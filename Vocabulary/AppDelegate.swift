@@ -19,8 +19,11 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         backgroundBarColor(UIColor.black.withAlphaComponent(0.1))
         _ = playBackgroundMusic(with: .夏の霧, volume: Constant.volume)
+        audioInterruptionNotification()
         return true
     }
+    
+    @objc func replayMusic(_ notificaiton: Notification) { audioPlayer?.play() }
 }
 
 // MARK: - AVAudioPlayerDelegate
@@ -49,7 +52,7 @@ extension AppDelegate {
         
         audioPlayer.volume = volume
         audioPlayer.play()
-        
+                
         return true
     }
     
@@ -94,6 +97,11 @@ private extension AppDelegate {
         }
         
         return audioPlayer
+    }
+    
+    /// 註冊音樂被中斷的通知 (Safari播放單字聲音時，音樂會被中斷)
+    func audioInterruptionNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(Self.replayMusic(_:)), name: AVAudioSession.interruptionNotification, object: nil)
     }
 }
 

@@ -1,0 +1,41 @@
+{
+  "pins" : [
+    {
+      "identity" : "wwhud",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWHUD.git",
+      "state" : {
+        "revision" : "caacd57c5343eb03fdefc8fcfa6dc4444c2d1c0c",
+        "version" : "1.1.2"
+      }
+    },
+    {
+      "identity" : "wwprint",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWPrint",
+      "state" : {
+        "revision" : "e4ad2863717465f224aa676f10a3a7ff1df58f7c",
+        "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "wwslider",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWSlider.git",
+      "state" : {
+        "revision" : "6ddee6ccff11661e2344ddd0434bb4a9ebdfb684",
+        "version" : "1.2.2"
+      }
+    },
+    {
+      "identity" : "wwsqlite3manager",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWSQLite3Manager.git",
+      "state" : {
+        "revision" : "3311badad6ed9fe3e55e85e949c4965e40920c2e",
+        "version" : "1.2.1"
+      }
+    }
+  ],
+  "version" : 2
+}

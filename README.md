@@ -1,4 +1,4 @@
-# Vocabulary
+# Vocabulary - Xcode 14.2
 我愛背單字 - 針對身為外語苦手的我，量身訂製的APP
 
 [![Swift-5.7](https://img.shields.io/badge/Swift-5.7-orange.svg?style=flat)](https://developer.apple.com/swift/) [![iOS 14.0](https://img.shields.io/badge/iOS-14.0-pink.svg?style=flat)](https://developer.apple.com/swift/) [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=flat)](https://developer.apple.com/swift/)
@@ -28,3 +28,9 @@
 1. Success.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
 1. Fail.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
 1. Nice.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
+
+### [引用套件](https://github.com/William-Weng/SwiftPackageManager)
+1. [WWPrint](https://github.com/William-Weng/WWPrint)
+1. [WWSQLite3Manager](https://github.com/William-Weng/WWSQLite3Manager.git)
+1. [WWHUD](https://github.com/William-Weng/WWHUD.git)
+1. [WWSlider](https://github.com/William-Weng/WWSlider.git)

@@ -18,7 +18,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         backgroundBarColor(UIColor.black.withAlphaComponent(0.1))
-        playBackgroundMusic(with: .夏の霧, volume: Constant.volume)
+        _ = playBackgroundMusic(with: .夏の霧, volume: Constant.volume)
         return true
     }
 }

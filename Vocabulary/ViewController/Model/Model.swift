@@ -23,7 +23,7 @@ final class Vocabulary: Codable {
         func value() -> String {
             switch self {
             case .easy: return "簡單"
-            case .medium: return "中等"
+            case .medium: return "一般"
             case .hard: return "困難"
             }
         }

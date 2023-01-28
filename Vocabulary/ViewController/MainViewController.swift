@@ -248,9 +248,12 @@ private extension MainViewController {
         
         titleSetting(with: MainTableViewCell.vocabularyListArray.count)
         
-        myTableView.reloadData()
-        refreshControl.endRefreshing()
+        myTableView._reloadData { [weak self] in
+            guard let this = self else { return }
+            this.myTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        }
         
+        refreshControl.endRefreshing()
         Utility.shared.flashHUD(with: .success)
     }
     
@@ -336,21 +339,7 @@ private extension MainViewController {
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
 
         Constant.VoiceCode.allCases.forEach { tableName in
-            
-            let title = tableName.flagEmoji()
-            let alertTitle = tableName.name()
-            
-            let action = UIAlertAction(title: alertTitle, style: .default) { [weak self] _ in
-                
-                guard let this = self else { return }
-                
-                Constant.currentTableName = tableName
-                
-                this.dictionaryButtonItem.title = title
-                this.reloadVocabulary()
-            }
-            
-            
+            let action = dictionaryAlertAction(with: tableName)
             alertController.addAction(action)
         }
         
@@ -361,6 +350,27 @@ private extension MainViewController {
         present(alertController, animated: true, completion: nil)
     }
     
+    /// 字典選單功能 => 切換資料庫
+    /// - Parameter tableName: Constant.VoiceCode
+    /// - Returns: UIAlertAction
+    func dictionaryAlertAction(with tableName: Constant.VoiceCode) -> UIAlertAction {
+        
+        let title = tableName.flagEmoji()
+        let alertTitle = tableName.name()
+        
+        let action = UIAlertAction(title: alertTitle, style: .default) { [weak self] _ in
+            
+            guard let this = self else { return }
+            
+            Constant.currentTableName = tableName
+            
+            this.dictionaryButtonItem.title = title
+            this.reloadVocabulary()
+        }
+        
+        return action
+    }
+    
     /// 背景音樂選單
     func backgroundMusicMenu() {
 
@@ -368,21 +378,7 @@ private extension MainViewController {
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
 
         Utility.Music.allCases.forEach { music in
-                        
-            let action = UIAlertAction(title: "\(music)", style: .default) { [weak self] _ in
-                
-                guard let this = self,
-                      let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                else {
-                    return
-                }
-                
-                let isSuccess = appDelegate.playBackgroundMusic(with: music, volume: Constant.volume)
-                
-                this.volumeButtonItem.image = !isSuccess ? UIImage(named: "NoVolume") : UIImage(named: "Volume")
-                this.volumeButtonItem.isEnabled = isSuccess
-            }
-            
+            let action = backgroundMusicAlertAction(with: music)
             alertController.addAction(action)
         }
         
@@ -391,6 +387,28 @@ private extension MainViewController {
         alertController.popoverPresentationController?.barButtonItem = navigationItem.leftBarButtonItem
         
         present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 背景音樂選單功能 => 播放音樂
+    /// - Parameter music: Utility.Music
+    /// - Returns: UIAlertAction
+    func backgroundMusicAlertAction(with music: Utility.Music) -> UIAlertAction {
+        
+        let action = UIAlertAction(title: "\(music)", style: .default) { [weak self] _ in
+            
+            guard let this = self,
+                  let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            else {
+                return
+            }
+            
+            let isSuccess = appDelegate.playBackgroundMusic(with: music, volume: Constant.volume)
+            
+            this.volumeButtonItem.image = !isSuccess ? UIImage(named: "NoVolume") : UIImage(named: "Volume")
+            this.volumeButtonItem.isEnabled = isSuccess
+        }
+        
+        return action
     }
     
     /// 右側滑動按鈕

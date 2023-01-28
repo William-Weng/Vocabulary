@@ -100,17 +100,7 @@ extension ListViewController: ListViewDelegate {
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
 
         Vocabulary.Speech.allCases.forEach { speech in
-            
-            let action = UIAlertAction(title: speech.value(), style: .default) { [weak self] _ in
-                
-                guard let this = self else { return }
-                
-                let isSuccess = API.shared.updateSpeechToList(vocabulary.id, speech: speech, for: Constant.currentTableName)
-                
-                if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
-                this.updateCellLabel(with: indexPath, speech: speech, info: nil)
-            }
-            
+            let action = speechAlertAction(with: indexPath, speech: speech, vocabulary: vocabulary)
             alertController.addAction(action)
         }
         
@@ -182,7 +172,7 @@ private extension ListViewController {
     ///   - title: 標題
     ///   - message: 訊息文字
     ///   - indexPath: IndexPath
-    ///   - action: (String) -> Bool
+    ///   - action: (Constant.ExampleInfomation) -> Bool
     func appendTextHint(title: String, message: String? = nil, indexPath: IndexPath, action: @escaping (Constant.ExampleInfomation) -> Bool) {
         
         guard let vocabulary = ListTableViewCell.vocabulary(with: indexPath) else { return }
@@ -193,12 +183,31 @@ private extension ListViewController {
         alertController.addTextField { $0.text = vocabulary.example; $0.placeholder = "請輸入相關例句" }
         alertController.addTextField { $0.text = vocabulary.translate; $0.placeholder = "請輸入例句翻譯" }
         
+        let actionOK = appendTextAlertAction(with: indexPath, textFields: alertController.textFields, vocabulary: vocabulary, action: action)
+        let actionCancel = UIAlertAction(title: "取消", style: .cancel) {  _ in }
+        
+        alertController.addAction(actionOK)
+        alertController.addAction(actionCancel)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 新增文字功能 => 解釋 / 例句 / 翻譯
+    /// - Parameters:
+    ///   - indexPath: IndexPath
+    ///   - textFields: [UITextField]?
+    ///   - vocabulary: Vocabulary
+    ///   - action: (Constant.ExampleInfomation) -> Bool
+    /// - Returns: UIAlertAction
+    func appendTextAlertAction(with indexPath: IndexPath, textFields: [UITextField]?, vocabulary: Vocabulary, action: @escaping (Constant.ExampleInfomation) -> Bool) -> UIAlertAction {
+        
         let actionOK = UIAlertAction(title: "確認", style: .default) { [weak self] _ in
             
             guard let this = self,
-                  let interpret = alertController.textFields?.first?.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-                  let example = alertController.textFields?[safe: 1]?.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-                  let translate = alertController.textFields?.last?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+                  let textFields = textFields,
+                  let interpret = textFields.first?.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+                  let example = textFields[safe: 1]?.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+                  let translate = textFields.last?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
             else {
                 return
             }
@@ -209,12 +218,27 @@ private extension ListViewController {
             this.updateCellLabel(with: indexPath, speech: nil, info: info)
         }
         
-        let actionCancel = UIAlertAction(title: "取消", style: .cancel) {  _ in }
+        return actionOK
+    }
+    
+    /// 單字詞性選單功能
+    /// - Parameters:
+    ///   - indexPath: IndexPath
+    ///   - speech: Vocabulary.Speech
+    ///   - vocabulary: Vocabulary
+    func speechAlertAction(with indexPath: IndexPath, speech: Vocabulary.Speech, vocabulary: Vocabulary) -> UIAlertAction {
         
-        alertController.addAction(actionOK)
-        alertController.addAction(actionCancel)
+        let action = UIAlertAction(title: speech.value(), style: .default) { [weak self] _ in
+            
+            guard let this = self else { return }
+            
+            let isSuccess = API.shared.updateSpeechToList(vocabulary.id, speech: speech, for: Constant.currentTableName)
+            
+            if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
+            this.updateCellLabel(with: indexPath, speech: speech, info: nil)
+        }
         
-        present(alertController, animated: true, completion: nil)
+        return action
     }
     
     /// 右側滑動按鈕

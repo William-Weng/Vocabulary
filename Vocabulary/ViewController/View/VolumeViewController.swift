@@ -30,12 +30,7 @@ final class VolumeViewController: UIViewController {
 extension VolumeViewController: SliderDeleagte {
     
     func valueChange(identifier: String, currentValue: CGFloat, maximumValue: CGFloat, isVertical: Bool) -> SliderInfomation {
-        
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return SliderInfomation(text: "0 %", icon: nil) }
-        
-        let percent = Int(currentValue / maximumValue * 100)
-        _ = appDelegate.musicVolumeSetting(Float(percent) * 0.01)
-                
+        let percent = valueChangePercent(identifier: identifier, currentValue: currentValue, maximumValue: maximumValue, isVertical: isVertical) ?? 0
         return SliderInfomation(text: "\(percent) %", icon: nil)
     }
 }
@@ -63,5 +58,22 @@ extension VolumeViewController {
         
         volumeProgressSlider.currentValue = currentValue
         volumeProgressSlider.configure(id: "volumeProgressView", initValue: "\(Int(volume * 100)) %", font: .systemFont(ofSize: 24), icon: nil, type: .segmented(100))
+    }
+    
+    /// Slider數值變動時的百分比值設定
+    /// - Parameters:
+    ///   - identifier: String
+    ///   - currentValue: WWSlider內部的高度
+    ///   - maximumValue: WWSlider高度最大值
+    ///   - isVertical: Bool
+    /// - Returns: Int?
+    func valueChangePercent(identifier: String, currentValue: CGFloat, maximumValue: CGFloat, isVertical: Bool) -> Int? {
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
+        
+        let percent = Int(currentValue / maximumValue * 100)
+        _ = appDelegate.musicVolumeSetting(Float(percent) * 0.01)
+                
+        return percent
     }
 }

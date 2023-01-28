@@ -397,6 +397,18 @@ extension UITableView {
         guard let cell = dequeueReusableCell(withIdentifier: T.identifier, for: indexPath) as? T else { fatalError("UITableViewCell Error") }
         return cell
     }
+    
+    /// [加強版的reloadData => 動畫完成後](https://cloud.tencent.com/developer/ask/sof/78125)
+    /// - Parameter completion: () -> Void)?
+    func _reloadData(completion: (() -> Void)?) {
+        
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+        
+        reloadData()
+        
+        CATransaction.commit()
+    }
 }
 
 // MARK: - UIRefreshControl (static function)

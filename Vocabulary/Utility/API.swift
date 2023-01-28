@@ -118,20 +118,22 @@ extension API {
 // MARK: - 小工具 (Update)
 extension API {
     
-    /// 更新單字到列表
+    /// 更新單字例句數量
     /// - Parameters:
-    ///   - id: Int
+    ///   - word: 單字
     ///   - tableName: 資料庫名稱
-    ///   - count: 列表的數量
+    ///   - count: 例句數量
+    ///   - hasUpdateTime: 要不要加上更新時間
     /// - Returns: Bool
-    func updateWordToList(_ word: String, for tableName: Constant.VoiceCode, count: Int) -> Bool {
+    func updateWordToList(_ word: String, for tableName: Constant.VoiceCode, count: Int, hasUpdateTime: Bool = true) -> Bool {
         
         guard let database = Constant.database else { return false }
         
-        let items: [SQLite3Database.InsertItem] = [
+        var items: [SQLite3Database.InsertItem] = [
             (key: "count", value: count),
-            (key: "updateTime", value: Date()._localTime()),
         ]
+        
+        if (hasUpdateTime) { items.append(SQLite3Database.InsertItem((key: "updateTime", value: Date()._localTime()))) }
         
         let condition = SQLite3Condition.Where().isCompare(key: "word", type: .equal, value: word)
         let result = database.update(tableName: tableName.vocabularyList(), items: items, where: condition)

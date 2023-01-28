@@ -29,6 +29,7 @@
 		642858AB297BC51E00DD7D88 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642858AA297BC51E00DD7D88 /* Model.swift */; };
 		642858AE297BC61300DD7D88 /* WWPrint in Frameworks */ = {isa = PBXBuildFile; productRef = 642858AD297BC61300DD7D88 /* WWPrint */; };
 		646E44A42980A726002BCBC8 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646E44A32980A726002BCBC8 /* ReviewViewController.swift */; };
+		649DF928298510A4005A9AE6 /* 桜雲.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 649DF927298510A4005A9AE6 /* 桜雲.m4a */; };
 		64C184F5297E5CC600D1D1B2 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C184F4297E5CC600D1D1B2 /* Protocol.swift */; };
 		64C184F7297E5D4C00D1D1B2 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C184F6297E5D4C00D1D1B2 /* MainTableViewCell.swift */; };
 		64C184F9297E5F7A00D1D1B2 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C184F8297E5F7A00D1D1B2 /* API.swift */; };
@@ -59,6 +60,7 @@
 		642858A5297BC40E00DD7D88 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		642858AA297BC51E00DD7D88 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		646E44A32980A726002BCBC8 /* ReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
+		649DF927298510A4005A9AE6 /* 桜雲.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "桜雲.m4a"; sourceTree = "<group>"; };
 		64C184F4297E5CC600D1D1B2 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		64C184F6297E5D4C00D1D1B2 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		64C184F8297E5F7A00D1D1B2 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				641B5CA12984AA1B00AB1C56 /* TheBeatOfNature.mp3 */,
+				649DF927298510A4005A9AE6 /* 桜雲.m4a */,
 				641B5C9D2984A7A400AB1C56 /* 夏の霧.m4a */,
 			);
 			path = Music;
@@ -282,6 +285,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				649DF928298510A4005A9AE6 /* 桜雲.m4a in Resources */,
 				64285897297BBF8700DD7D88 /* LaunchScreen.storyboard in Resources */,
 				641F3FC12983775D00C44851 /* Working.gif in Resources */,
 				64285894297BBF8700DD7D88 /* Assets.xcassets in Resources */,

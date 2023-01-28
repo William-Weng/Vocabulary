@@ -7,7 +7,6 @@
 
 import AVFoundation
 import UIKit
-import AVFAudio
 import WWHUD
 
 // MARK: - Utility (單例)
@@ -27,8 +26,9 @@ final class Utility: NSObject {
         
         case 夏の霧 = "夏の霧.m4a"
         case TheBeatOfNature = "TheBeatOfNature.mp3"
+        case 桜雲 = "桜雲.m4a"
         case 靜音 = ""
-
+        
         /// 音樂檔案路徑
         /// - Returns: URL?
         func fileURL() -> URL? { return Bundle.main.url(forResource: self.rawValue, withExtension: nil) }
@@ -36,11 +36,18 @@ final class Utility: NSObject {
         /// 音樂檔案類型
         /// - Returns: AVFileType
         func fileType() -> AVFileType {
-            switch self {
-            case .夏の霧: return .m4a
-            case .TheBeatOfNature: return .mp3
-            case .靜音: return .mp3
+            
+            guard let components = Optional.some(self.rawValue.components(separatedBy: ".")),
+                  components.count > 1,
+                  let extensionName = components.last
+            else {
+                return .mp3
             }
+            
+            if (extensionName.lowercased() == "mp3") { return .mp3 }
+            if (extensionName.lowercased() == "m4a") { return .m4a }
+            
+            return .mp3
         }
     }
     

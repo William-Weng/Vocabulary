@@ -87,6 +87,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - SFSafariViewControllerDelegate
 extension ListViewController: SFSafariViewControllerDelegate {}
 
+// MARK: - ListViewDelegate
 extension ListViewController: ListViewDelegate {
     
     /// 單字詞性選單
@@ -106,7 +107,7 @@ extension ListViewController: ListViewDelegate {
                 
                 let isSuccess = API.shared.updateSpeechToList(vocabulary.id, speech: speech, for: Constant.currentTableName)
                 
-                if (!isSuccess) { Utility.shared.flashHUD(with: .fail) }
+                if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
                 this.updateCellLabel(with: indexPath, speech: speech, info: nil)
             }
             
@@ -304,7 +305,7 @@ private extension ListViewController {
         if (ListTableViewCell.exmapleList.isEmpty) { return }
         
         let count = ListTableViewCell.exmapleList.count
-        let isSuccess = API.shared.updateWordToList(vocabularyList.word, for: Constant.currentTableName, count: count)
+        let isSuccess = API.shared.updateWordToList(vocabularyList.word, for: Constant.currentTableName, count: count, hasUpdateTime: false)
         
         if (isSuccess) { mainViewDelegate?.updateCountLabel(with: vocabularyListIndexPath, count: count) }
     }

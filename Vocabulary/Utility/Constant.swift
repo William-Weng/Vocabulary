@@ -36,6 +36,8 @@ extension Constant {
         case korean = "Korean"
         case chinese = "Chinese"
         
+        /// Description
+        /// - Returns: String
         func vocabularyList() -> String { return "\(self.rawValue)List" }
         
         /// [AVSpeechSynthesisVoice List](https://stackoverflow.com/questions/35492386/how-to-get-a-list-of-all-voices-on-ios-9/43576853)
@@ -91,8 +93,8 @@ extension Constant {
             
             switch self {
             case .english: return UIFont(name: "Bradley Hand", size: fontSize)
-            case .japanese: return UIFont(name: "PingFangTC-Regular", size: fontSize)
-            case .korean: return UIFont(name: "PingFangTC-Regular", size: fontSize)
+            case .japanese: return UIFont(name: "HiraMinProN-W6", size: fontSize)
+            case .korean: return UIFont(name: "AppleSDGothicNeo-SemiBold", size: fontSize)
             case .chinese: return UIFont(name: "PingFangTC-Regular", size: fontSize)
             }
         }

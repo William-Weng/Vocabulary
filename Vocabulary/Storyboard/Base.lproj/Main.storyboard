@@ -123,7 +123,7 @@
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="64" id="JHX-RJ-2mF"/>
                                                                     </constraints>
-                                                                    <fontDescription key="fontDescription" name="PingFangTC-Regular" family="PingFang TC" pointSize="36"/>
+                                                                    <fontDescription key="fontDescription" name="HiraMinProN-W6" family="Hiragino Mincho ProN" pointSize="36"/>
                                                                     <color key="textColor" systemColor="systemBlueColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
@@ -498,11 +498,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Add" width="128" height="128"/>
-        <image name="Music" width="128" height="128"/>
-        <image name="Search" width="128" height="128"/>
-        <image name="Sound" width="170.66667175292969" height="170.66667175292969"/>
-        <image name="Volume" width="128" height="128"/>
+        <image name="Add" width="21.333333969116211" height="21.333333969116211"/>
+        <image name="Music" width="21.333333969116211" height="21.333333969116211"/>
+        <image name="Search" width="21.333333969116211" height="21.333333969116211"/>
+        <image name="Sound" width="42.666667938232422" height="42.666667938232422"/>
+        <image name="Volume" width="21.333333969116211" height="21.333333969116211"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

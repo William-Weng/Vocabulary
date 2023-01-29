@@ -38,12 +38,16 @@ final class ListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        tabBarController?._tabBarHidden(true, animated: true)
+        
         ListTableViewCell.listViewDelegate = self
         animatedBackground(with: .reading)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        tabBarController?._tabBarHidden(false, animated: true)
         
         ListTableViewCell.listViewDelegate = nil
         pauseBackgroundAnimation()

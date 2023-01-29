@@ -29,6 +29,9 @@
 		642858AB297BC51E00DD7D88 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642858AA297BC51E00DD7D88 /* Model.swift */; };
 		642858AE297BC61300DD7D88 /* WWPrint in Frameworks */ = {isa = PBXBuildFile; productRef = 642858AD297BC61300DD7D88 /* WWPrint */; };
 		646E44A42980A726002BCBC8 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646E44A32980A726002BCBC8 /* ReviewViewController.swift */; };
+		6492ADD52986B8E900E1B59B /* KleeOne-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADD42986B8E900E1B59B /* KleeOne-SemiBold.ttf */; };
+		6492ADD72986BBFA00E1B59B /* GamjaFlower-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADD62986BBFA00E1B59B /* GamjaFlower-Regular.ttf */; };
+		6492ADDD2986BF6E00E1B59B /* jf-openhuninn-1.1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADDC2986BF6D00E1B59B /* jf-openhuninn-1.1.ttf */; };
 		649DF928298510A4005A9AE6 /* 桜雲.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 649DF927298510A4005A9AE6 /* 桜雲.m4a */; };
 		64C184F5297E5CC600D1D1B2 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C184F4297E5CC600D1D1B2 /* Protocol.swift */; };
 		64C184F7297E5D4C00D1D1B2 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C184F6297E5D4C00D1D1B2 /* MainTableViewCell.swift */; };
@@ -60,6 +63,9 @@
 		642858A5297BC40E00DD7D88 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		642858AA297BC51E00DD7D88 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		646E44A32980A726002BCBC8 /* ReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
+		6492ADD42986B8E900E1B59B /* KleeOne-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "KleeOne-SemiBold.ttf"; sourceTree = "<group>"; };
+		6492ADD62986BBFA00E1B59B /* GamjaFlower-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GamjaFlower-Regular.ttf"; sourceTree = "<group>"; };
+		6492ADDC2986BF6D00E1B59B /* jf-openhuninn-1.1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "jf-openhuninn-1.1.ttf"; sourceTree = "<group>"; };
 		649DF927298510A4005A9AE6 /* 桜雲.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "桜雲.m4a"; sourceTree = "<group>"; };
 		64C184F4297E5CC600D1D1B2 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		64C184F6297E5D4C00D1D1B2 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
@@ -113,6 +119,16 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		642448672986B57F0038449E /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				6492ADDC2986BF6D00E1B59B /* jf-openhuninn-1.1.ttf */,
+				6492ADD62986BBFA00E1B59B /* GamjaFlower-Regular.ttf */,
+				6492ADD42986B8E900E1B59B /* KleeOne-SemiBold.ttf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 		6428587E297BBF8600DD7D88 = {
@@ -169,6 +185,7 @@
 		642858A0297BC00700DD7D88 /* Material */ = {
 			isa = PBXGroup;
 			children = (
+				642448672986B57F0038449E /* Font */,
 				641B5CA02984A99100AB1C56 /* Music */,
 				641B5C9F2984A97600AB1C56 /* Picture */,
 				64285893297BBF8700DD7D88 /* Assets.xcassets */,
@@ -285,17 +302,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6492ADD52986B8E900E1B59B /* KleeOne-SemiBold.ttf in Resources */,
 				649DF928298510A4005A9AE6 /* 桜雲.m4a in Resources */,
 				64285897297BBF8700DD7D88 /* LaunchScreen.storyboard in Resources */,
 				641F3FC12983775D00C44851 /* Working.gif in Resources */,
 				64285894297BBF8700DD7D88 /* Assets.xcassets in Resources */,
 				641B5C9E2984A7A400AB1C56 /* 夏の霧.m4a in Resources */,
+				6492ADD72986BBFA00E1B59B /* GamjaFlower-Regular.ttf in Resources */,
 				641F3FCB29837EF800C44851 /* Nice.gif in Resources */,
 				641F3FC929837EE000C44851 /* Fail.gif in Resources */,
 				641B5CA22984AA1B00AB1C56 /* TheBeatOfNature.mp3 in Resources */,
 				64285892297BBF8600DD7D88 /* Main.storyboard in Resources */,
 				641F3FC3298377E300C44851 /* Studing.gif in Resources */,
 				64C18500297E849A00D1D1B2 /* Success.gif in Resources */,
+				6492ADDD2986BF6E00E1B59B /* jf-openhuninn-1.1.ttf in Resources */,
 				641F3FBD29836B5100C44851 /* Reading.gif in Resources */,
 				641F3FC529837B4800C44851 /* ReadMe.md in Resources */,
 			);

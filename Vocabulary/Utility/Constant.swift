@@ -102,9 +102,9 @@ extension Constant {
             
             switch self {
             case .english: return UIFont(name: "Bradley Hand", size: fontSize)
-            case .japanese: return UIFont(name: "HiraMinProN-W6", size: fontSize)
-            case .korean: return UIFont(name: "AppleSDGothicNeo-SemiBold", size: fontSize)
-            case .chinese: return UIFont(name: "PingFangTC-Regular", size: fontSize)
+            case .japanese: return UIFont(name: "KleeOne-SemiBold", size: fontSize)
+            case .korean: return UIFont(name: "GamjaFlower-Regular", size: fontSize)
+            case .chinese: return UIFont(name: "jf-openhuninn-1.1.ttf", size: fontSize)
             }
         }
     }

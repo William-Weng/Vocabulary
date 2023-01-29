@@ -19,3 +19,9 @@
 1. Success.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
 1. Fail.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
 1. Nice.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
+
+### [語言字型](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/為-ios-app-加入客製字型-custom-font-d2b28b0269e0)
+1. KleeOne-SemiBold.ttf - [Google Fonts - KleeOne](https://fonts.google.com/specimen/Klee+One)
+1. GamjaFlower-Regular.ttf - [Google Fonts - Gamja Flower](https://fonts.google.com/specimen/Gamja+Flower?query=Gamja+Flower)
+1. jf-openhuninn-1.1.ttf - [open 粉圓 - justfont](https://justfont.com/huninn/)
+

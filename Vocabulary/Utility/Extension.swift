@@ -9,6 +9,38 @@ import UIKit
 import AVKit
 import SafariServices
 
+// MARK: - NSObject (class function)
+extension NSObject {
+    
+    /// objc_getAssociatedObject泛型版
+    /// - _getAssociatedObject(&Content._lastOffset, defaultValue: CGFloat(0))
+    /// - Parameters:
+    ///   - key: 要設定該變數的指標
+    ///   - defaultValue: 設定預設值 (泛型)
+    /// - Returns: 由defaultValue決定回傳類型
+    func _getAssociatedObject<T>(_ key: UnsafeRawPointer?, defaultValue: T) -> T {
+        
+        guard let key = key,
+              let value = objc_getAssociatedObject(self, key) as? T
+        else {
+            return defaultValue
+        }
+        
+        return value
+    }
+    
+    /// objc_setAssociatedObject泛型版
+    /// - _setAssociatedObject(&Content._lastOffset, newValue: newValue)
+    /// - Parameters:
+    ///   - key: 要設定該變數的指標
+    ///   - newValue: 要設定的值 => 由newValue決定該類型 (泛型)
+    ///   - associationPolicy: Objective-C的存取類型
+    func _setAssociatedObject<T>(_ key: UnsafeRawPointer?, newValue: T, associationPolicy: objc_AssociationPolicy = .OBJC_ASSOCIATION_COPY_NONATOMIC) {
+        guard let key = key else { return }
+        objc_setAssociatedObject(self, key, newValue, associationPolicy)
+    }
+}
+
 // MARK: - Collection (override class function)
 extension Collection {
 
@@ -349,6 +381,28 @@ extension UINavigationBarAppearance {
     func _hasShadow(_ hasShadow: Bool = true) -> Self { if (!hasShadow) { shadowColor = nil }; return self }
 }
 
+// MARK: - UITabBarController
+extension UITabBarController {
+    
+    /// [設定TabBar是否顯示](https://stackoverflow.com/questions/41169966/swift-uitabbarcontroller-hide-with-animation)
+    /// - Parameters:
+    ///   - hidden: [Bool](https://www.appcoda.com.tw/interactive-animation-uiviewpropertyanimator/)
+    ///   - animated: animated
+    func _tabrBarHidden(_ hidden: Bool, animated: Bool) {
+                
+        let viewHeight = self.view.frame.size.height
+        var tabBarFrame = self.tabBar.frame
+        
+        tabBarFrame.origin.y = hidden ? viewHeight - tabBarFrame.size.height : viewHeight
+        
+        if (!animated) { self.tabBar.frame = tabBarFrame; return }
+        
+        UIViewPropertyAnimator(duration: 0.25, curve: .linear) {
+            self.tabBar.frame = tabBarFrame
+        }.startAnimation()
+    }
+}
+
 // MARK: - UITabBar (static function)
 extension UITabBar {
     
@@ -376,6 +430,22 @@ extension UITabBar {
     func _backgroundColor(_ color: UIColor) {
         self._transparent()
         self.backgroundColor = color
+    }
+}
+
+// MARK: - UIScrollView (class function)
+extension UIScrollView {
+    
+    /// [滑動方向](https://cloud.tencent.com/developer/ask/sof/28254)
+    /// - Returns: Constant.ScrollDirection
+    func _direction() -> Constant.ScrollDirection {
+        
+        if panGestureRecognizer.translation(in: self).y > 0 { return .up }
+        if panGestureRecognizer.translation(in: self).y < 0 { return .down }
+        if panGestureRecognizer.translation(in: self).x < 0 { return .left }
+        if panGestureRecognizer.translation(in: self).x > 0 { return .right }
+        
+        return .none
     }
 }
 

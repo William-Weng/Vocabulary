@@ -46,13 +46,14 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ANa-gN-Kzn"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="BTR-xj-2Mo" firstAttribute="centerX" secondItem="7WY-wC-Rjn" secondAttribute="centerX" id="BeK-yD-XNX"/>
                             <constraint firstItem="BTR-xj-2Mo" firstAttribute="centerY" secondItem="7WY-wC-Rjn" secondAttribute="centerY" id="ILK-SH-ggr"/>
                             <constraint firstItem="BTR-xj-2Mo" firstAttribute="height" secondItem="7WY-wC-Rjn" secondAttribute="height" multiplier="7:10" id="o2l-Tc-X2D" customClass="WWSilder"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="Lvl-ds-I8V"/>
                     <connections>
                         <outlet property="volumeProgressSlider" destination="BTR-xj-2Mo" id="BRl-VN-1cn"/>
                     </connections>
@@ -245,7 +246,7 @@
                         <outlet property="myTableView" destination="g1v-Rm-Z7N" id="Y2p-zG-TPz"/>
                         <outlet property="volumeButtonItem" destination="CaI-6N-Din" id="RJB-sk-dFA"/>
                         <segue destination="Afl-Sy-sBn" kind="show" identifier="ListTableViewSegue" id="3lo-lz-iJI"/>
-                        <segue destination="fcV-OW-2JY" kind="presentation" identifier="VolumeViewSegue" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="Ypq-4K-ZAg"/>
+                        <segue destination="fcV-OW-2JY" kind="presentation" identifier="VolumeViewSegue" animates="NO" modalPresentationStyle="fullScreen" id="Ypq-4K-ZAg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

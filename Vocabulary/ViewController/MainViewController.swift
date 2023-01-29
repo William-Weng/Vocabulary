@@ -33,6 +33,7 @@ final class MainViewController: UIViewController {
     private var refreshControl: UIRefreshControl!
     private var isAnimationStop = false
     private var disappearImage: UIImage?
+    private var currentScrollDirection: Constant.ScrollDirection = .down
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,8 +65,10 @@ final class MainViewController: UIViewController {
         
         case .listTableView: vocabularyListPageSetting(for: segue, sender: sender)
         case .volumeView:
+                        
             guard let viewController = segue.destination as? VolumeViewController else { return }
             viewController._transparent(.black.withAlphaComponent(0.3))
+            navigationController?.setNavigationBarHidden(true, animated: true)
         }
     }
     
@@ -82,11 +85,15 @@ final class MainViewController: UIViewController {
     }
     
     @IBAction func selectDictionaryAction(_ sender: UIBarButtonItem) {
-        dictionaryMenu()
+        // dictionaryMenu()
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        tabBarController?._tabrBarHidden(true, animated: true)
     }
     
     @IBAction func selectBackgroundMusic(_ sender: UIBarButtonItem) {
-        backgroundMusicMenu()
+        // backgroundMusicMenu()
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        tabBarController?._tabrBarHidden(false, animated: false)
     }
     
     @IBAction func selectVolume(_ sender: UIBarButtonItem) {
@@ -115,6 +122,20 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         return UISwipeActionsConfiguration(actions: trailingSwipeActionsMaker(with: indexPath))
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        let direction = scrollView._direction()
+        if (direction == currentScrollDirection) { return }
+        
+        switch direction {
+        case .up: tabBarController?._tabrBarHidden(true, animated: true)
+        case .down: tabBarController?._tabrBarHidden(false, animated: true)
+        case .left , .right ,.none: break
+        }
+        
+        currentScrollDirection = direction
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -244,17 +265,23 @@ private extension MainViewController {
     /// [重新讀取單字表](https://medium.com/@daoseng33/我說那個-uitableview-insertrows-uicollectionview-insertitems-呀-56b8758b2efb)
     func reloadVocabularyList() {
         
+        defer { refreshControl.endRefreshing() }
+        
         MainTableViewCell.vocabularyListArray += API.shared.searchVocabularyList(for: Constant.currentTableName, offset: MainTableViewCell.vocabularyListArray.count)
         
         titleSetting(with: MainTableViewCell.vocabularyListArray.count)
         
         myTableView._reloadData { [weak self] in
-            guard let this = self else { return }
+            
+            guard let this = self,
+                  !MainTableViewCell.vocabularyListArray.isEmpty
+            else {
+                return
+            }
+            
             this.myTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            Utility.shared.flashHUD(with: .success)
         }
-        
-        refreshControl.endRefreshing()
-        Utility.shared.flashHUD(with: .success)
     }
     
     /// 新增單字

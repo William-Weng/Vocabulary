@@ -58,10 +58,7 @@ extension AppDelegate {
     
     /// 取得背景音樂聲音大小
     /// - Returns: Float
-    func musicVolume() -> Float? {
-        guard let volume = audioPlayer?.volume else { return nil }
-        return volume
-    }
+    func musicVolume() -> Float? { return audioPlayer?.volume }
     
     /// 設定背景音樂聲音大小
     /// - Parameter volume: Float

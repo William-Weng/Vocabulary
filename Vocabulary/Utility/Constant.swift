@@ -29,6 +29,15 @@ extension Constant {
 // MARK: - Enumeration
 extension Constant {
     
+    /// ScrollView滾動的方向
+    enum ScrollDirection {
+        case none
+        case up
+        case down
+        case left
+        case right
+    }
+    
     enum VoiceCode: String, CaseIterable {
         
         case english = "English"

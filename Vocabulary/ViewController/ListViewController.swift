@@ -55,33 +55,16 @@ final class ListViewController: UIViewController {
         wwPrint("\(Self.self) deinit")
     }
     
-    @IBAction func dictionaryNet(_ sender: UIBarButtonItem) {
-        netDictionary(with: vocabularyList.word)
-    }
-    
-    @IBAction func refreshVocabularyList(_ sender: UIRefreshControl) {
-        reloadExampleList()
-    }
+    @IBAction func dictionaryNet(_ sender: UIBarButtonItem) { netDictionary(with: vocabularyList.word) }
+    @IBAction func refreshVocabularyList(_ sender: UIRefreshControl) { reloadExampleList() }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ListTableViewCell.exmapleList.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView._reusableCell(at: indexPath) as ListTableViewCell
-        cell.configure(with: indexPath)
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        return UISwipeActionsConfiguration(actions: trailingSwipeActionsMaker(with: indexPath))
-    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return ListTableViewCell.exmapleList.count }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { return listTableViewCell(tableView, cellForRowAt: indexPath) }
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? { return UISwipeActionsConfiguration(actions: trailingSwipeActionsMaker(with: indexPath)) }
 }
 
 // MARK: - SFSafariViewControllerDelegate
@@ -136,6 +119,19 @@ private extension ListViewController {
                 
         myTableView.reloadData()
         emptyExampleListAction()
+    }
+    
+    /// 產生ListTableViewCell
+    /// - Parameters:
+    ///   - tableView: UITableView
+    ///   - indexPath: IndexPath
+    /// - Returns: ListTableViewCell
+    func listTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> ListTableViewCell {
+        
+        let cell = tableView._reusableCell(at: indexPath) as ListTableViewCell
+        cell.configure(with: indexPath)
+        
+        return cell
     }
     
     /// 更新Cell的Label文字

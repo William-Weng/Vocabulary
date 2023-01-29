@@ -62,13 +62,8 @@ final class MainViewController: UIViewController {
         }
         
         switch segueType {
-        
         case .listTableView: vocabularyListPageSetting(for: segue, sender: sender)
-        case .volumeView:
-                        
-            guard let viewController = segue.destination as? VolumeViewController else { return }
-            viewController._transparent(.black.withAlphaComponent(0.3))
-            navigationController?.setNavigationBarHidden(true, animated: true)
+        case .volumeView: volumePageSetting(for: segue, sender: sender)
         }
     }
     
@@ -84,63 +79,20 @@ final class MainViewController: UIViewController {
         }
     }
     
-    @IBAction func selectDictionaryAction(_ sender: UIBarButtonItem) {
-        // dictionaryMenu()
-        navigationController?.setNavigationBarHidden(true, animated: true)
-        tabBarController?._tabrBarHidden(true, animated: true)
-    }
-    
-    @IBAction func selectBackgroundMusic(_ sender: UIBarButtonItem) {
-        // backgroundMusicMenu()
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        tabBarController?._tabrBarHidden(false, animated: false)
-    }
-    
-    @IBAction func selectVolume(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: ViewSegueType.volumeView.rawValue, sender: nil)
-    }
+    @IBAction func selectDictionaryAction(_ sender: UIBarButtonItem) { dictionaryMenu() }
+    @IBAction func selectBackgroundMusic(_ sender: UIBarButtonItem) { backgroundMusicMenu() }
+    @IBAction func selectVolume(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.volumeView.rawValue, sender: nil) }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return MainTableViewCell.vocabularyListArray.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView._reusableCell(at: indexPath) as MainTableViewCell
-        cell.configure(with: indexPath)
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: ViewSegueType.listTableView.rawValue, sender: indexPath)
-    }
-    
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        return UISwipeActionsConfiguration(actions: trailingSwipeActionsMaker(with: indexPath))
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        let direction = scrollView._direction()
-        if (direction == currentScrollDirection) { return }
-        
-        switch direction {
-        case .up: tabBarController?._tabrBarHidden(true, animated: true)
-        case .down: tabBarController?._tabrBarHidden(false, animated: true)
-        case .left , .right ,.none: break
-        }
-        
-        currentScrollDirection = direction
-    }
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        updateVocabularyList(for: scrollView)
-    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return MainTableViewCell.vocabularyListArray.count }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { return mainTableViewCell(tableView, cellForRowAt: indexPath) }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { performSegue(withIdentifier: ViewSegueType.listTableView.rawValue, sender: indexPath) }
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? { return UISwipeActionsConfiguration(actions: trailingSwipeActionsMaker(with: indexPath)) }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) { tabrBarHidden(with: scrollView) }
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateVocabularyList(for: scrollView) }
 }
 
 // MARK: - UIPopoverPresentationControllerDelegate
@@ -241,13 +193,28 @@ private extension MainViewController {
     /// UITableView的初始化設定
     func initSetting() {
         
-        refreshControl = UIRefreshControl._build(target: self, action: #selector(Self.refreshVocabularyList(_:)))
+        navigationItem.backBarButtonItem = UIBarButtonItem()
         
+        refreshControl = UIRefreshControl._build(target: self, action: #selector(Self.refreshVocabularyList(_:)))
+
+        myTableView._delegateAndDataSource(with: self)
         myTableView.addSubview(refreshControl)
         myTableView.tableFooterView = UIView()
-        myTableView._delegateAndDataSource(with: self)
         
-        reloadVocabularyList()
+        reloadVocabulary()
+    }
+    
+    /// 產生MainTableViewCell
+    /// - Parameters:
+    ///   - tableView: UITableView
+    ///   - indexPath: IndexPath
+    /// - Returns: MainTableViewCell
+    func mainTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> MainTableViewCell {
+        
+        let cell = tableView._reusableCell(at: indexPath) as MainTableViewCell
+        cell.configure(with: indexPath)
+        
+        return cell
     }
     
     /// 設定標題
@@ -258,20 +225,15 @@ private extension MainViewController {
     
     /// 重新讀取單字
     func reloadVocabulary() {
-        MainTableViewCell.vocabularyListArray = []
-        reloadVocabularyList()
-    }
-    
-    /// [重新讀取單字表](https://medium.com/@daoseng33/我說那個-uitableview-insertrows-uicollectionview-insertitems-呀-56b8758b2efb)
-    func reloadVocabularyList() {
         
         defer { refreshControl.endRefreshing() }
         
-        MainTableViewCell.vocabularyListArray += API.shared.searchVocabularyList(for: Constant.currentTableName, offset: MainTableViewCell.vocabularyListArray.count)
+        MainTableViewCell.vocabularyListArray = []
+        MainTableViewCell.vocabularyListArray = API.shared.searchVocabularyList(for: Constant.currentTableName, offset: MainTableViewCell.vocabularyListArray.count)
         
         titleSetting(with: MainTableViewCell.vocabularyListArray.count)
         
-        myTableView._reloadData { [weak self] in
+        myTableView._reloadData() { [weak self] in
             
             guard let this = self,
                   !MainTableViewCell.vocabularyListArray.isEmpty
@@ -279,9 +241,28 @@ private extension MainViewController {
                 return
             }
             
-            this.myTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            let topIndexPath = IndexPath(row: 0, section: 0)
+            this.myTableView.scrollToRow(at: topIndexPath, at: .top, animated: true)
+            
             Utility.shared.flashHUD(with: .success)
         }
+    }
+    
+    /// [新增單字列表](https://medium.com/@daoseng33/我說那個-uitableview-insertrows-uicollectionview-insertitems-呀-56b8758b2efb)
+    func appendVocabularyList() {
+        
+        defer { refreshControl.endRefreshing() }
+        
+        let oldListCount = MainTableViewCell.vocabularyListArray.count
+        MainTableViewCell.vocabularyListArray += API.shared.searchVocabularyList(for: Constant.currentTableName, offset: MainTableViewCell.vocabularyListArray.count)
+        
+        let newListCount = MainTableViewCell.vocabularyListArray.count
+        titleSetting(with: newListCount)
+        
+        let indexPaths = (oldListCount..<newListCount).map { IndexPath(row: $0, section: 0) }
+        myTableView._insertRows(at: indexPaths, animation: .automatic, animated: false)
+        
+        Utility.shared.flashHUD(with: .success)
     }
     
     /// 新增單字
@@ -308,7 +289,13 @@ private extension MainViewController {
     ///   - alphabet: 音標
     ///   - tableName: 資料庫名稱
     /// - Returns: Bool
-    func updateAlphabet(_ id: Int, alphabet: String, for tableName: Constant.VoiceCode) -> Bool {
+    func updateAlphabetLabel(with indexPath: IndexPath, id: Int, alphabet: String, for tableName: Constant.VoiceCode) -> Bool {
+        
+        guard var dictionary = MainTableViewCell.vocabularyListArray[safe: indexPath.row] else { return false }
+        
+        dictionary["alphabet"] = alphabet
+        MainTableViewCell.vocabularyListArray[indexPath.row] = dictionary
+        
         return API.shared.updateAlphabetToList(id, alphabet: alphabet, for: tableName)
     }
     
@@ -321,16 +308,17 @@ private extension MainViewController {
         let offset = scrollView.frame.height + scrollView.contentOffset.y - height
         let height = scrollView.contentSize.height
         
-        if (offset > height) { reloadVocabularyList() }
+        if (offset > height) { appendVocabularyList() }
     }
     
     /// 新增文字的提示框
     /// - Parameters:
+    ///   - indexPath: 要更新音標時，才會有IndexPath
     ///   - title: 標題
     ///   - message: 訊息文字
     ///   - defaultText: 預設文字
     ///   - action: (String) -> Bool
-    func appendTextHint(title: String, message: String? = nil, defaultText: String? = nil, action: @escaping (String) -> Bool) {
+    func appendTextHint(with indexPath: IndexPath? = nil ,title: String, message: String? = nil, defaultText: String? = nil, action: @escaping (String) -> Bool) {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
@@ -348,7 +336,12 @@ private extension MainViewController {
             }
             
             if (!action(inputWord)) { Utility.shared.flashHUD(with: .fail); return }
-            this.reloadVocabulary()
+            
+            if let indexPath = indexPath {
+                this.myTableView.reloadRows(at: [indexPath], with: .automatic)
+            } else {
+                this.reloadVocabulary()
+            }
         }
         
         let actionCancel = UIAlertAction(title: "取消", style: .cancel) {  _ in }
@@ -451,8 +444,8 @@ private extension MainViewController {
                 return
             }
             
-            this.appendTextHint(title: "請輸入音標", defaultText: vocabularyList.alphabet) { alphabet in
-                return this.updateAlphabet(vocabularyList.id, alphabet: alphabet, for: Constant.currentTableName)
+            this.appendTextHint(with: indexPath, title: "請輸入音標", defaultText: vocabularyList.alphabet) { alphabet in
+                return this.updateAlphabetLabel(with: indexPath, id: vocabularyList.id, alphabet: alphabet, for: Constant.currentTableName)
             }
         }
                 
@@ -472,11 +465,21 @@ private extension MainViewController {
             return
         }
         
-        navigationItem.backBarButtonItem = UIBarButtonItem()
-        
         viewController.vocabularyList = vocabularyList
         viewController.vocabularyListIndexPath = indexPath
         viewController.mainViewDelegate = self
+    }
+    
+    /// 設定音量頁的相關數值
+    /// - Parameters:
+    ///   - segue: UIStoryboardSegue
+    ///   - sender: Any?
+    func volumePageSetting(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let viewController = segue.destination as? VolumeViewController else { return }
+        
+        viewController._transparent(.black.withAlphaComponent(0.3))
+        tabBarController?._tabBarHidden(true, animated: true)
     }
     
     /// 動畫背景設定
@@ -504,5 +507,21 @@ private extension MainViewController {
     func pauseBackgroundAnimation() {
         disappearImage = myImageView.image
         isAnimationStop = true
+    }
+    
+    /// 滑動時TabBar
+    /// - Parameter scrollView: UIScrollView
+    func tabrBarHidden(with scrollView: UIScrollView) {
+        
+        let direction = scrollView._direction()
+        if (direction == currentScrollDirection) { return }
+        
+        switch direction {
+        case .up: tabBarController?._tabBarHidden(false, animated: true)
+        case .down: tabBarController?._tabBarHidden(true, animated: true)
+        case .left , .right ,.none: break
+        }
+        
+        currentScrollDirection = direction
     }
 }

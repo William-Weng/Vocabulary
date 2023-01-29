@@ -22,7 +22,7 @@ final class VolumeViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        self.dismiss(animated: true)
+        dismissAction()
     }
 }
 
@@ -75,5 +75,21 @@ extension VolumeViewController {
         _ = appDelegate.musicVolumeSetting(Float(percent) * 0.01)
                 
         return percent
+    }
+    
+    /// 回到上一頁
+    func dismissAction() {
+        
+        self.dismiss(animated: true) {
+            
+            guard let keyWindow = UIWindow._keyWindow(),
+                  let rootViewController = keyWindow.rootViewController,
+                  let tabBarController = rootViewController as? UITabBarController
+            else {
+                return
+            }
+            
+            tabBarController._tabBarHidden(false, animated: true)
+        }
     }
 }

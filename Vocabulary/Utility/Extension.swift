@@ -9,38 +9,6 @@ import UIKit
 import AVKit
 import SafariServices
 
-// MARK: - NSObject (class function)
-extension NSObject {
-    
-    /// objc_getAssociatedObject泛型版
-    /// - _getAssociatedObject(&Content._lastOffset, defaultValue: CGFloat(0))
-    /// - Parameters:
-    ///   - key: 要設定該變數的指標
-    ///   - defaultValue: 設定預設值 (泛型)
-    /// - Returns: 由defaultValue決定回傳類型
-    func _getAssociatedObject<T>(_ key: UnsafeRawPointer?, defaultValue: T) -> T {
-        
-        guard let key = key,
-              let value = objc_getAssociatedObject(self, key) as? T
-        else {
-            return defaultValue
-        }
-        
-        return value
-    }
-    
-    /// objc_setAssociatedObject泛型版
-    /// - _setAssociatedObject(&Content._lastOffset, newValue: newValue)
-    /// - Parameters:
-    ///   - key: 要設定該變數的指標
-    ///   - newValue: 要設定的值 => 由newValue決定該類型 (泛型)
-    ///   - associationPolicy: Objective-C的存取類型
-    func _setAssociatedObject<T>(_ key: UnsafeRawPointer?, newValue: T, associationPolicy: objc_AssociationPolicy = .OBJC_ASSOCIATION_COPY_NONATOMIC) {
-        guard let key = key else { return }
-        objc_setAssociatedObject(self, key, newValue, associationPolicy)
-    }
-}
-
 // MARK: - Collection (override class function)
 extension Collection {
 
@@ -279,6 +247,17 @@ extension URL {
     }
 }
 
+// MARK: - UIWindow (static function)
+extension UIWindow {
+    
+    /// [取得作用中的KeyWindow](https://stackoverflow.com/questions/57134259/how-to-resolve-keywindow-was-deprecated-in-ios-13-0)
+    /// - Returns: UIWindow?
+    static func _keyWindow() -> UIWindow? {
+        let keyWindow = UIApplication.shared.connectedScenes.filter({$0.activationState == .foregroundActive}).compactMap({$0 as? UIWindowScene}).first?.windows.filter({$0.isKeyWindow}).first
+        return keyWindow
+    }
+}
+
 // MARK: - UIView (class function)
 extension UIImageView {
     
@@ -387,18 +366,21 @@ extension UITabBarController {
     /// [設定TabBar是否顯示](https://stackoverflow.com/questions/41169966/swift-uitabbarcontroller-hide-with-animation)
     /// - Parameters:
     ///   - hidden: [Bool](https://www.appcoda.com.tw/interactive-animation-uiviewpropertyanimator/)
-    ///   - animated: animated
-    func _tabrBarHidden(_ hidden: Bool, animated: Bool) {
-                
+    ///   - animated: 使用動畫
+    ///   - duration: 動畫時間
+    ///   - curve: 動畫類型
+    func _tabBarHidden(_ isHidden: Bool, animated: Bool, duration: TimeInterval = 0.1, curve: UIView.AnimationCurve = .linear) {
+        
         let viewHeight = self.view.frame.size.height
         var tabBarFrame = self.tabBar.frame
         
-        tabBarFrame.origin.y = hidden ? viewHeight - tabBarFrame.size.height : viewHeight
+        tabBarFrame.origin.y = !isHidden ? viewHeight - tabBarFrame.size.height : viewHeight
         
         if (!animated) { self.tabBar.frame = tabBarFrame; return }
         
-        UIViewPropertyAnimator(duration: 0.25, curve: .linear) {
-            self.tabBar.frame = tabBarFrame
+        UIViewPropertyAnimator(duration: duration, curve: curve) { [weak self] in
+            guard let this = self else { return }
+            this.tabBar.frame = tabBarFrame
         }.startAnimation()
     }
 }
@@ -469,8 +451,8 @@ extension UITableView {
     }
     
     /// [加強版的reloadData => 動畫完成後](https://cloud.tencent.com/developer/ask/sof/78125)
-    /// - Parameter completion: () -> Void)?
-    func _reloadData(completion: (() -> Void)?) {
+    /// - Parameter completion: (() -> Void)?
+    func _reloadData(completion: (() -> Void)? = nil) {
         
         CATransaction.begin()
         CATransaction.setCompletionBlock(completion)
@@ -478,6 +460,18 @@ extension UITableView {
         reloadData()
         
         CATransaction.commit()
+    }
+    
+    /// 加強版的insertRows(at:with:)
+    /// - Parameters:
+    ///   - indexPaths: [IndexPath]
+    ///   - animation: UITableView.RowAnimation
+    ///   - animated: 動畫開關
+    func _insertRows(at indexPaths: [IndexPath], animation: UITableView.RowAnimation, animated: Bool) {
+        
+        UIView.setAnimationsEnabled(animated)
+        insertRows(at: indexPaths, with: .none)
+        UIView.setAnimationsEnabled(true)
     }
 }
 

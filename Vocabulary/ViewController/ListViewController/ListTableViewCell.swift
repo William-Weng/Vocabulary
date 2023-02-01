@@ -11,9 +11,7 @@ import AVFAudio
 
 // MARK: - 單字列表Cell
 final class ListTableViewCell: UITableViewCell, CellReusable {
-    
-    var indexPath: IndexPath = []
-    
+        
     @IBOutlet weak var speechLabel: UILabel!
     @IBOutlet weak var interpretLabel: UILabel!
     @IBOutlet weak var exampleLabel: UILabel!
@@ -22,6 +20,8 @@ final class ListTableViewCell: UITableViewCell, CellReusable {
     static var listViewDelegate: ListViewDelegate?
     static var exmapleList: [[String : Any]] = []
 
+    var indexPath: IndexPath = []
+    
     private var vocabulary: Vocabulary?
     
     override func prepareForReuse() {

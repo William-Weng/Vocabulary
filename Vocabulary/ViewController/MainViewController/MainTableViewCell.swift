@@ -12,8 +12,6 @@ import AVFAudio
 // MARK: - 單字頁面Cell
 final class MainTableViewCell: UITableViewCell, CellReusable {
     
-    var indexPath: IndexPath = []
-    
     @IBOutlet weak var levelLabel: UILabel!
     @IBOutlet weak var countLabel: UILabel!
     @IBOutlet weak var wordLabel: UILabel!
@@ -22,6 +20,8 @@ final class MainTableViewCell: UITableViewCell, CellReusable {
     static var mainViewDelegate: MainViewDelegate?
     static var vocabularyListArray: [[String : Any]] = []
 
+    var indexPath: IndexPath = []
+    
     private var vocabularyList: VocabularyList?
     
     override func prepareForReuse() {

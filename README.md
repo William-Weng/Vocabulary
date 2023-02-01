@@ -8,6 +8,12 @@
 # 附錄：資源下載說明
 ## 所有資源都是從網路下載，僅作程式分享教學之用，並無侵權之意，資源版權皆屬於原圖作者所有…
 
+### [引用套件](https://github.com/William-Weng/SwiftPackageManager)
+1. [WWPrint](https://github.com/William-Weng/WWPrint)
+1. [WWSQLite3Manager](https://github.com/William-Weng/WWSQLite3Manager.git)
+1. [WWHUD](https://github.com/William-Weng/WWHUD.git)
+1. [WWSlider](https://github.com/William-Weng/WWSlider.git)
+
 ### [相關圖示](https://www.flaticon.com)
 1. AppIcon - [dictionary_4033323.png](https://www.flaticon.com/free-icon/knowledge_2997319)
 1. Sound - [volume_727269.png](https://www.flaticon.com/free-icon/volume_727269)
@@ -15,7 +21,8 @@
 1. Music - [musical-note_2995101.png](https://www.flaticon.com/free-icon/musical-note_2995101)
 1. Volume - [volume_7566455.png](https://www.flaticon.com/free-icon/volume_7566455)
 1. NoVolume - [volume_7566449.png](https://www.flaticon.com/free-icon/volume_7566449)
-1. Add - [plus_9380151.png](https://www.flaticon.com/free-icon/plus_9380151)
+1. Add - [add_9364266.png](https://www.flaticon.com/free-icon/add_9364266)
+1. Dictionary - [search_9562555.png](https://www.flaticon.com/free-icon/search_9562555)
 
 ### [背景音樂](http://amachamusic.chagasi.com/)
 1. 夏の霧.m4a - [甘茶の音楽工房 - natsunokiri.mp3](http://amachamusic.chagasi.com/music_natsunokiri.html)
@@ -26,6 +33,7 @@
 1. Studing.gif - [桌布-會動的可愛小白熊-1](https://imgur.com/CsxYiU3)
 1. Working.gif - [桌布-會動的可愛小白熊-1](https://imgur.com/6VsD3md)
 1. Reading.gif - [桌布-會動的可愛小白熊-1](https://imgur.com/bM0UnMb)
+1. Search.gig - [桌布-會動的可愛小白熊-1](https://imgur.com/1y04NEk)
 1. Success.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
 1. Fail.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
 1. Nice.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
@@ -34,9 +42,3 @@
 1. KleeOne-SemiBold.ttf - [Google Fonts - KleeOne](https://fonts.google.com/specimen/Klee+One)
 1. GamjaFlower-Regular.ttf - [Google Fonts - Gamja Flower](https://fonts.google.com/specimen/Gamja+Flower?query=Gamja+Flower)
 1. jf-openhuninn-1.1.ttf - [open 粉圓 - justfont](https://justfont.com/huninn/)
-
-### [引用套件](https://github.com/William-Weng/SwiftPackageManager)
-1. [WWPrint](https://github.com/William-Weng/WWPrint)
-1. [WWSQLite3Manager](https://github.com/William-Weng/WWSQLite3Manager.git)
-1. [WWHUD](https://github.com/William-Weng/WWHUD.git)
-1. [WWSlider](https://github.com/William-Weng/WWSlider.git)

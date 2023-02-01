@@ -247,6 +247,20 @@ extension URL {
     }
 }
 
+// MARK: - Selector (class function)
+extension Selector {
+    
+    /// [延遲執行函數 => 取消 -> 執行 / @objc function](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/利用-debounce-優化-search-時發送的-request-783dc4261f27)
+    /// - Parameters:
+    ///   - target: [AnyObject](https://feijunjie.github.io/2019/07/05/20190705-iOS中取消延迟执行函数/)
+    ///   - delayTime: [TimeInterval](https://www.jianshu.com/p/346e3ba4970d)
+    ///   - object: 要傳過去的值
+    func _debounce(target: AnyObject, delayTime: TimeInterval = 0.3, object: Any? = nil) {
+        NSObject.cancelPreviousPerformRequests(withTarget: target, selector: self, object: object)
+        target.perform(self, with: object, afterDelay: delayTime)
+    }
+}
+
 // MARK: - UIWindow (static function)
 extension UIWindow {
     
@@ -369,7 +383,7 @@ extension UITabBarController {
     ///   - animated: 使用動畫
     ///   - duration: 動畫時間
     ///   - curve: 動畫類型
-    func _tabBarHidden(_ isHidden: Bool, animated: Bool, duration: TimeInterval = 0.1, curve: UIView.AnimationCurve = .linear) {
+    func _tabBarHidden(_ isHidden: Bool, animated: Bool = true, duration: TimeInterval = 0.1, curve: UIView.AnimationCurve = .linear) {
         
         let viewHeight = self.view.frame.size.height
         var tabBarFrame = self.tabBar.frame
@@ -532,6 +546,11 @@ extension UIViewController {
         self._modalStyle(backgroundColor, transitionStyle: .crossDissolve, presentationStyle: .overCurrentContext)
     }
     
+    /// 退鍵盤
+    /// - 讓View變成FisrtResponder
+    /// - Parameter isEndEditing: 退鍵盤
+    func _dismissKeyboard(_ isEndEditing: Bool = true) { view.endEditing(isEndEditing) }
+    
     /// [設定UIViewController透明背景 (當Alert用)](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/利用-view-controller-實現-ios-app-的彈出視窗-d1c78563bcde)
     /// - Parameters:
     ///   - backgroundColor: 背景色
@@ -542,9 +561,4 @@ extension UIViewController {
         self.modalPresentationStyle = presentationStyle
         self.modalTransitionStyle = transitionStyle
     }
-    
-    /// 退鍵盤
-    /// - 讓View變成FisrtResponder
-    /// - Parameter isEndEditing: 退鍵盤
-    func _dismissKeyboard(_ isEndEditing: Bool = true) { view.endEditing(isEndEditing) }
 }

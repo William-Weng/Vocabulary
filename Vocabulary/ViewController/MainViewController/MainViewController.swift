@@ -23,22 +23,27 @@ final class MainViewController: UIViewController {
     enum ViewSegueType: String {
         case listTableView = "ListTableViewSegue"
         case volumeView = "VolumeViewSegue"
+        case searchView = "SearchViewSegue"
     }
     
     @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var dictionaryButtonItem: UIBarButtonItem!
     @IBOutlet weak var volumeButtonItem: UIBarButtonItem!
-
-    private var refreshControl: UIRefreshControl!
+    @IBOutlet weak var appendWordButton: UIButton!
+    @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
+    
     private var isAnimationStop = false
-    private var disappearImage: UIImage?
     private var currentScrollDirection: Constant.ScrollDirection = .down
+    private var refreshControl: UIRefreshControl!
+    private var disappearImage: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initDatabase()
         initSetting()
+        
+        fakeTabBarHeightConstraint.constant = self.tabBarController?.tabBar.frame.height ?? 0
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,6 +69,7 @@ final class MainViewController: UIViewController {
         switch segueType {
         case .listTableView: vocabularyListPageSetting(for: segue, sender: sender)
         case .volumeView: volumePageSetting(for: segue, sender: sender)
+        case .searchView: break
         }
     }
     
@@ -71,7 +77,7 @@ final class MainViewController: UIViewController {
     
     @objc func refreshVocabularyList(_ sender: UIRefreshControl) { reloadVocabulary() }
     
-    @IBAction func appendWrodAction(_ sender: UIBarButtonItem) {
+    @IBAction func appendWrodAction(_ sender: UIButton) {
         
         appendTextHint(title: "請輸入單字") { [weak self] inputWord in
             guard let this = self else { return false }
@@ -79,9 +85,10 @@ final class MainViewController: UIViewController {
         }
     }
     
-    @IBAction func selectDictionaryAction(_ sender: UIBarButtonItem) { dictionaryMenu() }
+    @IBAction func selectDictionary(_ sender: UIBarButtonItem) { dictionaryMenu() }
     @IBAction func selectBackgroundMusic(_ sender: UIBarButtonItem) { backgroundMusicMenu() }
     @IBAction func selectVolume(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.volumeView.rawValue, sender: nil) }
+    @IBAction func searchWordAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.searchView.rawValue, sender: nil) }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -118,20 +125,6 @@ extension MainViewController: MainViewDelegate {
         guard var dictionary = MainTableViewCell.vocabularyListArray[safe: indexPath.row] else { return }
         
         dictionary["count"] = count
-        MainTableViewCell.vocabularyListArray[indexPath.row] = dictionary
-        
-        myTableView.reloadRows(at: [indexPath], with: .automatic)
-    }
-    
-    /// 更新等級Level文字
-    /// - Parameters:
-    ///   - indexPath: IndexPath
-    ///   - level: 等級
-    func updateLevelLabel(with indexPath: IndexPath, level: Vocabulary.Level) {
-        
-        guard var dictionary = MainTableViewCell.vocabularyListArray[safe: indexPath.row] else { return }
-        
-        dictionary["level"] = level.rawValue
         MainTableViewCell.vocabularyListArray[indexPath.row] = dictionary
         
         myTableView.reloadRows(at: [indexPath], with: .automatic)
@@ -287,7 +280,7 @@ private extension MainViewController {
     /// - Parameters:
     ///   - word: 單字
     ///   - alphabet: 音標
-    ///   - tableName: 資料庫名稱
+    ///   - tableName: 資料表名稱
     /// - Returns: Bool
     func updateAlphabetLabel(with indexPath: IndexPath, id: Int, alphabet: String, for tableName: Constant.VoiceCode) -> Bool {
         
@@ -297,6 +290,20 @@ private extension MainViewController {
         MainTableViewCell.vocabularyListArray[indexPath.row] = dictionary
         
         return API.shared.updateAlphabetToList(id, alphabet: alphabet, for: tableName)
+    }
+    
+    /// 更新等級Level文字
+    /// - Parameters:
+    ///   - indexPath: IndexPath
+    ///   - level: 等級
+    func updateLevelLabel(with indexPath: IndexPath, level: Vocabulary.Level) {
+        
+        guard var dictionary = MainTableViewCell.vocabularyListArray[safe: indexPath.row] else { return }
+        
+        dictionary["level"] = level.rawValue
+        MainTableViewCell.vocabularyListArray[indexPath.row] = dictionary
+        
+        myTableView.reloadRows(at: [indexPath], with: .automatic)
     }
     
     /// 下滑到底更新資料
@@ -509,19 +516,45 @@ private extension MainViewController {
         isAnimationStop = true
     }
     
-    /// 滑動時TabBar
+    /// 滑動時TabBar是否隱藏的規則設定
     /// - Parameter scrollView: UIScrollView
     func tabrBarHidden(with scrollView: UIScrollView) {
         
         let direction = scrollView._direction()
+        let duration: TimeInterval = 0.1
         if (direction == currentScrollDirection) { return }
         
+        var isHidden = false
+        
         switch direction {
-        case .up: tabBarController?._tabBarHidden(false, animated: true)
-        case .down: tabBarController?._tabBarHidden(true, animated: true)
+        case .up: isHidden = false
+        case .down: isHidden = true
         case .left , .right ,.none: break
         }
         
+        tabBarController?._tabBarHidden(isHidden, duration: duration)
+        appendButtonPositionConstraint(isHidden, duration: duration)
         currentScrollDirection = direction
+    }
+    
+    /// 更新新增單字Button的位置 for Tabbar
+    /// - Parameters:
+    ///   - isHidden: Bool
+    ///   - animated: Bool
+    ///   - duration: TimeInterval
+    ///   - curve: UIView.AnimationCurve
+    func appendButtonPositionConstraint(_ isHidden: Bool, animated: Bool = true, duration: TimeInterval, curve: UIView.AnimationCurve = .linear) {
+        
+        guard let tabBar = self.tabBarController?.tabBar else { return }
+        
+        if (!isHidden) { fakeTabBarHeightConstraint.constant = tabBar.frame.height; return }
+        fakeTabBarHeightConstraint.constant = 0
+        
+        UIViewPropertyAnimator(duration: duration, curve: curve) { [weak self] in
+            
+            guard let this = self else { return }
+            this.view.layoutIfNeeded()
+            
+        }.startAnimation()
     }
 }

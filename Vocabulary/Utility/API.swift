@@ -37,7 +37,7 @@ extension API {
     
     /// 搜尋單字列表
     /// - Parameters:
-    ///   - tableName: 資料庫名稱
+    ///   - tableName: 資料表名稱
     ///   - count: 單次搜尋的數量
     ///   - offset: 搜尋的偏移量
     /// - Returns: [[String : Any]]
@@ -55,7 +55,7 @@ extension API {
     /// 搜尋單字內容列表
     /// - Parameters:
     ///   - word: 單字
-    ///   - tableName: 資料庫名稱
+    ///   - tableName: 資料表名稱
     /// - Returns: [[String : Any]]
     func searchWordList(_ word: String, for tableName: Constant.VoiceCode) -> [[String : Any]] {
         
@@ -64,6 +64,41 @@ extension API {
         let condition = SQLite3Condition.Where().isCompare(key: "word", type: .equal, value: word)
         let orderBy = SQLite3Condition.OrderBy().item(key: "createTime", type: .ascending)
         let result = database.select(tableName: tableName.rawValue, type: Vocabulary.self, where: condition, orderBy: orderBy, limit: nil)
+        
+        return result.array
+    }
+    
+    ///  搜尋相似單字內容列表
+    /// - Parameters:
+    ///   - word: 單字
+    ///   - tableName: 資料表名稱
+    ///   - count: 單次搜尋的數量
+    ///   - offset: 搜尋的偏移量
+    /// - Returns: [[String : Any]]
+    func searchWordList(like word: String, for tableName: Constant.VoiceCode, count: Int = 10, offset: Int) -> [[String : Any]] {
+        
+        guard let database = Constant.database else { return [] }
+        
+        let condition = SQLite3Condition.Where().like(key: "word", condition: "\(word)%")
+        let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
+        let orderBy = SQLite3Condition.OrderBy().item(key: "word", type: .ascending)
+        let result = database.select(tableName: tableName.vocabularyList(), type: VocabularyList.self, where: condition, orderBy: orderBy, limit: limit)
+        
+        return result.array
+    }
+    
+    func searchWordDetail(in words: [String], for tableName: Constant.VoiceCode, count: Int = 10, offset: Int) -> [[String : Any]] {
+        
+        guard let database = Constant.database,
+              !words.isEmpty
+        else {
+            return []
+        }
+        
+        let condition = SQLite3Condition.Where().in(key: "word", values: words)
+        let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
+        let orderBy = SQLite3Condition.OrderBy().item(key: "word", type: .ascending)
+        let result = database.select(tableName: "\(tableName)", type: Vocabulary.self, where: condition, orderBy: orderBy, limit: limit)
         
         return result.array
     }
@@ -98,7 +133,7 @@ extension API {
     /// 新增單字到列表
     /// - Parameters:
     ///   - word: 單字
-    ///   - tableName: 資料庫名稱
+    ///   - tableName: 資料表名稱
     /// - Returns: Bool
     func insertWordToList(_ word: String, for tableName: Constant.VoiceCode) -> Bool {
         
@@ -107,7 +142,7 @@ extension API {
         let items: [SQLite3Database.InsertItem] = [
             (key: "word", value: word),
             (key: "count", value: 1),
-            (key: "level", value: Vocabulary.Level.easy.rawValue),
+            (key: "level", value: Vocabulary.Level.medium.rawValue),
         ]
         
         let result = database.insert(tableName: tableName.vocabularyList(), itemsArray: [items])
@@ -121,7 +156,7 @@ extension API {
     /// 更新單字例句數量
     /// - Parameters:
     ///   - word: 單字
-    ///   - tableName: 資料庫名稱
+    ///   - tableName: 資料表名稱
     ///   - count: 例句數量
     ///   - hasUpdateTime: 要不要加上更新時間
     /// - Returns: Bool
@@ -145,7 +180,7 @@ extension API {
     /// - Parameters:
     ///   - id: Int
     ///   - alphabet: 音標
-    ///   - tableName: 資料庫名稱
+    ///   - tableName: 資料表名稱
     /// - Returns: Bool
     func updateAlphabetToList(_ id: Int, alphabet: String, for tableName: Constant.VoiceCode) -> Bool {
         
@@ -165,7 +200,7 @@ extension API {
     /// - Parameters:
     ///   - id: Int
     ///   - alphabet: 音標
-    ///   - tableName: 資料庫名稱
+    ///   - tableName: 資料表名稱
     /// - Returns: Bool
     func updateExmapleToList(_ id: Int, info: Constant.ExampleInfomation, for tableName: Constant.VoiceCode) -> Bool {
         
@@ -188,7 +223,7 @@ extension API {
     /// - Parameters:
     ///   - id: Int
     ///   - speech: 詞性
-    ///   - tableName: 資料庫名稱
+    ///   - tableName: 資料表名稱
     /// - Returns: Bool
     func updateSpeechToList(_ id: Int, speech: Vocabulary.Speech, for tableName: Constant.VoiceCode) -> Bool {
         
@@ -208,7 +243,7 @@ extension API {
     /// - Parameters:
     ///   - id: Int
     ///   - level: 等級
-    ///   - tableName: 資料庫名稱
+    ///   - tableName: 資料表名稱
     /// - Returns: Bool
     func updateLevelToList(_ id: Int, level: Vocabulary.Level, for tableName: Constant.VoiceCode) -> Bool {
         

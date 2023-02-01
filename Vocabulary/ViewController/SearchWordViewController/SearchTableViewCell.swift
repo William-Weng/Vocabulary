@@ -13,17 +13,24 @@ final class SearchTableViewCell: UITableViewCell, CellReusable {
     
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var alphabetLabel: UILabel!
-    @IBOutlet weak var interpretListContainer: UIStackView!
-    
+    @IBOutlet weak var interpretListStackView: UIStackView!
+
     static var vocabularyListArray: [[String : Any]] = [] {
         didSet { Self.updateWordsDetailArray() }
     }
     
-    static var vocabularyDeteilListArray: [[String : Any]] = []
+    private static var vocabularyDeteilListArray: [[String : Any]] = []
     
     var indexPath: IndexPath = []
     
     private var vocabularyList: VocabularyList?
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        interpretListStackView.arrangedSubviews.forEach { subViews in
+            subViews.removeFromSuperview()
+        }
+    }
     
     func configure(with indexPath: IndexPath) { configure(for: indexPath) }
     
@@ -111,7 +118,15 @@ private extension SearchTableViewCell {
         wordLabel.font = Constant.currentTableName.font() ?? UIFont.systemFont(ofSize: 36.0)
         wordLabel.text = vocabularyList.word
         
-        alphabetLabel.text = vocabularyDeteilArray.first?.interpret
+        alphabetLabel.text = vocabularyList.alphabet
+        
+        vocabularyDeteilArray.forEach { vocabulary in
+            
+            let subView = InterpretView()
+            subView.configure(with: vocabulary)
+            
+            interpretListStackView.addArrangedSubview(subView)
+        }
     }
     
     /// 讀出單字

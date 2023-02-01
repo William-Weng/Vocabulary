@@ -8,8 +8,8 @@
 import UIKit
 import WWPrint
 
+// MARK: - 單字搜尋頁面
 final class SearchWordViewController: UIViewController {
-    
     
     @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var myTableView: UITableView!
@@ -62,6 +62,10 @@ extension SearchWordViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "SearchListTableViewSegue", sender: indexPath)
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        dismissKeyboard(with: titleSearchBar.searchTextField)
+    }
 }
 
 // MARK: - UISearchBarDelegate
@@ -70,6 +74,15 @@ extension SearchWordViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let selector = #selector(Self.reloadSearchData(_:))
         selector._debounce(target: self, delayTime: 0.5, object: searchText)
+    }
+}
+
+// MARK: - UITextFieldDelegate
+extension SearchWordViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        dismissKeyboard(with: textField)
+        return true
     }
 }
 
@@ -102,6 +115,7 @@ private extension SearchWordViewController {
         navigationItem.titleView = titleSearchBar
         titleSearchBar.placeholder = "請輸入要需搜尋的單字"
         titleSearchBar.delegate = self
+        titleSearchBar.searchTextField.delegate = self
     }
     
     /// 動畫背景設定
@@ -138,8 +152,7 @@ private extension SearchWordViewController {
         defer { myTableView.reloadData() }
         
         SearchTableViewCell.vocabularyListArray = []
-        SearchTableViewCell.vocabularyDeteilListArray = []
-
+        
         guard let word = word,
               !word.isEmpty
         else {
@@ -165,5 +178,10 @@ private extension SearchWordViewController {
         viewController.vocabularyList = vocabularyList
         viewController.vocabularyListIndexPath = indexPath
         viewController.mainViewDelegate = self
+    }
+    
+    /// [退鍵盤](https://medium.com/彼得潘的-swift-ios-app-開發教室/uitextfield如何讓鍵盤消失-)
+    func dismissKeyboard(with textField: UITextField) {
+        textField.resignFirstResponder()
     }
 }

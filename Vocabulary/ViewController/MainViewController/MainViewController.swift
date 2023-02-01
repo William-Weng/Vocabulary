@@ -522,9 +522,9 @@ private extension MainViewController {
         
         let direction = scrollView._direction()
         let duration: TimeInterval = 0.1
-        if (direction == currentScrollDirection) { return }
-        
         var isHidden = false
+
+        if (direction == currentScrollDirection) { return }        
         
         switch direction {
         case .up: isHidden = false

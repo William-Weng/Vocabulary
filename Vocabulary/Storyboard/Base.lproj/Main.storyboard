@@ -120,12 +120,30 @@
                                                                                 </userDefinedRuntimeAttribute>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </label>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hKx-9f-YAp">
+                                                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jk3-4v-sm7">
                                                                             <rect key="frame" x="55.999999999999986" y="0.0" width="236.66666666666663" height="30"/>
-                                                                            <fontDescription key="fontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="24"/>
-                                                                            <color key="textColor" systemColor="systemRedColor"/>
-                                                                            <nil key="highlightedColor"/>
-                                                                        </label>
+                                                                            <subviews>
+                                                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hKx-9f-YAp">
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="40" height="30"/>
+                                                                                    <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="width" constant="40" id="sOr-sB-Kp6"/>
+                                                                                    </constraints>
+                                                                                    <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="16"/>
+                                                                                    <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                    <userDefinedRuntimeAttributes>
+                                                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                                            <integer key="value" value="8"/>
+                                                                                        </userDefinedRuntimeAttribute>
+                                                                                    </userDefinedRuntimeAttributes>
+                                                                                </label>
+                                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uR4-yo-81b">
+                                                                                    <rect key="frame" x="39.999999999999986" y="0.0" width="196.66666666666663" height="30"/>
+                                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                </view>
+                                                                            </subviews>
+                                                                        </stackView>
                                                                     </subviews>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="30" id="O8o-H9-11r"/>
@@ -319,31 +337,23 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c7r-bq-9QN">
                                                     <rect key="frame" x="8" y="8" width="328.66666666666669" height="90"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="lCO-An-2UX">
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="lCO-An-2UX">
                                                             <rect key="frame" x="0.0" y="0.0" width="292.66666666666669" height="90"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="あい십일早安" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmN-Oi-da1">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="292.66666666666669" height="64"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" constant="64" id="o8J-GT-FbR"/>
-                                                                    </constraints>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="292.66666666666669" height="30"/>
                                                                     <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="30"/>
                                                                     <color key="textColor" systemColor="systemBlueColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="2rx-fQ-GOE">
-                                                                    <rect key="frame" x="0.0" y="64" width="292.66666666666669" height="26"/>
-                                                                    <subviews>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[naɪs]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lIO-m0-kor">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="292.66666666666669" height="26"/>
-                                                                            <constraints>
-                                                                                <constraint firstAttribute="height" constant="30" id="bjN-UQ-a33"/>
-                                                                            </constraints>
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                            <nil key="textColor"/>
-                                                                            <nil key="highlightedColor"/>
-                                                                        </label>
-                                                                    </subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uqf-qa-Ui8">
+                                                                    <rect key="frame" x="0.0" y="38" width="292.66666666666669" height="20"/>
+                                                                    <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="20"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="2rx-fQ-GOE">
+                                                                    <rect key="frame" x="0.0" y="66" width="292.66666666666669" height="24"/>
                                                                 </stackView>
                                                             </subviews>
                                                         </stackView>
@@ -378,8 +388,8 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
-                                            <outlet property="alphabetLabel" destination="lIO-m0-kor" id="jjT-7J-tjI"/>
-                                            <outlet property="interpretListContainer" destination="2rx-fQ-GOE" id="SCs-w9-70I"/>
+                                            <outlet property="alphabetLabel" destination="uqf-qa-Ui8" id="8Fa-zE-DPb"/>
+                                            <outlet property="interpretListStackView" destination="2rx-fQ-GOE" id="SCs-w9-70I"/>
                                             <outlet property="wordLabel" destination="cmN-Oi-da1" id="tmD-DY-by4"/>
                                         </connections>
                                     </tableViewCell>
@@ -656,7 +666,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="FBH-lM-RI1"/>
+        <segue reference="3lo-lz-iJI"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Add" width="170.66667175292969" height="170.66667175292969"/>

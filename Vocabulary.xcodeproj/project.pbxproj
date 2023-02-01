@@ -39,6 +39,8 @@
 		64C18502297E861800D1D1B2 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C18501297E861800D1D1B2 /* Utility.swift */; };
 		64C18504297EB8E700D1D1B2 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C18503297EB8E700D1D1B2 /* ListViewController.swift */; };
 		64C18507297EC01700D1D1B2 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C18506297EC01700D1D1B2 /* ListTableViewCell.swift */; };
+		64F5EDF3298AA26700A5A9AD /* InterpretView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F5EDF1298AA26700A5A9AD /* InterpretView.swift */; };
+		64F5EDF4298AA26700A5A9AD /* InterpretView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64F5EDF2298AA26700A5A9AD /* InterpretView.xib */; };
 		81BA793E29876CE000C0FD6C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 81BA793D29876CE000C0FD6C /* README.md */; };
 		81BA794029876DA800C0FD6C /* SearchWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA793F29876DA800C0FD6C /* SearchWordViewController.swift */; };
 		81BA79422987784B00C0FD6C /* Search.gif in Resources */ = {isa = PBXBuildFile; fileRef = 81BA79412987784B00C0FD6C /* Search.gif */; };
@@ -76,6 +78,8 @@
 		64C18501297E861800D1D1B2 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		64C18503297EB8E700D1D1B2 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		64C18506297EC01700D1D1B2 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
+		64F5EDF1298AA26700A5A9AD /* InterpretView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InterpretView.swift; path = ../../../../../.Trash/Vocabulary/Vocabulary/ViewController/View/InterpretView.swift; sourceTree = "<group>"; };
+		64F5EDF2298AA26700A5A9AD /* InterpretView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = InterpretView.xib; path = ../../../../../.Trash/Vocabulary/Vocabulary/ViewController/View/InterpretView.xib; sourceTree = "<group>"; };
 		81BA793D29876CE000C0FD6C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		81BA793F29876DA800C0FD6C /* SearchWordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWordViewController.swift; sourceTree = "<group>"; };
 		81BA79412987784B00C0FD6C /* Search.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Search.gif; sourceTree = "<group>"; };
@@ -234,6 +238,8 @@
 			isa = PBXGroup;
 			children = (
 				641B5CA62984BEB500AB1C56 /* VolumeViewController.swift */,
+				64F5EDF1298AA26700A5A9AD /* InterpretView.swift */,
+				64F5EDF2298AA26700A5A9AD /* InterpretView.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -353,6 +359,7 @@
 				6492ADD72986BBFA00E1B59B /* GamjaFlower-Regular.ttf in Resources */,
 				81BA79422987784B00C0FD6C /* Search.gif in Resources */,
 				641F3FCB29837EF800C44851 /* Nice.gif in Resources */,
+				64F5EDF4298AA26700A5A9AD /* InterpretView.xib in Resources */,
 				641F3FC929837EE000C44851 /* Fail.gif in Resources */,
 				641B5CA22984AA1B00AB1C56 /* TheBeatOfNature.mp3 in Resources */,
 				64285892297BBF8600DD7D88 /* Main.storyboard in Resources */,
@@ -384,6 +391,7 @@
 				6428588B297BBF8600DD7D88 /* AppDelegate.swift in Sources */,
 				64C184F9297E5F7A00D1D1B2 /* API.swift in Sources */,
 				641B5CA72984BEB500AB1C56 /* VolumeViewController.swift in Sources */,
+				64F5EDF3298AA26700A5A9AD /* InterpretView.swift in Sources */,
 				642858A6297BC40E00DD7D88 /* Constant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

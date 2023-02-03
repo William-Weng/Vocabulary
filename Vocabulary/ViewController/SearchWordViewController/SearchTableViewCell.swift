@@ -119,13 +119,13 @@ private extension SearchTableViewCell {
         wordLabel.text = vocabularyList.word
         
         alphabetLabel.text = vocabularyList.alphabet
-        
+
         vocabularyDeteilArray.forEach { vocabulary in
+
+            let subLabel = InterpretView()
+            subLabel.configure(with: vocabulary)
             
-            let subView = InterpretView()
-            subView.configure(with: vocabulary)
-            
-            interpretListStackView.addArrangedSubview(subView)
+            interpretListStackView.addArrangedSubview(subLabel)
         }
     }
     

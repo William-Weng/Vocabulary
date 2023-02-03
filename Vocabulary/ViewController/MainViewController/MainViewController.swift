@@ -8,7 +8,6 @@
 import UIKit
 import WWPrint
 import WWSQLite3Manager
-import WWHUD
 
 // MARK: - MainViewDelegate
 protocol MainViewDelegate {
@@ -255,7 +254,7 @@ private extension MainViewController {
         let indexPaths = (oldListCount..<newListCount).map { IndexPath(row: $0, section: 0) }
         myTableView._insertRows(at: indexPaths, animation: .automatic, animated: false)
         
-        Utility.shared.flashHUD(with: .success)
+        if (newListCount > oldListCount) { Utility.shared.flashHUD(with: .success) }
     }
     
     /// 新增單字
@@ -325,7 +324,7 @@ private extension MainViewController {
     ///   - message: 訊息文字
     ///   - defaultText: 預設文字
     ///   - action: (String) -> Bool
-    func appendTextHint(with indexPath: IndexPath? = nil ,title: String, message: String? = nil, defaultText: String? = nil, action: @escaping (String) -> Bool) {
+    func appendTextHint(with indexPath: IndexPath? = nil, title: String, message: String? = nil, defaultText: String? = nil, action: @escaping (String) -> Bool) {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 

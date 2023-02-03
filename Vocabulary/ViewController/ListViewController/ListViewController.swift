@@ -72,7 +72,12 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 // MARK: - SFSafariViewControllerDelegate
-extension ListViewController: SFSafariViewControllerDelegate {}
+extension ListViewController: SFSafariViewControllerDelegate {
+    
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        tabbar(isHidden: false)
+    }
+}
 
 // MARK: - ListViewDelegate
 extension ListViewController: ListViewDelegate {
@@ -163,8 +168,12 @@ private extension ListViewController {
     /// 單字網路字典
     /// - Parameter word: 單字
     func netDictionary(with word: String) {
+        
         guard let url = URL._standardization(string: Constant.currentTableName.dictionaryURL(with: word)) else { return }
-        _ = url._openUrlWithInside(delegate: self)
+        
+        let safariController = url._openUrlWithInside(delegate: self)
+        safariController.delegate = self
+        tabbar(isHidden: true)
     }
     
     /// 新增文字的提示框
@@ -332,5 +341,11 @@ private extension ListViewController {
         let isSuccess = API.shared.updateWordToList(vocabularyList.word, for: Constant.currentTableName, count: count, hasUpdateTime: false)
         
         if (isSuccess) { mainViewDelegate?.updateCountLabel(with: vocabularyListIndexPath, count: count) }
+    }
+    
+    /// 設定TabBar是否隱藏
+    /// - Parameter isHidden: Bool
+    func tabbar(isHidden: Bool) {
+        tabBarController?.tabBar.isHidden = isHidden
     }
 }

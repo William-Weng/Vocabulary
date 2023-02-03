@@ -72,7 +72,7 @@ private extension ListTableViewCell {
 
         exampleLabel.text = vocabulary.example ?? ""
         exampleLabel.font = Constant.currentTableName.font(size: 24.0) ?? UIFont.systemFont(ofSize: 24.0)
-
+        
         translateLabel.text = vocabulary.translate ?? ""
     }
     

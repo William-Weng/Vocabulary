@@ -87,6 +87,13 @@ extension API {
         return result.array
     }
     
+    /// 搜尋單字組的內容細節
+    /// - Parameters:
+    ///   - words: 單字組
+    ///   - tableName: Constant.VoiceCode
+    ///   - count: Int
+    ///   - offset: offset
+    /// - Returns: [[String : Any]]
     func searchWordDetail(in words: [String], for tableName: Constant.VoiceCode, count: Int = 10, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database,
@@ -99,6 +106,23 @@ extension API {
         let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
         let orderBy = SQLite3Condition.OrderBy().item(key: "word", type: .ascending)
         let result = database.select(tableName: "\(tableName)", type: Vocabulary.self, where: condition, orderBy: orderBy, limit: limit)
+        
+        return result.array
+    }
+    
+    /// 搜尋複習單字的列表
+    /// => SELECT * FROM EnglishList ORDER BY level DESC, review ASC, createTime DESC
+    /// - Parameters:
+    ///   - tableName: 資料表名稱
+    ///   - count: 數量
+    /// - Returns: [[String : Any]]
+    func searchReviewWordList(for tableName: Constant.VoiceCode, count: Int = 10, offset: Int) -> [[String : Any]] {
+        
+        guard let database = Constant.database else { return [] }
+        
+        let limit = SQLite3Condition.Limit().build(count: count, offset: 0)
+        let orderBy = SQLite3Condition.OrderBy().item(key: "level", type: .ascending).addItem(key: "review", type: .ascending).addItem(key: "createTime", type: .descending)
+        let result = database.select(tableName: tableName.vocabularyList(), type: VocabularyList.self, where: nil, orderBy: orderBy, limit: limit)
         
         return result.array
     }
@@ -258,6 +282,27 @@ extension API {
         
         return result.isSussess
     }
+    
+    /// 更新單字複習次數
+    /// - Parameters:
+    ///   - id: Int
+    ///   - level: 等級
+    ///   - tableName: 資料表名稱
+    /// - Returns: Bool
+    func updateReviewCountToList(_ id: Int, count: Int, for tableName: Constant.VoiceCode) -> Bool {
+        
+        guard let database = Constant.database else { return false }
+        
+        let items: [SQLite3Database.InsertItem] = [
+            (key: "review", value: count),
+        ]
+        
+        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let result = database.update(tableName: tableName.vocabularyList(), items: items, where: condition)
+        
+        return result.isSussess
+    }
+
 }
 
 // MARK: - 小工具 (Delete)

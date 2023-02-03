@@ -120,30 +120,25 @@
                                                                                 </userDefinedRuntimeAttribute>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </label>
-                                                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jk3-4v-sm7">
-                                                                            <rect key="frame" x="55.999999999999986" y="0.0" width="236.66666666666663" height="30"/>
-                                                                            <subviews>
-                                                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hKx-9f-YAp">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="40" height="30"/>
-                                                                                    <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                                    <constraints>
-                                                                                        <constraint firstAttribute="width" constant="40" id="sOr-sB-Kp6"/>
-                                                                                    </constraints>
-                                                                                    <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="16"/>
-                                                                                    <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                                    <nil key="highlightedColor"/>
-                                                                                    <userDefinedRuntimeAttributes>
-                                                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                                                            <integer key="value" value="8"/>
-                                                                                        </userDefinedRuntimeAttribute>
-                                                                                    </userDefinedRuntimeAttributes>
-                                                                                </label>
-                                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uR4-yo-81b">
-                                                                                    <rect key="frame" x="39.999999999999986" y="0.0" width="196.66666666666663" height="30"/>
-                                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                                </view>
-                                                                            </subviews>
-                                                                        </stackView>
+                                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hKx-9f-YAp">
+                                                                            <rect key="frame" x="56" y="0.0" width="40" height="30"/>
+                                                                            <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="40" id="sOr-sB-Kp6"/>
+                                                                            </constraints>
+                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="16"/>
+                                                                            <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                            <userDefinedRuntimeAttributes>
+                                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                                    <integer key="value" value="8"/>
+                                                                                </userDefinedRuntimeAttribute>
+                                                                            </userDefinedRuntimeAttributes>
+                                                                        </label>
+                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uR4-yo-81b">
+                                                                            <rect key="frame" x="103.99999999999999" y="0.0" width="188.66666666666663" height="30"/>
+                                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        </view>
                                                                     </subviews>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="30" id="O8o-H9-11r"/>
@@ -352,8 +347,15 @@
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L5z-8R-iRb">
+                                                                    <rect key="frame" x="0.0" y="66" width="292.66666666666669" height="4"/>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="4" id="8ho-ne-WZx"/>
+                                                                    </constraints>
+                                                                </view>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="2rx-fQ-GOE">
-                                                                    <rect key="frame" x="0.0" y="66" width="292.66666666666669" height="24"/>
+                                                                    <rect key="frame" x="0.0" y="78" width="292.66666666666669" height="12"/>
                                                                 </stackView>
                                                             </subviews>
                                                         </stackView>
@@ -577,7 +579,7 @@
             </objects>
             <point key="canvasLocation" x="3590" y="822"/>
         </scene>
-        <!--施工中-->
+        <!--單字複習-->
         <scene sceneID="6eg-Tg-jyq">
             <objects>
                 <viewController id="ciD-yo-hhF" customClass="ReviewViewController" customModule="Vocabulary" customModuleProvider="target" sceneMemberID="viewController">
@@ -588,24 +590,71 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lUf-jH-mbb">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                             </imageView>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Speak.gif" translatesAutoresizingMaskIntoConstraints="NO" id="GEl-yt-Yr9">
+                                <rect key="frame" x="59.666666666666657" y="197" width="255.99999999999997" height="256"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vocabulary" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OZG-pT-lgW">
+                                <rect key="frame" x="20" y="127" width="335" height="70"/>
+                                <fontDescription key="fontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="56"/>
+                                <color key="textColor" systemColor="tintColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="qSp-AC-gGC">
+                                <rect key="frame" x="16" y="658" width="343" height="39"/>
+                                <subviews>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oY9-z6-qfv">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="39"/>
+                                        <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="24"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="解答"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="8"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="answearAction:" destination="ciD-yo-hhF" eventType="touchUpInside" id="v75-aL-HNz"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Hal-aS-Ple"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="lUf-jH-mbb" secondAttribute="bottom" id="595-Gs-62g"/>
+                            <constraint firstItem="OZG-pT-lgW" firstAttribute="centerX" secondItem="2VX-Pj-djU" secondAttribute="centerX" id="7J6-hS-7ph"/>
+                            <constraint firstItem="GEl-yt-Yr9" firstAttribute="top" secondItem="OZG-pT-lgW" secondAttribute="bottom" id="K5W-9t-lqu"/>
                             <constraint firstItem="lUf-jH-mbb" firstAttribute="top" secondItem="2VX-Pj-djU" secondAttribute="top" id="LZ4-7O-iVG"/>
                             <constraint firstItem="lUf-jH-mbb" firstAttribute="leading" secondItem="Hal-aS-Ple" secondAttribute="leading" id="MkE-rd-8Po"/>
                             <constraint firstItem="lUf-jH-mbb" firstAttribute="trailing" secondItem="Hal-aS-Ple" secondAttribute="trailing" id="ZCw-km-64a"/>
+                            <constraint firstItem="qSp-AC-gGC" firstAttribute="leading" secondItem="Hal-aS-Ple" secondAttribute="leading" constant="16" id="agJ-Ov-0Va"/>
+                            <constraint firstItem="Hal-aS-Ple" firstAttribute="bottom" secondItem="qSp-AC-gGC" secondAttribute="bottom" constant="32" id="drd-2Z-gul"/>
+                            <constraint firstItem="OZG-pT-lgW" firstAttribute="top" secondItem="Hal-aS-Ple" secondAttribute="top" constant="36" id="eZA-Tg-DI2"/>
+                            <constraint firstItem="GEl-yt-Yr9" firstAttribute="centerX" secondItem="2VX-Pj-djU" secondAttribute="centerX" id="f7y-z0-OaT"/>
+                            <constraint firstItem="Hal-aS-Ple" firstAttribute="trailing" secondItem="OZG-pT-lgW" secondAttribute="trailing" constant="20" id="gZd-k4-q8g"/>
+                            <constraint firstItem="qSp-AC-gGC" firstAttribute="centerX" secondItem="2VX-Pj-djU" secondAttribute="centerX" id="gzf-GI-zhp"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="施工中" id="Wsv-fB-i1t"/>
+                    <navigationItem key="navigationItem" title="單字複習" id="Wsv-fB-i1t">
+                        <barButtonItem key="leftBarButtonItem" image="Calendar" id="ruL-5i-jGd"/>
+                        <barButtonItem key="rightBarButtonItem" image="Read" id="3O3-Ph-Vf5">
+                            <connections>
+                                <action selector="createQuestion:" destination="ciD-yo-hhF" id="Oeo-xu-s1P"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="answearButton" destination="oY9-z6-qfv" id="lQH-rK-Tib"/>
+                        <outlet property="answerLabel" destination="OZG-pT-lgW" id="CyX-Bm-fFc"/>
                         <outlet property="myImageView" destination="lUf-jH-mbb" id="wrs-Ee-yAP"/>
+                        <outlet property="speakImageView" destination="GEl-yt-Yr9" id="5Ek-FI-VRY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2yU-kb-7md" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="810" y="822"/>
+            <point key="canvasLocation" x="-303.19999999999999" y="1581.2807881773399"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="HBU-mM-Zg0">
@@ -670,10 +719,13 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Add" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="Calendar" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Dictionary" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Music" width="21.333333969116211" height="21.333333969116211"/>
+        <image name="Read" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Search" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Sound" width="42.666667938232422" height="42.666667938232422"/>
+        <image name="Speak.gif" width="256" height="256"/>
         <image name="Volume" width="21.333333969116211" height="21.333333969116211"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -689,6 +741,9 @@
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

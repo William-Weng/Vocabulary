@@ -19,7 +19,7 @@ final class MainTableViewCell: UITableViewCell, CellReusable {
     
     static var mainViewDelegate: MainViewDelegate?
     static var vocabularyListArray: [[String : Any]] = []
-
+    
     var indexPath: IndexPath = []
     
     private var vocabularyList: VocabularyList?

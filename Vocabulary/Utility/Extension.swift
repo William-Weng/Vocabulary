@@ -261,6 +261,19 @@ extension Selector {
     }
 }
 
+// MARK: - UIButton (class function)
+extension UIButton {
+    
+    /// 按鍵能不能按 / 顏色
+    /// - Parameters:
+    ///   - isEnabled: Bool
+    ///   - backgroundColor: UIColor?
+    func _isEnabled(_ isEnabled: Bool, backgroundColor: UIColor?) {
+        self.isEnabled = isEnabled
+        self.backgroundColor = backgroundColor
+    }
+}
+
 // MARK: - UIWindow (static function)
 extension UIWindow {
     

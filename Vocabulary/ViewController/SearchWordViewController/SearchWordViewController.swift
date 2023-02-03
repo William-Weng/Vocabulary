@@ -18,7 +18,8 @@ final class SearchWordViewController: UIViewController {
     private var isAnimationStop = false
     private var disappearImage: UIImage?
     private var titleSearchBar = UISearchBar()
-        
+    private var refreshControl: UIRefreshControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initSearchBar()
@@ -41,39 +42,37 @@ final class SearchWordViewController: UIViewController {
         pauseBackgroundAnimation()
     }
     
-    @objc func reloadSearchData(_ searchText: String) { searchWordList(like: titleSearchBar.text) }
+    /// 重新讀取資料
+    /// - Parameter word: String
+    @objc func reloadSearchWord(_ word: String?) {
+        searchWordList(like: word)
+    }
+    
+    /// 重新讀取資料
+    /// - Parameter refreshControl: UIRefreshControl
+    @objc func refreshSearchWord(_ refreshControl: UIRefreshControl) {
+        let word = titleSearchBar.searchTextField.text
+        self.reloadSearchWord(word)
+        Utility.shared.flashHUD(with: .success)
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension SearchWordViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return SearchTableViewCell.vocabularyListArray.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView._reusableCell(at: indexPath) as SearchTableViewCell
-        cell.configure(with: indexPath)
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "SearchListTableViewSegue", sender: indexPath)
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        dismissKeyboard(with: titleSearchBar.searchTextField)
-    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return SearchTableViewCell.vocabularyListArray.count }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { return searchTableViewCell(tableView, cellForRowAt: indexPath) }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { performSegue(withIdentifier: "SearchListTableViewSegue", sender: indexPath) }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) { dismissKeyboard(with: titleSearchBar.searchTextField) }
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateSearchData(for: scrollView) }
 }
 
 // MARK: - UISearchBarDelegate
 extension SearchWordViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        let selector = #selector(Self.reloadSearchData(_:))
-        selector._debounce(target: self, delayTime: 0.5, object: searchText)
+        let selector = #selector(Self.reloadSearchWord(_:))
+        selector._debounce(target: self, delayTime: 1.0, object: searchText)
     }
 }
 
@@ -105,8 +104,13 @@ private extension SearchWordViewController {
     
     /// UITableView的初始化設定
     func initSetting() {
+        
         SearchTableViewCell.vocabularyListArray = []
+        
+        refreshControl = UIRefreshControl._build(target: self, action: #selector(Self.refreshSearchWord(_:)))
+        
         myTableView._delegateAndDataSource(with: self)
+        myTableView.addSubview(refreshControl)
         myTableView.tableFooterView = UIView()
     }
     
@@ -116,6 +120,31 @@ private extension SearchWordViewController {
         titleSearchBar.placeholder = "請輸入要需搜尋的單字"
         titleSearchBar.delegate = self
         titleSearchBar.searchTextField.delegate = self
+    }
+    
+    /// 產生MainTableViewCell
+    /// - Parameters:
+    ///   - tableView: UITableView
+    ///   - indexPath: IndexPath
+    /// - Returns: MainTableViewCell
+    func searchTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> SearchTableViewCell {
+        
+        let cell = tableView._reusableCell(at: indexPath) as SearchTableViewCell
+        cell.configure(with: indexPath)
+        
+        return cell
+    }
+    
+    /// 下滑到底更新資料
+    /// - Parameters:
+    ///   - scrollView: UIScrollView
+    ///   - height: CGFloat
+    func updateSearchData(for scrollView: UIScrollView, height: CGFloat = 128.0) {
+        
+        let offset = scrollView.frame.height + scrollView.contentOffset.y - height
+        let height = scrollView.contentSize.height
+        
+        if (offset > height) { appendSearchWordList(like: titleSearchBar.searchTextField.text) }
     }
     
     /// 動畫背景設定
@@ -149,7 +178,10 @@ private extension SearchWordViewController {
     /// - Parameter word: 以它為開頭的單字
     func searchWordList(like word: String?) {
         
-        defer { myTableView.reloadData() }
+        defer {
+            refreshControl.endRefreshing()
+            myTableView.reloadData()
+        }
         
         SearchTableViewCell.vocabularyListArray = []
         
@@ -160,6 +192,28 @@ private extension SearchWordViewController {
         }
         
         SearchTableViewCell.vocabularyListArray = API.shared.searchWordList(like: word, for: Constant.currentTableName, offset: 0)
+    }
+    
+    /// 增加相似的單字
+    /// - Parameter word: 以它為開頭的單字
+    func appendSearchWordList(like word: String?) {
+        
+        defer { refreshControl.endRefreshing() }
+        
+        guard let word = word,
+              !word.isEmpty
+        else {
+            return
+        }
+        
+        let oldListCount = SearchTableViewCell.vocabularyListArray.count
+        SearchTableViewCell.vocabularyListArray += API.shared.searchWordList(like: word, for: Constant.currentTableName, offset: oldListCount)
+
+        let newListCount = SearchTableViewCell.vocabularyListArray.count
+        let indexPaths = (oldListCount..<newListCount).map { IndexPath(row: $0, section: 0) }
+        myTableView._insertRows(at: indexPaths, animation: .automatic, animated: false)
+        
+        if (newListCount > oldListCount) { Utility.shared.flashHUD(with: .success) }
     }
     
     /// 設定單字列表頁的相關數值

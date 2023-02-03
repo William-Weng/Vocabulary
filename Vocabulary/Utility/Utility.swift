@@ -21,6 +21,8 @@ final class Utility: NSObject {
         case studing = "Studing.gif"
         case search = "Search.gif"
         case nice = "Nice.gif"
+        case speak = "Speak.gif"
+        case shudder = "Shudder.gif"
     }
     
     enum Music: String, CaseIterable {
@@ -78,5 +80,38 @@ extension Utility {
     ///   - volume: 音量 (0% ~ 100%)
     func speak(string: String, voice: Constant.VoiceCode = .english, rate: Float = 0.4, pitchMultiplier: Float = 1.5, volume: Float = 1.0) {
         Self.synthesizer._speak(string: string, voice: voice, rate: rate, pitchMultiplier: pitchMultiplier, volume: volume)
+    }
+}
+
+// MARK: - 選單
+extension Utility {
+    
+    /// 單字等級選單
+    /// - Parameters:
+    ///   - target: UIViewController
+    ///   - vocabularyList: VocabularyList?
+    ///   - popoverItem: UIBarButtonItem?
+    func levelMenu(target: UIViewController, vocabularyList: VocabularyList?, popoverItem: UIBarButtonItem? = nil) {
+        
+        guard let vocabularyList = vocabularyList else { return }
+        
+        let alertController = UIAlertController(title: "請選擇等級", message: nil, preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
+        
+        Vocabulary.Level.allCases.forEach { level in
+            
+            let action = UIAlertAction(title: level.value(), style: .default) { _ in
+                let isSuccess = API.shared.updateLevelToList(vocabularyList.id, level: level, for: Constant.currentTableName)
+                if (!isSuccess) { Utility.shared.flashHUD(with: .fail) }
+            }
+            
+            alertController.addAction(action)
+        }
+        
+        alertController.addAction(action)
+        alertController.modalPresentationStyle = .popover
+        alertController.popoverPresentationController?.barButtonItem = popoverItem
+        
+        target.present(alertController, animated: true, completion: nil)
     }
 }

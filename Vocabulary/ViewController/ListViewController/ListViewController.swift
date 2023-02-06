@@ -22,6 +22,7 @@ final class ListViewController: UIViewController {
     @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var myTableView: UITableView!
     
+    var canEdit = false
     var vocabularyListIndexPath: IndexPath!
     var vocabularyList: VocabularyList!
     var mainViewDelegate: MainViewDelegate?
@@ -37,21 +38,23 @@ final class ListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        tabBarController?._tabBarHidden(true, animated: true)
-        
+                
         ListTableViewCell.listViewDelegate = self
         animatedBackground(with: .reading)
+        
+        mainViewDelegate?.tabBarHidden(true)
+        
+        if (!canEdit) { tabBarController?._tabBarHidden(true, animated: true) }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        tabBarController?._tabBarHidden(false, animated: true)
-        
+                
         ListTableViewCell.listViewDelegate = nil
         pauseBackgroundAnimation()
         updateExampleCount(ListTableViewCell.exmapleList.count)
+
+        mainViewDelegate?.tabBarHidden(false)
     }
     
     deinit {
@@ -124,7 +127,7 @@ private extension ListViewController {
     /// 重新讀取單字列表
     func reloadExampleList() {
         
-        ListTableViewCell.exmapleList = API.shared.searchWordList(vocabularyList.word, for: Constant.currentTableName)
+        ListTableViewCell.exmapleList = API.shared.searchWordDetailList(vocabularyList.word, for: Constant.currentTableName)
                 
         myTableView.reloadData()
         emptyExampleListAction()
@@ -281,6 +284,7 @@ private extension ListViewController {
             this.emptyExampleListAction()
         }
         
+        if (!canEdit) { return [updateAction] }
         return [updateAction, deleteAction]
     }
     

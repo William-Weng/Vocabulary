@@ -14,6 +14,7 @@ protocol MainViewDelegate {
     func deleteRow(with indexPath: IndexPath)
     func levelMenu(with indexPath: IndexPath)
     func updateCountLabel(with indexPath: IndexPath, count: Int)
+    func tabBarHidden(_ isHidden: Bool)
 }
 
 // MARK: - 單字頁面
@@ -39,10 +40,7 @@ final class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initDatabase()
         initSetting()
-        
-        fakeTabBarHeightConstraint.constant = self.tabBarController?.tabBar.frame.height ?? 0
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -137,7 +135,7 @@ extension MainViewController: MainViewDelegate {
         
         let alertController = UIAlertController(title: "請選擇等級", message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
-
+        
         Vocabulary.Level.allCases.forEach { level in
             
             let action = UIAlertAction(title: level.value(), style: .default) { [weak self] _ in
@@ -159,41 +157,37 @@ extension MainViewController: MainViewDelegate {
         
         present(alertController, animated: true, completion: nil)
     }
+    
+    /// 設定TabBar顯示與否
+    /// - Parameters:
+    ///   - isHidden: Bool
+    func tabBarHidden(_ isHidden: Bool) {
+        
+        guard let tabBarController = tabBarController else { return }
+        
+        let duration: TimeInterval = 0.1
+        
+        tabBarController._tabBarHidden(isHidden, duration: duration)
+        appendButtonPositionConstraint(isHidden, duration: duration)
+    }
 }
 
 // MARK: - 小工具
 private extension MainViewController {
-    
-    /// 初始化資料表 / 資料庫
-    func initDatabase() {
         
-        let result = WWSQLite3Manager.shared.connent(with: Constant.DatabaseName)
-        
-        switch result {
-        case .failure(_): Utility.shared.flashHUD(with: .fail)
-        case .success(let database): Constant.database = database
-            
-            wwPrint(database.fileURL)
-            
-            Constant.VoiceCode.allCases.forEach { tableName in
-                _ = database.create(tableName: tableName.rawValue, type: Vocabulary.self, isOverwrite: false)
-                _ = database.create(tableName: tableName.vocabularyList(), type: VocabularyList.self, isOverwrite: false)
-            }
-        }
-    }
-    
     /// UITableView的初始化設定
     func initSetting() {
-        
-        navigationItem.backBarButtonItem = UIBarButtonItem()
-        
+                
         refreshControl = UIRefreshControl._build(target: self, action: #selector(Self.refreshVocabularyList(_:)))
-
+        fakeTabBarHeightConstraint.constant = self.tabBarController?.tabBar.frame.height ?? 0
+        
         myTableView._delegateAndDataSource(with: self)
         myTableView.addSubview(refreshControl)
         myTableView.tableFooterView = UIView()
         
         reloadVocabulary()
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem()
     }
     
     /// 產生MainTableViewCell
@@ -212,7 +206,11 @@ private extension MainViewController {
     /// 設定標題
     /// - Parameter count: Int
     func titleSetting(with count: Int) {
-        title = "\(Constant.Title) - \(count)"
+        
+        let label = UILabel()
+        label.text = "\(Constant.Title) - \(count)"
+        
+        navigationItem.titleView = label
     }
     
     /// 重新讀取單字
@@ -264,9 +262,9 @@ private extension MainViewController {
     /// - Returns: Bool
     func appendWord(_ word: String, for tableName: Constant.VoiceCode) -> Bool {
         
-        guard let count = API.shared.insertNewWord(word, for: tableName) else { return false }
+        guard let count = API.shared.insertNewWord(word, for: tableName)?.count else { return false }
         
-        guard let listCount = Optional.some(API.shared.searchWordList(word, for: tableName).count),
+        guard let listCount = Optional.some(API.shared.searchWordDetailList(word, for: tableName).count),
               listCount > 1
         else {
             return API.shared.insertWordToList(word, for: tableName)
@@ -466,11 +464,12 @@ private extension MainViewController {
         
         guard let viewController = segue.destination as? ListViewController,
               let indexPath = sender as? IndexPath,
-              let vocabularyList = MainTableViewCell.vocabularyListArray[safe: indexPath.row]?._jsonClass(for: VocabularyList.self)
+              let vocabularyList = MainTableViewCell.vocabularyList(with: indexPath)
         else {
             return
         }
         
+        viewController.canEdit = true
         viewController.vocabularyList = vocabularyList
         viewController.vocabularyListIndexPath = indexPath
         viewController.mainViewDelegate = self
@@ -520,9 +519,9 @@ private extension MainViewController {
     func tabrBarHidden(with scrollView: UIScrollView) {
         
         let direction = scrollView._direction()
-        let duration: TimeInterval = 0.1
+        
         var isHidden = false
-
+        
         if (direction == currentScrollDirection) { return }        
         
         switch direction {
@@ -530,9 +529,8 @@ private extension MainViewController {
         case .down: isHidden = true
         case .left , .right ,.none: break
         }
-        
-        tabBarController?._tabBarHidden(isHidden, duration: duration)
-        appendButtonPositionConstraint(isHidden, duration: duration)
+                
+        tabBarHidden(isHidden)
         currentScrollDirection = direction
     }
     

@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  Vocabulary
 //
-//  Created by iOS on 2023/2/2.
+//  Created by William.Weng on 2023/2/2.
 //
 
 import UIKit

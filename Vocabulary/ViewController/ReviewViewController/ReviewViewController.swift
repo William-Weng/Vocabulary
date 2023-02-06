@@ -8,27 +8,33 @@
 import UIKit
 import WWPrint
 
+// MARK: - 複習單字頁面
 final class ReviewViewController: UIViewController {
     
     @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var speakImageView: UIImageView!
     @IBOutlet weak var answearButton: UIButton!
     @IBOutlet weak var answerLabel: UILabel!
+    @IBOutlet weak var interpretLabel: UILabel!
+    @IBOutlet weak var refreshQuestionButtonItem: UIBarButtonItem!
     
-    private let reviewWordCount = 2
+    private let repeatAnimateLoopCount = 3
+    private let solutionViewSegue = "SolutionViewSegue"
     
     private var isNextVocabulary = false
     private var isAnimationStop = false
+    private var searchWordCount = 10
     private var speakAnimateLoopCount = 0
     private var disappearImage: UIImage?
     private var reviewWordList: [[String : Any]] = []
+    private var reviewWordDetailList: [[String : Any]] = []
     private var vocabularyList: VocabularyList?
     private var vocabularyArray: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
-        initReviewWordList(count: reviewWordCount)
+        initReviewWordList()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,48 +47,23 @@ final class ReviewViewController: UIViewController {
         pauseBackgroundAnimation()
     }
     
-    deinit { wwPrint("\(Self.self) deinit") }
-    
-    @objc func speakVocabularyAction(_ tapGesture: UITapGestureRecognizer) {
-                
-        if (!isNextVocabulary) { speakVocabulary(vocabularyList); return }
-                
-        guard let examinationList = reviewWordList.popLast(),
-              let vocabularyList = examinationList._jsonClass(for: VocabularyList.self)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let viewController = segue.destination as? SolutionViewController,
+              let words = sender as? [String]
         else {
             return
         }
         
-        let count = reviewWordCount - reviewWordList.count
-        title = "單字複習 - \(count) / \(reviewWordCount)"
-        speakVocabulary(vocabularyList)
-    }
-        
-    @IBAction func answearAction(_ sender: UIButton) {
-                
-        guard let vocabularyList = vocabularyList else { return }
-        
-        answerAlert("解答", placeholder: "請輸入您所聽到的單字") { [weak self] word in
-            
-            guard let this = self else { return }
-            
-            defer {
-                this.isNextVocabulary = true
-                this.answerLabel.text = vocabularyList.word
-                this.answearButton._isEnabled(false, backgroundColor: .gray)
-                Utility.shared.levelMenu(target: this, vocabularyList: vocabularyList)
-            }
-            
-            if (vocabularyList.word.lowercased() != word.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()) { Utility.shared.flashHUD(with: .shudder); return }
-                        
-            _ = API.shared.updateReviewCountToList(vocabularyList.id, count: vocabularyList.review + 1, for: Constant.currentTableName)
-            
-            this.vocabularyArray.append(word)
-            Utility.shared.flashHUD(with: .nice)
-        }
+        viewController.words = words
     }
     
-    @IBAction func createQuestion(_ sender: UIBarButtonItem) { initReviewWordList(count: reviewWordCount) }
+    deinit { wwPrint("\(Self.self) deinit") }
+    
+    @objc func guessVocabulary(_ tapGesture: UITapGestureRecognizer) { speakVocabularyAction() }
+    @IBAction func guessAnswear(_ sender: UIButton) { answearAction() }
+    @IBAction func reviewSolution(_ sender: UIBarButtonItem) { performSegue(withIdentifier: solutionViewSegue, sender: vocabularyArray) }
+    @IBAction func refreshQuestion(_ sender: UIBarButtonItem) { initReviewWordList(); Utility.shared.flashHUD(with: .nice) }
 }
 
 // MARK: - 小工具
@@ -91,21 +72,35 @@ private extension ReviewViewController {
     /// 初始化設定
     func initSetting() {
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(Self.speakVocabularyAction(_:)))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(Self.guessVocabulary(_:)))
         speakImageView.addGestureRecognizer(tapGesture)
         
-        answearButton._isEnabled(false, backgroundColor: .gray)
-        vocabularyArray = []
-        isNextVocabulary = true
-        answerLabel.text = ""
+        navigationItem.backBarButtonItem = UIBarButtonItem()
     }
     
     /// 產生猜單字的字組
-    /// - Parameter count: 題目數量
-    func initReviewWordList(count: Int) {
-        title = "單字複習"
+    /// - Parameter count: 一次要搜尋的單字數量
+    func initReviewWordList(count: Int = 10) {
+        
+        initTitle(with: "單字複習")
+        
         isNextVocabulary = true
-        reviewWordList = API.shared.searchReviewWordList(for: Constant.currentTableName, count: count, offset: 0)
+        isNextVocabulary = true
+        vocabularyArray = []
+        answerLabel.text = ""
+        interpretLabel.text = ""
+        answearButtonStatus(isEnabled: false)
+        
+        searchWordCount = count
+        reviewWordList = API.shared.searchGuessWordList(for: Constant.currentTableName, count: searchWordCount, offset: 0)
+        searchWordCount = reviewWordList.count
+    }
+    
+    /// 設定Title
+    func initTitle(with text: String?) {
+        let label = UILabel()
+        label.text = text
+        navigationItem.titleView = label
     }
     
     /// 按下語音播放猜單字的動作
@@ -119,7 +114,8 @@ private extension ReviewViewController {
         speakAnimateLoopCount = 0
         isNextVocabulary = false
         speakImageView.isUserInteractionEnabled = false
-        answearButton._isEnabled(false, backgroundColor: .gray)
+        answerLabel.text = ""
+        answearButtonStatus(isEnabled: false)
         
         _ = speakImageView._GIF(url: gifUrl) { [weak self] result in
             
@@ -135,7 +131,7 @@ private extension ReviewViewController {
                     info.pointer.pointee = true
                     this.speakImageView.image = UIImage(named: "Speak.gif")
                     this.speakImageView.isUserInteractionEnabled = true
-                    this.answearButton._isEnabled(true, backgroundColor: .red)
+                    this.answearButtonStatus(isEnabled: true)
                 }
             }
         }
@@ -158,7 +154,7 @@ private extension ReviewViewController {
         _ = myImageView._GIF(url: gifUrl) { [weak self] result in
             
             guard let this = self else { return }
-                        
+            
             switch result {
             case .failure(let error): wwPrint(error)
             case .success(let info):
@@ -179,12 +175,25 @@ private extension ReviewViewController {
     func speakVocabulary(_ vocabularyList: VocabularyList?) {
         
         guard let vocabularyList = vocabularyList else { return }
-        
+                
         self.vocabularyList = vocabularyList
         
-        answerLabel.text = ""
         playWordSound(with: vocabularyList)
-        speakVocabularyAction(with: .speak, loopCount: 5)
+        speakVocabularyAction(with: .speak, loopCount: repeatAnimateLoopCount)
+        interpretLabelAction(vocabularyList)
+    }
+    
+    /// 讀出單字時所顯示單字的提示
+    /// - Parameter vocabularyList: VocabularyList
+    func interpretLabelAction(_ vocabularyList: VocabularyList) {
+        
+        if (reviewWordDetailList.isEmpty) { reviewWordDetailList = API.shared.searchWordDetailList(vocabularyList.word, for: Constant.currentTableName) }
+        
+        guard let detailList = reviewWordDetailList.popLast() else { interpretLabel.text = ""; return }
+        
+        let vocabulary = detailList._jsonClass(for: Vocabulary.self)
+        reviewWordDetailList.insert(detailList, at: 0)
+        interpretLabel.text = vocabulary?.interpret
     }
     
     /// 新增文字的提示框
@@ -215,5 +224,81 @@ private extension ReviewViewController {
         alertController.addAction(actionCancel)
         
         present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 設定解答按鍵 / 重新產生題目按鈕的狀態
+    /// - Parameter isEnabled: Bool
+    func answearButtonStatus(isEnabled: Bool) {
+        let backgroundColor: UIColor = (!isEnabled) ? .systemGray : .systemRed
+        answearButton._isEnabled(isEnabled, backgroundColor: backgroundColor)
+        refreshQuestionButtonItem.isEnabled = isEnabled
+    }
+    
+    /// 讀出要複習的單字語音
+    func speakVocabularyAction() {
+        
+        if (!isNextVocabulary) { speakVocabulary(vocabularyList); return }
+                
+        guard let examinationList = reviewWordList.popLast(),
+              let vocabularyList = examinationList._jsonClass(for: VocabularyList.self)
+        else {
+            return
+        }
+        
+        let count = searchWordCount - reviewWordList.count
+        initTitle(with: "單字複習 - \(count) / \(searchWordCount)")
+        speakVocabulary(vocabularyList)
+    }
+    
+    /// 填寫解答之後的動作
+    /// - Parameters:
+    ///   - word: String
+    ///   - vocabularyList: VocabularyList
+    func solutionAction(with vocabularyList: VocabularyList, isCorrect: Bool) -> Bool {
+                
+        isNextVocabulary = true
+        answearButtonStatus(isEnabled: false)
+        reviewWordDetailList = []
+        
+        answerLabel.text = vocabularyList.word
+        vocabularyArray.append(vocabularyList.word)
+        
+        _ = API.shared.updateReviewCountToList(vocabularyList.id, count: vocabularyList.review + 1, for: Constant.currentTableName)
+        
+        let reviewWordList = API.shared.searchReviewWordList(vocabularyList.word, for: Constant.currentTableName)
+        
+        guard !reviewWordList.isEmpty,
+              let list = reviewWordList.first?._jsonClass(for: VocabularyReviewList.self)
+        else {
+            return API.shared.insertReviewWordToList(vocabularyList.word, for: Constant.currentTableName, isCorrect: isCorrect)
+        }
+        
+        return API.shared.updateReviewResultToList(list, isCorrect: isCorrect, for: Constant.currentTableName)
+    }
+    
+    /// 送出所填寫的解答
+    func answearAction() {
+        
+        guard let vocabularyList = vocabularyList else { return }
+        
+        answerAlert("解答", placeholder: "請輸入您所聽到的單字") { [weak self] inputWord in
+            
+            guard let this = self else { return }
+            
+            var isCorrect = false
+            
+            defer {
+                
+                let hudType: Utility.HudGifType = (!isCorrect) ? .shudder : .nice
+                
+                _ = this.solutionAction(with: vocabularyList, isCorrect: isCorrect)
+                
+                Utility.shared.flashHUD(with: hudType)
+                Utility.shared.levelMenu(target: this, vocabularyList: vocabularyList)
+            }
+            
+            if (vocabularyList.word.lowercased() != inputWord.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()) { isCorrect = false; return }
+            isCorrect = true
+        }
     }
 }

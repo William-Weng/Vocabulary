@@ -6,8 +6,9 @@
 //
 
 import UIKit
-import WWPrint
 import AVFAudio
+import WWPrint
+import WWSQLite3Manager
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +18,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     private var audioPlayer: AVAudioPlayer?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        initDatabase()
         backgroundBarColor(UIColor.black.withAlphaComponent(0.1))
         _ = playBackgroundMusic(with: .夏の霧, volume: Constant.volume)
         audioInterruptionNotification()
@@ -72,6 +75,43 @@ extension AppDelegate {
 
 // MARK: - 小工具
 private extension AppDelegate {
+    
+    /// 初始化資料表 / 資料庫
+    func initDatabase() {
+        
+        let result = WWSQLite3Manager.shared.connent(with: Constant.DatabaseName)
+        
+        switch result {
+        case .failure(_): Utility.shared.flashHUD(with: .fail)
+        case .success(let database):
+            
+            Constant.database = database
+            
+            Constant.VoiceCode.allCases.forEach { tableName in
+                let result = createDatabase(database, for: tableName)
+                wwPrint("\(tableName) => \(result)")
+            }
+            
+            wwPrint(database.fileURL)
+        }
+    }
+    
+    /// 建立該語言的資料庫
+    /// - Parameters:
+    ///   - database: SQLite3Database
+    ///   - tableName: Constant.VoiceCode
+    /// - Returns: [SQLite3Database.ExecuteResult]
+    func createDatabase(_ database: SQLite3Database, for tableName: Constant.VoiceCode) -> [SQLite3Database.ExecuteResult] {
+        
+        let result = [
+            database.create(tableName: tableName.rawValue, type: Vocabulary.self, isOverwrite: false),
+            database.create(tableName: tableName.vocabularyList(), type: VocabularyList.self, isOverwrite: false),
+            database.create(tableName: tableName.vocabularyReviewList(), type: VocabularyReviewList.self, isOverwrite: false),
+            database.create(tableName: tableName.vocabularySentenceList(), type: VocabularySentenceList.self, isOverwrite: false),
+        ]
+        
+        return result
+    }
     
     /// 設定Bar的背景色
     /// - Parameter color: UIColor

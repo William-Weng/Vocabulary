@@ -2,7 +2,7 @@
 //  SearchTableViewCell.swift
 //  Vocabulary
 //
-//  Created by iOS on 2023/1/30.
+//  Created by William.Weng on 2023/1/30.
 //
 
 import UIKit

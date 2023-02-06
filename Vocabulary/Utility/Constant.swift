@@ -38,6 +38,7 @@ extension Constant {
         case right
     }
     
+    // MARK: - 單字內容的資料庫名稱
     enum VoiceCode: String, CaseIterable {
         
         case english = "English"
@@ -45,9 +46,17 @@ extension Constant {
         case korean = "Korean"
         case chinese = "Chinese"
         
-        /// Description
+        /// 單字列表的資料庫名稱 => EnglishList
         /// - Returns: String
         func vocabularyList() -> String { return "\(self.rawValue)List" }
+        
+        /// 複習單字列表的資料庫名稱 => EnglishReview
+        /// - Returns: String
+        func vocabularyReviewList() -> String { return "\(self.rawValue)Review" }
+        
+        /// 常用例句的資料庫名稱 => EnglishSentence
+        /// - Returns: String
+        func vocabularySentenceList() -> String { return "\(self.rawValue)Sentence" }
         
         /// [AVSpeechSynthesisVoice List](https://stackoverflow.com/questions/35492386/how-to-get-a-list-of-all-voices-on-ios-9/43576853)
         /// - Returns: String

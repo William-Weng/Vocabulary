@@ -2,7 +2,7 @@
 //  SearchWordViewController.swift
 //  Vocabulary
 //
-//  Created by iOS on 2023/1/30.
+//  Created by William.Weng on 2023/1/30.
 //
 
 import UIKit
@@ -13,6 +13,8 @@ final class SearchWordViewController: UIViewController {
     
     @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var myTableView: UITableView!
+    
+    private let searchListTableViewSegue = "SearchListTableViewSegue"
     
     private var word: String = ""
     private var isAnimationStop = false
@@ -62,7 +64,7 @@ extension SearchWordViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return SearchTableViewCell.vocabularyListArray.count }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { return searchTableViewCell(tableView, cellForRowAt: indexPath) }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { performSegue(withIdentifier: "SearchListTableViewSegue", sender: indexPath) }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { performSegue(withIdentifier: searchListTableViewSegue, sender: indexPath) }
     func scrollViewDidScroll(_ scrollView: UIScrollView) { dismissKeyboard(with: titleSearchBar.searchTextField) }
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateSearchData(for: scrollView) }
 }
@@ -97,6 +99,7 @@ extension SearchWordViewController: MainViewDelegate {
     
     func levelMenu(with indexPath: IndexPath) {}
     func updateCountLabel(with indexPath: IndexPath, count: Int) {}
+    func tabBarHidden(_ isHidden: Bool) {}
 }
 
 // MARK: - 小工具

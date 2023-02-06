@@ -21,9 +21,11 @@
 1. Music - [musical-note_2995101.png](https://www.flaticon.com/free-icon/musical-note_2995101)
 1. Volume - [volume_7566455.png](https://www.flaticon.com/free-icon/volume_7566455)
 1. NoVolume - [volume_7566449.png](https://www.flaticon.com/free-icon/volume_7566449)
-1. Add - [add_9364266.png](https://www.flaticon.com/free-icon/add_9364266)
+1. Add - [plus_7887095.png](https://www.flaticon.com/free-icon/plus_7887095)
 1. Dictionary - [search_9562555.png](https://www.flaticon.com/free-icon/search_9562555)
-1. Calendar - [calendar_2370271.png](https://www.flaticon.com/free-icon/calendar_2370271)
+1. Refresh - [circular-arrow_3227520](https://www.flaticon.com/free-icon/circular-arrow_3227520)
+1. Book - [circular-book_2232688](https://www.flaticon.com/free-icon/book_2232688)
+1. Test - [exam_3403504](https://www.flaticon.com/free-icon/exam_3403504)
 
 ### [背景音樂](http://amachamusic.chagasi.com/)
 1. 夏の霧.m4a - [甘茶の音楽工房 - natsunokiri.mp3](http://amachamusic.chagasi.com/music_natsunokiri.html)
@@ -32,13 +34,18 @@
 
 ### [動畫圖示](https://imgur.com/)
 1. Studing.gif - [桌布-會動的可愛小白熊-1](https://imgur.com/CsxYiU3)
-1. Working.gif - [桌布-會動的可愛小白熊-1](https://imgur.com/6VsD3md)
 1. Reading.gif - [桌布-會動的可愛小白熊-1](https://imgur.com/bM0UnMb)
 1. Search.gif - [桌布-會動的可愛小白熊-1](https://imgur.com/1y04NEk)
+1. Working.gif - [桌布-會動的可愛小白熊-2](https://imgur.com/uXEipP5)
+1. Solution.gif - [桌布-會動的可愛小白熊-4](https://imgur.com/9KkmcGe)
+1. Sentence.gif - [桌布-會動的可愛小白熊-2](https://imgur.com/BzWWaem)
 1. Success.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
 1. Fail.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
 1. Nice.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
 1. Speak.gif - [media-amazon.com](https://m.media-amazon.com/images/G/01/digital/music/player/web/EQ_accent.gif)
+
+
+
 
 ### [語言字型](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/為-ios-app-加入客製字型-custom-font-d2b28b0269e0)
 1. KleeOne-SemiBold.ttf - [Google Fonts - KleeOne](https://fonts.google.com/specimen/Klee+One)

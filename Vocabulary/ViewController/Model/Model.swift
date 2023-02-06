@@ -125,6 +125,31 @@ final class VocabularyList: Codable {
     deinit { wwPrint("\(Self.self) deinit") }
 }
 
+// MARK: - 單字複習列表
+final class VocabularyReviewList: Codable {
+    
+    let id: Int             // 編號
+    let word: String        // 單字
+    let correctCount: Int   // 答對的次數
+    let mistakeCount: Int   // 答錯的次數
+    let createTime: Date    // 建立時間
+    let updateTime: Date    // 更新時間
+    
+    deinit { wwPrint("\(Self.self) deinit") }
+}
+
+// MARK: - 單字例句列表
+final class VocabularySentenceList: Codable {
+    
+    let id: Int             // 編號
+    let example: String?    // 例句範例
+    let translate: String?  // 例句翻譯
+    let createTime: Date    // 建立時間
+    let updateTime: Date    // 更新時間
+    
+    deinit { wwPrint("\(Self.self) deinit") }
+}
+
 // MARK: - SQLite3SchemeDelegate
 extension Vocabulary: SQLite3SchemeDelegate {
     
@@ -162,6 +187,44 @@ extension VocabularyList: SQLite3SchemeDelegate {
             (key: "review", type: .INTEGER()),
             (key: "word", type: .TEXT(attribute: (isNotNull: true, isNoCase: true, isUnique: true), defaultValue: nil)),
             (key: "alphabet", type: .TEXT(attribute: (isNotNull: false, isNoCase: true, isUnique: false), defaultValue: nil)),
+            (key: "createTime", type: .TIMESTAMP()),
+            (key: "updateTime", type: .TIMESTAMP()),
+        ]
+        
+        return keyTypes
+    }
+}
+
+// MARK: - SQLite3SchemeDelegate
+extension VocabularyReviewList: SQLite3SchemeDelegate {
+    
+    /// SQLite資料結構 for WWSQLite3Manager
+    /// - Returns: [(key: String, type: SQLite3Condition.DataType)]
+    static func structure() -> [(key: String, type: SQLite3Condition.DataType)] {
+        
+        let keyTypes: [(key: String, type: SQLite3Condition.DataType)] = [
+            (key: "id", type: .INTEGER()),
+            (key: "word", type: .TEXT(attribute: (isNotNull: true, isNoCase: true, isUnique: true), defaultValue: nil)),
+            (key: "correctCount", type: .INTEGER()),
+            (key: "mistakeCount", type: .INTEGER()),
+            (key: "createTime", type: .TIMESTAMP()),
+            (key: "updateTime", type: .TIMESTAMP()),
+        ]
+        
+        return keyTypes
+    }
+}
+
+extension VocabularySentenceList: SQLite3SchemeDelegate {
+    
+    /// SQLite資料結構 for WWSQLite3Manager
+    /// - Returns: [(key: String, type: SQLite3Condition.DataType)]
+    static func structure() -> [(key: String, type: SQLite3Condition.DataType)] {
+        
+        let keyTypes: [(key: String, type: SQLite3Condition.DataType)] = [
+            (key: "id", type: .INTEGER()),
+            (key: "example", type: .TEXT(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),
+            (key: "translate", type: .TEXT(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),
             (key: "createTime", type: .TIMESTAMP()),
             (key: "updateTime", type: .TIMESTAMP()),
         ]

@@ -16,8 +16,11 @@ final class SolutionViewController: UIViewController {
     
     var words: [String] = []
     
-    private let solutionDetailSegue = "SolutionDetailSegue"
-
+    enum ViewSegueType: String {
+        case solutionDetail = "SolutionDetailSegue"
+        case reviewResult = "ReviewResultViewSegue"
+    }
+        
     private var isAnimationStop = false
     private var disappearImage: UIImage?
 
@@ -28,7 +31,17 @@ final class SolutionViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        vocabularyListPageSetting(for: segue, sender: sender)
+        
+        guard let identifier = segue.identifier,
+              let viewSegueType = ViewSegueType(rawValue: identifier)
+        else {
+            return
+        }
+        
+        switch viewSegueType {
+        case .solutionDetail: vocabularyListPageSetting(for: segue, sender: sender)
+        case .reviewResult: wwPrint(viewSegueType)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,6 +55,10 @@ final class SolutionViewController: UIViewController {
         tabBarController?._tabBarHidden(false, animated: true)
         pauseBackgroundAnimation()
     }
+    
+    @IBAction func reviewAction(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: ViewSegueType.reviewResult.rawValue, sender: nil)
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -49,7 +66,7 @@ extension SolutionViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return words.count }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { return solutionTableViewCell(tableView, cellForRowAt: indexPath) }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { performSegue(withIdentifier: solutionDetailSegue, sender: indexPath) }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { performSegue(withIdentifier: ViewSegueType.solutionDetail.rawValue, sender: indexPath) }
 }
 
 // MARK: - 小工具
@@ -128,5 +145,4 @@ private extension SolutionViewController {
         viewController.vocabularyListIndexPath = indexPath
         viewController.mainViewDelegate = nil
     }
-
 }

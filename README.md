@@ -1,9 +1,9 @@
-# Vocabulary - Xcode 14.2
-我愛背單字 - 針對身為外語苦手的我，量身訂製的APP
+# [Vocabulary - Xcode 14.2]( https://youtu.be/EiEdM3oGd-w)
+我愛背單字 - 針對身為外語苦手的我，量身訂製的APP，有輕快的背景音樂，也有發音，加上可愛的動畫…
 
 [![Swift-5.7](https://img.shields.io/badge/Swift-5.7-orange.svg?style=flat)](https://developer.apple.com/swift/) [![iOS 14.0](https://img.shields.io/badge/iOS-14.0-pink.svg?style=flat)](https://developer.apple.com/swift/) [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=flat)](https://developer.apple.com/swift/)
 
-![](./Vocabulary.png)
+![](./Vocabulary_1.png) ![](./Vocabulary_2.png) ![](./Vocabulary_3.png)
 
 # 附錄：資源下載說明
 ## 所有資源都是從網路下載，僅作程式分享教學之用，並無侵權之意，資源版權皆屬於原圖作者所有…
@@ -26,6 +26,8 @@
 1. Refresh - [circular-arrow_3227520](https://www.flaticon.com/free-icon/circular-arrow_3227520)
 1. Book - [circular-book_2232688](https://www.flaticon.com/free-icon/book_2232688)
 1. Test - [exam_3403504](https://www.flaticon.com/free-icon/exam_3403504)
+1. Star - [star_1985879](https://www.flaticon.com/free-icon/star_1985879)
+1. Cry - [cry_9600663](https://www.flaticon.com/free-icon/cry_9600663)
 
 ### [背景音樂](http://amachamusic.chagasi.com/)
 1. 夏の霧.m4a - [甘茶の音楽工房 - natsunokiri.mp3](http://amachamusic.chagasi.com/music_natsunokiri.html)
@@ -39,13 +41,11 @@
 1. Working.gif - [桌布-會動的可愛小白熊-2](https://imgur.com/uXEipP5)
 1. Solution.gif - [桌布-會動的可愛小白熊-4](https://imgur.com/9KkmcGe)
 1. Sentence.gif - [桌布-會動的可愛小白熊-2](https://imgur.com/BzWWaem)
+1. Review.gif - [桌布-會動的可愛小白熊-3](https://imgur.com/yh92O1W)
 1. Success.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
 1. Fail.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
 1. Nice.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
 1. Speak.gif - [media-amazon.com](https://m.media-amazon.com/images/G/01/digital/music/player/web/EQ_accent.gif)
-
-
-
 
 ### [語言字型](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/為-ios-app-加入客製字型-custom-font-d2b28b0269e0)
 1. KleeOne-SemiBold.ttf - [Google Fonts - KleeOne](https://fonts.google.com/specimen/Klee+One)

@@ -118,6 +118,7 @@ extension API {
     /// - Parameters:
     ///   - tableName: 資料表名稱
     ///   - count: 數量
+    ///   - offset: 偏移量
     /// - Returns: [[String : Any]]
     func searchGuessWordList(for tableName: Constant.VoiceCode, count: Int = 10, offset: Int) -> [[String : Any]] {
         
@@ -142,6 +143,40 @@ extension API {
         let condition = SQLite3Condition.Where().isCompare(key: "word", type: .equal, value: word)
         let orderBy = SQLite3Condition.OrderBy().item(key: "createTime", type: .ascending)
         let result = database.select(tableName: tableName.vocabularyReviewList(), type: VocabularyReviewList.self, where: condition, orderBy: orderBy, limit: nil)
+        
+        return result.array
+    }
+    
+    /// 搜尋例句內容的列表
+    /// - Parameters:
+    ///   - tableName: 資料表名稱
+    ///   - count: 數量
+    ///   - offset: 偏移量
+    /// - Returns: [[String : Any]]
+    func searchSentenceList(for tableName: Constant.VoiceCode, count: Int = 10, offset: Int) -> [[String : Any]] {
+        
+        guard let database = Constant.database else { return [] }
+        
+        let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
+        let orderBy = SQLite3Condition.OrderBy().item(key: "createTime", type: .descending)
+        let result = database.select(tableName: tableName.vocabularySentenceList(), type: VocabularySentenceList.self, where: nil, orderBy: orderBy, limit: limit)
+        
+        return result.array
+    }
+    
+    ///  搜尋複習過的單字內容總表
+    /// - Parameters:
+    ///   - tableName: 資料表名稱
+    ///   - count: 單次搜尋的數量
+    ///   - offset: 搜尋的偏移量
+    /// - Returns: [[String : Any]]
+    func searchReviewList(for tableName: Constant.VoiceCode, count: Int = 10, offset: Int) -> [[String : Any]] {
+        
+        guard let database = Constant.database else { return [] }
+        
+        let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
+        let orderBy = SQLite3Condition.OrderBy().item(key: "mistakeCount", type: .descending).addItem(key: "updateTime", type: .descending)
+        let result = database.select(tableName: tableName.vocabularyReviewList(), type: VocabularyReviewList.self, where: nil, orderBy: orderBy, limit: limit)
         
         return result.array
     }
@@ -215,6 +250,26 @@ extension API {
         }
         
         let result = database.insert(tableName: tableName.vocabularyReviewList(), itemsArray: [items])
+        return result?.isSussess ?? false
+    }
+    
+    /// 新增常用例句
+    /// - Parameters:
+    ///   - example: 常用例句
+    ///   - translate: 例句翻譯
+    ///   - tableName: 資料表名稱
+    /// - Returns: Bool
+    func insertSentenceToList(_ example: String, translate: String, for tableName: Constant.VoiceCode) -> Bool {
+        
+        guard let database = Constant.database else { return false }
+        
+        let items: [SQLite3Database.InsertItem] = [
+            (key: "speech", value: 0),
+            (key: "example", value: example),
+            (key: "translate", value: translate),
+        ]
+        
+        let result = database.insert(tableName: tableName.vocabularySentenceList(), itemsArray: [items])
         return result?.isSussess ?? false
     }
 }
@@ -373,6 +428,50 @@ extension API {
         
         return result.isSussess
     }
+    
+    /// 更新常用例句分類
+    /// - Parameters:
+    ///   - id: Int
+    ///   - speech: 分類
+    ///   - tableName: 資料表名稱
+    /// - Returns: Bool
+    func updateSentenceSpeechToList(_ id: Int, speech: VocabularySentenceList.Speech, for tableName: Constant.VoiceCode) -> Bool {
+        
+        guard let database = Constant.database else { return false }
+        
+        let items: [SQLite3Database.InsertItem] = [
+            (key: "speech", value: speech.rawValue),
+            (key: "updateTime", value: Date()._localTime()),
+        ]
+        
+        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let result = database.update(tableName: tableName.vocabularySentenceList(), items: items, where: condition)
+        
+        return result.isSussess
+    }
+    
+    /// 更新常用例句內容
+    /// - Parameters:
+    ///   - id: Int
+    ///   - example: 常用例句
+    ///   - translate: 例句翻譯
+    ///   - tableName: 資料表名稱
+    /// - Returns: Bool
+    func updateSentenceToList(_ id: Int, example: String, translate: String, for tableName: Constant.VoiceCode) -> Bool {
+        
+        guard let database = Constant.database else { return false }
+        
+        let items: [SQLite3Database.InsertItem] = [
+            (key: "example", value: example),
+            (key: "translate", value: translate),
+            (key: "updateTime", value: Date()._localTime())
+        ]
+        
+        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let result = database.update(tableName: tableName.vocabularySentenceList(), items: items, where: condition)
+        
+        return result.isSussess
+    }
 }
 
 // MARK: - 小工具 (Delete)
@@ -404,6 +503,21 @@ extension API {
         
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
         let result = database.delete(tableName: tableName.vocabularyList(), where: condition)
+        
+        return result.isSussess
+    }
+    
+    /// 刪除常用例句
+    /// - Parameters:
+    ///   - id: Int
+    ///   - tableName: Constant.VoiceCode
+    /// - Returns: Bool
+    func deleteSentenceList(with id: Int, for tableName: Constant.VoiceCode) -> Bool {
+        
+        guard let database = Constant.database else { return false }
+        
+        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let result = database.delete(tableName: tableName.vocabularySentenceList(), where: condition)
         
         return result.isSussess
     }

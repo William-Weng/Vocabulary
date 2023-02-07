@@ -20,6 +20,7 @@ final class Utility: NSObject {
         case working = "Working.gif"
         case studing = "Studing.gif"
         case search = "Search.gif"
+        case review = "Review.gif"
         case nice = "Nice.gif"
         case speak = "Speak.gif"
         case shudder = "Shudder.gif"

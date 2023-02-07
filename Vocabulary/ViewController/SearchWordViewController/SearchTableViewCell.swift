@@ -8,7 +8,7 @@
 import UIKit
 import WWPrint
 
-// MARK: - 單字列表Cell
+// MARK: - 搜尋的單字列表Cell
 final class SearchTableViewCell: UITableViewCell, CellReusable {
     
     @IBOutlet weak var wordLabel: UILabel!

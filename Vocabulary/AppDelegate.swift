@@ -26,7 +26,13 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    @objc func replayMusic(_ notificaiton: Notification) { audioPlayer?.play() }
+    @objc func replayMusic(_ notificaiton: Notification) {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            guard let this = self else { return }
+            this.audioPlayer?.play()
+        }
+    }
 }
 
 // MARK: - AVAudioPlayerDelegate
@@ -79,24 +85,20 @@ private extension AppDelegate {
     /// 初始化資料表 / 資料庫
     func initDatabase() {
         
-        let result = WWSQLite3Manager.shared.connent(with: Constant.DatabaseName)
+        let result = WWSQLite3Manager.shared.connent(with: Constant.databaseName)
         
         switch result {
         case .failure(_): Utility.shared.flashHUD(with: .fail)
         case .success(let database):
             
             Constant.database = database
-            
-            Constant.VoiceCode.allCases.forEach { tableName in
-                let result = createDatabase(database, for: tableName)
-                wwPrint("\(tableName) => \(result)")
-            }
+            Constant.VoiceCode.allCases.forEach { _ = createDatabase(database, for: $0) }
             
             wwPrint(database.fileURL)
         }
     }
     
-    /// 建立該語言的資料庫
+    /// 建立該語言的資料庫群
     /// - Parameters:
     ///   - database: SQLite3Database
     ///   - tableName: Constant.VoiceCode

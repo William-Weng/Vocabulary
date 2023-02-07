@@ -61,6 +61,7 @@ final class ReviewViewController: UIViewController {
     deinit { wwPrint("\(Self.self) deinit") }
     
     @objc func guessVocabulary(_ tapGesture: UITapGestureRecognizer) { speakVocabularyAction() }
+    
     @IBAction func guessAnswear(_ sender: UIButton) { answearAction() }
     @IBAction func reviewSolution(_ sender: UIBarButtonItem) { performSegue(withIdentifier: solutionViewSegue, sender: vocabularyArray) }
     @IBAction func refreshQuestion(_ sender: UIBarButtonItem) { initReviewWordList(); Utility.shared.flashHUD(with: .nice) }
@@ -229,9 +230,13 @@ private extension ReviewViewController {
     /// 設定解答按鍵 / 重新產生題目按鈕的狀態
     /// - Parameter isEnabled: Bool
     func answearButtonStatus(isEnabled: Bool) {
+        
         let backgroundColor: UIColor = (!isEnabled) ? .systemGray : .systemRed
+        
         answearButton._isEnabled(isEnabled, backgroundColor: backgroundColor)
         refreshQuestionButtonItem.isEnabled = isEnabled
+        
+        if (reviewWordList.isEmpty) { refreshQuestionButtonItem.isEnabled = true }
     }
     
     /// 讀出要複習的單字語音

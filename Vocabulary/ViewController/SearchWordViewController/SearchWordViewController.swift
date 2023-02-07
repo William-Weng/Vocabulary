@@ -115,12 +115,14 @@ private extension SearchWordViewController {
         myTableView._delegateAndDataSource(with: self)
         myTableView.addSubview(refreshControl)
         myTableView.tableFooterView = UIView()
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem()
     }
     
     /// [初始化搜尋列](https://jjeremy-xue.medium.com/swift-客製化-navigation-bar-customized-navigation-bar-8e4eaf188d7c)
     func initSearchBar() {
         navigationItem.titleView = titleSearchBar
-        titleSearchBar.placeholder = "請輸入要需搜尋的單字"
+        titleSearchBar.placeholder = "請輸入需要搜尋的單字"
         titleSearchBar.delegate = self
         titleSearchBar.searchTextField.delegate = self
     }

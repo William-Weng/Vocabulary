@@ -6,16 +6,26 @@
 //
 
 import UIKit
+import SafariServices
 import WWPrint
 
+// MARK: - SentenceViewDelegate
+protocol SentenceViewDelegate {
+    func speechMenu(with indexPath: IndexPath)
+}
+
+// MARK: - 常用例句
 final class SentenceViewController: UIViewController {
 
     @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var myTableView: UITableView!
-    
+    @IBOutlet weak var appendWordButton: UIButton!
+    @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
+        
     private var isAnimationStop = false
     private var disappearImage: UIImage?
     private var refreshControl: UIRefreshControl!
+    private var currentScrollDirection: Constant.ScrollDirection = .down
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,18 +42,76 @@ final class SentenceViewController: UIViewController {
         pauseBackgroundAnimation()
     }
     
-    @objc func demo() {}
+    @IBAction func appendSentenceAction(_ sender: UIButton) {
+        
+        appendSentenceHint(title: "請輸入例句") { [weak self] (example, translate) in
+            guard let this = self else { return false }
+            return this.appendSentence(example, translate: translate, for: Constant.currentTableName)
+        }
+    }
+    
+    @objc func refreshSentenceList(_ sender: UIRefreshControl) { reloadSentenceList() }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension SentenceViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return 100 }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return SentenceTableViewCell.sentenceListArray.count }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { return sentenceTableViewCell(tableView, cellForRowAt: indexPath) }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? { return nil }
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {}
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {}
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        guard let dictionary = SentenceTableViewCell.sentenceListArray[safe: indexPath.row],
+              let sentenceList = dictionary._jsonClass(for: VocabularySentenceList.self)
+        else {
+            return
+        }
+        
+        netDictionary(with: sentenceList.example)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? { return UISwipeActionsConfiguration(actions: trailingSwipeActionsMaker(with: indexPath)) }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) { tabrBarHidden(with: scrollView) }
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateSentenceList(for: scrollView) }
+}
+
+// MARK: - SFSafariViewControllerDelegate
+extension SentenceViewController: SFSafariViewControllerDelegate {
+    
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        tabbar(isHidden: false)
+    }
+}
+
+// MARK: - SentenceViewDelegate
+extension SentenceViewController: SentenceViewDelegate {
+    
+    func speechMenu(with indexPath: IndexPath) {
+        
+        guard let sentenceList = SentenceTableViewCell.sentenceList(with: indexPath) else { return }
+        
+        let alertController = UIAlertController(title: "請選擇分類", message: nil, preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
+        
+        VocabularySentenceList.Speech.allCases.forEach { speech in
+            
+            let action = UIAlertAction(title: speech.value(), style: .default) { [weak self] _ in
+
+                guard let this = self else { return }
+                let isSuccess = API.shared.updateSentenceSpeechToList(sentenceList.id, speech: speech, for: Constant.currentTableName)
+
+                if (!isSuccess) { Utility.shared.flashHUD(with: .fail) }
+                this.updateSentenceLabel(with: indexPath, speech: speech)
+            }
+            
+            alertController.addAction(action)
+        }
+        
+        alertController.addAction(action)
+        alertController.modalPresentationStyle = .popover
+        alertController.popoverPresentationController?.barButtonItem = navigationItem.leftBarButtonItem
+        
+        present(alertController, animated: true, completion: nil)
+    }
 }
 
 // MARK: - 小工具
@@ -51,14 +119,101 @@ private extension SentenceViewController {
     
     /// UITableView的初始化設定
     func initSetting() {
-                
-        refreshControl = UIRefreshControl._build(target: self, action: #selector(Self.demo))
         
-        myTableView._delegateAndDataSource(with: self)
+        refreshControl = UIRefreshControl._build(target: self, action: #selector(Self.refreshSentenceList(_:)))
+        fakeTabBarHeightConstraint.constant = self.tabBarController?.tabBar.frame.height ?? 0
+        navigationItem.backBarButtonItem = UIBarButtonItem()
+        
+        reloadSentenceList()
+        
+        SentenceTableViewCell.sentenceViewDelegate = self
+        
         myTableView.addSubview(refreshControl)
         myTableView.tableFooterView = UIView()
-                
-        navigationItem.backBarButtonItem = UIBarButtonItem()
+        myTableView._delegateAndDataSource(with: self)
+    }
+    
+    /// 設定標題
+    /// - Parameter count: Int
+    func titleSetting(with count: Int) {
+        
+        let label = UILabel()
+        label.text = "常用例句 - \(count)"
+        
+        navigationItem.titleView = label
+    }
+    
+    /// 重新讀取單字
+    func reloadSentenceList() {
+        
+        defer { refreshControl.endRefreshing() }
+        
+        SentenceTableViewCell.sentenceListArray = []
+        SentenceTableViewCell.sentenceListArray = API.shared.searchSentenceList(for: Constant.currentTableName, offset: 0)
+        
+        titleSetting(with: SentenceTableViewCell.sentenceListArray.count)
+        
+        myTableView._reloadData() { [weak self] in
+            
+            guard let this = self,
+                  !SentenceTableViewCell.sentenceListArray.isEmpty
+            else {
+                return
+            }
+            
+            let topIndexPath = IndexPath(row: 0, section: 0)
+            this.myTableView.scrollToRow(at: topIndexPath, at: .top, animated: true)
+            
+            Utility.shared.flashHUD(with: .success)
+        }
+    }
+    
+    /// [新增例否句列表](https://medium.com/@daoseng33/我說那個-uitableview-insertrows-uicollectionview-insertitems-呀-56b8758b2efb)
+    func appendSentenceList() {
+        
+        defer { refreshControl.endRefreshing() }
+        
+        let oldListCount = SentenceTableViewCell.sentenceListArray.count
+        SentenceTableViewCell.sentenceListArray += API.shared.searchSentenceList(for: Constant.currentTableName, offset: SentenceTableViewCell.sentenceListArray.count)
+        
+        let newListCount = SentenceTableViewCell.sentenceListArray.count
+        titleSetting(with: newListCount)
+        
+        let indexPaths = (oldListCount..<newListCount).map { IndexPath(row: $0, section: 0) }
+        myTableView._insertRows(at: indexPaths, animation: .automatic, animated: false)
+        
+        if (newListCount > oldListCount) { Utility.shared.flashHUD(with: .success) }
+    }
+    
+    /// 產生SentenceTableViewCell
+    /// - Parameters:
+    ///   - tableView: UITableView
+    ///   - indexPath: IndexPath
+    /// - Returns: MainTableViewCell
+    func sentenceTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> SentenceTableViewCell {
+        
+        let cell = tableView._reusableCell(at: indexPath) as SentenceTableViewCell
+        cell.configure(with: indexPath)
+        
+        return cell
+    }
+    
+    /// 右側滑動按鈕
+    /// - Parameter indexPath: IndexPath
+    /// - Returns: [UIContextualAction]
+    func trailingSwipeActionsMaker(with indexPath: IndexPath) -> [UIContextualAction] {
+        
+        let updateAction = UIContextualAction._build(with: "更新", color: #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)) { [weak self] in
+            guard let this = self else { return }
+            this.updateSentence(with: indexPath)
+        }
+        
+        let deleteAction = UIContextualAction._build(with: "刪除", color: #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)) { [weak self] in
+            guard let this = self else { return }
+            this.deleteSentence(with: indexPath)
+        }
+        
+        return [updateAction, deleteAction]
     }
     
     /// 動畫背景設定
@@ -88,16 +243,202 @@ private extension SentenceViewController {
         isAnimationStop = true
     }
     
-    /// 產生SentenceTableViewCell
+    /// 滑動時TabBar是否隱藏的規則設定
+    /// - Parameter scrollView: UIScrollView
+    func tabrBarHidden(with scrollView: UIScrollView) {
+        
+        let direction = scrollView._direction()
+        
+        var isHidden = false
+        
+        if (direction == currentScrollDirection) { return }
+        
+        switch direction {
+        case .up: isHidden = false
+        case .down: isHidden = true
+        case .left , .right ,.none: break
+        }
+        
+        tabBarHidden(isHidden)
+        currentScrollDirection = direction
+    }
+    
+    /// 設定TabBar顯示與否
     /// - Parameters:
-    ///   - tableView: UITableView
+    ///   - isHidden: Bool
+    func tabBarHidden(_ isHidden: Bool) {
+        
+        guard let tabBarController = tabBarController else { return }
+        
+        let duration = Constant.duration
+        
+        tabBarController._tabBarHidden(isHidden, duration: duration)
+        appendButtonPositionConstraint(isHidden, duration: duration)
+    }
+    
+    /// 更新新增單字Button的位置 for Tabbar
+    /// - Parameters:
+    ///   - isHidden: Bool
+    ///   - animated: Bool
+    ///   - duration: TimeInterval
+    ///   - curve: UIView.AnimationCurve
+    func appendButtonPositionConstraint(_ isHidden: Bool, animated: Bool = true, duration: TimeInterval, curve: UIView.AnimationCurve = .linear) {
+        
+        guard let tabBar = self.tabBarController?.tabBar else { return }
+        
+        if (!isHidden) { fakeTabBarHeightConstraint.constant = tabBar.frame.height; return }
+        fakeTabBarHeightConstraint.constant = 0
+        
+        UIViewPropertyAnimator(duration: duration, curve: curve) { [weak self] in
+            
+            guard let this = self else { return }
+            this.view.layoutIfNeeded()
+            
+        }.startAnimation()
+    }
+    
+    /// 新增例句的提示框
+    /// - Parameters:
+    ///   - indexPath: 要更新音標時，才會有IndexPath
+    ///   - title: 標題
+    ///   - message: 訊息文字
+    ///   - defaultText: 預設文字
+    ///   - action: (String) -> Bool
+    func appendSentenceHint(with indexPath: IndexPath? = nil, title: String, message: String? = nil, exampleText: String? = nil, translateText: String? = nil, action: @escaping (String, String) -> Bool) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
+        alertController.addTextField {
+            $0.text = exampleText
+            $0.placeholder = "請輸入例句…"
+        }
+        
+        alertController.addTextField {
+            $0.text = translateText
+            $0.placeholder = "請輸入翻譯…"
+        }
+        
+        let actionOK = UIAlertAction(title: "確認", style: .default) { [weak self] _ in
+            
+            guard let this = self,
+                  let inputExampleText = alertController.textFields?.first?.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+                  let inputTranslateText = alertController.textFields?.last?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+            else {
+                return
+            }
+            
+            if (!action(inputExampleText, inputTranslateText)) { Utility.shared.flashHUD(with: .fail); return }
+            
+            Utility.shared.flashHUD(with: .success)
+            
+            if let indexPath = indexPath {
+                this.myTableView.reloadRows(at: [indexPath], with: .automatic)
+            } else {
+                this.reloadSentenceList()
+            }
+        }
+        
+        let actionCancel = UIAlertAction(title: "取消", style: .cancel) {  _ in }
+        
+        alertController.addAction(actionOK)
+        alertController.addAction(actionCancel)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 新增單字
+    /// - Parameters:
+    ///   - word: 單字
+    ///   - tableName: 資料表
+    /// - Returns: Bool
+    func appendSentence(_ example: String, translate: String, for tableName: Constant.VoiceCode) -> Bool {
+        return API.shared.insertSentenceToList(example, translate: translate, for: Constant.currentTableName)
+    }
+    
+    /// 下滑到底更新資料
+    /// - Parameters:
+    ///   - scrollView: UIScrollView
+    ///   - height: CGFloat
+    func updateSentenceList(for scrollView: UIScrollView, height: CGFloat = 128.0) {
+        
+        let offset = scrollView.frame.height + scrollView.contentOffset.y - height
+        let height = scrollView.contentSize.height
+        
+        if (offset > height) { appendSentenceList() }
+    }
+    
+    /// 更新分類Level文字
+    /// - Parameters:
     ///   - indexPath: IndexPath
-    /// - Returns: MainTableViewCell
-    func sentenceTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> SentenceTableViewCell {
+    ///   - level: 等級
+    func updateSentenceLabel(with indexPath: IndexPath, speech: VocabularySentenceList.Speech) {
         
-        let cell = tableView._reusableCell(at: indexPath) as SentenceTableViewCell
-        cell.configure(with: indexPath)
+        guard var dictionary = SentenceTableViewCell.sentenceListArray[safe: indexPath.row] else { return }
         
-        return cell
+        dictionary["speech"] = speech.rawValue
+        SentenceTableViewCell.sentenceListArray[indexPath.row] = dictionary
+        
+        myTableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+    
+    /// 更新例句 (句子 / 翻譯)
+    /// - Parameter indexPath: IndexPath
+    func updateSentence(with indexPath: IndexPath) {
+        
+        guard let sentenceList = SentenceTableViewCell.sentenceList(with: indexPath) else { return }
+        
+        appendSentenceHint(with: indexPath, title: "請更新例句", exampleText: sentenceList.example, translateText: sentenceList.translate) { (exampleInput, translateInput) in
+            
+            guard var dictionary = SentenceTableViewCell.sentenceListArray[safe: indexPath.row] else { return false }
+            
+            dictionary["example"] = exampleInput
+            dictionary["translate"] = translateInput
+            SentenceTableViewCell.sentenceListArray[indexPath.row] = dictionary
+            
+            return API.shared.updateSentenceToList(sentenceList.id, example: exampleInput, translate: translateInput, for: Constant.currentTableName)
+        }
+    }
+    
+    /// 刪除例句
+    /// - Parameter indexPath: IndexPath
+    func deleteSentence(with indexPath: IndexPath) {
+        
+        guard let sentenceList = SentenceTableViewCell.sentenceList(with: indexPath) else { return }
+        
+        let isSuccess = API.shared.deleteSentenceList(with: sentenceList.id, for: Constant.currentTableName)
+        if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
+        
+        SentenceTableViewCell.sentenceListArray.remove(at: indexPath.row)
+        titleSetting(with: SentenceTableViewCell.sentenceListArray.count)
+        
+        myTableView.deleteRows(at: [indexPath], with: .fade)
+    }
+    
+    /// 例句網路字典
+    /// - Parameter example: 例句
+    func netDictionary(with example: String?) {
+        
+        guard let example = example,
+              let url = URL._standardization(string: googleSearchUrlString(with: example))
+        else {
+            return
+        }
+        
+        let safariController = url._openUrlWithInside(delegate: self)
+        safariController.delegate = self
+        tabbar(isHidden: true)
+    }
+    
+    /// Google搜尋
+    /// - Parameter example: 例句
+    func googleSearchUrlString(with example: String) -> String {
+        let googleSearchUrl = "https://www.google.com/search?q=\(example)"
+        return googleSearchUrl
+    }
+    
+    /// 設定TabBar是否隱藏
+    /// - Parameter isHidden: Bool
+    func tabbar(isHidden: Bool) {
+        tabBarController?.tabBar.isHidden = isHidden
     }
 }

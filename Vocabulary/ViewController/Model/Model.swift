@@ -85,7 +85,7 @@ final class Vocabulary: Codable {
             case .pronoue: return .systemBlue
             case .verb: return .systemRed
             case .adverb: return .black
-            case .adjective: return .systemBlue
+            case .adjective: return .systemOrange
             case .preposition: return .systemBrown
             case .conjunction: return .systemGray
             case .determiner: return .systemGray
@@ -144,10 +144,50 @@ final class VocabularySentenceList: Codable {
     let id: Int             // 編號
     let example: String?    // 例句範例
     let translate: String?  // 例句翻譯
+    let speech: Int         // 詞性
     let createTime: Date    // 建立時間
     let updateTime: Date    // 更新時間
     
     deinit { wwPrint("\(Self.self) deinit") }
+    
+    // 例句詞性
+    public enum Speech: Int, CaseIterable {
+        
+        case general = 000
+        case proverb = 001
+        case movie = 002
+        case article = 003
+        case locution = 004
+        case celebrity = 005
+        
+        /// 例句詞性
+        /// - Returns: String
+        func value() -> String {
+            
+            switch self {
+            case .general: return "一般"
+            case .proverb: return "諺語"
+            case .movie: return "電影"
+            case .article: return "文章"
+            case .locution: return "慣用語"
+            case .celebrity: return "名人"
+            }
+        }
+        
+        /// 詞性背景色
+        /// - Returns: UIColor
+        func backgroundColor() -> UIColor {
+            
+            switch self {
+            case .general: return .systemGray
+            case .proverb: return .systemRed
+            case .movie: return .systemBlue
+            case .article: return .systemOrange
+            case .locution: return .systemGreen
+            case .celebrity: return .magenta
+            }
+        }
+    }
 }
 
 // MARK: - SQLite3SchemeDelegate
@@ -215,6 +255,7 @@ extension VocabularyReviewList: SQLite3SchemeDelegate {
     }
 }
 
+// MARK: - SQLite3SchemeDelegate
 extension VocabularySentenceList: SQLite3SchemeDelegate {
     
     /// SQLite資料結構 for WWSQLite3Manager
@@ -223,6 +264,7 @@ extension VocabularySentenceList: SQLite3SchemeDelegate {
         
         let keyTypes: [(key: String, type: SQLite3Condition.DataType)] = [
             (key: "id", type: .INTEGER()),
+            (key: "speech", type: .INTEGER()),
             (key: "example", type: .TEXT(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),
             (key: "translate", type: .TEXT(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),
             (key: "createTime", type: .TIMESTAMP()),

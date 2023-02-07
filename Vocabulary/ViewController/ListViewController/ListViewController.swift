@@ -185,7 +185,7 @@ private extension ListViewController {
     ///   - message: 訊息文字
     ///   - indexPath: IndexPath
     ///   - action: (Constant.ExampleInfomation) -> Bool
-    func appendTextHint(title: String, message: String? = nil, indexPath: IndexPath, action: @escaping (Constant.ExampleInfomation) -> Bool) {
+    func appendTextHint(with indexPath: IndexPath, title: String, message: String? = nil, action: @escaping (Constant.ExampleInfomation) -> Bool) {
         
         guard let vocabulary = ListTableViewCell.vocabulary(with: indexPath) else { return }
         
@@ -262,7 +262,7 @@ private extension ListViewController {
             
             guard let this = self else { return }
             
-            this.appendTextHint(title: "請輸入相關文字", indexPath: indexPath) { info in
+            this.appendTextHint(with: indexPath, title: "請輸入相關文字") { info in
                 return API.shared.updateExmapleToList(info.id, info: info, for: Constant.currentTableName)
             }
         }

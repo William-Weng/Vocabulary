@@ -34,9 +34,9 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
     
     private var isAnimationStop = false
+    private var disappearImage: UIImage?
     private var currentScrollDirection: Constant.ScrollDirection = .down
     private var refreshControl: UIRefreshControl!
-    private var disappearImage: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,7 +74,7 @@ final class MainViewController: UIViewController {
     
     @objc func refreshVocabularyList(_ sender: UIRefreshControl) { reloadVocabulary() }
     
-    @IBAction func appendWrodAction(_ sender: UIButton) {
+    @IBAction func appendWordAction(_ sender: UIButton) {
         
         appendTextHint(title: "請輸入單字") { [weak self] inputWord in
             guard let this = self else { return false }
@@ -165,7 +165,7 @@ extension MainViewController: MainViewDelegate {
         
         guard let tabBarController = tabBarController else { return }
         
-        let duration: TimeInterval = 0.1
+        let duration = Constant.duration
         
         tabBarController._tabBarHidden(isHidden, duration: duration)
         appendButtonPositionConstraint(isHidden, duration: duration)
@@ -177,7 +177,9 @@ private extension MainViewController {
         
     /// UITableView的初始化設定
     func initSetting() {
-                
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem()
+        
         refreshControl = UIRefreshControl._build(target: self, action: #selector(Self.refreshVocabularyList(_:)))
         fakeTabBarHeightConstraint.constant = self.tabBarController?.tabBar.frame.height ?? 0
         
@@ -186,8 +188,6 @@ private extension MainViewController {
         myTableView.tableFooterView = UIView()
         
         reloadVocabulary()
-        
-        navigationItem.backBarButtonItem = UIBarButtonItem()
     }
     
     /// 產生MainTableViewCell
@@ -208,7 +208,7 @@ private extension MainViewController {
     func titleSetting(with count: Int) {
         
         let label = UILabel()
-        label.text = "\(Constant.Title) - \(count)"
+        label.text = "我愛背單字 - \(count)"
         
         navigationItem.titleView = label
     }

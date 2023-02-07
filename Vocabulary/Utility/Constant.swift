@@ -11,8 +11,8 @@ import WWSQLite3Manager
 // MARK: - Constant
 final class Constant: NSObject {
     
-    static let DatabaseName = "Vocabulary.db"
-    static let Title = "我愛背單字"
+    static let databaseName = "Vocabulary.db"
+    static let duration: TimeInterval = 0.1
 
     static var database: SQLite3Database?
     static var currentTableName: Constant.VoiceCode = .english
@@ -23,7 +23,6 @@ final class Constant: NSObject {
 extension Constant {
     typealias ExampleInfomation = (id: Int, interpret: String, example: String, translate: String)      // 單字ID / 字義 / 例句 / 例句翻譯
     typealias GIFImageInformation = (index: Int, cgImage: CGImage, pointer: UnsafeMutablePointer<Bool>) // GIF動畫: (第幾張, CGImage, UnsafeMutablePointer<Bool>)
-
 }
 
 // MARK: - Enumeration

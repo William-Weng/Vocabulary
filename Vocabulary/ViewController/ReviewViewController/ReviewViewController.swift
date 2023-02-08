@@ -67,6 +67,11 @@ final class ReviewViewController: UIViewController {
     @IBAction func refreshQuestion(_ sender: UIBarButtonItem) { initReviewWordList(); Utility.shared.flashHUD(with: .nice) }
 }
 
+// MARK: - MyNavigationControllerDelegate
+extension ReviewViewController: MyNavigationControllerDelegate {
+    func refreshRootViewController() { initReviewWordList() }
+}
+
 // MARK: - 小工具
 private extension ReviewViewController {
     

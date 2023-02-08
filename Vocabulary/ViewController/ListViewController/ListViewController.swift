@@ -22,12 +22,13 @@ final class ListViewController: UIViewController {
     @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var myTableView: UITableView!
     
-    var canEdit = false
+    var canDelete = false
     var vocabularyListIndexPath: IndexPath!
     var vocabularyList: VocabularyList!
     var mainViewDelegate: MainViewDelegate?
 
     private var isAnimationStop = false
+    private var isSafariViewControllerDismiss = true
     private var refreshControl: UIRefreshControl!
     private var disappearImage: UIImage?
     
@@ -38,23 +39,30 @@ final class ListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-                
+        
         ListTableViewCell.listViewDelegate = self
         animatedBackground(with: .reading)
         
         mainViewDelegate?.tabBarHidden(true)
         
-        if (!canEdit) { tabBarController?._tabBarHidden(true, animated: true) }
+        if (!canDelete) { tabBarController?._tabBarHidden(true, animated: true) }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-                
+        
         ListTableViewCell.listViewDelegate = nil
         pauseBackgroundAnimation()
         updateExampleCount(ListTableViewCell.exmapleList.count)
-
+        
+        if (!isSafariViewControllerDismiss) { return }
+        tabBarController?.tabBar.isHidden = false
         mainViewDelegate?.tabBarHidden(false)
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        tabBarController?.tabBar.isHidden = true
     }
     
     deinit {
@@ -78,33 +86,14 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
 extension ListViewController: SFSafariViewControllerDelegate {
     
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        tabbar(isHidden: false)
+        isSafariViewControllerDismiss = true
     }
 }
 
 // MARK: - ListViewDelegate
 extension ListViewController: ListViewDelegate {
     
-    /// 單字詞性選單
-    /// - Parameter indexPath: IndexPath
-    func speechMenu(with indexPath: IndexPath) {
-        
-        guard let vocabulary = ListTableViewCell.vocabulary(with: indexPath) else { return }
-                
-        let alertController = UIAlertController(title: "請選擇詞性", message: nil, preferredStyle: .actionSheet)
-        let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
-
-        Vocabulary.Speech.allCases.forEach { speech in
-            let action = speechAlertAction(with: indexPath, speech: speech, vocabulary: vocabulary)
-            alertController.addAction(action)
-        }
-        
-        alertController.addAction(action)
-        alertController.modalPresentationStyle = .popover
-        alertController.popoverPresentationController?.barButtonItem = navigationItem.leftBarButtonItem
-        
-        present(alertController, animated: true, completion: nil)
-    }
+    func speechMenu(with indexPath: IndexPath) { speechMenuAction(with: indexPath) }
 }
 
 // MARK: - 小工具
@@ -174,9 +163,31 @@ private extension ListViewController {
         
         guard let url = URL._standardization(string: Constant.currentTableName.dictionaryURL(with: word)) else { return }
         
+        isSafariViewControllerDismiss = false
+        
         let safariController = url._openUrlWithInside(delegate: self)
         safariController.delegate = self
-        tabbar(isHidden: true)
+    }
+    
+    /// 單字詞性選單功能
+    /// - Parameter indexPath: IndexPath
+    func speechMenuAction(with indexPath: IndexPath) {
+        
+        guard let vocabulary = ListTableViewCell.vocabulary(with: indexPath) else { return }
+                
+        let alertController = UIAlertController(title: "請選擇詞性", message: nil, preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
+
+        Vocabulary.Speech.allCases.forEach { speech in
+            let action = speechAlertAction(with: indexPath, speech: speech, vocabulary: vocabulary)
+            alertController.addAction(action)
+        }
+        
+        alertController.addAction(action)
+        alertController.modalPresentationStyle = .popover
+        alertController.popoverPresentationController?.barButtonItem = navigationItem.leftBarButtonItem
+        
+        present(alertController, animated: true, completion: nil)
     }
     
     /// 新增文字的提示框
@@ -284,7 +295,7 @@ private extension ListViewController {
             this.emptyExampleListAction()
         }
         
-        if (!canEdit) { return [updateAction] }
+        if (!canDelete) { return [updateAction] }
         return [updateAction, deleteAction]
     }
     
@@ -345,11 +356,5 @@ private extension ListViewController {
         let isSuccess = API.shared.updateWordToList(vocabularyList.word, for: Constant.currentTableName, count: count, hasUpdateTime: false)
         
         if (isSuccess) { mainViewDelegate?.updateCountLabel(with: vocabularyListIndexPath, count: count) }
-    }
-    
-    /// 設定TabBar是否隱藏
-    /// - Parameter isHidden: Bool
-    func tabbar(isHidden: Bool) {
-        tabBarController?.tabBar.isHidden = isHidden
     }
 }

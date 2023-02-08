@@ -87,11 +87,11 @@ final class Vocabulary: Codable {
             case .adverb: return .black
             case .adjective: return .systemOrange
             case .preposition: return .systemBrown
-            case .conjunction: return .systemGray
+            case .conjunction: return .darkGray
             case .determiner: return .systemGray
-            case .interjection: return .systemGray
+            case .interjection: return .systemIndigo
             case .numeral: return .systemBlue
-            case .phrase: return .systemBlue
+            case .phrase: return .darkGray
             case .addreviation: return .systemGray
             }
         }
@@ -159,6 +159,7 @@ final class VocabularySentenceList: Codable {
         case article = 003
         case locution = 004
         case celebrity = 005
+        case slang = 006
         
         /// 例句詞性
         /// - Returns: String
@@ -171,6 +172,7 @@ final class VocabularySentenceList: Codable {
             case .article: return "文章"
             case .locution: return "慣用語"
             case .celebrity: return "名人"
+            case .slang: return "俚語"
             }
         }
         
@@ -184,7 +186,8 @@ final class VocabularySentenceList: Codable {
             case .movie: return .systemBlue
             case .article: return .systemOrange
             case .locution: return .systemGreen
-            case .celebrity: return .magenta
+            case .celebrity: return .darkGray
+            case .slang: return .systemIndigo
             }
         }
     }

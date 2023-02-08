@@ -11,7 +11,7 @@ import AVFAudio
 
 // MARK: - 單字列表Cell
 final class ListTableViewCell: UITableViewCell, CellReusable {
-        
+    
     @IBOutlet weak var speechLabel: UILabel!
     @IBOutlet weak var interpretLabel: UILabel!
     @IBOutlet weak var exampleLabel: UILabel!
@@ -54,6 +54,7 @@ extension ListTableViewCell {
 private extension ListTableViewCell {
     
     /// 畫面設定
+    /// - Parameter indexPath: IndexPath
     func configure(for indexPath: IndexPath) {
         
         guard let vocabulary = Self.vocabulary(with: indexPath) else { return }

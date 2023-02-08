@@ -52,8 +52,14 @@ final class SolutionViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
         tabBarController?._tabBarHidden(false, animated: true)
         pauseBackgroundAnimation()
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        tabBarController?.tabBar.isHidden = true
     }
     
     @IBAction func reviewAction(_ sender: UIBarButtonItem) {
@@ -140,7 +146,7 @@ private extension SolutionViewController {
             return
         }
         
-        viewController.canEdit = false
+        viewController.canDelete = false
         viewController.vocabularyList = vocabularyList
         viewController.vocabularyListIndexPath = indexPath
         viewController.mainViewDelegate = nil

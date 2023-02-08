@@ -193,7 +193,7 @@ private extension ReviewResultViewController {
             return
         }
         
-        viewController.canEdit = false
+        viewController.canDelete = false
         viewController.vocabularyList = vocabularyList
         viewController.vocabularyListIndexPath = indexPath
         viewController.mainViewDelegate = nil

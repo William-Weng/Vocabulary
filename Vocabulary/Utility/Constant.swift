@@ -12,10 +12,11 @@ import WWSQLite3Manager
 final class Constant: NSObject {
     
     static let databaseName = "Vocabulary.db"
-    static let duration: TimeInterval = 0.1
-
+    static let duration: TimeInterval = 0.2
+    static let notificationName = Notification._name("RefreshViewController")
+    
     static var database: SQLite3Database?
-    static var currentTableName: Constant.VoiceCode = .english
+    static var currentTableName: Constant.VoiceCode = .english { didSet { NotificationCenter.default._post(name: Constant.notificationName) }}
     static var volume: Float = 0.1
 }
 

@@ -55,6 +55,10 @@ final class MainViewController: UIViewController {
         pauseBackgroundAnimation()
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         guard let identifier = segue.identifier,
@@ -105,71 +109,10 @@ extension MainViewController: UIPopoverPresentationControllerDelegate {}
 // MARK: - MainViewDelegate
 extension MainViewController: MainViewDelegate {
     
-    /// 刪除該列資料
-    /// - Parameter indexPath: IndexPath
-    func deleteRow(with indexPath: IndexPath) {
-        MainTableViewCell.vocabularyListArray.remove(at: indexPath.row)
-        myTableView.deleteRows(at: [indexPath], with: .fade)
-        titleSetting(with: MainTableViewCell.vocabularyListArray.count)
-    }
-    
-    /// 更新例句數量文字
-    /// - Parameters:
-    ///   - indexPath: IndexPath
-    ///   - count: 數量
-    func updateCountLabel(with indexPath: IndexPath, count: Int) {
-        
-        guard var dictionary = MainTableViewCell.vocabularyListArray[safe: indexPath.row] else { return }
-        
-        dictionary["count"] = count
-        MainTableViewCell.vocabularyListArray[indexPath.row] = dictionary
-        
-        myTableView.reloadRows(at: [indexPath], with: .automatic)
-    }
-    
-    /// 單字等級選單
-    /// - Parameter indexPath: IndexPath
-    func levelMenu(with indexPath: IndexPath) {
-        
-        guard let vocabularyList = MainTableViewCell.vocabularyList(with: indexPath) else { return }
-        
-        let alertController = UIAlertController(title: "請選擇等級", message: nil, preferredStyle: .actionSheet)
-        let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
-        
-        Vocabulary.Level.allCases.forEach { level in
-            
-            let action = UIAlertAction(title: level.value(), style: .default) { [weak self] _ in
-
-                guard let this = self else { return }
-
-                let isSuccess = API.shared.updateLevelToList(vocabularyList.id, level: level, for: Constant.currentTableName)
-
-                if (!isSuccess) { Utility.shared.flashHUD(with: .fail) }
-                this.updateLevelLabel(with: indexPath, level: level)
-            }
-            
-            alertController.addAction(action)
-        }
-        
-        alertController.addAction(action)
-        alertController.modalPresentationStyle = .popover
-        alertController.popoverPresentationController?.barButtonItem = navigationItem.leftBarButtonItem
-        
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    /// 設定TabBar顯示與否
-    /// - Parameters:
-    ///   - isHidden: Bool
-    func tabBarHidden(_ isHidden: Bool) {
-        
-        guard let tabBarController = tabBarController else { return }
-        
-        let duration = Constant.duration
-        
-        tabBarController._tabBarHidden(isHidden, duration: duration)
-        appendButtonPositionConstraint(isHidden, duration: duration)
-    }
+    func deleteRow(with indexPath: IndexPath) { deleteRowAction(with: indexPath) }
+    func updateCountLabel(with indexPath: IndexPath, count: Int) { updateCountLabelAction(with: indexPath, count: count) }
+    func levelMenu(with indexPath: IndexPath) { levelMenuAction(with: indexPath) }
+    func tabBarHidden(_ isHidden: Bool) { tabBarHiddenAction(isHidden) }
 }
 
 // MARK: - 小工具
@@ -236,6 +179,72 @@ private extension MainViewController {
             
             Utility.shared.flashHUD(with: .success)
         }
+    }
+    
+    /// 刪除該列資料功能
+    /// - Parameter indexPath: IndexPath
+    func deleteRowAction(with indexPath: IndexPath) {
+        MainTableViewCell.vocabularyListArray.remove(at: indexPath.row)
+        myTableView.deleteRows(at: [indexPath], with: .fade)
+        titleSetting(with: MainTableViewCell.vocabularyListArray.count)
+    }
+    
+    /// 更新例句數量文字功能
+    /// - Parameters:
+    ///   - indexPath: IndexPath
+    ///   - count: 數量
+    func updateCountLabelAction(with indexPath: IndexPath, count: Int) {
+        
+        guard var dictionary = MainTableViewCell.vocabularyListArray[safe: indexPath.row] else { return }
+        
+        dictionary["count"] = count
+        MainTableViewCell.vocabularyListArray[indexPath.row] = dictionary
+        
+        myTableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+
+    /// 單字等級選單功能
+    /// - Parameter indexPath: IndexPath
+    func levelMenuAction(with indexPath: IndexPath) {
+        
+        guard let vocabularyList = MainTableViewCell.vocabularyList(with: indexPath) else { return }
+        
+        let alertController = UIAlertController(title: "請選擇等級", message: nil, preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
+        
+        Vocabulary.Level.allCases.forEach { level in
+            
+            let action = UIAlertAction(title: level.value(), style: .default) { [weak self] _ in
+
+                guard let this = self else { return }
+
+                let isSuccess = API.shared.updateLevelToList(vocabularyList.id, level: level, for: Constant.currentTableName)
+
+                if (!isSuccess) { Utility.shared.flashHUD(with: .fail) }
+                this.updateLevelLabel(with: indexPath, level: level)
+            }
+            
+            alertController.addAction(action)
+        }
+        
+        alertController.addAction(action)
+        alertController.modalPresentationStyle = .popover
+        alertController.popoverPresentationController?.barButtonItem = navigationItem.leftBarButtonItem
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 設定TabBar顯示與否功能
+    /// - Parameters:
+    ///   - isHidden: Bool
+    func tabBarHiddenAction(_ isHidden: Bool) {
+        
+        guard let tabBarController = tabBarController else { return }
+        
+        let duration = Constant.duration
+        
+        tabBarController._tabBarHidden(isHidden, duration: duration)
+        appendButtonPositionConstraint(isHidden, duration: duration)
     }
     
     /// [新增單字列表](https://medium.com/@daoseng33/我說那個-uitableview-insertrows-uicollectionview-insertitems-呀-56b8758b2efb)
@@ -469,7 +478,7 @@ private extension MainViewController {
             return
         }
         
-        viewController.canEdit = true
+        viewController.canDelete = true
         viewController.vocabularyList = vocabularyList
         viewController.vocabularyListIndexPath = indexPath
         viewController.mainViewDelegate = self
@@ -498,7 +507,7 @@ private extension MainViewController {
         _ = myImageView._GIF(url: gifUrl) { [weak self] result in
             
             guard let this = self else { return }
-                        
+            
             switch result {
             case .failure(let error): wwPrint(error)
             case .success(let info):
@@ -514,7 +523,7 @@ private extension MainViewController {
         isAnimationStop = true
     }
     
-    /// 滑動時TabBar是否隱藏的規則設定
+    /// [滑動時TabBar是否隱藏的規則設定](https://www.jianshu.com/p/539b265bcb5d)
     /// - Parameter scrollView: UIScrollView
     func tabrBarHidden(with scrollView: UIScrollView) {
         
@@ -529,7 +538,7 @@ private extension MainViewController {
         case .down: isHidden = true
         case .left , .right ,.none: break
         }
-                
+        
         tabBarHidden(isHidden)
         currentScrollDirection = direction
     }

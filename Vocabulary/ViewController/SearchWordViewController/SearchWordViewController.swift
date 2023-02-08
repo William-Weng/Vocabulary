@@ -40,8 +40,14 @@ final class SearchWordViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
         tabBarController?._tabBarHidden(false, animated: true)
         pauseBackgroundAnimation()
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        tabBarController?.tabBar.isHidden = true
     }
     
     /// 重新讀取資料
@@ -90,13 +96,7 @@ extension SearchWordViewController: UITextFieldDelegate {
 // MARK: - MainViewDelegate
 extension SearchWordViewController: MainViewDelegate {
     
-    /// 刪除該列資料
-    /// - Parameter indexPath: IndexPath
-    func deleteRow(with indexPath: IndexPath) {
-        SearchTableViewCell.vocabularyListArray.remove(at: indexPath.row)
-        myTableView.deleteRows(at: [indexPath], with: .fade)
-    }
-    
+    func deleteRow(with indexPath: IndexPath) { deleteRowAction(with: indexPath) }
     func levelMenu(with indexPath: IndexPath) {}
     func updateCountLabel(with indexPath: IndexPath, count: Int) {}
     func tabBarHidden(_ isHidden: Bool) {}
@@ -150,6 +150,13 @@ private extension SearchWordViewController {
         let height = scrollView.contentSize.height
         
         if (offset > height) { appendSearchWordList(like: titleSearchBar.searchTextField.text) }
+    }
+    
+    /// 刪除該列資料
+    /// - Parameter indexPath: IndexPath
+    func deleteRowAction(with indexPath: IndexPath) {
+        SearchTableViewCell.vocabularyListArray.remove(at: indexPath.row)
+        myTableView.deleteRows(at: [indexPath], with: .fade)
     }
     
     /// 動畫背景設定

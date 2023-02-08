@@ -138,6 +138,25 @@ extension URL {
     }
 }
 
+// MARK: - URL (class function)
+extension URL {
+    
+    /// 在APP內部開啟URL (SafariViewController) => window.webkit.messageHandlers.LinkUrl.postMessage("https://www.google.com")
+    /// - Parameter urlString: URL網址
+    func _openUrlWithInside(delegate: (UIViewController & SFSafariViewControllerDelegate)) -> SFSafariViewController {
+        
+        let safariViewController = SFSafariViewController(url: self)
+        
+        safariViewController.modalPresentationStyle = .fullScreen
+        safariViewController.modalTransitionStyle = .crossDissolve
+        safariViewController.delegate = delegate
+
+        delegate.present(safariViewController, animated: true)
+        
+        return safariViewController
+    }
+}
+
 // MARK: - JSONSerialization (static function)
 extension JSONSerialization {
     
@@ -228,25 +247,6 @@ extension AVAudioPlayer {
     }
 }
 
-// MARK: - URL (class function)
-extension URL {
-    
-    /// 在APP內部開啟URL (SafariViewController) => window.webkit.messageHandlers.LinkUrl.postMessage("https://www.google.com")
-    /// - Parameter urlString: URL網址
-    func _openUrlWithInside(delegate: (UIViewController & SFSafariViewControllerDelegate)) -> SFSafariViewController {
-        
-        let safariViewController = SFSafariViewController(url: self)
-        
-        safariViewController.delegate = delegate
-        safariViewController.modalPresentationStyle = .overCurrentContext
-        safariViewController.modalTransitionStyle = .crossDissolve
-        
-        delegate.present(safariViewController, animated: true)
-        
-        return safariViewController
-    }
-}
-
 // MARK: - Selector (class function)
 extension Selector {
     
@@ -259,6 +259,35 @@ extension Selector {
         NSObject.cancelPreviousPerformRequests(withTarget: target, selector: self, object: object)
         target.perform(self, with: object, afterDelay: delayTime)
     }
+}
+
+// MARK: - Notification (static function)
+extension Notification {
+    
+    /// String => Notification.Name
+    /// - Parameter name: key的名字
+    /// - Returns: Notification.Name
+    static func _name(_ name: String) -> Notification.Name { return Notification.Name(rawValue: name) }
+}
+
+// MARK: - NotificationCenter (class function)
+extension NotificationCenter {
+    
+    /// 註冊通知
+    /// - Parameters:
+    ///   - name: 要註冊的Notification名稱
+    ///   - queue: 執行的序列
+    ///   - object: 接收的資料
+    ///   - handler: 監聽到後要執行的動作
+    func _register(name: Notification.Name, queue: OperationQueue = .main, object: Any? = nil, handler: @escaping ((Notification) -> Void)) {
+        self.addObserver(forName: name, object: object, queue: queue) { (notification) in handler(notification) }
+    }
+
+    /// 發出通知
+    /// - Parameters:
+    ///   - name: 要發出的Notification名稱
+    ///   - object: 要傳送的資料
+    func _post(name: Notification.Name, object: Any? = nil) { self.post(name: name, object: object) }
 }
 
 // MARK: - UIButton (class function)
@@ -387,6 +416,29 @@ extension UINavigationBarAppearance {
     func _hasShadow(_ hasShadow: Bool = true) -> Self { if (!hasShadow) { shadowColor = nil }; return self }
 }
 
+// MARK: - UINavigationController (class function)
+extension UINavigationController {
+    
+    /// 取得第一頁的ViewController
+    /// - Returns: UIViewController?
+    func _rootViewController() -> UIViewController? { return viewControllers.first }
+    
+    /// 回到RootViewController => 動畫完成後
+    /// - Parameter completion: 動畫完成後的動作
+    /// - Returns: [UIViewController]?
+    func _popToRootViewController(completion: (() -> Void)?) -> [UIViewController]? {
+        
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+        
+        let viewControllers = popToRootViewController(animated: true)
+        
+        CATransaction.commit()
+        
+        return viewControllers
+    }
+}
+
 // MARK: - UITabBarController
 extension UITabBarController {
     
@@ -445,14 +497,16 @@ extension UITabBar {
 // MARK: - UIScrollView (class function)
 extension UIScrollView {
     
-    /// [滑動方向](https://cloud.tencent.com/developer/ask/sof/28254)
+    /// [取得ScrollView滾動的方向](https://cloud.tencent.com/developer/ask/sof/28254)
     /// - Returns: Constant.ScrollDirection
     func _direction() -> Constant.ScrollDirection {
         
-        if panGestureRecognizer.translation(in: self).y > 0 { return .up }
-        if panGestureRecognizer.translation(in: self).y < 0 { return .down }
-        if panGestureRecognizer.translation(in: self).x < 0 { return .left }
-        if panGestureRecognizer.translation(in: self).x > 0 { return .right }
+        let postion = panGestureRecognizer.translation(in: self)
+        
+        if postion.y > 0 { return .up }
+        if postion.y < 0 { return .down }
+        if postion.x < 0 { return .left }
+        if postion.x > 0 { return .right }
         
         return .none
     }

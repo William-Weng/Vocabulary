@@ -14,7 +14,7 @@ protocol SentenceViewDelegate {
     func speechMenu(with indexPath: IndexPath)
 }
 
-// MARK: - 常用例句
+// MARK: - 精選例句
 final class SentenceViewController: UIViewController {
 
     @IBOutlet weak var myImageView: UIImageView!
@@ -26,7 +26,7 @@ final class SentenceViewController: UIViewController {
     private var disappearImage: UIImage?
     private var refreshControl: UIRefreshControl!
     private var currentScrollDirection: Constant.ScrollDirection = .down
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
@@ -75,43 +75,17 @@ extension SentenceViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 // MARK: - SFSafariViewControllerDelegate
-extension SentenceViewController: SFSafariViewControllerDelegate {
-    
-    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        tabbar(isHidden: false)
-    }
-}
+extension SentenceViewController: SFSafariViewControllerDelegate {}
 
 // MARK: - SentenceViewDelegate
 extension SentenceViewController: SentenceViewDelegate {
     
-    func speechMenu(with indexPath: IndexPath) {
-        
-        guard let sentenceList = SentenceTableViewCell.sentenceList(with: indexPath) else { return }
-        
-        let alertController = UIAlertController(title: "請選擇分類", message: nil, preferredStyle: .actionSheet)
-        let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
-        
-        VocabularySentenceList.Speech.allCases.forEach { speech in
-            
-            let action = UIAlertAction(title: speech.value(), style: .default) { [weak self] _ in
+    func speechMenu(with indexPath: IndexPath) { speechMenuAction(with: indexPath) }
+}
 
-                guard let this = self else { return }
-                let isSuccess = API.shared.updateSentenceSpeechToList(sentenceList.id, speech: speech, for: Constant.currentTableName)
-
-                if (!isSuccess) { Utility.shared.flashHUD(with: .fail) }
-                this.updateSentenceLabel(with: indexPath, speech: speech)
-            }
-            
-            alertController.addAction(action)
-        }
-        
-        alertController.addAction(action)
-        alertController.modalPresentationStyle = .popover
-        alertController.popoverPresentationController?.barButtonItem = navigationItem.leftBarButtonItem
-        
-        present(alertController, animated: true, completion: nil)
-    }
+// MARK: - MyNavigationControllerDelegate
+extension SentenceViewController: MyNavigationControllerDelegate {
+    func refreshRootViewController() { reloadSentenceList() }
 }
 
 // MARK: - 小工具
@@ -138,7 +112,7 @@ private extension SentenceViewController {
     func titleSetting(with count: Int) {
         
         let label = UILabel()
-        label.text = "常用例句 - \(count)"
+        label.text = "精選例句 - \(count)"
         
         navigationItem.titleView = label
     }
@@ -241,6 +215,36 @@ private extension SentenceViewController {
     func pauseBackgroundAnimation() {
         disappearImage = myImageView.image
         isAnimationStop = true
+    }
+    
+    /// 例句類型的選單功能
+    /// - Parameter indexPath: IndexPath
+    func speechMenuAction(with indexPath: IndexPath) {
+        
+        guard let sentenceList = SentenceTableViewCell.sentenceList(with: indexPath) else { return }
+        
+        let alertController = UIAlertController(title: "請選擇分類", message: nil, preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
+        
+        VocabularySentenceList.Speech.allCases.forEach { speech in
+            
+            let action = UIAlertAction(title: speech.value(), style: .default) { [weak self] _ in
+
+                guard let this = self else { return }
+                let isSuccess = API.shared.updateSentenceSpeechToList(sentenceList.id, speech: speech, for: Constant.currentTableName)
+
+                if (!isSuccess) { Utility.shared.flashHUD(with: .fail) }
+                this.updateSentenceLabel(with: indexPath, speech: speech)
+            }
+            
+            alertController.addAction(action)
+        }
+        
+        alertController.addAction(action)
+        alertController.modalPresentationStyle = .popover
+        alertController.popoverPresentationController?.barButtonItem = navigationItem.leftBarButtonItem
+        
+        present(alertController, animated: true, completion: nil)
     }
     
     /// 滑動時TabBar是否隱藏的規則設定
@@ -426,7 +430,6 @@ private extension SentenceViewController {
         
         let safariController = url._openUrlWithInside(delegate: self)
         safariController.delegate = self
-        tabbar(isHidden: true)
     }
     
     /// Google搜尋
@@ -434,11 +437,5 @@ private extension SentenceViewController {
     func googleSearchUrlString(with example: String) -> String {
         let googleSearchUrl = "https://www.google.com/search?q=\(example)"
         return googleSearchUrl
-    }
-    
-    /// 設定TabBar是否隱藏
-    /// - Parameter isHidden: Bool
-    func tabbar(isHidden: Bool) {
-        tabBarController?.tabBar.isHidden = isHidden
     }
 }

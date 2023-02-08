@@ -66,7 +66,7 @@ private extension SentenceTableViewCell {
         speechLabel.text = speechType.value()
         speechLabel.backgroundColor = speechType.backgroundColor()
         
-        exampleLabel.font = Constant.currentTableName.font() ?? UIFont.systemFont(ofSize: 36.0)
+        exampleLabel.font = Constant.currentTableName.font(size: 24.0) ?? UIFont.systemFont(ofSize: 24.0)
         exampleLabel.text = sentenceList.example
         
         translateLabel.text = sentenceList.translate

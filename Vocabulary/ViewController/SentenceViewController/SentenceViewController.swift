@@ -71,7 +71,7 @@ extension SentenceViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? { return UISwipeActionsConfiguration(actions: trailingSwipeActionsMaker(with: indexPath)) }
     func scrollViewDidScroll(_ scrollView: UIScrollView) { tabrBarHidden(with: scrollView) }
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateSentenceList(for: scrollView) }
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateSentenceList(for: scrollView, height: Constant.updateScrolledHeight) }
 }
 
 // MARK: - SFSafariViewControllerDelegate
@@ -363,7 +363,7 @@ private extension SentenceViewController {
     /// - Parameters:
     ///   - scrollView: UIScrollView
     ///   - height: CGFloat
-    func updateSentenceList(for scrollView: UIScrollView, height: CGFloat = 128.0) {
+    func updateSentenceList(for scrollView: UIScrollView, height: CGFloat) {
         
         let offset = scrollView.frame.height + scrollView.contentOffset.y - height
         let height = scrollView.contentSize.height

@@ -72,7 +72,7 @@ extension SearchWordViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { return searchTableViewCell(tableView, cellForRowAt: indexPath) }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { performSegue(withIdentifier: searchListTableViewSegue, sender: indexPath) }
     func scrollViewDidScroll(_ scrollView: UIScrollView) { dismissKeyboard(with: titleSearchBar.searchTextField) }
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateSearchData(for: scrollView) }
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateSearchData(for: scrollView, height: Constant.updateScrolledHeight) }
 }
 
 // MARK: - UISearchBarDelegate
@@ -144,7 +144,7 @@ private extension SearchWordViewController {
     /// - Parameters:
     ///   - scrollView: UIScrollView
     ///   - height: CGFloat
-    func updateSearchData(for scrollView: UIScrollView, height: CGFloat = 128.0) {
+    func updateSearchData(for scrollView: UIScrollView, height: CGFloat) {
         
         let offset = scrollView.frame.height + scrollView.contentOffset.y - height
         let height = scrollView.contentSize.height

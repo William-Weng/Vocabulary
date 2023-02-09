@@ -34,7 +34,14 @@ final class ReviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
-        initReviewWordList()
+        initReviewWordList(count: searchTotalCount())
+    }
+    
+    /// 取得各難度的搜尋總數量
+    /// - Returns: Int
+    func searchTotalCount() -> Int {
+        let totalCount = Constant.searchCountWithLevel.reduce(0) { return $0 + $1.value }
+        return totalCount
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -64,12 +71,12 @@ final class ReviewViewController: UIViewController {
     
     @IBAction func guessAnswear(_ sender: UIButton) { answearAction() }
     @IBAction func reviewSolution(_ sender: UIBarButtonItem) { performSegue(withIdentifier: solutionViewSegue, sender: vocabularyArray) }
-    @IBAction func refreshQuestion(_ sender: UIBarButtonItem) { initReviewWordList(); Utility.shared.flashHUD(with: .nice) }
+    @IBAction func refreshQuestion(_ sender: UIBarButtonItem) { initReviewWordList(count: searchTotalCount()); Utility.shared.flashHUD(with: .nice) }
 }
 
 // MARK: - MyNavigationControllerDelegate
 extension ReviewViewController: MyNavigationControllerDelegate {
-    func refreshRootViewController() { initReviewWordList() }
+    func refreshRootViewController() { initReviewWordList(count: searchTotalCount()) }
 }
 
 // MARK: - 小工具
@@ -86,19 +93,17 @@ private extension ReviewViewController {
     
     /// 產生猜單字的字組
     /// - Parameter count: 一次要搜尋的單字數量
-    func initReviewWordList(count: Int = 10) {
+    func initReviewWordList(count: Int) {
         
         initTitle(with: "單字複習")
         
-        isNextVocabulary = true
         isNextVocabulary = true
         vocabularyArray = []
         answerLabel.text = ""
         interpretLabel.text = ""
         answearButtonStatus(isEnabled: false)
         
-        searchWordCount = count
-        reviewWordList = API.shared.searchGuessWordList(for: Constant.currentTableName, count: searchWordCount, offset: 0)
+        reviewWordList = reviewWordRandomListArray()
         searchWordCount = reviewWordList.count
     }
     
@@ -255,6 +260,8 @@ private extension ReviewViewController {
             return
         }
         
+        wwPrint(vocabularyList._jsonObject())
+        
         let count = searchWordCount - reviewWordList.count
         initTitle(with: "單字複習 - \(count) / \(searchWordCount)")
         speakVocabulary(vocabularyList)
@@ -310,5 +317,18 @@ private extension ReviewViewController {
             if (vocabularyList.word.lowercased() != inputWord.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()) { isCorrect = false; return }
             isCorrect = true
         }
+    }
+    
+    /// 產生隨機的題目
+    /// - Returns:
+    func reviewWordRandomListArray() -> [[String : Any]] {
+        
+        var list: [[String : Any]] = []
+        
+        for (level, count) in Constant.searchCountWithLevel {
+            list += API.shared.searchGuessWordList(with: level, for: Constant.currentTableName, count: count, offset: 0)
+        }
+        
+        return list.shuffled()
     }
 }

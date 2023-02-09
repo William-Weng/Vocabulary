@@ -9,11 +9,93 @@ import UIKit
 import AVKit
 import SafariServices
 
+// MARK: - Int (class function)
+extension Int {
+    
+    /// [取得亂數](https://appcoda.com.tw/swift-random-number/)
+    /// - Parameter range: Range<Int>
+    /// - Returns: Int
+    static func _random(in range: Range<Int>) -> Int {
+      var generator = SystemRandomNumberGenerator()
+      let number = Int.random(in: range, using: &generator)
+      return number
+    }
+}
+
 // MARK: - Collection (override class function)
 extension Collection {
 
     /// [為Array加上安全取值特性 => nil](https://stackoverflow.com/questions/25329186/safe-bounds-checked-array-lookup-in-swift-through-optional-bindings)
     subscript(safe index: Index) -> Element? { return indices.contains(index) ? self[index] : nil }
+}
+
+// MARK: - Encodable (class function)
+extension Encodable {
+    
+    /// Class => JSON Data
+    /// - Returns: Data?
+    func _jsonData() -> Data? {
+        guard let jsonData = try? JSONEncoder().encode(self) else { return nil }
+        return jsonData
+    }
+    
+    /// Class => JSON String
+    func _jsonString() -> String? {
+        guard let jsonData = self._jsonData() else { return nil }
+        return jsonData._string()
+    }
+    
+    /// Class => JSON Object
+    /// - Returns: Any?
+    func _jsonObject() -> Any? {
+        guard let jsonData = self._jsonData() else { return nil }
+        return jsonData._jsonObject()
+    }
+}
+
+// MARK: - Array (class function)
+extension Array {
+    
+    /// Array => JSON Data
+    /// - ["name","William"] => ["name","William"] => 5b226e616d65222c2257696c6c69616d225d
+    /// - Returns: Data?
+    func _jsonData(options: JSONSerialization.WritingOptions = JSONSerialization.WritingOptions()) -> Data? {
+        return JSONSerialization._data(with: self, options: options)
+    }
+    
+    /// Array => JSON Object
+    /// - Parameters:
+    ///   - writingOptions: JSONSerialization.WritingOptions
+    ///   - readingOptions: JSONSerialization.ReadingOptions
+    /// - Returns: Any?
+    func _jsonObject(writingOptions: JSONSerialization.WritingOptions = JSONSerialization.WritingOptions(), readingOptions: JSONSerialization.ReadingOptions = .allowFragments) -> Any? {
+        return self._jsonData(options: writingOptions)?._jsonObject(options: readingOptions)
+    }
+    
+    /// Array => JSON String
+    /// - Parameters:
+    ///   - options: JSONSerialization.WritingOptions
+    ///   - encoding: String.Encoding
+    /// - Returns: String?
+    func _jsonString(options: JSONSerialization.WritingOptions = JSONSerialization.WritingOptions(), using encoding: String.Encoding = .utf8) -> String? {
+        return self._jsonData(options: options)?._string(using: encoding)
+    }
+    
+    /// [隨機排序](https://blog.csdn.net/weixin_41735943/article/details/85229696)
+    /// - Returns: [[Self.Element]?](https://leetcode.com/problems/shuffle-an-array/solutions/127672/shuffle-an-array/)
+    func _randomSort() -> [Self.Element]? {
+        
+        guard self.count != 0 else { return nil }
+        
+        var array = self
+        
+        for index in 0..<array.count {
+            let randomIndex = Int._random(in: 0..<array.count)
+            array.swapAt(index, randomIndex)
+        }
+        
+        return array
+    }
 }
 
 // MARK: - Dictionary (class function)
@@ -91,6 +173,21 @@ extension Data {
         decoder.dateDecodingStrategy = .formatted(formatter)
         
         return try? decoder.decode(type.self, from: self)
+    }
+    
+    /// Data => JSON
+    /// - 7b2268747470223a2022626f6479227d => {"http": "body"}
+    /// - Returns: Any?
+    func _jsonObject(options: JSONSerialization.ReadingOptions = .allowFragments) -> Any? {
+        let json = try? JSONSerialization.jsonObject(with: self, options: options)
+        return json
+    }
+    
+    /// Data => 字串
+    /// - Parameter encoding: 字元編碼
+    /// - Returns: String?
+    func _string(using encoding: String.Encoding = .utf8) -> String? {
+        return String(bytes: self, encoding: encoding)
     }
 }
 

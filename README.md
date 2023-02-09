@@ -3,7 +3,7 @@
 
 [![Swift-5.7](https://img.shields.io/badge/Swift-5.7-orange.svg?style=flat)](https://developer.apple.com/swift/) [![iOS 14.0](https://img.shields.io/badge/iOS-14.0-pink.svg?style=flat)](https://developer.apple.com/swift/) [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=flat)](https://developer.apple.com/swift/)
 
-![](./Vocabulary_1.png) ![](./Vocabulary_2.png) ![](./Vocabulary_3.png)
+![](./Vocabulary_1.png) ![](./Vocabulary_2.png) ![](./Vocabulary_3.png) ![](./Vocabulary_4.png)
 
 # 附錄：資源下載說明
 ## 所有資源都是從網路下載，僅作程式分享教學之用，並無侵權之意，資源版權皆屬於原圖作者所有…

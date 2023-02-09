@@ -56,7 +56,7 @@ extension ReviewResultViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return ReviewResultTableViewCell.reviewResultListArray.count }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { return reviewResultTableViewCell(tableView, cellForRowAt: indexPath) }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { performSegue(withIdentifier: reviewDetailSegue, sender: indexPath) }
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateReviewResultList(for: scrollView) }
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateReviewResultList(for: scrollView, height: Constant.updateScrolledHeight) }
 }
 
 // MARK: - ReviewResultViewController
@@ -154,7 +154,7 @@ private extension ReviewResultViewController {
     /// - Parameters:
     ///   - scrollView: UIScrollView
     ///   - height: CGFloat
-    func updateReviewResultList(for scrollView: UIScrollView, height: CGFloat = 128.0) {
+    func updateReviewResultList(for scrollView: UIScrollView, height: CGFloat) {
         
         let offset = scrollView.frame.height + scrollView.contentOffset.y - height
         let height = scrollView.contentSize.height

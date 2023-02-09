@@ -88,8 +88,8 @@ final class MainViewController: UIViewController {
     
     @IBAction func selectDictionary(_ sender: UIBarButtonItem) { dictionaryMenu() }
     @IBAction func selectBackgroundMusic(_ sender: UIBarButtonItem) { backgroundMusicMenu() }
-    @IBAction func selectVolume(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.volumeView.rawValue, sender: nil) }
-    @IBAction func searchWordAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.searchView.rawValue, sender: nil) }
+    @IBAction func selectVolume(_ sender: UIBarButtonItem) { performSegue(for: .volumeView, sender: nil) }
+    @IBAction func searchWordAction(_ sender: UIBarButtonItem) { performSegue(for: .searchView, sender: nil) }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -97,10 +97,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return MainTableViewCell.vocabularyListArray.count }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { return mainTableViewCell(tableView, cellForRowAt: indexPath) }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { performSegue(withIdentifier: ViewSegueType.listTableView.rawValue, sender: indexPath) }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { performSegue(for: .listTableView, sender: indexPath) }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? { return UISwipeActionsConfiguration(actions: trailingSwipeActionsMaker(with: indexPath)) }
     func scrollViewDidScroll(_ scrollView: UIScrollView) { tabrBarHidden(with: scrollView) }
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateVocabularyList(for: scrollView) }
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateVocabularyList(for: scrollView, height: Constant.updateScrolledHeight) }
 }
 
 // MARK: - UIPopoverPresentationControllerDelegate
@@ -154,6 +154,13 @@ private extension MainViewController {
         label.text = "我愛背單字 - \(count)"
         
         navigationItem.titleView = label
+    }
+    
+    /// 使用Segue進入下一頁
+    /// - Parameter indexPath: IndexPath
+    func performSegue(for type: ViewSegueType, sender: Any?) {
+        currentScrollDirection = .none
+        performSegue(withIdentifier: type.rawValue, sender: sender)
     }
     
     /// 重新讀取單字
@@ -316,7 +323,7 @@ private extension MainViewController {
     /// - Parameters:
     ///   - scrollView: UIScrollView
     ///   - height: CGFloat
-    func updateVocabularyList(for scrollView: UIScrollView, height: CGFloat = 128.0) {
+    func updateVocabularyList(for scrollView: UIScrollView, height: CGFloat) {
         
         let offset = scrollView.frame.height + scrollView.contentOffset.y - height
         let height = scrollView.contentSize.height

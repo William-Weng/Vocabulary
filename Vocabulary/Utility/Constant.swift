@@ -14,6 +14,8 @@ final class Constant: NSObject {
     static let databaseName = "Vocabulary.db"
     static let duration: TimeInterval = 0.2
     static let notificationName = Notification._name("RefreshViewController")
+    static let updateScrolledHeight: CGFloat = 128.0
+    static let searchCountWithLevel: SearchCountWithLevel = [.easy: 3, .medium: 4, .hard: 3]
     
     static var database: SQLite3Database?
     static var currentTableName: Constant.VoiceCode = .english { didSet { NotificationCenter.default._post(name: Constant.notificationName) }}
@@ -24,6 +26,7 @@ final class Constant: NSObject {
 extension Constant {
     typealias ExampleInfomation = (id: Int, interpret: String, example: String, translate: String)      // 單字ID / 字義 / 例句 / 例句翻譯
     typealias GIFImageInformation = (index: Int, cgImage: CGImage, pointer: UnsafeMutablePointer<Bool>) // GIF動畫: (第幾張, CGImage, UnsafeMutablePointer<Bool>)
+    typealias SearchCountWithLevel = [Vocabulary.Level: Int]                                            // 複習單字的數量
 }
 
 // MARK: - Enumeration

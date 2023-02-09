@@ -1,4 +1,4 @@
-# [Vocabulary - Xcode 14.2]( https://youtu.be/EiEdM3oGd-w)
+# [Vocabulary - Xcode 14.2](https://youtu.be/RWm37ck-lPc)
 我愛背單字 - 針對身為外語苦手的我，量身訂製的APP，有輕快的背景音樂，也有發音，加上可愛的動畫…
 
 [![Swift-5.7](https://img.shields.io/badge/Swift-5.7-orange.svg?style=flat)](https://developer.apple.com/swift/) [![iOS 14.0](https://img.shields.io/badge/iOS-14.0-pink.svg?style=flat)](https://developer.apple.com/swift/) [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=flat)](https://developer.apple.com/swift/)

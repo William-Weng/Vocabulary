@@ -64,6 +64,10 @@ extension Constant {
         /// - Returns: String
         func vocabularySentenceList() -> String { return "\(self.rawValue)Sentence" }
         
+        /// 常用書籤
+        /// - Returns: String
+        func bookmarks() -> String { return "\(self.rawValue)BookmarkSite" }
+        
         /// [AVSpeechSynthesisVoice List](https://stackoverflow.com/questions/35492386/how-to-get-a-list-of-all-voices-on-ios-9/43576853)
         /// - Returns: String
         func code() -> String {

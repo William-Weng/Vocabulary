@@ -2,7 +2,7 @@
 //  SentenceViewController.swift
 //  Vocabulary
 //
-//  Created by iOS on 2023/2/6.
+//  Created by William.Weng on 2023/2/6.
 //
 
 import UIKit
@@ -294,7 +294,7 @@ private extension SentenceViewController {
         appendButtonPositionConstraint(isHidden, duration: duration)
     }
     
-    /// 更新新增單字Button的位置 for Tabbar
+    /// 更新新增例句Button的位置 for Tabbar
     /// - Parameters:
     ///   - isHidden: Bool
     ///   - animated: Bool

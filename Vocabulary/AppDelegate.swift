@@ -110,6 +110,7 @@ private extension AppDelegate {
             database.create(tableName: tableName.vocabularyList(), type: VocabularyList.self, isOverwrite: false),
             database.create(tableName: tableName.vocabularyReviewList(), type: VocabularyReviewList.self, isOverwrite: false),
             database.create(tableName: tableName.vocabularySentenceList(), type: VocabularySentenceList.self, isOverwrite: false),
+            database.create(tableName: tableName.bookmarks(), type: BookmarkSite.self, isOverwrite: false),
         ]
         
         return result

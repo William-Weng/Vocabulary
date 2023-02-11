@@ -2,7 +2,7 @@
 //  ReviewResultTableViewCell.swift
 //  Vocabulary
 //
-//  Created by iOS on 2023/2/7.
+//  Created by William.Weng on 2023/2/7.
 //
 
 import UIKit

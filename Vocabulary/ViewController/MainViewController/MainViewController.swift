@@ -35,8 +35,9 @@ final class MainViewController: UIViewController {
     
     private var isLoaded = false
     private var isAnimationStop = false
-    private var disappearImage: UIImage?
     private var currentScrollDirection: Constant.ScrollDirection = .down
+
+    private var disappearImage: UIImage?
     private var refreshControl: UIRefreshControl!
     
     override func viewDidLoad() {

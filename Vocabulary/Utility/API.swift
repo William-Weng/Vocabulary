@@ -182,8 +182,27 @@ extension API {
         guard let database = Constant.database else { return [] }
         
         let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
-        let orderBy = SQLite3Condition.OrderBy().item(key: "mistakeCount", type: .descending).addItem(key: "updateTime", type: .descending)
+        let orderBy = SQLite3Condition.OrderBy().item(key: "mistakeCount", type: .descending).addItem(key: "correctCount", type: .ascending).addItem(key: "updateTime", type: .descending)
         let result = database.select(tableName: tableName.vocabularyReviewList(), type: VocabularyReviewList.self, where: nil, orderBy: orderBy, limit: limit)
+        
+        return result.array
+    }
+    
+    ///  搜尋書籤列表
+    /// - Parameters:
+    ///   - tableName: 資料表名稱
+    ///   - count: 單次搜尋的數量
+    ///   - offset: 搜尋的偏移量
+    /// - Returns: [[String : Any]]
+    func searchBookmarkList(for tableName: Constant.VoiceCode, count: Int = 10, offset: Int) -> [[String : Any]] {
+        
+        guard let database = Constant.database else { return [] }
+        
+        let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
+        let orderBy = SQLite3Condition.OrderBy().item(key: "updateTime", type: .descending)
+        let result = database.select(tableName: tableName.bookmarks(), type: BookmarkSite.self, where: nil, orderBy: orderBy, limit: limit)
+        
+        wwPrint(result.sql)
         
         return result.array
     }
@@ -277,6 +296,25 @@ extension API {
         ]
         
         let result = database.insert(tableName: tableName.vocabularySentenceList(), itemsArray: [items])
+        return result?.isSussess ?? false
+    }
+    
+    /// 新增書籤
+    /// - Parameters:
+    ///   - title: 網頁標題
+    ///   - webUrl: 網頁網址
+    ///   - tableName: 資料表名稱
+    /// - Returns: Bool
+    func insertBookmarkToList(_ title: String, webUrl: String, for tableName: Constant.VoiceCode) -> Bool {
+        
+        guard let database = Constant.database else { return false }
+        
+        let items: [SQLite3Database.InsertItem] = [
+            (key: "title", value: title),
+            (key: "url", value: webUrl),
+        ]
+        
+        let result = database.insert(tableName: tableName.bookmarks(), itemsArray: [items])
         return result?.isSussess ?? false
     }
 }
@@ -479,6 +517,28 @@ extension API {
         
         return result.isSussess
     }
+    
+    /// 更新書籤內容
+    /// - Parameters:
+    ///   - id: Int
+    ///   - title: 音標
+    ///   - webUrl: 資料表名稱
+    /// - Returns: Bool
+    func updateBookmarkToList(_ id: Int, title: String, webUrl: String, for tableName: Constant.VoiceCode) -> Bool {
+        
+        guard let database = Constant.database else { return false }
+        
+        let items: [SQLite3Database.InsertItem] = [
+            (key: "title", value: title),
+            (key: "url", value: webUrl),
+            (key: "updateTime", value: Date()._localTime()),
+        ]
+        
+        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let result = database.update(tableName: tableName.bookmarks(), items: items, where: condition)
+        
+        return result.isSussess
+    }
 }
 
 // MARK: - 小工具 (Delete)
@@ -525,6 +585,21 @@ extension API {
         
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
         let result = database.delete(tableName: tableName.vocabularySentenceList(), where: condition)
+        
+        return result.isSussess
+    }
+    
+    /// 刪除書籤
+    /// - Parameters:
+    ///   - id: Int
+    ///   - tableName: Constant.VoiceCode
+    /// - Returns: Bool
+    func deleteBookmark(with id: Int, for tableName: Constant.VoiceCode) -> Bool {
+        
+        guard let database = Constant.database else { return false }
+        
+        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let result = database.delete(tableName: tableName.bookmarks(), where: condition)
         
         return result.isSussess
     }

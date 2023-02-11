@@ -34,6 +34,7 @@
 1. Cry - [cry_9600663](https://www.flaticon.com/free-icon/cry_9600663)
 1. Filter - [choice_4047250](https://www.flaticon.com/free-icon/choice_4047250)
 1. Others - [other_7245102](https://www.flaticon.com/free-icon/other_7245102)
+1. Picture - [picture_2659360](https://www.flaticon.com/free-icon/picture_2659360)
 
 ### [背景音樂 - .mp3 / .m4a](http://amachamusic.chagasi.com/)
 1. 夏の霧.m4a - [甘茶の音楽工房 - natsunokiri.mp3](http://amachamusic.chagasi.com/music_natsunokiri.html)

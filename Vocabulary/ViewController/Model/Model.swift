@@ -194,6 +194,19 @@ final class VocabularySentenceList: Codable {
     }
 }
 
+// MARK: - 網址書籤
+final class BookmarkSite: Codable {
+    
+    let id: Int             // 編號
+    let title: String       // 書籤標題
+    let url: String         // 書籤網址
+    let icon: String?       // 書籤圖示網址
+    let createTime: Date    // 建立時間
+    let updateTime: Date    // 更新時間
+    
+    deinit { wwPrint("\(Self.self) deinit") }
+}
+
 // MARK: - 背景音樂
 struct Music {
     
@@ -301,6 +314,26 @@ extension VocabularySentenceList: SQLite3SchemeDelegate {
             (key: "speech", type: .INTEGER()),
             (key: "example", type: .TEXT(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),
             (key: "translate", type: .TEXT(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),
+            (key: "createTime", type: .TIMESTAMP()),
+            (key: "updateTime", type: .TIMESTAMP()),
+        ]
+        
+        return keyTypes
+    }
+}
+
+// MARK: - SQLite3SchemeDelegate
+extension BookmarkSite: SQLite3SchemeDelegate {
+    
+    /// SQLite資料結構 for WWSQLite3Manager
+    /// - Returns: [(key: String, type: SQLite3Condition.DataType)]
+    static func structure() -> [(key: String, type: SQLite3Condition.DataType)] {
+        
+        let keyTypes: [(key: String, type: SQLite3Condition.DataType)] = [
+            (key: "id", type: .INTEGER()),
+            (key: "title", type: .TEXT(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),
+            (key: "url", type: .TEXT(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),
+            (key: "icon", type: .TEXT(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),
             (key: "createTime", type: .TIMESTAMP()),
             (key: "updateTime", type: .TIMESTAMP()),
         ]

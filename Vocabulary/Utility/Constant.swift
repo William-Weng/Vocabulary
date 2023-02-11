@@ -12,9 +12,9 @@ import WWSQLite3Manager
 final class Constant: NSObject {
     
     static let databaseName = "Vocabulary.db"
-    static let duration: TimeInterval = 0.2
+    static let duration: TimeInterval = 0.15
     static let notificationName = Notification._name("RefreshViewController")
-    static let updateScrolledHeight: CGFloat = 128.0
+    static let updateScrolledHeight: CGFloat = 80.0
     static let searchCountWithLevel: SearchCountWithLevel = [.easy: 3, .medium: 4, .hard: 3]
     
     static var database: SQLite3Database?

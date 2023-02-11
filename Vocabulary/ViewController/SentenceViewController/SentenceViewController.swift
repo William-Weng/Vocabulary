@@ -21,12 +21,14 @@ final class SentenceViewController: UIViewController {
     @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var appendWordButton: UIButton!
     @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
-        
+    
+    private var isLoaded = false
     private var isAnimationStop = false
     private var disappearImage: UIImage?
     private var refreshControl: UIRefreshControl!
     private var currentScrollDirection: Constant.ScrollDirection = .down
-
+    private var currentSpeech: VocabularySentenceList.Speech? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
@@ -42,6 +44,11 @@ final class SentenceViewController: UIViewController {
         pauseBackgroundAnimation()
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        traitCollectionDidChange()
+    }
+
     @IBAction func appendSentenceAction(_ sender: UIButton) {
         
         appendSentenceHint(title: "請輸入例句") { [weak self] (example, translate) in
@@ -49,6 +56,8 @@ final class SentenceViewController: UIViewController {
             return this.appendSentence(example, translate: translate, for: Constant.currentTableName)
         }
     }
+    
+    @IBAction func filterSentence(_ sender: UIBarButtonItem) { sentenceSpeechMenu() }
     
     @objc func refreshSentenceList(_ sender: UIRefreshControl) { reloadSentenceList() }
 }
@@ -85,7 +94,11 @@ extension SentenceViewController: SentenceViewDelegate {
 
 // MARK: - MyNavigationControllerDelegate
 extension SentenceViewController: MyNavigationControllerDelegate {
-    func refreshRootViewController() { reloadSentenceList() }
+    
+    func refreshRootViewController() {
+        currentSpeech = nil
+        reloadSentenceList()
+    }
 }
 
 // MARK: - 小工具
@@ -94,17 +107,18 @@ private extension SentenceViewController {
     /// UITableView的初始化設定
     func initSetting() {
         
+        isLoaded = true
+        navigationItem.backBarButtonItem = UIBarButtonItem()
+        SentenceTableViewCell.sentenceViewDelegate = self
+
         refreshControl = UIRefreshControl._build(target: self, action: #selector(Self.refreshSentenceList(_:)))
         fakeTabBarHeightConstraint.constant = self.tabBarController?.tabBar.frame.height ?? 0
-        navigationItem.backBarButtonItem = UIBarButtonItem()
         
-        reloadSentenceList()
-        
-        SentenceTableViewCell.sentenceViewDelegate = self
-        
+        myTableView._delegateAndDataSource(with: self)
         myTableView.addSubview(refreshControl)
         myTableView.tableFooterView = UIView()
-        myTableView._delegateAndDataSource(with: self)
+
+        reloadSentenceList()
     }
     
     /// 設定標題
@@ -123,7 +137,7 @@ private extension SentenceViewController {
         defer { refreshControl.endRefreshing() }
         
         SentenceTableViewCell.sentenceListArray = []
-        SentenceTableViewCell.sentenceListArray = API.shared.searchSentenceList(for: Constant.currentTableName, offset: 0)
+        SentenceTableViewCell.sentenceListArray = API.shared.searchSentenceList(with: currentSpeech, for: Constant.currentTableName, offset: 0)
         
         titleSetting(with: SentenceTableViewCell.sentenceListArray.count)
         
@@ -148,7 +162,7 @@ private extension SentenceViewController {
         defer { refreshControl.endRefreshing() }
         
         let oldListCount = SentenceTableViewCell.sentenceListArray.count
-        SentenceTableViewCell.sentenceListArray += API.shared.searchSentenceList(for: Constant.currentTableName, offset: SentenceTableViewCell.sentenceListArray.count)
+        SentenceTableViewCell.sentenceListArray += API.shared.searchSentenceList(with: currentSpeech, for: Constant.currentTableName, offset: SentenceTableViewCell.sentenceListArray.count)
         
         let newListCount = SentenceTableViewCell.sentenceListArray.count
         titleSetting(with: newListCount)
@@ -263,14 +277,14 @@ private extension SentenceViewController {
         case .left , .right ,.none: break
         }
         
-        tabBarHidden(isHidden)
+        tabBarHiddenAction(isHidden)
         currentScrollDirection = direction
     }
     
     /// 設定TabBar顯示與否
     /// - Parameters:
     ///   - isHidden: Bool
-    func tabBarHidden(_ isHidden: Bool) {
+    func tabBarHiddenAction(_ isHidden: Bool) {
         
         guard let tabBarController = tabBarController else { return }
         
@@ -290,9 +304,7 @@ private extension SentenceViewController {
         
         guard let tabBar = self.tabBarController?.tabBar else { return }
         
-        if (!isHidden) { fakeTabBarHeightConstraint.constant = tabBar.frame.height; return }
-        fakeTabBarHeightConstraint.constant = 0
-        
+        fakeTabBarHeightConstraint.constant = !isHidden ? tabBar.frame.height : .zero
         UIViewPropertyAnimator(duration: duration, curve: curve) { [weak self] in
             
             guard let this = self else { return }
@@ -350,10 +362,10 @@ private extension SentenceViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    /// 新增單字
+    /// 新增例句
     /// - Parameters:
-    ///   - word: 單字
-    ///   - tableName: 資料表
+    ///   - example: 例句
+    ///   - tableName: 翻譯
     /// - Returns: Bool
     func appendSentence(_ example: String, translate: String, for tableName: Constant.VoiceCode) -> Bool {
         return API.shared.insertSentenceToList(example, translate: translate, for: Constant.currentTableName)
@@ -437,5 +449,59 @@ private extension SentenceViewController {
     func googleSearchUrlString(with example: String) -> String {
         let googleSearchUrl = "https://www.google.com/search?q=\(example)"
         return googleSearchUrl
+    }
+    
+    /// 例句屬性選單
+    func sentenceSpeechMenu() {
+
+        let alertController = UIAlertController(title: "請選擇例句屬性", message: nil, preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
+        let allACaseAction = sentenceSpeechAction(with: nil)
+        
+        VocabularySentenceList.Speech.allCases.forEach { speech in
+            let action = sentenceSpeechAction(with: speech)
+            alertController.addAction(action)
+        }
+        
+        alertController.addAction(allACaseAction)
+        alertController.addAction(action)
+        alertController.modalPresentationStyle = .popover
+        alertController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 例句屬性選單功能 => 重新讀取資料庫
+    /// - Parameter music: Utility.Music
+    /// - Returns: UIAlertAction
+    func sentenceSpeechAction(with speech: VocabularySentenceList.Speech?) -> UIAlertAction {
+        
+        var title = "全部"
+        
+        if let speech = speech { title = speech.value() }
+        
+        let action = UIAlertAction(title: title, style: .default) { [weak self] _ in
+            
+            guard let this = self else { return }
+            
+            this.currentSpeech = speech
+            this.reloadSentenceList()
+        }
+        
+        return action
+    }
+    
+    /// 畫面旋轉後，要修正的事情
+    func traitCollectionDidChange() {
+        
+        if (!isLoaded) { return }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + Constant.duration) { [weak self] in
+            
+            guard let this = self else { return }
+            
+            this.currentScrollDirection = .none
+            this.tabBarHiddenAction(false)
+        }
     }
 }

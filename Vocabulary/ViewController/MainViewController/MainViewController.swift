@@ -33,6 +33,7 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var appendWordButton: UIButton!
     @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
     
+    private var isLoaded = false
     private var isAnimationStop = false
     private var disappearImage: UIImage?
     private var currentScrollDirection: Constant.ScrollDirection = .down
@@ -55,8 +56,9 @@ final class MainViewController: UIViewController {
         pauseBackgroundAnimation()
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        traitCollectionDidChange()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -121,6 +123,7 @@ private extension MainViewController {
     /// UITableView的初始化設定
     func initSetting() {
         
+        isLoaded = true
         navigationItem.backBarButtonItem = UIBarButtonItem()
         
         refreshControl = UIRefreshControl._build(target: self, action: #selector(Self.refreshVocabularyList(_:)))
@@ -560,14 +563,26 @@ private extension MainViewController {
         
         guard let tabBar = self.tabBarController?.tabBar else { return }
         
-        if (!isHidden) { fakeTabBarHeightConstraint.constant = tabBar.frame.height; return }
-        fakeTabBarHeightConstraint.constant = 0
-        
+        fakeTabBarHeightConstraint.constant = !isHidden ? tabBar.frame.height : .zero
         UIViewPropertyAnimator(duration: duration, curve: curve) { [weak self] in
             
             guard let this = self else { return }
             this.view.layoutIfNeeded()
             
         }.startAnimation()
+    }
+    
+    /// 畫面旋轉後，要修正的事情
+    func traitCollectionDidChange() {
+        
+        if (!isLoaded) { return }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + Constant.duration) { [weak self] in
+            
+            guard let this = self else { return }
+            
+            this.currentScrollDirection = .none
+            this.tabBarHiddenAction(false)
+        }
     }
 }

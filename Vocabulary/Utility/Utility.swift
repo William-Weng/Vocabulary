@@ -26,6 +26,7 @@ final class Utility: NSObject {
         case shudder = "Shudder.gif"
         case solution = "Solution.gif"
         case sentence = "Sentence.gif"
+        case others = "Others.gif"
     }
     
     enum Music: String, CaseIterable {

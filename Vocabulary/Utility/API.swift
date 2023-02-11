@@ -151,17 +151,22 @@ extension API {
     
     /// 搜尋例句內容的列表
     /// - Parameters:
+    ///   - speech: 例句的詞性
     ///   - tableName: 資料表名稱
     ///   - count: 數量
     ///   - offset: 偏移量
     /// - Returns: [[String : Any]]
-    func searchSentenceList(for tableName: Constant.VoiceCode, count: Int = 10, offset: Int) -> [[String : Any]] {
-        
+    func searchSentenceList(with speech: VocabularySentenceList.Speech? = nil, for tableName: Constant.VoiceCode, count: Int = 10, offset: Int) -> [[String : Any]] {
+                
         guard let database = Constant.database else { return [] }
         
+        var condition: SQLite3Condition.Where?
         let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
         let orderBy = SQLite3Condition.OrderBy().item(key: "createTime", type: .descending)
-        let result = database.select(tableName: tableName.vocabularySentenceList(), type: VocabularySentenceList.self, where: nil, orderBy: orderBy, limit: limit)
+        
+        if let speech = speech { condition = SQLite3Condition.Where().isCompare(key: "speech", type: .equal, value: speech.rawValue) }
+        
+        let result = database.select(tableName: tableName.vocabularySentenceList(), type: VocabularySentenceList.self, where: condition, orderBy: orderBy, limit: limit)
         
         return result.array
     }

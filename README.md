@@ -28,6 +28,8 @@
 1. Test - [exam_3403504](https://www.flaticon.com/free-icon/exam_3403504)
 1. Star - [star_1985879](https://www.flaticon.com/free-icon/star_1985879)
 1. Cry - [cry_9600663](https://www.flaticon.com/free-icon/cry_9600663)
+1. Filter - [choice_4047250](https://www.flaticon.com/free-icon/choice_4047250)
+1. Others - [other_7245102](https://www.flaticon.com/free-icon/other_7245102)
 
 ### [背景音樂](http://amachamusic.chagasi.com/)
 1. 夏の霧.m4a - [甘茶の音楽工房 - natsunokiri.mp3](http://amachamusic.chagasi.com/music_natsunokiri.html)
@@ -46,6 +48,7 @@
 1. Fail.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
 1. Nice.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
 1. Speak.gif - [media-amazon.com](https://m.media-amazon.com/images/G/01/digital/music/player/web/EQ_accent.gif)
+1. Others.gif - [小白呆萌溫馨動漫gif動圖_動態圖_表情包下載_SOOGIF](http://img.soogif.com/xUsqykJ9IjXSgbL1v4yxlFDlTlhApFVw.gif)
 
 ### [語言字型](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/為-ios-app-加入客製字型-custom-font-d2b28b0269e0)
 1. KleeOne-SemiBold.ttf - [Google Fonts - KleeOne](https://fonts.google.com/specimen/Klee+One)

@@ -30,7 +30,7 @@ final class ReviewViewController: UIViewController {
     private var reviewWordDetailList: [[String : Any]] = []
     private var vocabularyList: VocabularyList?
     private var vocabularyArray: [String] = []
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
@@ -98,9 +98,10 @@ private extension ReviewViewController {
         initTitle(with: "單字複習")
         
         isNextVocabulary = true
-        vocabularyArray = []
         answerLabel.text = ""
         interpretLabel.text = ""
+        vocabularyArray = []
+        reviewWordDetailList = []
         answearButtonStatus(isEnabled: false)
         
         reviewWordList = reviewWordRandomListArray()
@@ -253,7 +254,7 @@ private extension ReviewViewController {
     func speakVocabularyAction() {
         
         if (!isNextVocabulary) { speakVocabulary(vocabularyList); return }
-                
+        
         guard let examinationList = reviewWordList.popLast(),
               let vocabularyList = examinationList._jsonClass(for: VocabularyList.self)
         else {
@@ -272,7 +273,7 @@ private extension ReviewViewController {
     ///   - word: String
     ///   - vocabularyList: VocabularyList
     func solutionAction(with vocabularyList: VocabularyList, isCorrect: Bool) -> Bool {
-                
+        
         isNextVocabulary = true
         answearButtonStatus(isEnabled: false)
         reviewWordDetailList = []

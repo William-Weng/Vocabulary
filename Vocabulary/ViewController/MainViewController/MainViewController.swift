@@ -417,12 +417,19 @@ private extension MainViewController {
     /// 背景音樂選單
     func backgroundMusicMenu() {
 
-        let alertController = UIAlertController(title: "請選擇背景音樂", message: nil, preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: "請選擇背景音樂 (.mp3 / .m4a)", message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
-
-        Utility.Music.allCases.forEach { music in
-            let action = backgroundMusicAlertAction(with: music)
-            alertController.addAction(action)
+        
+        if var musicList = musicFileList()?.sorted() {
+            
+            musicList.append("靜音")
+            musicList.forEach({ filename in
+                
+                let music = Music(filename: filename)
+                let action = backgroundMusicAlertAction(with: music)
+                
+                alertController.addAction(action)
+            })
         }
         
         alertController.addAction(action)
@@ -433,11 +440,11 @@ private extension MainViewController {
     }
     
     /// 背景音樂選單功能 => 播放音樂
-    /// - Parameter music: Utility.Music
+    /// - Parameter music: Music
     /// - Returns: UIAlertAction
-    func backgroundMusicAlertAction(with music: Utility.Music) -> UIAlertAction {
+    func backgroundMusicAlertAction(with music: Music) -> UIAlertAction {
         
-        let action = UIAlertAction(title: "\(music)", style: .default) { [weak self] _ in
+        let action = UIAlertAction(title: "\(music.filename)", style: .default) { [weak self] _ in
             
             guard let this = self,
                   let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -583,6 +590,34 @@ private extension MainViewController {
             
             this.currentScrollDirection = .none
             this.tabBarHiddenAction(false)
+        }
+    }
+    
+    /// 建立存放背景音樂的資料夾
+    /// - Returns: 資料夾的URL
+    func musicFolderMaker() -> URL? {
+        
+        guard let musicFolderUrl = Constant.musicFolderUrl else { return nil }
+        
+        let result = FileManager.default._createDirectory(with: musicFolderUrl, path: "")
+        
+        switch result {
+        case .failure(let error): wwPrint(error); return nil
+        case .success(let isSuccess): return (!isSuccess) ? nil : musicFolderUrl
+        }
+    }
+    
+    /// 背景音樂的資料夾的檔案列表
+    /// - Returns: [String]?
+    func musicFileList() -> [String]? {
+        
+        guard let musicFolder = musicFolderMaker() else { return nil }
+        
+        let result = FileManager.default._fileList(with: musicFolder)
+        
+        switch result {
+        case .failure(let error): wwPrint(error); return nil
+        case .success(let list): return list
         }
     }
 }

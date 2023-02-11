@@ -252,6 +252,23 @@ extension URL {
         
         return safariViewController
     }
+    
+    /// 加上後面的路徑
+    /// - Parameter path: String
+    /// - Returns: URL?
+    func _appendPath(_ path: String) -> URL? {
+        let pathComponent = self.path + "/" + path
+        return URL._standardization(string: pathComponent)
+    }
+    
+    /// 取得檔案路徑的副檔名
+    /// - 大 or 小寫
+    /// - Parameter isUppercased: 要轉換成大寫或小寫
+    /// - Returns: String
+    func _pathExtension(isUppercased: Bool = true) -> String {
+        if (isUppercased) { return pathExtension.uppercased() }
+        return pathExtension.lowercased()
+    }
 }
 
 // MARK: - JSONSerialization (static function)
@@ -387,16 +404,55 @@ extension NotificationCenter {
     func _post(name: Notification.Name, object: Any? = nil) { self.post(name: name, object: object) }
 }
 
-// MARK: - UIButton (class function)
-extension UIButton {
+// MARK: - FileManager (class function)
+extension FileManager {
     
-    /// 按鍵能不能按 / 顏色
+    /// [取得User的資料夾](https://cdfq152313.github.io/post/2016-10-11/)
+    /// - UIFileSharingEnabled = YES => iOS設置iTunes文件共享
+    /// - Parameter directory: User的資料夾名稱
+    /// - Returns: [URL]
+    func _userDirectory(for directory: FileManager.SearchPathDirectory) -> [URL] { return Self.default.urls(for: directory, in: .userDomainMask) }
+    
+    /// User的「文件」資料夾URL
+    /// - => ~/Documents (UIFileSharingEnabled)
+    /// - Returns: URL?
+    func _documentDirectory() -> URL? { return self._userDirectory(for: .documentDirectory).first }
+    
+    /// 新增資料夾
     /// - Parameters:
-    ///   - isEnabled: Bool
-    ///   - backgroundColor: UIColor?
-    func _isEnabled(_ isEnabled: Bool, backgroundColor: UIColor?) {
-        self.isEnabled = isEnabled
-        self.backgroundColor = backgroundColor
+    ///   - url: 基本資料夾位置
+    ///   - path: 資料夾名稱
+    /// - Returns: Result<Bool, Error>
+    func _createDirectory(with url: URL?, path: String) -> Result<Bool, Error> {
+        
+        guard let url = url,
+              let directoryURL = Optional.some(url.appendingPathComponent(path))
+        else {
+            return .success(false)
+        }
+        
+        do {
+            try createDirectory(at: directoryURL, withIntermediateDirectories: true, attributes: nil)
+            return .success(true)
+        } catch {
+            return .failure(error)
+        }
+    }
+    
+    /// [讀取資料夾 / 檔案名稱的列表](https://blog.csdn.net/pk_20140716/article/details/54925418)
+    /// - ["1.png", "Demo"])
+    /// - Parameter url: 要讀取的資料夾路徑
+    /// - Returns: [String]?
+    func _fileList(with url: URL?) -> Result<[String]?, Error> {
+        
+        guard let path = url?.path else { return .success(nil) }
+        
+        do {
+            let fileList = try contentsOfDirectory(atPath: path)
+            return .success(fileList)
+        } catch {
+            return .failure(error)
+        }
     }
 }
 
@@ -408,6 +464,19 @@ extension UIWindow {
     static func _keyWindow() -> UIWindow? {
         let keyWindow = UIApplication.shared.connectedScenes.filter({$0.activationState == .foregroundActive}).compactMap({$0 as? UIWindowScene}).first?.windows.filter({$0.isKeyWindow}).first
         return keyWindow
+    }
+}
+
+// MARK: - UIButton (class function)
+extension UIButton {
+    
+    /// 按鍵能不能按 / 顏色
+    /// - Parameters:
+    ///   - isEnabled: Bool
+    ///   - backgroundColor: UIColor?
+    func _isEnabled(_ isEnabled: Bool, backgroundColor: UIColor?) {
+        self.isEnabled = isEnabled
+        self.backgroundColor = backgroundColor
     }
 }
 

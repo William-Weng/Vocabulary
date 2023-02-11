@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 import WWPrint
 import WWSQLite3Manager
 
@@ -190,6 +191,36 @@ final class VocabularySentenceList: Codable {
             case .slang: return .systemIndigo
             }
         }
+    }
+}
+
+// MARK: - 背景音樂
+struct Music {
+    
+    let filename: String
+    
+    /// 音樂檔案路徑
+    /// - Returns: URL?
+    func fileURL() -> URL? {
+        let musicFolderUrl = Constant.musicFolderUrl
+        return musicFolderUrl?._appendPath(filename)
+    }
+    
+    /// 音樂檔案類型
+    /// - Returns: AVFileType
+    func fileType() -> AVFileType {
+        
+        guard let components = Optional.some(filename.components(separatedBy: ".")),
+              components.count > 1,
+              let extensionName = components.last
+        else {
+            return .mp3
+        }
+        
+        if (extensionName.lowercased() == "mp3") { return .mp3 }
+        if (extensionName.lowercased() == "m4a") { return .m4a }
+        
+        return .mp3
     }
 }
 

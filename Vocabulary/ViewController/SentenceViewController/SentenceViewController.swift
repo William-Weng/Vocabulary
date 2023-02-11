@@ -472,7 +472,7 @@ private extension SentenceViewController {
     }
     
     /// 例句屬性選單功能 => 重新讀取資料庫
-    /// - Parameter music: Utility.Music
+    /// - Parameter music: Music
     /// - Returns: UIAlertAction
     func sentenceSpeechAction(with speech: VocabularySentenceList.Speech?) -> UIAlertAction {
         

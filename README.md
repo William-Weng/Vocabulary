@@ -3,7 +3,11 @@
 
 [![Swift-5.7](https://img.shields.io/badge/Swift-5.7-orange.svg?style=flat)](https://developer.apple.com/swift/) [![iOS 14.0](https://img.shields.io/badge/iOS-14.0-pink.svg?style=flat)](https://developer.apple.com/swift/) [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=flat)](https://developer.apple.com/swift/) ![](https://img.shields.io/github/v/tag/William-Weng/Vocabulary)
 
-![](./Vocabulary_1.png) ![](./Vocabulary_2.png) ![](./Vocabulary_3.png) ![](./Vocabulary_4.png)
+![](./@Image/Example_1.png) ![](./@Image/Example_2.png) ![](./@Image/Example_3.png)
+
+![](./@Image/Example_4.png) ![](./@Image/Example_5.png) ![](./@Image/Example_6.png)
+
+![](./@Image/Example_0.png)
 
 # 附錄：資源下載說明
 ## 所有資源都是從網路下載，僅作程式分享教學之用，並無侵權之意，資源版權皆屬於原圖作者所有…
@@ -31,7 +35,7 @@
 1. Filter - [choice_4047250](https://www.flaticon.com/free-icon/choice_4047250)
 1. Others - [other_7245102](https://www.flaticon.com/free-icon/other_7245102)
 
-### [背景音樂](http://amachamusic.chagasi.com/)
+### [背景音樂 - .mp3 / .m4a](http://amachamusic.chagasi.com/)
 1. 夏の霧.m4a - [甘茶の音楽工房 - natsunokiri.mp3](http://amachamusic.chagasi.com/music_natsunokiri.html)
 1. 桜雲.m4a - [甘茶の音楽工房 - ouun.mp3](http://amachamusic.chagasi.com/music_ouun.html)
 1. TheBeatOfNature.mp3 - [Pixabay - the-beat-of-nature-122841.mp3](https://pixabay.com/music/solo-guitar-the-beat-of-nature-122841/)

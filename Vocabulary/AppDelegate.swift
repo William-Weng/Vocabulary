@@ -21,8 +21,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         
         initDatabase()
         backgroundBarColor(UIColor.black.withAlphaComponent(0.1))
-        _ = playBackgroundMusic(with: .夏の霧, volume: Constant.volume)
         audioInterruptionNotification()
+        
         return true
     }
     
@@ -50,7 +50,7 @@ extension AppDelegate {
     ///   - music: 音樂檔案
     ///   - volume: 音量大小
     /// - Returns: Bool
-    func playBackgroundMusic(with music: Utility.Music, volume: Float) -> Bool {
+    func playBackgroundMusic(with music: Music, volume: Float) -> Bool {
         
         audioPlayer?.stop()
         audioPlayer = nil
@@ -123,8 +123,8 @@ private extension AppDelegate {
     }
     
     /// 音樂播放器
-    /// - Parameter music: Utility.Music
-    func musicPlayerMaker(with music: Utility.Music) -> AVAudioPlayer? {
+    /// - Parameter music: Music
+    func musicPlayerMaker(with music: Music) -> AVAudioPlayer? {
         
         audioPlayer?.stop()
         audioPlayer = nil

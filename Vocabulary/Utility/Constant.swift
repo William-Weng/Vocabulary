@@ -16,17 +16,20 @@ final class Constant: NSObject {
     static let notificationName = Notification._name("RefreshViewController")
     static let updateScrolledHeight: CGFloat = 80.0
     static let searchCountWithLevel: SearchCountWithLevel = [.easy: 3, .medium: 4, .hard: 3]
-    
+
     static var database: SQLite3Database?
     static var currentTableName: Constant.VoiceCode = .english { didSet { NotificationCenter.default._post(name: Constant.notificationName) }}
     static var volume: Float = 0.1
+    static var musicFolderUrl: URL? { get { return FileManager.default._documentDirectory()?.appendingPathComponent("Music", isDirectory: false) }}
 }
 
 // MARK: - Typealias
 extension Constant {
+    
     typealias ExampleInfomation = (id: Int, interpret: String, example: String, translate: String)      // 單字ID / 字義 / 例句 / 例句翻譯
     typealias GIFImageInformation = (index: Int, cgImage: CGImage, pointer: UnsafeMutablePointer<Bool>) // GIF動畫: (第幾張, CGImage, UnsafeMutablePointer<Bool>)
     typealias SearchCountWithLevel = [Vocabulary.Level: Int]                                            // 複習單字的數量
+    typealias FileInfomation = (isExist: Bool, isDirectory: Bool)                                       // 檔案相關資訊 (是否存在 / 是否為資料夾)
 }
 
 // MARK: - Enumeration
@@ -121,6 +124,7 @@ extension Constant {
         }
     }
     
+    // MARK: - 自定義錯誤
     enum MyError: Error, LocalizedError {
         
         var errorDescription: String { errorMessage() }

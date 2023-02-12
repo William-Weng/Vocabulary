@@ -7,24 +7,36 @@
 
 import UIKit
 
+// MARK: - 其它設定Cell
 final class OthersTableViewCell: UITableViewCell, CellReusable {
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var iconImageView: UIImageView!
     
+    static var othersViewDelegate: OthersViewDelegate?
     static var bookmarksArray: [[String : Any]] = []
     
     var indexPath: IndexPath = []
     
     private var bookmarkSite: BookmarkSite?
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        iconImageView.gestureRecognizers?.forEach({ iconImageView.removeGestureRecognizer($0) })
+    }
+    
     func configure(with indexPath: IndexPath) { configure(for: indexPath) }
+    
+    @objc func loadImage(_ sender: UITapGestureRecognizer) {
+        guard let filename = iconFilename() else { return }
+        Self.othersViewDelegate?.loadImage(with: indexPath, filename: filename)
+    }
 }
 
 // MARK: - 小工具
 extension OthersTableViewCell {
     
-    /// 取得書籤例句
+    /// 取得書籤
     /// - Parameter indexPath: IndexPath
     /// - Returns: VocabularyList?
     static func bookmarkSite(with indexPath: IndexPath) -> BookmarkSite? {
@@ -42,11 +54,36 @@ private extension OthersTableViewCell {
         
         guard let bookmarkSite = Self.bookmarkSite(with: indexPath) else { return }
         
-        // let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(Self.updateSpeechLabel(_:)))
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(Self.loadImage(_:)))
         
         self.indexPath = indexPath
         self.bookmarkSite = bookmarkSite
         
         titleLabel.text = bookmarkSite.title
+        
+        iconImageView.addGestureRecognizer(tapRecognizer)
+        iconImageView.image = iconImage(with: iconFilename()) ?? UIImage(named: "Picture")
+    }
+    
+    /// 讀取存在手機的圖示檔
+    /// - Parameter filename: String?
+    /// - Returns: UIImage?
+    func iconImage(with filename: String?) -> UIImage? {
+        
+        guard let imageFolderUrl = Constant.imageFolderUrl,
+              let filename = filename
+        else {
+            return nil
+        }
+        
+        let url = imageFolderUrl.appendingPathComponent(filename, isDirectory: false)
+        return UIImage(contentsOfFile: url.path)
+    }
+    
+    /// 圖示檔的名稱 (SHA1)
+    /// - Returns: String?
+    func iconFilename() -> String? {
+        guard let bookmarkSite = bookmarkSite else { return nil }
+        return bookmarkSite.url._sha1()
     }
 }

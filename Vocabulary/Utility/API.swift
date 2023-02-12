@@ -521,8 +521,9 @@ extension API {
     /// 更新書籤內容
     /// - Parameters:
     ///   - id: Int
-    ///   - title: 音標
-    ///   - webUrl: 資料表名稱
+    ///   - title: 標題
+    ///   - webUrl: 網址
+    ///   - tableName: 資料表名稱
     /// - Returns: Bool
     func updateBookmarkToList(_ id: Int, title: String, webUrl: String, for tableName: Constant.VoiceCode) -> Bool {
         
@@ -532,6 +533,26 @@ extension API {
             (key: "title", value: title),
             (key: "url", value: webUrl),
             (key: "updateTime", value: Date()._localTime()),
+        ]
+        
+        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let result = database.update(tableName: tableName.bookmarks(), items: items, where: condition)
+        
+        return result.isSussess
+    }
+    
+    /// 更新書籤圖片網址
+    /// - Parameters:
+    ///   - id: Int
+    ///   - iconUrl: 圖片網址
+    ///   - webUrl: 資料表名稱
+    /// - Returns: Bool
+    func updateBookmarkIconToList(_ id: Int, iconUrl: String, for tableName: Constant.VoiceCode) -> Bool {
+        
+        guard let database = Constant.database else { return false }
+        
+        let items: [SQLite3Database.InsertItem] = [
+            (key: "icon", value: iconUrl),
         ]
         
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)

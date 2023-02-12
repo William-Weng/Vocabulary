@@ -27,6 +27,7 @@ final class Utility: NSObject {
         case solution = "Solution.gif"
         case sentence = "Sentence.gif"
         case others = "Others.gif"
+        case download = "Download.gif"
     }
     
     enum Music: String, CaseIterable {
@@ -75,6 +76,12 @@ extension Utility {
         WWHUD.shared.flash(effect: .gif(url: gifUrl, options: nil), height: 256.0, backgroundColor: .black.withAlphaComponent(0.3), animation: 0.75, completion: nil)
     }
     
+    /// [播放HUD](https://augmentedcode.io/2019/09/01/animating-gifs-and-apngs-with-cganimateimageaturlwithblock-in-swift/)
+    func diplayHUD(with type: Utility.HudGifType) {
+        guard let gifUrl = Bundle.main.url(forResource: type.rawValue, withExtension: nil) else { return }
+        WWHUD.shared.display(effect: .gif(url: gifUrl, options: nil), height: 256.0, backgroundColor: .black.withAlphaComponent(0.3))
+    }
+    
     /// [讀出文字 / 文字發聲](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/讓開不了口的-app-開口說話-48c674f8f69e)
     /// - Parameters:
     ///   - string: 要讀出的文字
@@ -84,6 +91,13 @@ extension Utility {
     ///   - volume: 音量 (0% ~ 100%)
     func speak(string: String, voice: Constant.VoiceCode = .english, rate: Float = 0.4, pitchMultiplier: Float = 1.5, volume: Float = 1.0) {
         Self.synthesizer._speak(string: string, voice: voice, rate: rate, pitchMultiplier: pitchMultiplier, volume: volume)
+    }
+    
+    /// 判斷是不是網址的網址 (http:// || https://)
+    /// - Parameter urlString: String
+    /// - Returns: Bool
+    func isWebUrlString(_ urlString: String) -> Bool {
+        return urlString.hasPrefix("http://") || urlString.hasPrefix("https://")
     }
 }
 

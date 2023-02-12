@@ -24,6 +24,7 @@ final class SentenceViewController: UIViewController {
     
     private var isLoaded = false
     private var isAnimationStop = false
+
     private var disappearImage: UIImage?
     private var refreshControl: UIRefreshControl!
     private var currentScrollDirection: Constant.ScrollDirection = .down
@@ -67,24 +68,19 @@ extension SentenceViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return SentenceTableViewCell.sentenceListArray.count }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { return sentenceTableViewCell(tableView, cellForRowAt: indexPath) }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        guard let dictionary = SentenceTableViewCell.sentenceListArray[safe: indexPath.row],
-              let sentenceList = dictionary._jsonClass(for: VocabularySentenceList.self)
-        else {
-            return
-        }
-        
-        netDictionary(with: sentenceList.example)
-    }
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { netDictionary(with: indexPath) }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? { return UISwipeActionsConfiguration(actions: trailingSwipeActionsMaker(with: indexPath)) }
     func scrollViewDidScroll(_ scrollView: UIScrollView) { tabrBarHidden(with: scrollView) }
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateSentenceList(for: scrollView, height: Constant.updateScrolledHeight) }
 }
 
 // MARK: - SFSafariViewControllerDelegate
-extension SentenceViewController: SFSafariViewControllerDelegate {}
+extension SentenceViewController: SFSafariViewControllerDelegate {
+    
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        tabBarHiddenAction(false)
+    }
+}
 
 // MARK: - SentenceViewDelegate
 extension SentenceViewController: SentenceViewDelegate {
@@ -431,6 +427,19 @@ private extension SentenceViewController {
     }
     
     /// 例句網路字典
+    /// - Parameter indexPath: IndexPath
+    func netDictionary(with indexPath: IndexPath) {
+        
+        guard let dictionary = SentenceTableViewCell.sentenceListArray[safe: indexPath.row],
+              let sentenceList = dictionary._jsonClass(for: VocabularySentenceList.self)
+        else {
+            return
+        }
+        
+        netDictionary(with: sentenceList.example)
+    }
+    
+    /// 例句網路字典
     /// - Parameter example: 例句
     func netDictionary(with example: String?) {
         
@@ -439,6 +448,8 @@ private extension SentenceViewController {
         else {
             return
         }
+        
+        currentScrollDirection = .none
         
         let safariController = url._openUrlWithInside(delegate: self)
         safariController.delegate = self

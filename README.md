@@ -54,6 +54,7 @@
 1. Nice.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
 1. Speak.gif - [media-amazon.com](https://m.media-amazon.com/images/G/01/digital/music/player/web/EQ_accent.gif)
 1. Others.gif - [小白呆萌溫馨動漫gif動圖_動態圖_表情包下載_SOOGIF](http://img.soogif.com/xUsqykJ9IjXSgbL1v4yxlFDlTlhApFVw.gif)
+1. Download.gif - [https://in.pinterest.com/meghaumrania/cute-love-gif/](https://i.pinimg.com/originals/d4/89/0e/d4890e94b9e0ff70bf52c392a5e8d752.gif)
 
 ### [語言字型](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/為-ios-app-加入客製字型-custom-font-d2b28b0269e0)
 1. KleeOne-SemiBold.ttf - [Google Fonts - KleeOne](https://fonts.google.com/specimen/Klee+One)

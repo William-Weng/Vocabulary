@@ -8,6 +8,7 @@
 import UIKit
 import AVKit
 import SafariServices
+import CommonCrypto
 
 // MARK: - Int (class function)
 extension Int {
@@ -152,6 +153,30 @@ extension String {
     /// - Parameter characterSet: 字元的判斷方式
     /// - Returns: String?
     func _encodingURL(characterSet: CharacterSet = .urlQueryAllowed) -> String? { return addingPercentEncoding(withAllowedCharacters: characterSet) }
+    
+    /// [文字 => SHA1](https://stackoverflow.com/questions/25761344/how-to-hash-nsstring-with-sha1-in-swift)
+    /// - Returns: [String](https://emn178.github.io/online-tools/sha1.html)
+    func _sha1() -> String { return self._secureHashAlgorithm(digestLength: CC_SHA1_DIGEST_LENGTH, encode: CC_SHA1) }
+}
+
+// MARK: - String (private class function)
+private extension String {
+    
+    /// [計算SHA家族的雜湊值](https://zh.wikipedia.org/zh-tw/SHA家族)
+    /// - Parameters:
+    ///   - digestLength: [雜湊值長度](https://ithelp.ithome.com.tw/articles/10241695)
+    ///   - encode: [雜湊函式](https://ithelp.ithome.com.tw/articles/10208884)
+    /// - Returns: [String](https://emn178.github.io/online-tools/)
+    func _secureHashAlgorithm(digestLength: Int32, encode: (_ data: UnsafeRawPointer?, _ len: CC_LONG, _ md: UnsafeMutablePointer<UInt8>?) -> UnsafeMutablePointer<UInt8>?) -> String {
+        
+        let data = Data(self.utf8)
+        var hash = [UInt8](repeating: 0, count: Int(digestLength))
+        
+        data.withUnsafeBytes { _ = encode($0.baseAddress, CC_LONG(data.count), &hash) }
+        
+        let hexBytes = hash.map { String(format: "%02hhx", $0) }
+        return hexBytes.joined()
+    }
 }
 
 // MARK: - Data (class function)
@@ -254,11 +279,12 @@ extension URL {
     }
     
     /// 加上後面的路徑
-    /// - Parameter path: String
     /// - Returns: URL?
-    func _appendPath(_ path: String) -> URL? {
-        let pathComponent = self.path + "/" + path
-        return URL._standardization(string: pathComponent)
+    /// - Parameters:
+    ///   - path: String
+    ///   - isDirectory: Bool
+    func _appendPath(_ path: String, isDirectory: Bool = false) -> URL? {
+        return self.appendingPathComponent(path, isDirectory: isDirectory)
     }
     
     /// 取得檔案路徑的副檔名
@@ -450,6 +476,27 @@ extension FileManager {
         do {
             let fileList = try contentsOfDirectory(atPath: path)
             return .success(fileList)
+        } catch {
+            return .failure(error)
+        }
+    }
+    
+    /// 寫入Data - 二進制資料
+    /// - Parameters:
+    ///   - url: 寫入Data的文件URL
+    ///   - data: 要寫入的資料
+    /// - Returns: Result<Bool, Error>
+    func _writeData(to url: URL?, data: Data?) -> Result<Bool, Error> {
+        
+        guard let url = url,
+              let data = data
+        else {
+            return .success(false)
+        }
+        
+        do {
+            try data.write(to: url)
+            return .success(true)
         } catch {
             return .failure(error)
         }

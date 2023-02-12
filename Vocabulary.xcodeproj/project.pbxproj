@@ -26,6 +26,8 @@
 		642858AB297BC51E00DD7D88 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642858AA297BC51E00DD7D88 /* Model.swift */; };
 		642858AE297BC61300DD7D88 /* WWPrint in Frameworks */ = {isa = PBXBuildFile; productRef = 642858AD297BC61300DD7D88 /* WWPrint */; };
 		646E44A42980A726002BCBC8 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646E44A32980A726002BCBC8 /* ReviewViewController.swift */; };
+		6472DD462997DFE100B0044A /* WWNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 6472DD452997DFE100B0044A /* WWNetworking */; };
+		6472DD482997E58300B0044A /* Download.gif in Resources */ = {isa = PBXBuildFile; fileRef = 6472DD472997E58300B0044A /* Download.gif */; };
 		6492ADD52986B8E900E1B59B /* KleeOne-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADD42986B8E900E1B59B /* KleeOne-SemiBold.ttf */; };
 		6492ADD72986BBFA00E1B59B /* GamjaFlower-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADD62986BBFA00E1B59B /* GamjaFlower-Regular.ttf */; };
 		6492ADDD2986BF6E00E1B59B /* jf-openhuninn-1.1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADDC2986BF6D00E1B59B /* jf-openhuninn-1.1.ttf */; };
@@ -77,6 +79,7 @@
 		642858A5297BC40E00DD7D88 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		642858AA297BC51E00DD7D88 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		646E44A32980A726002BCBC8 /* ReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
+		6472DD472997E58300B0044A /* Download.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Download.gif; sourceTree = "<group>"; };
 		6492ADD42986B8E900E1B59B /* KleeOne-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "KleeOne-SemiBold.ttf"; sourceTree = "<group>"; };
 		6492ADD62986BBFA00E1B59B /* GamjaFlower-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GamjaFlower-Regular.ttf"; sourceTree = "<group>"; };
 		6492ADDC2986BF6D00E1B59B /* jf-openhuninn-1.1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "jf-openhuninn-1.1.ttf"; sourceTree = "<group>"; };
@@ -116,6 +119,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6420F6AE2980C30D005EAA5A /* WWHUD in Frameworks */,
+				6472DD462997DFE100B0044A /* WWNetworking in Frameworks */,
 				641B5CA52984B1F200AB1C56 /* WWSlider in Frameworks */,
 				642858AE297BC61300DD7D88 /* WWPrint in Frameworks */,
 				642858A9297BC48900DD7D88 /* WWSQLite3Manager in Frameworks */,
@@ -130,6 +134,7 @@
 			children = (
 				64C184FF297E849A00D1D1B2 /* Success.gif */,
 				641F3FC2298377E300C44851 /* Studing.gif */,
+				6472DD472997E58300B0044A /* Download.gif */,
 				814B4D01298CE5B9002A56CD /* Shudder.gif */,
 				818E26172992357300385705 /* Review.gif */,
 				641F3FBC29836B5100C44851 /* Reading.gif */,
@@ -360,6 +365,7 @@
 				642858AD297BC61300DD7D88 /* WWPrint */,
 				6420F6AD2980C30D005EAA5A /* WWHUD */,
 				641B5CA42984B1F200AB1C56 /* WWSlider */,
+				6472DD452997DFE100B0044A /* WWNetworking */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -394,6 +400,7 @@
 				642858AC297BC61300DD7D88 /* XCRemoteSwiftPackageReference "WWPrint" */,
 				6420F6AC2980C30D005EAA5A /* XCRemoteSwiftPackageReference "WWHUD" */,
 				641B5CA32984B1F200AB1C56 /* XCRemoteSwiftPackageReference "WWSlider" */,
+				6472DD442997DFE100B0044A /* XCRemoteSwiftPackageReference "WWNetworking" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -413,6 +420,7 @@
 				64285897297BBF8700DD7D88 /* LaunchScreen.storyboard in Resources */,
 				641F3FC12983775D00C44851 /* Search.gif in Resources */,
 				818E26182992357300385705 /* Review.gif in Resources */,
+				6472DD482997E58300B0044A /* Download.gif in Resources */,
 				64285894297BBF8700DD7D88 /* Assets.xcassets in Resources */,
 				81CD85CA2990EFDB009C39FF /* Sentence.gif in Resources */,
 				81BA793E29876CE000C0FD6C /* README.md in Resources */,
@@ -730,6 +738,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		6472DD442997DFE100B0044A /* XCRemoteSwiftPackageReference "WWNetworking" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWNetworking.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -752,6 +768,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 642858AC297BC61300DD7D88 /* XCRemoteSwiftPackageReference "WWPrint" */;
 			productName = WWPrint;
+		};
+		6472DD452997DFE100B0044A /* WWNetworking */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6472DD442997DFE100B0044A /* XCRemoteSwiftPackageReference "WWNetworking" */;
+			productName = WWNetworking;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

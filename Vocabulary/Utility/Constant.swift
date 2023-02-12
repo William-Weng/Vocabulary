@@ -21,6 +21,7 @@ final class Constant: NSObject {
     static var currentTableName: Constant.VoiceCode = .english { didSet { NotificationCenter.default._post(name: Constant.notificationName) }}
     static var volume: Float = 0.1
     static var musicFolderUrl: URL? { get { return FileManager.default._documentDirectory()?.appendingPathComponent("Music", isDirectory: false) }}
+    static var imageFolderUrl: URL? { get { return FileManager.default._documentDirectory()?.appendingPathComponent("Image", isDirectory: false) }}
 }
 
 // MARK: - Typealias
@@ -134,12 +135,14 @@ extension Constant {
         var errorDescription: String { errorMessage() }
         
         case notOpenURL
+        case notImage
         
         /// 顯示錯誤說明
         /// - Returns: String
         private func errorMessage() -> String {
             switch self {
             case .notOpenURL: return "打開URL錯誤"
+            case .notImage: return "不是圖片檔"
             }
         }
     }

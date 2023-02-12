@@ -6,8 +6,16 @@
 //
 
 import UIKit
+import SafariServices
 import WWPrint
+import WWNetworking
 
+// MARK: - OthersViewDelegate
+protocol OthersViewDelegate {
+    func loadImage(with indexPath: IndexPath, filename: String)
+}
+
+// MARK: - 其它設定
 final class OthersViewController: UIViewController {
 
     @IBOutlet weak var myImageView: UIImageView!
@@ -45,6 +53,8 @@ final class OthersViewController: UIViewController {
             return this.appendBookmark(title, webUrl: webUrl, for: Constant.currentTableName)
         }
     }
+    
+    deinit { wwPrint("\(Self.self) init") }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -52,8 +62,68 @@ extension OthersViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return OthersTableViewCell.bookmarksArray.count }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { return othersTableViewCell(tableView, cellForRowAt: indexPath) }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { openBookmark(with: indexPath) }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? { return UISwipeActionsConfiguration(actions: trailingSwipeActionsMaker(with: indexPath)) }
     func scrollViewDidScroll(_ scrollView: UIScrollView) { tabrBarHidden(with: scrollView) }
+}
+
+// MARK: - SFSafariViewControllerDelegate
+extension OthersViewController: SFSafariViewControllerDelegate {
+    
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        tabBarHiddenAction(false)
+    }
+}
+
+// MARK: - OthersViewDelegate
+extension OthersViewController: OthersViewDelegate {
+    
+    /// 載入Cell的圖示
+    /// - Parameters:
+    ///   - indexPath: IndexPath
+    ///   - filename: String
+    func loadImage(with indexPath: IndexPath, filename: String) {
+        
+        let bookmarkSite = OthersTableViewCell.bookmarkSite(with: indexPath)
+        
+        appendIconUrlHint(with: indexPath, title: "請輸入圖示網址", iconUrl: bookmarkSite?.icon) { [weak self] iconUrl in
+            
+            guard let this = self,
+                  this.updateIconUrl(with: indexPath, iconUrl: iconUrl)
+            else {
+                Utility.shared.flashHUD(with: .fail); return
+            }
+            
+            this.downloadImage(with: indexPath, filename: filename) { downloadResult in
+                
+                var isSuccess = false
+                var error: Error?
+                
+                defer {
+                    
+                    let gifType: Utility.HudGifType = (!isSuccess) ? .fail : .download
+                    
+                    this.myTableView.reloadRows(at: [indexPath], with: .automatic)
+                    Utility.shared.flashHUD(with: gifType)
+
+                    wwPrint(error)
+                }
+                
+                switch downloadResult {
+                case .failure(let failure): error = failure
+                case .success(let data):
+                    
+                    guard let data = data else { return }
+                    let storeResult = this.storeIconData(data, filename: filename)
+                    
+                    switch storeResult {
+                    case .failure(let failure): error = failure
+                    case .success(let success): isSuccess = success
+                    }
+                }
+            }
+        }
+    }
 }
 
 // MARK: - 小工具
@@ -64,6 +134,7 @@ private extension OthersViewController {
         
         isLoaded = true
         navigationItem.backBarButtonItem = UIBarButtonItem()
+        OthersTableViewCell.othersViewDelegate = self
         
         refreshControl = UIRefreshControl._build(target: self, action: #selector(Self.refreshBookmarks(_:)))
         fakeTabBarHeightConstraint.constant = self.tabBarController?.tabBar.frame.height ?? 0
@@ -217,7 +288,7 @@ private extension OthersViewController {
     ///   - title: 標題
     ///   - message: 訊息文字
     ///   - defaultText: 預設文字
-    ///   - action: (String) -> Bool
+    ///   - action: (String, String) -> Bool
     func appendBookmarkHint(with indexPath: IndexPath? = nil, title: String, message: String? = nil, titleText: String? = nil, webUrlText: String? = nil, action: @escaping (String, String) -> Bool) {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -241,15 +312,7 @@ private extension OthersViewController {
                 return
             }
             
-            if (!action(inputTitle, inputWebUrl)) { Utility.shared.flashHUD(with: .fail); return }
-            
-            Utility.shared.flashHUD(with: .success)
-            
-            if let indexPath = indexPath {
-                this.updateCellLabel(with: indexPath, title: inputTitle, webUrl: inputWebUrl)
-            } else {
-                this.reloadBookmarks()
-            }
+            this.appendBookmarkAction(with: indexPath, title: inputTitle, webUrl: inputWebUrl, action: action)
         }
         
         let actionCancel = UIAlertAction(title: "取消", style: .cancel) {  _ in }
@@ -258,6 +321,25 @@ private extension OthersViewController {
         alertController.addAction(actionCancel)
         
         present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 新增書籤的動作
+    /// - Parameters:
+    ///   - indexPath: IndexPath?
+    ///   - title: String
+    ///   - webUrl: String
+    ///   - action: (String, String) -> Bool
+    func appendBookmarkAction(with indexPath: IndexPath?, title: String, webUrl: String, action: @escaping (String, String) -> Bool) {
+        
+        if (!action(title, webUrl)) { Utility.shared.flashHUD(with: .fail); return }
+        
+        Utility.shared.flashHUD(with: .success)
+        
+        if let indexPath = indexPath {
+            updateCellLabel(with: indexPath, title: title, webUrl: webUrl)
+        } else {
+            reloadBookmarks()
+        }
     }
     
     /// 右側滑動按鈕
@@ -315,6 +397,128 @@ private extension OthersViewController {
         
         OthersTableViewCell.bookmarksArray[indexPath.row] = dictionary
         myTableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+    
+    /// 增加Cell圖示的提示框
+    /// - Parameters:
+    ///   - indexPath: IndexPath
+    ///   - title: String
+    ///   - message: String?
+    ///   - iconUrl: String?
+    ///   - action: (String) -> Void
+    func appendIconUrlHint(with indexPath: IndexPath, title: String, message: String? = nil, iconUrl: String? = nil, action: @escaping (String) -> Void) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alertController.addTextField {
+            $0.text = iconUrl
+            $0.placeholder = "請輸入圖示網址…"
+        }
+        
+        let actionOK = UIAlertAction(title: "確認", style: .default) { _ in
+            guard let url = alertController.textFields?.first?.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+            action(url)
+        }
+        
+        let actionCancel = UIAlertAction(title: "取消", style: .cancel) {  _ in }
+        
+        alertController.addAction(actionOK)
+        alertController.addAction(actionCancel)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 更新Cell資料的圖示網址
+    /// - Parameters:
+    ///   - indexPath: IndexPath
+    ///   - iconUrl: String
+    /// - Returns: Bool
+    func updateIconUrl(with indexPath: IndexPath, iconUrl: String) -> Bool {
+        
+        guard var bookmark = OthersTableViewCell.bookmarksArray[safe: indexPath.row],
+              let id = bookmark["id"],
+              let bookmarkId = Int("\(id)")
+        else {
+            return false
+        }
+        
+        bookmark["icon"] = iconUrl
+        OthersTableViewCell.bookmarksArray[indexPath.row] = bookmark
+                
+        return API.shared.updateBookmarkIconToList(bookmarkId, iconUrl: iconUrl, for: Constant.currentTableName)
+    }
+    
+    /// 下載Cell圖示
+    /// - Parameters:
+    ///   - indexPath: IndexPath
+    ///   - filename: String
+    ///   - result: Result<Data?, Error>
+    func downloadImage(with indexPath: IndexPath, filename: String, result: @escaping (Result<Data?, Error>) -> Void) {
+        
+        guard let bookmark = OthersTableViewCell.bookmarkSite(with: indexPath),
+              let urlString = bookmark.icon,
+              Utility.shared.isWebUrlString(urlString)
+        else {
+            result(.failure(Constant.MyError.notOpenURL)); return
+        }
+        
+        Utility.shared.diplayHUD(with: .download)
+        
+        _ = WWNetworking.shared.download(urlString: urlString) { info in
+            
+            wwPrint(info.totalWritten / info.totalSize)
+            
+        } completion: { downloadResult in
+            
+            switch downloadResult {
+            case .failure(let error): result(.failure(error))
+            case .success(let info): result(.success(info.data))
+            }
+        }
+    }
+    
+    /// 儲存Cell圖示
+    /// - Parameters:
+    ///   - data: Data?
+    ///   - filename: String
+    /// - Returns: Result<Bool, Error>
+    func storeIconData(_ data: Data?, filename: String) -> Result<Bool, Error> {
+        
+        guard let data = data,
+              let imageFolderUrl = Constant.imageFolderUrl
+        else {
+            return .failure(Constant.MyError.notImage)
+        }
+        
+        let result = FileManager.default._createDirectory(with: imageFolderUrl, path: "")
+        
+        switch result {
+            
+        case .failure(let error): return .failure(error)
+        case .success(let _isSuccess):
+            
+            if (!_isSuccess) { return .failure(Constant.MyError.notOpenURL) }
+                                
+            let url = imageFolderUrl.appendingPathComponent(filename, isDirectory: false)
+            return FileManager.default._writeData(to: url, data: data)
+        }
+    }
+    
+    /// 打開書籤網址
+    /// - Parameter example: 例句
+    func openBookmark(with indexPath: IndexPath) {
+        
+        guard let urlString = OthersTableViewCell.bookmarkSite(with: indexPath)?.url,
+              Utility.shared.isWebUrlString(urlString),
+              let url = URL._standardization(string: urlString)
+        else {
+            Utility.shared.flashHUD(with: .fail); return
+        }
+        
+        currentScrollDirection = .none
+        
+        let safariController = url._openUrlWithInside(delegate: self)
+        safariController.delegate = self
     }
 }
 

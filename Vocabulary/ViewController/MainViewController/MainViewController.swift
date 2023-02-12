@@ -171,14 +171,14 @@ private extension MainViewController {
     func reloadVocabulary() {
         
         defer { refreshControl.endRefreshing() }
-        
+                
         MainTableViewCell.vocabularyListArray = []
         MainTableViewCell.vocabularyListArray = API.shared.searchVocabularyList(for: Constant.currentTableName, offset: MainTableViewCell.vocabularyListArray.count)
         
         titleSetting(with: MainTableViewCell.vocabularyListArray.count)
         
         myTableView._reloadData() { [weak self] in
-            
+                        
             guard let this = self,
                   !MainTableViewCell.vocabularyListArray.isEmpty
             else {
@@ -264,7 +264,7 @@ private extension MainViewController {
         defer { refreshControl.endRefreshing() }
         
         let oldListCount = MainTableViewCell.vocabularyListArray.count
-        MainTableViewCell.vocabularyListArray += API.shared.searchVocabularyList(for: Constant.currentTableName, offset: MainTableViewCell.vocabularyListArray.count)
+        MainTableViewCell.vocabularyListArray += API.shared.searchVocabularyList(for: Constant.currentTableName, offset: oldListCount)
         
         let newListCount = MainTableViewCell.vocabularyListArray.count
         titleSetting(with: newListCount)
@@ -329,10 +329,12 @@ private extension MainViewController {
     ///   - height: CGFloat
     func updateVocabularyList(for scrollView: UIScrollView, height: CGFloat) {
         
-        let offset = scrollView.frame.height + scrollView.contentOffset.y - height
-        let height = scrollView.contentSize.height
+        let contentOffsetY = scrollView.contentOffset.y
+        let offset = scrollView.frame.height + contentOffsetY - height
+        let contentHeight = scrollView.contentSize.height
         
-        if (offset > height) { appendVocabularyList() }
+        if (contentOffsetY < 0) { return }
+        if (offset > contentHeight) { appendVocabularyList() }
     }
     
     /// 新增文字的提示框

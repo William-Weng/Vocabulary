@@ -158,7 +158,7 @@ private extension SentenceViewController {
         defer { refreshControl.endRefreshing() }
         
         let oldListCount = SentenceTableViewCell.sentenceListArray.count
-        SentenceTableViewCell.sentenceListArray += API.shared.searchSentenceList(with: currentSpeech, for: Constant.currentTableName, offset: SentenceTableViewCell.sentenceListArray.count)
+        SentenceTableViewCell.sentenceListArray += API.shared.searchSentenceList(with: currentSpeech, for: Constant.currentTableName, offset: oldListCount)
         
         let newListCount = SentenceTableViewCell.sentenceListArray.count
         titleSetting(with: newListCount)
@@ -373,10 +373,12 @@ private extension SentenceViewController {
     ///   - height: CGFloat
     func updateSentenceList(for scrollView: UIScrollView, height: CGFloat) {
         
-        let offset = scrollView.frame.height + scrollView.contentOffset.y - height
-        let height = scrollView.contentSize.height
+        let contentOffsetY = scrollView.contentOffset.y
+        let offset = scrollView.frame.height + contentOffsetY - height
+        let contentHeight = scrollView.contentSize.height
         
-        if (offset > height) { appendSentenceList() }
+        if (contentOffsetY < 0) { return }
+        if (offset > contentHeight) { appendSentenceList() }
     }
     
     /// 更新分類Level文字

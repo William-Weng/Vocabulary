@@ -156,10 +156,12 @@ private extension ReviewResultViewController {
     ///   - height: CGFloat
     func updateReviewResultList(for scrollView: UIScrollView, height: CGFloat) {
         
-        let offset = scrollView.frame.height + scrollView.contentOffset.y - height
-        let height = scrollView.contentSize.height
+        let contentOffsetY = scrollView.contentOffset.y
+        let offset = scrollView.frame.height + contentOffsetY - height
+        let contentHeight = scrollView.contentSize.height
         
-        if (offset > height) { appendReviewResultList() }
+        if (contentOffsetY < 0) { return }
+        if (offset > contentHeight) { appendReviewResultList() }
     }
     
     /// 新複習過的單字列表
@@ -168,7 +170,7 @@ private extension ReviewResultViewController {
         defer { refreshControl.endRefreshing() }
         
         let oldListCount = ReviewResultTableViewCell.reviewResultListArray.count
-        ReviewResultTableViewCell.reviewResultListArray += API.shared.searchReviewList(for: Constant.currentTableName, offset: ReviewResultTableViewCell.reviewResultListArray.count)
+        ReviewResultTableViewCell.reviewResultListArray += API.shared.searchReviewList(for: Constant.currentTableName, offset: oldListCount)
 
         let newListCount = ReviewResultTableViewCell.reviewResultListArray.count
         titleSetting(with: newListCount)

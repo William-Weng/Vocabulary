@@ -8,6 +8,7 @@
 import UIKit
 import WWPrint
 
+// MARK: - MyNavigationControllerDelegate
 protocol MyNavigationControllerDelegate {
     func refreshRootViewController()
 }
@@ -20,9 +21,7 @@ final class MyNavigationController: UINavigationController {
         registerNotification()
     }
     
-    deinit {
-        wwPrint("deinit \(Self.self)")
-    }
+    deinit { wwPrint("deinit \(Self.self)") }
 }
 
 // MARK: - 小工具

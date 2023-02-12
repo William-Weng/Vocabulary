@@ -201,9 +201,7 @@ extension API {
         let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
         let orderBy = SQLite3Condition.OrderBy().item(key: "updateTime", type: .descending)
         let result = database.select(tableName: tableName.bookmarks(), type: BookmarkSite.self, where: nil, orderBy: orderBy, limit: limit)
-        
-        wwPrint(result.sql)
-        
+                
         return result.array
     }
 }

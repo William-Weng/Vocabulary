@@ -146,10 +146,12 @@ private extension SearchWordViewController {
     ///   - height: CGFloat
     func updateSearchData(for scrollView: UIScrollView, height: CGFloat) {
         
-        let offset = scrollView.frame.height + scrollView.contentOffset.y - height
-        let height = scrollView.contentSize.height
+        let contentOffsetY = scrollView.contentOffset.y
+        let offset = scrollView.frame.height + contentOffsetY - height
+        let contentHeight = scrollView.contentSize.height
         
-        if (offset > height) { appendSearchWordList(like: titleSearchBar.searchTextField.text) }
+        if (contentOffsetY < 0) { return }
+        if (offset > contentHeight) { appendSearchWordList(like: titleSearchBar.searchTextField.text) }
     }
     
     /// 刪除該列資料

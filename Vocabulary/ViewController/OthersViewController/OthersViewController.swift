@@ -65,6 +65,7 @@ extension OthersViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { openBookmark(with: indexPath) }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? { return UISwipeActionsConfiguration(actions: trailingSwipeActionsMaker(with: indexPath)) }
     func scrollViewDidScroll(_ scrollView: UIScrollView) { tabrBarHidden(with: scrollView) }
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateBookmarkList(for: scrollView, height: Constant.updateScrolledHeight) }
 }
 
 // MARK: - SFSafariViewControllerDelegate
@@ -75,10 +76,15 @@ extension OthersViewController: SFSafariViewControllerDelegate {
     }
 }
 
+// MARK: - MyNavigationControllerDelegate
+extension OthersViewController: MyNavigationControllerDelegate {
+    func refreshRootViewController() { reloadBookmarks() }
+}
+
 // MARK: - OthersViewDelegate
 extension OthersViewController: OthersViewDelegate {
     
-    /// 載入Cell的圖示
+    /// 載入Cell的圖示 (變更 / 下載 / 儲存)
     /// - Parameters:
     ///   - indexPath: IndexPath
     ///   - filename: String
@@ -342,6 +348,37 @@ private extension OthersViewController {
         }
     }
     
+    /// 下滑到底更新資料
+    /// - Parameters:
+    ///   - scrollView: UIScrollView
+    ///   - height: CGFloat
+    func updateBookmarkList(for scrollView: UIScrollView, height: CGFloat) {
+        
+        let contentOffsetY = scrollView.contentOffset.y
+        let offset = scrollView.frame.height + contentOffsetY - height
+        let contentHeight = scrollView.contentSize.height
+        
+        if (contentOffsetY < 0) { return }
+        if (offset > contentHeight) { appendBookmarkList() }
+    }
+    
+    /// 增加書籤列表
+    func appendBookmarkList() {
+        
+        defer { refreshControl.endRefreshing() }
+        
+        let oldListCount = OthersTableViewCell.bookmarksArray.count
+        OthersTableViewCell.bookmarksArray += API.shared.searchBookmarkList(for: Constant.currentTableName, offset: oldListCount)
+        
+        let newListCount = OthersTableViewCell.bookmarksArray.count
+        titleSetting(with: newListCount)
+        
+        let indexPaths = (oldListCount..<newListCount).map { IndexPath(row: $0, section: 0) }
+        myTableView._insertRows(at: indexPaths, animation: .automatic, animated: false)
+        
+        if (newListCount > oldListCount) { Utility.shared.flashHUD(with: .success) }
+    }
+    
     /// 右側滑動按鈕
     /// - Parameter indexPath: IndexPath
     /// - Returns: [UIContextualAction]
@@ -505,7 +542,7 @@ private extension OthersViewController {
     }
     
     /// 打開書籤網址
-    /// - Parameter example: 例句
+    /// - Parameter indexPath: IndexPath
     func openBookmark(with indexPath: IndexPath) {
         
         guard let urlString = OthersTableViewCell.bookmarkSite(with: indexPath)?.url,

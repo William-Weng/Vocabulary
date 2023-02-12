@@ -139,11 +139,11 @@ private extension OthersViewController {
         refreshControl = UIRefreshControl._build(target: self, action: #selector(Self.refreshBookmarks(_:)))
         fakeTabBarHeightConstraint.constant = self.tabBarController?.tabBar.frame.height ?? 0
         
+        reloadBookmarks()
+        
         myTableView._delegateAndDataSource(with: self)
         myTableView.addSubview(refreshControl)
         myTableView.tableFooterView = UIView()
-        
-        reloadBookmarks()
     }
     
     /// 設定標題
@@ -169,7 +169,7 @@ private extension OthersViewController {
         myTableView._reloadData() { [weak self] in
             
             guard let this = self,
-                  !SentenceTableViewCell.sentenceListArray.isEmpty
+                  !OthersTableViewCell.bookmarksArray.isEmpty
             else {
                 return
             }

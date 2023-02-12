@@ -9,6 +9,7 @@ import UIKit
 import AVKit
 import SafariServices
 import CommonCrypto
+import WebKit
 
 // MARK: - Int (class function)
 extension Int {
@@ -840,5 +841,47 @@ extension UIViewController {
         self.view.backgroundColor = backgroundColor
         self.modalPresentationStyle = presentationStyle
         self.modalTransitionStyle = transitionStyle
+    }
+}
+
+// MARK: - WKWebView (static function)
+extension WKWebView {
+    
+    /// 產生WKWebView (WKNavigationDelegate & WKUIDelegate)
+    /// - Parameters:
+    ///   - delegate: WKNavigationDelegate & WKUIDelegate
+    ///   - frame: WKWebView的大小
+    ///   - canOpenWindows: [window.open(url)](https://www.jianshu.com/p/561307f8aa9e) for  [webView(_:createWebViewWith:for:windowFeatures:)](https://developer.apple.com/documentation/webkit/wkuidelegate/1536907-webview)
+    ///   - configuration: WKWebViewConfiguration
+    ///   - contentInsetAdjustmentBehavior: scrollView是否為全畫面
+    /// - Returns: WKWebView
+    static func _build(delegate: (WKNavigationDelegate & WKUIDelegate)?, frame: CGRect, canOpenWindows: Bool = false, configuration: WKWebViewConfiguration = WKWebViewConfiguration(), contentInsetAdjustmentBehavior: UIScrollView.ContentInsetAdjustmentBehavior = .never) -> WKWebView {
+        
+        let webView = WKWebView(frame: frame, configuration: configuration)
+        configuration.preferences.javaScriptCanOpenWindowsAutomatically = canOpenWindows
+        
+        webView.backgroundColor = .white
+        webView.navigationDelegate = delegate
+        webView.uiDelegate = delegate
+        webView.scrollView.contentInsetAdjustmentBehavior = contentInsetAdjustmentBehavior
+        
+        return webView
+    }
+}
+
+// MARK: - WKWebView (class function)
+extension WKWebView {
+    
+    /// 載入WebView網址
+    func _load(urlString: String?, cachePolicy: URLRequest.CachePolicy = .reloadIgnoringCacheData, timeoutInterval: TimeInterval) -> WKNavigation? {
+        
+        guard let urlString = urlString,
+              let url = URL(string: urlString),
+              let urlRequest = Optional.some(URLRequest(url: url, cachePolicy: cachePolicy, timeoutInterval: timeoutInterval))
+        else {
+            return nil
+        }
+        
+        return self.load(urlRequest)
     }
 }

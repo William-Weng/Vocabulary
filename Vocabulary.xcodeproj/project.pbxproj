@@ -39,6 +39,8 @@
 		64C18502297E861800D1D1B2 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C18501297E861800D1D1B2 /* Utility.swift */; };
 		64C18504297EB8E700D1D1B2 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C18503297EB8E700D1D1B2 /* ListViewController.swift */; };
 		64C18507297EC01700D1D1B2 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C18506297EC01700D1D1B2 /* ListTableViewCell.swift */; };
+		64ED74D62998C3D300948C77 /* License.html in Resources */ = {isa = PBXBuildFile; fileRef = 64ED74D52998C3D300948C77 /* License.html */; };
+		64ED74D82998C5EF00948C77 /* LicenseWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ED74D72998C5EF00948C77 /* LicenseWebViewController.swift */; };
 		81079F3D298CBB81000ED617 /* Speak.gif in Resources */ = {isa = PBXBuildFile; fileRef = 81079F3C298CBB81000ED617 /* Speak.gif */; };
 		81201C4C298B58C200291485 /* InterpretView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81201C4A298B58C200291485 /* InterpretView.swift */; };
 		81201C4D298B58C200291485 /* InterpretView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81201C4B298B58C200291485 /* InterpretView.xib */; };
@@ -91,6 +93,8 @@
 		64C18501297E861800D1D1B2 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		64C18503297EB8E700D1D1B2 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		64C18506297EC01700D1D1B2 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
+		64ED74D52998C3D300948C77 /* License.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = License.html; sourceTree = "<group>"; };
+		64ED74D72998C5EF00948C77 /* LicenseWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseWebViewController.swift; sourceTree = "<group>"; };
 		81079F3C298CBB81000ED617 /* Speak.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Speak.gif; sourceTree = "<group>"; };
 		81201C4A298B58C200291485 /* InterpretView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterpretView.swift; sourceTree = "<group>"; };
 		81201C4B298B58C200291485 /* InterpretView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InterpretView.xib; sourceTree = "<group>"; };
@@ -210,6 +214,7 @@
 				818E2616299231D400385705 /* ReviewResultViewController */,
 				81CD85CD2990F040009C39FF /* SentenceViewController */,
 				81AB5EF72996437B0035216F /* OthersViewController */,
+				64ED74D72998C5EF00948C77 /* LicenseWebViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -229,6 +234,7 @@
 				642448672986B57F0038449E /* Font */,
 				641B5C9F2984A97600AB1C56 /* Picture */,
 				64285893297BBF8700DD7D88 /* Assets.xcassets */,
+				64ED74D52998C3D300948C77 /* License.html */,
 				81BA793D29876CE000C0FD6C /* README.md */,
 			);
 			path = Material;
@@ -418,6 +424,7 @@
 			files = (
 				6492ADD52986B8E900E1B59B /* KleeOne-SemiBold.ttf in Resources */,
 				64285897297BBF8700DD7D88 /* LaunchScreen.storyboard in Resources */,
+				64ED74D62998C3D300948C77 /* License.html in Resources */,
 				641F3FC12983775D00C44851 /* Search.gif in Resources */,
 				818E26182992357300385705 /* Review.gif in Resources */,
 				6472DD482997E58300B0044A /* Download.gif in Resources */,
@@ -471,6 +478,7 @@
 				8196323329933CEF00B96960 /* MyNavigationController.swift in Sources */,
 				642858A6297BC40E00DD7D88 /* Constant.swift in Sources */,
 				818E261329922FFE00385705 /* ReviewResultViewController.swift in Sources */,
+				64ED74D82998C5EF00948C77 /* LicenseWebViewController.swift in Sources */,
 				819D69D2298E31E1001AF48E /* SolutionTableViewCell.swift in Sources */,
 				819D69D0298E311D001AF48E /* SolutionViewController.swift in Sources */,
 			);

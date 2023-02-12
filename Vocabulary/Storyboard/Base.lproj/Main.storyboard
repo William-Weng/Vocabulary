@@ -14,6 +14,35 @@
         </array>
     </customFonts>
     <scenes>
+        <!--資源說明-->
+        <scene sceneID="drq-Q9-x9y">
+            <objects>
+                <viewController id="l9r-Ge-VaH" customClass="LicenseWebViewController" customModule="Vocabulary" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Qgi-pd-Ys1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="mty-rI-IIM"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="資源說明" id="6ag-Lf-4xp">
+                        <rightBarButtonItems>
+                            <barButtonItem image="GoForward" id="9GI-jj-S8d">
+                                <connections>
+                                    <action selector="goForward:" destination="l9r-Ge-VaH" id="KCw-S0-czj"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="GoBack" id="T6B-TN-ScR">
+                                <connections>
+                                    <action selector="goBack:" destination="l9r-Ge-VaH" id="4M3-tr-UHX"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L2B-hH-7Z2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2540" y="2344"/>
+        </scene>
         <!--其它設定-->
         <scene sceneID="M8j-OQ-T80">
             <objects>
@@ -121,7 +150,13 @@
                             <constraint firstItem="CA3-vP-ekI" firstAttribute="top" secondItem="EOs-Wv-Caq" secondAttribute="bottom" constant="8" id="zxI-b0-3ne"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="其它設定" id="Emu-bQ-cBa"/>
+                    <navigationItem key="navigationItem" title="其它設定" id="Emu-bQ-cBa">
+                        <barButtonItem key="rightBarButtonItem" image="License" id="jcq-fL-75G">
+                            <connections>
+                                <segue destination="l9r-Ge-VaH" kind="show" id="4PT-Wl-RAh"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="fakeTabBarHeightConstraint" destination="QLV-I8-J1V" id="BHS-YQ-3Tn"/>
                         <outlet property="myImageView" destination="Shl-KE-8e1" id="LlX-tE-JW7"/>
@@ -1337,6 +1372,9 @@
         <image name="Cry" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Dictionary" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Filter" width="21.333333969116211" height="21.333333969116211"/>
+        <image name="GoBack" width="21.333333969116211" height="21.333333969116211"/>
+        <image name="GoForward" width="21.333333969116211" height="21.333333969116211"/>
+        <image name="License" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Music" width="21.333333969116211" height="21.333333969116211"/>
         <image name="NoVolume" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Others" width="21.333333969116211" height="21.333333969116211"/>

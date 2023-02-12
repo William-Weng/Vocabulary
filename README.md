@@ -9,7 +9,7 @@
 ![](./@Image/Example_0.png)
 
 # 附錄：資源下載說明
-## 所有資源都是從網路下載，僅作程式分享教學之用，並無侵權之意，資源版權皆屬於原圖作者所有…
+## 所有資源都是從網路下載，僅作程式分享教學之用，並無侵權之意，資源版權皆屬於原作者所有…
 
 ### [引用套件](https://github.com/William-Weng/SwiftPackageManager)
 1. [WWPrint](https://github.com/William-Weng/WWPrint)
@@ -35,6 +35,8 @@
 1. Filter - [choice_4047250](https://www.flaticon.com/free-icon/choice_4047250)
 1. Others - [other_7245102](https://www.flaticon.com/free-icon/other_7245102)
 1. Picture - [picture_2659360](https://www.flaticon.com/free-icon/picture_2659360)
+1. GoBack - [back_786298](https://www.flaticon.com/free-icon/back_786298)
+1. GoForward - [back_786298](https://www.flaticon.com/free-icon/back_786298)
 
 ### [背景音樂 - .mp3 / .m4a](http://amachamusic.chagasi.com/)
 1. 夏の霧.m4a - [甘茶の音楽工房 - natsunokiri.mp3](http://amachamusic.chagasi.com/music_natsunokiri.html)

@@ -37,6 +37,7 @@ final class OthersViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         animatedBackground(with: .others)
+        tabBarHiddenAction(false)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -69,12 +70,7 @@ extension OthersViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 // MARK: - SFSafariViewControllerDelegate
-extension OthersViewController: SFSafariViewControllerDelegate {
-    
-    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        tabBarHiddenAction(false)
-    }
-}
+extension OthersViewController: SFSafariViewControllerDelegate {}
 
 // MARK: - MyNavigationControllerDelegate
 extension OthersViewController: MyNavigationControllerDelegate {

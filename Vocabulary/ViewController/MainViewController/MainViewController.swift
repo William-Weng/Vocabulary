@@ -77,7 +77,11 @@ final class MainViewController: UIViewController {
         }
     }
     
-    deinit { wwPrint("\(Self.self) deinit") }
+    deinit {
+        MainTableViewCell.vocabularyListArray = []
+        MainTableViewCell.mainViewDelegate = nil
+        wwPrint("\(Self.self) deinit")
+    }
     
     @objc func refreshVocabularyList(_ sender: UIRefreshControl) { reloadVocabulary() }
     
@@ -353,10 +357,27 @@ private extension MainViewController {
             $0.placeholder = title
         }
         
+        let actionOK = appendTextAlertAction(with: indexPath, textFields: alertController.textFields, action: action)
+        let actionCancel = UIAlertAction(title: "取消", style: .cancel) {  _ in }
+        
+        alertController.addAction(actionOK)
+        alertController.addAction(actionCancel)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 新增文字的提示框動作
+    /// - Parameters:
+    ///   - indexPath: IndexPath?
+    ///   - textFields: [UITextField]?
+    ///   - action: (String) -> Bool
+    /// - Returns: UIAlertAction
+    func appendTextAlertAction(with indexPath: IndexPath? = nil, textFields: [UITextField]?, action: @escaping (String) -> Bool) -> UIAlertAction {
+        
         let actionOK = UIAlertAction(title: "確認", style: .default) { [weak self] _ in
             
             guard let this = self,
-                  let inputWord = alertController.textFields?.first?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+                  let inputWord = textFields?.first?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
             else {
                 return
             }
@@ -370,12 +391,7 @@ private extension MainViewController {
             }
         }
         
-        let actionCancel = UIAlertAction(title: "取消", style: .cancel) {  _ in }
-        
-        alertController.addAction(actionOK)
-        alertController.addAction(actionCancel)
-        
-        present(alertController, animated: true, completion: nil)
+        return actionOK
     }
     
     /// 字典選單

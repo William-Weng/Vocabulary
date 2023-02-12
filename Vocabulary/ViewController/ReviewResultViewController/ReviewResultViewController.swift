@@ -48,6 +48,11 @@ final class ReviewResultViewController: UIViewController {
     }
     
     @objc func refreshReviewResultList(_ sender: UIRefreshControl) { relaodReviewResultList() }
+    
+    deinit {
+        ReviewResultTableViewCell.reviewResultListArray = []
+        wwPrint("\(Self.self) deinit")
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource

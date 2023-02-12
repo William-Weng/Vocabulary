@@ -605,6 +605,10 @@ extension UINavigationBar {
         let settings = UINavigationBarAppearance()._transparent()._backgroundColor(color)._backgroundImage(image)._hasShadow(hasShadow)
         self.scrollEdgeAppearance = settings
     }
+    
+    /// 取得第一個SubView
+    /// - Returns: UIView?
+    func _rootView() -> UIView? { return subviews.first }
 }
 
 // MARK: - UINavigationBarAppearance (class function)

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WWPrint
 
 // MARK: - 其它設定Cell
 final class OthersTableViewCell: UITableViewCell, CellReusable {
@@ -31,6 +32,8 @@ final class OthersTableViewCell: UITableViewCell, CellReusable {
         guard let filename = iconFilename() else { return }
         Self.othersViewDelegate?.loadImage(with: indexPath, filename: filename)
     }
+    
+    deinit { wwPrint("\(Self.self) deinit") }
 }
 
 // MARK: - 小工具

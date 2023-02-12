@@ -63,6 +63,11 @@ final class SearchWordViewController: UIViewController {
         self.reloadSearchWord(word)
         Utility.shared.flashHUD(with: .success)
     }
+    
+    deinit {
+        SearchTableViewCell.vocabularyListArray = []
+        wwPrint("\(Self.self) deinit")
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource

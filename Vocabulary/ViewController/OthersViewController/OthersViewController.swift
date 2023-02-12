@@ -13,6 +13,7 @@ import WWNetworking
 // MARK: - OthersViewDelegate
 protocol OthersViewDelegate {
     func loadImage(with indexPath: IndexPath, filename: String)
+    func tabBarHidden(_ isHidden: Bool)
 }
 
 // MARK: - 其它設定
@@ -21,6 +22,8 @@ final class OthersViewController: UIViewController {
     @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
+    
+    private let licenseWebViewSegue = "LicenseWebViewSegue"
     
     private var isLoaded = false
     private var isAnimationStop = false
@@ -45,6 +48,12 @@ final class OthersViewController: UIViewController {
         pauseBackgroundAnimation()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let webViewController = segue.destination as? LicenseWebViewController else { return }
+        webViewController.othersViewDelegate = self
+    }
+    
     @objc func refreshBookmarks(_ sender: UIRefreshControl) { reloadBookmarks() }
     
     @IBAction func appendBookmarkAction(_ sender: UIButton) {
@@ -55,7 +64,13 @@ final class OthersViewController: UIViewController {
         }
     }
     
-    deinit { wwPrint("\(Self.self) init") }
+    @IBAction func licensePage(_ sender: UIBarButtonItem) { performSegue(withIdentifier: licenseWebViewSegue, sender: nil) }
+    
+    deinit {
+        OthersTableViewCell.bookmarksArray = []
+        OthersTableViewCell.othersViewDelegate = nil
+        wwPrint("\(Self.self) init")
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -80,52 +95,8 @@ extension OthersViewController: MyNavigationControllerDelegate {
 // MARK: - OthersViewDelegate
 extension OthersViewController: OthersViewDelegate {
     
-    /// 載入Cell的圖示 (變更 / 下載 / 儲存)
-    /// - Parameters:
-    ///   - indexPath: IndexPath
-    ///   - filename: String
-    func loadImage(with indexPath: IndexPath, filename: String) {
-        
-        let bookmarkSite = OthersTableViewCell.bookmarkSite(with: indexPath)
-        
-        appendIconUrlHint(with: indexPath, title: "請輸入圖示網址", iconUrl: bookmarkSite?.icon) { [weak self] iconUrl in
-            
-            guard let this = self,
-                  this.updateIconUrl(with: indexPath, iconUrl: iconUrl)
-            else {
-                Utility.shared.flashHUD(with: .fail); return
-            }
-            
-            this.downloadImage(with: indexPath, filename: filename) { downloadResult in
-                
-                var isSuccess = false
-                var error: Error?
-                
-                defer {
-                    
-                    let gifType: Utility.HudGifType = (!isSuccess) ? .fail : .download
-                    
-                    this.myTableView.reloadRows(at: [indexPath], with: .automatic)
-                    Utility.shared.flashHUD(with: gifType)
-
-                    wwPrint(error)
-                }
-                
-                switch downloadResult {
-                case .failure(let failure): error = failure
-                case .success(let data):
-                    
-                    guard let data = data else { return }
-                    let storeResult = this.storeIconData(data, filename: filename)
-                    
-                    switch storeResult {
-                    case .failure(let failure): error = failure
-                    case .success(let success): isSuccess = success
-                    }
-                }
-            }
-        }
-    }
+    func loadImage(with indexPath: IndexPath, filename: String) { loadImageAction(with: indexPath, filename: filename) }
+    func tabBarHidden(_ isHidden: Bool) { tabBarHiddenAction(isHidden) }
 }
 
 // MARK: - 小工具
@@ -283,7 +254,7 @@ private extension OthersViewController {
             
         }.startAnimation()
     }
-    
+        
     /// 新增書籤的提示框
     /// - Parameters:
     ///   - indexPath: 要更新書籤時，才會有IndexPath
@@ -552,6 +523,53 @@ private extension OthersViewController {
         
         let safariController = url._openUrlWithInside(delegate: self)
         safariController.delegate = self
+    }
+    
+    /// 載入Cell的圖示 (變更 / 下載 / 儲存)
+    /// - Parameters:
+    ///   - indexPath: IndexPath
+    ///   - filename: String
+    func loadImageAction(with indexPath: IndexPath, filename: String) {
+        
+        let bookmarkSite = OthersTableViewCell.bookmarkSite(with: indexPath)
+        
+        appendIconUrlHint(with: indexPath, title: "請輸入圖示網址", iconUrl: bookmarkSite?.icon) { [weak self] iconUrl in
+            
+            guard let this = self,
+                  this.updateIconUrl(with: indexPath, iconUrl: iconUrl)
+            else {
+                Utility.shared.flashHUD(with: .fail); return
+            }
+            
+            this.downloadImage(with: indexPath, filename: filename) { downloadResult in
+                
+                var isSuccess = false
+                var error: Error?
+                
+                defer {
+                    
+                    let gifType: Utility.HudGifType = (!isSuccess) ? .fail : .download
+                    
+                    this.myTableView.reloadRows(at: [indexPath], with: .automatic)
+                    Utility.shared.flashHUD(with: gifType)
+
+                    wwPrint(error)
+                }
+                
+                switch downloadResult {
+                case .failure(let failure): error = failure
+                case .success(let data):
+                    
+                    guard let data = data else { return }
+                    let storeResult = this.storeIconData(data, filename: filename)
+                    
+                    switch storeResult {
+                    case .failure(let failure): error = failure
+                    case .success(let success): isSuccess = success
+                    }
+                }
+            }
+        }
     }
 }
 

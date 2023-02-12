@@ -23,6 +23,8 @@ final class SolutionTableViewCell: UITableViewCell, CellReusable {
     func configure(with indexPath: IndexPath) { configure(for: indexPath) }
     
     @IBAction func playSound(_ sender: UIButton) { playWordSound() }
+    
+    deinit { wwPrint("\(Self.self) deinit") }
 }
 
 // MARK: - 小工具

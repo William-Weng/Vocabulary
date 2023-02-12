@@ -61,6 +61,12 @@ final class SentenceViewController: UIViewController {
     @IBAction func filterSentence(_ sender: UIBarButtonItem) { sentenceSpeechMenu() }
     
     @objc func refreshSentenceList(_ sender: UIRefreshControl) { reloadSentenceList() }
+    
+    deinit {
+        SentenceTableViewCell.sentenceListArray = []
+        SentenceTableViewCell.sentenceViewDelegate = nil
+        wwPrint("\(Self.self) deinit")
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -330,11 +336,28 @@ private extension SentenceViewController {
             $0.placeholder = "請輸入翻譯…"
         }
         
+        let actionOK = appendSentenceAlertAction(with: indexPath, textFields: alertController.textFields, action: action)
+        let actionCancel = UIAlertAction(title: "取消", style: .cancel) {  _ in }
+        
+        alertController.addAction(actionOK)
+        alertController.addAction(actionCancel)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 新增例句的提示框動作
+    /// - Parameters:
+    ///   - indexPath: IndexPath?
+    ///   - textFields: [UITextField]?
+    ///   - action: (String, String) -> Bool
+    /// - Returns: UIAlertAction
+    func appendSentenceAlertAction(with indexPath: IndexPath? = nil, textFields: [UITextField]?, action: @escaping (String, String) -> Bool) -> UIAlertAction {
+        
         let actionOK = UIAlertAction(title: "確認", style: .default) { [weak self] _ in
             
             guard let this = self,
-                  let inputExampleText = alertController.textFields?.first?.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-                  let inputTranslateText = alertController.textFields?.last?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+                  let inputExampleText = textFields?.first?.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+                  let inputTranslateText = textFields?.last?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
             else {
                 return
             }
@@ -350,12 +373,7 @@ private extension SentenceViewController {
             }
         }
         
-        let actionCancel = UIAlertAction(title: "取消", style: .cancel) {  _ in }
-        
-        alertController.addAction(actionOK)
-        alertController.addAction(actionCancel)
-        
-        present(alertController, animated: true, completion: nil)
+        return actionOK
     }
     
     /// 新增例句

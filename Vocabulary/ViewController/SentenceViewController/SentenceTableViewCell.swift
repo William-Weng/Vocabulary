@@ -33,6 +33,8 @@ final class SentenceTableViewCell: UITableViewCell, CellReusable {
     @objc func updateSpeechLabel(_ sender: UITapGestureRecognizer) { Self.sentenceViewDelegate?.speechMenu(with: indexPath) }
 
     @IBAction func playSound(_ sender: UIButton) { playExampleSound() }
+    
+    deinit { wwPrint("\(Self.self) deinit") }
 }
 
 // MARK: - 小工具

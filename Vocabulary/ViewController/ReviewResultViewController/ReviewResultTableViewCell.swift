@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WWPrint
 
 // MARK: - 複習單字結果的Cell
 final class ReviewResultTableViewCell: UITableViewCell, CellReusable {
@@ -21,6 +22,8 @@ final class ReviewResultTableViewCell: UITableViewCell, CellReusable {
     @IBOutlet weak var mistakeCountLabel: UILabel!
     
     func configure(with indexPath: IndexPath) { configure(for: indexPath) }
+    
+    deinit { wwPrint("\(Self.self) deinit") }
 }
 
 // MARK: - 小工具

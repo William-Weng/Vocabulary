@@ -26,7 +26,7 @@ final class ListViewController: UIViewController {
     var vocabularyListIndexPath: IndexPath!
     var vocabularyList: VocabularyList!
     var mainViewDelegate: MainViewDelegate?
-
+    
     private var isAnimationStop = false
     private var isSafariViewControllerDismiss = true
     private var refreshControl: UIRefreshControl!
@@ -67,6 +67,7 @@ final class ListViewController: UIViewController {
     
     deinit {
         ListTableViewCell.exmapleList = []
+        ListTableViewCell.listViewDelegate = nil
         wwPrint("\(Self.self) deinit")
     }
     

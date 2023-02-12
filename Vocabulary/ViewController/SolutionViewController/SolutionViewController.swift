@@ -65,6 +65,11 @@ final class SolutionViewController: UIViewController {
     @IBAction func reviewAction(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: ViewSegueType.reviewResult.rawValue, sender: nil)
     }
+    
+    deinit {
+        SolutionTableViewCell.vocabularyReviewListArray = []
+        wwPrint("\(Self.self) deinit")
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource

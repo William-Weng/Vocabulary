@@ -338,7 +338,7 @@ extension AVSpeechSynthesizer {
     
     /// [讀出文字 / 文字發聲](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/讓開不了口的-app-開口說話-48c674f8f69e)
     /// - Parameters:
-    ///   - string: 要讀出的文字
+    ///   - string: [要讀出的文字](https://medium.com/彼得潘的-swift-ios-app-開發教室/利用-avspeechsynthesizer-講話-14bc4ca4a3a6)
     ///   - voice: 使用的聲音語言
     ///   - rate: 語度 (0% ~ 100%)
     ///   - pitchMultiplier: 音調 (50% ~ 200%)
@@ -346,10 +346,12 @@ extension AVSpeechSynthesizer {
     func _speak(string: String, voice: Constant.VoiceCode = .english, rate: Float = 0.5, pitchMultiplier: Float = 1.5, volume: Float = 0.5) {
         
         let utterance = AVSpeechUtterance._build(string: string, voice: voice)
+        
         utterance.rate = rate
         utterance.pitchMultiplier = pitchMultiplier
         utterance.volume = volume
-
+        utterance.postUtteranceDelay = 1.0
+        
         self.speak(utterance)
     }
 }

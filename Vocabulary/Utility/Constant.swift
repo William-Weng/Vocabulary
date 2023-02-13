@@ -146,4 +146,39 @@ extension Constant {
             }
         }
     }
+    
+    // MARK: - 問題等級
+    enum QuestionLevel: CaseIterable {
+        
+        case read       // 看到中文解譯
+        case listen     // 聽到外文語句
+        
+        /// 文字顏色
+        /// - Returns: UIColor
+        func color() -> UIColor {
+            switch self {
+            case .read: return .darkText
+            case .listen: return .clear
+            }
+        }
+        
+        /// 顯示Title
+        /// - Returns: String
+        func value() -> String {
+            switch self {
+            case .read: return "單字翻譯"
+            case .listen: return "例句閱讀"
+            }
+        }
+        
+        /// GIF動畫循環次數
+        /// - Returns: Int
+        func repeatAnimateLoopCount() -> Int {
+            switch self {
+            case .read: return 3
+            case .listen: return 10
+            }
+            
+        }
+    }
 }

@@ -86,7 +86,7 @@ extension Utility {
     /// - Parameters:
     ///   - string: 要讀出的文字
     ///   - voice: 使用的聲音語言
-    ///   - rate: 語度 (0% ~ 100%)
+    ///   - rate: 語速 (0% ~ 100%)
     ///   - pitchMultiplier: 音調 (50% ~ 200%)
     ///   - volume: 音量 (0% ~ 100%)
     func speak(string: String, voice: Constant.VoiceCode = .english, rate: Float = 0.4, pitchMultiplier: Float = 1.5, volume: Float = 1.0) {

@@ -18,19 +18,22 @@ final class ReviewViewController: UIViewController {
     @IBOutlet weak var interpretLabel: UILabel!
     @IBOutlet weak var refreshQuestionButtonItem: UIBarButtonItem!
     
-    private let repeatAnimateLoopCount = 3
     private let solutionViewSegue = "SolutionViewSegue"
     
     private var isNextVocabulary = false
     private var isAnimationStop = false
+    private var repeatAnimateLoopCount = 3
     private var searchWordCount = 10
     private var speakAnimateLoopCount = 0
-    private var disappearImage: UIImage?
+    private var questionLevel: Constant.QuestionLevel = .read
+    
     private var reviewWordList: [[String : Any]] = []
     private var reviewWordDetailList: [[String : Any]] = []
-    private var vocabularyList: VocabularyList?
     private var vocabularyArray: [String] = []
-        
+    
+    private var vocabularyList: VocabularyList?
+    private var disappearImage: UIImage?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
@@ -72,6 +75,7 @@ final class ReviewViewController: UIViewController {
     @IBAction func guessAnswear(_ sender: UIButton) { answearAction() }
     @IBAction func reviewSolution(_ sender: UIBarButtonItem) { performSegue(withIdentifier: solutionViewSegue, sender: vocabularyArray) }
     @IBAction func refreshQuestion(_ sender: UIBarButtonItem) { initReviewWordList(count: searchTotalCount()); Utility.shared.flashHUD(with: .nice) }
+    @IBAction func questionLevel(_ sender: UIBarButtonItem) { levelMenu() }
 }
 
 // MARK: - MyNavigationControllerDelegate
@@ -126,7 +130,6 @@ private extension ReviewViewController {
         speakAnimateLoopCount = 0
         isNextVocabulary = false
         speakImageView.isUserInteractionEnabled = false
-        answerLabel.text = ""
         answearButtonStatus(isEnabled: false)
         
         _ = speakImageView._GIF(url: gifUrl) { [weak self] result in
@@ -149,10 +152,24 @@ private extension ReviewViewController {
         }
     }
     
-    /// 讀出單字
-    func playWordSound(with list: VocabularyList?) {
-        guard let list = list else { return }
-        Utility.shared.speak(string: list.word, voice: Constant.currentTableName)
+    /// 讀出單字 (單字解譯 / 單字例句)
+    /// - Parameters:
+    ///   - level: Constant.QuestionLevel
+    func playWordSound(with level: Constant.QuestionLevel) {
+        
+        guard let answerText = answerLabel.text,
+              let interpretText = interpretLabel.text
+        else {
+            return
+        }
+        
+        switch level {
+        case .read:
+            Utility.shared.speak(string: answerText, voice: Constant.currentTableName)
+        case .listen:
+            Utility.shared.speak(string: answerText, voice: Constant.currentTableName)
+            Utility.shared.speak(string: interpretText, voice: Constant.currentTableName)
+        }
     }
     
     /// 動畫背景設定
@@ -183,21 +200,25 @@ private extension ReviewViewController {
     }
     
     /// 讀出單字
-    /// - Parameter vocabularyList: VocabularyList?
-    func speakVocabulary(_ vocabularyList: VocabularyList?) {
+    /// - Parameters:
+    ///   - vocabularyList: VocabularyList?
+    ///   - level: Constant.QuestionLevel
+    func speakVocabulary(_ vocabularyList: VocabularyList?, level: Constant.QuestionLevel) {
         
         guard let vocabularyList = vocabularyList else { return }
-                
+        
         self.vocabularyList = vocabularyList
         
-        playWordSound(with: vocabularyList)
+        interpretLabelAction(vocabularyList, level: questionLevel)
         speakVocabularyAction(with: .speak, loopCount: repeatAnimateLoopCount)
-        interpretLabelAction(vocabularyList)
+        playWordSound(with: questionLevel)
     }
     
-    /// 讀出單字時所顯示單字的提示
-    /// - Parameter vocabularyList: VocabularyList
-    func interpretLabelAction(_ vocabularyList: VocabularyList) {
+    /// 讀出單字時所顯示單字的提示 (單字翻譯 / 單字例句)
+    /// - Parameters:
+    ///   - vocabularyList: VocabularyList?
+    ///   - level: Constant.QuestionLevel
+    func interpretLabelAction(_ vocabularyList: VocabularyList, level: Constant.QuestionLevel) {
         
         if (reviewWordDetailList.isEmpty) { reviewWordDetailList = API.shared.searchWordDetailList(vocabularyList.word, for: Constant.currentTableName) }
         
@@ -205,7 +226,20 @@ private extension ReviewViewController {
         
         let vocabulary = detailList._jsonClass(for: Vocabulary.self)
         reviewWordDetailList.insert(detailList, at: 0)
-        interpretLabel.text = vocabulary?.interpret
+        
+        answerLabel.text = vocabularyList.word
+        answerLabel.textColor = .clear
+        
+        switch level {
+        case .read:
+            interpretLabel.text = vocabulary?.interpret
+            interpretLabel.textColor = level.color()
+            interpretLabel.font = Constant.VoiceCode.chinese.font(size: 24.0)
+        case .listen:
+            interpretLabel.text = vocabulary?.example
+            interpretLabel.textColor = level.color()
+            interpretLabel.font = Constant.currentTableName.font(size: 24.0)
+        }
     }
     
     /// 新增文字的提示框
@@ -253,19 +287,17 @@ private extension ReviewViewController {
     /// 讀出要複習的單字語音
     func speakVocabularyAction() {
         
-        if (!isNextVocabulary) { speakVocabulary(vocabularyList); return }
+        if (!isNextVocabulary) { speakVocabulary(vocabularyList, level: questionLevel); return }
         
         guard let examinationList = reviewWordList.popLast(),
               let vocabularyList = examinationList._jsonClass(for: VocabularyList.self)
         else {
             return
         }
-        
-        wwPrint(vocabularyList._jsonObject())
-        
+                
         let count = searchWordCount - reviewWordList.count
         initTitle(with: "單字複習 - \(count) / \(searchWordCount)")
-        speakVocabulary(vocabularyList)
+        speakVocabulary(vocabularyList, level: questionLevel)
     }
     
     /// 填寫解答之後的動作
@@ -278,7 +310,9 @@ private extension ReviewViewController {
         answearButtonStatus(isEnabled: false)
         reviewWordDetailList = []
         
-        answerLabel.text = vocabularyList.word
+        answerLabel.textColor = .systemBlue
+        interpretLabel.textColor = .darkText
+        
         vocabularyArray.append(vocabularyList.word)
         
         _ = API.shared.updateReviewCountToList(vocabularyList.id, count: vocabularyList.review + 1, for: Constant.currentTableName)
@@ -310,7 +344,6 @@ private extension ReviewViewController {
                 let hudType: Utility.HudGifType = (!isCorrect) ? .shudder : .nice
                 
                 _ = this.solutionAction(with: vocabularyList, isCorrect: isCorrect)
-                
                 Utility.shared.flashHUD(with: hudType)
                 Utility.shared.levelMenu(target: this, vocabularyList: vocabularyList)
             }
@@ -321,7 +354,7 @@ private extension ReviewViewController {
     }
     
     /// 產生隨機的題目
-    /// - Returns:
+    /// - Returns: [[String : Any]]
     func reviewWordRandomListArray() -> [[String : Any]] {
         
         var list: [[String : Any]] = []
@@ -331,5 +364,33 @@ private extension ReviewViewController {
         }
         
         return list.shuffled()
+    }
+    
+    /// 猜字等級選單
+    func levelMenu() {
+
+        let alertController = UIAlertController(title: "請選擇等級", message: nil, preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
+        
+        Constant.QuestionLevel.allCases.forEach { level in
+            
+            let action = UIAlertAction(title: level.value(), style: .default) { [weak self] _ in
+                
+                guard let this = self else { return }
+                
+                this.questionLevel = level
+                this.repeatAnimateLoopCount = level.repeatAnimateLoopCount()
+                this.initReviewWordList(count: this.searchTotalCount())
+                
+                Utility.shared.flashHUD(with: .nice)
+            }
+            
+            alertController.addAction(action)
+        }
+        
+        alertController.addAction(action)
+        alertController.modalPresentationStyle = .popover
+        
+        present(alertController, animated: true, completion: nil)
     }
 }

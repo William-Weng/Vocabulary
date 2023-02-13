@@ -37,6 +37,7 @@
 1. Picture - [picture_2659360](https://www.flaticon.com/free-icon/picture_2659360)
 1. GoBack - [back_786298](https://www.flaticon.com/free-icon/back_786298)
 1. GoForward - [back_786298](https://www.flaticon.com/free-icon/back_786298)
+1. Level - [level-up_7634463](https://www.flaticon.com/free-icon/level-up_7634463)
 
 ### [背景音樂 - .mp3 / .m4a](http://amachamusic.chagasi.com/)
 1. 夏の霧.m4a - [甘茶の音楽工房 - natsunokiri.mp3](http://amachamusic.chagasi.com/music_natsunokiri.html)

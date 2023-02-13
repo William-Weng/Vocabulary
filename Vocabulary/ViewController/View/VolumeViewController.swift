@@ -24,6 +24,11 @@ final class VolumeViewController: UIViewController {
         super.touchesBegan(touches, with: event)
         dismissAction()
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        volumeProgressSlider.isVertical.toggle()
+    }
 }
 
 // MARK: - SliderDeleagte

@@ -258,7 +258,6 @@ private extension SentenceViewController {
         
         alertController.addAction(action)
         alertController.modalPresentationStyle = .popover
-        alertController.popoverPresentationController?.barButtonItem = navigationItem.leftBarButtonItem
         
         present(alertController, animated: true, completion: nil)
     }

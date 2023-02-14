@@ -45,8 +45,6 @@ final class LicenseWebViewController: UIViewController {
         webView.goForward()
     }
     
-    
-    
     deinit {
         othersViewDelegate = nil
         observation = nil
@@ -85,7 +83,7 @@ private extension LicenseWebViewController {
         }
     }
     
-    /// 設定上下頁按鍵態狀
+    /// 設定上下頁按鍵狀態
     /// - Parameter webView: WKWebView
     func goItemSetting(with webView: WKWebView) {
         goBackItem.isEnabled = webView.canGoBack

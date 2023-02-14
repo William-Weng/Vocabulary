@@ -11,15 +11,18 @@ import WWPrint
 // MARK: - 複習單字頁面
 final class ReviewViewController: UIViewController {
     
+    enum ViewSegue: String {
+        case solutionView = "SolutionViewSegue"
+        case speakingRateView = "SpeakingRateViewSegue"
+    }
+    
     @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var speakImageView: UIImageView!
     @IBOutlet weak var answearButton: UIButton!
     @IBOutlet weak var answerLabel: UILabel!
     @IBOutlet weak var interpretLabel: UILabel!
     @IBOutlet weak var refreshQuestionButtonItem: UIBarButtonItem!
-    
-    private let solutionViewSegue = "SolutionViewSegue"
-    
+
     private var isNextVocabulary = false
     private var isAnimationStop = false
     private var repeatAnimateLoopCount = 3
@@ -40,13 +43,6 @@ final class ReviewViewController: UIViewController {
         initReviewWordList(count: searchTotalCount())
     }
     
-    /// 取得各難度的搜尋總數量
-    /// - Returns: Int
-    func searchTotalCount() -> Int {
-        let totalCount = Constant.searchCountWithLevel.reduce(0) { return $0 + $1.value }
-        return totalCount
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         animatedBackground(with: .working)
@@ -59,6 +55,24 @@ final class ReviewViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
+        guard let identifier = segue.identifier,
+              let viewSegue = ViewSegue(rawValue: identifier)
+        else {
+            return
+        }
+        
+        switch viewSegue {
+        case .solutionView: solutionPageSetting(for: segue, sender: sender)
+        case .speakingRateView: speakingRatePageSetting(for: segue, sender: sender)
+        }
+    }
+    
+    /// 設定解答頁的相關數值
+    /// - Parameters:
+    ///   - segue: UIStoryboardSegue
+    ///   - sender: Any?
+    func solutionPageSetting(for segue: UIStoryboardSegue, sender: Any?) {
+        
         guard let viewController = segue.destination as? SolutionViewController,
               let words = sender as? [String]
         else {
@@ -68,14 +82,29 @@ final class ReviewViewController: UIViewController {
         viewController.words = words
     }
     
+    /// 設定語速的相關數值
+    /// - Parameters:
+    ///   - segue: UIStoryboardSegue
+    ///   - sender: Any?
+    func speakingRatePageSetting(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let viewController = segue.destination as? VolumeViewController else { return }
+        
+        viewController._transparent(.black.withAlphaComponent(0.3))
+        viewController.soundType = .rate
+        
+        tabBarController?._tabBarHidden(true, animated: true)
+    }
+    
     deinit { wwPrint("\(Self.self) deinit") }
     
     @objc func guessVocabulary(_ tapGesture: UITapGestureRecognizer) { speakVocabularyAction() }
     
     @IBAction func guessAnswear(_ sender: UIButton) { answearAction() }
-    @IBAction func reviewSolution(_ sender: UIBarButtonItem) { performSegue(withIdentifier: solutionViewSegue, sender: vocabularyArray) }
+    @IBAction func reviewSolution(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegue.solutionView.rawValue, sender: vocabularyArray) }
     @IBAction func refreshQuestion(_ sender: UIBarButtonItem) { initReviewWordList(count: searchTotalCount()); Utility.shared.flashHUD(with: .nice) }
     @IBAction func questionLevel(_ sender: UIBarButtonItem) { levelMenu() }
+    @IBAction func speedRate(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegue.speakingRateView.rawValue, sender: nil) }
 }
 
 // MARK: - MyNavigationControllerDelegate
@@ -165,10 +194,10 @@ private extension ReviewViewController {
         
         switch level {
         case .read:
-            Utility.shared.speak(string: answerText, voice: Constant.currentTableName)
+            Utility.shared.speak(string: answerText, voice: Constant.currentTableName, rate: Constant.speakingSpeed)
         case .listen:
-            Utility.shared.speak(string: answerText, voice: Constant.currentTableName)
-            Utility.shared.speak(string: interpretText, voice: Constant.currentTableName)
+            Utility.shared.speak(string: answerText, voice: Constant.currentTableName, rate: Constant.speakingSpeed)
+            Utility.shared.speak(string: interpretText, voice: Constant.currentTableName, rate: Constant.speakingSpeed)
         }
     }
     
@@ -232,13 +261,13 @@ private extension ReviewViewController {
         
         switch level {
         case .read:
-            interpretLabel.text = vocabulary?.interpret
-            interpretLabel.textColor = level.color()
             interpretLabel.font = Constant.VoiceCode.chinese.font(size: 24.0)
-        case .listen:
-            interpretLabel.text = vocabulary?.example
             interpretLabel.textColor = level.color()
+            interpretLabel.text = vocabulary?.interpret
+        case .listen:
             interpretLabel.font = Constant.currentTableName.font(size: 24.0)
+            interpretLabel.textColor = level.color()
+            interpretLabel.text = vocabulary?.example
         }
     }
     
@@ -270,6 +299,13 @@ private extension ReviewViewController {
         alertController.addAction(actionCancel)
         
         present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 取得各難度的搜尋總數量
+    /// - Returns: Int
+    func searchTotalCount() -> Int {
+        let totalCount = Constant.searchCountWithLevel.reduce(0) { return $0 + $1.value }
+        return totalCount
     }
     
     /// 設定解答按鍵 / 重新產生題目按鈕的狀態

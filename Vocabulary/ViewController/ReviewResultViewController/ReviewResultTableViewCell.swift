@@ -22,6 +22,8 @@ final class ReviewResultTableViewCell: UITableViewCell, CellReusable {
     @IBOutlet weak var mistakeCountLabel: UILabel!
     
     func configure(with indexPath: IndexPath) { configure(for: indexPath) }
+        
+    @IBAction func playSound(_ sender: UIButton) { playWordSound() }
     
     deinit { wwPrint("\(Self.self) deinit") }
 }
@@ -54,5 +56,11 @@ private extension ReviewResultTableViewCell {
         
         correctCountLabel.text = "\(vocabularyReviewList.correctCount)"
         mistakeCountLabel.text = "\(vocabularyReviewList.mistakeCount)"
+    }
+    
+    /// 讀出單字
+    func playWordSound() {
+        guard let vocabularyReviewList = vocabularyReviewList else { return }
+        Utility.shared.speak(string: vocabularyReviewList.word, voice: Constant.currentTableName)
     }
 }

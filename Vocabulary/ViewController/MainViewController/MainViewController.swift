@@ -526,6 +526,8 @@ private extension MainViewController {
         guard let viewController = segue.destination as? VolumeViewController else { return }
         
         viewController._transparent(.black.withAlphaComponent(0.3))
+        viewController.soundType = .volume
+        
         tabBarController?._tabBarHidden(true, animated: true)
     }
     

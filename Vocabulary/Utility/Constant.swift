@@ -20,6 +20,7 @@ final class Constant: NSObject {
     static var database: SQLite3Database?
     static var currentTableName: Constant.VoiceCode = .english { didSet { NotificationCenter.default._post(name: Constant.notificationName) }}
     static var volume: Float = 0.1
+    static var speakingSpeed: Float = 0.4
     static var musicFolderUrl: URL? { get { return FileManager.default._documentDirectory()?.appendingPathComponent("Music", isDirectory: false) }}
     static var imageFolderUrl: URL? { get { return FileManager.default._documentDirectory()?.appendingPathComponent("Image", isDirectory: false) }}
 }
@@ -124,7 +125,7 @@ extension Constant {
             case .english: return UIFont(name: "Bradley Hand", size: fontSize)
             case .japanese: return UIFont(name: "KleeOne-SemiBold", size: fontSize)
             case .korean: return UIFont(name: "GamjaFlower-Regular", size: fontSize)
-            case .chinese: return UIFont(name: "jf-openhuninn-1.1.ttf", size: fontSize)
+            case .chinese: return UIFont(name: "jf-openhuninn-1.1", size: fontSize)
             }
         }
     }

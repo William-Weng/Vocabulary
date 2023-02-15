@@ -24,7 +24,7 @@ final class SentenceViewController: UIViewController {
     
     private var isLoaded = false
     private var isAnimationStop = false
-
+    
     private var disappearImage: UIImage?
     private var refreshControl: UIRefreshControl!
     private var currentScrollDirection: Constant.ScrollDirection = .down
@@ -210,7 +210,7 @@ private extension SentenceViewController {
     /// - Parameter type: Utility.HudGifType
     func animatedBackground(with type: Utility.HudGifType) {
         
-        guard let gifUrl = Bundle.main.url(forResource: type.rawValue, withExtension: nil) else { return }
+        guard let gifUrl = type.fileURL() else { return }
         
         isAnimationStop = false
         

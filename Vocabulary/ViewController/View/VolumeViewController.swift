@@ -153,6 +153,7 @@ extension VolumeViewController {
             let percent = this.sliderVolume() ?? 0
             let constant = this.currentValueMaker(with: percent)
             
+            this.tabBarHidden(true)
             this.updateWidth(isLandscape: this.isLandscape(with: size))
             this.volumeProgressSlider.currentValue = constant
             _ = this.volumeProgressSlider.valueSetting(constant: constant, info: (text: "\(Int(percent * 100)) %", icon: nil))
@@ -181,20 +182,38 @@ extension VolumeViewController {
     func isLandscape(with size: CGSize) -> Bool {
         return size.width > size.height
     }
-
+    
     /// 回到上一頁
     func dismissAction() {
         
-        self.dismiss(animated: true) {
-            
-            guard let keyWindow = UIWindow._keyWindow(),
-                  let rootViewController = keyWindow.rootViewController,
-                  let tabBarController = rootViewController as? UITabBarController
-            else {
-                return
-            }
-            
-            tabBarController._tabBarHidden(false, animated: true)
+        self.dismiss(animated: true) { [weak self] in
+            guard let this = self else { return }
+            this.tabBarHidden(false)
         }
+    }
+    
+    /// 顯示 / 隱藏 => TabBar
+    /// - Parameters:
+    ///   - isHidden: Bool
+    ///   - animated: Bool
+    ///   - duration: TimeInterval
+    ///   - curve: UIView.AnimationCurve
+    func tabBarHidden(_ isHidden: Bool, animated: Bool = true, duration: TimeInterval = 0.1, curve: UIView.AnimationCurve = .linear) {
+        guard let tabBarController = rootTabBarController() else { return }
+        tabBarController._tabBarHidden(isHidden, animated: animated, duration: duration, curve: curve)
+    }
+    
+    /// 取得首頁的UITabBarController
+    /// - Returns: UITabBarController?
+    func rootTabBarController() -> UITabBarController? {
+        
+        guard let keyWindow = UIWindow._keyWindow(),
+              let rootViewController = keyWindow.rootViewController,
+              let tabBarController = rootViewController as? UITabBarController
+        else {
+            return nil
+        }
+
+        return tabBarController
     }
 }

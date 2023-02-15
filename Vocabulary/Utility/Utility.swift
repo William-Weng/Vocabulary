@@ -28,34 +28,12 @@ final class Utility: NSObject {
         case sentence = "Sentence.gif"
         case others = "Others.gif"
         case download = "Download.gif"
-    }
-    
-    enum Music: String, CaseIterable {
         
-        case 夏の霧 = "夏の霧.m4a"
-        case TheBeatOfNature = "TheBeatOfNature.mp3"
-        case 桜雲 = "桜雲.m4a"
-        case 靜音 = ""
-        
-        /// 音樂檔案路徑
+        /// 檔案路徑
         /// - Returns: URL?
-        func fileURL() -> URL? { return Bundle.main.url(forResource: self.rawValue, withExtension: nil) }
-        
-        /// 音樂檔案類型
-        /// - Returns: AVFileType
-        func fileType() -> AVFileType {
-            
-            guard let components = Optional.some(self.rawValue.components(separatedBy: ".")),
-                  components.count > 1,
-                  let extensionName = components.last
-            else {
-                return .mp3
-            }
-            
-            if (extensionName.lowercased() == "mp3") { return .mp3 }
-            if (extensionName.lowercased() == "m4a") { return .m4a }
-            
-            return .mp3
+        func fileURL() -> URL? {
+            let backgroundFolderUrl = Constant.animationFolderUrl
+            return backgroundFolderUrl?._appendPath(self.rawValue)
         }
     }
     
@@ -69,16 +47,28 @@ final class Utility: NSObject {
 // MARK: - Utility (class function)
 extension Utility {
     
-    /// [播放HUD](https://augmentedcode.io/2019/09/01/animating-gifs-and-apngs-with-cganimateimageaturlwithblock-in-swift/)
+    /// [顯示HUD](https://augmentedcode.io/2019/09/01/animating-gifs-and-apngs-with-cganimateimageaturlwithblock-in-swift/)
     /// - Parameter type: Utility.HudGifType
     func flashHUD(with type: Utility.HudGifType) {
-        guard let gifUrl = Bundle.main.url(forResource: type.rawValue, withExtension: nil) else { return }
+        
+        guard let gifUrl = type.fileURL(),
+              FileManager.default._fileExists(with: gifUrl).isExist
+        else {
+            WWHUD.shared.flash(effect: .default, backgroundColor: .black.withAlphaComponent(0.3), animation: 0.75, completion: nil); return
+        }
+        
         WWHUD.shared.flash(effect: .gif(url: gifUrl, options: nil), height: 256.0, backgroundColor: .black.withAlphaComponent(0.3), animation: 0.75, completion: nil)
     }
     
     /// [播放HUD](https://augmentedcode.io/2019/09/01/animating-gifs-and-apngs-with-cganimateimageaturlwithblock-in-swift/)
     func diplayHUD(with type: Utility.HudGifType) {
-        guard let gifUrl = Bundle.main.url(forResource: type.rawValue, withExtension: nil) else { return }
+
+        guard let gifUrl = type.fileURL(),
+              FileManager.default._fileExists(with: gifUrl).isExist
+        else {
+            WWHUD.shared.flash(effect: .default, backgroundColor: .black.withAlphaComponent(0.3), animation: 0.75, completion: nil); return
+        }
+        
         WWHUD.shared.display(effect: .gif(url: gifUrl, options: nil), height: 256.0, backgroundColor: .black.withAlphaComponent(0.3))
     }
     
@@ -93,7 +83,7 @@ extension Utility {
         Self.synthesizer._speak(string: string, voice: voice, rate: rate, pitchMultiplier: pitchMultiplier, volume: volume)
     }
     
-    /// 判斷是不是網址的網址 (http:// || https://)
+    /// 判斷是不是Web的網址 (http:// || https://)
     /// - Parameter urlString: String
     /// - Returns: Bool
     func isWebUrlString(_ urlString: String) -> Bool {

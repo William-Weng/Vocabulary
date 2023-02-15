@@ -40,6 +40,7 @@ final class ReviewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
+        initSpeakImage()
         initReviewWordList(count: searchTotalCount())
     }
     
@@ -65,35 +66,6 @@ final class ReviewViewController: UIViewController {
         case .solutionView: solutionPageSetting(for: segue, sender: sender)
         case .speakingRateView: speakingRatePageSetting(for: segue, sender: sender)
         }
-    }
-    
-    /// 設定解答頁的相關數值
-    /// - Parameters:
-    ///   - segue: UIStoryboardSegue
-    ///   - sender: Any?
-    func solutionPageSetting(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        guard let viewController = segue.destination as? SolutionViewController,
-              let words = sender as? [String]
-        else {
-            return
-        }
-        
-        viewController.words = words
-    }
-    
-    /// 設定語速的相關數值
-    /// - Parameters:
-    ///   - segue: UIStoryboardSegue
-    ///   - sender: Any?
-    func speakingRatePageSetting(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        guard let viewController = segue.destination as? VolumeViewController else { return }
-        
-        viewController._transparent(.black.withAlphaComponent(0.3))
-        viewController.soundType = .rate
-        
-        tabBarController?._tabBarHidden(true, animated: true)
     }
     
     deinit { wwPrint("\(Self.self) deinit") }
@@ -122,6 +94,18 @@ private extension ReviewViewController {
         speakImageView.addGestureRecognizer(tapGesture)
         
         navigationItem.backBarButtonItem = UIBarButtonItem()
+    }
+    
+    /// 初始化SpeakImage
+    func initSpeakImage() {
+         
+        guard let fileURL = Utility.HudGifType.speak.fileURL(),
+              let image = UIImage(contentsOfFile: fileURL.path)
+        else {
+            return
+        }
+        
+        speakImageView.image = image
     }
     
     /// 產生猜單字的字組
@@ -154,12 +138,14 @@ private extension ReviewViewController {
     ///   - loopCount: 動畫次數
     func speakVocabularyAction(with type: Utility.HudGifType = .speak, loopCount: Int = 5) {
         
-        guard let gifUrl = Bundle.main.url(forResource: type.rawValue, withExtension: nil) else { return }
+        guard let gifUrl = type.fileURL() else { return }
         
         speakAnimateLoopCount = 0
         isNextVocabulary = false
         speakImageView.isUserInteractionEnabled = false
         answearButtonStatus(isEnabled: false)
+        
+        var speakImage = UIImage()
         
         _ = speakImageView._GIF(url: gifUrl) { [weak self] result in
             
@@ -170,10 +156,11 @@ private extension ReviewViewController {
             case .success(let info):
                 
                 if (info.index == 0) { this.speakAnimateLoopCount += 1 }
+                if (info.index == 1) { speakImage = UIImage(cgImage: info.cgImage) }
                 
                 if (this.speakAnimateLoopCount > loopCount) {
                     info.pointer.pointee = true
-                    this.speakImageView.image = UIImage(named: "Speak.gif")
+                    this.speakImageView.image = speakImage
                     this.speakImageView.isUserInteractionEnabled = true
                     this.answearButtonStatus(isEnabled: true)
                 }
@@ -205,7 +192,7 @@ private extension ReviewViewController {
     /// - Parameter type: Utility.HudGifType
     func animatedBackground(with type: Utility.HudGifType) {
         
-        guard let gifUrl = Bundle.main.url(forResource: type.rawValue, withExtension: nil) else { return }
+        guard let gifUrl = type.fileURL() else { return }
         
         isAnimationStop = false
         
@@ -428,5 +415,34 @@ private extension ReviewViewController {
         alertController.modalPresentationStyle = .popover
         
         present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 設定解答頁的相關數值
+    /// - Parameters:
+    ///   - segue: UIStoryboardSegue
+    ///   - sender: Any?
+    func solutionPageSetting(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let viewController = segue.destination as? SolutionViewController,
+              let words = sender as? [String]
+        else {
+            return
+        }
+        
+        viewController.words = words
+    }
+    
+    /// 設定語速的相關數值
+    /// - Parameters:
+    ///   - segue: UIStoryboardSegue
+    ///   - sender: Any?
+    func speakingRatePageSetting(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let viewController = segue.destination as? VolumeViewController else { return }
+        
+        viewController._transparent(.black.withAlphaComponent(0.3))
+        viewController.soundType = .rate
+        
+        tabBarController?._tabBarHidden(true, animated: true)
     }
 }

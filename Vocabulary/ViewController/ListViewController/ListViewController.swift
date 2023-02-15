@@ -303,7 +303,7 @@ private extension ListViewController {
     /// - Parameter type: Utility.HudGifType
     func animatedBackground(with type: Utility.HudGifType) {
         
-        guard let gifUrl = Bundle.main.url(forResource: type.rawValue, withExtension: nil) else { return }
+        guard let gifUrl = type.fileURL() else { return }
         
         isAnimationStop = false
         

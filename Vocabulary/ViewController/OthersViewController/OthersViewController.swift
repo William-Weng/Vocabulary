@@ -58,7 +58,7 @@ final class OthersViewController: UIViewController {
     
     @IBAction func appendBookmarkAction(_ sender: UIButton) {
         
-        appendBookmarkHint(title: "請輸入例句") { [weak self] (title, webUrl) in
+        appendBookmarkHint(title: "請輸入網址") { [weak self] (title, webUrl) in
             guard let this = self else { return false }
             return this.appendBookmark(title, webUrl: webUrl, for: Constant.currentTableName)
         }
@@ -180,7 +180,7 @@ private extension OthersViewController {
     /// - Parameter type: Utility.HudGifType
     func animatedBackground(with type: Utility.HudGifType) {
         
-        guard let gifUrl = Bundle.main.url(forResource: type.rawValue, withExtension: nil) else { return }
+        guard let gifUrl = type.fileURL() else { return }
         
         isAnimationStop = false
         

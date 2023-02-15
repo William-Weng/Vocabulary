@@ -504,6 +504,19 @@ extension FileManager {
             return .failure(error)
         }
     }
+    
+    /// 測試該檔案是否存在 / 是否為資料夾
+    /// - Parameter url: 檔案的URL路徑
+    /// - Returns: Constant.FileInfomation
+    func _fileExists(with url: URL?) -> Constant.FileInfomation {
+        
+        guard let url = url else { return (false, false) }
+        
+        var isDirectory: ObjCBool = false
+        let isExist = fileExists(atPath: url.path, isDirectory: &isDirectory)
+        
+        return (isExist, isDirectory.boolValue)
+    }
 }
 
 // MARK: - UIWindow (static function)
@@ -889,5 +902,29 @@ extension WKWebView {
         }
         
         return self.load(urlRequest)
+    }
+    
+    /// [網址讀取進度條設定](https://juejin.cn/post/6894106901186330632) => 回傳值要接起來
+    /// - Parameters:
+    ///   - height: 進度條的位置高度
+    ///   - thickness: 進度條的厚度
+    ///   - trackTintColor: 進度條的背景色
+    ///   - progressTintColor: 進度條的前景色
+    /// - Returns: NSKeyValueObservation?
+    func _estimatedProgress(with height: CGFloat, thickness: CGFloat = 5.0, trackTintColor: UIColor? = .clear, progressTintColor: UIColor? = .systemBlue) -> NSKeyValueObservation? {
+        
+        let progressView = UIProgressView(frame: CGRect(x: 0, y: height, width: self.bounds.width, height: thickness))
+        progressView.progress = 0
+        progressView.trackTintColor = trackTintColor
+        progressView.progressTintColor = progressTintColor
+        
+        self.addSubview(progressView)
+        
+        let observation = self.observe(\.estimatedProgress, options: [.new]) { [weak self] (_, _)  in
+            guard let this = self else { return }
+            progressView.progress = Float(this.estimatedProgress)
+        }
+        
+        return observation
     }
 }

@@ -93,19 +93,7 @@ private extension LicenseWebViewController {
     /// [網址讀取進度條設定](https://juejin.cn/post/6894106901186330632)
     /// - Parameter webView: WKWebView
     func estimatedProgress(with webView: WKWebView) {
-        
         let navigationBarHeight = navigationController?.navigationBar._rootView()?.frame.height ?? 0
-        
-        progressView = UIProgressView(frame: CGRect(x: 0, y: navigationBarHeight, width: view.bounds.width, height: 6))
-        progressView.progress = 0
-        progressView.trackTintColor = .white
-        progressView.progressTintColor = .systemBlue
-        
-        view.addSubview(progressView)
-        
-        observation = webView.observe(\.estimatedProgress, options: [.new]) { [weak self] (_, _)  in
-            guard let this = self else { return }
-            this.progressView.progress = Float(webView.estimatedProgress)
-        }
+        observation = webView._estimatedProgress(with: navigationBarHeight)
     }
 }

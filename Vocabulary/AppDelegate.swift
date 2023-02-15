@@ -22,6 +22,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         initDatabase()
         backgroundBarColor(UIColor.black.withAlphaComponent(0.1))
         audioInterruptionNotification()
+        _ = animationFolderUrlMaker()
         
         return true
     }
@@ -114,6 +115,20 @@ private extension AppDelegate {
         ]
         
         return result
+    }
+    
+    /// 建立存放GIF動畫的資料夾
+    /// - Returns: 資料夾的URL
+    func animationFolderUrlMaker() -> URL? {
+        
+        guard let musicFolderUrl = Constant.animationFolderUrl else { return nil }
+        
+        let result = FileManager.default._createDirectory(with: musicFolderUrl, path: "")
+        
+        switch result {
+        case .failure(let error): wwPrint(error); return nil
+        case .success(let isSuccess): return (!isSuccess) ? nil : musicFolderUrl
+        }
     }
     
     /// 設定Bar的背景色

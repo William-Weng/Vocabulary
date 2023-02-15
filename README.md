@@ -5,7 +5,7 @@
 
 ![](./@Image/Example_1.png) ![](./@Image/Example_2.png) ![](./@Image/Example_3.png)
 ![](./@Image/Example_4.png) ![](./@Image/Example_5.png) ![](./@Image/Example_6.png)
-![](./@Image/Example_7.png)
+![](./@Image/Example_7.png) ![](./@Image/Example_8.png) ![](./@Image/Example_9.png)
 ![](./@Image/Example_0.png)
 
 # 附錄：資源下載說明
@@ -19,7 +19,7 @@
 1. [WWNetworking](https://github.com/William-Weng/WWNetworking.git)
 
 ### [相關圖示](https://www.flaticon.com)
-1. AppIcon - [dictionary_4033323.png](https://www.flaticon.com/free-icon/knowledge_2997319)
+1. AppIcon - [dictionary_2080699.png](https://www.flaticon.com/free-icon/dictionary_2080699)
 1. Sound - [volume_727269.png](https://www.flaticon.com/free-icon/volume_727269)
 1. Search - [search_3128287.png](https://www.flaticon.com/free-icon/search_3128287)
 1. Music - [musical-note_2995101.png](https://www.flaticon.com/free-icon/musical-note_2995101)
@@ -39,13 +39,14 @@
 1. GoForward - [back_786298](https://www.flaticon.com/free-icon/back_786298)
 1. Level - [level-up_7634463](https://www.flaticon.com/free-icon/level-up_7634463)
 1. SpeedMeter - [level-up_7634463](https://www.flaticon.com/free-icon/speedometer_571685)
+1. SoundWaves - [waves_875590](https://www.flaticon.com/free-icon/sound-waves_875590)
 
-### [背景音樂 - .mp3 / .m4a](http://amachamusic.chagasi.com/)
+### [背景音樂 - .mp3 / .m4a (請在iTunes上自行加入)](http://amachamusic.chagasi.com/)
 1. 夏の霧.m4a - [甘茶の音楽工房 - natsunokiri.mp3](http://amachamusic.chagasi.com/music_natsunokiri.html)
 1. 桜雲.m4a - [甘茶の音楽工房 - ouun.mp3](http://amachamusic.chagasi.com/music_ouun.html)
 1. TheBeatOfNature.mp3 - [Pixabay - the-beat-of-nature-122841.mp3](https://pixabay.com/music/solo-guitar-the-beat-of-nature-122841/)
 
-### [動畫圖示](https://imgur.com/)
+### [動畫圖示 (請在iTunes上自行加入)](https://imgur.com/)
 1. Studing.gif - [桌布-會動的可愛小白熊-1](https://imgur.com/CsxYiU3)
 1. Reading.gif - [桌布-會動的可愛小白熊-1](https://imgur.com/bM0UnMb)
 1. Search.gif - [桌布-會動的可愛小白熊-1](https://imgur.com/1y04NEk)

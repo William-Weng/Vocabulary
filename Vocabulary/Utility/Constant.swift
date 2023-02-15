@@ -21,8 +21,9 @@ final class Constant: NSObject {
     static var currentTableName: Constant.VoiceCode = .english { didSet { NotificationCenter.default._post(name: Constant.notificationName) }}
     static var volume: Float = 0.1
     static var speakingSpeed: Float = 0.4
-    static var musicFolderUrl: URL? { get { return FileManager.default._documentDirectory()?.appendingPathComponent("Music", isDirectory: false) }}
     static var imageFolderUrl: URL? { get { return FileManager.default._documentDirectory()?.appendingPathComponent("Image", isDirectory: false) }}
+    static var musicFolderUrl: URL? { get { return FileManager.default._documentDirectory()?.appendingPathComponent("Music", isDirectory: false) }}
+    static var animationFolderUrl: URL? { get { return FileManager.default._documentDirectory()?.appendingPathComponent("Animation", isDirectory: false) }}
 }
 
 // MARK: - Typealias
@@ -95,6 +96,7 @@ extension Constant {
         }
         
         /// 字典名稱
+        /// - Returns: String
         func name() -> String {
             
             switch self {
@@ -179,7 +181,6 @@ extension Constant {
             case .read: return 3
             case .listen: return 10
             }
-            
         }
     }
 }

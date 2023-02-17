@@ -21,16 +21,16 @@ final class MyNavigationController: UINavigationController {
         registerNotification()
     }
     
-    deinit { wwPrint("deinit \(Self.self)") }
+    deinit { wwPrint("\(Self.self) deinit") }
 }
 
 // MARK: - 小工具
 extension MyNavigationController {
     
-    /// 註冊通知功能 (資料庫變動時更新資料)
+    /// 註冊通知功能 (語言變動時更新資料)
     func registerNotification() {
         
-        NotificationCenter.default._register(name: Constant.notificationName) { _ in
+        NotificationCenter.default._register(name: .refreshViewController) { _ in
             
             _ = self._popToRootViewController() { [weak self] in
                 

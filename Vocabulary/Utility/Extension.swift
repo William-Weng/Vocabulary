@@ -235,6 +235,16 @@ extension Date {
         
         return dateFormatter.string(from: self)
     }
+    
+    /// [增加日期 => 年 / 月 / 日](https://areckkimo.medium.com/用uipageviewcontroller實作萬年曆-76edaac841e1)
+    /// - Parameters:
+    ///   - component:
+    ///   - value: 年(.year) / 月(.month) / 日(.day)
+    ///   - calendar: 當地的日曆基準
+    /// - Returns: Date?
+    func _adding(component: Calendar.Component = .day, value: Int, for calendar: Calendar = .current) -> Date? {
+        return calendar.date(byAdding: component, value: value, to: self)
+    }
 }
 
 // MARK: - URL (static function)
@@ -390,6 +400,74 @@ extension AVAudioPlayer {
     }
 }
 
+// MARK: - AVAudioRecorder (static function)
+extension AVAudioRecorder {
+    
+    /// [產生AVAudioRecorder](https://cdfq152313.github.io/post/2016-10-06/)
+    /// - Parameters:
+    ///   - recordURL: URL
+    ///   - audioQuality: AVAudioQuality
+    ///   - delegate: AVAudioRecorderDelegate?
+    /// - Returns: AVAudioRecorder?
+    static func _build(recordURL: URL, audioQuality: AVAudioQuality = .medium, delegate: AVAudioRecorderDelegate? = nil) -> AVAudioRecorder? {
+        
+        let settings: [String: Any] = [
+            AVEncoderAudioQualityKey: audioQuality.rawValue,
+            AVEncoderBitRateKey: 16,
+            AVNumberOfChannelsKey: 2,
+            AVSampleRateKey: 44100.0
+        ]
+        
+        guard let format = AVAudioFormat(settings: settings) else { return nil }
+        
+        let audioRecorder = try? AVAudioRecorder(url: recordURL, format: format)
+        audioRecorder?.delegate = delegate
+        
+        return audioRecorder
+    }
+}
+
+// MARK: - AVAudioRecorder (class function)
+extension AVAudioRecorder {
+    
+    /// 開始錄音 (.wav) => NSMicrophoneUsageDescription
+    /// - Returns: Result<Bool, Error>
+    func _record() -> Result<Bool, Error> {
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playAndRecord)
+        }
+        catch {
+            return .failure(error)
+        }
+        
+        guard self.prepareToRecord(),
+              self.record()
+        else {
+            return .success(false)
+        }
+        
+        return .success(true)
+    }
+    
+    /// 停止錄音
+    /// - Returns: Result<Bool, Error>
+    func _stop() -> Result<Bool, Error> {
+        
+        self.stop()
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+            try AVAudioSession.sharedInstance().setActive(true)
+        }
+        catch {
+            return .failure(error)
+        }
+        
+        return .success(true)
+    }
+}
+
 // MARK: - Selector (class function)
 extension Selector {
     
@@ -422,15 +500,51 @@ extension NotificationCenter {
     ///   - queue: 執行的序列
     ///   - object: 接收的資料
     ///   - handler: 監聽到後要執行的動作
+    func _register(name: Constant.NotificationName, queue: OperationQueue = .main, object: Any? = nil, handler: @escaping ((Notification) -> Void)) {
+        self.addObserver(forName: name.name(), object: object, queue: queue) { (notification) in handler(notification) }
+    }
+
+    
+    /// 發出通知
+    /// - Parameters:
+    ///   - name: 要發出的Notification名稱
+    ///   - object: 要傳送的資料
+    func _post(name: Constant.NotificationName, object: Any? = nil) { self.post(name: name.name(), object: object) }
+    
+    /// 移除通知
+    /// - Parameters:
+    ///   - observer: 要移除的位置
+    ///   - name: 要移除的Notification名稱
+    ///   - object: 接收的資料
+    func _remove(observer: Any, name: Constant.NotificationName, object: Any? = nil) { self._remove(observer: observer, name: name.name()) }
+}
+
+// MARK: - NotificationCenter (class function)
+private extension NotificationCenter {
+    
+    /// 註冊通知
+    /// - Parameters:
+    ///   - name: 要註冊的Notification名稱
+    ///   - queue: 執行的序列
+    ///   - object: 接收的資料
+    ///   - handler: 監聽到後要執行的動作
     func _register(name: Notification.Name, queue: OperationQueue = .main, object: Any? = nil, handler: @escaping ((Notification) -> Void)) {
         self.addObserver(forName: name, object: object, queue: queue) { (notification) in handler(notification) }
     }
-
+    
+    
     /// 發出通知
     /// - Parameters:
     ///   - name: 要發出的Notification名稱
     ///   - object: 要傳送的資料
     func _post(name: Notification.Name, object: Any? = nil) { self.post(name: name, object: object) }
+    
+    /// 移除通知
+    /// - Parameters:
+    ///   - observer: 要移除的位置
+    ///   - name: 要移除的Notification名稱
+    ///   - object: 接收的資料
+    func _remove(observer: Any, name: Notification.Name, object: Any? = nil) { self.removeObserver(observer, name: name, object: object) }
 }
 
 // MARK: - FileManager (class function)
@@ -446,6 +560,11 @@ extension FileManager {
     /// - => ~/Documents (UIFileSharingEnabled)
     /// - Returns: URL?
     func _documentDirectory() -> URL? { return self._userDirectory(for: .documentDirectory).first }
+    
+    /// User的「暫存」資料夾
+    /// - => ~/tmp
+    /// - Returns: URL
+    func _temporaryDirectory() -> URL { return self.temporaryDirectory }
     
     /// 新增資料夾
     /// - Parameters:

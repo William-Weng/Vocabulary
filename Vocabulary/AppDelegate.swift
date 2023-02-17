@@ -13,17 +13,21 @@ import WWSQLite3Manager
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    static var infinityMusicLoop = true
+    
     var window: UIWindow?
     
     private var audioPlayer: AVAudioPlayer?
+    private var recordlayer: AVAudioPlayer?
+    private var audioRecorder: AVAudioRecorder?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         initDatabase()
-        backgroundBarColor(UIColor.black.withAlphaComponent(0.1))
+        backgroundBarColor(.black.withAlphaComponent(0.1))
         audioInterruptionNotification()
-        _ = animationFolderUrlMaker()
         
+        _ = animationFolderUrlMaker()
         return true
     }
     
@@ -36,11 +40,18 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-// MARK: - AVAudioPlayerDelegate
-extension AppDelegate: AVAudioPlayerDelegate {
+// MARK: - AVAudioRecorderDelegate
+extension AppDelegate: AVAudioRecorderDelegate {
     
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) { player.play() }
-    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) { wwPrint(error) }
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        
+        guard let recordlayer = AVAudioPlayer._build(audioURL: recorder.url, fileTypeHint: .wav, delegate: nil) else { return }
+        
+        self.recordlayer = recordlayer
+        recordlayer.play()
+    }
+    
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) { wwPrint(error) }
 }
 
 // MARK: - 小工具
@@ -55,14 +66,16 @@ extension AppDelegate {
         
         audioPlayer?.stop()
         audioPlayer = nil
-        
+         
         guard let audioPlayer = musicPlayerMaker(with: music) else { return false }
         
         self.audioPlayer = audioPlayer
         
         audioPlayer.volume = volume
+        audioPlayer.numberOfLoops = Int.max
+        audioPlayer.prepareToPlay()
         audioPlayer.play()
-                
+        
         return true
     }
     
@@ -78,6 +91,16 @@ extension AppDelegate {
         audioPlayer?.volume = Constant.volume
         return musicVolume()
     }
+    
+    /// 錄製聲音
+    func recordWave() -> Bool {
+        guard let recordURL = FileManager.default._temporaryDirectory()._appendPath("record.wav") else { return false }
+        return recordSound(recordURL: recordURL)
+    }
+    
+    /// 停止錄製聲音
+    /// - Returns: Bool
+    func stopRecordingWave() -> Bool { stopRecorder() }
 }
 
 // MARK: - 小工具
@@ -121,7 +144,7 @@ private extension AppDelegate {
     /// - Returns: 資料夾的URL
     func animationFolderUrlMaker() -> URL? {
         
-        guard let musicFolderUrl = Constant.animationFolderUrl else { return nil }
+        guard let musicFolderUrl = Constant.FileFolder.animation.url() else { return nil }
         
         let result = FileManager.default._createDirectory(with: musicFolderUrl, path: "")
         
@@ -146,7 +169,7 @@ private extension AppDelegate {
         audioPlayer = nil
         
         guard let audioURL = music.fileURL(),
-              let audioPlayer = AVAudioPlayer._build(audioURL: audioURL, fileTypeHint: music.fileType(), delegate: self)
+              let audioPlayer = AVAudioPlayer._build(audioURL: audioURL, fileTypeHint: music.fileType(), delegate: nil)
         else {
             return nil
         }
@@ -157,6 +180,37 @@ private extension AppDelegate {
     /// 註冊音樂被中斷的通知 (Safari播放單字聲音時，音樂會被中斷)
     func audioInterruptionNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(Self.replayMusic(_:)), name: AVAudioSession.interruptionNotification, object: nil)
+    }
+    
+    /// 開始錄音 (.wav)
+    /// - Parameter recordURL: URL
+    /// - Returns: Bool
+    func recordSound(recordURL: URL) -> Bool {
+        
+        _ = audioRecorder?._stop()
+        
+        guard let audioRecorder = AVAudioRecorder._build(recordURL: recordURL) else { return false }
+
+        self.audioRecorder = audioRecorder
+        audioRecorder.delegate = self
+        
+        let result = audioRecorder._record()
+        
+        switch result {
+        case .failure(let error): wwPrint(error); return false
+        case .success(let isSuccess): return isSuccess
+        }
+    }
+    
+    /// 停止錄音
+    func stopRecorder() -> Bool {
+        
+        guard let result = audioRecorder?._stop() else { return false }
+        
+        switch result {
+        case .failure(let error): wwPrint(error); return false
+        case .success(let isSuccess): return isSuccess
+        }
     }
 }
 

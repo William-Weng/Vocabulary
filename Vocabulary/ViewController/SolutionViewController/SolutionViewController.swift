@@ -57,11 +57,6 @@ final class SolutionViewController: UIViewController {
         pauseBackgroundAnimation()
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        tabBarController?.tabBar.isHidden = true
-    }
-    
     @IBAction func reviewAction(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: ViewSegueType.reviewResult.rawValue, sender: nil)
     }

@@ -40,6 +40,7 @@
 1. Level - [level-up_7634463](https://www.flaticon.com/free-icon/level-up_7634463)
 1. SpeedMeter - [level-up_7634463](https://www.flaticon.com/free-icon/speedometer_571685)
 1. SoundWaves - [waves_875590](https://www.flaticon.com/free-icon/sound-waves_875590)
+1. Recorder - [google-voice_3128290](https://www.flaticon.com/free-icon/google-voice_3128290)
 
 ### [背景音樂 - .mp3 / .m4a (請在iTunes上自行加入)](http://amachamusic.chagasi.com/)
 1. 夏の霧.m4a - [甘茶の音楽工房 - natsunokiri.mp3](http://amachamusic.chagasi.com/music_natsunokiri.html)
@@ -60,6 +61,7 @@
 1. Speak.gif - [media-amazon.com](https://m.media-amazon.com/images/G/01/digital/music/player/web/EQ_accent.gif)
 1. Others.gif - [小白呆萌溫馨動漫gif動圖_動態圖_表情包下載_SOOGIF](http://img.soogif.com/xUsqykJ9IjXSgbL1v4yxlFDlTlhApFVw.gif)
 1. Download.gif - [https://in.pinterest.com/meghaumrania/cute-love-gif/](https://i.pinimg.com/originals/d4/89/0e/d4890e94b9e0ff70bf52c392a5e8d752.gif)
+1. Talking.gif - [https://images.squarespace-cdn.com/content/v1/5d7bd675b95d9b3bf482a2e2/1585769822469-DYS3O5LZ0WNN0KYRJTRM/People+talking](https://images.squarespace-cdn.com/content/v1/5d7bd675b95d9b3bf482a2e2/1585769822469-DYS3O5LZ0WNN0KYRJTRM/People+talking)
 
 ### [語言字型](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/為-ios-app-加入客製字型-custom-font-d2b28b0269e0)
 1. KleeOne-SemiBold.ttf - [Google Fonts - KleeOne](https://fonts.google.com/specimen/Klee+One)

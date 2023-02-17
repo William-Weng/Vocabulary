@@ -42,7 +42,6 @@ final class ListViewController: UIViewController {
         
         ListTableViewCell.listViewDelegate = self
         animatedBackground(with: .reading)
-        
         mainViewDelegate?.tabBarHidden(true)
         
         if (!canDelete) { tabBarController?._tabBarHidden(true, animated: true) }
@@ -60,9 +59,8 @@ final class ListViewController: UIViewController {
         mainViewDelegate?.tabBarHidden(false)
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        tabBarController?.tabBar.isHidden = true
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        talkingViewSetting(for: segue, sender: sender)
     }
     
     deinit {
@@ -73,6 +71,7 @@ final class ListViewController: UIViewController {
     
     @IBAction func dictionaryNet(_ sender: UIBarButtonItem) { netDictionary(with: vocabularyList.word) }
     @IBAction func refreshVocabularyList(_ sender: UIRefreshControl) { reloadExampleList() }
+    @IBAction func recordingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: "RecordingWaveSegue", sender: nil) }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -356,5 +355,17 @@ private extension ListViewController {
         let isSuccess = API.shared.updateWordToList(vocabularyList.word, for: Constant.currentTableName, count: count, hasUpdateTime: false)
         
         if (isSuccess) { mainViewDelegate?.updateCountLabel(with: vocabularyListIndexPath, count: count) }
+    }
+    
+    /// 設定錄音頁面
+    /// - Parameters:
+    ///   - segue: UIStoryboardSegue
+    ///   - sender: Any?
+    func talkingViewSetting(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let viewController = segue.destination as? TalkingViewController else { return }
+        
+        viewController._transparent(.black.withAlphaComponent(0.3))
+        tabBarController?._tabBarHidden(true, animated: true)
     }
 }

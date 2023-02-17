@@ -725,15 +725,23 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="l6z-VV-iSf">
-                        <barButtonItem key="rightBarButtonItem" image="Dictionary" id="Wqz-yk-dcb">
-                            <connections>
-                                <action selector="dictionaryNet:" destination="Afl-Sy-sBn" id="35H-hg-Oqf"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="Dictionary" id="Wqz-yk-dcb">
+                                <connections>
+                                    <action selector="dictionaryNet:" destination="Afl-Sy-sBn" id="35H-hg-Oqf"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="Recorder" id="lc7-gU-SrO">
+                                <connections>
+                                    <action selector="recordingAction:" destination="Afl-Sy-sBn" id="NPg-kq-tOb"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="myImageView" destination="WtF-Il-nOH" id="zH0-Pm-OS2"/>
                         <outlet property="myTableView" destination="BuR-Tg-8nD" id="o2B-T5-6jz"/>
+                        <segue destination="Re7-Kr-I9I" kind="presentation" identifier="RecordingWaveSegue" modalPresentationStyle="fullScreen" id="wwR-4x-yc0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gfT-ou-jW5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1072,20 +1080,20 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ReviewResultTableViewCell" id="yGr-4Q-LtM" customClass="ReviewResultTableViewCell" customModule="Vocabulary" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="375" height="108"/>
+                                        <rect key="frame" x="0.0" y="50" width="375" height="108.66666412353516"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yGr-4Q-LtM" id="U1x-cj-AQT">
-                                            <rect key="frame" x="0.0" y="0.0" width="344.66666666666669" height="108"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="344.66666666666669" height="108.66666412353516"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kjK-Dn-L7J">
-                                                    <rect key="frame" x="8" y="8" width="336.66666666666669" height="92"/>
+                                                    <rect key="frame" x="8" y="8" width="336.66666666666669" height="92.666666666666671"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Kg6-f9-8PE">
-                                                            <rect key="frame" x="0.0" y="0.0" width="272.66666666666669" height="92"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="272.66666666666669" height="92.666666666666671"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="あい십일早安" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ma-bR-hOX">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="272.66666666666669" height="48"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="272.66666666666669" height="48.666666666666664"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="36" id="Rht-wN-TuZ"/>
                                                                     </constraints>
@@ -1094,13 +1102,13 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qbz-Le-eLh">
-                                                                    <rect key="frame" x="0.0" y="56" width="272.66666666666669" height="36"/>
+                                                                    <rect key="frame" x="0.0" y="56.666666666666671" width="272.66666666666669" height="36"/>
                                                                     <subviews>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jwd-Eq-5hs">
                                                                             <rect key="frame" x="0.0" y="0.0" width="132.33333333333334" height="36"/>
                                                                             <subviews>
                                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Star" translatesAutoresizingMaskIntoConstraints="NO" id="G8m-zd-CSR">
-                                                                                    <rect key="frame" x="16" y="3.6666666666666714" width="29" height="29"/>
+                                                                                    <rect key="frame" x="16" y="3.6666666666666572" width="29" height="29"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="width" secondItem="G8m-zd-CSR" secondAttribute="height" id="NfF-W1-pl7"/>
                                                                                     </constraints>
@@ -1125,7 +1133,7 @@
                                                                             <rect key="frame" x="140.33333333333331" y="0.0" width="132.33333333333331" height="36"/>
                                                                             <subviews>
                                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Cry" translatesAutoresizingMaskIntoConstraints="NO" id="Htf-An-J10">
-                                                                                    <rect key="frame" x="16" y="3.6666666666666714" width="29" height="29"/>
+                                                                                    <rect key="frame" x="16" y="3.6666666666666572" width="29" height="29"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="width" secondItem="Htf-An-J10" secondAttribute="height" id="sns-Ul-mVU"/>
                                                                                     </constraints>
@@ -1154,10 +1162,10 @@
                                                             </subviews>
                                                         </stackView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oNj-i5-n1a">
-                                                            <rect key="frame" x="272.66666666666669" y="0.0" width="64" height="92"/>
+                                                            <rect key="frame" x="272.66666666666669" y="0.0" width="64" height="92.666666666666671"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zCQ-ru-4NQ">
-                                                                    <rect key="frame" x="10.666666666666629" y="24.666666666666668" width="42.666666666666664" height="42.666666666666657"/>
+                                                                    <rect key="frame" x="10.666666666666629" y="24.999999999999996" width="42.666666666666664" height="42.666666666666657"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                     <state key="normal" image="Sound"/>
                                                                     <connections>
@@ -1214,12 +1222,44 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0fB-PC-gSV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="808.79999999999995" y="2449.5073891625616"/>
+            <point key="canvasLocation" x="809" y="2381"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Talking View Controller-->
+        <scene sceneID="Ewh-2T-XFT">
+            <objects>
+                <viewController id="Re7-Kr-I9I" customClass="TalkingViewController" customModule="Vocabulary" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bOE-Uq-KJ8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8OC-Ha-sEW">
+                                <rect key="frame" x="36" y="254.66666666666663" width="303" height="303"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="8OC-Ha-sEW" secondAttribute="height" id="G0L-Ya-EMe"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="kus-mB-RvC"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="kus-mB-RvC" firstAttribute="trailing" secondItem="8OC-Ha-sEW" secondAttribute="trailing" constant="36" id="8P2-eT-GIJ"/>
+                            <constraint firstItem="8OC-Ha-sEW" firstAttribute="centerX" secondItem="bOE-Uq-KJ8" secondAttribute="centerX" id="Inz-xl-rSF"/>
+                            <constraint firstItem="8OC-Ha-sEW" firstAttribute="centerY" secondItem="bOE-Uq-KJ8" secondAttribute="centerY" id="oAh-Pf-ppN"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="kWP-Z3-tnl"/>
+                    <connections>
+                        <outlet property="myImageView" destination="8OC-Ha-sEW" id="GDX-LX-z6O"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CSi-dM-KQc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1482" y="2381"/>
+        </scene>
+        <!--My Tab Bar Controller-->
         <scene sceneID="HBU-mM-Zg0">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="2RX-is-pqS" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="2RX-is-pqS" customClass="MyTabBarController" customModule="Vocabulary" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="PRd-yf-cP4">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -1279,17 +1319,17 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SentenceTableViewCell" id="7kq-cM-I72" customClass="SentenceTableViewCell" customModule="Vocabulary" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="375" height="231.66667175292969"/>
+                                        <rect key="frame" x="0.0" y="50" width="375" height="233.33332824707031"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7kq-cM-I72" id="OoA-Pn-cp2">
-                                            <rect key="frame" x="0.0" y="0.0" width="344.66666666666669" height="231.66667175292969"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="344.66666666666669" height="233.33332824707031"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tAd-5F-WZQ">
-                                                    <rect key="frame" x="8" y="8" width="336.66666666666669" height="215.66666666666666"/>
+                                                    <rect key="frame" x="8" y="8" width="336.66666666666669" height="217.33333333333334"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Tus-cj-5mI">
-                                                            <rect key="frame" x="0.0" y="0.0" width="272.66666666666669" height="215.66666666666666"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="272.66666666666669" height="217.33333333333334"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6rr-hR-SCM">
                                                                     <rect key="frame" x="0.0" y="0.0" width="272.66666666666669" height="30"/>
@@ -1319,13 +1359,13 @@
                                                                     </constraints>
                                                                 </stackView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Example Example Example Example Example Example Example Example" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H6l-1O-BW6">
-                                                                    <rect key="frame" x="0.0" y="34" width="272.66666666666669" height="145.66666666666666"/>
+                                                                    <rect key="frame" x="0.0" y="34" width="272.66666666666669" height="147.33333333333334"/>
                                                                     <fontDescription key="fontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="24"/>
                                                                     <color key="textColor" systemColor="systemBlueColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Translate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VAz-ar-QAy">
-                                                                    <rect key="frame" x="0.0" y="183.66666666666666" width="272.66666666666669" height="32"/>
+                                                                    <rect key="frame" x="0.0" y="185.33333333333334" width="272.66666666666669" height="32"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="32" id="LPr-Ko-1fw"/>
                                                                     </constraints>
@@ -1336,10 +1376,10 @@
                                                             </subviews>
                                                         </stackView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aOk-iN-3sV">
-                                                            <rect key="frame" x="272.66666666666669" y="0.0" width="64" height="215.66666666666666"/>
+                                                            <rect key="frame" x="272.66666666666669" y="0.0" width="64" height="217.33333333333334"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRE-Mv-jkZ">
-                                                                    <rect key="frame" x="14" y="90" width="36" height="36"/>
+                                                                    <rect key="frame" x="14" y="90.666666666666671" width="36" height="36"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" secondItem="TRE-Mv-jkZ" secondAttribute="height" multiplier="1:1" id="KSn-do-Psy"/>
                                                                         <constraint firstAttribute="height" constant="36" id="ddL-2p-rnS"/>
@@ -1409,17 +1449,25 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="精選例句" id="G8k-sM-Y5D">
-                        <barButtonItem key="rightBarButtonItem" image="Filter" id="cOV-hL-dfD">
-                            <connections>
-                                <action selector="filterSentence:" destination="4GH-0f-Srn" id="dSb-zn-tge"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="Filter" id="cOV-hL-dfD">
+                                <connections>
+                                    <action selector="filterSentence:" destination="4GH-0f-Srn" id="dSb-zn-tge"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="Recorder" id="ks3-55-801">
+                                <connections>
+                                    <action selector="recordingAction:" destination="4GH-0f-Srn" id="NEn-2g-LbR"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="appendWordButton" destination="XZe-Fj-KbX" id="Yfa-Ds-xPG"/>
                         <outlet property="fakeTabBarHeightConstraint" destination="zVe-h7-jDM" id="rCq-sN-4sc"/>
                         <outlet property="myImageView" destination="5hC-US-bHV" id="HTn-Z9-Wq2"/>
                         <outlet property="myTableView" destination="czi-3u-KUv" id="3xt-PW-3s9"/>
+                        <segue destination="Re7-Kr-I9I" kind="presentation" identifier="RecordingSegue" modalPresentationStyle="fullScreen" id="aTr-M4-697"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TnI-EW-xFE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1485,8 +1533,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="wwR-4x-yc0"/>
         <segue reference="0U2-Kk-LoG"/>
-        <segue reference="ryU-FM-Qlk"/>
+        <segue reference="Ypq-4K-ZAg"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Add" width="170.66667175292969" height="170.66667175292969"/>
@@ -1504,6 +1553,7 @@
         <image name="Pen" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Picture" width="85.333335876464844" height="85.333335876464844"/>
         <image name="Read" width="21.333333969116211" height="21.333333969116211"/>
+        <image name="Recorder" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Refresh" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Search" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Sound" width="42.666667938232422" height="42.666667938232422"/>

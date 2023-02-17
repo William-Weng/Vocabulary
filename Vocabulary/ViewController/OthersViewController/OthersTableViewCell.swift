@@ -73,7 +73,7 @@ private extension OthersTableViewCell {
     /// - Returns: UIImage?
     func iconImage(with filename: String?) -> UIImage? {
         
-        guard let imageFolderUrl = Constant.imageFolderUrl,
+        guard let imageFolderUrl = Constant.FileFolder.image.url(),
               let filename = filename
         else {
             return nil

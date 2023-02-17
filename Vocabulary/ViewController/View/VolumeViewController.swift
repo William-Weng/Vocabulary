@@ -27,6 +27,7 @@ final class VolumeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initProgressSlider()
+        updateSliderWidthActionNotification()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -44,12 +45,10 @@ final class VolumeViewController: UIViewController {
         updateWidth(isLandscape: isLandscape(with: view.frame.size))
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        viewWillTransitionAction(to: size, with: coordinator)
+    deinit {
+        NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
+        wwPrint("\(Self.self) deinit")
     }
-    
-    deinit { wwPrint("\(Self.self) deinit") }
 }
 
 // MARK: - SliderDeleagte
@@ -140,24 +139,25 @@ extension VolumeViewController {
         }
     }
     
-    /// [修正畫面旋轉後，畫面數據比例不對的問題](https://stackoverflow.com/questions/26943808/ios-how-to-run-a-function-after-device-has-rotated-swift)
-    /// - Parameters:
-    ///   - size: CGSize
-    ///   - coordinator: UIViewControllerTransitionCoordinator
-    func viewWillTransitionAction(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    /// 更新Slider的寬度
+    func updateSliderWidthActionNotification() {
         
-        coordinator.animate { [weak self] _ in
-            
+        NotificationCenter.default._register(name: .viewDidTransition) { [weak self] notification in
             guard let this = self else { return }
-            
-            let percent = this.sliderVolume() ?? 0
-            let constant = this.currentValueMaker(with: percent)
-            
-            this.tabBarHidden(true)
-            this.updateWidth(isLandscape: this.isLandscape(with: size))
-            this.volumeProgressSlider.currentValue = constant
-            _ = this.volumeProgressSlider.valueSetting(constant: constant, info: (text: "\(Int(percent * 100)) %", icon: nil))
+            this.sliderWidthAction()
         }
+    }
+    
+    /// [修正畫面旋轉後，畫面長寬比例不對的問題](https://stackoverflow.com/questions/26943808/ios-how-to-run-a-function-after-device-has-rotated-swift)
+    func sliderWidthAction() {
+                                
+        let percent = sliderVolume() ?? 0
+        let constant = currentValueMaker(with: percent)
+        
+        tabBarHidden(true)
+        updateWidth(isLandscape: isLandscape(with: view.frame.size))
+        volumeProgressSlider.currentValue = constant
+        _ = volumeProgressSlider.valueSetting(constant: constant, info: (text: "\(Int(percent * 100)) %", icon: nil))
     }
     
     /// 該Slider的寬度

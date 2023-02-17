@@ -11,19 +11,16 @@ import WWSQLite3Manager
 // MARK: - Constant
 final class Constant: NSObject {
     
-    static let databaseName = "Vocabulary.db"
     static let duration: TimeInterval = 0.15
-    static let notificationName = Notification._name("RefreshViewController")
-    static let updateScrolledHeight: CGFloat = 80.0
+    static let updateScrolledHeight: CGFloat = 96.0
+    static let databaseName = "Vocabulary.db"
     static let searchCountWithLevel: SearchCountWithLevel = [.easy: 3, .medium: 4, .hard: 3]
-
-    static var database: SQLite3Database?
-    static var currentTableName: Constant.VoiceCode = .english { didSet { NotificationCenter.default._post(name: Constant.notificationName) }}
+    
     static var volume: Float = 0.1
     static var speakingSpeed: Float = 0.4
-    static var imageFolderUrl: URL? { get { return FileManager.default._documentDirectory()?.appendingPathComponent("Image", isDirectory: false) }}
-    static var musicFolderUrl: URL? { get { return FileManager.default._documentDirectory()?.appendingPathComponent("Music", isDirectory: false) }}
-    static var animationFolderUrl: URL? { get { return FileManager.default._documentDirectory()?.appendingPathComponent("Animation", isDirectory: false) }}
+    static var database: SQLite3Database?
+    
+    static var currentTableName: Constant.VoiceCode = .english { didSet { NotificationCenter.default._post(name: .refreshViewController) }}
 }
 
 // MARK: - Typealias
@@ -182,5 +179,29 @@ extension Constant {
             case .listen: return 10
             }
         }
+    }
+    
+    /// 通知的名稱
+    enum NotificationName: String {
+        
+        case refreshViewController = "RefreshViewController"
+        case viewDidTransition = "viewDidTransition"
+        case tabbarHiddenStatus = "tabbarHiddenStatus"
+        
+        /// 產生Notification.Name
+        /// - Returns: Notification.Name
+        func name() -> Notification.Name { return Notification._name(self.rawValue) }
+    }
+    
+    /// 外部的資料夾路徑 => ./Documents/Music
+    enum FileFolder: String {
+        
+        case image = "Image"
+        case music = "Music"
+        case animation = "Animation"
+        
+        /// 產生URL
+        /// - Returns: URL?
+        func url() -> URL? { return FileManager.default._documentDirectory()?.appendingPathComponent(self.rawValue, isDirectory: false) }
     }
 }

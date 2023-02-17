@@ -33,7 +33,6 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var appendWordButton: UIButton!
     @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
     
-    private var isLoaded = false
     private var isAnimationStop = false
     private var currentScrollDirection: Constant.ScrollDirection = .down
 
@@ -43,6 +42,7 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
+        updateButtonPositionConstraintNotification()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,11 +55,6 @@ final class MainViewController: UIViewController {
         super.viewWillDisappear(animated)
         MainTableViewCell.mainViewDelegate = nil
         pauseBackgroundAnimation()
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        traitCollectionDidChange()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -80,6 +75,7 @@ final class MainViewController: UIViewController {
     deinit {
         MainTableViewCell.vocabularyListArray = []
         MainTableViewCell.mainViewDelegate = nil
+        NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
         wwPrint("\(Self.self) deinit")
     }
     
@@ -124,11 +120,10 @@ extension MainViewController: MainViewDelegate {
 
 // MARK: - 小工具
 private extension MainViewController {
-        
+    
     /// UITableView的初始化設定
     func initSetting() {
         
-        isLoaded = true
         navigationItem.backBarButtonItem = UIBarButtonItem()
         
         refreshControl = UIRefreshControl._build(target: self, action: #selector(Self.refreshVocabularyList(_:)))
@@ -167,7 +162,7 @@ private extension MainViewController {
     /// 使用Segue進入下一頁
     /// - Parameter indexPath: IndexPath
     func performSegue(for type: ViewSegueType, sender: Any?) {
-        currentScrollDirection = .none
+        currentScrollDirection = .up
         performSegue(withIdentifier: type.rawValue, sender: sender)
     }
     
@@ -286,12 +281,7 @@ private extension MainViewController {
     func appendWord(_ word: String, for tableName: Constant.VoiceCode) -> Bool {
         
         guard let count = API.shared.insertNewWord(word, for: tableName)?.count else { return false }
-        
-        guard let listCount = Optional.some(API.shared.searchWordDetailList(word, for: tableName).count),
-              listCount > 1
-        else {
-            return API.shared.insertWordToList(word, for: tableName)
-        }
+        guard API.shared.searchWordDetailList(word, for: tableName).count > 1 else { return API.shared.insertWordToList(word, for: tableName) }
         
         return API.shared.updateWordToList(word, for: tableName, count: count)
     }
@@ -578,6 +568,22 @@ private extension MainViewController {
         currentScrollDirection = direction
     }
     
+    /// 更新appendButton的位置
+    func updateButtonPositionConstraintNotification() {
+        
+        NotificationCenter.default._register(name: .viewDidTransition) { [weak self] notification in
+            
+            guard let this = self,
+                  let isHidden = notification.object as? Bool
+            else {
+                return
+            }
+            
+            this.currentScrollDirection = .none
+            this.appendButtonPositionConstraint(isHidden, duration: Constant.duration)
+        }
+    }
+    
     /// 更新新增單字Button的位置 for Tabbar
     /// - Parameters:
     ///   - isHidden: Bool
@@ -589,33 +595,18 @@ private extension MainViewController {
         guard let tabBar = self.tabBarController?.tabBar else { return }
         
         fakeTabBarHeightConstraint.constant = !isHidden ? tabBar.frame.height : .zero
+        
         UIViewPropertyAnimator(duration: duration, curve: curve) { [weak self] in
-            
             guard let this = self else { return }
             this.view.layoutIfNeeded()
-            
         }.startAnimation()
-    }
-    
-    /// 畫面旋轉後，要修正的事情
-    func traitCollectionDidChange() {
-        
-        if (!isLoaded) { return }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + Constant.duration) { [weak self] in
-            
-            guard let this = self else { return }
-            
-            this.currentScrollDirection = .none
-            this.tabBarHiddenAction(false)
-        }
     }
     
     /// 建立存放背景音樂的資料夾
     /// - Returns: 資料夾的URL
     func musicFolderMaker() -> URL? {
         
-        guard let musicFolderUrl = Constant.musicFolderUrl else { return nil }
+        guard let musicFolderUrl = Constant.FileFolder.music.url() else { return nil }
         
         let result = FileManager.default._createDirectory(with: musicFolderUrl, path: "")
         

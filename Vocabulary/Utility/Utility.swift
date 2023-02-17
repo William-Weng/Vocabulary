@@ -28,11 +28,12 @@ final class Utility: NSObject {
         case sentence = "Sentence.gif"
         case others = "Others.gif"
         case download = "Download.gif"
-        
+        case talking = "Talking.gif"
+
         /// 檔案路徑
         /// - Returns: URL?
         func fileURL() -> URL? {
-            let backgroundFolderUrl = Constant.animationFolderUrl
+            let backgroundFolderUrl = Constant.FileFolder.animation.url()
             return backgroundFolderUrl?._appendPath(self.rawValue)
         }
     }

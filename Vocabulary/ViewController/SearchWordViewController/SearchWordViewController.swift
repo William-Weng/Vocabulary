@@ -45,11 +45,6 @@ final class SearchWordViewController: UIViewController {
         pauseBackgroundAnimation()
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        tabBarController?.tabBar.isHidden = true
-    }
-    
     /// 重新讀取資料
     /// - Parameter word: String
     @objc func reloadSearchWord(_ word: String?) {

@@ -25,7 +25,6 @@ final class OthersViewController: UIViewController {
     
     private let licenseWebViewSegue = "LicenseWebViewSegue"
     
-    private var isLoaded = false
     private var isAnimationStop = false
     private var currentScrollDirection: Constant.ScrollDirection = .down
     
@@ -35,6 +34,7 @@ final class OthersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
+        updateButtonPositionConstraintNotification()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,6 +69,7 @@ final class OthersViewController: UIViewController {
     deinit {
         OthersTableViewCell.bookmarksArray = []
         OthersTableViewCell.othersViewDelegate = nil
+        NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
         wwPrint("\(Self.self) init")
     }
 }
@@ -105,7 +106,6 @@ private extension OthersViewController {
     /// UITableView的初始化設定
     func initSetting() {
         
-        isLoaded = true
         navigationItem.backBarButtonItem = UIBarButtonItem()
         OthersTableViewCell.othersViewDelegate = self
         
@@ -236,6 +236,21 @@ private extension OthersViewController {
         appendButtonPositionConstraint(isHidden, duration: duration)
     }
     
+    /// 更新appendButton的位置
+    func updateButtonPositionConstraintNotification() {
+        
+        NotificationCenter.default._register(name: .viewDidTransition) { [weak self] notification in
+            
+            guard let this = self,
+                  let isHidden = notification.object as? Bool
+            else {
+                return
+            }
+            
+            this.appendButtonPositionConstraint(isHidden, duration: Constant.duration)
+        }
+    }
+    
     /// 更新新增書籤Button的位置 for Tabbar
     /// - Parameters:
     ///   - isHidden: Bool
@@ -254,7 +269,7 @@ private extension OthersViewController {
             
         }.startAnimation()
     }
-        
+    
     /// 新增書籤的提示框
     /// - Parameters:
     ///   - indexPath: 要更新書籤時，才會有IndexPath
@@ -489,7 +504,7 @@ private extension OthersViewController {
     func storeIconData(_ data: Data?, filename: String) -> Result<Bool, Error> {
         
         guard let data = data,
-              let imageFolderUrl = Constant.imageFolderUrl
+              let imageFolderUrl = Constant.FileFolder.image.url()
         else {
             return .failure(Constant.MyError.notImage)
         }
@@ -519,7 +534,7 @@ private extension OthersViewController {
             Utility.shared.flashHUD(with: .fail); return
         }
         
-        currentScrollDirection = .none
+        currentScrollDirection = .up
         
         let safariController = url._openUrlWithInside(delegate: self)
         safariController.delegate = self

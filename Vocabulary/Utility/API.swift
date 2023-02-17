@@ -157,7 +157,7 @@ extension API {
     ///   - offset: 偏移量
     /// - Returns: [[String : Any]]
     func searchSentenceList(with speech: VocabularySentenceList.Speech? = nil, for tableName: Constant.VoiceCode, count: Int = 10, offset: Int) -> [[String : Any]] {
-                
+        
         guard let database = Constant.database else { return [] }
         
         var condition: SQLite3Condition.Where?

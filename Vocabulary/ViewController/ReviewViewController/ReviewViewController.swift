@@ -46,11 +46,13 @@ final class ReviewViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        MyTabBarController.isHidden = false
         animatedBackground(with: .working)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        MyTabBarController.isHidden = true
         pauseBackgroundAnimation()
     }
     
@@ -67,8 +69,6 @@ final class ReviewViewController: UIViewController {
         case .speakingRateView: speakingRatePageSetting(for: segue, sender: sender)
         }
     }
-    
-    deinit { wwPrint("\(Self.self) deinit") }
     
     @objc func guessVocabulary(_ tapGesture: UITapGestureRecognizer) { speakVocabularyAction() }
     

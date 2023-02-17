@@ -22,7 +22,6 @@ final class SentenceViewController: UIViewController {
     @IBOutlet weak var appendWordButton: UIButton!
     @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
     
-    private var isLoaded = false
     private var isAnimationStop = false
     
     private var disappearImage: UIImage?
@@ -33,6 +32,7 @@ final class SentenceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
+        updateButtonPositionConstraintNotification()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,11 +45,12 @@ final class SentenceViewController: UIViewController {
         pauseBackgroundAnimation()
     }
     
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        traitCollectionDidChange()
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        talkingViewSetting(for: segue, sender: sender)
     }
-
+    
+    @objc func refreshSentenceList(_ sender: UIRefreshControl) { reloadSentenceList() }
+    
     @IBAction func appendSentenceAction(_ sender: UIButton) {
         
         appendSentenceHint(title: "請輸入例句") { [weak self] (example, translate) in
@@ -58,13 +59,13 @@ final class SentenceViewController: UIViewController {
         }
     }
     
+    @IBAction func recordingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: "RecordingSegue", sender: nil) }
     @IBAction func filterSentence(_ sender: UIBarButtonItem) { sentenceSpeechMenu() }
-    
-    @objc func refreshSentenceList(_ sender: UIRefreshControl) { reloadSentenceList() }
     
     deinit {
         SentenceTableViewCell.sentenceListArray = []
         SentenceTableViewCell.sentenceViewDelegate = nil
+        NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
         wwPrint("\(Self.self) deinit")
     }
 }
@@ -109,7 +110,6 @@ private extension SentenceViewController {
     /// UITableView的初始化設定
     func initSetting() {
         
-        isLoaded = true
         navigationItem.backBarButtonItem = UIBarButtonItem()
         SentenceTableViewCell.sentenceViewDelegate = self
 
@@ -295,6 +295,21 @@ private extension SentenceViewController {
         appendButtonPositionConstraint(isHidden, duration: duration)
     }
     
+    /// 更新appendButton的位置
+    func updateButtonPositionConstraintNotification() {
+        
+        NotificationCenter.default._register(name: .viewDidTransition) { [weak self] notification in
+            
+            guard let this = self,
+                  let isHidden = notification.object as? Bool
+            else {
+                return
+            }
+            
+            this.appendButtonPositionConstraint(isHidden, duration: Constant.duration)
+        }
+    }
+    
     /// 更新新增例句Button的位置 for Tabbar
     /// - Parameters:
     ///   - isHidden: Bool
@@ -468,7 +483,7 @@ private extension SentenceViewController {
             return
         }
         
-        currentScrollDirection = .none
+        currentScrollDirection = .up
         
         let safariController = url._openUrlWithInside(delegate: self)
         safariController.delegate = self
@@ -521,17 +536,15 @@ private extension SentenceViewController {
         return action
     }
     
-    /// 畫面旋轉後，要修正的事情
-    func traitCollectionDidChange() {
+    /// 設定錄音頁面
+    /// - Parameters:
+    ///   - segue: UIStoryboardSegue
+    ///   - sender: Any?
+    func talkingViewSetting(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if (!isLoaded) { return }
+        guard let viewController = segue.destination as? TalkingViewController else { return }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + Constant.duration) { [weak self] in
-            
-            guard let this = self else { return }
-            
-            this.currentScrollDirection = .none
-            this.tabBarHiddenAction(false)
-        }
+        viewController._transparent(.black.withAlphaComponent(0.3))
+        tabBarHiddenAction(true)
     }
 }

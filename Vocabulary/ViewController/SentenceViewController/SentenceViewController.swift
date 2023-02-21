@@ -292,7 +292,7 @@ private extension SentenceViewController {
         let duration = Constant.duration
         
         tabBarController._tabBarHidden(isHidden, duration: duration)
-        appendButtonPositionConstraint(isHidden, duration: duration)
+        NotificationCenter.default._post(name: .viewDidTransition, object: isHidden)
     }
     
     /// 更新appendButton的位置

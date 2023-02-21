@@ -204,6 +204,10 @@ final class BookmarkSite: Codable {
     let createTime: Date    // 建立時間
     let updateTime: Date    // 更新時間
     
+    /// 圖示檔的名稱 (SHA1)
+    /// - Returns: String
+    func iconName() -> String { return url._sha1() }
+    
     deinit { wwPrint("\(Self.self) deinit") }
 }
 

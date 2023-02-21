@@ -18,7 +18,7 @@ protocol OthersViewDelegate {
 
 // MARK: - 其它設定
 final class OthersViewController: UIViewController {
-
+    
     @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
@@ -106,6 +106,8 @@ private extension OthersViewController {
     /// UITableView的初始化設定
     func initSetting() {
         
+        _ = removeNotUsedImages()
+
         navigationItem.backBarButtonItem = UIBarButtonItem()
         OthersTableViewCell.othersViewDelegate = self
         
@@ -233,7 +235,7 @@ private extension OthersViewController {
         let duration = Constant.duration
         
         tabBarController._tabBarHidden(isHidden, duration: duration)
-        appendButtonPositionConstraint(isHidden, duration: duration)
+        NotificationCenter.default._post(name: .viewDidTransition, object: isHidden)
     }
     
     /// 更新appendButton的位置
@@ -586,5 +588,58 @@ private extension OthersViewController {
             }
         }
     }
+    
+    /// 移除沒用到的圖示檔案
+    /// - Returns: Bool
+    func removeNotUsedImages() -> Bool {
+        
+        guard let imageFolderFileList = imageFolderFileList(),
+              let bookmarkListIconNameList = bookmarkListIconNameList()
+        else {
+            return false
+        }
+        
+        let differenceList = bookmarkListIconNameList._symmetricDifference(with: imageFolderFileList)
+        return removeImages(with: differenceList)
+    }
+    
+    /// 圖示資料夾的檔案列表
+    /// - Returns: [String]?
+    func imageFolderFileList() -> [String]? {
+        
+        guard let imageFolder = Constant.FileFolder.image.url() else { return nil }
+        
+        let result = FileManager.default._fileList(with: imageFolder)
+        
+        switch result {
+        case .failure(let error): wwPrint(error); return nil
+        case .success(let list): return list
+        }
+    }
+    
+    /// 取得書籤的圖示名稱列表
+    /// - Returns: [String]
+    func bookmarkListIconNameList() -> [String]? {
+        
+        let bookmarkList = API.shared.searchBookmarkList(for: Constant.currentTableName, offset: 0)
+        
+        let iconNameList = bookmarkList.compactMap { list in
+            return list._jsonClass(for: BookmarkSite.self)
+        }.map { bookmarkSite in
+            bookmarkSite.iconName()
+        }
+        
+        return !iconNameList.isEmpty ? iconNameList : nil
+    }
+    
+    /// 移除圖示檔案
+    /// - Parameter paths: Set<String>
+    /// - Returns: Bool
+    func removeImages(with paths: [String]) -> Bool {
+        
+        guard let imageFolder = Constant.FileFolder.image.url() else { return false }
+        
+        Set(paths).forEach { _ = FileManager.default._removeFile(at: imageFolder._appendPath($0)) }
+        return true
+    }
 }
-

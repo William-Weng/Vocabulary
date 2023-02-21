@@ -199,11 +199,13 @@ extension API {
     ///   - count: 單次搜尋的數量
     ///   - offset: 搜尋的偏移量
     /// - Returns: [[String : Any]]
-    func searchBookmarkList(for tableName: Constant.VoiceCode, count: Int = 10, offset: Int) -> [[String : Any]] {
+    func searchBookmarkList(for tableName: Constant.VoiceCode, count: Int? = 10, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
-        let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
+        var limit: SQLite3Condition.Limit?
+        
+        if let count = count { limit = SQLite3Condition.Limit().build(count: count, offset: offset) }
         let orderBy = SQLite3Condition.OrderBy().item(key: "updateTime", type: .descending)
         let result = database.select(tableName: tableName.bookmarks(), type: BookmarkSite.self, where: nil, orderBy: orderBy, limit: limit)
                 

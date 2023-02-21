@@ -253,7 +253,7 @@ private extension MainViewController {
         let duration = Constant.duration
         
         tabBarController._tabBarHidden(isHidden, duration: duration)
-        appendButtonPositionConstraint(isHidden, duration: duration)
+        NotificationCenter.default._post(name: .viewDidTransition, object: isHidden)
     }
     
     /// [新增單字列表](https://medium.com/@daoseng33/我說那個-uitableview-insertrows-uicollectionview-insertitems-呀-56b8758b2efb)

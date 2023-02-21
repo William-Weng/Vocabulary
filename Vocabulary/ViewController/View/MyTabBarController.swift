@@ -37,7 +37,7 @@ private extension MyTabBarController {
         coordinator.animate { [weak self] _ in
             
             guard let this = self else { return }
-                        
+            
             this._tabBarHidden(Self.isHidden)
             NotificationCenter.default._post(name: .viewDidTransition, object: Self.isHidden)
         }

@@ -72,7 +72,7 @@ extension AppDelegate {
         self.audioPlayer = audioPlayer
         
         audioPlayer.volume = volume
-        audioPlayer.numberOfLoops = Int.max
+        audioPlayer.numberOfLoops = -1
         audioPlayer.prepareToPlay()
         audioPlayer.play()
         

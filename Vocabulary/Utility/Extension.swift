@@ -100,6 +100,21 @@ extension Array {
     }
 }
 
+// MARK: - Array (class function)
+extension Array where Self.Element: Hashable {
+        
+    /// [兩者不重複的值 => 差集](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes/)
+    /// - Parameter other: [Element]
+    /// - Returns: [Element]
+    func _symmetricDifference(with other: [Element]) -> [Element] {
+        
+        let set = Set(self)
+        let otherSet = Set(other)
+        
+        return Array(set.symmetricDifference(otherSet))
+    }
+}
+
 // MARK: - Dictionary (class function)
 extension Dictionary {
     
@@ -283,7 +298,7 @@ extension URL {
         safariViewController.modalPresentationStyle = .fullScreen
         safariViewController.modalTransitionStyle = .crossDissolve
         safariViewController.delegate = delegate
-
+        
         delegate.present(safariViewController, animated: true)
         
         return safariViewController
@@ -406,16 +421,19 @@ extension AVAudioRecorder {
     /// [產生AVAudioRecorder](https://cdfq152313.github.io/post/2016-10-06/)
     /// - Parameters:
     ///   - recordURL: URL
-    ///   - audioQuality: AVAudioQuality
+    ///   - audioQuality: 錄音品質
+    ///   - bitRate: 音質 (16 bits)
+    ///   - channelNumber: 聲道數 (雙聲道)
+    ///   - rate: 聲音取樣率 (44100 Hz)
     ///   - delegate: AVAudioRecorderDelegate?
     /// - Returns: AVAudioRecorder?
-    static func _build(recordURL: URL, audioQuality: AVAudioQuality = .medium, delegate: AVAudioRecorderDelegate? = nil) -> AVAudioRecorder? {
+    static func _build(recordURL: URL, audioQuality: AVAudioQuality = .medium, bitRate: Int = 16, channelNumber: Int = 2, rate: Float = 44100.0, delegate: AVAudioRecorderDelegate? = nil) -> AVAudioRecorder? {
         
         let settings: [String: Any] = [
             AVEncoderAudioQualityKey: audioQuality.rawValue,
-            AVEncoderBitRateKey: 16,
-            AVNumberOfChannelsKey: 2,
-            AVSampleRateKey: 44100.0
+            AVEncoderBitRateKey: bitRate,
+            AVNumberOfChannelsKey: channelNumber,
+            AVSampleRateKey: rate
         ]
         
         guard let format = AVAudioFormat(settings: settings) else { return nil }
@@ -635,6 +653,21 @@ extension FileManager {
         let isExist = fileExists(atPath: url.path, isDirectory: &isDirectory)
         
         return (isExist, isDirectory.boolValue)
+    }
+    
+    /// 移除檔案
+    /// - Parameter atURL: URL
+    /// - Returns: Result<Bool, Error>
+    func _removeFile(at atURL: URL?) -> Result<Bool, Error> {
+        
+        guard let atURL = atURL else { return .success(false) }
+        
+        do {
+            try removeItem(at: atURL)
+            return .success(true)
+        } catch  {
+            return .failure(error)
+        }
     }
 }
 

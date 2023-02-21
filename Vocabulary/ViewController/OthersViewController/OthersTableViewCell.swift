@@ -87,6 +87,6 @@ private extension OthersTableViewCell {
     /// - Returns: String?
     func iconFilename() -> String? {
         guard let bookmarkSite = bookmarkSite else { return nil }
-        return bookmarkSite.url._sha1()
+        return bookmarkSite.iconName()
     }
 }

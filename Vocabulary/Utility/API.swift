@@ -87,7 +87,7 @@ extension API {
         let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
         let orderBy = SQLite3Condition.OrderBy().item(key: "word", type: .ascending)
         let result = database.select(tableName: tableName.vocabularyList(), type: VocabularyList.self, where: condition, orderBy: orderBy, limit: limit)
-        
+
         return result.array
     }
     
@@ -134,7 +134,7 @@ extension API {
         let limit = SQLite3Condition.Limit().build(count: count, offset: 0)
         let orderBy = SQLite3Condition.OrderBy().item(key: "level", type: .ascending).addItem(key: "review", type: .ascending).addItem(key: "createTime", type: .descending)
         let result = database.select(tableName: tableName.vocabularyList(), type: VocabularyList.self, where: condition, orderBy: orderBy, limit: limit)
-                
+        
         return result.array
     }
     
@@ -296,7 +296,7 @@ extension API {
         
         let items: [SQLite3Database.InsertItem] = [
             (key: "speech", value: 0),
-            (key: "example", value: example),
+            (key: "example", value: example.fixSqliteSingleQuote()),
             (key: "translate", value: translate),
         ]
         
@@ -361,7 +361,7 @@ extension API {
         guard let database = Constant.database else { return false }
         
         let items: [SQLite3Database.InsertItem] = [
-            (key: "alphabet", value: alphabet),
+            (key: "alphabet", value: alphabet.fixSqliteSingleQuote()),
         ]
         
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
@@ -382,7 +382,7 @@ extension API {
         
         let items: [SQLite3Database.InsertItem] = [
             (key: "interpret", value: info.interpret),
-            (key: "example", value: info.example),
+            (key: "example", value: info.example.fixSqliteSingleQuote()),
             (key: "translate", value: info.translate),
             (key: "updateTime", value: Date()._localTime()),
         ]
@@ -512,7 +512,7 @@ extension API {
         guard let database = Constant.database else { return false }
         
         let items: [SQLite3Database.InsertItem] = [
-            (key: "example", value: example),
+            (key: "example", value: example.fixSqliteSingleQuote()),
             (key: "translate", value: translate),
             (key: "updateTime", value: Date()._localTime())
         ]

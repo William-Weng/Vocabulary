@@ -621,7 +621,7 @@ private extension OthersViewController {
     /// - Returns: [String]
     func bookmarkListIconNameList() -> [String]? {
         
-        let bookmarkList = API.shared.searchBookmarkList(for: Constant.currentTableName, offset: 0)
+        let bookmarkList = API.shared.searchBookmarkList(for: Constant.currentTableName, count: nil, offset: 0)
         
         let iconNameList = bookmarkList.compactMap { list in
             return list._jsonClass(for: BookmarkSite.self)

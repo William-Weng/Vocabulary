@@ -140,7 +140,7 @@ extension String {
     /// [國家地區代碼](https://zh.wikipedia.org/wiki/國家地區代碼)
     /// - [顏文字：AA => 🇦🇦 / TW => 🇹🇼](https://lets-emoji.com/)
     /// - Returns: String
-    func _flagEmoji() -> String {
+    func _flagEmoji() -> Self {
         
         let characterA: (ascii: String, unicode: UInt32, error: String) = ("A", 0x1F1E6, "？")
         var unicodeString = ""
@@ -168,11 +168,15 @@ extension String {
     /// - 是在哈囉 => %E6%98%AF%E5%9C%A8%E5%93%88%E5%9B%89
     /// - Parameter characterSet: 字元的判斷方式
     /// - Returns: String?
-    func _encodingURL(characterSet: CharacterSet = .urlQueryAllowed) -> String? { return addingPercentEncoding(withAllowedCharacters: characterSet) }
+    func _encodingURL(characterSet: CharacterSet = .urlQueryAllowed) -> Self? { return addingPercentEncoding(withAllowedCharacters: characterSet) }
     
     /// [文字 => SHA1](https://stackoverflow.com/questions/25761344/how-to-hash-nsstring-with-sha1-in-swift)
     /// - Returns: [String](https://emn178.github.io/online-tools/sha1.html)
-    func _sha1() -> String { return self._secureHashAlgorithm(digestLength: CC_SHA1_DIGEST_LENGTH, encode: CC_SHA1) }
+    func _sha1() -> Self { return self._secureHashAlgorithm(digestLength: CC_SHA1_DIGEST_LENGTH, encode: CC_SHA1) }
+    
+    /// [修正Sqlite單引號問題 / ' => ''](https://dotblogs.com.tw/shanna/2019/09/08/205706)
+    /// - Returns: [String](https://benjr.tw/102928)
+    func fixSqliteSingleQuote() -> Self { return self.replacingOccurrences(of: "'", with: "''") }
 }
 
 // MARK: - String (private class function)

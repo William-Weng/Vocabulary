@@ -266,6 +266,38 @@ extension Date {
     }
 }
 
+// MARK: - Bundle (class function)
+extension Bundle {
+    
+    /// 讀取info.plist的欄位資訊
+    /// - CFBundleShortVersionString...
+    /// - Parameter key: 要取的Key值
+    /// - Returns: Any?
+    func _infoDictionary(with key: String) -> Any? { return self.infoDictionary?[key] }
+    
+    /// 讀取info.plist的欄位資訊
+    /// - CFBundleShortVersionString...
+    /// - Parameter key: 要取的Key值
+    /// - Returns: Any?
+    func _infoDictionary(with key: Constant.InfoPlistKey) -> Any? { return self._infoDictionary(with: key.rawValue) }
+    
+    /// 取得外部版本號
+    /// - info.plist => Version
+    /// - Returns: String?
+    func _appVersionString() -> String? {
+        guard let version = self._infoDictionary(with: .CFBundleShortVersionString) as? String else { return nil }
+        return version
+    }
+    
+    /// 取得內部版本號
+    /// - info.plist => Build
+    /// - Returns: String?
+    func _appBuildString() -> String? {
+        guard let build = self._infoDictionary(with: .CFBundleVersion) as? String else { return nil }
+        return build
+    }
+}
+
 // MARK: - URL (static function)
 extension URL {
     

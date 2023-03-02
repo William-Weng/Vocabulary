@@ -65,6 +65,7 @@ final class OthersViewController: UIViewController {
     }
     
     @IBAction func licensePage(_ sender: UIBarButtonItem) { performSegue(withIdentifier: licenseWebViewSegue, sender: nil) }
+    @IBAction func versionInformation(_ sender: UIBarButtonItem) { appVersionInformationHint() }
     
     deinit {
         OthersTableViewCell.bookmarksArray = []
@@ -309,6 +310,23 @@ private extension OthersViewController {
         
         alertController.addAction(actionOK)
         alertController.addAction(actionCancel)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 顯示版本訊息
+    func appVersionInformationHint() {
+        
+        guard let version = Bundle.main._appVersionString(),
+              let build  = Bundle.main._appBuildString()
+        else {
+            return
+        }
+        
+        let alertController = UIAlertController(title: nil, message: "v\(version) - \(build)", preferredStyle: .alert)
+        let actionOK = UIAlertAction(title: "確認", style: .default) { _ in }
+        
+        alertController.addAction(actionOK)
         
         present(alertController, animated: true, completion: nil)
     }

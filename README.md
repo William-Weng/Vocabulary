@@ -41,6 +41,7 @@
 1. SpeedMeter - [level-up_7634463](https://www.flaticon.com/free-icon/speedometer_571685)
 1. SoundWaves - [waves_875590](https://www.flaticon.com/free-icon/sound-waves_875590)
 1. Recorder - [google-voice_3128290](https://www.flaticon.com/free-icon/google-voice_3128290)
+1. Information - [information_9485469](https://www.flaticon.com/free-icon/information_9485469)
 
 ### [背景音樂 - .mp3 / .m4a (請在iTunes上自行加入)](http://amachamusic.chagasi.com/)
 1. 夏の霧.m4a - [甘茶の音楽工房 - natsunokiri.mp3](http://amachamusic.chagasi.com/music_natsunokiri.html)

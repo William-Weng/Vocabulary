@@ -28,6 +28,11 @@ final class TalkingViewController: UIViewController {
         animatedBackground(with: .talking)
         recordWave()
     }
+    
+    deinit {
+        isAnimationStop = true
+        wwPrint("\(Self.self) deinit")
+    }
 }
 
 // MARK: - 小工具

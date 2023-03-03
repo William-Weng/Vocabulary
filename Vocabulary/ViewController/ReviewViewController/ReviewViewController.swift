@@ -69,7 +69,7 @@ final class ReviewViewController: UIViewController {
         case .speakingRateView: speakingRatePageSetting(for: segue, sender: sender)
         }
     }
-    
+        
     @objc func guessVocabulary(_ tapGesture: UITapGestureRecognizer) { speakVocabularyAction() }
     
     @IBAction func guessAnswear(_ sender: UIButton) { answearAction() }
@@ -77,6 +77,8 @@ final class ReviewViewController: UIViewController {
     @IBAction func refreshQuestion(_ sender: UIBarButtonItem) { initReviewWordList(count: searchTotalCount()); Utility.shared.flashHUD(with: .nice) }
     @IBAction func questionLevel(_ sender: UIBarButtonItem) { levelMenu() }
     @IBAction func speedRate(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegue.speakingRateView.rawValue, sender: nil) }
+    
+    deinit { wwPrint("\(Self.self) deinit") }
 }
 
 // MARK: - MyNavigationControllerDelegate

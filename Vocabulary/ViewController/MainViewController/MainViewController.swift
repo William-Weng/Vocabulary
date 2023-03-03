@@ -72,13 +72,6 @@ final class MainViewController: UIViewController {
         }
     }
     
-    deinit {
-        MainTableViewCell.vocabularyListArray = []
-        MainTableViewCell.mainViewDelegate = nil
-        NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
-        wwPrint("\(Self.self) deinit")
-    }
-    
     @objc func refreshVocabularyList(_ sender: UIRefreshControl) { reloadVocabulary() }
     
     @IBAction func appendWordAction(_ sender: UIButton) {
@@ -93,6 +86,13 @@ final class MainViewController: UIViewController {
     @IBAction func selectBackgroundMusic(_ sender: UIBarButtonItem) { backgroundMusicMenu() }
     @IBAction func selectVolume(_ sender: UIBarButtonItem) { performSegue(for: .volumeView, sender: nil) }
     @IBAction func searchWordAction(_ sender: UIBarButtonItem) { performSegue(for: .searchView, sender: nil) }
+    
+    deinit {
+        MainTableViewCell.vocabularyListArray = []
+        MainTableViewCell.mainViewDelegate = nil
+        NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
+        wwPrint("\(Self.self) deinit")
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource

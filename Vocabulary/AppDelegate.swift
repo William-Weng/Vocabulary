@@ -38,6 +38,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             this.audioPlayer?.play()
         }
     }
+    
+    deinit { wwPrint("\(Self.self) deinit") }
 }
 
 // MARK: - AVAudioRecorderDelegate

@@ -22,7 +22,7 @@ final class ReviewResultTableViewCell: UITableViewCell, CellReusable {
     @IBOutlet weak var mistakeCountLabel: UILabel!
     
     func configure(with indexPath: IndexPath) { configure(for: indexPath) }
-        
+    
     @IBAction func playSound(_ sender: UIButton) { playWordSound() }
     
     deinit { wwPrint("\(Self.self) deinit") }

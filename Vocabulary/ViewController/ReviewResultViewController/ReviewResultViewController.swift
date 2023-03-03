@@ -46,7 +46,7 @@ final class ReviewResultViewController: UIViewController {
         super.viewWillDisappear(animated)
         pauseBackgroundAnimation()
     }
-    
+
     @objc func refreshReviewResultList(_ sender: UIRefreshControl) { relaodReviewResultList() }
     
     deinit {

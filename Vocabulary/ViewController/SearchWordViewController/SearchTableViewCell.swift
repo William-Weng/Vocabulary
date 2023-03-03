@@ -33,10 +33,10 @@ final class SearchTableViewCell: UITableViewCell, CellReusable {
     }
     
     func configure(with indexPath: IndexPath) { configure(for: indexPath) }
+        
+    @IBAction func playSound(_ sender: UIButton) { playWordSound() }
     
     deinit { wwPrint("\(Self.self) deinit") }
-    
-    @IBAction func playSound(_ sender: UIButton) { playWordSound() }
 }
 
 // MARK: - 小工具

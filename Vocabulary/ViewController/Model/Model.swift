@@ -13,6 +13,18 @@ import WWSQLite3Manager
 // MARK: - 單字內容
 final class Vocabulary: Codable {
     
+    let id: Int             // 編號
+    let speech: Int         // 詞性
+    let word: String        // 單字
+    let interpret: String?  // 單字翻譯
+    let example: String?    // 例句範例
+    let translate: String?  // 例句翻譯
+    let imageUrl: String?   // 圖片網址
+    let createTime: Date    // 建立時間
+    let updateTime: Date    // 更新時間
+    
+    deinit { wwPrint("\(Self.self) deinit") }
+    
     // 單字難度等級
     public enum Level: Int, CaseIterable {
         
@@ -97,18 +109,6 @@ final class Vocabulary: Codable {
             }
         }
     }
-    
-    let id: Int             // 編號
-    let speech: Int         // 詞性
-    let word: String        // 單字
-    let interpret: String?  // 單字翻譯
-    let example: String?    // 例句範例
-    let translate: String?  // 例句翻譯
-    let imageUrl: String?   // 圖片網址
-    let createTime: Date    // 建立時間
-    let updateTime: Date    // 更新時間
-    
-    deinit { wwPrint("\(Self.self) deinit") }
 }
 
 // MARK: - 單字列表內容

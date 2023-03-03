@@ -159,8 +159,9 @@
 		6428589E297BBFE300DD7D88 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				64A11DF629B2279300688C90 /* SubViewControllers */,
+				64C18505297EB8F400D1D1B2 /* SubViews */,
 				6439D6F62980CDC800091E37 /* Model */,
-				64C18505297EB8F400D1D1B2 /* View */,
 				81D8E09F298A1191001D2581 /* MainViewController */,
 				81D8E09E298A1181001D2581 /* ListViewController */,
 				81D8E0A0298A11A3001D2581 /* ReviewViewController */,
@@ -222,17 +223,24 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		64C18505297EB8F400D1D1B2 /* View */ = {
+		64A11DF629B2279300688C90 /* SubViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				8196323229933CEF00B96960 /* MyNavigationController.swift */,
 				81F52F33299DE87A005F9DF2 /* MyTabBarController.swift */,
 				812C5443299F73DC003F942A /* TalkingViewController.swift */,
 				641B5CA62984BEB500AB1C56 /* VolumeViewController.swift */,
+			);
+			path = SubViewControllers;
+			sourceTree = "<group>";
+		};
+		64C18505297EB8F400D1D1B2 /* SubViews */ = {
+			isa = PBXGroup;
+			children = (
 				81201C4A298B58C200291485 /* InterpretView.swift */,
 				81201C4B298B58C200291485 /* InterpretView.xib */,
 			);
-			path = View;
+			path = SubViews;
 			sourceTree = "<group>";
 		};
 		64F6F42A29991B40001F4F66 /* LicenseWebViewController */ = {

@@ -18,17 +18,20 @@ final class MyNavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        registerNotification()
+        refreshViewControllerNotification()
     }
     
-    deinit { wwPrint("\(Self.self) deinit") }
+    deinit {
+        NotificationCenter.default._remove(observer: self, name: .refreshViewController)
+        wwPrint("\(Self.self) deinit")
+    }
 }
 
 // MARK: - 小工具
 extension MyNavigationController {
     
     /// 註冊通知功能 (語言變動時更新資料)
-    func registerNotification() {
+    func refreshViewControllerNotification() {
         
         NotificationCenter.default._register(name: .refreshViewController) { _ in
             

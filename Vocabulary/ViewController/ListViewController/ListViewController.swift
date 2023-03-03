@@ -63,15 +63,15 @@ final class ListViewController: UIViewController {
         talkingViewSetting(for: segue, sender: sender)
     }
     
+    @IBAction func dictionaryNet(_ sender: UIBarButtonItem) { netDictionary(with: vocabularyList.word) }
+    @IBAction func refreshVocabularyList(_ sender: UIRefreshControl) { reloadExampleList() }
+    @IBAction func recordingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: "RecordingWaveSegue", sender: nil) }
+    
     deinit {
         ListTableViewCell.exmapleList = []
         ListTableViewCell.listViewDelegate = nil
         wwPrint("\(Self.self) deinit")
     }
-    
-    @IBAction func dictionaryNet(_ sender: UIBarButtonItem) { netDictionary(with: vocabularyList.word) }
-    @IBAction func refreshVocabularyList(_ sender: UIRefreshControl) { reloadExampleList() }
-    @IBAction func recordingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: "RecordingWaveSegue", sender: nil) }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource

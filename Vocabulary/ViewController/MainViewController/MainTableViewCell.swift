@@ -30,12 +30,12 @@ final class MainTableViewCell: UITableViewCell, CellReusable {
     }
     
     func configure(with indexPath: IndexPath) { configure(for: indexPath) }
+
+    @objc func updateLevelLabel(_ sender: UITapGestureRecognizer) { Self.mainViewDelegate?.levelMenu(with: indexPath) }
+
+    @IBAction func playSound(_ sender: UIButton) { playWordSound() }    
     
     deinit { wwPrint("\(Self.self) deinit") }
-    
-    @IBAction func playSound(_ sender: UIButton) { playWordSound() }
-    
-    @objc func updateLevelLabel(_ sender: UITapGestureRecognizer) { Self.mainViewDelegate?.levelMenu(with: indexPath) }
 }
 
 // MARK: - 小工具

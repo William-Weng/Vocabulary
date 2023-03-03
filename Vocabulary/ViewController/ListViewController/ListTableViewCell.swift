@@ -28,14 +28,14 @@ final class ListTableViewCell: UITableViewCell, CellReusable {
         super.prepareForReuse()
         exampleLabel.gestureRecognizers?.forEach({ exampleLabel.removeGestureRecognizer($0) })
     }
-    
-    deinit { wwPrint("\(Self.self) deinit") }
 
     func configure(with indexPath: IndexPath) { configure(for: indexPath) }
     
+    @objc func updateSpeechLabel(_ sender: UITapGestureRecognizer) { Self.listViewDelegate?.speechMenu(with: indexPath) }
+    
     @IBAction func playSound(_ sender: UIButton) { playExampleSound() }
     
-    @objc func updateSpeechLabel(_ sender: UITapGestureRecognizer) { Self.listViewDelegate?.speechMenu(with: indexPath) }
+    deinit { wwPrint("\(Self.self) deinit") }
 }
 
 // MARK: - 小工具

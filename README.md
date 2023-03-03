@@ -1,12 +1,12 @@
-# [Vocabulary - Video](https://youtu.be/4kDiReZRm5c)
-我愛背單字 - 針對身為外語苦手的我，量身訂製的APP，有輕快的背景音樂，也有發音，加上可愛的動畫…
+# [Vocabulary - Video](https://youtu.be/Cqtt30G74_8)
+[我愛背單字 - 針對身為外語苦手的我，量身訂製的APP，有輕快的背景音樂，也有發音，加上可愛的動畫…](https://github.com/William-Weng/Vocabulary)
 
 [![Swift-5.7](https://img.shields.io/badge/Swift-5.7-orange.svg?style=flat)](https://developer.apple.com/swift/) [![iOS 14.0](https://img.shields.io/badge/iOS-14.0-pink.svg?style=flat)](https://developer.apple.com/swift/) [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=flat)](https://developer.apple.com/swift/) ![](https://img.shields.io/github/v/tag/William-Weng/Vocabulary)
 
-![](./@Image/Example_1.png) ![](./@Image/Example_2.png) ![](./@Image/Example_3.png)
-![](./@Image/Example_4.png) ![](./@Image/Example_5.png) ![](./@Image/Example_6.png)
-![](./@Image/Example_7.png) ![](./@Image/Example_8.png) ![](./@Image/Example_9.png)
-![](./@Image/Example_0.png)
+![](./@Image/001.png) ![](./@Image/002.png) ![](./@Image/003.png)
+![](./@Image/004.png) ![](./@Image/005.png) ![](./@Image/006.png)
+![](./@Image/007.png) ![](./@Image/008.png) ![](./@Image/009.png)
+![](./@Image/000.png)
 
 # 附錄：資源下載說明
 ## 所有資源都是從網路下載，僅作程式分享教學之用，並無侵權之意，資源版權皆屬於原作者所有…
@@ -42,6 +42,8 @@
 1. SoundWaves - [waves_875590](https://www.flaticon.com/free-icon/sound-waves_875590)
 1. Recorder - [google-voice_3128290](https://www.flaticon.com/free-icon/google-voice_3128290)
 1. Information - [information_9485469](https://www.flaticon.com/free-icon/information_9485469)
+1. Pencil - [pencil_1142618](https://www.flaticon.com/free-icon/pencil_1142618)
+1. Close - [close_9068699](https://www.flaticon.com/free-icon/close_9068699)
 
 ### [背景音樂 - .mp3 / .m4a (請在iTunes上自行加入)](http://amachamusic.chagasi.com/)
 1. 夏の霧.m4a - [甘茶の音楽工房 - natsunokiri.mp3](http://amachamusic.chagasi.com/music_natsunokiri.html)

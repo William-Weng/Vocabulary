@@ -9,6 +9,7 @@ import UIKit
 import AVKit
 import SafariServices
 import CommonCrypto
+import PencilKit
 import WebKit
 
 // MARK: - Int (class function)
@@ -718,6 +719,38 @@ extension UIWindow {
     }
 }
 
+// MARK: - UIWindow (class function)
+extension UIWindow {
+    
+    /// 測試有沒有SafeArea => 瀏海？
+    /// - Returns: Bool
+    func _hasSafeArea() -> Bool {
+        let bottom = safeAreaInsets.bottom
+        return bottom > 0
+    }
+}
+
+// MARK: - UIView (class function)
+extension UIView {
+    
+    /// [設定LayoutConstraint => 不能加frame](https://zonble.gitbooks.io/kkbox-ios-dev/content/autolayout/intrinsic_content_size.html)
+    /// - Parameter view: [要設定的View](https://www.appcoda.com.tw/auto-layout-programmatically/)
+    func _autolayout(on view: UIView) {
+        
+        removeFromSuperview()
+        view.addSubview(self)
+        
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            topAnchor.constraint(equalTo: view.topAnchor),
+            bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        ])
+    }
+}
+
 // MARK: - UIButton (class function)
 extension UIButton {
     
@@ -1115,4 +1148,60 @@ extension WKWebView {
         
         return observation
     }
+}
+
+// MARK: - PKToolPicker (static function)
+extension PKToolPicker {
+    
+    /// [產生Pancel工具列 => 要留著全域的](https://developer.apple.com/videos/play/wwdc2020/10107/)
+    /// - Parameters:
+    ///   - window: [UIWindow](https://developer.apple.com/videos/play/wwdc2019/221/)
+    ///   - canvasView: PKCanvasView
+    /// - Returns: PKToolPicker?
+    static func _build(with canvasView: PKCanvasView) -> PKToolPicker {
+        
+        let toolPicker = PKToolPicker()
+        
+        toolPicker.setVisible(true, forFirstResponder: canvasView)
+        toolPicker.addObserver(canvasView)
+        
+        return toolPicker
+    }
+}
+
+// MARK: - PKCanvasView (static function)
+extension PKCanvasView {
+    
+    /// [產生Pencel畫布](https://youtu.be/PkJ9dB-Ou_w)
+    /// - Parameters:
+    ///   - view: [要顯示哪一個View上面？](https://www.youtube.com/watch?v=f2SHsHsjTGM)
+    ///   - backgroundColor: 背景色
+    ///   - isOpaque: 背景的isOpaque = true，才可以讓背景看得到，但是效能↓
+    ///   - drawing: PKDrawing
+    ///   - drawingPolicy: 畫筆的使用權 (用筆畫？用手畫？)
+    ///   - delegate: PKCanvasViewDelegate
+    /// - Returns: PKCanvasView
+    static func _build(onView view: UIView, backgroundColor: UIColor = .black.withAlphaComponent(0.3), isOpaque: Bool = false, drawing: PKDrawing = PKDrawing(), drawingPolicy: PKCanvasViewDrawingPolicy = .default, delegate: PKCanvasViewDelegate? = nil) -> PKCanvasView {
+        
+        let canvasView = PKCanvasView()
+        
+        canvasView.delegate = delegate
+        canvasView.drawing = drawing
+        canvasView.backgroundColor = backgroundColor
+        canvasView.drawingPolicy = .default
+        canvasView.isOpaque = isOpaque
+        
+        canvasView.alwaysBounceVertical = false
+        canvasView.alwaysBounceHorizontal = false
+        canvasView._autolayout(on: view)
+
+        return canvasView
+    }
+}
+
+// MARK: - PKCanvasView (class function)
+extension PKCanvasView {
+    
+    /// [清除畫布](https://stackoverflow.com/questions/56683060/removing-content-in-pencilkit)
+    func _clear() { drawing = PKDrawing() }
 }

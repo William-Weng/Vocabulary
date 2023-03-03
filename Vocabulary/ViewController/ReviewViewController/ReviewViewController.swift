@@ -22,7 +22,8 @@ final class ReviewViewController: UIViewController {
     @IBOutlet weak var answerLabel: UILabel!
     @IBOutlet weak var interpretLabel: UILabel!
     @IBOutlet weak var refreshQuestionButtonItem: UIBarButtonItem!
-
+    @IBOutlet weak var landscapeBottomConstraint: NSLayoutConstraint!
+    
     private var isNextVocabulary = false
     private var isAnimationStop = false
     private var repeatAnimateLoopCount = 3
@@ -54,6 +55,11 @@ final class ReviewViewController: UIViewController {
         super.viewWillDisappear(animated)
         MyTabBarController.isHidden = true
         pauseBackgroundAnimation()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if let window = view.window, window._hasSafeArea() { landscapeBottomConstraint.constant = 64 }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

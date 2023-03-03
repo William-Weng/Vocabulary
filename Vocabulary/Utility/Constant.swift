@@ -191,8 +191,9 @@ extension Constant {
     enum NotificationName: String {
         
         case refreshViewController = "RefreshViewController"
-        case viewDidTransition = "viewDidTransition"
-        case tabbarHiddenStatus = "tabbarHiddenStatus"
+        case viewDidTransition = "ViewDidTransition"
+        case tabbarHiddenStatus = "TabbarHiddenStatus"
+        case displayCanvasView = "DisplayCanvasView"
         
         /// 產生Notification.Name
         /// - Returns: Notification.Name

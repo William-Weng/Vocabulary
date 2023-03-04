@@ -82,8 +82,8 @@ final class MainViewController: UIViewController {
         }
     }
     
-    @IBAction func selectDictionary(_ sender: UIBarButtonItem) { dictionaryMenu() }
-    @IBAction func selectBackgroundMusic(_ sender: UIBarButtonItem) { backgroundMusicMenu() }
+    @IBAction func selectDictionary(_ sender: UIBarButtonItem) { dictionaryMenu(sender) }
+    @IBAction func selectBackgroundMusic(_ sender: UIBarButtonItem) { backgroundMusicMenu(sender) }
     @IBAction func selectVolume(_ sender: UIBarButtonItem) { performSegue(for: .volumeView, sender: nil) }
     @IBAction func searchWordAction(_ sender: UIBarButtonItem) { performSegue(for: .searchView, sender: nil) }
     
@@ -384,7 +384,7 @@ private extension MainViewController {
     }
     
     /// 字典選單
-    func dictionaryMenu() {
+    func dictionaryMenu(_ sender: UIBarButtonItem) {
 
         let alertController = UIAlertController(title: "請選擇字典", message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
@@ -396,6 +396,7 @@ private extension MainViewController {
         
         alertController.addAction(action)
         alertController.modalPresentationStyle = .popover
+        alertController.popoverPresentationController?.barButtonItem = sender
         
         present(alertController, animated: true, completion: nil)
     }
@@ -422,7 +423,7 @@ private extension MainViewController {
     }
     
     /// 背景音樂選單
-    func backgroundMusicMenu() {
+    func backgroundMusicMenu(_ sender: UIBarButtonItem) {
 
         let alertController = UIAlertController(title: "請選擇背景音樂 (.mp3 / .m4a)", message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
@@ -441,7 +442,8 @@ private extension MainViewController {
         
         alertController.addAction(action)
         alertController.modalPresentationStyle = .popover
-        
+        alertController.popoverPresentationController?.barButtonItem = sender
+
         present(alertController, animated: true, completion: nil)
     }
     

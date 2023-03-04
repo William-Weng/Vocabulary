@@ -60,7 +60,7 @@ final class SentenceViewController: UIViewController {
     }
     
     @IBAction func recordingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: "RecordingSegue", sender: nil) }
-    @IBAction func filterSentence(_ sender: UIBarButtonItem) { sentenceSpeechMenu() }
+    @IBAction func filterSentence(_ sender: UIBarButtonItem) { sentenceSpeechMenu(sender) }
     
     deinit {
         SentenceTableViewCell.sentenceListArray = []
@@ -497,7 +497,7 @@ private extension SentenceViewController {
     }
     
     /// 例句屬性選單
-    func sentenceSpeechMenu() {
+    func sentenceSpeechMenu(_ sender: UIBarButtonItem) {
 
         let alertController = UIAlertController(title: "請選擇例句屬性", message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
@@ -511,7 +511,7 @@ private extension SentenceViewController {
         alertController.addAction(allACaseAction)
         alertController.addAction(action)
         alertController.modalPresentationStyle = .popover
-        alertController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        alertController.popoverPresentationController?.barButtonItem = sender
         
         present(alertController, animated: true, completion: nil)
     }

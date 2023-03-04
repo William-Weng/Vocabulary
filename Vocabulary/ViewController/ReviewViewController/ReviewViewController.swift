@@ -81,7 +81,7 @@ final class ReviewViewController: UIViewController {
     @IBAction func guessAnswear(_ sender: UIButton) { answearAction() }
     @IBAction func reviewSolution(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegue.solutionView.rawValue, sender: vocabularyArray) }
     @IBAction func refreshQuestion(_ sender: UIBarButtonItem) { initReviewWordList(count: searchTotalCount()); Utility.shared.flashHUD(with: .nice) }
-    @IBAction func questionLevel(_ sender: UIBarButtonItem) { levelMenu() }
+    @IBAction func questionLevel(_ sender: UIBarButtonItem) { levelMenu(sender) }
     @IBAction func speedRate(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegue.speakingRateView.rawValue, sender: nil) }
     
     deinit { wwPrint("\(Self.self) deinit") }
@@ -398,7 +398,7 @@ private extension ReviewViewController {
     }
     
     /// 猜字等級選單
-    func levelMenu() {
+    func levelMenu(_ sender: UIBarButtonItem) {
 
         let alertController = UIAlertController(title: "請選擇等級", message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
@@ -421,6 +421,7 @@ private extension ReviewViewController {
         
         alertController.addAction(action)
         alertController.modalPresentationStyle = .popover
+        alertController.popoverPresentationController?.barButtonItem = sender
         
         present(alertController, animated: true, completion: nil)
     }

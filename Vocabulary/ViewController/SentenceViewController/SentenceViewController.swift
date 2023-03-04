@@ -499,6 +499,7 @@ private extension SentenceViewController {
     }
     
     /// 例句屬性選單
+    /// - Parameter sender: UIBarButtonItem
     func sentenceSpeechMenu(_ sender: UIBarButtonItem) {
 
         let alertController = UIAlertController(title: "請選擇例句屬性", message: nil, preferredStyle: .actionSheet)

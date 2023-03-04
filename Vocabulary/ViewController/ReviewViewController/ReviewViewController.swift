@@ -78,7 +78,7 @@ final class ReviewViewController: UIViewController {
         
     @objc func guessVocabulary(_ tapGesture: UITapGestureRecognizer) { speakVocabularyAction() }
     
-    @IBAction func guessAnswear(_ sender: UIButton) { answearAction() }
+    @IBAction func guessAnswear(_ sender: UIButton) { answearAction(sender) }
     @IBAction func reviewSolution(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegue.solutionView.rawValue, sender: vocabularyArray) }
     @IBAction func refreshQuestion(_ sender: UIBarButtonItem) { initReviewWordList(count: searchTotalCount()); Utility.shared.flashHUD(with: .nice) }
     @IBAction func questionLevel(_ sender: UIBarButtonItem) { levelMenu(sender) }
@@ -266,13 +266,11 @@ private extension ReviewViewController {
         }
     }
     
-    /// 新增文字的提示框
+    /// 填寫答案的提示框
     /// - Parameters:
-    ///   - indexPath: 要更新音標時，才會有IndexPath
-    ///   - title: 標題
-    ///   - message: 訊息文字
-    ///   - placeholder: 提示字串
-    ///   - defaultText: 預設文字
+    ///   - title: String
+    ///   - message: String?
+    ///   - placeholder: String?
     ///   - action: (String) -> Void
     func answerAlert(_ title: String, message: String? = nil, placeholder: String?, action: @escaping (String) -> Void) {
         
@@ -360,7 +358,8 @@ private extension ReviewViewController {
     }
     
     /// 送出所填寫的解答
-    func answearAction() {
+    /// - Parameter sender: UIButton
+    func answearAction(_ sender: UIButton) {
         
         guard let vocabularyList = vocabularyList else { return }
         
@@ -376,7 +375,7 @@ private extension ReviewViewController {
                 
                 _ = this.solutionAction(with: vocabularyList, isCorrect: isCorrect)
                 Utility.shared.flashHUD(with: hudType)
-                Utility.shared.levelMenu(target: this, vocabularyList: vocabularyList)
+                Utility.shared.levelMenu(target: this, vocabularyList: vocabularyList, sourceView: sender)
             }
             
             if (vocabularyList.word.lowercased() != inputWord.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()) { isCorrect = false; return }
@@ -398,6 +397,7 @@ private extension ReviewViewController {
     }
     
     /// 猜字等級選單
+    /// - Parameter sender: UIBarButtonItem
     func levelMenu(_ sender: UIBarButtonItem) {
 
         let alertController = UIAlertController(title: "請選擇等級", message: nil, preferredStyle: .actionSheet)

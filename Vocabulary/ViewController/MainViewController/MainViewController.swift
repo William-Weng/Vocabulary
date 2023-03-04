@@ -386,6 +386,7 @@ private extension MainViewController {
     }
     
     /// 字典選單
+    /// - Parameter sender: UIBarButtonItem
     func dictionaryMenu(_ sender: UIBarButtonItem) {
 
         let alertController = UIAlertController(title: "請選擇字典", message: nil, preferredStyle: .actionSheet)
@@ -425,6 +426,7 @@ private extension MainViewController {
     }
     
     /// 背景音樂選單
+    /// - Parameter sender: UIBarButtonItem
     func backgroundMusicMenu(_ sender: UIBarButtonItem) {
 
         let alertController = UIAlertController(title: "請選擇背景音樂 (.mp3 / .m4a)", message: nil, preferredStyle: .actionSheet)

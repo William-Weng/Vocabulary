@@ -99,8 +99,8 @@ extension Utility {
     /// - Parameters:
     ///   - target: UIViewController
     ///   - vocabularyList: VocabularyList?
-    ///   - popoverItem: UIBarButtonItem?
-    func levelMenu(target: UIViewController, vocabularyList: VocabularyList?, popoverItem: UIBarButtonItem? = nil) {
+    ///   - sourceView: UIView?
+    func levelMenu(target: UIViewController, vocabularyList: VocabularyList?, sourceView: UIView? = nil) {
         
         guard let vocabularyList = vocabularyList else { return }
         
@@ -119,7 +119,7 @@ extension Utility {
         
         alertController.addAction(action)
         alertController.modalPresentationStyle = .popover
-        alertController.popoverPresentationController?.barButtonItem = popoverItem
+        alertController.popoverPresentationController?.sourceView = sourceView
         
         target.present(alertController, animated: true, completion: nil)
     }

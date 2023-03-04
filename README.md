@@ -1,4 +1,4 @@
-# [Vocabulary - Video](https://youtu.be/Cqtt30G74_8)
+# Vocabulary - [for iPhone](https://youtu.be/Cqtt30G74_8) / [for iPad](https://youtu.be/4a3lslw7OpM)
 [我愛背單字 - 針對身為外語苦手的我，量身訂製的APP，有輕快的背景音樂，也有發音，加上可愛的動畫…](https://github.com/William-Weng/Vocabulary)
 
 [![Swift-5.7](https://img.shields.io/badge/Swift-5.7-orange.svg?style=flat)](https://developer.apple.com/swift/) [![iOS 14.0](https://img.shields.io/badge/iOS-14.0-pink.svg?style=flat)](https://developer.apple.com/swift/) [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=flat)](https://developer.apple.com/swift/) ![](https://img.shields.io/github/v/tag/William-Weng/Vocabulary)

@@ -241,7 +241,8 @@ private extension SentenceViewController {
         
         let alertController = UIAlertController(title: "請選擇分類", message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
-        
+        let cell = Utility.shared.didSelectedCell(myTableView, with: indexPath) as SentenceTableViewCell?
+
         VocabularySentenceList.Speech.allCases.forEach { speech in
             
             let action = UIAlertAction(title: speech.value(), style: .default) { [weak self] _ in
@@ -258,7 +259,8 @@ private extension SentenceViewController {
         
         alertController.addAction(action)
         alertController.modalPresentationStyle = .popover
-        
+        alertController.popoverPresentationController?.sourceView = cell?.speechLabel
+
         present(alertController, animated: true, completion: nil)
     }
     

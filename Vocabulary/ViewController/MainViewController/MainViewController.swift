@@ -221,6 +221,7 @@ private extension MainViewController {
         
         let alertController = UIAlertController(title: "請選擇等級", message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
+        let cell = Utility.shared.didSelectedCell(myTableView, with: indexPath) as MainTableViewCell?
         
         Vocabulary.Level.allCases.forEach { level in
             
@@ -239,6 +240,7 @@ private extension MainViewController {
         
         alertController.addAction(action)
         alertController.modalPresentationStyle = .popover
+        alertController.popoverPresentationController?.sourceView = cell?.levelLabel
         
         present(alertController, animated: true, completion: nil)
     }

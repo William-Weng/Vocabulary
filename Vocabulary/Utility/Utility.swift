@@ -123,4 +123,21 @@ extension Utility {
         
         target.present(alertController, animated: true, completion: nil)
     }
+    
+    /// 取得被點到的Cell with CellReusable
+    /// - Parameters:
+    ///   - tableView: UITableView
+    ///   - indexPath: IndexPath
+    /// - Returns: T?
+    func didSelectedCell<T: CellReusable>(_ tableView: UITableView, with indexPath: IndexPath) -> T? {
+        
+        var cell: T?
+        
+        tableView.visibleCells.forEach { visibleCell in
+            guard let visibleCell = visibleCell as? T else { return }
+            if (visibleCell.indexPath == indexPath) { cell = visibleCell }
+        }
+        
+        return cell
+    }
 }

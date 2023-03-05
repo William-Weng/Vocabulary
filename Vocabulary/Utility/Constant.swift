@@ -192,7 +192,6 @@ extension Constant {
         
         case refreshViewController = "RefreshViewController"
         case viewDidTransition = "ViewDidTransition"
-        case tabbarHiddenStatus = "TabbarHiddenStatus"
         case displayCanvasView = "DisplayCanvasView"
         
         /// 產生Notification.Name

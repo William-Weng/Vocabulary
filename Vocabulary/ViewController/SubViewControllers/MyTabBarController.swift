@@ -17,7 +17,10 @@ final class MyTabBarController: UITabBarController {
     private var canvasView: PKCanvasView?
     private var toolPicker: PKToolPicker?
     private var dismissButton: UIButton?
-    
+    private var cleanDrawingButton: UIButton?
+    private var diameter = 36.0
+    private var gap = 32.0
+
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCanvasViewAction()
@@ -35,7 +38,8 @@ final class MyTabBarController: UITabBarController {
     }
 
     @objc func dismissCanvasView(_ sender: UIButton) { removeCanvasView() }
-    
+    @objc func cleanCanvasDrawing(_ sender: UIButton) { cleanDrawing() }
+
     deinit {
         NotificationCenter.default._remove(observer: self, name: .displayCanvasView)
         wwPrint("\(Self.self) deinit")
@@ -99,12 +103,22 @@ private extension MyTabBarController {
         guard let canvasView = canvasView else { return }
         
         dismissButton?.removeFromSuperview()
-        dismissButton = dismissButtonMaker()
+        cleanDrawingButton?.removeFromSuperview()
         
-        if let dismissButton = dismissButton {
-            dismissButton.addTarget(self, action: #selector(Self.dismissCanvasView(_:)), for: .touchUpInside)
-            canvasView.addSubview(dismissButton)
+        dismissButton = dismissButtonMaker(diameter, gap: gap, imageName: "Close")
+        cleanDrawingButton = cleanDrawingButtonMaker(diameter, gap: gap, imageName: "Clean")
+        
+        guard let dismissButton = dismissButton,
+              let cleanDrawingButton = cleanDrawingButton
+        else {
+            return
         }
+        
+        dismissButton.addTarget(self, action: #selector(Self.dismissCanvasView(_:)), for: .touchUpInside)
+        cleanDrawingButton.addTarget(self, action: #selector(Self.cleanCanvasDrawing(_:)), for: .touchUpInside)
+        
+        canvasView.addSubview(dismissButton)
+        canvasView.addSubview(cleanDrawingButton)
     }
     
     /// 產生關閉畫布按鈕
@@ -112,7 +126,7 @@ private extension MyTabBarController {
     ///   - diameter: 直徑
     ///   - gap: 與右上角的間隔
     /// - Returns: UIButton
-    func dismissButtonMaker(_ diameter: CGFloat = 36, gap: CGFloat = 32, imageName: String = "Close") -> UIButton {
+    func dismissButtonMaker(_ diameter: CGFloat, gap: CGFloat, imageName: String) -> UIButton {
         
         let button = UIButton()
         
@@ -128,11 +142,37 @@ private extension MyTabBarController {
         return button
     }
     
+    /// 產生清空畫布的按鈕
+    /// - Parameters:
+    ///   - diameter: 直徑
+    ///   - gap: 與右上角的間隔
+    /// - Returns: UIButton
+    func cleanDrawingButtonMaker(_ diameter: CGFloat, gap: CGFloat, imageName: String) -> UIButton {
+        
+        let button = UIButton()
+        
+        button.frame.size = CGSize(width: diameter, height: diameter)
+        button.center = CGPoint(x: view.frame.width - gap, y: gap)
+        button.setBackgroundImage(UIImage(named: imageName), for: .normal)
+        button.backgroundColor = .clear
+        
+        if let window = view.window, window._hasSafeArea() {
+            button.center = CGPoint(x: gap, y: gap + 24.0)
+        }
+        
+        return button
+    }
+    
     /// 移除畫布
     func removeCanvasView() {
         canvasView?.removeFromSuperview()
         canvasView = nil
         toolPicker = nil
         dismissButton = nil
+    }
+    
+    /// 清空畫布
+    func cleanDrawing() {
+        canvasView?.drawing = PKDrawing()
     }
 }

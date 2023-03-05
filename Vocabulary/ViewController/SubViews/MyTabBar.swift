@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import PencilKit
 import WWPrint
 
 @IBDesignable

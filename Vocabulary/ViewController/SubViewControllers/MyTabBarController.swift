@@ -152,7 +152,7 @@ private extension MyTabBarController {
         let button = UIButton()
         
         button.frame.size = CGSize(width: diameter, height: diameter)
-        button.center = CGPoint(x: view.frame.width - gap, y: gap)
+        button.center = CGPoint(x: gap, y: gap)
         button.setBackgroundImage(UIImage(named: imageName), for: .normal)
         button.backgroundColor = .clear
         

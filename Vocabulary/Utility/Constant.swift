@@ -176,15 +176,6 @@ extension Constant {
             case .listen: return "例句閱讀"
             }
         }
-        
-        /// GIF動畫循環次數
-        /// - Returns: Int
-        func repeatAnimateLoopCount() -> Int {
-            switch self {
-            case .read: return 3
-            case .listen: return 10
-            }
-        }
     }
     
     /// 通知的名稱

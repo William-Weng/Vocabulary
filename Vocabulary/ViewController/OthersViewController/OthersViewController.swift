@@ -27,7 +27,6 @@ final class OthersViewController: UIViewController {
     
     private var isAnimationStop = false
     private var currentScrollDirection: Constant.ScrollDirection = .down
-    
     private var disappearImage: UIImage?
     private var refreshControl: UIRefreshControl!
     

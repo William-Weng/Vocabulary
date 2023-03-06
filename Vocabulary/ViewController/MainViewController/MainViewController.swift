@@ -32,7 +32,7 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var volumeButtonItem: UIBarButtonItem!
     @IBOutlet weak var appendWordButton: UIButton!
     @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
-    
+        
     private var isAnimationStop = false
     private var currentScrollDirection: Constant.ScrollDirection = .down
 
@@ -254,8 +254,8 @@ private extension MainViewController {
         
         let duration = Constant.duration
         
-        tabBarController._tabBarHidden(isHidden, duration: duration)
         NotificationCenter.default._post(name: .viewDidTransition, object: isHidden)
+        tabBarController._tabBarHidden(isHidden, duration: duration)
     }
     
     /// [新增單字列表](https://medium.com/@daoseng33/我說那個-uitableview-insertrows-uicollectionview-insertitems-呀-56b8758b2efb)
@@ -523,8 +523,9 @@ private extension MainViewController {
         
         viewController._transparent(.black.withAlphaComponent(0.3))
         viewController.soundType = .volume
+        viewController.mainViewDelegate = self
         
-        tabBarController?._tabBarHidden(true, animated: true)
+        tabBarHidden(true)
     }
     
     /// 動畫背景設定
@@ -562,7 +563,7 @@ private extension MainViewController {
         
         var isHidden = false
         
-        if (direction == currentScrollDirection) { return }        
+        if (direction == currentScrollDirection) { return }
         
         switch direction {
         case .up: isHidden = false

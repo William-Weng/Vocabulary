@@ -161,9 +161,9 @@
 		6428589E297BBFE300DD7D88 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				64A11DF629B2279300688C90 /* SubViewControllers */,
-				64C18505297EB8F400D1D1B2 /* SubViews */,
 				6439D6F62980CDC800091E37 /* Model */,
+				64C18505297EB8F400D1D1B2 /* SubViews */,
+				64A11DF629B2279300688C90 /* SubViewControllers */,
 				81D8E09F298A1191001D2581 /* MainViewController */,
 				81D8E09E298A1181001D2581 /* ListViewController */,
 				81D8E0A0298A11A3001D2581 /* ReviewViewController */,

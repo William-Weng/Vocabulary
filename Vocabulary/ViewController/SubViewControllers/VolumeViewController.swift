@@ -17,10 +17,11 @@ final class VolumeViewController: UIViewController {
         case rate       // 語速快慢
     }
     
-    var soundType: AdjustmentSoundType = .volume
-    
     @IBOutlet weak var widthConstraint: NSLayoutConstraint!
     @IBOutlet weak var volumeProgressSlider: WWSlider!
+    
+    var soundType: AdjustmentSoundType = .volume
+    var mainViewDelegate: MainViewDelegate?
     
     private var isInitSetting = false
     
@@ -46,6 +47,7 @@ final class VolumeViewController: UIViewController {
     }
     
     deinit {
+        mainViewDelegate = nil
         NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
         wwPrint("\(Self.self) deinit")
     }
@@ -187,8 +189,14 @@ extension VolumeViewController {
     func dismissAction() {
         
         self.dismiss(animated: true) { [weak self] in
+            
             guard let this = self else { return }
-            this.tabBarHidden(false)
+            
+            if let mainViewDelegate = this.mainViewDelegate {
+                mainViewDelegate.tabBarHidden(false)
+            } else {
+                this.tabBarHidden(false)
+            }
         }
     }
     

@@ -39,24 +39,12 @@ final class ListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        ListTableViewCell.listViewDelegate = self
-        animatedBackground(with: .reading)
-        mainViewDelegate?.tabBarHidden(true)
-        
-        if (!canDelete) { tabBarController?._tabBarHidden(true, animated: true) }
+        viewWillAppearAction(animated)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        ListTableViewCell.listViewDelegate = nil
-        pauseBackgroundAnimation()
-        updateExampleCount(ListTableViewCell.exmapleList.count)
-        
-        if (!isSafariViewControllerDismiss) { return }
-        tabBarController?.tabBar.isHidden = false
-        mainViewDelegate?.tabBarHidden(false)
+        viewWillDisappearAction(animated)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -92,7 +80,6 @@ extension ListViewController: SFSafariViewControllerDelegate {
 
 // MARK: - ListViewDelegate
 extension ListViewController: ListViewDelegate {
-    
     func speechMenu(with indexPath: IndexPath) { speechMenuAction(with: indexPath) }
 }
 
@@ -153,7 +140,6 @@ private extension ListViewController {
         }
         
         ListTableViewCell.exmapleList[indexPath.row] = dictionary
-        
         myTableView.reloadRows(at: [indexPath], with: .automatic)
     }
     
@@ -189,6 +175,29 @@ private extension ListViewController {
         alertController.popoverPresentationController?.sourceView = cell?.speechLabel
 
         present(alertController, animated: true, completion: nil)
+    }
+    
+    /// View將要顯示時的動作
+    /// - Parameter animated: Bool
+    func viewWillAppearAction(_ animated: Bool) {
+        
+        ListTableViewCell.listViewDelegate = self
+        animatedBackground(with: .reading)
+        mainViewDelegate?.tabBarHidden(true)
+        
+        if (!canDelete) { tabBarController?._tabBarHidden(true, animated: true) }
+    }
+    
+    /// View將要消失時的動作
+    /// - Parameter animated: Bool
+    func viewWillDisappearAction(_ animated: Bool) {
+        
+        ListTableViewCell.listViewDelegate = nil
+        pauseBackgroundAnimation()
+        updateExampleCount(ListTableViewCell.exmapleList.count)
+        
+        if (!isSafariViewControllerDismiss) { return }
+        mainViewDelegate?.tabBarHidden(false)
     }
     
     /// 新增文字的提示框

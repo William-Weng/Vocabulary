@@ -7,6 +7,7 @@
 
 import UIKit
 import WWPrint
+import AVFAudio
 
 // MARK: - 複習單字頁面
 final class ReviewViewController: UIViewController {
@@ -26,9 +27,8 @@ final class ReviewViewController: UIViewController {
     
     private var isNextVocabulary = false
     private var isAnimationStop = false
-    private var repeatAnimateLoopCount = 3
+    private var isGuessAnimationStop = false
     private var searchWordCount = 10
-    private var speakAnimateLoopCount = 0
     private var questionLevel: Constant.QuestionLevel = .read
     
     private var reviewWordList: [[String : Any]] = []
@@ -37,6 +37,8 @@ final class ReviewViewController: UIViewController {
     
     private var vocabularyList: VocabularyList?
     private var disappearImage: UIImage?
+    
+    lazy var speechSynthesizer = AVSpeechSynthesizer._build(delegate: self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,7 +77,7 @@ final class ReviewViewController: UIViewController {
         case .speakingRateView: speakingRatePageSetting(for: segue, sender: sender)
         }
     }
-        
+    
     @objc func guessVocabulary(_ tapGesture: UITapGestureRecognizer) { speakVocabularyAction() }
     
     @IBAction func guessAnswear(_ sender: UIButton) { answearAction(sender) }
@@ -85,6 +87,13 @@ final class ReviewViewController: UIViewController {
     @IBAction func speedRate(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegue.speakingRateView.rawValue, sender: nil) }
     
     deinit { wwPrint("\(Self.self) deinit") }
+}
+
+// MARK: - AVSpeechSynthesizerDelegate
+extension ReviewViewController: AVSpeechSynthesizerDelegate {
+    
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) { isGuessAnimationStop = false }
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) { isGuessAnimationStop = true }
 }
 
 // MARK: - MyNavigationControllerDelegate
@@ -140,16 +149,16 @@ private extension ReviewViewController {
         navigationItem.titleView = label
     }
     
-    /// 按下語音播放猜單字的動作
+    /// [按下語音播放猜單字的動作 (聲音播完 && 動畫完成)](https://stackoverflow.com/questions/40856037/how-to-know-when-an-avspeechutterance-has-finished-so-as-to-continue-app-activi)
     /// - Parameters:
     ///   - type: Utility.HudGifType
     ///   - loopCount: 動畫次數
-    func speakVocabularyAction(with type: Utility.HudGifType = .speak, loopCount: Int = 5) {
+    func speakVocabularyAction(with type: Utility.HudGifType = .speak) {
         
         guard let gifUrl = type.fileURL() else { return }
         
-        speakAnimateLoopCount = 0
         isNextVocabulary = false
+        isGuessAnimationStop = false
         speakImageView.isUserInteractionEnabled = false
         answearButtonStatus(isEnabled: false)
         
@@ -163,10 +172,9 @@ private extension ReviewViewController {
             case .failure(let error): wwPrint(error)
             case .success(let info):
                 
-                if (info.index == 0) { this.speakAnimateLoopCount += 1 }
                 if (info.index == 1) { speakImage = UIImage(cgImage: info.cgImage) }
                 
-                if (this.speakAnimateLoopCount > loopCount) {
+                if (this.isGuessAnimationStop && info.index == 0) {
                     info.pointer.pointee = true
                     this.speakImageView.image = speakImage
                     this.speakImageView.isUserInteractionEnabled = true
@@ -187,13 +195,14 @@ private extension ReviewViewController {
             return
         }
         
+        let string: String
+        
         switch level {
-        case .read:
-            Utility.shared.speak(string: answerText, voice: Constant.currentTableName, rate: Constant.speakingSpeed)
-        case .listen:
-            Utility.shared.speak(string: answerText, voice: Constant.currentTableName, rate: Constant.speakingSpeed)
-            Utility.shared.speak(string: interpretText, voice: Constant.currentTableName, rate: Constant.speakingSpeed)
+        case .read: string = answerText
+        case .listen: string = "\(answerText). \(interpretText)"
         }
+        
+        speechSynthesizer._speak(string: string, voice: Constant.currentTableName, rate: Constant.speakingSpeed)
     }
     
     /// 動畫背景設定
@@ -234,7 +243,7 @@ private extension ReviewViewController {
         self.vocabularyList = vocabularyList
         
         interpretLabelAction(vocabularyList, level: questionLevel)
-        speakVocabularyAction(with: .speak, loopCount: repeatAnimateLoopCount)
+        speakVocabularyAction(with: .speak)
         playWordSound(with: questionLevel)
     }
     
@@ -323,7 +332,7 @@ private extension ReviewViewController {
         else {
             return
         }
-                
+        
         let count = searchWordCount - reviewWordList.count
         initTitle(with: "單字複習 - \(count) / \(searchWordCount)")
         speakVocabulary(vocabularyList, level: questionLevel)
@@ -410,7 +419,6 @@ private extension ReviewViewController {
                 guard let this = self else { return }
                 
                 this.questionLevel = level
-                this.repeatAnimateLoopCount = level.repeatAnimateLoopCount()
                 this.initReviewWordList(count: this.searchTotalCount())
                 
                 Utility.shared.flashHUD(with: .nice)

@@ -59,6 +59,22 @@ extension AppDelegate: AVAudioRecorderDelegate {
 // MARK: - 小工具
 extension AppDelegate {
     
+    /// 初始化資料表 / 資料庫
+    func initDatabase() {
+        
+        let result = WWSQLite3Manager.shared.connent(with: Constant.databaseName)
+        
+        switch result {
+        case .failure(_): Utility.shared.flashHUD(with: .fail)
+        case .success(let database):
+            
+            Constant.database = database
+            Constant.VoiceCode.allCases.forEach { _ = createDatabase(database, for: $0) }
+            
+            wwPrint(database.fileURL)
+        }
+    }
+    
     /// 播放背景音樂
     /// - Parameters:
     ///   - music: 音樂檔案
@@ -107,22 +123,6 @@ extension AppDelegate {
 
 // MARK: - 小工具
 private extension AppDelegate {
-    
-    /// 初始化資料表 / 資料庫
-    func initDatabase() {
-        
-        let result = WWSQLite3Manager.shared.connent(with: Constant.databaseName)
-        
-        switch result {
-        case .failure(_): Utility.shared.flashHUD(with: .fail)
-        case .success(let database):
-            
-            Constant.database = database
-            Constant.VoiceCode.allCases.forEach { _ = createDatabase(database, for: $0) }
-            
-            wwPrint(database.fileURL)
-        }
-    }
     
     /// 建立該語言的資料庫群
     /// - Parameters:

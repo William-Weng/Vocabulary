@@ -46,6 +46,8 @@
 1. Pencil - [pencil_1142618](https://www.flaticon.com/free-icon/pencil_1142618)
 1. Close - [close_9068699](https://www.flaticon.com/free-icon/close_9068699)
 1. Clean - [blackboard-eraser_3303661](https://www.flaticon.com/free-icon/blackboard-eraser_3303661)
+1. Share - [share_4212381](https://www.flaticon.com/free-icon/share_4212381)
+1. Download - [download_3039520](https://www.flaticon.com/free-icon/download_3039520)
 
 ### [背景音樂 - .mp3 / .m4a (請在iTunes上自行加入)](http://amachamusic.chagasi.com/)
 1. 夏の霧.m4a - [甘茶の音楽工房 - natsunokiri.mp3](http://amachamusic.chagasi.com/music_natsunokiri.html)

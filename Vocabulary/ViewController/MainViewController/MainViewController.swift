@@ -118,6 +118,11 @@ extension MainViewController: MainViewDelegate {
     func tabBarHidden(_ isHidden: Bool) { tabBarHiddenAction(isHidden) }
 }
 
+// MARK: - MyNavigationControllerDelegate
+extension MainViewController: MyNavigationControllerDelegate {
+    func refreshRootViewController() { reloadVocabulary() }
+}
+
 // MARK: - 小工具
 private extension MainViewController {
     
@@ -419,7 +424,7 @@ private extension MainViewController {
             Constant.currentTableName = tableName
             
             this.dictionaryButtonItem.title = title
-            this.reloadVocabulary()
+            NotificationCenter.default._post(name: .refreshViewController)
         }
         
         return action

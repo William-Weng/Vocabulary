@@ -706,6 +706,21 @@ extension FileManager {
             return .failure(error)
         }
     }
+    
+    /// 移動檔案
+    /// - Parameters:
+    ///   - atURL: 從這裡移動 =>
+    ///   - toURL: => 到這裡
+    /// - Returns: Result<Bool, Error>
+    func _moveFile(at atURL: URL, to toURL: URL) -> Result<Bool, Error> {
+        
+        do {
+            try moveItem(at: atURL, to: toURL)
+            return .success(true)
+        } catch {
+            return .failure(error)
+        }
+    }
 }
 
 // MARK: - UIWindow (static function)
@@ -918,6 +933,27 @@ extension UITabBarController {
     }
 }
 
+// MARK: - UIActivityViewController (static function)
+extension UIActivityViewController {
+    
+    /// [產生UIActivityViewController分享功能](https://jjeremy-xue.medium.com/swift-玩玩-uiactivityviewcontroller-5995bb80ff68)
+    /// - Parameters:
+    ///   - activityItems: [Any]
+    ///   - applicationActivities: [UIActivity]?
+    ///   - tintColor: tintColor
+    ///   - barButtonItem: 要貼在哪個Item上 (for iPad)
+    /// - Returns: UIActivityViewController
+    static func _build(activityItems: [Any], applicationActivities: [UIActivity]? = nil, tintColor: UIColor = .white, barButtonItem: UIBarButtonItem? = nil) -> UIActivityViewController {
+        
+        let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
+        
+        activityViewController.view.tintColor = tintColor
+        activityViewController.popoverPresentationController?.barButtonItem = barButtonItem
+        
+        return activityViewController
+    }
+}
+
 // MARK: - UITabBar (static function)
 extension UITabBar {
     
@@ -1081,6 +1117,24 @@ extension UIViewController {
         self.view.backgroundColor = backgroundColor
         self.modalPresentationStyle = presentationStyle
         self.modalTransitionStyle = transitionStyle
+    }
+}
+
+// MARK: - UIDocumentPickerViewController (static function)
+extension UIDocumentPickerViewController {
+    
+    /// [產生UIDocumentPickerViewController](https://www.jianshu.com/p/f34c2688e55b)
+    /// - Parameters:
+    ///   - delegate: [UIDocumentPickerDelegate](https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/UTIRef/Articles/System-DeclaredUniformTypeIdentifiers.html)
+    ///   - allowedUTIs: [要讀取的檔案類型](https://developer.apple.com/documentation/uniformtypeidentifiers)
+    ///   - presentationStyle: 彈出動畫的樣式
+    /// - Returns: Self
+    static func _build(delegate: UIDocumentPickerDelegate, allowedUTIs: [UTType], asCopy: Bool = true) -> UIDocumentPickerViewController {
+        
+        let controller = UIDocumentPickerViewController(forOpeningContentTypes: allowedUTIs, asCopy: asCopy)
+        controller.delegate = delegate
+        
+        return controller
     }
 }
 

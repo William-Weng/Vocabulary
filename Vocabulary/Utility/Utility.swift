@@ -49,7 +49,7 @@ final class Utility: NSObject {
 extension Utility {
     
     /// [顯示HUD](https://augmentedcode.io/2019/09/01/animating-gifs-and-apngs-with-cganimateimageaturlwithblock-in-swift/)
-    /// - Parameter type: Utility.HudGifType
+    /// - Parameter type: [Utility.HudGifType](https://www.swiftjectivec.com/animating-images-using-image-io/)
     func flashHUD(with type: Utility.HudGifType) {
         
         guard let gifUrl = type.fileURL(),
@@ -58,7 +58,8 @@ extension Utility {
             WWHUD.shared.flash(effect: .default, backgroundColor: .black.withAlphaComponent(0.3), animation: 0.75, completion: nil); return
         }
         
-        WWHUD.shared.flash(effect: .gif(url: gifUrl, options: nil), height: 256.0, backgroundColor: .black.withAlphaComponent(0.3), animation: 0.75, completion: nil)
+        let options = [kCGImageAnimationStartIndex: 0] as? CFDictionary
+        WWHUD.shared.flash(effect: .gif(url: gifUrl, options: options), height: 256.0, backgroundColor: .black.withAlphaComponent(0.3), animation: 0.75, completion: nil)
     }
     
     /// [播放HUD](https://augmentedcode.io/2019/09/01/animating-gifs-and-apngs-with-cganimateimageaturlwithblock-in-swift/)

@@ -178,6 +178,12 @@ extension String {
     /// [修正Sqlite單引號問題 / ' => ''](https://dotblogs.com.tw/shanna/2019/09/08/205706)
     /// - Returns: [String](https://benjr.tw/102928)
     func fixSqliteSingleQuote() -> Self { return self.replacingOccurrences(of: "'", with: "''") }
+    
+    /// 去除空白及換行字元
+    /// - Returns: Self
+    func _removeWhiteSpacesAndNewlines() -> Self {
+        return trimmingCharacters(in: .whitespacesAndNewlines)
+    }
 }
 
 // MARK: - String (private class function)
@@ -378,6 +384,22 @@ extension JSONSerialization {
         }
         
         return data
+    }
+}
+
+// MARK: - CALayer (class function)
+extension CALayer {
+    
+    /// 設定圓角
+    /// - 可以個別設定要哪幾個角
+    /// - 預設是四個角全是圓角
+    /// - Parameters:
+    ///   - radius: 圓的半徑
+    ///   - corners: 圓角要哪幾個邊
+    func _maskedCorners(radius: CGFloat, corners: CACornerMask = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner]) {
+        self.masksToBounds = true
+        self.maskedCorners = corners
+        self.cornerRadius = radius
     }
 }
 

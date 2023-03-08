@@ -17,14 +17,6 @@ protocol OthersViewDelegate {
     func tabBarHidden(_ isHidden: Bool)
 }
 
-// MARK: - UIDocumentPickerDelegate
-extension OthersViewController: UIDocumentPickerDelegate {
-    
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        downloadDocumentAction(controller, didPickDocumentsAt: urls)
-    }
-}
-
 // MARK: - 其它設定
 final class OthersViewController: UIViewController {
     
@@ -98,6 +90,14 @@ extension OthersViewController: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - SFSafariViewControllerDelegate
 extension OthersViewController: SFSafariViewControllerDelegate {}
+
+// MARK: - UIDocumentPickerDelegate
+extension OthersViewController: UIDocumentPickerDelegate {
+    
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        downloadDocumentAction(controller, didPickDocumentsAt: urls)
+    }
+}
 
 // MARK: - MyNavigationControllerDelegate
 extension OthersViewController: MyNavigationControllerDelegate {

@@ -220,4 +220,40 @@ extension Constant {
         /// - Returns: URL?
         func url() -> URL? { return FileManager.default._documentDirectory()?.appendingPathComponent(self.rawValue, isDirectory: false) }
     }
+    
+    /// 要搜尋的類型分類
+    enum SearchType: Int, CaseIterable, CustomStringConvertible {
+        
+        var description: String { toString() }
+        
+        case word = 0
+        case interpret = 1
+        
+        /// 轉成中文字
+        /// - Returns: String
+        func toString() -> String {
+            switch self {
+            case .word: return "單字"
+            case .interpret: return "字義"
+            }
+        }
+        
+        /// 轉成欄位名稱
+        /// - Returns: String
+        func field() -> String {
+            switch self {
+            case .word: return "word"
+            case .interpret: return "interpret"
+            }
+        }
+        
+        /// 背景色
+        /// - Returns: UIColor
+        func backgroundColor() -> UIColor {
+            switch self {
+            case .word: return .darkGray
+            case .interpret: return .systemBlue
+            }
+        }
+    }
 }

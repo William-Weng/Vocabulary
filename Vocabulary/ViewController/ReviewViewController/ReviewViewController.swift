@@ -161,9 +161,7 @@ private extension ReviewViewController {
         isGuessAnimationStop = false
         speakImageView.isUserInteractionEnabled = false
         answearButtonStatus(isEnabled: false)
-        
-        var speakImage = UIImage()
-        
+                
         _ = speakImageView._GIF(url: gifUrl) { [weak self] result in
             
             guard let this = self else { return }
@@ -171,12 +169,10 @@ private extension ReviewViewController {
             switch result {
             case .failure(let error): wwPrint(error)
             case .success(let info):
-                
-                if (info.index == 1) { speakImage = UIImage(cgImage: info.cgImage) }
-                
+                                
                 if (this.isGuessAnimationStop && info.index == 0) {
                     info.pointer.pointee = true
-                    this.speakImageView.image = speakImage
+                    this.speakImageView.image = UIImage(contentsOfFile: gifUrl.path)
                     this.speakImageView.isUserInteractionEnabled = true
                     this.answearButtonStatus(isEnabled: true)
                 }

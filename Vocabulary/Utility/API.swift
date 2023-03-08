@@ -72,22 +72,35 @@ extension API {
         return result.array
     }
     
-    ///  搜尋相似單字內容列表
+    /// 搜尋相似內容的列表 (單字 / 字義)
+    ///  - Parameters:
     /// - Parameters:
-    ///   - word: 單字
-    ///   - tableName: 資料表名稱
+    ///   - text: 相似的文字
+    ///   - searchType: Constant.SearchType
+    ///   - tableName: Constant.VoiceCode
     ///   - count: 單次搜尋的數量
     ///   - offset: 搜尋的偏移量
     /// - Returns: [[String : Any]]
-    func searchWordList(like word: String, for tableName: Constant.VoiceCode, count: Int = 10, offset: Int) -> [[String : Any]] {
+    func searchList(like text: String, searchType: Constant.SearchType, for tableName: Constant.VoiceCode, count: Int? = 10, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
-        let condition = SQLite3Condition.Where().like(key: "word", condition: "\(word)%")
-        let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
+        let condition: SQLite3Condition.Where
+        var limit: SQLite3Condition.Limit?
         let orderBy = SQLite3Condition.OrderBy().item(key: "word", type: .ascending)
-        let result = database.select(tableName: tableName.vocabularyList(), type: VocabularyList.self, where: condition, orderBy: orderBy, limit: limit)
-
+        let result: SQLite3Database.SelectResult
+        
+        if let count = count { limit = SQLite3Condition.Limit().build(count: count, offset: offset) }
+        
+        switch searchType {
+        case .word:
+            condition = SQLite3Condition.Where().like(key: "\(searchType.field())", condition: "\(text)%")
+            result = database.select(tableName: tableName.vocabularyList(), type: VocabularyList.self, where: condition, orderBy: orderBy, limit: limit)
+        case .interpret:
+            condition = SQLite3Condition.Where().like(key: "\(searchType.field())", condition: "%\(text)%")
+            result = database.select(tableName: tableName.rawValue, type: Vocabulary.self, where: condition, orderBy: orderBy, limit: limit)
+        }
+        
         return result.array
     }
     
@@ -95,10 +108,9 @@ extension API {
     /// - Parameters:
     ///   - words: 單字組
     ///   - tableName: Constant.VoiceCode
-    ///   - count: Int
     ///   - offset: offset
     /// - Returns: [[String : Any]]
-    func searchWordDetail(in words: [String], for tableName: Constant.VoiceCode, count: Int = 10, offset: Int) -> [[String : Any]] {
+    func searchWordDetail(in words: [String], for tableName: Constant.VoiceCode, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database,
               !words.isEmpty
@@ -107,9 +119,30 @@ extension API {
         }
         
         let condition = SQLite3Condition.Where().in(key: "word", values: words)
-        let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
+        let result = database.select(tableName: "\(tableName)", type: Vocabulary.self, where: condition, orderBy: nil, limit: nil)
+        
+        return result.array
+    }
+    
+    /// 搜尋單字組內容
+    /// - Parameters:
+    ///   - words: [String]
+    ///   - tableName: Constant.VoiceCode
+    ///   - count: Int
+    ///   - offset: Int
+    /// - Returns: [[String : Any]]
+    func searchWordListDetail(in words: [String], for tableName: Constant.VoiceCode, count: Int = 10, offset: Int) -> [[String : Any]] {
+        
+        guard let database = Constant.database,
+              !words.isEmpty
+        else {
+            return []
+        }
+        
+        let condition = SQLite3Condition.Where().in(key: "word", values: words)
         let orderBy = SQLite3Condition.OrderBy().item(key: "word", type: .ascending)
-        let result = database.select(tableName: "\(tableName)", type: Vocabulary.self, where: condition, orderBy: orderBy, limit: limit)
+        let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
+        let result = database.select(tableName: tableName.vocabularyList(), type: VocabularyList.self, where: condition, orderBy: orderBy, limit: limit)
         
         return result.array
     }

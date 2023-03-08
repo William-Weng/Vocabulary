@@ -14,22 +14,19 @@ final class SearchTableViewCell: UITableViewCell, CellReusable {
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var alphabetLabel: UILabel!
     @IBOutlet weak var interpretListStackView: UIStackView!
-
-    static var vocabularyListArray: [[String : Any]] = [] {
-        didSet { Self.updateWordsDetailArray() }
-    }
     
-    private static var vocabularyDeteilListArray: [[String : Any]] = []
+    static var searchType: Constant.SearchType = .word
+    static var vocabularyListArray: [[String : Any]] = [] { didSet { Self.updateWordsDetailArray() }}
     
     var indexPath: IndexPath = []
+    
+    private static var vocabularyDeteilListArray: [[String : Any]] = []
     
     private var vocabularyList: VocabularyList?
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        interpretListStackView.arrangedSubviews.forEach { subViews in
-            subViews.removeFromSuperview()
-        }
+        interpretListStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
     }
     
     func configure(with indexPath: IndexPath) { configure(for: indexPath) }
@@ -46,7 +43,13 @@ private extension SearchTableViewCell {
     /// - Parameter indexPath: IndexPath
     /// - Returns: VocabularyList?
     static func vocabularyList(with indexPath: IndexPath) -> VocabularyList? {
-        guard let vocabularyList = Self.vocabularyListArray[safe: indexPath.row]?._jsonClass(for: VocabularyList.self) else { return nil }
+        
+        guard let list = Self.vocabularyListArray[safe: indexPath.row],
+              let vocabularyList = list._jsonClass(for: VocabularyList.self)
+        else {
+            return nil
+        }
+
         return vocabularyList
     }
     
@@ -54,14 +57,20 @@ private extension SearchTableViewCell {
     /// - Parameter indexPath: IndexPath
     /// - Returns: VocabularyList?
     static func vocabularyDeteilList(with indexPath: IndexPath) -> Vocabulary? {
-        guard let vocabulary = Self.vocabularyDeteilListArray[safe: indexPath.row]?._jsonClass(for: Vocabulary.self) else { return nil }
+        
+        guard let listArray = Self.vocabularyDeteilListArray[safe: indexPath.row],
+              let vocabulary = listArray._jsonClass(for: Vocabulary.self)
+        else {
+            return nil
+        }
+        
         return vocabulary
     }
     
     /// 更新特定單字群的列表 => in(["word", "detail"])
     static func updateWordsDetailArray() {
-        let words = Self.words(with: SearchTableViewCell.vocabularyListArray.count)
-        SearchTableViewCell.vocabularyDeteilListArray = API.shared.searchWordDetail(in: Array(words), for: Constant.currentTableName, offset: 0)
+        let words = Self.words(with: Self.vocabularyListArray.count)
+        Self.vocabularyDeteilListArray = API.shared.searchWordDetail(in: Array(words), for: Constant.currentTableName, offset: 0)
     }
     
     /// 取得整體的word列表
@@ -85,7 +94,7 @@ private extension SearchTableViewCell {
     static func vocabularyDeteil(for word: String) -> [Vocabulary] {
         
         var vocabularyArray: [Vocabulary] = []
-                
+        
         for index in 0..<Self.vocabularyDeteilListArray.count {
             
             guard let detailList = Self.vocabularyDeteilList(with: IndexPath(row: index, section: 0)),

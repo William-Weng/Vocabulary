@@ -21,10 +21,11 @@ final class SearchWordViewController: UIViewController {
     private var disappearImage: UIImage?
     private var titleSearchBar = UISearchBar()
     private var refreshControl: UIRefreshControl!
+    private var currentSearchType: Constant.SearchType = .word { didSet { switchSearchTypeAction(for: currentSearchType) }}
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initSearchBar()
+        initSearchBar(with: currentSearchType)
         initSetting()
     }
     
@@ -55,8 +56,22 @@ final class SearchWordViewController: UIViewController {
     /// - Parameter refreshControl: UIRefreshControl
     @objc func refreshSearchWord(_ refreshControl: UIRefreshControl) {
         let word = titleSearchBar.searchTextField.text
-        self.reloadSearchWord(word)
-        Utility.shared.flashHUD(with: .success)
+        searchWordList(like: word)
+    }
+    
+    /// 切換要搜尋的類型分類
+    /// - Parameter sender: UIButton
+    @objc func switchSearchType(_ sender: UIButton) {
+        
+        let rawValue = currentSearchType.rawValue + 1
+        
+        currentSearchType = Constant.SearchType(rawValue: rawValue) ?? .word
+        
+        SearchTableViewCell.searchType = currentSearchType
+        titleSearchBar.placeholder = "請輸入需要搜尋的\(currentSearchType)"
+        sender.setTitle("  \(currentSearchType)  ", for: .normal)
+        
+        refreshSearchWord(refreshControl)
     }
     
     deinit {
@@ -108,6 +123,7 @@ private extension SearchWordViewController {
     /// UITableView的初始化設定
     func initSetting() {
         
+        SearchTableViewCell.searchType = currentSearchType
         SearchTableViewCell.vocabularyListArray = []
         
         refreshControl = UIRefreshControl._build(target: self, action: #selector(Self.refreshSearchWord(_:)))
@@ -120,13 +136,34 @@ private extension SearchWordViewController {
     }
     
     /// [初始化搜尋列](https://jjeremy-xue.medium.com/swift-客製化-navigation-bar-customized-navigation-bar-8e4eaf188d7c)
-    func initSearchBar() {
-        navigationItem.titleView = titleSearchBar
-        titleSearchBar.placeholder = "請輸入需要搜尋的單字"
+    /// - Parameter type: [Constant.SearchType](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/uitextfield-的-leftview-rightview-以放大鏡-密碼顯示開關為例-7813fa9fd4f1)
+    func initSearchBar(with type: Constant.SearchType) {
+        
+        titleSearchBar.placeholder = "請輸入需要搜尋的\(type)"
         titleSearchBar.delegate = self
         titleSearchBar.searchTextField.delegate = self
+        titleSearchBar.searchTextField.leftView = searchTypeButtonMaker(with: type, backgroundColor: .systemRed)
+        
+        navigationItem.titleView = titleSearchBar
     }
     
+    /// 設定搜尋的類型按鈕 => 單字 / 字義
+    /// - Parameters:
+    ///   - title: String
+    ///   - backgroundColor: UIColor
+    /// - Returns: UIButton
+    func searchTypeButtonMaker(with type: Constant.SearchType, backgroundColor: UIColor) -> UIButton {
+        
+        let button = UIButton()
+        
+        button.backgroundColor = type.backgroundColor()
+        button.setTitle("  \(type)  ", for: .normal)
+        button.layer._maskedCorners(radius: 8.0)
+        button.addTarget(self, action: #selector(Self.switchSearchType(_:)), for: .touchUpInside)
+        
+        return button
+    }
+        
     /// 產生MainTableViewCell
     /// - Parameters:
     ///   - tableView: UITableView
@@ -199,13 +236,13 @@ private extension SearchWordViewController {
         
         SearchTableViewCell.vocabularyListArray = []
         
-        guard let word = word,
+        guard let word = word?._removeWhiteSpacesAndNewlines(),
               !word.isEmpty
         else {
             return
         }
         
-        SearchTableViewCell.vocabularyListArray = API.shared.searchWordList(like: word, for: Constant.currentTableName, offset: 0)
+        SearchTableViewCell.vocabularyListArray = vocabularyListArrayMaker(like: word, searchType: currentSearchType, for: Constant.currentTableName, offset: 0)
     }
     
     /// 增加相似的單字
@@ -221,8 +258,8 @@ private extension SearchWordViewController {
         }
         
         let oldListCount = SearchTableViewCell.vocabularyListArray.count
-        SearchTableViewCell.vocabularyListArray += API.shared.searchWordList(like: word, for: Constant.currentTableName, offset: oldListCount)
-
+        SearchTableViewCell.vocabularyListArray += vocabularyListArrayMaker(like: word, searchType: currentSearchType, for: Constant.currentTableName, offset: oldListCount)
+        
         let newListCount = SearchTableViewCell.vocabularyListArray.count
         let indexPaths = (oldListCount..<newListCount).map { IndexPath(row: $0, section: 0) }
         myTableView._insertRows(at: indexPaths, animation: .automatic, animated: false)
@@ -249,7 +286,45 @@ private extension SearchWordViewController {
     }
     
     /// [退鍵盤](https://medium.com/彼得潘的-swift-ios-app-開發教室/uitextfield如何讓鍵盤消失-)
+    /// - Parameter textField: UITextField
     func dismissKeyboard(with textField: UITextField) {
         textField.resignFirstResponder()
+    }
+    
+    /// 切換搜尋類型的相關動作
+    /// - Parameter searchType: SearchType
+    func switchSearchTypeAction(for searchType: Constant.SearchType) {
+        
+        guard let leftButton = titleSearchBar.searchTextField.leftView as? UIButton else { return }
+        
+        leftButton.setTitle("  \(searchType)  ", for: .normal)
+        leftButton.backgroundColor = searchType.backgroundColor()
+        titleSearchBar.placeholder = "請輸入需要搜尋的\(searchType)"
+    }
+    
+    /// 取得單字列表 for 分類
+    /// - Parameters:
+    ///   - text: String
+    ///   - searchType: Constant.SearchType
+    ///   - tableName: Constant.VoiceCode
+    ///   - offset: Int
+    /// - Returns: [[String : Any]]
+    func vocabularyListArrayMaker(like text: String, searchType: Constant.SearchType, for tableName: Constant.VoiceCode, offset: Int) -> [[String : Any]] {
+        
+        let dictionary: [[String : Any]]
+        
+        switch searchType {
+        case .word:
+            dictionary = API.shared.searchList(like: text, searchType: currentSearchType, for: Constant.currentTableName, offset: offset)
+            
+        case .interpret:
+            
+            let array = API.shared.searchList(like: text, searchType: currentSearchType, for: Constant.currentTableName, count: nil, offset: 0)
+            let words = array.compactMap { $0._jsonClass(for: Vocabulary.self)?.word }
+            
+            dictionary = API.shared.searchWordListDetail(in: words, for: Constant.currentTableName, offset: offset)
+        }
+        
+        return dictionary
     }
 }

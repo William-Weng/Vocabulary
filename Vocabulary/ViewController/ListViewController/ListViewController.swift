@@ -164,8 +164,8 @@ private extension ListViewController {
         let alertController = UIAlertController(title: "請選擇詞性", message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
         let cell = Utility.shared.didSelectedCell(myTableView, with: indexPath) as ListTableViewCell?
-
-        Vocabulary.Speech.allCases.forEach { speech in
+        
+        Vocabulary.Speech.list(for: Constant.currentTableName).forEach { speech in
             let action = speechAlertAction(with: indexPath, speech: speech, vocabulary: vocabulary)
             alertController.addAction(action)
         }

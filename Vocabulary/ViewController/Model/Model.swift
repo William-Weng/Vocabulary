@@ -69,11 +69,32 @@ final class Vocabulary: Codable {
         case phrase = 010
         case addreviation = 011
         
+        case めいし = 100
+        case けいようし = 101
+        case けいようどうし = 102
+        case どうし = 103
+        case ふくし = 104
+        case れんたいし = 105
+        case せつぞくし = 106
+        case じょし = 107
+        case じょどうし = 108
+        case かんどうし = 109
+        
+        case nom = 200
+        case déterminant = 201
+        case adjectif = 202
+        case pronom = 203
+        case verbe = 204
+        case adverbe = 205
+        case préposition = 206
+        case conjonction = 207
+        
         /// [語言詞性](https://boroenglish.com/詞性縮寫總整理/)
-        /// - Returns: String
+        /// - Returns: [String](https://hkotakujapanese.com/日文文法基礎/)
         func value() -> String {
             
             switch self {
+            
             case .noue: return "名詞"
             case .pronoue: return "代名詞"
             case .verb: return "動詞"
@@ -86,6 +107,26 @@ final class Vocabulary: Codable {
             case .numeral: return "數詞"
             case .phrase: return "片語"
             case .addreviation: return "縮寫"
+            
+            case .めいし: return "名詞"
+            case .けいようし: return "形容詞"
+            case .けいようどうし: return "形容動詞"
+            case .どうし: return "動詞"
+            case .ふくし: return "副詞"
+            case .れんたいし: return "連体詞"
+            case .せつぞくし: return "接続詞"
+            case .じょし: return "助詞"
+            case .じょどうし: return "助動詞"
+            case .かんどうし: return "感動詞"
+            
+            case .nom: return "名詞"
+            case .déterminant: return "限定詞"
+            case .adjectif: return "形容詞"
+            case .pronom: return "代詞"
+            case .verbe: return "動詞"
+            case .adverbe: return "副詞"
+            case .préposition: return "介詞"
+            case .conjonction: return "連詞"
             }
         }
         
@@ -94,6 +135,7 @@ final class Vocabulary: Codable {
         func backgroundColor() -> UIColor {
             
             switch self {
+            
             case .noue: return .systemGray
             case .pronoue: return .systemBlue
             case .verb: return .systemRed
@@ -106,7 +148,40 @@ final class Vocabulary: Codable {
             case .numeral: return .systemBlue
             case .phrase: return .darkGray
             case .addreviation: return .systemGray
+            
+            case .めいし: return .systemGray
+            case .けいようし: return .systemBlue
+            case .けいようどうし: return .systemOrange
+            case .どうし: return .systemRed
+            case .ふくし: return .darkGray
+            case .れんたいし: return .systemBlue
+            case .せつぞくし: return .systemIndigo
+            case .じょし: return .systemBlue
+            case .じょどうし: return .systemPink
+            case .かんどうし: return .systemOrange
+                
+            case .nom: return .systemGray
+            case .déterminant: return .systemBlue
+            case .adjectif: return  .systemOrange
+            case .pronom: return .systemRed
+            case .verbe: return .darkGray
+            case .adverbe: return .systemBlue
+            case .préposition: return .systemIndigo
+            case .conjonction: return .systemPink
             }
+        }
+        
+        /// 各語言的詞性列表 => 每100個為一組分類 (0xx / 1xx / 2xx / …)
+        /// - Parameter database: Constant.VoiceCode
+        /// - Returns: [Speech]
+        static func list(for database: Constant.VoiceCode) -> [Speech] {
+            
+            let speechList = Speech.allCases.filter { speech in
+                let number = speech.rawValue - database.groupNumber()
+                return (number > -1 && number < 100)
+            }
+            
+            return speechList
         }
     }
 }

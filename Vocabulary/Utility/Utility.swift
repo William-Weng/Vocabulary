@@ -40,7 +40,7 @@ final class Utility: NSObject {
     
     static let shared = Utility()
     
-    private static let synthesizer = AVSpeechSynthesizer._build()
+    private let synthesizer = AVSpeechSynthesizer._build()
     
     private override init() {}
 }
@@ -81,7 +81,7 @@ extension Utility {
     ///   - pitchMultiplier: 音調 (50% ~ 200%)
     ///   - volume: 音量 (0% ~ 100%)
     func speak(string: String, voice: Constant.VoiceCode = .english, rate: Float = 0.4, pitchMultiplier: Float = 1.5, volume: Float = 1.0) {
-        Self.synthesizer._speak(string: string, voice: voice, rate: rate, pitchMultiplier: pitchMultiplier, volume: volume)
+        self.synthesizer._speak(string: string, voice: voice, rate: rate, pitchMultiplier: pitchMultiplier, volume: volume)
     }
     
     /// 判斷是不是Web的網址 (http:// || https://)

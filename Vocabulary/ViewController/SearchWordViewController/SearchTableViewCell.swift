@@ -33,7 +33,7 @@ final class SearchTableViewCell: UITableViewCell, CellReusable {
     }
     
     func configure(with indexPath: IndexPath) { configure(for: indexPath) }
-        
+    
     @IBAction func playSound(_ sender: UIButton) { playWordSound() }
     
     deinit { wwPrint("\(Self.self) deinit") }
@@ -85,7 +85,7 @@ private extension SearchTableViewCell {
     static func vocabularyDeteil(for word: String) -> [Vocabulary] {
         
         var vocabularyArray: [Vocabulary] = []
-        
+                
         for index in 0..<Self.vocabularyDeteilListArray.count {
             
             guard let detailList = Self.vocabularyDeteilList(with: IndexPath(row: index, section: 0)),
@@ -111,7 +111,7 @@ private extension SearchTableViewCell {
         guard let vocabularyList = Self.vocabularyList(with: indexPath) else { return }
         
         let vocabularyDeteilArray = Self.vocabularyDeteil(for: vocabularyList.word)
-        
+                
         self.indexPath = indexPath
         self.vocabularyList = vocabularyList
         
@@ -119,9 +119,9 @@ private extension SearchTableViewCell {
         wordLabel.text = vocabularyList.word
         
         alphabetLabel.text = vocabularyList.alphabet
-
+                
         vocabularyDeteilArray.forEach { vocabulary in
-
+            
             let subLabel = InterpretView()
             subLabel.configure(with: vocabulary)
             

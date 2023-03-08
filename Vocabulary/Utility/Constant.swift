@@ -55,6 +55,7 @@ extension Constant {
         
         case english = "English"
         case japanese = "Japenese"
+        case french = "French"
         case korean = "Korean"
         case chinese = "Chinese"
         
@@ -70,7 +71,7 @@ extension Constant {
         /// - Returns: String
         func vocabularySentenceList() -> String { return "\(self.rawValue)Sentence" }
         
-        /// 常用書籤
+        /// 常用書籤 => EnglishBookmarkSite
         /// - Returns: String
         func bookmarks() -> String { return "\(self.rawValue)BookmarkSite" }
         
@@ -80,6 +81,7 @@ extension Constant {
             switch self {
             case .english: return "en-US"
             case .japanese: return "ja-JP"
+            case .french: return "fr-FR"
             case .korean: return "ko-KR"
             case .chinese: return "zh-TW"
             }
@@ -93,6 +95,7 @@ extension Constant {
             switch self {
             case .english: return "https://tw.dictionary.search.yahoo.com/search?p=\(word)"
             case .japanese: return "https://dictionary.goo.ne.jp/word/\(word)"
+            case .french: return "https://www.frdic.com/dicts/fr/\(word)"
             case .korean: return "https://dic.daum.net/search.do?dic=ch&q=\(word)"
             case .chinese: return "https://cdict.net/?q=\(word)"
             }
@@ -105,6 +108,7 @@ extension Constant {
             switch self {
             case .english: return "\(flagEmoji()) 英文字典"
             case .japanese: return "\(flagEmoji()) 日文字典"
+            case .french: return "\(flagEmoji()) 法文字典"
             case .korean: return "\(flagEmoji()) 韓文字典"
             case .chinese: return "\(flagEmoji()) 中文字典"
             }
@@ -117,6 +121,7 @@ extension Constant {
             switch self {
             case .english: return "US"._flagEmoji()
             case .japanese: return "JP"._flagEmoji()
+            case .french: return "FR"._flagEmoji()
             case .korean: return "KR"._flagEmoji()
             case .chinese: return "TW"._flagEmoji()
             }
@@ -129,8 +134,22 @@ extension Constant {
             switch self {
             case .english: return UIFont(name: "Bradley Hand", size: fontSize)
             case .japanese: return UIFont(name: "KleeOne-SemiBold", size: fontSize)
+            case .french: return UIFont(name: "Bradley Hand", size: fontSize)
             case .korean: return UIFont(name: "GamjaFlower-Regular", size: fontSize)
             case .chinese: return UIFont(name: "jf-openhuninn-1.1", size: fontSize)
+            }
+        }
+        
+        /// 分類 / 分組號碼 (0xx / 1xx / 2xx / ...)
+        /// => 要跟Vocabulary.Speech配合
+        /// - Returns: Int
+        func groupNumber() -> Int {
+            switch self {
+            case .english: return 000
+            case .japanese: return 100
+            case .french: return 200
+            case .korean: return 000
+            case .chinese: return 000
             }
         }
     }

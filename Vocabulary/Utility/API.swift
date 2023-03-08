@@ -225,7 +225,7 @@ extension API {
         
         let items: [SQLite3Database.InsertItem] = [
             (key: "word", value: word),
-            (key: "speech", value: Vocabulary.Speech.noue.rawValue),
+            (key: "speech", value: tableName.groupNumber()),
         ]
         
         guard let database = Constant.database,

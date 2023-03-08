@@ -699,7 +699,7 @@ private extension OthersViewController {
               let fileUrl = urls.first,
               let backupUrl = FileManager.default._documentDirectory()?._appendPath("\(Date()).db")
         else {
-            return
+            downloadDocumentHint(target: self, title: "備份路徑錯誤", message: nil); return
         }
         
         var result = FileManager.default._moveFile(at: databaseUrl, to: backupUrl)

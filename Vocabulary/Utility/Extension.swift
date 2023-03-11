@@ -184,6 +184,17 @@ extension String {
     func _removeWhiteSpacesAndNewlines() -> Self {
         return trimmingCharacters(in: .whitespacesAndNewlines)
     }
+    
+    /// 將"2020-07-08 16:36:31 +0800" => Date()
+    /// - Parameter dateFormat: 時間格式
+    /// - Returns: Date?
+    func _date(dateFormat: String = "yyyy-MM-dd HH:mm:ss ZZZ") -> Date? {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = dateFormat
+        
+        return dateFormatter.date(from: self)
+    }
 }
 
 // MARK: - String (private class function)
@@ -250,14 +261,14 @@ extension Date {
     /// - 2020-07-07 16:08:50 +0800
     /// - Parameters:
     ///   - dateFormat: 時間格式
-    ///   - identifier: 區域辨識
+    ///   - timeZone: 時區辨識
     /// - Returns: String?
-    func _localTime(with dateFormat: String = "yyyy-MM-dd HH:mm:ss", timeZone identifier: String = "UTC") -> String {
+    func _localTime(dateFormat: String = "yyyy-MM-dd HH:mm:ss", timeZone: TimeZone? = TimeZone(identifier: "UTC")) -> String {
         
         let dateFormatter = DateFormatter()
 
         dateFormatter.dateFormat = "\(dateFormat)"
-        dateFormatter.timeZone = TimeZone(identifier: identifier)
+        dateFormatter.timeZone = timeZone
         
         return dateFormatter.string(from: self)
     }
@@ -580,7 +591,6 @@ extension NotificationCenter {
     func _register(name: Constant.NotificationName, queue: OperationQueue = .main, object: Any? = nil, handler: @escaping ((Notification) -> Void)) {
         self.addObserver(forName: name.name(), object: object, queue: queue) { (notification) in handler(notification) }
     }
-
     
     /// 發出通知
     /// - Parameters:
@@ -738,6 +748,21 @@ extension FileManager {
         
         do {
             try moveItem(at: atURL, to: toURL)
+            return .success(true)
+        } catch {
+            return .failure(error)
+        }
+    }
+    
+    /// 複製檔案
+    /// - Parameters:
+    ///   - atURL: 從這裡複製 =>
+    ///   - toURL: => 到這裡
+    /// - Returns: Result<Bool, Error>
+    func _copyFile(at atURL: URL, to toURL: URL) -> Result<Bool, Error> {
+        
+        do {
+            try copyItem(at: atURL, to: toURL)
             return .success(true)
         } catch {
             return .failure(error)

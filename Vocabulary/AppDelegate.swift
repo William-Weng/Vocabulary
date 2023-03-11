@@ -28,6 +28,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         audioInterruptionNotification()
         
         _ = animationFolderUrlMaker()
+        
         return true
     }
     
@@ -62,7 +63,7 @@ extension AppDelegate {
     /// 初始化資料表 / 資料庫
     func initDatabase() {
         
-        let result = WWSQLite3Manager.shared.connent(with: Constant.databaseName)
+        let result = WWSQLite3Manager.shared.connent(for: .documents, filename: Constant.databaseName)
         
         switch result {
         case .failure(_): Utility.shared.flashHUD(with: .fail)
@@ -84,7 +85,7 @@ extension AppDelegate {
         
         audioPlayer?.stop()
         audioPlayer = nil
-         
+        
         guard let audioPlayer = musicPlayerMaker(with: music) else { return false }
         
         self.audioPlayer = audioPlayer
@@ -97,7 +98,7 @@ extension AppDelegate {
         return true
     }
     
-    /// 取得背景音樂聲音大小
+    /// 取得背景音樂音量大小
     /// - Returns: Float
     func musicVolume() -> Float? { return audioPlayer?.volume }
     
@@ -205,6 +206,7 @@ private extension AppDelegate {
     }
     
     /// 停止錄音
+    /// - Returns: Bool
     func stopRecorder() -> Bool {
         
         guard let result = audioRecorder?._stop() else { return false }

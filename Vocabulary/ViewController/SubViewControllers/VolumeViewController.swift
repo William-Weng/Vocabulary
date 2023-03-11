@@ -144,7 +144,7 @@ extension VolumeViewController {
     /// 更新Slider的寬度
     func updateSliderWidthActionNotification() {
         
-        NotificationCenter.default._register(name: .viewDidTransition) { [weak self] notification in
+        NotificationCenter.default._register(name: .viewDidTransition) { [weak self] _ in
             guard let this = self else { return }
             this.sliderWidthAction()
         }

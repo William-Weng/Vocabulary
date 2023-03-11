@@ -697,7 +697,7 @@ private extension OthersViewController {
         
         guard let databaseUrl = Constant.database?.fileURL,
               let fileUrl = urls.first,
-              let backupUrl = FileManager.default._documentDirectory()?._appendPath("\(Date()).db")
+              let backupUrl = Constant.backupDirectory?._appendPath("\(Date()._localTime()).\(Constant.databaseFileExtension)")
         else {
             downloadDocumentHint(target: self, title: "備份路徑錯誤", message: nil); return
         }

@@ -8,6 +8,7 @@
 import UIKit
 import WWPrint
 import WWSQLite3Manager
+import WWToast
 
 // MARK: - MainViewDelegate
 protocol MainViewDelegate {
@@ -32,7 +33,7 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var volumeButtonItem: UIBarButtonItem!
     @IBOutlet weak var appendWordButton: UIButton!
     @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
-        
+    
     private var isAnimationStop = false
     private var currentScrollDirection: Constant.ScrollDirection = .down
 
@@ -43,6 +44,7 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         initSetting()
         updateButtonPositionConstraintNotification()
+        backupDatabaseAction(delay: Constant.autoBackupDelaySecond)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -640,5 +642,104 @@ private extension MainViewController {
         case .failure(let error): wwPrint(error); return nil
         case .success(let list): return list
         }
+    }
+    
+    /// 備份資料庫
+    /// - Parameter second: 3秒後備份
+    func backupDatabaseAction(delay second: TimeInterval) {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + second) { [weak self] in
+            
+            guard let this = self else { return }
+            
+            let date = this.lastBackupDatabaseDate()
+            let backUpIfNeeded = this.autoBackupDatabaseRule(lastDate: date, days: Constant.autoBackupDays)
+                        
+            if (backUpIfNeeded) {
+
+                let result = this.backupDatabase()
+                var message: Any
+                
+                switch result {
+                case .failure(let error): message = error
+                case .success(let filename):
+                    message = "自動備份失敗"
+                    if let filename = filename { message = filename }
+                }
+                
+                let backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1).withAlphaComponent(0.7)
+                WWToast.shared.makeText(target: this, text: message, backgroundColor: backgroundColor)
+            }
+        }
+    }
+    
+    /// 備份資料庫
+    /// - Returns: Result<Bool, Error>
+    func backupDatabase() -> Result<String?, Error> {
+        
+        guard let databaseUrl = Constant.database?.fileURL,
+              let filename = Optional.some("\(Date()._localTime(dateFormat: "yyyy-MM-dd HH:mm:ss ZZZ", timeZone: .current)).\(Constant.databaseFileExtension)"),
+              let backupUrl = Constant.backupDirectory?._appendPath(filename)
+        else {
+            return .failure(Constant.MyError.notOpenURL)
+        }
+        
+        let result = FileManager.default._copyFile(at: databaseUrl, to: backupUrl)
+        
+        switch result {
+        case .failure(let error): return .failure(error)
+        case .success(let isSuccess): return (isSuccess ? .success(filename) : .success(nil))
+        }
+    }
+    
+    /// 自動備份的規則 => 完全沒備份過 / 超過7天
+    /// - Parameters:
+    ///   - lastDate: Date?
+    ///   - days: Int
+    /// - Returns: Bool
+    func autoBackupDatabaseRule(lastDate: Date?, days: Int) -> Bool {
+        
+        guard let lastDate = lastDate,
+              let ruleDate = lastDate._adding(value: days)
+        else {
+            return true
+        }
+        
+        if Date() > ruleDate { return true }
+        return false
+    }
+    
+    /// 取得最後備份資料庫的檔案日期
+    /// - Returns: Date?
+    func lastBackupDatabaseDate() -> Date? {
+        
+        guard let backupDirectory = Constant.backupDirectory else { return nil }
+        
+        let fileManager = FileManager.default
+        let result = fileManager._fileList(with: backupDirectory)
+        
+        var lastBackupDate: Date?
+        
+        switch result {
+        case .failure(let error): wwPrint(error); break
+        case .success(let fileList):
+            
+            guard let fileList = fileList else { break }
+            
+            lastBackupDate = fileList.compactMap { filename -> Date? in
+                
+                guard let url = backupDirectory._appendPath(filename),
+                      url.pathExtension.lowercased() == Constant.databaseFileExtension.lowercased(),
+                      let date = filename.replacingOccurrences(of: ".\(Constant.databaseFileExtension)", with: "")._date()
+                else {
+                    return nil
+                }
+                
+                return date
+                
+            }.sorted(by: >).first
+        }
+        
+        return lastBackupDate
     }
 }

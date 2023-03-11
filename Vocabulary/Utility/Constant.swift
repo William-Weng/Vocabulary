@@ -14,12 +14,16 @@ final class Constant: NSObject {
     static let duration: TimeInterval = 0.15
     static let updateScrolledHeight: CGFloat = 96.0
     static let databaseName = "Vocabulary.db"
+    static let databaseFileExtension = "db"
+    static let autoBackupDays = 7
+    static let autoBackupDelaySecond: TimeInterval = 2
     static let searchCountWithLevel: SearchCountWithLevel = [.easy: 3, .medium: 4, .hard: 3]
     
     static var volume: Float = 0.1
     static var speakingSpeed: Float = 0.4
     static var database: SQLite3Database?
     
+    static var backupDirectory = FileManager.default._documentDirectory()
     static var currentTableName: Constant.VoiceCode = .english { didSet { NotificationCenter.default._post(name: .refreshViewController) }}
 }
 

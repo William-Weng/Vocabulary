@@ -1,13 +1,8 @@
-# Vocabulary - [for iPhone](https://youtu.be/Cqtt30G74_8) / [for iPad](https://youtu.be/4a3lslw7OpM)
-[我愛背單字 - 針對身為外語苦手的我，量身訂製的APP，有輕快的背景音樂，也有發音，加上可愛的動畫…](https://github.com/William-Weng/Vocabulary)
+# [Vocabulary](https://github.com/William-Weng/Vocabulary) - [for iPhone](https://youtu.be/8bYvKdA5gkc) / [for iPad](https://youtu.be/LCbHuw8ONWI)
+我愛背單字 - 針對身為外語苦手的我，量身訂製的APP，有輕快的背景音樂，也有發音，加上可愛的動畫…
 
 [![Swift-5.7](https://img.shields.io/badge/Swift-5.7-orange.svg?style=flat)](https://developer.apple.com/swift/) [![iOS 14.0](https://img.shields.io/badge/iOS-14.0-pink.svg?style=flat)](https://developer.apple.com/swift/) [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=flat)](https://developer.apple.com/swift/) ![](https://img.shields.io/github/v/tag/William-Weng/Vocabulary)
 
-![](./@Image/001.png) ![](./@Image/002.png) ![](./@Image/003.png)
-![](./@Image/004.png) ![](./@Image/005.png) ![](./@Image/006.png)
-![](./@Image/007.png) ![](./@Image/008.png) ![](./@Image/009.png)
-![](./@Image/000.png)
-![](./@Image/Storyboard.png)
 
 # 附錄：資源下載說明
 ## 所有資源都是從網路下載，僅作程式分享教學之用，並無侵權之意，資源版權皆屬於原作者所有…
@@ -18,6 +13,7 @@
 1. [WWHUD](https://github.com/William-Weng/WWHUD.git)
 1. [WWSlider](https://github.com/William-Weng/WWSlider.git)
 1. [WWNetworking](https://github.com/William-Weng/WWNetworking.git)
+1. [WWToast](https://github.com/William-Weng/WWToast.git)
 
 ### [相關圖示](https://www.flaticon.com)
 1. AppIcon - [dictionary_2080699.png](https://www.flaticon.com/free-icon/dictionary_2080699)
@@ -50,9 +46,10 @@
 1. Download - [download_3039520](https://www.flaticon.com/free-icon/download_3039520)
 
 ### [背景音樂 - .mp3 / .m4a (請在iTunes上自行加入)](http://amachamusic.chagasi.com/)
-1. 夏の霧.m4a - [甘茶の音楽工房 - natsunokiri.mp3](http://amachamusic.chagasi.com/music_natsunokiri.html)
-1. 桜雲.m4a - [甘茶の音楽工房 - ouun.mp3](http://amachamusic.chagasi.com/music_ouun.html)
-1. TheBeatOfNature.mp3 - [Pixabay - the-beat-of-nature-122841.mp3](https://pixabay.com/music/solo-guitar-the-beat-of-nature-122841/)
+1. [夏の霧.m4a - 甘茶の音楽工房](http://amachamusic.chagasi.com/music_natsunokiri.html)
+1. [桜雲.m4a - 甘茶の音楽工房](http://amachamusic.chagasi.com/music_ouun.html)
+1. [TheBeatOfNature.mp3 - Pixabay](https://pixabay.com/music/solo-guitar-the-beat-of-nature-122841/)
+1. [一小時睡眠舒壓音樂詩歌.mp3 - 來婉音樂](https://youtu.be/WYW-GO7uXuM)
 
 ### [動畫圖示 (請在iTunes上自行加入)](https://imgur.com/)
 1. Studing.gif - [桌布-會動的可愛小白熊-1](https://imgur.com/CsxYiU3)

@@ -39,10 +39,19 @@
     {
       "identity" : "wwsqlite3manager",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/William-Weng/WWSQLite3Manager.git",
+      "location" : "https://github.com/William-Weng/WWSQLite3Manager",
       "state" : {
-        "revision" : "03ceff94cc2d1f4a5955c8371ba6e7d16f54f91a",
-        "version" : "1.3.2"
+        "revision" : "18d22afe80c3de211f42b8dbf821043adc8698b0",
+        "version" : "1.4.2"
+      }
+    },
+    {
+      "identity" : "wwtoast",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWToast",
+      "state" : {
+        "revision" : "a5c029033c0be6018fdd943cb8f07778b2a58ca2",
+        "version" : "1.0.1"
       }
     }
   ],

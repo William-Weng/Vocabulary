@@ -3,6 +3,11 @@
 
 [![Swift-5.7](https://img.shields.io/badge/Swift-5.7-orange.svg?style=flat)](https://developer.apple.com/swift/) [![iOS 14.0](https://img.shields.io/badge/iOS-14.0-pink.svg?style=flat)](https://developer.apple.com/swift/) [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=flat)](https://developer.apple.com/swift/) ![](https://img.shields.io/github/v/tag/William-Weng/Vocabulary)
 
+![](./@Image/001.png) ![](./@Image/002.png) ![](./@Image/003.png)
+![](./@Image/004.png) ![](./@Image/005.png) ![](./@Image/006.png)
+![](./@Image/007.png) ![](./@Image/008.png) ![](./@Image/009.png)
+![](./@Image/000.png)
+![](./@Image/Storyboard.png)
 
 # 附錄：資源下載說明
 ## 所有資源都是從網路下載，僅作程式分享教學之用，並無侵權之意，資源版權皆屬於原作者所有…

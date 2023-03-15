@@ -4,6 +4,7 @@
 
 ## Others
 *.db
+@Music/
 
 ## User settings
 xcuserdata/

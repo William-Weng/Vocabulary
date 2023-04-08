@@ -93,7 +93,10 @@ private extension LicenseWebViewController {
     /// [網址讀取進度條設定](https://juejin.cn/post/6894106901186330632)
     /// - Parameter webView: WKWebView
     func estimatedProgress(with webView: WKWebView) {
+        
         let navigationBarHeight = navigationController?.navigationBar._rootView()?.frame.height ?? 0
-        observation = webView._estimatedProgress(with: navigationBarHeight)
+        let thickness: CGFloat = 5.0
+        
+        observation = webView._estimatedProgress(with: navigationBarHeight - thickness * 0.5, thickness: thickness)
     }
 }

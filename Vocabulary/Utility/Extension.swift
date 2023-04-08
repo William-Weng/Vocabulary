@@ -619,7 +619,6 @@ private extension NotificationCenter {
         self.addObserver(forName: name, object: object, queue: queue) { (notification) in handler(notification) }
     }
     
-    
     /// 發出通知
     /// - Parameters:
     ///   - name: 要發出的Notification名稱
@@ -1236,6 +1235,7 @@ extension WKWebView {
     func _estimatedProgress(with height: CGFloat, thickness: CGFloat = 5.0, trackTintColor: UIColor? = .clear, progressTintColor: UIColor? = .systemBlue) -> NSKeyValueObservation? {
         
         let progressView = UIProgressView(frame: CGRect(x: 0, y: height, width: self.bounds.width, height: thickness))
+        
         progressView.progress = 0
         progressView.trackTintColor = trackTintColor
         progressView.progressTintColor = progressTintColor
@@ -1243,8 +1243,15 @@ extension WKWebView {
         self.addSubview(progressView)
         
         let observation = self.observe(\.estimatedProgress, options: [.new]) { [weak self] (_, _)  in
+            
             guard let this = self else { return }
+            
+            var isHidden = true
+            
             progressView.progress = Float(this.estimatedProgress)
+            
+            if (progressView.progress < 1.0) { isHidden = false }
+            progressView.isHidden = isHidden
         }
         
         return observation

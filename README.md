@@ -19,6 +19,7 @@
 1. [WWSlider](https://github.com/William-Weng/WWSlider.git)
 1. [WWNetworking](https://github.com/William-Weng/WWNetworking.git)
 1. [WWToast](https://github.com/William-Weng/WWToast.git)
+1. [WWNetworking-UIImage](https://github.com/William-Weng/WWNetworking-UIImage.git)
 
 ### [相關圖示](https://www.flaticon.com)
 1. AppIcon - [dictionary_2080699.png](https://www.flaticon.com/free-icon/dictionary_2080699)

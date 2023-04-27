@@ -168,6 +168,7 @@ private extension AppDelegate {
     
     /// 音樂播放器
     /// - Parameter music: Music
+    /// - Returns: AVAudioPlayer?
     func musicPlayerMaker(with music: Music) -> AVAudioPlayer? {
         
         audioPlayer?.stop()

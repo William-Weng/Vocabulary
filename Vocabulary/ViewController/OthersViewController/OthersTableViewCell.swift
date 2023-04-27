@@ -7,6 +7,7 @@
 
 import UIKit
 import WWPrint
+import WWNetworking_UIImage
 
 // MARK: - 其它設定Cell
 final class OthersTableViewCell: UITableViewCell, CellReusable {
@@ -65,7 +66,7 @@ private extension OthersTableViewCell {
         titleLabel.text = bookmarkSite.title
         
         iconImageView.addGestureRecognizer(tapRecognizer)
-        iconImageView.image = iconImage(with: iconFilename()) ?? UIImage(named: "Picture")
+        iconImageView.WW.downloadImage(with: bookmarkSite.icon, defaultImage: UIImage(named: "Picture"))
     }
     
     /// 讀取存在手機的圖示檔

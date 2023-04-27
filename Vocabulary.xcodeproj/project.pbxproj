@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6414E99E29BC6A98005B3EAD /* WWNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 6414E99D29BC6A98005B3EAD /* WWNetworking */; };
 		6414E9A129BC6AAC005B3EAD /* WWHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 6414E9A029BC6AAC005B3EAD /* WWHUD */; };
-		6414E9A429BC6AC5005B3EAD /* WWSQLite3Manager in Frameworks */ = {isa = PBXBuildFile; productRef = 6414E9A329BC6AC5005B3EAD /* WWSQLite3Manager */; };
 		6414E9A729BC6ADF005B3EAD /* WWSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 6414E9A629BC6ADF005B3EAD /* WWSlider */; };
 		6414E9AA29BC6AF5005B3EAD /* WWToast in Frameworks */ = {isa = PBXBuildFile; productRef = 6414E9A929BC6AF5005B3EAD /* WWToast */; };
 		6414E9B229BC71E5005B3EAD /* License.html in Resources */ = {isa = PBXBuildFile; fileRef = 6414E9B129BC71E5005B3EAD /* License.html */; };
@@ -38,6 +36,7 @@
 		81201C4C298B58C200291485 /* InterpretView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81201C4A298B58C200291485 /* InterpretView.swift */; };
 		81201C4D298B58C200291485 /* InterpretView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81201C4B298B58C200291485 /* InterpretView.xib */; };
 		812C5444299F73DC003F942A /* TalkingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812C5443299F73DC003F942A /* TalkingViewController.swift */; };
+		815AF25629F110C200A8CC4D /* WWNetworking-UIImage in Frameworks */ = {isa = PBXBuildFile; productRef = 815AF25529F110C200A8CC4D /* WWNetworking-UIImage */; };
 		815E14782990F47700EC571D /* SentenceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815E14772990F47700EC571D /* SentenceTableViewCell.swift */; };
 		818E261329922FFE00385705 /* ReviewResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818E261229922FFE00385705 /* ReviewResultViewController.swift */; };
 		818E2615299230B300385705 /* ReviewResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818E2614299230B300385705 /* ReviewResultTableViewCell.swift */; };
@@ -103,8 +102,7 @@
 				6414E9A129BC6AAC005B3EAD /* WWHUD in Frameworks */,
 				6414E9A729BC6ADF005B3EAD /* WWSlider in Frameworks */,
 				6414E9AA29BC6AF5005B3EAD /* WWToast in Frameworks */,
-				6414E9A429BC6AC5005B3EAD /* WWSQLite3Manager in Frameworks */,
-				6414E99E29BC6A98005B3EAD /* WWNetworking in Frameworks */,
+				815AF25629F110C200A8CC4D /* WWNetworking-UIImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,11 +340,10 @@
 			);
 			name = Vocabulary;
 			packageProductDependencies = (
-				6414E99D29BC6A98005B3EAD /* WWNetworking */,
 				6414E9A029BC6AAC005B3EAD /* WWHUD */,
-				6414E9A329BC6AC5005B3EAD /* WWSQLite3Manager */,
 				6414E9A629BC6ADF005B3EAD /* WWSlider */,
 				6414E9A929BC6AF5005B3EAD /* WWToast */,
+				815AF25529F110C200A8CC4D /* WWNetworking-UIImage */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -377,11 +374,10 @@
 			);
 			mainGroup = 6428587E297BBF8600DD7D88;
 			packageReferences = (
-				6414E99C29BC6A98005B3EAD /* XCRemoteSwiftPackageReference "WWNetworking" */,
 				6414E99F29BC6AAC005B3EAD /* XCRemoteSwiftPackageReference "WWHUD" */,
-				6414E9A229BC6AC5005B3EAD /* XCRemoteSwiftPackageReference "WWSQLite3Manager" */,
 				6414E9A529BC6ADF005B3EAD /* XCRemoteSwiftPackageReference "WWSlider" */,
 				6414E9A829BC6AF5005B3EAD /* XCRemoteSwiftPackageReference "WWToast" */,
+				815AF25429F110C200A8CC4D /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -590,7 +586,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20230311;
+				CURRENT_PROJECT_VERSION = 20230426;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -626,7 +622,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20230311;
+				CURRENT_PROJECT_VERSION = 20230426;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -680,28 +676,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		6414E99C29BC6A98005B3EAD /* XCRemoteSwiftPackageReference "WWNetworking" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/William-Weng/WWNetworking.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.1.0;
-			};
-		};
 		6414E99F29BC6AAC005B3EAD /* XCRemoteSwiftPackageReference "WWHUD" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWHUD.git";
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 1.1.0;
-			};
-		};
-		6414E9A229BC6AC5005B3EAD /* XCRemoteSwiftPackageReference "WWSQLite3Manager" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/William-Weng/WWSQLite3Manager";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.4.0;
 			};
 		};
 		6414E9A529BC6ADF005B3EAD /* XCRemoteSwiftPackageReference "WWSlider" */ = {
@@ -720,23 +700,21 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		815AF25429F110C200A8CC4D /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWNetworking-UIImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6414E99D29BC6A98005B3EAD /* WWNetworking */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6414E99C29BC6A98005B3EAD /* XCRemoteSwiftPackageReference "WWNetworking" */;
-			productName = WWNetworking;
-		};
 		6414E9A029BC6AAC005B3EAD /* WWHUD */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6414E99F29BC6AAC005B3EAD /* XCRemoteSwiftPackageReference "WWHUD" */;
 			productName = WWHUD;
-		};
-		6414E9A329BC6AC5005B3EAD /* WWSQLite3Manager */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6414E9A229BC6AC5005B3EAD /* XCRemoteSwiftPackageReference "WWSQLite3Manager" */;
-			productName = WWSQLite3Manager;
 		};
 		6414E9A629BC6ADF005B3EAD /* WWSlider */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -747,6 +725,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6414E9A829BC6AF5005B3EAD /* XCRemoteSwiftPackageReference "WWToast" */;
 			productName = WWToast;
+		};
+		815AF25529F110C200A8CC4D /* WWNetworking-UIImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 815AF25429F110C200A8CC4D /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */;
+			productName = "WWNetworking-UIImage";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

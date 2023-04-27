@@ -117,8 +117,6 @@ private extension OthersViewController {
     /// UITableView的初始化設定
     func initSetting() {
         
-        _ = removeNotUsedImages()
-
         navigationItem.backBarButtonItem = UIBarButtonItem()
         OthersTableViewCell.othersViewDelegate = self
         
@@ -275,6 +273,7 @@ private extension OthersViewController {
         guard let tabBar = self.tabBarController?.tabBar else { return }
         
         fakeTabBarHeightConstraint.constant = !isHidden ? tabBar.frame.height : .zero
+        
         UIViewPropertyAnimator(duration: duration, curve: curve) { [weak self] in
             
             guard let this = self else { return }
@@ -497,62 +496,6 @@ private extension OthersViewController {
         return API.shared.updateBookmarkIconToList(bookmarkId, iconUrl: iconUrl, for: Constant.currentTableName)
     }
     
-    /// 下載Cell圖示
-    /// - Parameters:
-    ///   - indexPath: IndexPath
-    ///   - filename: String
-    ///   - result: Result<Data?, Error>
-    func downloadImage(with indexPath: IndexPath, filename: String, result: @escaping (Result<Data?, Error>) -> Void) {
-        
-        guard let bookmark = OthersTableViewCell.bookmarkSite(with: indexPath),
-              let urlString = bookmark.icon,
-              Utility.shared.isWebUrlString(urlString)
-        else {
-            result(.failure(Constant.MyError.notOpenURL)); return
-        }
-        
-        Utility.shared.diplayHUD(with: .download)
-        
-        _ = WWNetworking.shared.download(urlString: urlString) { info in
-            
-            wwPrint(info.totalWritten / info.totalSize)
-            
-        } completion: { downloadResult in
-            
-            switch downloadResult {
-            case .failure(let error): result(.failure(error))
-            case .success(let info): result(.success(info.data))
-            }
-        }
-    }
-    
-    /// 儲存Cell圖示
-    /// - Parameters:
-    ///   - data: Data?
-    ///   - filename: String
-    /// - Returns: Result<Bool, Error>
-    func storeIconData(_ data: Data?, filename: String) -> Result<Bool, Error> {
-        
-        guard let data = data,
-              let imageFolderUrl = Constant.FileFolder.image.url()
-        else {
-            return .failure(Constant.MyError.notImage)
-        }
-        
-        let result = FileManager.default._createDirectory(with: imageFolderUrl, path: "")
-        
-        switch result {
-            
-        case .failure(let error): return .failure(error)
-        case .success(let _isSuccess):
-            
-            if (!_isSuccess) { return .failure(Constant.MyError.notOpenURL) }
-                                
-            let url = imageFolderUrl.appendingPathComponent(filename, isDirectory: false)
-            return FileManager.default._writeData(to: url, data: data)
-        }
-    }
-    
     /// 打開書籤網址
     /// - Parameter indexPath: IndexPath
     func openBookmark(with indexPath: IndexPath) {
@@ -586,89 +529,8 @@ private extension OthersViewController {
                 Utility.shared.flashHUD(with: .fail); return
             }
             
-            this.downloadImage(with: indexPath, filename: filename) { downloadResult in
-                
-                var isSuccess = false
-                var error: Error?
-                
-                defer {
-                    
-                    let gifType: Utility.HudGifType = (!isSuccess) ? .fail : .download
-                    
-                    this.myTableView.reloadRows(at: [indexPath], with: .automatic)
-                    Utility.shared.flashHUD(with: gifType)
-
-                    wwPrint(error)
-                }
-                
-                switch downloadResult {
-                case .failure(let failure): error = failure
-                case .success(let data):
-                    
-                    guard let data = data else { return }
-                    let storeResult = this.storeIconData(data, filename: filename)
-                    
-                    switch storeResult {
-                    case .failure(let failure): error = failure
-                    case .success(let success): isSuccess = success
-                    }
-                }
-            }
+            this.myTableView.reloadRows(at: [indexPath], with: .automatic)
         }
-    }
-    
-    /// 移除沒用到的圖示檔案
-    /// - Returns: Bool
-    func removeNotUsedImages() -> Bool {
-        
-        guard let imageFolderFileList = imageFolderFileList(),
-              let bookmarkListIconNameList = bookmarkListIconNameList()
-        else {
-            return false
-        }
-        
-        let differenceList = bookmarkListIconNameList._symmetricDifference(with: imageFolderFileList)
-        return removeImages(with: differenceList)
-    }
-    
-    /// 圖示資料夾的檔案列表
-    /// - Returns: [String]?
-    func imageFolderFileList() -> [String]? {
-        
-        guard let imageFolder = Constant.FileFolder.image.url() else { return nil }
-        
-        let result = FileManager.default._fileList(with: imageFolder)
-        
-        switch result {
-        case .failure(let error): wwPrint(error); return nil
-        case .success(let list): return list
-        }
-    }
-    
-    /// 取得書籤的圖示名稱列表
-    /// - Returns: [String]
-    func bookmarkListIconNameList() -> [String]? {
-        
-        let bookmarkList = API.shared.searchBookmarkList(for: Constant.currentTableName, count: nil, offset: 0)
-        
-        let iconNameList = bookmarkList.compactMap { list in
-            return list._jsonClass(for: BookmarkSite.self)
-        }.map { bookmarkSite in
-            bookmarkSite.iconName()
-        }
-        
-        return !iconNameList.isEmpty ? iconNameList : nil
-    }
-    
-    /// 移除圖示檔案
-    /// - Parameter paths: Set<String>
-    /// - Returns: Bool
-    func removeImages(with paths: [String]) -> Bool {
-        
-        guard let imageFolder = Constant.FileFolder.image.url() else { return false }
-        
-        Set(paths).forEach { _ = FileManager.default._removeFile(at: imageFolder._appendPath($0)) }
-        return true
     }
     
     /// 下載備份的Database

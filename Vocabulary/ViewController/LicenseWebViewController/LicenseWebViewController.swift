@@ -56,6 +56,11 @@ final class LicenseWebViewController: UIViewController {
 extension LicenseWebViewController: WKNavigationDelegate, WKUIDelegate {
     
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) { goItemSetting(with: webView) }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        webView._disableUserSelectAndTouch { result in wwPrint(result) }
+        webView._disableUserScale{ result in wwPrint(result) }
+    }
 }
 
 // MARK: - 小工具
@@ -77,7 +82,7 @@ private extension LicenseWebViewController {
     /// 修正WebView滿版問題 => contentInsetAdjustmentBehavior
     /// - Parameter webView: WKWebView
     func fixContentInset(with webView: WKWebView) {
-                
+        
         if let navigationBarHeight = navigationController?.navigationBar._rootView()?.frame.height {
             webView.scrollView.contentInset = UIEdgeInsets(top: navigationBarHeight, left: 0, bottom: 0, right: 0)
         }

@@ -1225,6 +1225,63 @@ extension WKWebView {
         return self.load(urlRequest)
     }
     
+    /// 執行JavaScript
+    /// - Parameters:
+    ///   - script: JavaScript文字
+    ///   - result: Result<Any?, Error>
+    func _evaluateJavaScript(script: String?, result: @escaping (Result<Any?, Error>) -> Void) {
+        
+        guard let script = script else { result(.failure(Constant.MyError.isEmpty)); return }
+        
+        self.evaluateJavaScript(script) { data, error in
+            if let error = error { result(.failure(error)); return }
+            result(.success(data))
+        }
+    }
+    
+    /// [禁止使用者去動作 => 不能長按](https://teagan-hsu.coderbridge.io/2020/12/29/how-to-set-css-styles-using-javascript/)
+    /// - Parameter result: [Result<Any?, Error>](https://teagan-hsu.coderbridge.io/2020/12/29/how-to-set-css-styles-using-javascript/)
+    func _disableUserSelectAndTouch(result: @escaping (Result<Any?, Error>) -> Void) {
+        
+        let script = """
+        (function() {
+            let style = document.createElement('style');
+            style.innerHTML = `*:not(input,textarea),*:focus:not(input,textarea){-webkit-user-select:none;-webkit-touch-callout:none;}`;
+            document.head.appendChild(style);
+        }());
+        """
+        
+        self._evaluateJavaScript(script: script) { _result in
+            
+            switch _result {
+            case .failure(let error): result(.failure(error))
+            case .success(let value): result(.success(value))
+            }
+        }
+    }
+    
+    /// [禁止使用者縮放 => 不能雙指放大縮小](https://blog.csdn.net/jbj6568839z/article/details/103665222)
+    /// - Parameter result: [Result<Any?, Error>](https://stackoverflow.com/questions/18982228/how-to-add-meta-tag-in-javascript)
+    func _disableUserScale(result: @escaping (Result<Any?, Error>) -> Void) {
+        
+        let script = """
+        (function() {
+            let meta = document.createElement('meta');
+            meta.name = `viewport`;
+            meta.content = `initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no`;
+            document.getElementsByTagName('head')[0].appendChild(meta);
+        }());
+        """
+        
+        self._evaluateJavaScript(script: script) { _result in
+            
+            switch _result {
+            case .failure(let error): result(.failure(error))
+            case .success(let value): result(.success(value))
+            }
+        }
+    }
+    
     /// [網址讀取進度條設定](https://juejin.cn/post/6894106901186330632) => 回傳值要接起來
     /// - Parameters:
     ///   - height: 進度條的位置高度

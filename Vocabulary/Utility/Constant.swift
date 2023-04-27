@@ -165,6 +165,7 @@ extension Constant {
         
         case notOpenURL
         case notImage
+        case isEmpty
         
         /// 顯示錯誤說明
         /// - Returns: String
@@ -172,6 +173,7 @@ extension Constant {
             switch self {
             case .notOpenURL: return "打開URL錯誤"
             case .notImage: return "不是圖片檔"
+            case .isEmpty: return "資料是空的"
             }
         }
     }

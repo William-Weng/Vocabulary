@@ -23,6 +23,7 @@ final class SentenceViewController: UIViewController {
     @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
     
     private var isAnimationStop = false
+    private var isFixed = false
     
     private var disappearImage: UIImage?
     private var refreshControl: UIRefreshControl!
@@ -38,6 +39,11 @@ final class SentenceViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         animatedBackground(with: .sentence)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if (!isFixed) { fixTableViewForSafeArea(); isFixed = true }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -85,7 +91,10 @@ extension SentenceViewController: UITableViewDelegate, UITableViewDataSource {
 extension SentenceViewController: SFSafariViewControllerDelegate {
     
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        tabBarHiddenAction(false)
+        let isHidden = false
+        
+        tabBarHiddenAction(isHidden)
+        navigationBarHiddenAction(isHidden)
     }
 }
 
@@ -302,11 +311,19 @@ private extension SentenceViewController {
     /// - Parameters:
     ///   - isHidden: Bool
     func navigationBarHiddenAction(_ isHidden: Bool) {
-        
         guard let navigationController = navigationController else { return }
+        navigationController.setNavigationBarHidden(isHidden, animated: true)
+    }
+    
+    /// 修正TableView不使用SafeArea的位置問題
+    func fixTableViewForSafeArea() {
         
-        let duration = Constant.duration
-        navigationController._navigationBarHidden(isHidden, duration: duration)
+        let navigationBarHeight = navigationController?._navigationBarHeight() ?? .zero
+        let indexPath = IndexPath(row: 0, section: 0)
+        
+        myTableView.contentInsetAdjustmentBehavior = .never
+        myTableView.contentInset.top = navigationBarHeight
+        myTableView.scrollToRow(at: indexPath, at: .top, animated: false)
     }
     
     /// 更新appendButton的位置

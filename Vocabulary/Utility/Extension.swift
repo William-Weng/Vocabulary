@@ -953,28 +953,16 @@ extension UINavigationController {
         return viewControllers
     }
     
-    /// 設定NavigationBar顯示 / 隱藏
-    /// - Parameters:
-    ///   - hidden: Bool
-    ///   - animated: 使用動畫
-    ///   - duration: 動畫時間
-    ///   - curve: 動畫類型
-    func _navigationBarHidden(_ isHidden: Bool, animated: Bool = true, duration: TimeInterval = 0.1, curve: UIView.AnimationCurve = .linear) {
+    /// 取得NavigationBar的高度
+    func _navigationBarHeight() -> CGFloat {
         
         guard let statusBarManager = UIStatusBarManager._build(),
-              var currentNavigationBarFrame = Optional.some(navigationBar.frame)
+              var navigationBarFrame = Optional.some(navigationBar.frame)
         else {
-            return
+            return .zero
         }
         
-        currentNavigationBarFrame.origin.y = !isHidden ? statusBarManager.statusBarFrame.height : -currentNavigationBarFrame.height
-        
-        if (!animated) { self.navigationBar.frame = currentNavigationBarFrame; return }
-                
-        UIViewPropertyAnimator(duration: duration, curve: curve) { [weak self] in
-            guard let this = self else { return }
-            this.navigationBar.frame = currentNavigationBarFrame
-        }.startAnimation()
+        return statusBarManager.statusBarFrame.height + navigationBarFrame.height
     }
 }
 

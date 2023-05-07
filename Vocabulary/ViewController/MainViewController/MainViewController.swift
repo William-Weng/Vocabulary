@@ -35,6 +35,7 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var appendWordButton: UIButton!
     @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
     
+    private var isFixed = false
     private var isAnimationStop = false
     private var currentScrollDirection: Constant.ScrollDirection = .down
 
@@ -52,6 +53,11 @@ final class MainViewController: UIViewController {
         super.viewWillAppear(animated)
         MainTableViewCell.mainViewDelegate = self
         animatedBackground(with: .studing)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if (!isFixed) { fixTableViewForSafeArea(); isFixed = true }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -139,6 +145,7 @@ private extension MainViewController {
         fakeTabBarHeightConstraint.constant = self.tabBarController?.tabBar.frame.height ?? 0
         
         myTableView._delegateAndDataSource(with: self)
+        
         myTableView.addSubview(refreshControl)
         myTableView.tableFooterView = UIView()
         
@@ -271,11 +278,19 @@ private extension MainViewController {
     /// - Parameters:
     ///   - isHidden: Bool
     func navigationBarHiddenAction(_ isHidden: Bool) {
-        
         guard let navigationController = navigationController else { return }
+        navigationController.setNavigationBarHidden(isHidden, animated: true)
+    }
+    
+    /// 修正TableView不使用SafeArea的位置問題
+    func fixTableViewForSafeArea() {
         
-        let duration = Constant.duration
-        navigationController._navigationBarHidden(isHidden, duration: duration)
+        let navigationBarHeight = navigationController?._navigationBarHeight() ?? .zero
+        let indexPath = IndexPath(row: 0, section: 0)
+        
+        myTableView.contentInsetAdjustmentBehavior = .never
+        myTableView.contentInset.top = navigationBarHeight
+        myTableView.scrollToRow(at: indexPath, at: .top, animated: false)
     }
     
     /// [新增單字列表](https://medium.com/@daoseng33/我說那個-uitableview-insertrows-uicollectionview-insertitems-呀-56b8758b2efb)

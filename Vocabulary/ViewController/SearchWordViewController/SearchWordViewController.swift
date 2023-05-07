@@ -95,7 +95,7 @@ extension SearchWordViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         let selector = #selector(Self.reloadSearchWord(_:))
-        selector._debounce(target: self, delayTime: 1.0, object: searchText)
+        selector._debounce(target: self, delayTime: Constant.searchDelayTime, object: searchText)
     }
 }
 
@@ -115,6 +115,7 @@ extension SearchWordViewController: MainViewDelegate {
     func levelMenu(with indexPath: IndexPath) {}
     func updateCountLabel(with indexPath: IndexPath, count: Int) {}
     func tabBarHidden(_ isHidden: Bool) {}
+    func navigationBarHidden(_ isHidden: Bool) {}
 }
 
 // MARK: - 小工具

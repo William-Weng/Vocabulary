@@ -16,6 +16,7 @@ protocol MainViewDelegate {
     func levelMenu(with indexPath: IndexPath)
     func updateCountLabel(with indexPath: IndexPath, count: Int)
     func tabBarHidden(_ isHidden: Bool)
+    func navigationBarHidden(_ isHidden: Bool)
 }
 
 // MARK: - 單字頁面
@@ -118,6 +119,7 @@ extension MainViewController: MainViewDelegate {
     func updateCountLabel(with indexPath: IndexPath, count: Int) { updateCountLabelAction(with: indexPath, count: count) }
     func levelMenu(with indexPath: IndexPath) { levelMenuAction(with: indexPath) }
     func tabBarHidden(_ isHidden: Bool) { tabBarHiddenAction(isHidden) }
+    func navigationBarHidden(_ isHidden: Bool) { navigationBarHiddenAction(isHidden) }
 }
 
 // MARK: - MyNavigationControllerDelegate
@@ -263,6 +265,17 @@ private extension MainViewController {
         
         NotificationCenter.default._post(name: .viewDidTransition, object: isHidden)
         tabBarController._tabBarHidden(isHidden, duration: duration)
+    }
+    
+    /// 設定NavigationBar顯示與否功能
+    /// - Parameters:
+    ///   - isHidden: Bool
+    func navigationBarHiddenAction(_ isHidden: Bool) {
+        
+        guard let navigationController = navigationController else { return }
+        
+        let duration = Constant.duration
+        navigationController._navigationBarHidden(isHidden, duration: duration)
     }
     
     /// [新增單字列表](https://medium.com/@daoseng33/我說那個-uitableview-insertrows-uicollectionview-insertitems-呀-56b8758b2efb)
@@ -562,7 +575,7 @@ private extension MainViewController {
         isAnimationStop = true
     }
     
-    /// [滑動時TabBar是否隱藏的規則設定](https://www.jianshu.com/p/539b265bcb5d)
+    /// [滑動時TabBar是否隱藏的規則設定 => NavigationBar也一起處理](https://www.jianshu.com/p/539b265bcb5d)
     /// - Parameter scrollView: UIScrollView
     func tabrBarHidden(with scrollView: UIScrollView) {
         
@@ -579,6 +592,7 @@ private extension MainViewController {
         }
         
         tabBarHidden(isHidden)
+        navigationBarHidden(isHidden)
         currentScrollDirection = direction
     }
     

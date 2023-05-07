@@ -18,6 +18,7 @@ final class Constant: NSObject {
     static let autoBackupDays = 7
     static let autoBackupDelaySecond: TimeInterval = 2
     static let searchCountWithLevel: SearchCountWithLevel = [.easy: 3, .medium: 4, .hard: 3]
+    static let searchDelayTime: TimeInterval = 0.3
     
     static var volume: Float = 0.1
     static var speakingSpeed: Float = 0.4

@@ -40,7 +40,6 @@ final class OthersViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         animatedBackground(with: .others)
-        tabBarHiddenAction(false)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -89,7 +88,16 @@ extension OthersViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 // MARK: - SFSafariViewControllerDelegate
-extension OthersViewController: SFSafariViewControllerDelegate {}
+extension OthersViewController: SFSafariViewControllerDelegate {
+    
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        
+        let isHidden = false
+        
+        tabBarHiddenAction(isHidden)
+        navigationBarHiddenAction(isHidden)
+    }
+}
 
 // MARK: - UIDocumentPickerDelegate
 extension OthersViewController: UIDocumentPickerDelegate {
@@ -231,6 +239,7 @@ private extension OthersViewController {
         }
         
         tabBarHiddenAction(isHidden)
+        navigationBarHiddenAction(isHidden)
         currentScrollDirection = direction
     }
     
@@ -245,6 +254,17 @@ private extension OthersViewController {
         
         tabBarController._tabBarHidden(isHidden, duration: duration)
         NotificationCenter.default._post(name: .viewDidTransition, object: isHidden)
+    }
+    
+    /// 設定NavigationBar顯示與否功能
+    /// - Parameters:
+    ///   - isHidden: Bool
+    func navigationBarHiddenAction(_ isHidden: Bool) {
+        
+        guard let navigationController = navigationController else { return }
+        
+        let duration = Constant.duration
+        navigationController._navigationBarHidden(isHidden, duration: duration)
     }
     
     /// 更新appendButton的位置

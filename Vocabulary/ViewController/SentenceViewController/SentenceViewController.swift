@@ -281,6 +281,7 @@ private extension SentenceViewController {
         }
         
         tabBarHiddenAction(isHidden)
+        navigationBarHiddenAction(isHidden)
         currentScrollDirection = direction
     }
     
@@ -295,6 +296,17 @@ private extension SentenceViewController {
         
         tabBarController._tabBarHidden(isHidden, duration: duration)
         NotificationCenter.default._post(name: .viewDidTransition, object: isHidden)
+    }
+    
+    /// 設定NavigationBar顯示與否功能
+    /// - Parameters:
+    ///   - isHidden: Bool
+    func navigationBarHiddenAction(_ isHidden: Bool) {
+        
+        guard let navigationController = navigationController else { return }
+        
+        let duration = Constant.duration
+        navigationController._navigationBarHidden(isHidden, duration: duration)
     }
     
     /// 更新appendButton的位置

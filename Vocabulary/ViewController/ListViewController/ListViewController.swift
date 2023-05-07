@@ -182,9 +182,11 @@ private extension ListViewController {
     func viewWillAppearAction(_ animated: Bool) {
         
         ListTableViewCell.listViewDelegate = self
-        animatedBackground(with: .reading)
-        mainViewDelegate?.tabBarHidden(true)
         
+        animatedBackground(with: .reading)
+        mainViewDelegate?.navigationBarHidden(false)
+        mainViewDelegate?.tabBarHidden(true)
+
         if (!canDelete) { tabBarController?._tabBarHidden(true, animated: true) }
     }
     
@@ -193,10 +195,12 @@ private extension ListViewController {
     func viewWillDisappearAction(_ animated: Bool) {
         
         ListTableViewCell.listViewDelegate = nil
+        
         pauseBackgroundAnimation()
         updateExampleCount(ListTableViewCell.exmapleList.count)
         
         if (!isSafariViewControllerDismiss) { return }
+        mainViewDelegate?.navigationBarHidden(false)
         mainViewDelegate?.tabBarHidden(false)
     }
     

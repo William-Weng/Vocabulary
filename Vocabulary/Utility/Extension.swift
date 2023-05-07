@@ -12,7 +12,7 @@ import CommonCrypto
 import PencilKit
 import WebKit
 
-// MARK: - Int (class function)
+// MARK: - Int (function)
 extension Int {
     
     /// [取得亂數](https://appcoda.com.tw/swift-random-number/)
@@ -32,7 +32,7 @@ extension Collection {
     subscript(safe index: Index) -> Element? { return indices.contains(index) ? self[index] : nil }
 }
 
-// MARK: - Encodable (class function)
+// MARK: - Encodable (function)
 extension Encodable {
     
     /// Class => JSON Data
@@ -56,7 +56,7 @@ extension Encodable {
     }
 }
 
-// MARK: - Array (class function)
+// MARK: - Array (function)
 extension Array {
     
     /// Array => JSON Data
@@ -101,7 +101,7 @@ extension Array {
     }
 }
 
-// MARK: - Array (class function)
+// MARK: - Array (function)
 extension Array where Self.Element: Hashable {
         
     /// [兩者不重複的值 => 差集](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes/)
@@ -116,7 +116,7 @@ extension Array where Self.Element: Hashable {
     }
 }
 
-// MARK: - Dictionary (class function)
+// MARK: - Dictionary (function)
 extension Dictionary {
     
     /// Dictionary => JSON Data
@@ -135,7 +135,7 @@ extension Dictionary {
     }
 }
 
-// MARK: - String (class function)
+// MARK: - String (function)
 extension String {
 
     /// [國家地區代碼](https://zh.wikipedia.org/wiki/國家地區代碼)
@@ -217,7 +217,7 @@ private extension String {
     }
 }
 
-// MARK: - Data (class function)
+// MARK: - Data (function)
 extension Data {
     
     /// Data => Class
@@ -254,7 +254,7 @@ extension Data {
     }
 }
 
-// MARK: - Date (class function)
+// MARK: - Date (function)
 extension Date {
     
     /// 將UTC時間 => 該時區的時間
@@ -284,7 +284,7 @@ extension Date {
     }
 }
 
-// MARK: - Bundle (class function)
+// MARK: - Bundle (function)
 extension Bundle {
     
     /// 讀取info.plist的欄位資訊
@@ -340,7 +340,7 @@ extension URL {
     }
 }
 
-// MARK: - URL (class function)
+// MARK: - URL (function)
 extension URL {
     
     /// 在APP內部開啟URL (SafariViewController) => window.webkit.messageHandlers.LinkUrl.postMessage("https://www.google.com")
@@ -398,7 +398,7 @@ extension JSONSerialization {
     }
 }
 
-// MARK: - CALayer (class function)
+// MARK: - CALayer (function)
 extension CALayer {
     
     /// 設定圓角
@@ -428,7 +428,7 @@ extension AVSpeechSynthesizer {
     }
 }
 
-// MARK: - AVSpeechSynthesizer (class function)
+// MARK: - AVSpeechSynthesizer (function)
 extension AVSpeechSynthesizer {
     
     /// [讀出文字 / 文字發聲](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/讓開不了口的-app-開口說話-48c674f8f69e)
@@ -515,7 +515,7 @@ extension AVAudioRecorder {
     }
 }
 
-// MARK: - AVAudioRecorder (class function)
+// MARK: - AVAudioRecorder (function)
 extension AVAudioRecorder {
     
     /// 開始錄音 (.wav) => NSMicrophoneUsageDescription
@@ -556,7 +556,7 @@ extension AVAudioRecorder {
     }
 }
 
-// MARK: - Selector (class function)
+// MARK: - Selector (function)
 extension Selector {
     
     /// [延遲執行函數 => 取消 -> 執行 / @objc function](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/利用-debounce-優化-search-時發送的-request-783dc4261f27)
@@ -579,7 +579,7 @@ extension Notification {
     static func _name(_ name: String) -> Notification.Name { return Notification.Name(rawValue: name) }
 }
 
-// MARK: - NotificationCenter (class function)
+// MARK: - NotificationCenter (function)
 extension NotificationCenter {
     
     /// 註冊通知
@@ -606,7 +606,7 @@ extension NotificationCenter {
     func _remove(observer: Any, name: Constant.NotificationName, object: Any? = nil) { self._remove(observer: observer, name: name.name()) }
 }
 
-// MARK: - NotificationCenter (class function)
+// MARK: - NotificationCenter (function)
 private extension NotificationCenter {
     
     /// 註冊通知
@@ -633,7 +633,7 @@ private extension NotificationCenter {
     func _remove(observer: Any, name: Notification.Name, object: Any? = nil) { self.removeObserver(observer, name: name, object: object) }
 }
 
-// MARK: - FileManager (class function)
+// MARK: - FileManager (function)
 extension FileManager {
     
     /// [取得User的資料夾](https://cdfq152313.github.io/post/2016-10-11/)
@@ -780,7 +780,7 @@ extension UIWindow {
     }
 }
 
-// MARK: - UIWindow (class function)
+// MARK: - UIWindow (function)
 extension UIWindow {
     
     /// 測試有沒有SafeArea => 瀏海？
@@ -791,7 +791,7 @@ extension UIWindow {
     }
 }
 
-// MARK: - UIView (class function)
+// MARK: - UIView (function)
 extension UIView {
     
     /// [設定LayoutConstraint => 不能加frame](https://zonble.gitbooks.io/kkbox-ios-dev/content/autolayout/intrinsic_content_size.html)
@@ -812,7 +812,7 @@ extension UIView {
     }
 }
 
-// MARK: - UIButton (class function)
+// MARK: - UIButton (function)
 extension UIButton {
     
     /// 按鍵能不能按 / 顏色
@@ -825,7 +825,7 @@ extension UIButton {
     }
 }
 
-// MARK: - UIView (class function)
+// MARK: - UIView (function)
 extension UIImageView {
     
     /// [播放GIF圖片 - 本地圖片](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/利用-cganimateimageaturlwithblock-播放-gif-4780071b835e)
@@ -846,7 +846,7 @@ extension UIImageView {
     }
 }
 
-// MARK: - UIApplication (class function)
+// MARK: - UIApplication (function)
 extension UIApplication {
     
     /// 開啟相關的URL
@@ -864,7 +864,7 @@ extension UIApplication {
     }
 }
 
-// MARK: - UINavigationBar (class function)
+// MARK: - UINavigationBar (function)
 extension UINavigationBar {
     
     /// [透明背景 (透明底線) => application(_:didFinishLaunchingWithOptions:)](https://sarunw.com/posts/uinavigationbar-changes-in-ios13/)
@@ -908,7 +908,7 @@ extension UINavigationBar {
     func _rootView() -> UIView? { return subviews.first }
 }
 
-// MARK: - UINavigationBarAppearance (class function)
+// MARK: - UINavigationBarAppearance (function)
 extension UINavigationBarAppearance {
     
     /// 設定背景色透明 - UINavigationBar.appearance()._transparent()
@@ -931,7 +931,7 @@ extension UINavigationBarAppearance {
     func _hasShadow(_ hasShadow: Bool = true) -> Self { if (!hasShadow) { shadowColor = nil }; return self }
 }
 
-// MARK: - UINavigationController (class function)
+// MARK: - UINavigationController (function)
 extension UINavigationController {
     
     /// 取得第一頁的ViewController
@@ -952,6 +952,38 @@ extension UINavigationController {
         
         return viewControllers
     }
+    
+    /// 設定NavigationBar顯示 / 隱藏
+    /// - Parameters:
+    ///   - hidden: Bool
+    ///   - animated: 使用動畫
+    ///   - duration: 動畫時間
+    ///   - curve: 動畫類型
+    func _navigationBarHidden(_ isHidden: Bool, animated: Bool = true, duration: TimeInterval = 0.1, curve: UIView.AnimationCurve = .linear) {
+        
+        guard let statusBarManager = UIStatusBarManager._build(),
+              var currentNavigationBarFrame = Optional.some(navigationBar.frame)
+        else {
+            return
+        }
+        
+        currentNavigationBarFrame.origin.y = !isHidden ? statusBarManager.statusBarFrame.height : -currentNavigationBarFrame.height
+        
+        if (!animated) { self.navigationBar.frame = currentNavigationBarFrame; return }
+                
+        UIViewPropertyAnimator(duration: duration, curve: curve) { [weak self] in
+            guard let this = self else { return }
+            this.navigationBar.frame = currentNavigationBarFrame
+        }.startAnimation()
+    }
+}
+
+// MARK: - UIStatusBarManager (static function)
+extension UIStatusBarManager {
+    
+    /// [取得UIStatusBarManager](https://www.jianshu.com/p/d60757f13038)
+    /// - Returns: [UIStatusBarManager?](https://www.jianshu.com/p/e401762d824b)
+    static func _build() -> UIStatusBarManager? { return UIWindow._keyWindow()?.windowScene?.statusBarManager }
 }
 
 // MARK: - UITabBarController
@@ -1008,7 +1040,7 @@ extension UITabBar {
     static func _transparent() { self.appearance()._transparent() }
 }
 
-// MARK: - UITabBar (class function)
+// MARK: - UITabBar (function)
 extension UITabBar {
     
     /// 透明背景 (透明底線)
@@ -1030,7 +1062,7 @@ extension UITabBar {
     }
 }
 
-// MARK: - UIScrollView (class function)
+// MARK: - UIScrollView (function)
 extension UIScrollView {
     
     /// [取得ScrollView滾動的方向](https://cloud.tencent.com/developer/ask/sof/28254)
@@ -1048,7 +1080,7 @@ extension UIScrollView {
     }
 }
 
-// MARK: - UITableView (class function)
+// MARK: - UITableView (function)
 extension UITableView {
     
     /// 初始化Protocal
@@ -1139,7 +1171,7 @@ extension UIContextualAction {
     }
 }
 
-// MARK: - UIViewController (class function)
+// MARK: - UIViewController (function)
 extension UIViewController {
     
     /// 設定UIViewController透明背景 (當Alert用)
@@ -1209,7 +1241,7 @@ extension WKWebView {
     }
 }
 
-// MARK: - WKWebView (class function)
+// MARK: - WKWebView (function)
 extension WKWebView {
     
     /// 載入WebView網址
@@ -1364,7 +1396,7 @@ extension PKCanvasView {
     }
 }
 
-// MARK: - PKCanvasView (class function)
+// MARK: - PKCanvasView (function)
 extension PKCanvasView {
     
     /// [清除畫布](https://stackoverflow.com/questions/56683060/removing-content-in-pencilkit)

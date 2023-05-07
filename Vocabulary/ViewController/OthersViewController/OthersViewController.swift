@@ -279,6 +279,7 @@ private extension OthersViewController {
         
         myTableView.contentInsetAdjustmentBehavior = .never
         myTableView.contentInset.top = navigationBarHeight
+        myTableView.contentInset.bottom = navigationBarHeight
         myTableView.scrollToRow(at: indexPath, at: .top, animated: false)
     }
     

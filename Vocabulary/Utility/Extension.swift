@@ -954,10 +954,12 @@ extension UINavigationController {
     }
     
     /// 取得NavigationBar的高度
-    func _navigationBarHeight() -> CGFloat {
+    /// - Parameter keyWindow: UIWindow?
+    /// - Returns: CGFloat
+    func _navigationBarHeight(for keyWindow: UIWindow? = UIWindow._keyWindow()) -> CGFloat {
         
-        guard let statusBarManager = UIStatusBarManager._build(),
-              var navigationBarFrame = Optional.some(navigationBar.frame)
+        guard let statusBarManager = UIStatusBarManager._build(for: keyWindow),
+              let navigationBarFrame = Optional.some(navigationBar.frame)
         else {
             return .zero
         }
@@ -970,8 +972,11 @@ extension UINavigationController {
 extension UIStatusBarManager {
     
     /// [取得UIStatusBarManager](https://www.jianshu.com/p/d60757f13038)
+    /// - Parameter keyWindow: UIWindow?
     /// - Returns: [UIStatusBarManager?](https://www.jianshu.com/p/e401762d824b)
-    static func _build() -> UIStatusBarManager? { return UIWindow._keyWindow()?.windowScene?.statusBarManager }
+    static func _build(for keyWindow: UIWindow? = UIWindow._keyWindow()) -> UIStatusBarManager? {
+        return keyWindow?.windowScene?.statusBarManager
+    }
 }
 
 // MARK: - UITabBarController

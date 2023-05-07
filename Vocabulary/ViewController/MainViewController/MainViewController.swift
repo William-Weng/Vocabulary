@@ -285,11 +285,13 @@ private extension MainViewController {
     /// 修正TableView不使用SafeArea的位置問題
     func fixTableViewForSafeArea() {
         
-        let navigationBarHeight = navigationController?._navigationBarHeight() ?? .zero
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let navigationBarHeight = navigationController?._navigationBarHeight(for: appDelegate?.window) ?? .zero
         let indexPath = IndexPath(row: 0, section: 0)
         
         myTableView.contentInsetAdjustmentBehavior = .never
         myTableView.contentInset.top = navigationBarHeight
+        myTableView.contentInset.bottom = navigationBarHeight
         myTableView.scrollToRow(at: indexPath, at: .top, animated: false)
     }
     

@@ -141,4 +141,21 @@ extension Utility {
         
         return cell
     }
+    
+    /// 產生NavigationItem標題的LabelView
+    /// - Parameters:
+    ///   - text: 標題文字
+    ///   - textColor: 文字顏色
+    ///   - font: 文字字型
+    /// - Returns: UILabel
+    func titleLabelMaker(with text: String?, textColor: UIColor = .label, font: UIFont = .systemFont(ofSize: 17.0, weight: .semibold)) -> UILabel {
+        
+        let label = UILabel()
+        
+        label.text = text
+        label.font = font
+        label.textColor = textColor
+        
+        return label
+    }
 }

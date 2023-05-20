@@ -45,7 +45,7 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
-        updateButtonPositionConstraintNotification()
+        viewDidTransitionAction()
         backupDatabaseAction(delay: Constant.autoBackupDelaySecond)
     }
     
@@ -57,7 +57,7 @@ final class MainViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if (!isFixed) { fixTableViewForSafeArea(); isFixed = true }
+        if (!isFixed) { fixTableViewInsetForSafeArea(for: IndexPath(row: 0, section: 0)); isFixed = true }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -283,16 +283,12 @@ private extension MainViewController {
     }
     
     /// 修正TableView不使用SafeArea的位置問題
-    func fixTableViewForSafeArea() {
+    func fixTableViewInsetForSafeArea(for indexPath: IndexPath? = nil) {
         
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let navigationBarHeight = navigationController?._navigationBarHeight(for: appDelegate?.window) ?? .zero
-        let indexPath = IndexPath(row: 0, section: 0)
         
-        myTableView.contentInsetAdjustmentBehavior = .never
-        myTableView.contentInset.top = navigationBarHeight
-        myTableView.contentInset.bottom = navigationBarHeight
-        myTableView.scrollToRow(at: indexPath, at: .top, animated: false)
+        myTableView._fixContentInsetForSafeArea(height: navigationBarHeight, scrollTo: indexPath)
     }
     
     /// [新增單字列表](https://medium.com/@daoseng33/我說那個-uitableview-insertrows-uicollectionview-insertitems-呀-56b8758b2efb)
@@ -613,8 +609,8 @@ private extension MainViewController {
         currentScrollDirection = direction
     }
     
-    /// 更新appendButton的位置
-    func updateButtonPositionConstraintNotification() {
+    /// 畫面旋轉的動作 (更新appendButton的位置 / TableView的Inset位置)
+    func viewDidTransitionAction() {
         
         NotificationCenter.default._register(name: .viewDidTransition) { [weak self] notification in
             
@@ -626,6 +622,7 @@ private extension MainViewController {
             
             this.currentScrollDirection = .none
             this.appendButtonPositionConstraint(isHidden, duration: Constant.duration)
+            this.fixTableViewInsetForSafeArea()
         }
     }
     
@@ -698,7 +695,7 @@ private extension MainViewController {
                     if let filename = filename { message = filename }
                 }
                 
-                let backgroundColor = #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1).withAlphaComponent(0.7)
+                let backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1).withAlphaComponent(0.7)
                 WWToast.shared.makeText(target: this, text: message, backgroundColor: backgroundColor)
             }
         }

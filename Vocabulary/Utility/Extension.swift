@@ -1115,6 +1115,21 @@ extension UITableView {
         insertRows(at: indexPaths, with: .none)
         UIView.setAnimationsEnabled(true)
     }
+    
+    /// 修正TableView滿版，而不使用SafeArea的位置問題 (contentInsetAdjustmentBehavior = .never)
+    /// => UINavigationBar切換 / 隱藏時會造成Inset變動的問題
+    /// - Parameters:
+    ///   - height: height
+    ///   - indexPath: IndexPath?
+    func _fixContentInsetForSafeArea(height: CGFloat, scrollTo indexPath: IndexPath? = nil) {
+        
+        contentInsetAdjustmentBehavior = .never
+        
+        contentInset.top = height
+        contentInset.bottom = height
+        
+        if let indexPath = indexPath { scrollToRow(at: indexPath, at: .top, animated: false) }
+    }
 }
 
 // MARK: - UIRefreshControl (static function)

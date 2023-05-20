@@ -33,7 +33,7 @@ final class SentenceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
-        updateButtonPositionConstraintNotification()
+        viewDidTransitionAction()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,7 +43,7 @@ final class SentenceViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if (!isFixed) { fixTableViewForSafeArea(); isFixed = true }
+        if (!isFixed) { fixTableViewInsetForSafeArea(for: IndexPath(row: 0, section: 0)); isFixed = true }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -316,19 +316,16 @@ private extension SentenceViewController {
     }
     
     /// 修正TableView不使用SafeArea的位置問題
-    func fixTableViewForSafeArea() {
+    func fixTableViewInsetForSafeArea(for indexPath: IndexPath? = nil) {
         
-        let navigationBarHeight = navigationController?._navigationBarHeight() ?? .zero
-        let indexPath = IndexPath(row: 0, section: 0)
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        let navigationBarHeight = navigationController?._navigationBarHeight(for: appDelegate?.window) ?? .zero
         
-        myTableView.contentInsetAdjustmentBehavior = .never
-        myTableView.contentInset.top = navigationBarHeight
-        myTableView.contentInset.bottom = navigationBarHeight
-        myTableView.scrollToRow(at: indexPath, at: .top, animated: false)
+        myTableView._fixContentInsetForSafeArea(height: navigationBarHeight, scrollTo: indexPath)
     }
     
-    /// 更新appendButton的位置
-    func updateButtonPositionConstraintNotification() {
+    /// 畫面旋轉的動作 (更新appendButton的位置 / TableView的Inset位置)
+    func viewDidTransitionAction() {
         
         NotificationCenter.default._register(name: .viewDidTransition) { [weak self] notification in
             
@@ -338,7 +335,9 @@ private extension SentenceViewController {
                 return
             }
             
+            this.currentScrollDirection = .none
             this.appendButtonPositionConstraint(isHidden, duration: Constant.duration)
+            this.fixTableViewInsetForSafeArea()
         }
     }
     

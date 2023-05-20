@@ -106,6 +106,13 @@ extension Constant {
             }
         }
         
+        /// [找出定義或字源的URL](https://youtu.be/cC1tlq5NUHM)
+        /// - Parameter word: 要查詢的單字
+        /// - Returns: String
+        func defineVocabularyURL(with word: String) -> String {
+            return "https://www.google.com/search?q=define+\(word)"
+        }
+        
         /// 字典名稱
         /// - Returns: String
         func name() -> String {

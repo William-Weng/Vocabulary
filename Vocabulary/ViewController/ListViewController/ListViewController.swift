@@ -51,6 +51,10 @@ final class ListViewController: UIViewController {
         talkingViewSetting(for: segue, sender: sender)
     }
     
+    @objc func defineVocabulary(_ sender: UITapGestureRecognizer) {
+        defineVocabularyAction(with: vocabularyList.word)
+    }
+    
     @IBAction func dictionaryNet(_ sender: UIBarButtonItem) { netDictionary(with: vocabularyList.word) }
     @IBAction func refreshVocabularyList(_ sender: UIRefreshControl) { reloadExampleList() }
     @IBAction func recordingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: "RecordingWaveSegue", sender: nil) }
@@ -88,8 +92,8 @@ private extension ListViewController {
     
     /// 初始化單字列表
     func initSetting() {
-        
-        title = vocabularyList.word
+                
+        titleViewSetting(with: vocabularyList.word)
         
         refreshControl = UIRefreshControl._build(target: self, action: #selector(Self.refreshVocabularyList(_:)))
         
@@ -98,6 +102,17 @@ private extension ListViewController {
         myTableView._delegateAndDataSource(with: self)
         
         reloadExampleList()
+    }
+    
+    /// 標題文字相關設定
+    func titleViewSetting(with word: String) {
+        
+        let titleView = Utility.shared.titleLabelMaker(with: word)
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(Self.defineVocabulary(_:)))
+        
+        titleView.isUserInteractionEnabled = true
+        titleView.addGestureRecognizer(gesture)
+        navigationItem.titleView = titleView
     }
     
     /// 重新讀取單字列表
@@ -147,7 +162,23 @@ private extension ListViewController {
     /// - Parameter word: 單字
     func netDictionary(with word: String) {
         
-        guard let url = URL._standardization(string: Constant.currentTableName.dictionaryURL(with: word)) else { return }
+        let url = URL._standardization(string: Constant.currentTableName.dictionaryURL(with: word))
+        openUrlWithInside(with: url)
+    }
+    
+    /// 尋找單字定義
+    /// - Parameter word: 單字
+    func defineVocabularyAction(with word: String) {
+        
+        let url = URL._standardization(string: Constant.currentTableName.defineVocabularyURL(with: word))
+        openUrlWithInside(with: url)
+    }
+    
+    /// 開啟SafariController
+    /// - Parameter url: URL?
+    func openUrlWithInside(with url: URL?) {
+        
+        guard let url = url else { return }
         
         isSafariViewControllerDismiss = false
         

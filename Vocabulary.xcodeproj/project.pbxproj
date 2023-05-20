@@ -20,6 +20,7 @@
 		642858A4297BC38200DD7D88 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642858A3297BC38200DD7D88 /* Extension.swift */; };
 		642858A6297BC40E00DD7D88 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642858A5297BC40E00DD7D88 /* Constant.swift */; };
 		642858AB297BC51E00DD7D88 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642858AA297BC51E00DD7D88 /* Model.swift */; };
+		642C5E722A18487800AC290B /* @Image in Resources */ = {isa = PBXBuildFile; fileRef = 642C5E712A18487800AC290B /* @Image */; };
 		646E44A42980A726002BCBC8 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646E44A32980A726002BCBC8 /* ReviewViewController.swift */; };
 		6492ADD52986B8E900E1B59B /* KleeOne-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADD42986B8E900E1B59B /* KleeOne-SemiBold.ttf */; };
 		6492ADD72986BBFA00E1B59B /* GamjaFlower-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADD62986BBFA00E1B59B /* GamjaFlower-Regular.ttf */; };
@@ -65,6 +66,7 @@
 		642858A5297BC40E00DD7D88 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		642858AA297BC51E00DD7D88 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		642C5E702A182C8700AC290B /* Vocabulary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Vocabulary.entitlements; sourceTree = "<group>"; };
+		642C5E712A18487800AC290B /* @Image */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "@Image"; sourceTree = SOURCE_ROOT; };
 		646E44A32980A726002BCBC8 /* ReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
 		6492ADD42986B8E900E1B59B /* KleeOne-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "KleeOne-SemiBold.ttf"; sourceTree = "<group>"; };
 		6492ADD62986BBFA00E1B59B /* GamjaFlower-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GamjaFlower-Regular.ttf"; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 		642858A0297BC00700DD7D88 /* Material */ = {
 			isa = PBXGroup;
 			children = (
+				642C5E712A18487800AC290B /* @Image */,
 				642448672986B57F0038449E /* Font */,
 				64285893297BBF8700DD7D88 /* Assets.xcassets */,
 				6414E9B129BC71E5005B3EAD /* License.html */,
@@ -400,6 +403,7 @@
 				64285894297BBF8700DD7D88 /* Assets.xcassets in Resources */,
 				81BA793E29876CE000C0FD6C /* README.md in Resources */,
 				6492ADD72986BBFA00E1B59B /* GamjaFlower-Regular.ttf in Resources */,
+				642C5E722A18487800AC290B /* @Image in Resources */,
 				81201C4D298B58C200291485 /* InterpretView.xib in Resources */,
 				64285892297BBF8600DD7D88 /* Main.storyboard in Resources */,
 				6492ADDD2986BF6E00E1B59B /* jf-openhuninn-1.1.ttf in Resources */,

@@ -295,7 +295,8 @@ private extension MainViewController {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let navigationBarHeight = navigationController?._navigationBarHeight(for: appDelegate?.window) ?? .zero
         
-        myTableView._fixContentInsetForSafeArea(height: navigationBarHeight, scrollTo: indexPath)
+        if (MainTableViewCell.vocabularyListArray.count != 0) { myTableView._fixContentInsetForSafeArea(height: navigationBarHeight, scrollTo: indexPath); return }
+        myTableView._fixContentInsetForSafeArea(height: navigationBarHeight, scrollTo: nil)
     }
     
     /// [新增單字列表](https://medium.com/@daoseng33/我說那個-uitableview-insertrows-uicollectionview-insertitems-呀-56b8758b2efb)

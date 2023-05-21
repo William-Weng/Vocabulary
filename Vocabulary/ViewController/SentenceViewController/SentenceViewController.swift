@@ -327,7 +327,8 @@ private extension SentenceViewController {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         let navigationBarHeight = navigationController?._navigationBarHeight(for: appDelegate?.window) ?? .zero
         
-        myTableView._fixContentInsetForSafeArea(height: navigationBarHeight, scrollTo: indexPath)
+        if (SentenceTableViewCell.sentenceListArray.count != 0) { myTableView._fixContentInsetForSafeArea(height: navigationBarHeight, scrollTo: indexPath); return }
+        myTableView._fixContentInsetForSafeArea(height: navigationBarHeight, scrollTo: nil)
     }
     
     /// 畫面旋轉的動作 (更新appendButton的位置 / TableView的Inset位置)

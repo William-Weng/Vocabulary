@@ -18,6 +18,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
+    private let audioPlayerQueue = DispatchQueue(label: "github.com/William-Weng/Vocabulary")
+    
     private var audioPlayer: AVAudioPlayer?
     private var recordlayer: AVAudioPlayer?
     private var audioRecorder: AVAudioRecorder?
@@ -38,7 +40,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             guard let this = self else { return }
-            this.audioPlayer?.play()
+            this.audioPlayer?._play(queue: this.audioPlayerQueue)
         }
     }
     
@@ -85,6 +87,7 @@ extension AppDelegate {
     /// - Returns: Bool
     func playBackgroundMusic(with music: Music, volume: Float) -> Bool {
         
+        
         audioPlayer?.stop()
         audioPlayer = nil
         
@@ -95,7 +98,7 @@ extension AppDelegate {
         audioPlayer.volume = volume
         audioPlayer.numberOfLoops = -1
         audioPlayer.prepareToPlay()
-        audioPlayer.play()
+        audioPlayer._play(queue: audioPlayerQueue)
         
         return true
     }
@@ -220,4 +223,5 @@ private extension AppDelegate {
         }
     }
 }
+
 

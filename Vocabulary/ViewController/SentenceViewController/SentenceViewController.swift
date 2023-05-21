@@ -56,7 +56,8 @@ final class SentenceViewController: UIViewController {
     }
     
     @objc func refreshSentenceList(_ sender: UIRefreshControl) { reloadSentenceList() }
-    
+    @objc func sentenceCount(_ sender: UITapGestureRecognizer) { sentenceCountAction() }
+
     @IBAction func appendSentenceAction(_ sender: UIButton) {
         
         appendSentenceHint(title: "請輸入例句") { [weak self] (example, translate) in
@@ -132,14 +133,19 @@ private extension SentenceViewController {
         reloadSentenceList()
     }
     
-    /// 設定標題
-    /// - Parameter count: Int
-    func titleSetting(with count: Int) {
+    /// 顯示精選例句總數量
+    func sentenceCountAction() {
         
-        let label = UILabel()
-        label.text = "精選例句 - \(count)"
+        guard let version = Bundle.main._appVersionString(),
+              let build  = Bundle.main._appBuildString()
+        else {
+            return
+        }
         
-        navigationItem.titleView = label
+        let title = "精選例句 - \(sentenceCount())"
+        let message = "v\(version) - \(build)"
+        
+        informationHint(with: title, message: message)
     }
     
     /// 重新讀取單字
@@ -578,5 +584,56 @@ private extension SentenceViewController {
         
         viewController._transparent(.black.withAlphaComponent(0.3))
         tabBarHiddenAction(true)
+    }
+    
+    /// 取得精選例句總數量
+    /// - Returns: Int
+    func sentenceCount() -> Int {
+        
+        let key = "speech"
+        let field = "\(key)Count"
+        
+        guard let result = API.shared.searchSentenceCount(for: Constant.currentTableName, key: key).first,
+              let value = result["\(field)"],
+              let count = Int("\(value)", radix: 10)
+        else {
+            return 0
+        }
+                
+        return count
+    }
+    
+    /// 設定標題
+    /// - Parameter count: Int
+    func titleSetting(with count: Int) {
+        
+        let title = "精選例句 - \(count)"
+        
+        guard let titleView = navigationItem.titleView as? UILabel else { titleViewSetting(with: title); return }
+        titleView.text = title
+    }
+    
+    /// 標題文字相關設定
+    /// - Parameter word: String
+    func titleViewSetting(with title: String) {
+        
+        let titleView = Utility.shared.titleLabelMaker(with: title)
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(Self.sentenceCount(_:)))
+        
+        titleView.isUserInteractionEnabled = true
+        titleView.addGestureRecognizer(gesture)
+        
+        navigationItem.titleView = titleView
+    }
+    
+    /// 顯示版本 / 精選例句數量訊息
+    func informationHint(with title: String?, message: String?) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let actionOK = UIAlertAction(title: "確認", style: .default) { _ in }
+        
+        alertController.addAction(actionOK)
+        
+        present(alertController, animated: true, completion: nil)
     }
 }

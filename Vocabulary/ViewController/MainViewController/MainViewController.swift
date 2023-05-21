@@ -45,8 +45,6 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
-        viewDidTransitionAction()
-        backupDatabaseAction(delay: Constant.autoBackupDelaySecond)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,6 +80,7 @@ final class MainViewController: UIViewController {
     }
     
     @objc func refreshVocabularyList(_ sender: UIRefreshControl) { reloadVocabulary() }
+    @objc func vocabularyCount(_ sender: UITapGestureRecognizer) { vocabularyCountAction() }
     
     @IBAction func appendWordAction(_ sender: UIButton) {
         
@@ -150,6 +149,9 @@ private extension MainViewController {
         myTableView.tableFooterView = UIView()
         
         reloadVocabulary()
+        
+        viewDidTransitionAction()
+        backupDatabaseAction(delay: Constant.autoBackupDelaySecond)
     }
     
     /// 產生MainTableViewCell
@@ -165,14 +167,19 @@ private extension MainViewController {
         return cell
     }
     
-    /// 設定標題
-    /// - Parameter count: Int
-    func titleSetting(with count: Int) {
+    /// 顯示單字總數量
+    func vocabularyCountAction() {
         
-        let label = UILabel()
-        label.text = "我愛背單字 - \(count)"
+        guard let version = Bundle.main._appVersionString(),
+              let build  = Bundle.main._appBuildString()
+        else {
+            return
+        }
         
-        navigationItem.titleView = label
+        let title = "單字數量 - \(vocabularyCount())"
+        let message = "v\(version) - \(build)"
+        
+        informationHint(with: title, message: message)
     }
     
     /// 使用Segue進入下一頁
@@ -769,5 +776,56 @@ private extension MainViewController {
         }
         
         return lastBackupDate
+    }
+    
+    /// 取得單字總數量
+    /// - Returns: Int
+    func vocabularyCount() -> Int {
+        
+        let key = "word"
+        let field = "\(key)Count"
+        
+        guard let result = API.shared.searchVocabularyCount(for: Constant.currentTableName, key: key).first,
+              let value = result["\(field)"],
+              let count = Int("\(value)", radix: 10)
+        else {
+            return 0
+        }
+                
+        return count
+    }
+    
+    /// 設定標題
+    /// - Parameter count: Int
+    func titleSetting(with count: Int) {
+        
+        let title = "我愛背單字 - \(count)"
+        
+        guard let titleView = navigationItem.titleView as? UILabel else { titleViewSetting(with: title); return }
+        titleView.text = title
+    }
+    
+    /// 標題文字相關設定
+    /// - Parameter word: String
+    func titleViewSetting(with title: String) {
+        
+        let titleView = Utility.shared.titleLabelMaker(with: title)
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(Self.vocabularyCount(_:)))
+        
+        titleView.isUserInteractionEnabled = true
+        titleView.addGestureRecognizer(gesture)
+        
+        navigationItem.titleView = titleView
+    }
+    
+    /// 顯示版本 / 單字數量訊息
+    func informationHint(with title: String?, message: String?) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let actionOK = UIAlertAction(title: "確認", style: .default) { _ in }
+        
+        alertController.addAction(actionOK)
+        
+        present(alertController, animated: true, completion: nil)
     }
 }

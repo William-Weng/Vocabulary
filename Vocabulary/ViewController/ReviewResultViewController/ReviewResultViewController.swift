@@ -48,7 +48,8 @@ final class ReviewResultViewController: UIViewController {
     }
 
     @objc func refreshReviewResultList(_ sender: UIRefreshControl) { relaodReviewResultList() }
-    
+    @objc func reviewCount(_ sender: UITapGestureRecognizer) { reviewCountAction() }
+
     deinit {
         ReviewResultTableViewCell.reviewResultListArray = []
         wwPrint("\(Self.self) deinit")
@@ -104,17 +105,22 @@ private extension ReviewResultViewController {
             Utility.shared.flashHUD(with: .success)
         }
     }
-    
-    /// 設定標題
-    /// - Parameter count: Int
-    func titleSetting(with count: Int) {
-        
-        let label = UILabel()
-        label.text = "複習總覽 - \(count)"
-        
-        navigationItem.titleView = label
-    }
 
+    /// 顯示複習總覽總數量
+    func reviewCountAction() {
+        
+        guard let version = Bundle.main._appVersionString(),
+              let build  = Bundle.main._appBuildString()
+        else {
+            return
+        }
+        
+        let title = "複習總覽 - \(reviewCount())"
+        let message = "v\(version) - \(build)"
+        
+        informationHint(with: title, message: message)
+    }
+    
     /// 動畫背景設定
     /// - Parameter type: Utility.HudGifType
     func animatedBackground(with type: Utility.HudGifType) {
@@ -204,6 +210,57 @@ private extension ReviewResultViewController {
         viewController.vocabularyList = vocabularyList
         viewController.vocabularyListIndexPath = indexPath
         viewController.mainViewDelegate = nil
+    }
+    
+    /// 取得複習總覽總數量
+    /// - Returns: Int
+    func reviewCount() -> Int {
+        
+        let key = "word"
+        let field = "\(key)Count"
+        
+        guard let result = API.shared.searchReviewCount(for: Constant.currentTableName, key: key).first,
+              let value = result["\(field)"],
+              let count = Int("\(value)", radix: 10)
+        else {
+            return 0
+        }
+                
+        return count
+    }
+    
+    /// 設定標題
+    /// - Parameter count: Int
+    func titleSetting(with count: Int) {
+        
+        let title = "複習總覽 - \(count)"
+        
+        guard let titleView = navigationItem.titleView as? UILabel else { titleViewSetting(with: title); return }
+        titleView.text = title
+    }
+    
+    /// 標題文字相關設定
+    /// - Parameter word: String
+    func titleViewSetting(with title: String) {
+        
+        let titleView = Utility.shared.titleLabelMaker(with: title)
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(Self.reviewCount(_:)))
+        
+        titleView.isUserInteractionEnabled = true
+        titleView.addGestureRecognizer(gesture)
+        
+        navigationItem.titleView = titleView
+    }
+    
+    /// 顯示版本 / 複習總覽數量訊息
+    func informationHint(with title: String?, message: String?) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let actionOK = UIAlertAction(title: "確認", style: .default) { _ in }
+        
+        alertController.addAction(actionOK)
+        
+        present(alertController, animated: true, completion: nil)
     }
 }
 

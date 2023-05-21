@@ -61,7 +61,8 @@ final class OthersViewController: UIViewController {
     }
     
     @objc func refreshBookmarks(_ sender: UIRefreshControl) { reloadBookmarks() }
-    
+    @objc func bookmarkCount(_ sender: UITapGestureRecognizer) { bookmarkCountAction() }
+
     @IBAction func appendBookmarkAction(_ sender: UIButton) {
         
         appendBookmarkHint(title: "請輸入網址") { [weak self] (title, webUrl) in
@@ -71,7 +72,6 @@ final class OthersViewController: UIViewController {
     }
     
     @IBAction func licensePage(_ sender: UIBarButtonItem) { performSegue(withIdentifier: licenseWebViewSegue, sender: nil) }
-    @IBAction func versionInformation(_ sender: UIBarButtonItem) { appVersionInformationHint() }
     @IBAction func shareDatabase(_ sender: UIBarButtonItem) { shareDatabaseAction(sender) }
     @IBAction func downloadDatabase(_ sender: UIBarButtonItem) { downloadDatabaseAction(sender) }
     
@@ -145,16 +145,6 @@ private extension OthersViewController {
         myTableView.tableFooterView = UIView()
     }
     
-    /// 設定標題
-    /// - Parameter count: Int
-    func titleSetting(with count: Int) {
-        
-        let label = UILabel()
-        label.text = "常用書籤 - \(count)"
-        
-        navigationItem.titleView = label
-    }
-    
     /// 重新讀取書籤
     func reloadBookmarks() {
         
@@ -200,6 +190,21 @@ private extension OthersViewController {
         cell.configure(with: indexPath)
         
         return cell
+    }
+    
+    /// 顯示書籤總數量
+    func bookmarkCountAction() {
+        
+        guard let version = Bundle.main._appVersionString(),
+              let build  = Bundle.main._appBuildString()
+        else {
+            return
+        }
+        
+        let title = "書籤數量 - \(bookmarkCount())"
+        let message = "v\(version) - \(build)"
+        
+        informationHint(with: title, message: message)
     }
     
     /// 動畫背景設定
@@ -354,23 +359,6 @@ private extension OthersViewController {
         
         alertController.addAction(actionOK)
         alertController.addAction(actionCancel)
-        
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    /// 顯示版本訊息
-    func appVersionInformationHint() {
-        
-        guard let version = Bundle.main._appVersionString(),
-              let build  = Bundle.main._appBuildString()
-        else {
-            return
-        }
-        
-        let alertController = UIAlertController(title: nil, message: "v\(version) - \(build)", preferredStyle: .alert)
-        let actionOK = UIAlertAction(title: "確認", style: .default) { _ in }
-        
-        alertController.addAction(actionOK)
         
         present(alertController, animated: true, completion: nil)
     }
@@ -641,5 +629,56 @@ private extension OthersViewController {
         alertController.popoverPresentationController?.barButtonItem = barButtonItem
         
         target.present(alertController, animated: true)
+    }
+    
+    /// 取得書籤總數量
+    /// - Returns: Int
+    func bookmarkCount() -> Int {
+        
+        let key = "url"
+        let field = "\(key)Count"
+        
+        guard let result = API.shared.searchBookmarkCount(for: Constant.currentTableName, key: key).first,
+              let value = result["\(field)"],
+              let count = Int("\(value)", radix: 10)
+        else {
+            return 0
+        }
+                
+        return count
+    }
+    
+    /// 設定標題
+    /// - Parameter count: Int
+    func titleSetting(with count: Int) {
+        
+        let title = "常用書籤 - \(count)"
+        
+        guard let titleView = navigationItem.titleView as? UILabel else { titleViewSetting(with: title); return }
+        titleView.text = title
+    }
+    
+    /// 標題文字相關設定
+    /// - Parameter word: String
+    func titleViewSetting(with title: String) {
+        
+        let titleView = Utility.shared.titleLabelMaker(with: title)
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(Self.bookmarkCount(_:)))
+        
+        titleView.isUserInteractionEnabled = true
+        titleView.addGestureRecognizer(gesture)
+        
+        navigationItem.titleView = titleView
+    }
+    
+    /// 顯示版本 / 常用書籤數量訊息
+    func informationHint(with title: String?, message: String?) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let actionOK = UIAlertAction(title: "確認", style: .default) { _ in }
+        
+        alertController.addAction(actionOK)
+        
+        present(alertController, animated: true, completion: nil)
     }
 }

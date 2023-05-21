@@ -56,6 +56,58 @@ extension API {
         return result.array
     }
     
+    /// 搜尋單字列表總數量
+    /// - Parameters:
+    ///   - tableName: 資料表名稱
+    ///   - key: 欄位名稱
+    /// - Returns: [[String : Any]]
+    func searchVocabularyCount(for tableName: Constant.VoiceCode, key: String? = nil) -> [[String : Any]] {
+        
+        guard let database = Constant.database else { return [] }
+        
+        let result = database.select(tableName: tableName.vocabularyList(), functions: [.count(key, .INTEGER())])
+        return result.array
+    }
+    
+    /// 搜尋書籤總數量
+    /// - Parameters:
+    ///   - tableName: 資料表名稱
+    ///   - key: 欄位名稱
+    /// - Returns: [[String : Any]]
+    func searchBookmarkCount(for tableName: Constant.VoiceCode, key: String? = nil) -> [[String : Any]] {
+        
+        guard let database = Constant.database else { return [] }
+        
+        let result = database.select(tableName: tableName.bookmarks(), functions: [.count(key, .INTEGER())])
+        return result.array
+    }
+    
+    /// 搜尋精選例句總數量
+    /// - Parameters:
+    ///   - tableName: 資料表名稱
+    ///   - key: 欄位名稱
+    /// - Returns: [[String : Any]]
+    func searchSentenceCount(for tableName: Constant.VoiceCode, key: String? = nil) -> [[String : Any]] {
+        
+        guard let database = Constant.database else { return [] }
+        
+        let result = database.select(tableName: tableName.vocabularySentenceList(), functions: [.count(key, .INTEGER())])
+        return result.array
+    }
+    
+    /// 搜尋複習總覽總數量
+    /// - Parameters:
+    ///   - tableName: 資料表名稱
+    ///   - key: 欄位名稱
+    /// - Returns: [[String : Any]]
+    func searchReviewCount(for tableName: Constant.VoiceCode, key: String? = nil) -> [[String : Any]] {
+        
+        guard let database = Constant.database else { return [] }
+        
+        let result = database.select(tableName: tableName.vocabularyReviewList(), functions: [.count(key, .INTEGER())])
+        return result.array
+    }
+    
     /// 搜尋單字內容列表
     /// - Parameters:
     ///   - word: 單字

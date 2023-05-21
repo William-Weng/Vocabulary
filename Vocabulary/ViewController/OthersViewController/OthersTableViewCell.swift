@@ -17,6 +17,7 @@ final class OthersTableViewCell: UITableViewCell, CellReusable {
     
     static var othersViewDelegate: OthersViewDelegate?
     static var bookmarksArray: [[String : Any]] = []
+    static var defaultImage = UIImage(named: "Picture")
     
     var indexPath: IndexPath = []
     
@@ -24,7 +25,10 @@ final class OthersTableViewCell: UITableViewCell, CellReusable {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        iconImageView.gestureRecognizers?.forEach({ iconImageView.removeGestureRecognizer($0) })
+        iconImageView.gestureRecognizers?.forEach({
+            iconImageView.removeGestureRecognizer($0)
+            iconImageView.image = Self.defaultImage
+        })
     }
     
     func configure(with indexPath: IndexPath) { configure(for: indexPath) }
@@ -66,7 +70,7 @@ private extension OthersTableViewCell {
         titleLabel.text = bookmarkSite.title
         
         iconImageView.addGestureRecognizer(tapRecognizer)
-        iconImageView.WW.downloadImage(with: bookmarkSite.icon, defaultImage: UIImage(named: "Picture"))
+        iconImageView.WW.downloadImage(with: bookmarkSite.icon, defaultImage: Self.defaultImage)
     }
     
     /// 讀取存在手機的圖示檔

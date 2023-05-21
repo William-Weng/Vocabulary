@@ -105,6 +105,7 @@ private extension ListViewController {
     }
     
     /// 標題文字相關設定
+    /// - Parameter word: String
     func titleViewSetting(with word: String) {
         
         let titleView = Utility.shared.titleLabelMaker(with: word)

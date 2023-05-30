@@ -69,6 +69,16 @@ extension API {
         return result.array
     }
     
+    func searchWordDetailListCount(_ word: String, for tableName: Constant.VoiceCode, key: String? = nil) -> [[String : Any]] {
+        
+        guard let database = Constant.database else { return [] }
+        
+        let condition = SQLite3Condition.Where().isCompare(key: "word", type: .equal, value: word)
+        let result = database.select(tableName: tableName.rawValue, functions: [.count(key, .INTEGER())], where: condition)
+        
+        return result.array
+    }
+    
     /// 搜尋書籤總數量
     /// - Parameters:
     ///   - tableName: 資料表名稱
@@ -305,23 +315,20 @@ extension API {
     /// - Parameters:
     ///   - word: 單字
     ///   - tableName: 資料表名稱
-    /// - Returns: 單字列表數量
-    func insertNewWord(_ word: String, for tableName: Constant.VoiceCode) -> [[String : Any]]? {
+    /// - Returns: Bool
+    func insertNewWord(_ word: String, for tableName: Constant.VoiceCode) -> Bool {
+        
+        guard let database = Constant.database else { return false }
         
         let items: [SQLite3Database.InsertItem] = [
             (key: "word", value: word),
             (key: "speech", value: tableName.groupNumber()),
         ]
         
-        guard let database = Constant.database,
-              let isSussess = database.insert(tableName: tableName.rawValue, itemsArray: [items])?.isSussess,
-              isSussess == true
-        else {
-            return nil
-        }
+        let result = database.insert(tableName: tableName.rawValue, itemsArray: [items])
         
-        let list = searchWord(word, for: tableName)
-        return list
+        // let list = searchWord(word, for: tableName)
+        return result?.isSussess ?? false
     }
     
     /// 新增單字到列表

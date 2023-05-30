@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6414E9A129BC6AAC005B3EAD /* WWHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 6414E9A029BC6AAC005B3EAD /* WWHUD */; };
-		6414E9A729BC6ADF005B3EAD /* WWSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 6414E9A629BC6ADF005B3EAD /* WWSlider */; };
-		6414E9AA29BC6AF5005B3EAD /* WWToast in Frameworks */ = {isa = PBXBuildFile; productRef = 6414E9A929BC6AF5005B3EAD /* WWToast */; };
 		6414E9B229BC71E5005B3EAD /* License.html in Resources */ = {isa = PBXBuildFile; fileRef = 6414E9B129BC71E5005B3EAD /* License.html */; };
 		641B5CA72984BEB500AB1C56 /* VolumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641B5CA62984BEB500AB1C56 /* VolumeViewController.swift */; };
 		6428588B297BBF8600DD7D88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6428588A297BBF8600DD7D88 /* AppDelegate.swift */; };
@@ -37,7 +34,6 @@
 		81201C4C298B58C200291485 /* InterpretView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81201C4A298B58C200291485 /* InterpretView.swift */; };
 		81201C4D298B58C200291485 /* InterpretView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81201C4B298B58C200291485 /* InterpretView.xib */; };
 		812C5444299F73DC003F942A /* TalkingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812C5443299F73DC003F942A /* TalkingViewController.swift */; };
-		815AF25629F110C200A8CC4D /* WWNetworking-UIImage in Frameworks */ = {isa = PBXBuildFile; productRef = 815AF25529F110C200A8CC4D /* WWNetworking-UIImage */; };
 		815E14782990F47700EC571D /* SentenceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815E14772990F47700EC571D /* SentenceTableViewCell.swift */; };
 		818E261329922FFE00385705 /* ReviewResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818E261229922FFE00385705 /* ReviewResultViewController.swift */; };
 		818E2615299230B300385705 /* ReviewResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818E2614299230B300385705 /* ReviewResultTableViewCell.swift */; };
@@ -49,6 +45,12 @@
 		81BA794029876DA800C0FD6C /* SearchWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA793F29876DA800C0FD6C /* SearchWordViewController.swift */; };
 		81BA794429877ACC00C0FD6C /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA794329877ACC00C0FD6C /* SearchTableViewCell.swift */; };
 		81CD85CC2990F03A009C39FF /* SentenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD85CB2990F03A009C39FF /* SentenceViewController.swift */; };
+		81E1F8F02A1F2C8100EB0139 /* WWHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 81E1F8EF2A1F2C8100EB0139 /* WWHUD */; };
+		81E1F8F32A1F2C9A00EB0139 /* WWSQLite3Manager in Frameworks */ = {isa = PBXBuildFile; productRef = 81E1F8F22A1F2C9A00EB0139 /* WWSQLite3Manager */; };
+		81E1F8F62A1F2CCA00EB0139 /* WWSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 81E1F8F52A1F2CCA00EB0139 /* WWSlider */; };
+		81E1F8FA2A1F2D2700EB0139 /* WWToast in Frameworks */ = {isa = PBXBuildFile; productRef = 81E1F8F92A1F2D2700EB0139 /* WWToast */; };
+		81E1F8FF2A1F2D9B00EB0139 /* WWNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 81E1F8FE2A1F2D9B00EB0139 /* WWNetworking */; };
+		81EB0ED92A1F2E1300EE2A83 /* WWNetworking-UIImage in Frameworks */ = {isa = PBXBuildFile; productRef = 81EB0ED82A1F2E1300EE2A83 /* WWNetworking-UIImage */; };
 		81F52F34299DE87A005F9DF2 /* MyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F52F33299DE87A005F9DF2 /* MyTabBarController.swift */; };
 /* End PBXBuildFile section */
 
@@ -102,10 +104,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6414E9A129BC6AAC005B3EAD /* WWHUD in Frameworks */,
-				6414E9A729BC6ADF005B3EAD /* WWSlider in Frameworks */,
-				6414E9AA29BC6AF5005B3EAD /* WWToast in Frameworks */,
-				815AF25629F110C200A8CC4D /* WWNetworking-UIImage in Frameworks */,
+				81E1F8FA2A1F2D2700EB0139 /* WWToast in Frameworks */,
+				81E1F8FF2A1F2D9B00EB0139 /* WWNetworking in Frameworks */,
+				81EB0ED92A1F2E1300EE2A83 /* WWNetworking-UIImage in Frameworks */,
+				81E1F8F62A1F2CCA00EB0139 /* WWSlider in Frameworks */,
+				81E1F8F32A1F2C9A00EB0139 /* WWSQLite3Manager in Frameworks */,
+				81E1F8F02A1F2C8100EB0139 /* WWHUD in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,7 +153,6 @@
 		64285889297BBF8600DD7D88 /* Vocabulary */ = {
 			isa = PBXGroup;
 			children = (
-				642C5E702A182C8700AC290B /* Vocabulary.entitlements */,
 				642858A1297BC01100DD7D88 /* Setting */,
 				642858A0297BC00700DD7D88 /* Material */,
 				642858A2297BC37700DD7D88 /* Utility */,
@@ -204,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				64285898297BBF8700DD7D88 /* Info.plist */,
+				642C5E702A182C8700AC290B /* Vocabulary.entitlements */,
 			);
 			name = Setting;
 			sourceTree = "<group>";
@@ -345,10 +349,12 @@
 			);
 			name = Vocabulary;
 			packageProductDependencies = (
-				6414E9A029BC6AAC005B3EAD /* WWHUD */,
-				6414E9A629BC6ADF005B3EAD /* WWSlider */,
-				6414E9A929BC6AF5005B3EAD /* WWToast */,
-				815AF25529F110C200A8CC4D /* WWNetworking-UIImage */,
+				81E1F8EF2A1F2C8100EB0139 /* WWHUD */,
+				81E1F8F22A1F2C9A00EB0139 /* WWSQLite3Manager */,
+				81E1F8F52A1F2CCA00EB0139 /* WWSlider */,
+				81E1F8F92A1F2D2700EB0139 /* WWToast */,
+				81E1F8FE2A1F2D9B00EB0139 /* WWNetworking */,
+				81EB0ED82A1F2E1300EE2A83 /* WWNetworking-UIImage */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -379,10 +385,12 @@
 			);
 			mainGroup = 6428587E297BBF8600DD7D88;
 			packageReferences = (
-				6414E99F29BC6AAC005B3EAD /* XCRemoteSwiftPackageReference "WWHUD" */,
-				6414E9A529BC6ADF005B3EAD /* XCRemoteSwiftPackageReference "WWSlider" */,
-				6414E9A829BC6AF5005B3EAD /* XCRemoteSwiftPackageReference "WWToast" */,
-				815AF25429F110C200A8CC4D /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */,
+				81E1F8EE2A1F2C8100EB0139 /* XCRemoteSwiftPackageReference "WWHUD" */,
+				81E1F8F12A1F2C9A00EB0139 /* XCRemoteSwiftPackageReference "WWSQLite3Manager" */,
+				81E1F8F42A1F2CCA00EB0139 /* XCRemoteSwiftPackageReference "WWSlider" */,
+				81E1F8F82A1F2D2700EB0139 /* XCRemoteSwiftPackageReference "WWToast" */,
+				81E1F8FD2A1F2D9B00EB0139 /* XCRemoteSwiftPackageReference "WWNetworking" */,
+				81EB0ED72A1F2E1300EE2A83 /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -593,7 +601,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20230521;
+				CURRENT_PROJECT_VERSION = 20230530;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -603,7 +611,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
@@ -612,7 +620,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.8;
+				MARKETING_VERSION = 1.4.9;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -631,7 +639,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20230521;
+				CURRENT_PROJECT_VERSION = 20230530;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -641,7 +649,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
@@ -650,7 +658,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.8;
+				MARKETING_VERSION = 1.4.9;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -686,59 +694,85 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		6414E99F29BC6AAC005B3EAD /* XCRemoteSwiftPackageReference "WWHUD" */ = {
+		81E1F8EE2A1F2C8100EB0139 /* XCRemoteSwiftPackageReference "WWHUD" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/William-Weng/WWHUD.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.1.0;
-			};
-		};
-		6414E9A529BC6ADF005B3EAD /* XCRemoteSwiftPackageReference "WWSlider" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/William-Weng/WWSlider.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.2.0;
-			};
-		};
-		6414E9A829BC6AF5005B3EAD /* XCRemoteSwiftPackageReference "WWToast" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/William-Weng/WWToast";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-		815AF25429F110C200A8CC4D /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/William-Weng/WWNetworking-UIImage.git";
+			repositoryURL = "https://github.com/William-Weng/WWHUD";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;
 			};
 		};
+		81E1F8F12A1F2C9A00EB0139 /* XCRemoteSwiftPackageReference "WWSQLite3Manager" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWSQLite3Manager";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.0;
+			};
+		};
+		81E1F8F42A1F2CCA00EB0139 /* XCRemoteSwiftPackageReference "WWSlider" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWSlider";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		81E1F8F82A1F2D2700EB0139 /* XCRemoteSwiftPackageReference "WWToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWToast";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		81E1F8FD2A1F2D9B00EB0139 /* XCRemoteSwiftPackageReference "WWNetworking" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWNetworking";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		81EB0ED72A1F2E1300EE2A83 /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWNetworking-UIImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		6414E9A029BC6AAC005B3EAD /* WWHUD */ = {
+		81E1F8EF2A1F2C8100EB0139 /* WWHUD */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6414E99F29BC6AAC005B3EAD /* XCRemoteSwiftPackageReference "WWHUD" */;
+			package = 81E1F8EE2A1F2C8100EB0139 /* XCRemoteSwiftPackageReference "WWHUD" */;
 			productName = WWHUD;
 		};
-		6414E9A629BC6ADF005B3EAD /* WWSlider */ = {
+		81E1F8F22A1F2C9A00EB0139 /* WWSQLite3Manager */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6414E9A529BC6ADF005B3EAD /* XCRemoteSwiftPackageReference "WWSlider" */;
+			package = 81E1F8F12A1F2C9A00EB0139 /* XCRemoteSwiftPackageReference "WWSQLite3Manager" */;
+			productName = WWSQLite3Manager;
+		};
+		81E1F8F52A1F2CCA00EB0139 /* WWSlider */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 81E1F8F42A1F2CCA00EB0139 /* XCRemoteSwiftPackageReference "WWSlider" */;
 			productName = WWSlider;
 		};
-		6414E9A929BC6AF5005B3EAD /* WWToast */ = {
+		81E1F8F92A1F2D2700EB0139 /* WWToast */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6414E9A829BC6AF5005B3EAD /* XCRemoteSwiftPackageReference "WWToast" */;
+			package = 81E1F8F82A1F2D2700EB0139 /* XCRemoteSwiftPackageReference "WWToast" */;
 			productName = WWToast;
 		};
-		815AF25529F110C200A8CC4D /* WWNetworking-UIImage */ = {
+		81E1F8FE2A1F2D9B00EB0139 /* WWNetworking */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 815AF25429F110C200A8CC4D /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */;
+			package = 81E1F8FD2A1F2D9B00EB0139 /* XCRemoteSwiftPackageReference "WWNetworking" */;
+			productName = WWNetworking;
+		};
+		81EB0ED82A1F2E1300EE2A83 /* WWNetworking-UIImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 81EB0ED72A1F2E1300EE2A83 /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */;
 			productName = "WWNetworking-UIImage";
 		};
 /* End XCSwiftPackageProductDependency section */

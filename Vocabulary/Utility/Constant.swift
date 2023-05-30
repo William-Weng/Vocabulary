@@ -160,8 +160,8 @@ extension Constant {
             case .english: return 000
             case .japanese: return 100
             case .french: return 200
-            case .korean: return 000
-            case .chinese: return 000
+            case .korean: return 300
+            case .chinese: return 400
             }
         }
     }
@@ -269,5 +269,12 @@ extension Constant {
             case .interpret: return .systemBlue
             }
         }
+    }
+    
+    enum WordActionType {
+        case append     // 新增
+        case update     // 修改
+        case delete     // 刪除
+        case search     // 查詢
     }
 }

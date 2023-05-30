@@ -28,7 +28,7 @@ final class ListTableViewCell: UITableViewCell, CellReusable {
         super.prepareForReuse()
         exampleLabel.gestureRecognizers?.forEach({ exampleLabel.removeGestureRecognizer($0) })
     }
-
+    
     func configure(with indexPath: IndexPath) { configure(for: indexPath) }
     
     @objc func updateSpeechLabel(_ sender: UITapGestureRecognizer) { Self.listViewDelegate?.speechMenu(with: indexPath) }
@@ -75,6 +75,7 @@ private extension ListTableViewCell {
         exampleLabel.font = Constant.currentTableName.font(size: 24.0) ?? UIFont.systemFont(ofSize: 24.0)
         
         translateLabel.text = vocabulary.translate ?? ""
+        translateLabel.textColor = .clear
     }
     
     /// 讀出例句

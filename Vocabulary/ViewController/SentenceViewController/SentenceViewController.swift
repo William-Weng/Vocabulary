@@ -12,6 +12,7 @@ import WWPrint
 // MARK: - SentenceViewDelegate
 protocol SentenceViewDelegate {
     func speechMenu(with indexPath: IndexPath)
+    func wordDictionary(with indexPath: IndexPath)
 }
 
 // MARK: - 精選例句
@@ -29,7 +30,8 @@ final class SentenceViewController: UIViewController {
     private var refreshControl: UIRefreshControl!
     private var currentScrollDirection: Constant.ScrollDirection = .down
     private var currentSpeech: VocabularySentenceList.Speech? = nil
-    
+    private var translateDisplayArray: Set<Int> = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
@@ -55,7 +57,7 @@ final class SentenceViewController: UIViewController {
         talkingViewSetting(for: segue, sender: sender)
     }
     
-    @objc func refreshSentenceList(_ sender: UIRefreshControl) { reloadSentenceList() }
+    @objc func refreshSentenceList(_ sender: UIRefreshControl) { translateDisplayArray = []; reloadSentenceList() }
     @objc func sentenceCount(_ sender: UITapGestureRecognizer) { sentenceCountAction() }
 
     @IBAction func appendSentenceAction(_ sender: UIButton) {
@@ -82,7 +84,7 @@ extension SentenceViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return SentenceTableViewCell.sentenceListArray.count }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { return sentenceTableViewCell(tableView, cellForRowAt: indexPath) }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { netDictionary(with: indexPath) }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { translateDisplayAction(tableView, didSelectRowAt: indexPath) }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? { return UISwipeActionsConfiguration(actions: trailingSwipeActionsMaker(with: indexPath)) }
     func scrollViewDidScroll(_ scrollView: UIScrollView) { tabrBarHidden(with: scrollView) }
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateSentenceList(for: scrollView, height: Constant.updateScrolledHeight) }
@@ -92,8 +94,8 @@ extension SentenceViewController: UITableViewDelegate, UITableViewDataSource {
 extension SentenceViewController: SFSafariViewControllerDelegate {
     
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        let isHidden = false
         
+        let isHidden = false
         tabBarHiddenAction(isHidden)
         navigationBarHiddenAction(isHidden)
     }
@@ -103,6 +105,7 @@ extension SentenceViewController: SFSafariViewControllerDelegate {
 extension SentenceViewController: SentenceViewDelegate {
     
     func speechMenu(with indexPath: IndexPath) { speechMenuAction(with: indexPath) }
+    func wordDictionary(with indexPath: IndexPath) { netDictionary(with: indexPath) }
 }
 
 // MARK: - MyNavigationControllerDelegate
@@ -129,7 +132,7 @@ private extension SentenceViewController {
         myTableView._delegateAndDataSource(with: self)
         myTableView.addSubview(refreshControl)
         myTableView.tableFooterView = UIView()
-
+        
         reloadSentenceList()
     }
     
@@ -168,12 +171,12 @@ private extension SentenceViewController {
             
             let topIndexPath = IndexPath(row: 0, section: 0)
             this.myTableView.scrollToRow(at: topIndexPath, at: .top, animated: true)
-            
+
             Utility.shared.flashHUD(with: .success)
         }
     }
     
-    /// [新增例否句列表](https://medium.com/@daoseng33/我說那個-uitableview-insertrows-uicollectionview-insertitems-呀-56b8758b2efb)
+    /// [新增例句列表](https://medium.com/@daoseng33/我說那個-uitableview-insertrows-uicollectionview-insertitems-呀-56b8758b2efb)
     func appendSentenceList() {
         
         defer { refreshControl.endRefreshing() }
@@ -199,7 +202,8 @@ private extension SentenceViewController {
         
         let cell = tableView._reusableCell(at: indexPath) as SentenceTableViewCell
         cell.configure(with: indexPath)
-        
+        cell.translateLabel.textColor = (!translateDisplayArray.contains(indexPath.row)) ? .clear : .darkGray
+
         return cell
     }
     
@@ -419,10 +423,12 @@ private extension SentenceViewController {
             Utility.shared.flashHUD(with: .success)
             
             if let indexPath = indexPath {
-                this.myTableView.reloadRows(at: [indexPath], with: .automatic)
-            } else {
-                this.reloadSentenceList()
+                this.fixTranslateDisplayArray(with: indexPath, type: .update)
+                this.myTableView.reloadRows(at: [indexPath], with: .automatic); return
             }
+            
+            this.fixTranslateDisplayArray(with: IndexPath(row: 0, section: 0), type: .append)
+            this.reloadSentenceList()
         }
         
         return actionOK
@@ -496,6 +502,7 @@ private extension SentenceViewController {
         titleSetting(with: SentenceTableViewCell.sentenceListArray.count)
         
         myTableView.deleteRows(at: [indexPath], with: .fade)
+        fixTranslateDisplayArray(with: indexPath, type: .delete)
     }
     
     /// 例句網路字典
@@ -540,14 +547,14 @@ private extension SentenceViewController {
 
         let alertController = UIAlertController(title: "請選擇例句屬性", message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
-        let allACaseAction = sentenceSpeechAction(with: nil)
+        let allCaseAction = sentenceSpeechAction(with: nil)
         
         VocabularySentenceList.Speech.allCases.forEach { speech in
             let action = sentenceSpeechAction(with: speech)
             alertController.addAction(action)
         }
         
-        alertController.addAction(allACaseAction)
+        alertController.addAction(allCaseAction)
         alertController.addAction(action)
         alertController.modalPresentationStyle = .popover
         alertController.popoverPresentationController?.barButtonItem = sender
@@ -569,6 +576,7 @@ private extension SentenceViewController {
             guard let this = self else { return }
             
             this.currentSpeech = speech
+            this.fixTranslateDisplayArray(with: IndexPath(row: 0, section: 0), type: .search)
             this.reloadSentenceList()
         }
         
@@ -636,5 +644,38 @@ private extension SentenceViewController {
         alertController.addAction(actionOK)
         
         present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 翻譯顯示與否
+    /// - Parameters:
+    ///   - tableView: UITableView
+    ///   - indexPath: IndexPath
+    func translateDisplayAction(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        translateDisplayArray._toggle(member: indexPath.row)
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+    
+    /// 修正記錄翻譯顯示與否，CRUD造成IndexPath移動的問題
+    /// - Parameters:
+    ///   - indexPath: IndexPath
+    ///   - type: Constant.WordActionType
+    func fixTranslateDisplayArray(with indexPath: IndexPath, type: Constant.WordActionType) {
+        
+        var _translateDisplayArray: [Int] = []
+        
+        switch type {
+        case .append:
+            _translateDisplayArray = self.translateDisplayArray.map { $0 + 1 }
+            _translateDisplayArray.append(indexPath.row)
+        case .update:
+            _translateDisplayArray = Array(self.translateDisplayArray)
+            _translateDisplayArray.append(indexPath.row)
+        case .delete:
+            _translateDisplayArray = self.translateDisplayArray.compactMap { ($0 > indexPath.row) ? ($0 - 1) : nil }
+        case .search:
+            break
+        }
+        
+        self.translateDisplayArray = Set(_translateDisplayArray)
     }
 }

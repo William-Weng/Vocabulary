@@ -32,6 +32,17 @@ extension Collection {
     subscript(safe index: Index) -> Element? { return indices.contains(index) ? self[index] : nil }
 }
 
+// MARK: - Set (function)
+extension Set where Self.Element: Hashable {
+    
+    /// 切換Set
+    /// - Parameter member: Self.Element
+    mutating func _toggle(member: Self.Element) {
+        if !contains(member) { self.insert(member); return }
+        self.remove(member)
+    }
+}
+
 // MARK: - Encodable (function)
 extension Encodable {
     

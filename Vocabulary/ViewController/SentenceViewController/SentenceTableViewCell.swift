@@ -26,11 +26,13 @@ final class SentenceTableViewCell: UITableViewCell, CellReusable {
     override func prepareForReuse() {
         super.prepareForReuse()
         speechLabel.gestureRecognizers?.forEach({ speechLabel.removeGestureRecognizer($0) })
+        accessoryView?.gestureRecognizers?.forEach({ accessoryView?.removeGestureRecognizer($0) })
     }
     
     func configure(with indexPath: IndexPath) { configure(for: indexPath) }
     
     @objc func updateSpeechLabel(_ sender: UITapGestureRecognizer) { Self.sentenceViewDelegate?.speechMenu(with: indexPath) }
+    @objc func persentNetDictionary(_ sender: UITapGestureRecognizer) { Self.sentenceViewDelegate?.wordDictionary(with: indexPath) }
 
     @IBAction func playSound(_ sender: UIButton) { playExampleSound() }
     
@@ -61,6 +63,7 @@ private extension SentenceTableViewCell {
         let speechType = VocabularySentenceList.Speech(rawValue: sentenceList.speech) ?? .general
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(Self.updateSpeechLabel(_:)))
 
+        self.accessoryView = accessoryViewMaker()
         self.indexPath = indexPath
         self.sentenceList = sentenceList
         
@@ -84,5 +87,18 @@ private extension SentenceTableViewCell {
         }
         
         Utility.shared.speak(string: example, voice: Constant.currentTableName)
+    }
+    
+    /// 最右側的箭頭View
+    /// - Returns: UIImageView
+    func accessoryViewMaker() -> UIImageView {
+        
+        let imageView = UIImageView(image: UIImage(imageLiteralResourceName: "NextArrow"))
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(Self.persentNetDictionary(_:)))
+        
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tapRecognizer)
+        
+        return imageView
     }
 }

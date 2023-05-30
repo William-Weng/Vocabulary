@@ -31,6 +31,7 @@ final class ListViewController: UIViewController {
     private var isSafariViewControllerDismiss = true
     private var refreshControl: UIRefreshControl!
     private var disappearImage: UIImage?
+    private var translateDisplayArray: Set<Int> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +73,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return ListTableViewCell.exmapleList.count }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { return listTableViewCell(tableView, cellForRowAt: indexPath) }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? { return UISwipeActionsConfiguration(actions: trailingSwipeActionsMaker(with: indexPath)) }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { translateDisplayAction(tableView, didSelectRowAt: indexPath) }
 }
 
 // MARK: - SFSafariViewControllerDelegate
@@ -120,7 +122,8 @@ private extension ListViewController {
     func reloadExampleList() {
         
         ListTableViewCell.exmapleList = API.shared.searchWordDetailList(vocabularyList.word, for: Constant.currentTableName)
-                
+        
+        translateDisplayArray = []
         myTableView.reloadData()
         emptyExampleListAction()
     }
@@ -134,6 +137,7 @@ private extension ListViewController {
         
         let cell = tableView._reusableCell(at: indexPath) as ListTableViewCell
         cell.configure(with: indexPath)
+        cell.translateLabel.textColor = (!translateDisplayArray.contains(indexPath.row)) ? .clear : .darkGray
         
         return cell
     }
@@ -284,6 +288,8 @@ private extension ListViewController {
             let info = Constant.ExampleInfomation(vocabulary.id, interpret, example, translate)
             
             if (!action(info)) { Utility.shared.flashHUD(with: .fail); return }
+            
+            this.fixTranslateDisplayArray(with: indexPath, type: .update)
             this.updateCellLabel(with: indexPath, speech: nil, info: info)
         }
         
@@ -338,6 +344,7 @@ private extension ListViewController {
             ListTableViewCell.exmapleList.remove(at: indexPath.row)
             
             this.myTableView.deleteRows(at: [indexPath], with: .fade)
+            this.fixTranslateDisplayArray(with: indexPath, type: .delete)
             this.emptyExampleListAction()
         }
         
@@ -392,7 +399,7 @@ private extension ListViewController {
         isAnimationStop = true
     }
     
-    /// 更新主頁單字範圍數量
+    /// 更新主頁單字數量
     /// - Parameter count: Int
     func updateExampleCount(_ count: Int) {
         
@@ -414,5 +421,35 @@ private extension ListViewController {
         
         viewController._transparent(.black.withAlphaComponent(0.3))
         tabBarController?._tabBarHidden(true, animated: true)
+    }
+    
+    /// 翻譯顯示與否
+    /// - Parameters:
+    ///   - tableView: UITableView
+    ///   - indexPath: IndexPath
+    func translateDisplayAction(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        translateDisplayArray._toggle(member: indexPath.row)
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+    
+    /// 修正記錄翻譯顯示與否，CRUD造成IndexPath移動的問題
+    /// - Parameters:
+    ///   - indexPath: IndexPath
+    ///   - type: Constant.WordActionType
+    func fixTranslateDisplayArray(with indexPath: IndexPath, type: Constant.WordActionType) {
+        
+        var _translateDisplayArray: [Int] = []
+        
+        switch type {
+        case .update:
+            _translateDisplayArray = Array(self.translateDisplayArray)
+            _translateDisplayArray.append(indexPath.row)
+        case .delete:
+            _translateDisplayArray = self.translateDisplayArray.compactMap { ($0 > indexPath.row) ? ($0 - 1) : nil }
+        case .append, .search:
+            break
+        }
+        
+        self.translateDisplayArray = Set(_translateDisplayArray)
     }
 }

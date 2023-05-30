@@ -316,17 +316,19 @@ private extension MainViewController {
         if (newListCount > oldListCount) { Utility.shared.flashHUD(with: .success) }
     }
     
-    /// 新增單字
+    /// 新增/更新單字
     /// - Parameters:
     ///   - word: 單字
     ///   - tableName: 資料表
     /// - Returns: Bool
     func appendWord(_ word: String, for tableName: Constant.VoiceCode) -> Bool {
         
-        guard let count = API.shared.insertNewWord(word, for: tableName)?.count else { return false }
-        guard API.shared.searchWordDetailList(word, for: tableName).count > 1 else { return API.shared.insertWordToList(word, for: tableName) }
+        guard API.shared.insertNewWord(word, for: tableName) else { return false }
         
-        return API.shared.updateWordToList(word, for: tableName, count: count)
+        let count = vocabularyDetailListCount(with: word)
+        if (count > 1) { return API.shared.updateWordToList(word, for: tableName, count: count) }
+        
+        return API.shared.insertWordToList(word, for: tableName)
     }
     
     /// 更新單字音標
@@ -787,6 +789,23 @@ private extension MainViewController {
         let field = "\(key)Count"
         
         guard let result = API.shared.searchVocabularyCount(for: Constant.currentTableName, key: key).first,
+              let value = result["\(field)"],
+              let count = Int("\(value)", radix: 10)
+        else {
+            return 0
+        }
+                
+        return count
+    }
+    
+    /// 取得該單字內容總數量
+    /// - Returns: Int
+    func vocabularyDetailListCount(with word: String) -> Int {
+        
+        let key = "word"
+        let field = "\(key)Count"
+        
+        guard let result = API.shared.searchWordDetailListCount(word, for: Constant.currentTableName, key: key).first,
               let value = result["\(field)"],
               let count = Int("\(value)", radix: 10)
         else {

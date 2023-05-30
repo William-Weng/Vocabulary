@@ -3,7 +3,7 @@
     {
       "identity" : "wwhud",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/William-Weng/WWHUD.git",
+      "location" : "https://github.com/William-Weng/WWHUD",
       "state" : {
         "revision" : "caacd57c5343eb03fdefc8fcfa6dc4444c2d1c0c",
         "version" : "1.1.2"
@@ -12,7 +12,7 @@
     {
       "identity" : "wwnetworking",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/William-Weng/WWNetworking.git",
+      "location" : "https://github.com/William-Weng/WWNetworking",
       "state" : {
         "revision" : "d910cd48e64e9514e3a631c84a2c57db1f7b55b9",
         "version" : "1.1.3"
@@ -21,25 +21,25 @@
     {
       "identity" : "wwnetworking-uiimage",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/William-Weng/WWNetworking-UIImage.git",
+      "location" : "https://github.com/William-Weng/WWNetworking-UIImage",
       "state" : {
-        "revision" : "e80e3d4f4466e88a23a6c11bbaf3ed5ad8d82409",
-        "version" : "1.0.0"
+        "revision" : "59a2fb14f65aaa266756a53748cb9359731a29fc",
+        "version" : "1.1.0"
       }
     },
     {
       "identity" : "wwprint",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/William-Weng/WWPrint",
+      "location" : "https://github.com/William-Weng/WWPrint.git",
       "state" : {
-        "revision" : "e4ad2863717465f224aa676f10a3a7ff1df58f7c",
-        "version" : "1.0.0"
+        "revision" : "67b58781fca2d400202f93c27ef695805947a717",
+        "version" : "1.0.1"
       }
     },
     {
       "identity" : "wwslider",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/William-Weng/WWSlider.git",
+      "location" : "https://github.com/William-Weng/WWSlider",
       "state" : {
         "revision" : "6ddee6ccff11661e2344ddd0434bb4a9ebdfb684",
         "version" : "1.2.2"

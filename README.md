@@ -1,7 +1,8 @@
 # [Vocabulary](https://github.com/William-Weng/Vocabulary) - [for iPhone](https://youtu.be/8bYvKdA5gkc) / [for iPad](https://youtu.be/LCbHuw8ONWI)
 我愛背單字 - 針對身為外語苦手的我，量身訂製的APP，有輕快的背景音樂，也有發音，加上可愛的動畫…
 
-[![Swift-5.7](https://img.shields.io/badge/Swift-5.7-orange.svg?style=flat)](https://developer.apple.com/swift/) [![iOS 14.0](https://img.shields.io/badge/iOS-14.0-pink.svg?style=flat)](https://developer.apple.com/swift/) ![](https://img.shields.io/github/v/tag/William-Weng/Vocabulary) [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=flat)](https://developer.apple.com/swift/) 
+[![Swift-5.7](https://img.shields.io/badge/Swift-5.7-orange.svg?style=flat)](https://developer.apple.com/swift/) [![iOS 14.0](https://img.shields.io/badge/iOS-14.0-pink.svg?style=flat)](https://developer.apple.com/swift/) ![](https://img.shields.io/github/v/tag/William-Weng/Vocabulary) [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=flat)](https://developer.apple.com/swift/)
+
 ![](./@Image/001.png) ![](./@Image/002.png) ![](./@Image/003.png)
 ![](./@Image/004.png) ![](./@Image/005.png) ![](./@Image/006.png)
 ![](./@Image/007.png) ![](./@Image/008.png) ![](./@Image/009.png)

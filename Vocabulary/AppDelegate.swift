@@ -87,7 +87,6 @@ extension AppDelegate {
     /// - Returns: Bool
     func playBackgroundMusic(with music: Music, volume: Float) -> Bool {
         
-        
         audioPlayer?.stop()
         audioPlayer = nil
         

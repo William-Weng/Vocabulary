@@ -13,7 +13,6 @@ import WWToast
 // MARK: - MainViewDelegate
 protocol MainViewDelegate {
     func deleteRow(with indexPath: IndexPath)
-    func levelMenu(with indexPath: IndexPath)
     func updateCountLabel(with indexPath: IndexPath, count: Int)
     func tabBarHidden(_ isHidden: Bool)
     func navigationBarHidden(_ isHidden: Bool)
@@ -32,24 +31,24 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var dictionaryButtonItem: UIBarButtonItem!
     @IBOutlet weak var volumeButtonItem: UIBarButtonItem!
+    @IBOutlet weak var musicButtonItem: UIBarButtonItem!
     @IBOutlet weak var appendWordButton: UIButton!
     @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
     
     private var isFixed = false
     private var isAnimationStop = false
     private var currentScrollDirection: Constant.ScrollDirection = .down
-
     private var disappearImage: UIImage?
     private var refreshControl: UIRefreshControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
+        initMenu()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        MainTableViewCell.mainViewDelegate = self
         animatedBackground(with: .studing)
     }
     
@@ -60,7 +59,6 @@ final class MainViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        MainTableViewCell.mainViewDelegate = nil
         pauseBackgroundAnimation()
     }
     
@@ -89,15 +87,12 @@ final class MainViewController: UIViewController {
             return this.appendWord(inputWord, for: Constant.currentTableName)
         }
     }
-    
-    @IBAction func selectDictionary(_ sender: UIBarButtonItem) { dictionaryMenu(sender) }
-    @IBAction func selectBackgroundMusic(_ sender: UIBarButtonItem) { backgroundMusicMenu(sender) }
+
     @IBAction func selectVolume(_ sender: UIBarButtonItem) { performSegue(for: .volumeView, sender: nil) }
     @IBAction func searchWordAction(_ sender: UIBarButtonItem) { performSegue(for: .searchView, sender: nil) }
     
     deinit {
         MainTableViewCell.vocabularyListArray = []
-        MainTableViewCell.mainViewDelegate = nil
         NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
         wwPrint("\(Self.self) deinit")
     }
@@ -122,7 +117,6 @@ extension MainViewController: MainViewDelegate {
     
     func deleteRow(with indexPath: IndexPath) { deleteRowAction(with: indexPath) }
     func updateCountLabel(with indexPath: IndexPath, count: Int) { updateCountLabelAction(with: indexPath, count: count) }
-    func levelMenu(with indexPath: IndexPath) { levelMenuAction(with: indexPath) }
     func tabBarHidden(_ isHidden: Bool) { tabBarHiddenAction(isHidden) }
     func navigationBarHidden(_ isHidden: Bool) { navigationBarHiddenAction(isHidden) }
 }
@@ -144,7 +138,6 @@ private extension MainViewController {
         fakeTabBarHeightConstraint.constant = self.tabBarController?.tabBar.frame.height ?? 0
         
         myTableView._delegateAndDataSource(with: self)
-        
         myTableView.addSubview(refreshControl)
         myTableView.tableFooterView = UIView()
         
@@ -234,38 +227,6 @@ private extension MainViewController {
         MainTableViewCell.vocabularyListArray[indexPath.row] = dictionary
         
         myTableView.reloadRows(at: [indexPath], with: .automatic)
-    }
-
-    /// 單字等級選單功能
-    /// - Parameter indexPath: IndexPath
-    func levelMenuAction(with indexPath: IndexPath) {
-        
-        guard let vocabularyList = MainTableViewCell.vocabularyList(with: indexPath) else { return }
-        
-        let alertController = UIAlertController(title: "請選擇等級", message: nil, preferredStyle: .actionSheet)
-        let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
-        let cell = Utility.shared.didSelectedCell(myTableView, with: indexPath) as MainTableViewCell?
-        
-        Vocabulary.Level.allCases.forEach { level in
-            
-            let action = UIAlertAction(title: level.value(), style: .default) { [weak self] _ in
-
-                guard let this = self else { return }
-
-                let isSuccess = API.shared.updateLevelToList(vocabularyList.id, level: level, for: Constant.currentTableName)
-
-                if (!isSuccess) { Utility.shared.flashHUD(with: .fail) }
-                this.updateLevelLabel(with: indexPath, level: level)
-            }
-            
-            alertController.addAction(action)
-        }
-        
-        alertController.addAction(action)
-        alertController.modalPresentationStyle = .popover
-        alertController.popoverPresentationController?.sourceView = cell?.levelLabel
-        
-        present(alertController, animated: true, completion: nil)
     }
     
     /// 設定TabBar顯示與否功能
@@ -426,94 +387,6 @@ private extension MainViewController {
         }
         
         return actionOK
-    }
-    
-    /// 字典選單
-    /// - Parameter sender: UIBarButtonItem
-    func dictionaryMenu(_ sender: UIBarButtonItem) {
-
-        let alertController = UIAlertController(title: "請選擇字典", message: nil, preferredStyle: .actionSheet)
-        let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
-
-        Constant.VoiceCode.allCases.forEach { tableName in
-            let action = dictionaryAlertAction(with: tableName)
-            alertController.addAction(action)
-        }
-        
-        alertController.addAction(action)
-        alertController.modalPresentationStyle = .popover
-        alertController.popoverPresentationController?.barButtonItem = sender
-        
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    /// 字典選單功能 => 切換資料庫
-    /// - Parameter tableName: Constant.VoiceCode
-    /// - Returns: UIAlertAction
-    func dictionaryAlertAction(with tableName: Constant.VoiceCode) -> UIAlertAction {
-        
-        let title = tableName.flagEmoji()
-        let alertTitle = tableName.name()
-        
-        let action = UIAlertAction(title: alertTitle, style: .default) { [weak self] _ in
-            
-            guard let this = self else { return }
-            
-            Constant.currentTableName = tableName
-            
-            this.dictionaryButtonItem.title = title
-            NotificationCenter.default._post(name: .refreshViewController)
-        }
-        
-        return action
-    }
-    
-    /// 背景音樂選單
-    /// - Parameter sender: UIBarButtonItem
-    func backgroundMusicMenu(_ sender: UIBarButtonItem) {
-
-        let alertController = UIAlertController(title: "請選擇背景音樂 (.mp3 / .m4a)", message: nil, preferredStyle: .actionSheet)
-        let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
-        
-        if var musicList = musicFileList()?.sorted() {
-            
-            musicList.append("靜音")
-            musicList.forEach({ filename in
-                
-                let music = Music(filename: filename)
-                let action = backgroundMusicAlertAction(with: music)
-                
-                alertController.addAction(action)
-            })
-        }
-        
-        alertController.addAction(action)
-        alertController.modalPresentationStyle = .popover
-        alertController.popoverPresentationController?.barButtonItem = sender
-
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    /// 背景音樂選單功能 => 播放音樂
-    /// - Parameter music: Music
-    /// - Returns: UIAlertAction
-    func backgroundMusicAlertAction(with music: Music) -> UIAlertAction {
-        
-        let action = UIAlertAction(title: "\(music.filename)", style: .default) { [weak self] _ in
-            
-            guard let this = self,
-                  let appDelegate = UIApplication.shared.delegate as? AppDelegate
-            else {
-                return
-            }
-            
-            let isSuccess = appDelegate.playBackgroundMusic(with: music, volume: Constant.volume)
-            
-            this.volumeButtonItem.image = !isSuccess ? UIImage(named: "NoVolume") : UIImage(named: "Volume")
-            this.volumeButtonItem.isEnabled = isSuccess
-        }
-        
-        return action
     }
     
     /// 右側滑動按鈕
@@ -847,5 +720,81 @@ private extension MainViewController {
         alertController.addAction(actionOK)
         
         present(alertController, animated: true, completion: nil)
+    }
+}
+
+// MARK: - UIMenu
+private extension MainViewController {
+    
+    /// [初始化功能選單](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/ios-的選單-menu-按鈕-pull-down-button-pop-up-button-2ddab2181ee5)
+    /// => [UIMenu - iOS 14](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/在-iphone-ipad-上顯示-popover-彈出視窗-ac196732e557)
+    func initMenu() {
+        initDictionaryItemMenu()
+        initMusicItemMenu()
+    }
+    
+    /// 初始化字典選單 (UIMenu)
+    /// - Parameter sender: UIBarButtonItem
+    func initDictionaryItemMenu() {
+        
+        let actions = Constant.VoiceCode.allCases.map { dictionaryItemMenuActionMaker(tableName: $0) }
+        let menu = UIMenu(title: "請選擇字典", children: actions)
+        
+        dictionaryButtonItem.menu = menu
+    }
+    
+    /// 初始化音樂選單 (UIMenu)
+    /// - Parameter sender: UIBarButtonItem
+    func initMusicItemMenu() {
+        
+        guard var musicList = musicFileList()?.sorted() else { return }
+        
+        musicList.append("靜音")
+        
+        let actions = musicList.map({ musicItemMenuActionMaker(filename: $0) })
+        let menu = UIMenu(title: "請選擇背景音樂 (.mp3 / .m4a)", children: actions)
+        
+        musicButtonItem.menu = menu
+    }
+    
+    /// 產生字典資料庫選單
+    /// - Parameter tableName: Constant.VoiceCode
+    /// - Returns: UIAction
+    func dictionaryItemMenuActionMaker(tableName: Constant.VoiceCode) -> UIAction {
+        
+        let action = UIAction(title: tableName.name()) { [weak self] _ in
+            
+            guard let this = self else { return }
+            
+            Constant.currentTableName = tableName
+            this.dictionaryButtonItem.title = tableName.flagEmoji()
+            NotificationCenter.default._post(name: .refreshViewController)
+        }
+        
+        return action
+    }
+    
+    /// 產生音樂選單
+    /// - Parameter filename: String
+    /// - Returns: UIAction
+    func musicItemMenuActionMaker(filename: String) -> UIAction {
+        
+        let music = Music(filename: filename)
+        
+        let action = UIAction(title: "\(music.filename)") { [weak self] _ in
+            
+            guard let this = self,
+                  let appDelegate = UIApplication.shared.delegate as? AppDelegate
+            else {
+                return
+            }
+            
+            let isSuccess = appDelegate.playBackgroundMusic(with: music, volume: Constant.volume)
+            
+            this.volumeButtonItem.image = !isSuccess ? UIImage(named: "NoVolume") : UIImage(named: "Volume")
+            this.volumeButtonItem.isEnabled = isSuccess
+        }
+        
+        return action
     }
 }

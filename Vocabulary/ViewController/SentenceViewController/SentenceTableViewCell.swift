@@ -15,7 +15,7 @@ final class SentenceTableViewCell: UITableViewCell, CellReusable {
     
     @IBOutlet weak var exampleLabel: UILabel!
     @IBOutlet weak var translateLabel: UILabel!
-    @IBOutlet weak var speechLabel: UILabel!
+    @IBOutlet weak var speechButton: UIButton!
     
     static var sentenceViewDelegate: SentenceViewDelegate?
     
@@ -23,15 +23,8 @@ final class SentenceTableViewCell: UITableViewCell, CellReusable {
     
     private var sentenceList: VocabularySentenceList?
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        speechLabel.gestureRecognizers?.forEach({ speechLabel.removeGestureRecognizer($0) })
-        accessoryView?.gestureRecognizers?.forEach({ accessoryView?.removeGestureRecognizer($0) })
-    }
-    
     func configure(with indexPath: IndexPath) { configure(for: indexPath) }
     
-    @objc func updateSpeechLabel(_ sender: UITapGestureRecognizer) { Self.sentenceViewDelegate?.speechMenu(with: indexPath) }
     @objc func persentNetDictionary(_ sender: UITapGestureRecognizer) { Self.sentenceViewDelegate?.wordDictionary(with: indexPath) }
 
     @IBAction func playSound(_ sender: UIButton) { playExampleSound() }
@@ -61,20 +54,20 @@ private extension SentenceTableViewCell {
         guard let sentenceList = Self.sentenceList(with: indexPath) else { return }
         
         let speechType = VocabularySentenceList.Speech(rawValue: sentenceList.speech) ?? .general
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(Self.updateSpeechLabel(_:)))
 
         self.accessoryView = accessoryViewMaker()
         self.indexPath = indexPath
         self.sentenceList = sentenceList
         
-        speechLabel.addGestureRecognizer(tapRecognizer)
-        speechLabel.text = speechType.value()
-        speechLabel.backgroundColor = speechType.backgroundColor()
+        translateLabel.text = sentenceList.translate
         
         exampleLabel.font = Constant.currentTableName.font(size: 24.0) ?? UIFont.systemFont(ofSize: 24.0)
         exampleLabel.text = sentenceList.example
         
-        translateLabel.text = sentenceList.translate
+        speechButton.setTitle(speechType.value(), for: .normal)
+        speechButton.backgroundColor = speechType.backgroundColor()
+        speechButton.showsMenuAsPrimaryAction = true
+        speechButton.menu = UIMenu(title: "請選擇分類", children: speechMenuActionMaker())
     }
     
     /// 讀出例句
@@ -100,5 +93,53 @@ private extension SentenceTableViewCell {
         imageView.addGestureRecognizer(tapRecognizer)
         
         return imageView
+    }
+    
+    /// 產生LevelButton選到時的動作
+    /// - Returns: [UIAction]
+    func speechMenuActionMaker() -> [UIAction] {
+            
+        let actions = VocabularySentenceList.Speech.allCases.map { speech in
+            
+            let action = UIAction(title: speech.value()) { [weak self] action in
+                
+                guard let this = self else { return }
+                
+                this.updateSpeech(speech, with: this.indexPath)
+                this.updateLevelDictionary(speech, with:this.indexPath)
+            }
+            
+            return action
+        }
+        
+        return actions
+    }
+    
+    /// 更新SpeechButton文字
+    /// - Parameters:
+    ///   - level: VocabularySentenceList.Speech
+    ///   - indexPath: IndexPath
+    func updateSpeech(_ speech: VocabularySentenceList.Speech, with indexPath: IndexPath) {
+        
+        guard let sentenceList = SentenceTableViewCell.sentenceList(with: indexPath) else { return }
+        
+        let isSuccess = API.shared.updateSentenceSpeechToList(sentenceList.id, speech: speech, for: Constant.currentTableName)
+
+        if (!isSuccess) { Utility.shared.flashHUD(with: .fail) }
+        
+        speechButton.setTitle(speech.value(), for: .normal)
+        speechButton.backgroundColor = speech.backgroundColor()
+    }
+    
+    /// 更新暫存的單字內容列表資訊
+    /// - Parameters:
+    ///   - level: VocabularySentenceList.Speech
+    ///   - indexPath: IndexPath
+    func updateLevelDictionary(_ speech: VocabularySentenceList.Speech, with indexPath: IndexPath) {
+        
+        guard var dictionary = SentenceTableViewCell.sentenceListArray[safe: indexPath.row] else { return }
+        
+        dictionary["speech"] = speech.rawValue
+        Self.sentenceListArray[indexPath.row] = dictionary
     }
 }

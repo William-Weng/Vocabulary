@@ -11,11 +11,6 @@ import WWPrint
 import WWSQLite3Manager
 import WWHUD
 
-// MARK: - ListViewDelegate
-protocol ListViewDelegate {
-    func speechMenu(with indexPath: IndexPath)
-}
-
 // MARK: - 單字列表
 final class ListViewController: UIViewController {
 
@@ -62,7 +57,6 @@ final class ListViewController: UIViewController {
     
     deinit {
         ListTableViewCell.exmapleList = []
-        ListTableViewCell.listViewDelegate = nil
         wwPrint("\(Self.self) deinit")
     }
 }
@@ -82,11 +76,6 @@ extension ListViewController: SFSafariViewControllerDelegate {
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         isSafariViewControllerDismiss = true
     }
-}
-
-// MARK: - ListViewDelegate
-extension ListViewController: ListViewDelegate {
-    func speechMenu(with indexPath: IndexPath) { speechMenuAction(with: indexPath) }
 }
 
 // MARK: - 小工具
@@ -191,34 +180,10 @@ private extension ListViewController {
         safariController.delegate = self
     }
     
-    /// 單字詞性選單功能
-    /// - Parameter indexPath: IndexPath
-    func speechMenuAction(with indexPath: IndexPath) {
-        
-        guard let vocabulary = ListTableViewCell.vocabulary(with: indexPath) else { return }
-                
-        let alertController = UIAlertController(title: "請選擇詞性", message: nil, preferredStyle: .actionSheet)
-        let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
-        let cell = Utility.shared.didSelectedCell(myTableView, with: indexPath) as ListTableViewCell?
-        
-        Vocabulary.Speech.list(for: Constant.currentTableName).forEach { speech in
-            let action = speechAlertAction(with: indexPath, speech: speech, vocabulary: vocabulary)
-            alertController.addAction(action)
-        }
-        
-        alertController.addAction(action)
-        alertController.modalPresentationStyle = .popover
-        alertController.popoverPresentationController?.sourceView = cell?.speechLabel
-
-        present(alertController, animated: true, completion: nil)
-    }
-    
     /// View將要顯示時的動作
     /// - Parameter animated: Bool
     func viewWillAppearAction(_ animated: Bool) {
-        
-        ListTableViewCell.listViewDelegate = self
-        
+                
         animatedBackground(with: .reading)
         mainViewDelegate?.navigationBarHidden(false)
         mainViewDelegate?.tabBarHidden(true)
@@ -229,9 +194,7 @@ private extension ListViewController {
     /// View將要消失時的動作
     /// - Parameter animated: Bool
     func viewWillDisappearAction(_ animated: Bool) {
-        
-        ListTableViewCell.listViewDelegate = nil
-        
+                
         pauseBackgroundAnimation()
         updateExampleCount(ListTableViewCell.exmapleList.count)
         
@@ -295,27 +258,7 @@ private extension ListViewController {
         
         return actionOK
     }
-    
-    /// 單字詞性選單功能
-    /// - Parameters:
-    ///   - indexPath: IndexPath
-    ///   - speech: Vocabulary.Speech
-    ///   - vocabulary: Vocabulary
-    func speechAlertAction(with indexPath: IndexPath, speech: Vocabulary.Speech, vocabulary: Vocabulary) -> UIAlertAction {
         
-        let action = UIAlertAction(title: speech.value(), style: .default) { [weak self] _ in
-            
-            guard let this = self else { return }
-            
-            let isSuccess = API.shared.updateSpeechToList(vocabulary.id, speech: speech, for: Constant.currentTableName)
-            
-            if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
-            this.updateCellLabel(with: indexPath, speech: speech, info: nil)
-        }
-        
-        return action
-    }
-    
     /// 右側滑動按鈕
     /// - Parameter indexPath: IndexPath
     /// - Returns: [UIContextualAction]

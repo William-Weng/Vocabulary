@@ -11,7 +11,6 @@ import WWPrint
 
 // MARK: - SentenceViewDelegate
 protocol SentenceViewDelegate {
-    func speechMenu(with indexPath: IndexPath)
     func wordDictionary(with indexPath: IndexPath)
 }
 
@@ -21,6 +20,7 @@ final class SentenceViewController: UIViewController {
     @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var appendWordButton: UIButton!
+    @IBOutlet weak var speechButtonItem: UIBarButtonItem!
     @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
     
     private var isAnimationStop = false
@@ -35,6 +35,7 @@ final class SentenceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
+        initMenu()
         viewDidTransitionAction()
     }
     
@@ -69,7 +70,6 @@ final class SentenceViewController: UIViewController {
     }
     
     @IBAction func recordingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: "RecordingSegue", sender: nil) }
-    @IBAction func filterSentence(_ sender: UIBarButtonItem) { sentenceSpeechMenu(sender) }
     
     deinit {
         SentenceTableViewCell.sentenceListArray = []
@@ -104,7 +104,6 @@ extension SentenceViewController: SFSafariViewControllerDelegate {
 // MARK: - SentenceViewDelegate
 extension SentenceViewController: SentenceViewDelegate {
     
-    func speechMenu(with indexPath: IndexPath) { speechMenuAction(with: indexPath) }
     func wordDictionary(with indexPath: IndexPath) { netDictionary(with: indexPath) }
 }
 
@@ -250,37 +249,6 @@ private extension SentenceViewController {
     func pauseBackgroundAnimation() {
         disappearImage = myImageView.image
         isAnimationStop = true
-    }
-    
-    /// 例句類型的選單功能
-    /// - Parameter indexPath: IndexPath
-    func speechMenuAction(with indexPath: IndexPath) {
-        
-        guard let sentenceList = SentenceTableViewCell.sentenceList(with: indexPath) else { return }
-        
-        let alertController = UIAlertController(title: "請選擇分類", message: nil, preferredStyle: .actionSheet)
-        let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
-        let cell = Utility.shared.didSelectedCell(myTableView, with: indexPath) as SentenceTableViewCell?
-
-        VocabularySentenceList.Speech.allCases.forEach { speech in
-            
-            let action = UIAlertAction(title: speech.value(), style: .default) { [weak self] _ in
-
-                guard let this = self else { return }
-                let isSuccess = API.shared.updateSentenceSpeechToList(sentenceList.id, speech: speech, for: Constant.currentTableName)
-
-                if (!isSuccess) { Utility.shared.flashHUD(with: .fail) }
-                this.updateSentenceLabel(with: indexPath, speech: speech)
-            }
-            
-            alertController.addAction(action)
-        }
-        
-        alertController.addAction(action)
-        alertController.modalPresentationStyle = .popover
-        alertController.popoverPresentationController?.sourceView = cell?.speechLabel
-
-        present(alertController, animated: true, completion: nil)
     }
     
     /// 滑動時TabBar是否隱藏的規則設定
@@ -456,21 +424,7 @@ private extension SentenceViewController {
         if (contentOffsetY < 0) { return }
         if (offset > contentHeight) { appendSentenceList() }
     }
-    
-    /// 更新分類Level文字
-    /// - Parameters:
-    ///   - indexPath: IndexPath
-    ///   - level: 等級
-    func updateSentenceLabel(with indexPath: IndexPath, speech: VocabularySentenceList.Speech) {
         
-        guard var dictionary = SentenceTableViewCell.sentenceListArray[safe: indexPath.row] else { return }
-        
-        dictionary["speech"] = speech.rawValue
-        SentenceTableViewCell.sentenceListArray[indexPath.row] = dictionary
-        
-        myTableView.reloadRows(at: [indexPath], with: .automatic)
-    }
-    
     /// 更新例句 (句子 / 翻譯)
     /// - Parameter indexPath: IndexPath
     func updateSentence(with indexPath: IndexPath) {
@@ -539,48 +493,6 @@ private extension SentenceViewController {
     func googleSearchUrlString(with example: String) -> String {
         let googleSearchUrl = "https://www.google.com/search?q=\(example)"
         return googleSearchUrl
-    }
-    
-    /// 例句屬性選單
-    /// - Parameter sender: UIBarButtonItem
-    func sentenceSpeechMenu(_ sender: UIBarButtonItem) {
-
-        let alertController = UIAlertController(title: "請選擇例句屬性", message: nil, preferredStyle: .actionSheet)
-        let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
-        let allCaseAction = sentenceSpeechAction(with: nil)
-        
-        VocabularySentenceList.Speech.allCases.forEach { speech in
-            let action = sentenceSpeechAction(with: speech)
-            alertController.addAction(action)
-        }
-        
-        alertController.addAction(allCaseAction)
-        alertController.addAction(action)
-        alertController.modalPresentationStyle = .popover
-        alertController.popoverPresentationController?.barButtonItem = sender
-        
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    /// 例句屬性選單功能 => 重新讀取資料庫
-    /// - Parameter music: Music
-    /// - Returns: UIAlertAction
-    func sentenceSpeechAction(with speech: VocabularySentenceList.Speech?) -> UIAlertAction {
-        
-        var title = "全部"
-        
-        if let speech = speech { title = speech.value() }
-        
-        let action = UIAlertAction(title: title, style: .default) { [weak self] _ in
-            
-            guard let this = self else { return }
-            
-            this.currentSpeech = speech
-            this.fixTranslateDisplayArray(with: IndexPath(row: 0, section: 0), type: .search)
-            this.reloadSentenceList()
-        }
-        
-        return action
     }
     
     /// 設定錄音頁面
@@ -677,5 +589,42 @@ private extension SentenceViewController {
         }
         
         self.translateDisplayArray = Set(_translateDisplayArray)
+    }
+}
+
+// MARK: - UIMenu
+private extension SentenceViewController {
+    
+    /// [初始化功能選單](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/ios-的選單-menu-按鈕-pull-down-button-pop-up-button-2ddab2181ee5)
+    /// => [UIMenu - iOS 14](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/在-iphone-ipad-上顯示-popover-彈出視窗-ac196732e557)
+    func initMenu() {
+        initSpeechItemMenu()
+    }
+    
+    /// 初始化例句屬性選單 (UIMenu)
+    /// - Parameter sender: UIBarButtonItem
+    func initSpeechItemMenu() {
+                
+        let actions = VocabularySentenceList.Speech.allCases.map { speechItemMenuActionMaker(speech: $0) }
+        let menu = UIMenu(title: "請選擇例句屬性", children: actions)
+        
+        speechButtonItem.menu = menu
+    }
+    
+    /// 產生字典資料庫選單
+    /// - Parameter tableName: Constant.VoiceCode
+    /// - Returns: UIAction
+    func speechItemMenuActionMaker(speech: VocabularySentenceList.Speech) -> UIAction {
+        
+        let action = UIAction(title: speech.value()) { [weak self] _ in
+            
+            guard let this = self else { return }
+            
+            this.currentSpeech = speech
+            this.fixTranslateDisplayArray(with: IndexPath(row: 0, section: 0), type: .search)
+            this.reloadSentenceList()
+        }
+        
+        return action
     }
 }

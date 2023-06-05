@@ -96,35 +96,6 @@ extension Utility {
 // MARK: - 選單
 extension Utility {
     
-    /// 單字等級選單
-    /// - Parameters:
-    ///   - target: UIViewController
-    ///   - vocabularyList: VocabularyList?
-    ///   - sourceView: UIView?
-    func levelMenu(target: UIViewController, vocabularyList: VocabularyList?, sourceView: UIView? = nil) {
-        
-        guard let vocabularyList = vocabularyList else { return }
-        
-        let alertController = UIAlertController(title: "請選擇等級", message: nil, preferredStyle: .actionSheet)
-        let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
-        
-        Vocabulary.Level.allCases.forEach { level in
-            
-            let action = UIAlertAction(title: level.value(), style: .default) { _ in
-                let isSuccess = API.shared.updateLevelToList(vocabularyList.id, level: level, for: Constant.currentTableName)
-                if (!isSuccess) { Utility.shared.flashHUD(with: .fail) }
-            }
-            
-            alertController.addAction(action)
-        }
-        
-        alertController.addAction(action)
-        alertController.modalPresentationStyle = .popover
-        alertController.popoverPresentationController?.sourceView = sourceView
-        
-        target.present(alertController, animated: true, completion: nil)
-    }
-    
     /// 取得被點到的Cell with CellReusable
     /// - Parameters:
     ///   - tableView: UITableView

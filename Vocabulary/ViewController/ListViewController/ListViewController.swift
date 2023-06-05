@@ -125,8 +125,10 @@ private extension ListViewController {
     func listTableViewCell(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> ListTableViewCell {
         
         let cell = tableView._reusableCell(at: indexPath) as ListTableViewCell
+        
         cell.configure(with: indexPath)
         cell.translateLabel.textColor = (!translateDisplayArray.contains(indexPath.row)) ? .clear : .darkGray
+        cell.interpretLabel.textColor = (!translateDisplayArray.contains(indexPath.row)) ? .clear : .label
         
         return cell
     }

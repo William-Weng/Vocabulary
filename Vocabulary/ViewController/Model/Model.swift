@@ -19,7 +19,6 @@ final class Vocabulary: Codable {
     let interpret: String?  // 單字翻譯
     let example: String?    // 例句範例
     let translate: String?  // 例句翻譯
-    let imageUrl: String?   // 圖片網址
     let createTime: Date    // 建立時間
     let updateTime: Date    // 更新時間
     
@@ -195,6 +194,7 @@ final class VocabularyList: Codable {
     let review: Int         // 複習的次數
     let word: String        // 單字
     let alphabet: String?   // 音標
+    let favorite: Bool?     // 我的最愛
     let createTime: Date    // 建立時間
     let updateTime: Date    // 更新時間
     
@@ -330,7 +330,6 @@ extension Vocabulary: SQLite3SchemeDelegate {
             (key: "interpret", type: .TEXT(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),
             (key: "example", type: .TEXT(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),
             (key: "translate", type: .TEXT(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),
-            (key: "imageUrl", type: .TEXT(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),
             (key: "createTime", type: .TIMESTAMP()),
             (key: "updateTime", type: .TIMESTAMP()),
         ]
@@ -353,6 +352,7 @@ extension VocabularyList: SQLite3SchemeDelegate {
             (key: "review", type: .INTEGER()),
             (key: "word", type: .TEXT(attribute: (isNotNull: true, isNoCase: true, isUnique: true), defaultValue: nil)),
             (key: "alphabet", type: .TEXT(attribute: (isNotNull: false, isNoCase: true, isUnique: false), defaultValue: nil)),
+            (key: "favorite", type: .NUMERIC(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),
             (key: "createTime", type: .TIMESTAMP()),
             (key: "updateTime", type: .TIMESTAMP()),
         ]

@@ -23,6 +23,7 @@ final class ReviewViewController: UIViewController {
     @IBOutlet weak var answerLabel: UILabel!
     @IBOutlet weak var interpretLabel: UILabel!
     @IBOutlet weak var refreshQuestionButtonItem: UIBarButtonItem!
+    @IBOutlet weak var questionLevelButtonItem: UIBarButtonItem!
     @IBOutlet weak var landscapeBottomConstraint: NSLayoutConstraint!
     
     private var isNextVocabulary = false
@@ -45,6 +46,7 @@ final class ReviewViewController: UIViewController {
         initSetting()
         initSpeakImage()
         initReviewWordList(count: searchTotalCount())
+        initQuestionLevelItem()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,7 +85,6 @@ final class ReviewViewController: UIViewController {
     @IBAction func guessAnswear(_ sender: UIButton) { answearAction(sender) }
     @IBAction func reviewSolution(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegue.solutionView.rawValue, sender: vocabularyArray) }
     @IBAction func refreshQuestion(_ sender: UIBarButtonItem) { initReviewWordList(count: searchTotalCount()); Utility.shared.flashHUD(with: .nice) }
-    @IBAction func questionLevel(_ sender: UIBarButtonItem) { levelMenu(sender) }
     @IBAction func speedRate(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegue.speakingRateView.rawValue, sender: nil) }
     
     deinit { wwPrint("\(Self.self) deinit") }
@@ -380,7 +381,9 @@ private extension ReviewViewController {
                 
                 _ = this.solutionAction(with: vocabularyList, isCorrect: isCorrect)
                 Utility.shared.flashHUD(with: hudType)
-                Utility.shared.levelMenu(target: this, vocabularyList: vocabularyList, sourceView: sender)
+                
+                this.levelMenu(target: this, vocabularyList: vocabularyList, sourceView: sender)
+                // this.initVocabularyLevelButton(with: vocabularyList)
             }
             
             if (vocabularyList.word.lowercased() != inputWord.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()) { isCorrect = false; return }
@@ -399,35 +402,6 @@ private extension ReviewViewController {
         }
         
         return list.shuffled()
-    }
-    
-    /// 猜字等級選單
-    /// - Parameter sender: UIBarButtonItem
-    func levelMenu(_ sender: UIBarButtonItem) {
-
-        let alertController = UIAlertController(title: "請選擇等級", message: nil, preferredStyle: .actionSheet)
-        let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
-        
-        Constant.QuestionLevel.allCases.forEach { level in
-            
-            let action = UIAlertAction(title: level.value(), style: .default) { [weak self] _ in
-                
-                guard let this = self else { return }
-                
-                this.questionLevel = level
-                this.initReviewWordList(count: this.searchTotalCount())
-                
-                Utility.shared.flashHUD(with: .nice)
-            }
-            
-            alertController.addAction(action)
-        }
-        
-        alertController.addAction(action)
-        alertController.modalPresentationStyle = .popover
-        alertController.popoverPresentationController?.barButtonItem = sender
-        
-        present(alertController, animated: true, completion: nil)
     }
     
     /// 設定解答頁的相關數值
@@ -459,3 +433,116 @@ private extension ReviewViewController {
         tabBarController?._tabBarHidden(true, animated: true)
     }
 }
+
+// MARK: - UIMenu
+extension ReviewViewController {
+    
+    /// 單字等級選單
+    /// - Parameters:
+    ///   - target: UIViewController
+    ///   - vocabularyList: VocabularyList?
+    ///   - sourceView: UIView?
+    func levelMenu(target: UIViewController, vocabularyList: VocabularyList?, sourceView: UIView? = nil) {
+        
+        guard let vocabularyList = vocabularyList else { return }
+        
+        let alertController = UIAlertController(title: "請選擇等級", message: nil, preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
+        
+        Vocabulary.Level.allCases.forEach { level in
+            
+            let action = UIAlertAction(title: level.value(), style: .default) { _ in
+                let isSuccess = API.shared.updateLevelToList(vocabularyList.id, level: level, for: Constant.currentTableName)
+                if (!isSuccess) { Utility.shared.flashHUD(with: .fail) }
+            }
+            
+            alertController.addAction(action)
+        }
+        
+        alertController.addAction(action)
+        alertController.modalPresentationStyle = .popover
+        alertController.popoverPresentationController?.sourceView = sourceView
+        
+        target.present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 初始化問題等級Item
+    func initQuestionLevelItem() {
+        
+        let actions = Constant.QuestionLevel.allCases.map { questionLevelActionMaker($0) }
+        let menu = UIMenu(title: "請選擇等級", children: actions)
+        
+        questionLevelButtonItem.menu = menu
+    }
+    
+    // TODO: 初始化問題等級Button
+    func initVocabularyLevelButton(with vocabularyList: VocabularyList?) {
+                
+        let actions = Vocabulary.Level.allCases.map { vocabularyLevelActionMaker($0, vocabularyList: vocabularyList) }
+        let menu = UIMenu(title: "請選擇等級", children: actions)
+
+        answearButton.showsMenuAsPrimaryAction = true
+        answearButton.menu = menu
+        answearButton.sendActions(for: .primaryActionTriggered)
+    }
+    
+    /// 問題等級功能
+    /// - Parameter level: Constant.QuestionLevel
+    /// - Returns: UIAction
+    func questionLevelActionMaker(_ level: Constant.QuestionLevel) -> UIAction {
+        
+        let action = UIAction(title: level.value()) { [weak self] _ in
+            
+            guard let this = self else { return }
+            
+            this.questionLevel = level
+            this.initReviewWordList(count: this.searchTotalCount())
+            
+            Utility.shared.flashHUD(with: .nice)
+        }
+        
+        return action
+    }
+    
+    /// 單字等級功能
+    /// - Parameters:
+    ///   - level: Vocabulary.Level
+    ///   - vocabularyList: VocabularyList?
+    /// - Returns: UIAction
+    func vocabularyLevelActionMaker(_ level: Vocabulary.Level, vocabularyList: VocabularyList?) -> UIAction {
+        
+        let action = UIAction(title: level.value()) { _ in
+            
+            guard let vocabularyList = vocabularyList else { return }
+            
+            let isSuccess = API.shared.updateLevelToList(vocabularyList.id, level: level, for: Constant.currentTableName)
+            if (!isSuccess) { Utility.shared.flashHUD(with: .fail) }
+        }
+        
+        return action
+    }
+}
+
+extension ReviewViewController: UIContextMenuInteractionDelegate {
+    
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in
+            return self.makeContextMenu()
+        })
+    }
+    
+    func makeContextMenu() -> UIMenu {
+        // 建立你的 UIMenu 選項
+        let action1 = UIAction(title: "選項1", image: UIImage(systemName: "option1")) { action in
+            // 在這裡實作選項1的動作
+        }
+        
+        let action2 = UIAction(title: "選項2", image: UIImage(systemName: "option2")) { action in
+            // 在這裡實作選項2的動作
+        }
+        
+        // 返回 UIMenu
+        return UIMenu(title: "選單標題", children: [action1, action2])
+    }
+}
+

@@ -13,8 +13,6 @@ import WWNetworking_UIImage
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    static var infinityMusicLoop = true
     
     var window: UIWindow?
     

@@ -12,6 +12,14 @@ import CommonCrypto
 import PencilKit
 import WebKit
 
+// MARK: - Bool (function)
+extension Bool {
+    
+    /// 將布林值轉成Int (true => 1 / false => 0)
+    /// - Returns: Int
+    func _int() -> Int { return Int(truncating: NSNumber(value: self)) }
+}
+
 // MARK: - Int (function)
 extension Int {
     
@@ -310,6 +318,17 @@ extension Bundle {
     /// - Returns: Any?
     func _infoDictionary(with key: Constant.InfoPlistKey) -> Any? { return self._infoDictionary(with: key.rawValue) }
     
+    /// 取得APP版本號 (外部 / 內部)
+    /// - info.plist => Version
+    /// - Returns: String?
+    func _appVersion() -> Constant.AppVersion {
+        
+        let app = self._appVersionString()
+        let build = self._appBuildString()
+        
+        return (app: app, build: build)
+    }
+    
     /// 取得外部版本號
     /// - info.plist => Version
     /// - Returns: String?
@@ -449,7 +468,7 @@ extension AVSpeechSynthesizer {
     ///   - rate: 語度 (0% ~ 100%)
     ///   - pitchMultiplier: 音調 (50% ~ 200%)
     ///   - volume: 音量 (0% ~ 100%)
-    func _speak(string: String, voice: Constant.VoiceCode = .english, rate: Float = 0.5, pitchMultiplier: Float = 1.5, volume: Float = 0.5) {
+    func _speak(string: String, voice: Constant.VoiceCode = .english, rate: Float = 0.5, pitchMultiplier: Float = 1.5, volume: Float = 1.0) {
         
         let utterance = AVSpeechUtterance._build(string: string, voice: voice)
         
@@ -787,6 +806,17 @@ extension FileManager {
         } catch {
             return .failure(error)
         }
+    }
+}
+
+// MARK: - UIDevice (static function)
+extension UIDevice {
+    
+    /// [取得系統的相關資訊](https://mini.nidbox.com/diary/read/9759417) => (name: "iOS", version: "14.6", model: "iPhone")
+    /// - Returns: [Constant.SystemInformation](https://mini.nidbox.com/diary/read/9759417)
+    static func _systemInformation() -> Constant.SystemInformation {
+        let info: Constant.SystemInformation = (name: UIDevice.current.systemName, version: UIDevice.current.systemVersion, model: UIDevice.current.model, idiom: UIDevice.current.userInterfaceIdiom)
+        return info
     }
 }
 
@@ -1309,6 +1339,7 @@ extension WKWebView {
             let style = document.createElement('style');
             style.innerHTML = `*:not(input,textarea),*:focus:not(input,textarea){-webkit-user-select:none;-webkit-touch-callout:none;}`;
             document.head.appendChild(style);
+            return true;
         }());
         """
         
@@ -1331,6 +1362,7 @@ extension WKWebView {
             meta.name = `viewport`;
             meta.content = `initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no`;
             document.getElementsByTagName('head')[0].appendChild(meta);
+            return true;
         }());
         """
         
@@ -1430,4 +1462,23 @@ extension PKCanvasView {
     
     /// [清除畫布](https://stackoverflow.com/questions/56683060/removing-content-in-pencilkit)
     func _clear() { drawing = PKDrawing() }
+}
+
+// MARK: - UIViewController (static function)
+extension UIApplicationShortcutItem {
+    
+    /// [產生QuickActions選單 (APP圖示長按出現的選單)](https://blog.csdn.net/soindy/article/details/49995573)
+    /// - [applicationWillResignActive(_:) / application(_:performActionFor:completionHandler:)](https://blog.csdn.net/soindy/article/details/49995573)
+    /// - [sceneWillResignActive(_:) / windowScene(_:performActionFor:completionHandler:)](https://bjdehang.github.io/OneSwift/articles/14.Swift如何给应用添加3D_Touch菜单.html)
+    /// - Parameters:
+    ///   - type: type = "DynamicAction"
+    ///   - localizedTitle: [顯示的主標題](https://www.jianshu.com/p/3024e997b457)
+    ///   - localizedSubtitle: 顯示的副標題
+    ///   - icon: 圖示
+    ///   - userInfo: 其它的資訊
+    /// - Returns: UIApplicationShortcutItem
+    static func _build(type: String = "DynamicAction", localizedTitle: String, localizedSubtitle: String? = nil, icon: UIApplicationShortcutIcon? = nil, userInfo: [String : NSSecureCoding]? = nil) -> UIApplicationShortcutItem {
+        let shortcutItem = UIApplicationShortcutItem(type: type, localizedTitle: localizedTitle, localizedSubtitle: localizedSubtitle, icon: icon, userInfo: userInfo)
+        return shortcutItem
+    }
 }

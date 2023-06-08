@@ -15,7 +15,7 @@ final class LicenseWebViewController: UIViewController {
     @IBOutlet weak var goBackItem: UIBarButtonItem!
     @IBOutlet weak var goForwardItem: UIBarButtonItem!
     
-    var othersViewDelegate: OthersViewDelegate?
+    var sentenceViewDelegate: SentenceViewDelegate?
     
     private var progressView: UIProgressView!
     private var observation: NSKeyValueObservation?
@@ -27,12 +27,12 @@ final class LicenseWebViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        othersViewDelegate?.tabBarHidden(true)
+        sentenceViewDelegate?.tabBarHidden(true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        othersViewDelegate?.tabBarHidden(false)
+        sentenceViewDelegate?.tabBarHidden(false)
     }
     
     @IBAction func goBack(_ sender: UIBarButtonItem) {
@@ -46,7 +46,7 @@ final class LicenseWebViewController: UIViewController {
     }
     
     deinit {
-        othersViewDelegate = nil
+        sentenceViewDelegate = nil
         observation = nil
         wwPrint("\(Self.self) deinit")
     }

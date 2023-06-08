@@ -31,10 +31,12 @@ final class Constant: NSObject {
 // MARK: - Typealias
 extension Constant {
     
-    typealias ExampleInfomation = (id: Int, interpret: String, example: String, translate: String)      // 單字ID / 字義 / 例句 / 例句翻譯
-    typealias GIFImageInformation = (index: Int, cgImage: CGImage, pointer: UnsafeMutablePointer<Bool>) // GIF動畫: (第幾張, CGImage, UnsafeMutablePointer<Bool>)
-    typealias SearchCountWithLevel = [Vocabulary.Level: Int]                                            // 複習單字的數量
-    typealias FileInfomation = (isExist: Bool, isDirectory: Bool)                                       // 檔案相關資訊 (是否存在 / 是否為資料夾)
+    typealias ExampleInfomation = (id: Int, interpret: String, example: String, translate: String)              // 單字ID / 字義 / 例句 / 例句翻譯
+    typealias GIFImageInformation = (index: Int, cgImage: CGImage, pointer: UnsafeMutablePointer<Bool>)         // GIF動畫: (第幾張, CGImage, UnsafeMutablePointer<Bool>)
+    typealias SearchCountWithLevel = [Vocabulary.Level: Int]                                                    // 複習單字的數量
+    typealias FileInfomation = (isExist: Bool, isDirectory: Bool)                                               // 檔案相關資訊 (是否存在 / 是否為資料夾)
+    typealias AppVersion = (app: String?, build: String?)                                                       // APP版本號
+    typealias SystemInformation = (name: String, version: String, model: String, idiom: UIUserInterfaceIdiom)   // 系統資訊 => (iOS, 12.1, iPhone, 0)
 }
 
 // MARK: - Enumeration
@@ -47,6 +49,26 @@ extension Constant {
         case down
         case left
         case right
+    }
+    
+    /// 複習單字結果排列
+    enum ReviewResultType: CaseIterable {
+        
+        case alphabet
+        case updateTime
+        case correctCount
+        case mistakeCount
+        
+        /// 顯示Title
+        /// - Returns: String
+        func value() -> String {
+            switch self {
+            case .alphabet: return "字母順序"
+            case .updateTime: return "更新時間"
+            case .correctCount: return "正確數量"
+            case .mistakeCount: return "錯誤數量"
+            }
+        }
     }
     
     /// [info.plist上的Key值](https://ithelp.ithome.com.tw/articles/10206444)

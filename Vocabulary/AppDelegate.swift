@@ -25,7 +25,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         _ = WWWebImage.initDatabase(for: .caches, expiredDays: 90)
+        
         initDatabase()
+        appVersionShortcutItem(with: application)
+        
         backgroundBarColor(.black.withAlphaComponent(0.1))
         audioInterruptionNotification()
         
@@ -218,6 +221,19 @@ private extension AppDelegate {
         case .failure(let error): wwPrint(error); return false
         case .success(let isSuccess): return isSuccess
         }
+    }
+    
+    /// 設定ShortcutItem
+    /// - Parameter application: UIApplication
+    func appVersionShortcutItem(with application: UIApplication) {
+        
+        let version = Bundle.main._appVersion()
+        let info = UIDevice._systemInformation()
+        let icon = UIApplicationShortcutIcon(type: .love)
+        let title = "版本 - \(info.name) \(info.version)"
+        let shortcutItem = UIApplicationShortcutItem._build(localizedTitle: title, localizedSubtitle: "v\(version.app ?? "0.0.0") (\(version.build ?? "0"))", icon: icon)
+        
+        application.shortcutItems = [shortcutItem]
     }
 }
 

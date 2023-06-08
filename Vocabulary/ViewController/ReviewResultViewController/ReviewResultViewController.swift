@@ -13,16 +13,19 @@ final class ReviewResultViewController: UIViewController {
     
     @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var myTableView: UITableView!
+    @IBOutlet weak var searchBarButtonItem: UIBarButtonItem!
     
     private let reviewDetailSegue = "ReviewDetailSegue"
     
     private var isAnimationStop = false
+    private var reviewResultType: Constant.ReviewResultType = .alphabet
     private var disappearImage: UIImage?
     private var refreshControl: UIRefreshControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
+        initMenu()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -47,9 +50,9 @@ final class ReviewResultViewController: UIViewController {
         pauseBackgroundAnimation()
     }
 
-    @objc func refreshReviewResultList(_ sender: UIRefreshControl) { relaodReviewResultList() }
+    @objc func refreshReviewResultList(_ sender: UIRefreshControl) { relaodReviewResultList(with: reviewResultType) }
     @objc func reviewCount(_ sender: UITapGestureRecognizer) { reviewCountAction() }
-
+    
     deinit {
         ReviewResultTableViewCell.reviewResultListArray = []
         wwPrint("\(Self.self) deinit")
@@ -62,7 +65,7 @@ extension ReviewResultViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return ReviewResultTableViewCell.reviewResultListArray.count }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { return reviewResultTableViewCell(tableView, cellForRowAt: indexPath) }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { performSegue(withIdentifier: reviewDetailSegue, sender: indexPath) }
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateReviewResultList(for: scrollView, height: Constant.updateScrolledHeight) }
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateReviewResultList(for: scrollView, height: Constant.updateScrolledHeight, type: reviewResultType) }
 }
 
 // MARK: - ReviewResultViewController
@@ -78,16 +81,17 @@ private extension ReviewResultViewController {
         myTableView.addSubview(refreshControl)
         myTableView.tableFooterView = UIView()
         
-        relaodReviewResultList()
+        relaodReviewResultList(with: reviewResultType)
     }
     
     /// 重新讀取複習過的單字列表
-    func relaodReviewResultList() {
+    /// - Parameter type: 搜尋排列的類型
+    func relaodReviewResultList(with type: Constant.ReviewResultType) {
         
         defer { refreshControl.endRefreshing() }
         
         ReviewResultTableViewCell.reviewResultListArray = []
-        ReviewResultTableViewCell.reviewResultListArray = API.shared.searchReviewList(for: Constant.currentTableName, offset: ReviewResultTableViewCell.reviewResultListArray.count)
+        ReviewResultTableViewCell.reviewResultListArray = API.shared.searchReviewList(for: Constant.currentTableName, type: type, offset: ReviewResultTableViewCell.reviewResultListArray.count)
         
         titleSetting(with: ReviewResultTableViewCell.reviewResultListArray.count)
         
@@ -109,14 +113,9 @@ private extension ReviewResultViewController {
     /// 顯示複習總覽總數量
     func reviewCountAction() {
         
-        guard let version = Bundle.main._appVersionString(),
-              let build  = Bundle.main._appBuildString()
-        else {
-            return
-        }
-        
+        let version = Bundle.main._appVersion()
+        let message = "v\(version.app ?? "1.0.0") - \(version.build ?? "0")"
         let title = "複習總覽 - \(reviewCount())"
-        let message = "v\(version) - \(build)"
         
         informationHint(with: title, message: message)
     }
@@ -165,23 +164,23 @@ private extension ReviewResultViewController {
     /// - Parameters:
     ///   - scrollView: UIScrollView
     ///   - height: CGFloat
-    func updateReviewResultList(for scrollView: UIScrollView, height: CGFloat) {
+    func updateReviewResultList(for scrollView: UIScrollView, height: CGFloat, type: Constant.ReviewResultType) {
         
         let contentOffsetY = scrollView.contentOffset.y
         let offset = scrollView.frame.height + contentOffsetY - height
         let contentHeight = scrollView.contentSize.height
         
         if (contentOffsetY < 0) { return }
-        if (offset > contentHeight) { appendReviewResultList() }
+        if (offset > contentHeight) { appendReviewResultList(with: type) }
     }
     
     /// 新複習過的單字列表
-    func appendReviewResultList() {
+    func appendReviewResultList(with type: Constant.ReviewResultType) {
         
         defer { refreshControl.endRefreshing() }
         
         let oldListCount = ReviewResultTableViewCell.reviewResultListArray.count
-        ReviewResultTableViewCell.reviewResultListArray += API.shared.searchReviewList(for: Constant.currentTableName, offset: oldListCount)
+        ReviewResultTableViewCell.reviewResultListArray += API.shared.searchReviewList(for: Constant.currentTableName, type: type, offset: oldListCount)
 
         let newListCount = ReviewResultTableViewCell.reviewResultListArray.count
         titleSetting(with: newListCount)
@@ -236,6 +235,8 @@ private extension ReviewResultViewController {
         let title = "複習總覽 - \(count)"
         
         guard let titleView = navigationItem.titleView as? UILabel else { titleViewSetting(with: title); return }
+        
+        titleView.sizeToFit()
         titleView.text = title
     }
     
@@ -264,3 +265,38 @@ private extension ReviewResultViewController {
     }
 }
 
+// MARK: - UIMenu
+private extension ReviewResultViewController {
+    
+    /// [初始化功能選單](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/ios-的選單-menu-按鈕-pull-down-button-pop-up-button-2ddab2181ee5)
+    /// => [UIMenu - iOS 14](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/在-iphone-ipad-上顯示-popover-彈出視窗-ac196732e557)
+    func initMenu() {
+        initSearchItemMenu()
+    }
+    
+    /// 初始化搜尋排序選單 (UIMenu)
+    /// - Parameter sender: UIBarButtonItem
+    func initSearchItemMenu() {
+        
+        let actions = Constant.ReviewResultType.allCases.map({ searchItemMenuActionMaker(type: $0) })
+        let menu = UIMenu(title: "請選擇排列方法", children: actions)
+        
+        searchBarButtonItem.menu = menu
+    }
+    
+    /// 產生搜尋排序選單
+    /// - Parameter filename: String
+    /// - Returns: UIAction
+    func searchItemMenuActionMaker(type: Constant.ReviewResultType) -> UIAction {
+        
+        let action = UIAction(title: "\(type.value())") { [weak self] _ in
+            
+            guard let this = self else { return }
+            
+            this.reviewResultType = type
+            this.relaodReviewResultList(with: type)
+        }
+        
+        return action
+    }
+}

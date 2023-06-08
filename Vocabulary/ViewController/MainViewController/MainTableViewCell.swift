@@ -16,14 +16,26 @@ final class MainTableViewCell: UITableViewCell, CellReusable {
     @IBOutlet weak var countLabel: UILabel!
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var alphabetLabel: UILabel!
+    @IBOutlet weak var favoriteImageView: UIImageView!
     
     static var vocabularyListArray: [[String : Any]] = []
     
     var indexPath: IndexPath = []
     
+    private var isFavorite = false
     private var vocabularyList: VocabularyList?
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        favoriteImageView.gestureRecognizers?.forEach({ favoriteImageView.removeGestureRecognizer($0) })
+    }
+    
     func configure(with indexPath: IndexPath) { configure(for: indexPath) }
+    
+    @objc func updateFavorite(_ recognizer: UITapGestureRecognizer) {
+        isFavorite.toggle()
+        updateFavorite(isFavorite, with: indexPath)
+    }
     
     @IBAction func playSound(_ sender: UIButton) { playWordSound() }    
     
@@ -48,13 +60,14 @@ private extension MainTableViewCell {
     /// 畫面設定
     /// - Parameter indexPath: IndexPath
     func configure(for indexPath: IndexPath) {
-        
+                
         guard let vocabularyList = Self.vocabularyList(with: indexPath) else { return }
         
         let level = Vocabulary.Level(rawValue: vocabularyList.level) ?? .easy
         
         self.indexPath = indexPath
         self.vocabularyList = vocabularyList
+        self.isFavorite = ((vocabularyList.favorite ?? 0) != 0)
         
         countLabel.text = "\(vocabularyList.count)"
         alphabetLabel.text = vocabularyList.alphabet
@@ -66,6 +79,15 @@ private extension MainTableViewCell {
         levelButton.backgroundColor = level.backgroundColor()
         levelButton.showsMenuAsPrimaryAction = true
         levelButton.menu = UIMenu(title: "請選擇等級", children: levelMenuActionMaker())
+        
+        favoriteImageView.image = (!isFavorite) ? UIImage(imageLiteralResourceName: "Notice_Off") : UIImage(imageLiteralResourceName: "Notice_On")
+        initFavoriteImageViewTapGestureRecognizer()
+    }
+    
+    /// FavoriteImageView點擊功能
+    func initFavoriteImageViewTapGestureRecognizer() {
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(Self.updateFavorite(_:)))
+        favoriteImageView.addGestureRecognizer(recognizer)
     }
     
     /// 讀出單字
@@ -81,13 +103,9 @@ private extension MainTableViewCell {
         let actions = Vocabulary.Level.allCases.map { level in
             
             let action = UIAction(title: level.value()) { [weak self] action in
-                
                 guard let this = self else { return }
-                
                 this.updateLevel(level, with: this.indexPath)
-                this.updateLevelDictionary(level, with: this.indexPath)
             }
-            
             return action
         }
         
@@ -107,6 +125,23 @@ private extension MainTableViewCell {
         
         levelButton.setTitle(level.value(), for: .normal)
         levelButton.backgroundColor = level.backgroundColor()
+        
+        updateLevelDictionary(level, with: indexPath)
+    }
+    
+    /// 更新Favorite狀態
+    /// - Parameters:
+    ///   - isFavorite: Bool
+    ///   - indexPath: IndexPath
+    func updateFavorite(_ isFavorite: Bool, with indexPath: IndexPath) {
+        
+        guard let vocabularyList = Self.vocabularyList(with: indexPath) else { return }
+        
+        let isSuccess = API.shared.updateVocabularyFavoriteToList(vocabularyList.id, isFavorite: isFavorite, for: Constant.currentTableName)
+        if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
+        
+        favoriteImageView.image = (!isFavorite) ? UIImage(imageLiteralResourceName: "Notice_Off") : UIImage(imageLiteralResourceName: "Notice_On")
+        updateFavoriteDictionary(isFavorite, with: indexPath)
     }
     
     /// 更新暫存的單字列表資訊
@@ -118,6 +153,20 @@ private extension MainTableViewCell {
         guard var dictionary = Self.vocabularyListArray[safe: indexPath.row] else { return }
         
         dictionary["level"] = level.rawValue
+        Self.vocabularyListArray[indexPath.row] = dictionary
+    }
+    
+    /// 更新暫存的我的最愛資訊
+    /// - Parameters:
+    ///   - level: Vocabulary.Level
+    ///   - indexPath: IndexPath
+    func updateFavoriteDictionary(_ isFavorite: Bool, with indexPath: IndexPath) {
+        
+        guard var dictionary = Self.vocabularyListArray[safe: indexPath.row] else { return }
+        
+        let favorite = isFavorite._int()
+        dictionary["favorite"] = favorite
+        
         Self.vocabularyListArray[indexPath.row] = dictionary
     }
 }

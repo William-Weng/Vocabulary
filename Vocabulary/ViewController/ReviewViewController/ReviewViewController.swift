@@ -38,8 +38,8 @@ final class ReviewViewController: UIViewController {
     
     private var vocabularyList: VocabularyList?
     private var disappearImage: UIImage?
-    
-    lazy var speechSynthesizer = AVSpeechSynthesizer._build(delegate: self)
+        
+    private lazy var speechSynthesizer = AVSpeechSynthesizer._build(delegate: self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -162,7 +162,7 @@ private extension ReviewViewController {
         isGuessAnimationStop = false
         speakImageView.isUserInteractionEnabled = false
         answearButtonStatus(isEnabled: false)
-                
+        
         _ = speakImageView._GIF(url: gifUrl) { [weak self] result in
             
             guard let this = self else { return }

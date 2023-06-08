@@ -15,12 +15,24 @@ final class SolutionTableViewCell: UITableViewCell, CellReusable {
     
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var alphabetLabel: UILabel!
+    @IBOutlet weak var favoriteImageView: UIImageView!
     
     var indexPath: IndexPath = []
     
+    private var isFavorite = false
     private var vocabularyList: VocabularyList?
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        favoriteImageView.gestureRecognizers?.forEach({ favoriteImageView.removeGestureRecognizer($0) })
+    }
+    
     func configure(with indexPath: IndexPath) { configure(for: indexPath) }
+    
+    @objc func updateFavorite(_ recognizer: UITapGestureRecognizer) {
+        isFavorite.toggle()
+        updateFavorite(isFavorite, with: indexPath)
+    }
     
     @IBAction func playSound(_ sender: UIButton) { playWordSound() }
     
@@ -50,16 +62,55 @@ private extension SolutionTableViewCell {
         
         self.indexPath = indexPath
         self.vocabularyList = vocabularyList
+        self.isFavorite = ((vocabularyList.favorite ?? 0) != 0)
         
         alphabetLabel.text = vocabularyList.alphabet
 
         wordLabel.text = vocabularyList.word
         wordLabel.font = Constant.currentTableName.font() ?? UIFont.systemFont(ofSize: 36.0)
+        
+        favoriteImageView.image = (!isFavorite) ? UIImage(imageLiteralResourceName: "Notice_Off") : UIImage(imageLiteralResourceName: "Notice_On")
+        initFavoriteImageViewTapGestureRecognizer()
     }
     
     /// 讀出單字
     func playWordSound() {
         guard let vocabularyList = vocabularyList else { return }
         Utility.shared.speak(string: vocabularyList.word, voice: Constant.currentTableName)
+    }
+    
+    /// FavoriteImageView點擊功能
+    func initFavoriteImageViewTapGestureRecognizer() {
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(Self.updateFavorite(_:)))
+        favoriteImageView.addGestureRecognizer(recognizer)
+    }
+
+    /// 更新Favorite狀態
+    /// - Parameters:
+    ///   - isFavorite: Bool
+    ///   - indexPath: IndexPath
+    func updateFavorite(_ isFavorite: Bool, with indexPath: IndexPath) {
+
+        guard let vocabularyReviewList = Self.vocabularyReviewList(with: indexPath) else { return }
+        
+        let isSuccess = API.shared.updateVocabularyFavoriteToList(vocabularyReviewList.id, isFavorite: isFavorite, for: Constant.currentTableName)
+        if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
+        
+        favoriteImageView.image = (!isFavorite) ? UIImage(imageLiteralResourceName: "Notice_Off") : UIImage(imageLiteralResourceName: "Notice_On")
+        updateFavoriteDictionary(isFavorite, with: indexPath)
+    }
+
+    /// 更新暫存的我的最愛資訊
+    /// - Parameters:
+    ///   - level: Vocabulary.Level
+    ///   - indexPath: IndexPath
+    func updateFavoriteDictionary(_ isFavorite: Bool, with indexPath: IndexPath) {
+
+        guard var dictionary = Self.vocabularyReviewListArray[safe: indexPath.row] else { return }
+
+        let favorite = isFavorite._int()
+        dictionary["favorite"] = favorite
+
+        Self.vocabularyReviewListArray[indexPath.row] = dictionary
     }
 }

@@ -601,7 +601,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20230604;
+				CURRENT_PROJECT_VERSION = 20230609;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -620,7 +620,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.1;
+				MARKETING_VERSION = 1.5.2;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -639,7 +639,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20230604;
+				CURRENT_PROJECT_VERSION = 20230609;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -658,7 +658,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.1;
+				MARKETING_VERSION = 1.5.2;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

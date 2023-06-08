@@ -16,16 +16,23 @@ final class SentenceTableViewCell: UITableViewCell, CellReusable {
     @IBOutlet weak var exampleLabel: UILabel!
     @IBOutlet weak var translateLabel: UILabel!
     @IBOutlet weak var speechButton: UIButton!
+    @IBOutlet weak var favoriteImageView: UIImageView!
     
     static var sentenceViewDelegate: SentenceViewDelegate?
     
     var indexPath: IndexPath = []
     
+    private var isFavorite = false
     private var sentenceList: VocabularySentenceList?
     
     func configure(with indexPath: IndexPath) { configure(for: indexPath) }
     
     @objc func persentNetDictionary(_ sender: UITapGestureRecognizer) { Self.sentenceViewDelegate?.wordDictionary(with: indexPath) }
+
+    @objc func updateFavorite(_ recognizer: UITapGestureRecognizer) {
+        isFavorite.toggle()
+        updateFavorite(isFavorite, with: indexPath)
+    }
 
     @IBAction func playSound(_ sender: UIButton) { playExampleSound() }
     
@@ -58,16 +65,26 @@ private extension SentenceTableViewCell {
         self.accessoryView = accessoryViewMaker()
         self.indexPath = indexPath
         self.sentenceList = sentenceList
+        self.isFavorite = ((sentenceList.favorite ?? 0) != 0)
         
         translateLabel.text = sentenceList.translate
         
-        exampleLabel.font = Constant.currentTableName.font(size: 24.0) ?? UIFont.systemFont(ofSize: 24.0)
+        exampleLabel.font = Constant.currentTableName.font(size: 24.0) ?? .systemFont(ofSize: 24.0)
         exampleLabel.text = sentenceList.example
         
         speechButton.setTitle(speechType.value(), for: .normal)
         speechButton.backgroundColor = speechType.backgroundColor()
         speechButton.showsMenuAsPrimaryAction = true
         speechButton.menu = UIMenu(title: "請選擇分類", children: speechMenuActionMaker())
+        
+        favoriteImageView.image = (!isFavorite) ? UIImage(imageLiteralResourceName: "Notice_Off") : UIImage(imageLiteralResourceName: "Notice_On")
+        initFavoriteImageViewTapGestureRecognizer()
+    }
+    
+    /// FavoriteImageView點擊功能
+    func initFavoriteImageViewTapGestureRecognizer() {
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(Self.updateFavorite(_:)))
+        favoriteImageView.addGestureRecognizer(recognizer)
     }
     
     /// 讀出例句
@@ -98,7 +115,7 @@ private extension SentenceTableViewCell {
     /// 產生LevelButton選到時的動作
     /// - Returns: [UIAction]
     func speechMenuActionMaker() -> [UIAction] {
-            
+        
         let actions = VocabularySentenceList.Speech.allCases.map { speech in
             
             let action = UIAction(title: speech.value()) { [weak self] action in
@@ -121,7 +138,7 @@ private extension SentenceTableViewCell {
     ///   - indexPath: IndexPath
     func updateSpeech(_ speech: VocabularySentenceList.Speech, with indexPath: IndexPath) {
         
-        guard let sentenceList = SentenceTableViewCell.sentenceList(with: indexPath) else { return }
+        guard let sentenceList = Self.sentenceList(with: indexPath) else { return }
         
         let isSuccess = API.shared.updateSentenceSpeechToList(sentenceList.id, speech: speech, for: Constant.currentTableName)
 
@@ -131,15 +148,44 @@ private extension SentenceTableViewCell {
         speechButton.backgroundColor = speech.backgroundColor()
     }
     
+    /// 更新Favorite狀態
+    /// - Parameters:
+    ///   - isFavorite: Bool
+    ///   - indexPath: IndexPath
+    func updateFavorite(_ isFavorite: Bool, with indexPath: IndexPath) {
+        
+        guard let sentenceList = Self.sentenceList(with: indexPath) else { return }
+
+        let isSuccess = API.shared.updateSentenceFavoriteToList(sentenceList.id, isFavorite: isFavorite, for: Constant.currentTableName)
+        if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
+
+        favoriteImageView.image = (!isFavorite) ? UIImage(imageLiteralResourceName: "Notice_Off") : UIImage(imageLiteralResourceName: "Notice_On")
+        updateFavoriteDictionary(isFavorite, with: indexPath)
+    }
+    
     /// 更新暫存的單字內容列表資訊
     /// - Parameters:
     ///   - level: VocabularySentenceList.Speech
     ///   - indexPath: IndexPath
     func updateLevelDictionary(_ speech: VocabularySentenceList.Speech, with indexPath: IndexPath) {
         
-        guard var dictionary = SentenceTableViewCell.sentenceListArray[safe: indexPath.row] else { return }
+        guard var dictionary = Self.sentenceListArray[safe: indexPath.row] else { return }
         
         dictionary["speech"] = speech.rawValue
+        Self.sentenceListArray[indexPath.row] = dictionary
+    }
+    
+    /// 更新暫存的我的最愛資訊
+    /// - Parameters:
+    ///   - level: Vocabulary.Level
+    ///   - indexPath: IndexPath
+    func updateFavoriteDictionary(_ isFavorite: Bool, with indexPath: IndexPath) {
+        
+        guard var dictionary = Self.sentenceListArray[safe: indexPath.row] else { return }
+
+        let favorite = isFavorite._int()
+        dictionary["favorite"] = favorite
+
         Self.sentenceListArray[indexPath.row] = dictionary
     }
 }

@@ -22,13 +22,16 @@ final class OthersViewController: UIViewController {
     
     @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var myTableView: UITableView!
+    @IBOutlet weak var dictionaryButtonItem: UIBarButtonItem!
     @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var appendBookmarkButton: UIButton!
     
     private let licenseWebViewSegue = "LicenseWebViewSegue"
     
     private var isAnimationStop = false
     private var isFixed = false
-    
+    private var isFavorite = false
+
     private var currentScrollDirection: Constant.ScrollDirection = .down
     private var disappearImage: UIImage?
     private var refreshControl: UIRefreshControl!
@@ -36,6 +39,7 @@ final class OthersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
+        initDictionaryItemMenu()
         viewDidTransitionAction()
     }
     
@@ -54,15 +58,12 @@ final class OthersViewController: UIViewController {
         pauseBackgroundAnimation()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        guard let webViewController = segue.destination as? LicenseWebViewController else { return }
-        webViewController.othersViewDelegate = self
-    }
-    
-    @objc func refreshBookmarks(_ sender: UIRefreshControl) { reloadBookmarks() }
+    @objc func refreshBookmarks(_ sender: UIRefreshControl) { reloadBookmarks(isFavorite: isFavorite) }
     @objc func bookmarkCount(_ sender: UITapGestureRecognizer) { bookmarkCountAction() }
 
+    @IBAction func shareDatabase(_ sender: UIBarButtonItem) { shareDatabaseAction(sender) }
+    @IBAction func downloadDatabase(_ sender: UIBarButtonItem) { downloadDatabaseAction(sender) }
+    @IBAction func filterFavorite(_ sender: UIBarButtonItem) { filterFavoriteAction(with: sender) }
     @IBAction func appendBookmarkAction(_ sender: UIButton) {
         
         appendBookmarkHint(title: "請輸入網址") { [weak self] (title, webUrl) in
@@ -70,10 +71,6 @@ final class OthersViewController: UIViewController {
             return this.appendBookmark(title, webUrl: webUrl, for: Constant.currentTableName)
         }
     }
-    
-    @IBAction func licensePage(_ sender: UIBarButtonItem) { performSegue(withIdentifier: licenseWebViewSegue, sender: nil) }
-    @IBAction func shareDatabase(_ sender: UIBarButtonItem) { shareDatabaseAction(sender) }
-    @IBAction func downloadDatabase(_ sender: UIBarButtonItem) { downloadDatabaseAction(sender) }
     
     deinit {
         OthersTableViewCell.bookmarksArray = []
@@ -116,7 +113,7 @@ extension OthersViewController: UIDocumentPickerDelegate {
 
 // MARK: - MyNavigationControllerDelegate
 extension OthersViewController: MyNavigationControllerDelegate {
-    func refreshRootViewController() { reloadBookmarks() }
+    func refreshRootViewController() { reloadBookmarks(isFavorite: isFavorite) }
 }
 
 // MARK: - OthersViewDelegate
@@ -138,7 +135,7 @@ private extension OthersViewController {
         refreshControl = UIRefreshControl._build(target: self, action: #selector(Self.refreshBookmarks(_:)))
         fakeTabBarHeightConstraint.constant = self.tabBarController?.tabBar.frame.height ?? 0
         
-        reloadBookmarks()
+        reloadBookmarks(isFavorite: isFavorite)
         
         myTableView._delegateAndDataSource(with: self)
         myTableView.addSubview(refreshControl)
@@ -146,12 +143,13 @@ private extension OthersViewController {
     }
     
     /// 重新讀取書籤
-    func reloadBookmarks() {
+    /// - Parameter isFavorite: 我的最愛
+    func reloadBookmarks(isFavorite: Bool) {
         
         defer { refreshControl.endRefreshing() }
         
         OthersTableViewCell.bookmarksArray = []
-        OthersTableViewCell.bookmarksArray = API.shared.searchBookmarkList(for: Constant.currentTableName, offset: 0)
+        OthersTableViewCell.bookmarksArray = API.shared.searchBookmarkList(isFavorite: isFavorite, for: Constant.currentTableName, offset: 0)
         
         titleSetting(with: OthersTableViewCell.bookmarksArray.count)
         
@@ -195,14 +193,9 @@ private extension OthersViewController {
     /// 顯示書籤總數量
     func bookmarkCountAction() {
         
-        guard let version = Bundle.main._appVersionString(),
-              let build  = Bundle.main._appBuildString()
-        else {
-            return
-        }
-        
+        let version = Bundle.main._appVersion()
+        let message = "v\(version.app ?? "1.0.0") - \(version.build ?? "0")"
         let title = "書籤數量 - \(bookmarkCount())"
-        let message = "v\(version) - \(build)"
         
         informationHint(with: title, message: message)
     }
@@ -376,11 +369,8 @@ private extension OthersViewController {
         
         Utility.shared.flashHUD(with: .success)
         
-        if let indexPath = indexPath {
-            updateCellLabel(with: indexPath, title: title, webUrl: webUrl)
-        } else {
-            reloadBookmarks()
-        }
+        if let indexPath = indexPath { updateCellLabel(with: indexPath, title: title, webUrl: webUrl); return }
+        reloadBookmarks(isFavorite: isFavorite)
     }
     
     /// 下滑到底更新資料
@@ -394,16 +384,16 @@ private extension OthersViewController {
         let contentHeight = scrollView.contentSize.height
         
         if (contentOffsetY < 0) { return }
-        if (offset > contentHeight) { appendBookmarkList() }
+        if (offset > contentHeight) { appendBookmarkList(isFavorite: isFavorite) }
     }
     
     /// 增加書籤列表
-    func appendBookmarkList() {
+    func appendBookmarkList(isFavorite: Bool) {
         
         defer { refreshControl.endRefreshing() }
         
         let oldListCount = OthersTableViewCell.bookmarksArray.count
-        OthersTableViewCell.bookmarksArray += API.shared.searchBookmarkList(for: Constant.currentTableName, offset: oldListCount)
+        OthersTableViewCell.bookmarksArray += API.shared.searchBookmarkList(isFavorite: isFavorite, for: Constant.currentTableName, offset: oldListCount)
         
         let newListCount = OthersTableViewCell.bookmarksArray.count
         titleSetting(with: newListCount)
@@ -681,5 +671,48 @@ private extension OthersViewController {
         alertController.addAction(actionOK)
         
         present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 過濾是否為Favorite的書籤
+    /// - Parameter sender: UIBarButtonItem
+    func filterFavoriteAction(with sender: UIBarButtonItem) {
+        
+        isFavorite.toggle()
+        
+        sender.image = (!isFavorite) ? UIImage(imageLiteralResourceName: "Notice_Off") : UIImage(imageLiteralResourceName: "Notice_On")
+        
+        appendBookmarkButton.isHidden = isFavorite
+        reloadBookmarks(isFavorite: isFavorite)
+    }
+}
+
+// MARK: - UIMenu
+extension OthersViewController {
+    
+    /// 初始化字典選單 (UIMenu)
+    /// - Parameter sender: UIBarButtonItem
+    func initDictionaryItemMenu() {
+        
+        let actions = Constant.VoiceCode.allCases.map { dictionaryItemMenuActionMaker(tableName: $0) }
+        let menu = UIMenu(title: "請選擇字典", children: actions)
+        
+        dictionaryButtonItem.menu = menu
+    }
+    
+    /// 產生字典資料庫選單
+    /// - Parameter tableName: Constant.VoiceCode
+    /// - Returns: UIAction
+    func dictionaryItemMenuActionMaker(tableName: Constant.VoiceCode) -> UIAction {
+        
+        let action = UIAction(title: tableName.name()) { [weak self] _ in
+            
+            guard let this = self else { return }
+            
+            Constant.currentTableName = tableName
+            this.dictionaryButtonItem.title = tableName.flagEmoji()
+            NotificationCenter.default._post(name: .refreshViewController)
+        }
+        
+        return action
     }
 }

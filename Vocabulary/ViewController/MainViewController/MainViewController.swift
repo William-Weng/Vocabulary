@@ -29,7 +29,6 @@ final class MainViewController: UIViewController {
     
     @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var myTableView: UITableView!
-    @IBOutlet weak var dictionaryButtonItem: UIBarButtonItem!
     @IBOutlet weak var volumeButtonItem: UIBarButtonItem!
     @IBOutlet weak var musicButtonItem: UIBarButtonItem!
     @IBOutlet weak var appendWordButton: UIButton!
@@ -37,6 +36,7 @@ final class MainViewController: UIViewController {
     
     private var isFixed = false
     private var isAnimationStop = false
+    private var isFavorite = false
     private var currentScrollDirection: Constant.ScrollDirection = .down
     private var disappearImage: UIImage?
     private var refreshControl: UIRefreshControl!
@@ -62,32 +62,13 @@ final class MainViewController: UIViewController {
         pauseBackgroundAnimation()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) { prepareAction(for: segue, sender: sender) }
         
-        guard let identifier = segue.identifier,
-              let segueType = ViewSegueType(rawValue: identifier)
-        else {
-            return
-        }
-        
-        switch segueType {
-        case .listTableView: vocabularyListPageSetting(for: segue, sender: sender)
-        case .volumeView: volumePageSetting(for: segue, sender: sender)
-        case .searchView: break
-        }
-    }
-    
-    @objc func refreshVocabularyList(_ sender: UIRefreshControl) { reloadVocabulary() }
+    @objc func refreshVocabularyList(_ sender: UIRefreshControl) { reloadVocabulary(isFavorite: isFavorite) }
     @objc func vocabularyCount(_ sender: UITapGestureRecognizer) { vocabularyCountAction() }
     
-    @IBAction func appendWordAction(_ sender: UIButton) {
-        
-        appendTextHint(title: "請輸入單字") { [weak self] inputWord in
-            guard let this = self else { return false }
-            return this.appendWord(inputWord, for: Constant.currentTableName)
-        }
-    }
-
+    @IBAction func appendWordAction(_ sender: UIButton) { appendTextHintAction(sender) }
+    @IBAction func filterFavorite(_ sender: UIBarButtonItem) { filterFavoriteAction(with: sender) }
     @IBAction func selectVolume(_ sender: UIBarButtonItem) { performSegue(for: .volumeView, sender: nil) }
     @IBAction func searchWordAction(_ sender: UIBarButtonItem) { performSegue(for: .searchView, sender: nil) }
     
@@ -106,7 +87,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { performSegue(for: .listTableView, sender: indexPath) }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? { return UISwipeActionsConfiguration(actions: trailingSwipeActionsMaker(with: indexPath)) }
     func scrollViewDidScroll(_ scrollView: UIScrollView) { tabrBarHidden(with: scrollView) }
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateVocabularyList(for: scrollView, height: Constant.updateScrolledHeight) }
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateVocabularyList(for: scrollView, height: Constant.updateScrolledHeight, isFavorite: isFavorite) }
 }
 
 // MARK: - UIPopoverPresentationControllerDelegate
@@ -123,7 +104,7 @@ extension MainViewController: MainViewDelegate {
 
 // MARK: - MyNavigationControllerDelegate
 extension MainViewController: MyNavigationControllerDelegate {
-    func refreshRootViewController() { reloadVocabulary() }
+    func refreshRootViewController() { reloadVocabulary(isFavorite: isFavorite) }
 }
 
 // MARK: - 小工具
@@ -141,7 +122,7 @@ private extension MainViewController {
         myTableView.addSubview(refreshControl)
         myTableView.tableFooterView = UIView()
         
-        reloadVocabulary()
+        reloadVocabulary(isFavorite: isFavorite)
         
         viewDidTransitionAction()
         backupDatabaseAction(delay: Constant.autoBackupDelaySecond)
@@ -162,17 +143,31 @@ private extension MainViewController {
     
     /// 顯示單字總數量
     func vocabularyCountAction() {
+
+        let version = Bundle.main._appVersion()
+        let message = "v\(version.app ?? "1.0.0") - \(version.build ?? "0")"
+        let title = "單字數量 - \(vocabularyCount())"
         
-        guard let version = Bundle.main._appVersionString(),
-              let build  = Bundle.main._appBuildString()
+        informationHint(with: title, message: message)
+    }
+    
+    /// 處理UIStoryboardSegue跳轉到下一頁的功能
+    /// - Parameters:
+    ///   - segue: UIStoryboardSegue
+    ///   - sender: Any?
+    func prepareAction(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let identifier = segue.identifier,
+              let segueType = ViewSegueType(rawValue: identifier)
         else {
             return
         }
         
-        let title = "單字數量 - \(vocabularyCount())"
-        let message = "v\(version) - \(build)"
-        
-        informationHint(with: title, message: message)
+        switch segueType {
+        case .listTableView: vocabularyListPageSetting(for: segue, sender: sender)
+        case .volumeView: volumePageSetting(for: segue, sender: sender)
+        case .searchView: break
+        }
     }
     
     /// 使用Segue進入下一頁
@@ -183,15 +178,16 @@ private extension MainViewController {
     }
     
     /// 重新讀取單字
-    func reloadVocabulary() {
+    /// - Parameter isFavorite: Bool
+    func reloadVocabulary(isFavorite: Bool = false) {
         
         defer { refreshControl.endRefreshing() }
-                
+        
         MainTableViewCell.vocabularyListArray = []
-        MainTableViewCell.vocabularyListArray = API.shared.searchVocabularyList(for: Constant.currentTableName, offset: MainTableViewCell.vocabularyListArray.count)
+        MainTableViewCell.vocabularyListArray = API.shared.searchVocabularyList(isFavorite: isFavorite, for: Constant.currentTableName, offset: MainTableViewCell.vocabularyListArray.count)
         
         titleSetting(with: MainTableViewCell.vocabularyListArray.count)
-        
+                
         myTableView._reloadData() { [weak self] in
                         
             guard let this = self,
@@ -261,12 +257,13 @@ private extension MainViewController {
     }
     
     /// [新增單字列表](https://medium.com/@daoseng33/我說那個-uitableview-insertrows-uicollectionview-insertitems-呀-56b8758b2efb)
-    func appendVocabularyList() {
+    /// - Parameter isFavorite: Bool
+    func appendVocabularyList(isFavorite: Bool) {
         
         defer { refreshControl.endRefreshing() }
         
         let oldListCount = MainTableViewCell.vocabularyListArray.count
-        MainTableViewCell.vocabularyListArray += API.shared.searchVocabularyList(for: Constant.currentTableName, offset: oldListCount)
+        MainTableViewCell.vocabularyListArray += API.shared.searchVocabularyList(isFavorite: isFavorite, for: Constant.currentTableName, offset: oldListCount)
         
         let newListCount = MainTableViewCell.vocabularyListArray.count
         titleSetting(with: newListCount)
@@ -326,14 +323,25 @@ private extension MainViewController {
     /// - Parameters:
     ///   - scrollView: UIScrollView
     ///   - height: CGFloat
-    func updateVocabularyList(for scrollView: UIScrollView, height: CGFloat) {
+    ///   - isFavorite: Bool
+    func updateVocabularyList(for scrollView: UIScrollView, height: CGFloat, isFavorite: Bool) {
         
         let contentOffsetY = scrollView.contentOffset.y
         let offset = scrollView.frame.height + contentOffsetY - height
         let contentHeight = scrollView.contentSize.height
         
         if (contentOffsetY < 0) { return }
-        if (offset > contentHeight) { appendVocabularyList() }
+        if (offset > contentHeight) { appendVocabularyList(isFavorite: isFavorite) }
+    }
+    
+    /// 新增單字的動作
+    /// - Parameter sender: UIButton
+    func appendTextHintAction(_ sender: UIButton) {
+        
+        appendTextHint(title: "請輸入單字") { [weak self] inputWord in
+            guard let this = self else { return false }
+            return this.appendWord(inputWord, for: Constant.currentTableName)
+        }
     }
     
     /// 新增文字的提示框
@@ -695,6 +703,8 @@ private extension MainViewController {
         let title = "我愛背單字 - \(count)"
         
         guard let titleView = navigationItem.titleView as? UILabel else { titleViewSetting(with: title); return }
+        
+        titleView.sizeToFit()
         titleView.text = title
     }
     
@@ -721,6 +731,18 @@ private extension MainViewController {
         
         present(alertController, animated: true, completion: nil)
     }
+    
+    /// 過濾是否為Favorite的單字
+    /// - Parameter sender: UIBarButtonItem
+    func filterFavoriteAction(with sender: UIBarButtonItem) {
+        
+        isFavorite.toggle()
+        
+        sender.image = (!isFavorite) ? UIImage(imageLiteralResourceName: "Notice_Off") : UIImage(imageLiteralResourceName: "Notice_On")
+        
+        appendWordButton.isHidden = isFavorite
+        reloadVocabulary(isFavorite: isFavorite)
+    }
 }
 
 // MARK: - UIMenu
@@ -729,18 +751,7 @@ private extension MainViewController {
     /// [初始化功能選單](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/ios-的選單-menu-按鈕-pull-down-button-pop-up-button-2ddab2181ee5)
     /// => [UIMenu - iOS 14](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/在-iphone-ipad-上顯示-popover-彈出視窗-ac196732e557)
     func initMenu() {
-        initDictionaryItemMenu()
         initMusicItemMenu()
-    }
-    
-    /// 初始化字典選單 (UIMenu)
-    /// - Parameter sender: UIBarButtonItem
-    func initDictionaryItemMenu() {
-        
-        let actions = Constant.VoiceCode.allCases.map { dictionaryItemMenuActionMaker(tableName: $0) }
-        let menu = UIMenu(title: "請選擇字典", children: actions)
-        
-        dictionaryButtonItem.menu = menu
     }
     
     /// 初始化音樂選單 (UIMenu)
@@ -755,23 +766,6 @@ private extension MainViewController {
         let menu = UIMenu(title: "請選擇背景音樂 (.mp3 / .m4a)", children: actions)
         
         musicButtonItem.menu = menu
-    }
-    
-    /// 產生字典資料庫選單
-    /// - Parameter tableName: Constant.VoiceCode
-    /// - Returns: UIAction
-    func dictionaryItemMenuActionMaker(tableName: Constant.VoiceCode) -> UIAction {
-        
-        let action = UIAction(title: tableName.name()) { [weak self] _ in
-            
-            guard let this = self else { return }
-            
-            Constant.currentTableName = tableName
-            this.dictionaryButtonItem.title = tableName.flagEmoji()
-            NotificationCenter.default._post(name: .refreshViewController)
-        }
-        
-        return action
     }
     
     /// 產生音樂選單

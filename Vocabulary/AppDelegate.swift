@@ -27,6 +27,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = WWWebImage.initDatabase(for: .caches, expiredDays: 90)
         
         initDatabase()
+        backgroundPlayAudio()
         appVersionShortcutItem(with: application)
         
         backgroundBarColor(.black.withAlphaComponent(0.1))
@@ -221,6 +222,11 @@ private extension AppDelegate {
         case .failure(let error): wwPrint(error); return false
         case .success(let isSuccess): return isSuccess
         }
+    }
+    
+    /// [背景播放音樂 => Background Modes](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/設定-background-mode-在背景播放音樂-9bab5db75cc9)
+    func backgroundPlayAudio() {
+        try? AVAudioSession.sharedInstance().setCategory(.playback)
     }
     
     /// 設定ShortcutItem

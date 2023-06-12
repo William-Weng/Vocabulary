@@ -824,9 +824,16 @@ extension UIDevice {
 extension UIWindow {
     
     /// [取得作用中的KeyWindow](https://stackoverflow.com/questions/57134259/how-to-resolve-keywindow-was-deprecated-in-ios-13-0)
+    /// - Parameter hasScene: [有沒有使用Scene ~ iOS 13](https://juejin.cn/post/6844903993496305671)
     /// - Returns: UIWindow?
-    static func _keyWindow() -> UIWindow? {
-        let keyWindow = UIApplication.shared.connectedScenes.filter({$0.activationState == .foregroundActive}).compactMap({$0 as? UIWindowScene}).first?.windows.filter({$0.isKeyWindow}).first
+    static func _keyWindow(hasScene: Bool = true) -> UIWindow? {
+        
+        var keyWindow: UIWindow?
+                
+        keyWindow = UIApplication.shared.connectedScenes.filter({$0.activationState == .foregroundActive}).compactMap({$0 as? UIWindowScene}).first?.windows.filter({$0.isKeyWindow}).first
+        
+        if (!hasScene) { keyWindow = UIApplication.shared.keyWindow }
+        
         return keyWindow
     }
 }

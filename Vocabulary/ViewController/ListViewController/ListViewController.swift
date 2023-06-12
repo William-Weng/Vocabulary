@@ -86,7 +86,7 @@ private extension ListViewController {
                 
         titleViewSetting(with: vocabularyList.word)
         
-        refreshControl = UIRefreshControl._build(target: self, action: #selector(Self.refreshVocabularyList(_:)))
+        refreshControl = UIRefreshControl._build(title: "重新讀取", target: self, action: #selector(Self.refreshVocabularyList(_:)))
         
         myTableView.addSubview(refreshControl)
         myTableView.tableFooterView = UIView()

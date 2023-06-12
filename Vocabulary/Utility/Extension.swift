@@ -1188,17 +1188,19 @@ extension UIRefreshControl {
     
     /// 產生UIRefreshControl
     /// - Parameters:
+    ///   - title: 標題
     ///   - target: 要設定的位置
     ///   - action: 向下拉要做什麼？
     ///   - controlEvents: 事件 => 值改變的時候
     /// - Returns: UIRefreshControl
-    static func _build(target: Any?, action: Selector, for controlEvents: UIControl.Event = [.valueChanged], tintColor: UIColor = .black, backgroundColor: UIColor? = nil) -> UIRefreshControl {
+    static func _build(title: String? = nil, target: Any?, action: Selector, for controlEvents: UIControl.Event = [.valueChanged], tintColor: UIColor = .black, backgroundColor: UIColor? = nil) -> UIRefreshControl {
         
         let refreshControl = UIRefreshControl()
         
         refreshControl.addTarget(target, action: action, for: controlEvents)
         refreshControl.tintColor = tintColor
         refreshControl.backgroundColor = backgroundColor
+        refreshControl.attributedTitle = NSAttributedString(string: title ?? "")
         
         return refreshControl
     }

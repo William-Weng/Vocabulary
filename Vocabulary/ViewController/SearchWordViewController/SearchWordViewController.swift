@@ -128,7 +128,7 @@ private extension SearchWordViewController {
         SearchTableViewCell.searchType = currentSearchType
         SearchTableViewCell.vocabularyListArray = []
         
-        refreshControl = UIRefreshControl._build(target: self, action: #selector(Self.refreshSearchWord(_:)))
+        refreshControl = UIRefreshControl._build(title: "重新讀取", target: self, action: #selector(Self.refreshSearchWord(_:)))
         
         myTableView._delegateAndDataSource(with: self)
         myTableView.addSubview(refreshControl)

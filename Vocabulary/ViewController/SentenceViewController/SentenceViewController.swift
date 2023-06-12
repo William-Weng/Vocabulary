@@ -136,7 +136,7 @@ private extension SentenceViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem()
         SentenceTableViewCell.sentenceViewDelegate = self
 
-        refreshControl = UIRefreshControl._build(target: self, action: #selector(Self.refreshSentenceList(_:)))
+        refreshControl = UIRefreshControl._build(title: "重新讀取", target: self, action: #selector(Self.refreshSentenceList(_:)))
         fakeTabBarHeightConstraint.constant = self.tabBarController?.tabBar.frame.height ?? 0
         
         myTableView._delegateAndDataSource(with: self)

@@ -33,6 +33,7 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var musicButtonItem: UIBarButtonItem!
     @IBOutlet weak var appendWordButton: UIButton!
     @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var activityViewIndicator: UIActivityIndicatorView!
     
     private var isFixed = false
     private var isAnimationStop = false
@@ -63,7 +64,7 @@ final class MainViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) { prepareAction(for: segue, sender: sender) }
-        
+    
     @objc func refreshVocabularyList(_ sender: UIRefreshControl) { reloadVocabulary(isFavorite: isFavorite) }
     @objc func vocabularyCount(_ sender: UITapGestureRecognizer) { vocabularyCountAction() }
     
@@ -86,7 +87,21 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { return mainTableViewCell(tableView, cellForRowAt: indexPath) }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { performSegue(for: .listTableView, sender: indexPath) }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? { return UISwipeActionsConfiguration(actions: trailingSwipeActionsMaker(with: indexPath)) }
-    func scrollViewDidScroll(_ scrollView: UIScrollView) { tabrBarHidden(with: scrollView) }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        tabrBarHidden(with: scrollView)
+        
+        activityViewIndicator.alpha = 0.0
+        
+        let contentOffsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let offset = scrollView.frame.height + contentOffsetY - Constant.updateScrolledHeight
+     
+        wwPrint("scrollView.frame.height => \(scrollView.frame.height), contentHeight => \(contentHeight), contentOffsetY => \(contentOffsetY)")
+        
+        if (contentOffsetY < 0) { return }
+        if (offset > contentHeight) { activityViewIndicator.alpha = 1.0 }
+    }
+    
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateVocabularyList(for: scrollView, height: Constant.updateScrolledHeight, isFavorite: isFavorite) }
 }
 
@@ -115,13 +130,12 @@ private extension MainViewController {
         
         navigationItem.backBarButtonItem = UIBarButtonItem()
         
-        refreshControl = UIRefreshControl._build(target: self, action: #selector(Self.refreshVocabularyList(_:)))
-        fakeTabBarHeightConstraint.constant = self.tabBarController?.tabBar.frame.height ?? 0
+        refreshControl = UIRefreshControl._build(title: "重新讀取", target: self, action: #selector(Self.refreshVocabularyList(_:)))
+        fakeTabBarHeightConstraint.constant = tabBarController?.tabBar.frame.height ?? 0
         
         myTableView._delegateAndDataSource(with: self)
         myTableView.addSubview(refreshControl)
-        myTableView.tableFooterView = UIView()
-        
+                
         reloadVocabulary(isFavorite: isFavorite)
         
         viewDidTransitionAction()
@@ -329,7 +343,7 @@ private extension MainViewController {
         let contentOffsetY = scrollView.contentOffset.y
         let offset = scrollView.frame.height + contentOffsetY - height
         let contentHeight = scrollView.contentSize.height
-        
+                
         if (contentOffsetY < 0) { return }
         if (offset > contentHeight) { appendVocabularyList(isFavorite: isFavorite) }
     }

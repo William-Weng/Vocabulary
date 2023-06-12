@@ -71,6 +71,33 @@ extension Constant {
         }
     }
     
+    /// HUD動畫Type
+    enum HudGifType: String {
+        
+        case success = "Success.gif"
+        case fail = "Fail.gif"
+        case reading = "Reading.gif"
+        case working = "Working.gif"
+        case studing = "Studing.gif"
+        case search = "Search.gif"
+        case review = "Review.gif"
+        case nice = "Nice.gif"
+        case speak = "Speak.gif"
+        case shudder = "Shudder.gif"
+        case solution = "Solution.gif"
+        case sentence = "Sentence.gif"
+        case others = "Others.gif"
+        case download = "Download.gif"
+        case talking = "Talking.gif"
+
+        /// 檔案路徑
+        /// - Returns: URL?
+        func fileURL() -> URL? {
+            let backgroundFolderUrl = Constant.FileFolder.animation.url()
+            return backgroundFolderUrl?._appendPath(self.rawValue)
+        }
+    }
+    
     /// [info.plist上的Key值](https://ithelp.ithome.com.tw/articles/10206444)
     enum InfoPlistKey: String {
         case CFBundleShortVersionString = "CFBundleShortVersionString"      // Version版本號 => 1.0.0

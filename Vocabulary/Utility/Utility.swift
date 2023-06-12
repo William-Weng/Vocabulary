@@ -12,32 +12,6 @@ import WWHUD
 // MARK: - Utility (單例)
 final class Utility: NSObject {
     
-    enum HudGifType: String {
-        
-        case success = "Success.gif"
-        case fail = "Fail.gif"
-        case reading = "Reading.gif"
-        case working = "Working.gif"
-        case studing = "Studing.gif"
-        case search = "Search.gif"
-        case review = "Review.gif"
-        case nice = "Nice.gif"
-        case speak = "Speak.gif"
-        case shudder = "Shudder.gif"
-        case solution = "Solution.gif"
-        case sentence = "Sentence.gif"
-        case others = "Others.gif"
-        case download = "Download.gif"
-        case talking = "Talking.gif"
-
-        /// 檔案路徑
-        /// - Returns: URL?
-        func fileURL() -> URL? {
-            let backgroundFolderUrl = Constant.FileFolder.animation.url()
-            return backgroundFolderUrl?._appendPath(self.rawValue)
-        }
-    }
-    
     static let shared = Utility()
     
     private let synthesizer = AVSpeechSynthesizer._build()
@@ -50,7 +24,7 @@ extension Utility {
     
     /// [顯示HUD](https://augmentedcode.io/2019/09/01/animating-gifs-and-apngs-with-cganimateimageaturlwithblock-in-swift/)
     /// - Parameter type: [Utility.HudGifType](https://www.swiftjectivec.com/animating-images-using-image-io/)
-    func flashHUD(with type: Utility.HudGifType) {
+    func flashHUD(with type: Constant.HudGifType) {
         
         guard let gifUrl = type.fileURL(),
               FileManager.default._fileExists(with: gifUrl).isExist
@@ -63,7 +37,7 @@ extension Utility {
     }
     
     /// [播放HUD](https://augmentedcode.io/2019/09/01/animating-gifs-and-apngs-with-cganimateimageaturlwithblock-in-swift/)
-    func diplayHUD(with type: Utility.HudGifType) {
+    func diplayHUD(with type: Constant.HudGifType) {
 
         guard let gifUrl = type.fileURL(),
               FileManager.default._fileExists(with: gifUrl).isExist

@@ -117,7 +117,7 @@ private extension ReviewViewController {
     /// 初始化SpeakImage
     func initSpeakImage() {
          
-        guard let fileURL = Utility.HudGifType.speak.fileURL(),
+        guard let fileURL = Constant.HudGifType.speak.fileURL(),
               let image = UIImage(contentsOfFile: fileURL.path)
         else {
             return
@@ -154,7 +154,7 @@ private extension ReviewViewController {
     /// - Parameters:
     ///   - type: Utility.HudGifType
     ///   - loopCount: 動畫次數
-    func speakVocabularyAction(with type: Utility.HudGifType = .speak) {
+    func speakVocabularyAction(with type: Constant.HudGifType = .speak) {
         
         guard let gifUrl = type.fileURL() else { return }
         
@@ -204,7 +204,7 @@ private extension ReviewViewController {
     
     /// 動畫背景設定
     /// - Parameter type: Utility.HudGifType
-    func animatedBackground(with type: Utility.HudGifType) {
+    func animatedBackground(with type: Constant.HudGifType) {
         
         guard let gifUrl = type.fileURL() else { return }
         
@@ -377,7 +377,7 @@ private extension ReviewViewController {
             
             defer {
                 
-                let hudType: Utility.HudGifType = (!isCorrect) ? .shudder : .nice
+                let hudType: Constant.HudGifType = (!isCorrect) ? .shudder : .nice
                 
                 _ = this.solutionAction(with: vocabularyList, isCorrect: isCorrect)
                 Utility.shared.flashHUD(with: hudType)

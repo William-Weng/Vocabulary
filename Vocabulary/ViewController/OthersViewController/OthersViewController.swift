@@ -202,7 +202,7 @@ private extension OthersViewController {
     
     /// 動畫背景設定
     /// - Parameter type: Utility.HudGifType
-    func animatedBackground(with type: Utility.HudGifType) {
+    func animatedBackground(with type: Constant.HudGifType) {
         
         guard let gifUrl = type.fileURL() else { return }
         

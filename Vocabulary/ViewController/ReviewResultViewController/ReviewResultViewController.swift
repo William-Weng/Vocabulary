@@ -14,10 +14,14 @@ final class ReviewResultViewController: UIViewController {
     @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var searchBarButtonItem: UIBarButtonItem!
-    
+    @IBOutlet weak var activityViewIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var indicatorLabel: UILabel!
+
     private let reviewDetailSegue = "ReviewDetailSegue"
     
     private var isAnimationStop = false
+    private var isNeededUpdate = true
+    
     private var reviewResultType: Constant.ReviewResultType = .alphabet
     private var disappearImage: UIImage?
     private var refreshControl: UIRefreshControl!
@@ -65,7 +69,7 @@ extension ReviewResultViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return ReviewResultTableViewCell.reviewResultListArray.count }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { return reviewResultTableViewCell(tableView, cellForRowAt: indexPath) }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { performSegue(withIdentifier: reviewDetailSegue, sender: indexPath) }
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateReviewResultList(for: scrollView, height: Constant.updateScrolledHeight, type: reviewResultType) }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) { updateHeightPercentAction(with: scrollView, isNeededUpdate: isNeededUpdate) }
 }
 
 // MARK: - ReviewResultViewController
@@ -93,8 +97,10 @@ private extension ReviewResultViewController {
         ReviewResultTableViewCell.reviewResultListArray = []
         ReviewResultTableViewCell.reviewResultListArray = API.shared.searchReviewList(for: Constant.currentTableName, type: type, offset: ReviewResultTableViewCell.reviewResultListArray.count)
         
-        titleSetting(with: ReviewResultTableViewCell.reviewResultListArray.count)
-        
+        let listCount = ReviewResultTableViewCell.reviewResultListArray.count
+        titleSetting(with: listCount)
+        isNeededUpdate = (listCount < Constant.searchCount) ? false : true
+                
         myTableView._reloadData() { [weak self] in
             
             guard let this = self,
@@ -188,7 +194,8 @@ private extension ReviewResultViewController {
         let indexPaths = (oldListCount..<newListCount).map { IndexPath(row: $0, section: 0) }
         myTableView._insertRows(at: indexPaths, animation: .automatic, animated: false)
         
-        if (newListCount > oldListCount) { Utility.shared.flashHUD(with: .success) }
+        if (newListCount > oldListCount) { Utility.shared.flashHUD(with: .success); return }
+        isNeededUpdate = false
     }
     
     /// 設定單字列表頁的相關數值
@@ -298,5 +305,58 @@ private extension ReviewResultViewController {
         }
         
         return action
+    }
+}
+
+// MARK: - 下滑更新
+private extension ReviewResultViewController {
+    
+    /// 下滑到底更新的動作設定
+    /// - Parameters:
+    ///   - scrollView: UIScrollView
+    ///   - criticalValue: 要更新的臨界值 => 120%才更新
+    func updateHeightPercentAction(with scrollView: UIScrollView, criticalValue: CGFloat = 1.2, isNeededUpdate: Bool) {
+        
+        var percent = Utility.shared.updateHeightPercent(with: scrollView, navigationController: navigationController)
+        
+        if isNeededUpdate && (percent > criticalValue) {
+            percent = 0.0
+            Utility.shared.impactEffect()
+            appendReviewResultList(with: reviewResultType)
+        }
+        
+        updateActivityViewIndicatorSetting(with: percent, isNeededUpdate: isNeededUpdate)
+    }
+    
+    ///  下滑到底更新的轉圈圈設定 => 根據百分比
+    /// - Parameter percent: CGFloat
+    func updateActivityViewIndicatorSetting(with percent: CGFloat, isNeededUpdate: Bool) {
+        
+        let alpha = (percent < 0) ? 0.0 : percent
+        
+        activityViewIndicator.alpha = alpha
+        indicatorLabel.alpha = alpha
+        indicatorLabel.text = updateActivityViewIndicatorTitle(with: percent, isNeededUpdate: isNeededUpdate)
+    }
+    
+    /// 下滑到底更新的顯示Title
+    /// - Parameter percent: CGFloat
+    /// - Returns: String
+    func updateActivityViewIndicatorTitle(with percent: CGFloat, isNeededUpdate: Bool) -> String {
+        
+        if (!isNeededUpdate) { return "無更新資料" }
+        
+        var _percent = percent
+        if (percent > 1.0) { _percent = 1.0 }
+        
+        let title = String(format: "%.2f", _percent * 100)
+        return "\(title) %"
+    }
+    
+    /// 更新下滑更新的高度基準值
+    /// - Parameter percent: KeyWindow高度的25%
+    func updateScrolledHeightSetting(percent: CGFloat = 0.25) {
+        guard let keyWindow = UIWindow._keyWindow(hasScene: false) else { return }
+        Constant.updateScrolledHeight = keyWindow.frame.height * percent
     }
 }

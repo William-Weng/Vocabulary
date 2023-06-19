@@ -43,7 +43,7 @@ extension API {
     ///   - offset: 搜尋的偏移量
     ///   - isFavorite: 我的最愛
     /// - Returns: [[String : Any]]
-    func searchVocabularyList(in words: [String]? = nil, isFavorite: Bool = false, for tableName: Constant.VoiceCode, count: Int = 10, offset: Int) -> [[String : Any]] {
+    func searchVocabularyList(in words: [String]? = nil, isFavorite: Bool = false, for tableName: Constant.VoiceCode, count: Int = Constant.searchCount, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
@@ -145,7 +145,7 @@ extension API {
     ///   - count: 單次搜尋的數量
     ///   - offset: 搜尋的偏移量
     /// - Returns: [[String : Any]]
-    func searchList(like text: String, searchType: Constant.SearchType, for tableName: Constant.VoiceCode, count: Int? = 10, offset: Int) -> [[String : Any]] {
+    func searchList(like text: String, searchType: Constant.SearchType, for tableName: Constant.VoiceCode, count: Int? = Constant.searchCount, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
@@ -195,7 +195,7 @@ extension API {
     ///   - count: Int
     ///   - offset: Int
     /// - Returns: [[String : Any]]
-    func searchWordListDetail(in words: [String], for tableName: Constant.VoiceCode, count: Int = 10, offset: Int) -> [[String : Any]] {
+    func searchWordListDetail(in words: [String], for tableName: Constant.VoiceCode, count: Int = Constant.searchCount, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database,
               !words.isEmpty
@@ -219,7 +219,7 @@ extension API {
     ///   - count: 數量
     ///   - offset: 偏移量
     /// - Returns: [[String : Any]]
-    func searchGuessWordList(with level: Vocabulary.Level, days: Int = -3, for tableName: Constant.VoiceCode, count: Int = 10, offset: Int) -> [[String : Any]] {
+    func searchGuessWordList(with level: Vocabulary.Level, days: Int = -3, for tableName: Constant.VoiceCode, count: Int = Constant.searchCount, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database,
               let time = Date()._adding(component: .day, value: days)?._localTime()
@@ -259,7 +259,7 @@ extension API {
     ///   - offset: 偏移量
     ///   - isFavorite: 我的最愛
     /// - Returns: [[String : Any]]
-    func searchSentenceList(with speech: VocabularySentenceList.Speech? = nil, isFavorite: Bool = false, for tableName: Constant.VoiceCode, count: Int = 10, offset: Int) -> [[String : Any]] {
+    func searchSentenceList(with speech: VocabularySentenceList.Speech? = nil, isFavorite: Bool = false, for tableName: Constant.VoiceCode, count: Int = Constant.searchCount, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
@@ -290,7 +290,7 @@ extension API {
     ///   - count: 單次搜尋的數量
     ///   - offset: 搜尋的偏移量
     /// - Returns: [[String : Any]]
-    func searchReviewList(for tableName: Constant.VoiceCode, type: Constant.ReviewResultType = .alphabet, count: Int = 10, offset: Int) -> [[String : Any]] {
+    func searchReviewList(for tableName: Constant.VoiceCode, type: Constant.ReviewResultType = .alphabet, count: Int = Constant.searchCount, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         

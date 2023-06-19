@@ -25,13 +25,16 @@ final class OthersViewController: UIViewController {
     @IBOutlet weak var dictionaryButtonItem: UIBarButtonItem!
     @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var appendBookmarkButton: UIButton!
-    
+    @IBOutlet weak var activityViewIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var indicatorLabel: UILabel!
+
     private let licenseWebViewSegue = "LicenseWebViewSegue"
     
     private var isAnimationStop = false
     private var isFixed = false
     private var isFavorite = false
-
+    private var isNeededUpdate = true
+    
     private var currentScrollDirection: Constant.ScrollDirection = .down
     private var disappearImage: UIImage?
     private var refreshControl: UIRefreshControl!
@@ -87,8 +90,7 @@ extension OthersViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { return othersTableViewCell(tableView, cellForRowAt: indexPath) }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { openBookmark(with: indexPath) }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? { return UISwipeActionsConfiguration(actions: trailingSwipeActionsMaker(with: indexPath)) }
-    func scrollViewDidScroll(_ scrollView: UIScrollView) { tabrBarHidden(with: scrollView) }
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateBookmarkList(for: scrollView, height: Constant.updateScrolledHeight) }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) { tabrBarHidden(with: scrollView); updateHeightPercentAction(with: scrollView, isNeededUpdate: isNeededUpdate) }
 }
 
 // MARK: - SFSafariViewControllerDelegate
@@ -151,7 +153,9 @@ private extension OthersViewController {
         OthersTableViewCell.bookmarksArray = []
         OthersTableViewCell.bookmarksArray = API.shared.searchBookmarkList(isFavorite: isFavorite, for: Constant.currentTableName, offset: 0)
         
-        titleSetting(with: OthersTableViewCell.bookmarksArray.count)
+        let listCount = OthersTableViewCell.bookmarksArray.count
+        titleSetting(with: listCount)
+        isNeededUpdate = (listCount < Constant.searchCount) ? false : true
         
         myTableView._reloadData() { [weak self] in
             
@@ -401,7 +405,8 @@ private extension OthersViewController {
         let indexPaths = (oldListCount..<newListCount).map { IndexPath(row: $0, section: 0) }
         myTableView._insertRows(at: indexPaths, animation: .automatic, animated: false)
         
-        if (newListCount > oldListCount) { Utility.shared.flashHUD(with: .success) }
+        if (newListCount > oldListCount) { Utility.shared.flashHUD(with: .success); return }
+        isNeededUpdate = false
     }
     
     /// 右側滑動按鈕
@@ -714,5 +719,61 @@ extension OthersViewController {
         }
         
         return action
+    }
+}
+
+// MARK: - 下滑更新
+private extension OthersViewController {
+    
+    /// 下滑到底更新的動作設定
+    /// - Parameters:
+    ///   - scrollView: UIScrollView
+    ///   - criticalValue: 要更新的臨界值 => 120%才更新
+    ///   - isNeededUpdate: Bool
+    func updateHeightPercentAction(with scrollView: UIScrollView, criticalValue: CGFloat = 1.2, isNeededUpdate: Bool) {
+        
+        var percent = Utility.shared.updateHeightPercent(with: scrollView, navigationController: navigationController)
+        
+        if isNeededUpdate && (percent > criticalValue) {
+            percent = 0.0
+            Utility.shared.impactEffect()
+            appendBookmarkList(isFavorite: isFavorite)
+        }
+        
+        updateActivityViewIndicatorSetting(with: percent, isNeededUpdate: isNeededUpdate)
+    }
+    
+    /// 下滑到底更新的轉圈圈設定 => 根據百分比
+    /// - Parameters:
+    ///   - percent: CGFloat
+    ///   - isNeededUpdate: Bool
+    func updateActivityViewIndicatorSetting(with percent: CGFloat, isNeededUpdate: Bool) {
+        
+        activityViewIndicator.alpha = percent
+        indicatorLabel.alpha = percent
+        indicatorLabel.text = updateActivityViewIndicatorTitle(with: percent, isNeededUpdate: isNeededUpdate)
+    }
+    
+    /// 下滑到底更新的顯示Title
+    /// - Parameters:
+    ///   - percent: CGFloat
+    ///   - isNeededUpdate: Bool
+    /// - Returns: String
+    func updateActivityViewIndicatorTitle(with percent: CGFloat, isNeededUpdate: Bool) -> String {
+        
+        if (!isNeededUpdate) { return "無更新資料" }
+        
+        var _percent = percent
+        if (percent > 1.0) { _percent = 1.0 }
+        
+        let title = String(format: "%.2f", _percent * 100)
+        return "\(title) %"
+    }
+    
+    /// 更新下滑更新的高度基準值
+    /// - Parameter percent: KeyWindow高度的25%
+    func updateScrolledHeightSetting(percent: CGFloat = 0.25) {
+        guard let keyWindow = UIWindow._keyWindow(hasScene: false) else { return }
+        Constant.updateScrolledHeight = keyWindow.frame.height * percent
     }
 }

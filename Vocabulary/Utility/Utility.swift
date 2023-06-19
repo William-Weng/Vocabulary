@@ -15,7 +15,8 @@ final class Utility: NSObject {
     static let shared = Utility()
     
     private let synthesizer = AVSpeechSynthesizer._build()
-    
+    private let feedback = UIImpactFeedbackGenerator._build(style: .medium)
+
     private override init() {}
 }
 
@@ -59,11 +60,32 @@ extension Utility {
         self.synthesizer._speak(string: string, voice: voice, rate: rate, pitchMultiplier: pitchMultiplier, volume: volume)
     }
     
+    /// 震動功能
+    func impactEffect() { feedback._impact() }
+    
     /// 判斷是不是Web的網址 (http:// || https://)
     /// - Parameter urlString: String
     /// - Returns: Bool
     func isWebUrlString(_ urlString: String) -> Bool {
         return urlString.hasPrefix("http://") || urlString.hasPrefix("https://")
+    }
+    
+    /// 計算下滑到底更新的距離百分比 (UIRefreshControl的另一邊)
+    /// - Parameters:
+    ///   - scrollView: UIScrollView
+    ///   - navigationController: UINavigationController?
+    /// - Returns: CGFloat
+    func updateHeightPercent(with scrollView: UIScrollView, navigationController: UINavigationController?) -> CGFloat {
+        
+        let navigationBarHeight = navigationController?._navigationBarHeight(for: UIWindow._keyWindow(hasScene: false)) ?? .zero
+        let offset = scrollView.frame.height + scrollView.contentOffset.y - scrollView.contentSize.height
+        var percent = 1.0 - (Constant.updateScrolledHeight - offset) / (Constant.updateScrolledHeight - navigationBarHeight)
+
+        if (scrollView.frame.height > scrollView.contentSize.height) {
+            percent = (scrollView.contentOffset.y + navigationBarHeight) / (Constant.updateScrolledHeight - navigationBarHeight)
+        }
+        
+        return percent
     }
 }
 

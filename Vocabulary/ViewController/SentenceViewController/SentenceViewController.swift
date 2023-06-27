@@ -28,6 +28,7 @@ final class SentenceViewController: UIViewController {
     
     private let recordingSegue = "RecordingSegue"
     private let licenseWebViewSegue = "LicenseWebViewSegue"
+    private let titleString = "精選例句"
 
     private var isAnimationStop = false
     private var isFixed = false
@@ -71,7 +72,7 @@ final class SentenceViewController: UIViewController {
     }
     
     @objc func refreshSentenceList(_ sender: UIRefreshControl) { translateDisplayArray = []; reloadSentenceList(with: currentSpeech, isFavorite: isFavorite) }
-    @objc func sentenceCount(_ sender: UITapGestureRecognizer) { sentenceCountAction() }
+    @objc func sentenceCount(_ sender: UITapGestureRecognizer) { sentenceCountAction(with: currentSpeech, isFavorite: isFavorite) }
 
     @IBAction func recordingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: recordingSegue, sender: nil) }
     @IBAction func licensePage(_ sender: UIBarButtonItem) { performSegue(withIdentifier: licenseWebViewSegue, sender: nil) }
@@ -149,11 +150,14 @@ private extension SentenceViewController {
     }
     
     /// 顯示精選例句總數量
-    func sentenceCountAction() {
+    /// - Parameters:
+    ///   - speech: VocabularySentenceList.Speech?
+    ///   - isFavorite: Bool
+    func sentenceCountAction(with speech: VocabularySentenceList.Speech?, isFavorite: Bool) {
         
         let version = Bundle.main._appVersion()
         let message = "v\(version.app ?? "1.0.0") - \(version.build ?? "0")"
-        let title = "精選例句 - \(sentenceCount())"
+        let title = "\(titleString) - \(sentenceCount(with: speech, isFavorite: isFavorite))"
 
         informationHint(with: title, message: message)
     }
@@ -170,7 +174,7 @@ private extension SentenceViewController {
         SentenceTableViewCell.sentenceListArray = API.shared.searchSentenceList(with: speech, isFavorite: isFavorite, for: Constant.currentTableName, offset: 0)
         
         let listCount = SentenceTableViewCell.sentenceListArray.count
-        titleSetting(with: listCount)
+        titleSetting(titleString, count: listCount)
         isNeededUpdate = (listCount < Constant.searchCount) ? false : true
         
         myTableView._reloadData() { [weak self] in
@@ -197,7 +201,7 @@ private extension SentenceViewController {
         SentenceTableViewCell.sentenceListArray += API.shared.searchSentenceList(with: speech, isFavorite: isFavorite, for: Constant.currentTableName, offset: oldListCount)
         
         let newListCount = SentenceTableViewCell.sentenceListArray.count
-        titleSetting(with: newListCount)
+        titleSetting(titleString, count: newListCount)
         
         let indexPaths = (oldListCount..<newListCount).map { IndexPath(row: $0, section: 0) }
         myTableView._insertRows(at: indexPaths, animation: .automatic, animated: false)
@@ -310,8 +314,7 @@ private extension SentenceViewController {
     /// 修正TableView不使用SafeArea的位置問題
     func fixTableViewInsetForSafeArea(for indexPath: IndexPath? = nil) {
         
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        let navigationBarHeight = navigationController?._navigationBarHeight(for: appDelegate?.window) ?? .zero
+        let navigationBarHeight = navigationController?._navigationBarHeight(for: UIWindow._keyWindow(hasScene: false)) ?? .zero
         
         if (SentenceTableViewCell.sentenceListArray.count != 0) { myTableView._fixContentInsetForSafeArea(height: navigationBarHeight, scrollTo: indexPath); return }
         myTableView._fixContentInsetForSafeArea(height: navigationBarHeight, scrollTo: nil)
@@ -438,7 +441,7 @@ private extension SentenceViewController {
         if (contentOffsetY < 0) { return }
         if (offset > contentHeight) { appendSentenceList(with: currentSpeech, isFavorite: isFavorite) }
     }
-        
+    
     /// 更新例句 (句子 / 翻譯)
     /// - Parameter indexPath: IndexPath
     func updateSentence(with indexPath: IndexPath) {
@@ -467,7 +470,7 @@ private extension SentenceViewController {
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
         
         SentenceTableViewCell.sentenceListArray.remove(at: indexPath.row)
-        titleSetting(with: SentenceTableViewCell.sentenceListArray.count)
+        titleSetting(titleString, count: SentenceTableViewCell.sentenceListArray.count)
         
         myTableView.deleteRows(at: [indexPath], with: .fade)
         fixTranslateDisplayArray(with: indexPath, type: .delete)
@@ -531,13 +534,16 @@ private extension SentenceViewController {
     }
     
     /// 取得精選例句總數量
+    /// - Parameters:
+    ///   - speech: VocabularySentenceList.Speech?
+    ///   - isFavorite: Bool
     /// - Returns: Int
-    func sentenceCount() -> Int {
+    func sentenceCount(with speech: VocabularySentenceList.Speech?, isFavorite: Bool) -> Int {
         
         let key = "speech"
         let field = "\(key)Count"
         
-        guard let result = API.shared.searchSentenceCount(for: Constant.currentTableName, key: key).first,
+        guard let result = API.shared.searchSentenceCount(for: Constant.currentTableName, key: key, speech: speech, isFavorite: isFavorite).first,
               let value = result["\(field)"],
               let count = Int("\(value)", radix: 10)
         else {
@@ -548,25 +554,28 @@ private extension SentenceViewController {
     }
     
     /// 設定標題
-    /// - Parameter count: Int
-    func titleSetting(with count: Int) {
+    /// - Parameters:
+    ///   - title: String
+    ///   - count: Int
+    func titleSetting(_ title: String, count: Int) {
         
-        let title = "精選例句 - \(count)"
-        
-        guard let titleView = navigationItem.titleView as? UILabel else { titleViewSetting(with: title); return }
-        titleView.text = title
+        guard let titleView = navigationItem.titleView as? UILabel else { titleViewSetting(with: title, count: count); return }
+        Utility.shared.titleViewSetting(with: titleView, title: title, count: count)
     }
     
     /// 標題文字相關設定
-    /// - Parameter word: String
-    func titleViewSetting(with title: String) {
+    /// - Parameters:
+    ///   - title: String
+    ///   - count: Int
+    func titleViewSetting(with title: String, count: Int) {
         
         let titleView = Utility.shared.titleLabelMaker(with: title)
         let gesture = UITapGestureRecognizer(target: self, action: #selector(Self.sentenceCount(_:)))
         
         titleView.isUserInteractionEnabled = true
         titleView.addGestureRecognizer(gesture)
-        
+        Utility.shared.titleViewSetting(with: titleView, title: title, count: count)
+
         navigationItem.titleView = titleView
     }
     
@@ -618,7 +627,7 @@ private extension SentenceViewController {
     /// - Parameter sender: UIBarButtonItem
     func filterFavoriteAction(_ sender: UIBarButtonItem) {
         isFavorite.toggle()
-        sender.image = (!isFavorite) ? UIImage(imageLiteralResourceName: "Notice_Off") : UIImage(imageLiteralResourceName: "Notice_On")
+        sender.image = Utility.shared.favoriteIcon(isFavorite)
         reloadSentenceList(with: currentSpeech, isFavorite: isFavorite)
     }
     

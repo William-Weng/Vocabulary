@@ -109,17 +109,17 @@ extension VolumeViewController {
     /// - Returns: Int?
     func valueChangePercent(identifier: String, currentValue: CGFloat, maximumValue: CGFloat, isVertical: Bool) -> Int? {
         
-        let percent = Int(currentValue / maximumValue * 100)
+        let percent = Float(currentValue / maximumValue)
         
         switch soundType {
         case .volume:
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
-            _ = appDelegate.musicVolumeSetting(Float(percent) * 0.01)
+            _ = appDelegate.musicVolumeSetting(percent)
         case .rate:
-            Constant.speakingSpeed = Float(percent) * 0.01 + 0.00001
+            Constant.speakingSpeed = percent
         }
-
-        return percent
+        
+        return Int(percent * 100)
     }
     
     /// 取得一開始的數值大小
@@ -152,7 +152,7 @@ extension VolumeViewController {
     
     /// [修正畫面旋轉後，畫面長寬比例不對的問題](https://stackoverflow.com/questions/26943808/ios-how-to-run-a-function-after-device-has-rotated-swift)
     func sliderWidthAction() {
-                                
+        
         let percent = sliderVolume() ?? 0
         let constant = currentValueMaker(with: percent)
         

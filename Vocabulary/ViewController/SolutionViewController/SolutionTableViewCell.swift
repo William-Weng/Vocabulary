@@ -69,7 +69,7 @@ private extension SolutionTableViewCell {
         wordLabel.text = vocabularyList.word
         wordLabel.font = Constant.currentTableName.font() ?? UIFont.systemFont(ofSize: 36.0)
         
-        favoriteImageView.image = (!isFavorite) ? UIImage(imageLiteralResourceName: "Notice_Off") : UIImage(imageLiteralResourceName: "Notice_On")
+        favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)
         initFavoriteImageViewTapGestureRecognizer()
     }
     
@@ -96,7 +96,7 @@ private extension SolutionTableViewCell {
         let isSuccess = API.shared.updateVocabularyFavoriteToList(vocabularyReviewList.id, isFavorite: isFavorite, for: Constant.currentTableName)
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
         
-        favoriteImageView.image = (!isFavorite) ? UIImage(imageLiteralResourceName: "Notice_Off") : UIImage(imageLiteralResourceName: "Notice_On")
+        favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)
         updateFavoriteDictionary(isFavorite, with: indexPath)
     }
 

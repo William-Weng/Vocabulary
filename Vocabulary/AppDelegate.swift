@@ -112,7 +112,7 @@ extension AppDelegate {
     /// - Parameter volume: Float
     /// - Returns: Float
     func musicVolumeSetting(_ volume: Float) -> Float? {
-        Constant.volume = volume + 0.00001
+        Constant.volume = volume
         audioPlayer?.volume = Constant.volume
         return musicVolume()
     }
@@ -120,7 +120,7 @@ extension AppDelegate {
     /// 錄製聲音
     func recordWave() -> Bool {
         guard let recordURL = FileManager.default._temporaryDirectory()._appendPath("record.wav") else { return false }
-        return recordSound(recordURL: recordURL)
+        return recordSound(with: recordURL)
     }
     
     /// 停止錄製聲音
@@ -195,7 +195,7 @@ private extension AppDelegate {
     /// 開始錄音 (.wav)
     /// - Parameter recordURL: URL
     /// - Returns: Bool
-    func recordSound(recordURL: URL) -> Bool {
+    func recordSound(with recordURL: URL) -> Bool {
         
         _ = audioRecorder?._stop()
         
@@ -236,8 +236,9 @@ private extension AppDelegate {
         let version = Bundle.main._appVersion()
         let info = UIDevice._systemInformation()
         let icon = UIApplicationShortcutIcon(type: .love)
-        let title = "版本 - \(info.name) \(info.version)"
-        let shortcutItem = UIApplicationShortcutItem._build(localizedTitle: title, localizedSubtitle: "v\(version.app ?? "0.0.0") (\(version.build ?? "0"))", icon: icon)
+        let title = "版本 for \(info.name) \(info.version)"
+        let subtitle = "v\(version.app ?? "0.0.0") (\(version.build ?? "0"))"
+        let shortcutItem = UIApplicationShortcutItem._build(localizedTitle: title, localizedSubtitle: subtitle, icon: icon)
         
         application.shortcutItems = [shortcutItem]
     }

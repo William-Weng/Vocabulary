@@ -36,6 +36,8 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var activityViewIndicator: UIActivityIndicatorView!
     @IBOutlet weak var indicatorLabel: UILabel!
     
+    private let titleString = "我愛背單字"
+    
     private var isFixed = false
     private var isAnimationStop = false
     private var isFavorite = false
@@ -123,7 +125,8 @@ private extension MainViewController {
         
         myTableView._delegateAndDataSource(with: self)
         myTableView.addSubview(refreshControl)
-                
+        myTableView.tableFooterView = UIView()
+        
         reloadVocabulary(isFavorite: isFavorite)
         
         viewDidTransitionAction()
@@ -148,7 +151,7 @@ private extension MainViewController {
 
         let version = Bundle.main._appVersion()
         let message = "v\(version.app ?? "1.0.0") - \(version.build ?? "0")"
-        let title = "單字數量 - \(vocabularyCount())"
+        let title = "單字數量 - \(vocabularyCount(isFavorite: isFavorite))"
         
         informationHint(with: title, message: message)
     }
@@ -189,7 +192,7 @@ private extension MainViewController {
         MainTableViewCell.vocabularyListArray = API.shared.searchVocabularyList(isFavorite: isFavorite, for: Constant.currentTableName, offset: MainTableViewCell.vocabularyListArray.count)
         
         let listCount = MainTableViewCell.vocabularyListArray.count
-        titleSetting(with: listCount)
+        titleSetting(titleString, count: listCount)
         isNeededUpdate = (listCount < Constant.searchCount) ? false : true
         
         myTableView._reloadData() { [weak self] in
@@ -212,7 +215,7 @@ private extension MainViewController {
     func deleteRowAction(with indexPath: IndexPath) {
         MainTableViewCell.vocabularyListArray.remove(at: indexPath.row)
         myTableView.deleteRows(at: [indexPath], with: .fade)
-        titleSetting(with: MainTableViewCell.vocabularyListArray.count)
+        titleSetting(titleString, count: MainTableViewCell.vocabularyListArray.count)
     }
     
     /// 更新例句數量文字功能
@@ -269,8 +272,8 @@ private extension MainViewController {
         MainTableViewCell.vocabularyListArray += API.shared.searchVocabularyList(isFavorite: isFavorite, for: Constant.currentTableName, offset: oldListCount)
         
         let newListCount = MainTableViewCell.vocabularyListArray.count
-        titleSetting(with: newListCount)
-        
+        titleSetting(titleString, count: newListCount)
+
         let indexPaths = (oldListCount..<newListCount).map { IndexPath(row: $0, section: 0) }
         myTableView._insertRows(at: indexPaths, animation: .automatic, animated: false)
         
@@ -653,13 +656,14 @@ private extension MainViewController {
     }
     
     /// 取得單字總數量
+    /// - Parameter isFavorite: Bool
     /// - Returns: Int
-    func vocabularyCount() -> Int {
+    func vocabularyCount(isFavorite: Bool) -> Int {
         
         let key = "word"
         let field = "\(key)Count"
         
-        guard let result = API.shared.searchVocabularyCount(for: Constant.currentTableName, key: key).first,
+        guard let result = API.shared.searchVocabularyCount(for: Constant.currentTableName, key: key, isFavorite: isFavorite).first,
               let value = result["\(field)"],
               let count = Int("\(value)", radix: 10)
         else {
@@ -670,6 +674,8 @@ private extension MainViewController {
     }
     
     /// 取得該單字內容總數量
+    /// - Parameters:
+    ///   - word: String
     /// - Returns: Int
     func vocabularyDetailListCount(with word: String) -> Int {
         
@@ -687,26 +693,27 @@ private extension MainViewController {
     }
     
     /// 設定標題
-    /// - Parameter count: Int
-    func titleSetting(with count: Int) {
+    /// - Parameters:
+    ///   - title: String
+    ///   - count: Int
+    func titleSetting(_ title: String, count: Int) {
         
-        let title = "我愛背單字 - \(count)"
-        
-        guard let titleView = navigationItem.titleView as? UILabel else { titleViewSetting(with: title); return }
-        
-        titleView.sizeToFit()
-        titleView.text = title
+        guard let titleView = navigationItem.titleView as? UILabel else { titleViewSetting(with: title, count: count); return }
+        Utility.shared.titleViewSetting(with: titleView, title: title, count: count)
     }
     
     /// 標題文字相關設定
-    /// - Parameter word: String
-    func titleViewSetting(with title: String) {
+    /// - Parameters:
+    ///   - title: String
+    ///   - count: Int
+    func titleViewSetting(with title: String, count: Int) {
         
         let titleView = Utility.shared.titleLabelMaker(with: title)
         let gesture = UITapGestureRecognizer(target: self, action: #selector(Self.vocabularyCount(_:)))
         
         titleView.isUserInteractionEnabled = true
         titleView.addGestureRecognizer(gesture)
+        Utility.shared.titleViewSetting(with: titleView, title: title, count: count)
         
         navigationItem.titleView = titleView
     }
@@ -727,8 +734,7 @@ private extension MainViewController {
     func filterFavoriteAction(with sender: UIBarButtonItem) {
         
         isFavorite.toggle()
-        
-        sender.image = (!isFavorite) ? UIImage(imageLiteralResourceName: "Notice_Off") : UIImage(imageLiteralResourceName: "Notice_On")
+        sender.image = Utility.shared.favoriteIcon(isFavorite)
         
         appendWordButton.isHidden = isFavorite
         reloadVocabulary(isFavorite: isFavorite)
@@ -790,6 +796,7 @@ private extension MainViewController {
     /// - Parameters:
     ///   - scrollView: UIScrollView
     ///   - criticalValue: 要更新的臨界值 => 120%才更新
+    ///   - isNeededUpdate: Bool
     func updateHeightPercentAction(with scrollView: UIScrollView, criticalValue: CGFloat = 1.2, isNeededUpdate: Bool) {
         
         var percent = Utility.shared.updateHeightPercent(with: scrollView, navigationController: navigationController)
@@ -803,8 +810,10 @@ private extension MainViewController {
         updateActivityViewIndicatorSetting(with: percent, isNeededUpdate: isNeededUpdate)
     }
     
-    ///  下滑到底更新的轉圈圈設定 => 根據百分比
-    /// - Parameter percent: CGFloat
+    /// 下滑到底更新的轉圈圈設定 => 根據百分比
+    /// - Parameters:
+    ///   - percent: CGFloat
+    ///   - isNeededUpdate: Bool
     func updateActivityViewIndicatorSetting(with percent: CGFloat, isNeededUpdate: Bool) {
         
         activityViewIndicator.alpha = percent
@@ -813,7 +822,9 @@ private extension MainViewController {
     }
     
     /// 下滑到底更新的顯示Title
-    /// - Parameter percent: CGFloat
+    /// - Parameters:
+    ///   - percent: CGFloat
+    ///   - isNeededUpdate: Bool
     /// - Returns: String
     func updateActivityViewIndicatorTitle(with percent: CGFloat, isNeededUpdate: Bool) -> String {
         

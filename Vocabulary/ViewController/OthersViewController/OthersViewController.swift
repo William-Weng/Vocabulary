@@ -29,7 +29,8 @@ final class OthersViewController: UIViewController {
     @IBOutlet weak var indicatorLabel: UILabel!
 
     private let licenseWebViewSegue = "LicenseWebViewSegue"
-    
+    private let titleString = "常用書籤"
+
     private var isAnimationStop = false
     private var isFixed = false
     private var isFavorite = false
@@ -154,7 +155,7 @@ private extension OthersViewController {
         OthersTableViewCell.bookmarksArray = API.shared.searchBookmarkList(isFavorite: isFavorite, for: Constant.currentTableName, offset: 0)
         
         let listCount = OthersTableViewCell.bookmarksArray.count
-        titleSetting(with: listCount)
+        titleSetting(titleString, count: listCount)
         isNeededUpdate = (listCount < Constant.searchCount) ? false : true
         
         myTableView._reloadData() { [weak self] in
@@ -276,8 +277,7 @@ private extension OthersViewController {
     /// 修正TableView不使用SafeArea的位置問題
     func fixTableViewInsetForSafeArea(for indexPath: IndexPath? = nil) {
         
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        let navigationBarHeight = navigationController?._navigationBarHeight(for: appDelegate?.window) ?? .zero
+        let navigationBarHeight = navigationController?._navigationBarHeight(for: UIWindow._keyWindow(hasScene: false)) ?? .zero
         
         if (OthersTableViewCell.bookmarksArray.count != 0) { myTableView._fixContentInsetForSafeArea(height: navigationBarHeight, scrollTo: indexPath); return }
         myTableView._fixContentInsetForSafeArea(height: navigationBarHeight, scrollTo: nil)
@@ -297,6 +297,7 @@ private extension OthersViewController {
             this.currentScrollDirection = .none
             this.appendButtonPositionConstraint(isHidden, duration: Constant.duration)
             this.fixTableViewInsetForSafeArea()
+            this.updateScrolledHeightSetting()
         }
     }
     
@@ -400,7 +401,7 @@ private extension OthersViewController {
         OthersTableViewCell.bookmarksArray += API.shared.searchBookmarkList(isFavorite: isFavorite, for: Constant.currentTableName, offset: oldListCount)
         
         let newListCount = OthersTableViewCell.bookmarksArray.count
-        titleSetting(with: newListCount)
+        titleSetting(titleString, count: newListCount)
         
         let indexPaths = (oldListCount..<newListCount).map { IndexPath(row: $0, section: 0) }
         myTableView._insertRows(at: indexPaths, animation: .automatic, animated: false)
@@ -447,7 +448,7 @@ private extension OthersViewController {
         OthersTableViewCell.bookmarksArray.remove(at: indexPath.row)
         
         myTableView.deleteRows(at: [indexPath], with: .fade)
-        titleSetting(with: OthersTableViewCell.bookmarksArray.count)
+        titleSetting(titleString, count: OthersTableViewCell.bookmarksArray.count)
     }
     
     /// 更新Cell的Label文字
@@ -645,25 +646,28 @@ private extension OthersViewController {
     }
     
     /// 設定標題
-    /// - Parameter count: Int
-    func titleSetting(with count: Int) {
+    /// - Parameters:
+    ///   - title: String
+    ///   - count: Int
+    func titleSetting(_ title: String, count: Int) {
         
-        let title = "常用書籤 - \(count)"
-        
-        guard let titleView = navigationItem.titleView as? UILabel else { titleViewSetting(with: title); return }
-        titleView.text = title
+        guard let titleView = navigationItem.titleView as? UILabel else { titleViewSetting(with: title, count: count); return }
+        Utility.shared.titleViewSetting(with: titleView, title: title, count: count)
     }
     
     /// 標題文字相關設定
-    /// - Parameter word: String
-    func titleViewSetting(with title: String) {
-        
+    /// - Parameters:
+    ///   - title: String
+    ///   - count: Int
+    func titleViewSetting(with title: String, count: Int) {
+
         let titleView = Utility.shared.titleLabelMaker(with: title)
         let gesture = UITapGestureRecognizer(target: self, action: #selector(Self.bookmarkCount(_:)))
         
         titleView.isUserInteractionEnabled = true
         titleView.addGestureRecognizer(gesture)
-        
+        Utility.shared.titleViewSetting(with: titleView, title: title, count: count)
+
         navigationItem.titleView = titleView
     }
     
@@ -683,8 +687,7 @@ private extension OthersViewController {
     func filterFavoriteAction(with sender: UIBarButtonItem) {
         
         isFavorite.toggle()
-        
-        sender.image = (!isFavorite) ? UIImage(imageLiteralResourceName: "Notice_Off") : UIImage(imageLiteralResourceName: "Notice_On")
+        sender.image = Utility.shared.favoriteIcon(isFavorite)
         
         appendBookmarkButton.isHidden = isFavorite
         reloadBookmarks(isFavorite: isFavorite)
@@ -733,7 +736,7 @@ private extension OthersViewController {
     func updateHeightPercentAction(with scrollView: UIScrollView, criticalValue: CGFloat = 1.2, isNeededUpdate: Bool) {
         
         var percent = Utility.shared.updateHeightPercent(with: scrollView, navigationController: navigationController)
-        
+                
         if isNeededUpdate && (percent > criticalValue) {
             percent = 0.0
             Utility.shared.impactEffect()

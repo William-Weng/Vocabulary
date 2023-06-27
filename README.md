@@ -51,7 +51,6 @@
 1. Share - [share_4212381](https://www.flaticon.com/free-icon/share_4212381)
 1. Download - [download_3039520](https://www.flaticon.com/free-icon/download_3039520)
 1. NextArrow - [next_709586](https://www.flaticon.com/free-icon/next_709586)
-1. License - [graphic-designer_2779775](https://www.flaticon.com/free-icon/graphic-designer_2779775)
 1. Notice_On - [heart_2589175](https://www.flaticon.com/free-icon/heart_2589175)
 1. Notice_Off - [heart_2589197](https://www.flaticon.com/free-icon/heart_2589197)
 

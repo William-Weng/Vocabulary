@@ -77,7 +77,7 @@ private extension SentenceTableViewCell {
         speechButton.showsMenuAsPrimaryAction = true
         speechButton.menu = UIMenu(title: "請選擇分類", children: speechMenuActionMaker())
         
-        favoriteImageView.image = (!isFavorite) ? UIImage(imageLiteralResourceName: "Notice_Off") : UIImage(imageLiteralResourceName: "Notice_On")
+        favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)
         initFavoriteImageViewTapGestureRecognizer()
     }
     
@@ -159,7 +159,7 @@ private extension SentenceTableViewCell {
         let isSuccess = API.shared.updateSentenceFavoriteToList(sentenceList.id, isFavorite: isFavorite, for: Constant.currentTableName)
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
 
-        favoriteImageView.image = (!isFavorite) ? UIImage(imageLiteralResourceName: "Notice_Off") : UIImage(imageLiteralResourceName: "Notice_On")
+        favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)
         updateFavoriteDictionary(isFavorite, with: indexPath)
     }
     

@@ -19,22 +19,6 @@ final class API: NSObject {
 // MARK: - 小工具 (Search)
 extension API {
     
-    /// 單字搜尋
-    /// - Parameters:
-    ///   - word: 單字
-    ///   - tableName: 資料表名稱
-    /// - Returns: [[String : Any]]
-    func searchWord(_ word: String, for tableName: Constant.VoiceCode) -> [[String : Any]] {
-        
-        guard let database = Constant.database else { return [] }
-        
-        let condition = SQLite3Condition.Where().isCompare(key: "word", type: .equal, value: word)
-        let orderBy = SQLite3Condition.OrderBy().item(key: "createTime", type: .ascending)
-        let result = database.select(tableName: tableName.rawValue, type: Vocabulary.self, where: condition, orderBy: orderBy, limit: nil)
-        
-        return result.array
-    }
-    
     /// 搜尋單字列表
     /// - Parameters:
     ///   - words: 特定單字群
@@ -62,15 +46,24 @@ extension API {
     /// - Parameters:
     ///   - tableName: 資料表名稱
     ///   - key: 欄位名稱
+    ///   - isFavorite: Bool
     /// - Returns: [[String : Any]]
-    func searchVocabularyCount(for tableName: Constant.VoiceCode, key: String? = nil) -> [[String : Any]] {
+    func searchVocabularyCount(for tableName: Constant.VoiceCode, key: String? = nil, isFavorite: Bool = false) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
-        let result = database.select(tableName: tableName.vocabularyList(), functions: [.count(key, .INTEGER())])
+        let condition: SQLite3Condition.Where? = (isFavorite) ? SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: isFavorite._int()) : nil
+        let result = database.select(tableName: tableName.vocabularyList(), functions: [.count(key, .INTEGER())], where: condition)
+        
         return result.array
     }
     
+    /// 搜尋該單字數量
+    /// - Parameters:
+    ///   - word: String
+    ///   - tableName: Constant.VoiceCode
+    ///   - key: String?
+    /// - Returns: [[String : Any]]
     func searchWordDetailListCount(_ word: String, for tableName: Constant.VoiceCode, key: String? = nil) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
@@ -98,12 +91,28 @@ extension API {
     /// - Parameters:
     ///   - tableName: 資料表名稱
     ///   - key: 欄位名稱
+    ///   - isFavorite: Bool
     /// - Returns: [[String : Any]]
-    func searchSentenceCount(for tableName: Constant.VoiceCode, key: String? = nil) -> [[String : Any]] {
+    func searchSentenceCount(for tableName: Constant.VoiceCode, key: String? = nil, speech: VocabularySentenceList.Speech?, isFavorite: Bool) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
-        let result = database.select(tableName: tableName.vocabularySentenceList(), functions: [.count(key, .INTEGER())])
+        var condition: SQLite3Condition.Where?
+
+        if let speech = speech {
+            var _condition = SQLite3Condition.Where().isCompare(key: "speech", type: .equal, value: speech.rawValue)
+            if isFavorite { _condition = _condition.andCompare(key: "favorite", type: .equal, value: isFavorite._int()) }
+            condition = _condition
+        }
+        
+        if isFavorite {
+            var _condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: isFavorite._int())
+            if let speech = speech { _condition = _condition.andCompare(key: "speech", type: .equal, value: speech.rawValue) }
+            condition = _condition
+        }
+        
+        let result = database.select(tableName: tableName.vocabularySentenceList(), functions: [.count(key, .INTEGER())], where: condition)
+        
         return result.array
     }
     
@@ -111,13 +120,31 @@ extension API {
     /// - Parameters:
     ///   - tableName: 資料表名稱
     ///   - key: 欄位名稱
+    ///   - isFavorite: Bool
     /// - Returns: [[String : Any]]
-    func searchReviewCount(for tableName: Constant.VoiceCode, key: String? = nil) -> [[String : Any]] {
+    func searchReviewCount(for tableName: Constant.VoiceCode, key: String, isFavorite: Bool) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
-        let result = database.select(tableName: tableName.vocabularyReviewList(), functions: [.count(key, .INTEGER())])
-        return result.array
+        let field = "\(key)Count"
+        var array: [[String : Any]] = []
+        
+        var sql = "SELECT Count(Review.\(key)) as \(field) FROM \(tableName.vocabularyReviewList()) as Review JOIN \(tableName.vocabularyList()) as List ON Review.word = List.word"
+        
+        if (isFavorite) { sql += " WHERE List.favorite = \(isFavorite._int())" }
+        
+        database.select(sql: sql, result: { statement in
+            
+            var dict: [String : Any] = [:]
+            
+            dict["\(field)"] = statement?._value(at: Int32(0), dataType: .INTEGER()) ?? 0
+            array.append(dict)
+            
+        }, completion: { isCompleted in
+            wwPrint(isCompleted)
+        })
+        
+        return array
     }
     
     /// 搜尋單字內容列表
@@ -269,13 +296,13 @@ extension API {
 
         if let speech = speech {
             var _condition = SQLite3Condition.Where().isCompare(key: "speech", type: .equal, value: speech.rawValue)
-            if isFavorite { _condition = _condition.andCompare(key: "favorite", type: .equal, value: 1) }
+            if isFavorite { _condition = _condition.andCompare(key: "favorite", type: .equal, value: isFavorite._int()) }
             condition = _condition
         }
         
         if isFavorite {
-            var _condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: 1)
-            if let speech = speech { _condition = _condition.isCompare(key: "speech", type: .equal, value: speech.rawValue) }
+            var _condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: isFavorite._int())
+            if let speech = speech { _condition = _condition.andCompare(key: "speech", type: .equal, value: speech.rawValue) }
             condition = _condition
         }
         
@@ -284,29 +311,52 @@ extension API {
         return result.array
     }
     
-    ///  搜尋複習過的單字內容總表
+    /// 搜尋複習過的單字內容總表
     /// - Parameters:
-    ///   - tableName: 資料表名稱
-    ///   - count: 單次搜尋的數量
-    ///   - offset: 搜尋的偏移量
+    ///   - tableName: Constant.VoiceCode
+    ///   - type: Constant.ReviewResultType
+    ///   - isFavorite: Bool
+    ///   - count: Int
+    ///   - offset: Int
     /// - Returns: [[String : Any]]
-    func searchReviewList(for tableName: Constant.VoiceCode, type: Constant.ReviewResultType = .alphabet, count: Int = Constant.searchCount, offset: Int) -> [[String : Any]] {
+    func searchReviewList(for tableName: Constant.VoiceCode, type: Constant.ReviewResultType = .alphabet, isFavorite: Bool, count: Int = Constant.searchCount, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
-        let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
-        var orderBy = SQLite3Condition.OrderBy().item(key: "updateTime", type: .descending)
+        let limit = "LIMIT \(count) OFFSET \(offset)"
+        let condition = "WHERE favorite = \(isFavorite._int())"
+        let modelType = VocabularyReviewList.self
         
+        var orderBy = "ORDER BY Review.updateTime DESC"
+        var array: [[String : Any]] = []
+
         switch type {
-        case .updateTime: orderBy = SQLite3Condition.OrderBy().item(key: "updateTime", type: .descending)
-        case .alphabet: orderBy = SQLite3Condition.OrderBy().item(key: "word", type: .ascending)
-        case .correctCount: orderBy = SQLite3Condition.OrderBy().item(key: "correctCount", type: .descending).addItem(key: "updateTime", type: .descending)
-        case .mistakeCount: orderBy = SQLite3Condition.OrderBy().item(key: "mistakeCount", type: .descending).addItem(key: "updateTime", type: .descending)
+        case .updateTime: orderBy = "ORDER BY Review.updateTime DESC"
+        case .alphabet: orderBy = "ORDER BY Review.word ASC"
+        case .correctCount: orderBy = "ORDER BY Review.correctCount DESC"
+        case .mistakeCount: orderBy = "ORDER BY Review.mistakeCount DESC"
         }
         
-        let result = database.select(tableName: tableName.vocabularyReviewList(), type: VocabularyReviewList.self, where: nil, orderBy: orderBy, limit: limit)
-                
-        return result.array
+        var sql = "SELECT Review.id, Review.word, Review.correctCount, Review.mistakeCount, List.id as wordId, List.favorite as favorite, Review.createTime, Review.updateTime FROM \(tableName.vocabularyReviewList()) as Review JOIN \(tableName.vocabularyList()) as List ON Review.word = List.word"
+        
+        if (isFavorite) { sql += " \(condition)" }
+        sql += " \(orderBy) \(limit)"
+        
+        database.select(sql: sql, result: { statement in
+            
+            var dict: [String : Any] = [:]
+            
+            modelType.structure()._forEach { (index, paramater, _) in
+                dict[paramater.key] = statement?._value(at: Int32(index), dataType: paramater.type) ?? nil
+            }
+            
+            array.append(dict)
+            
+        }, completion: { isCompleted in
+            wwPrint(isCompleted)
+        })
+        
+        return array
     }
     
     ///  搜尋書籤列表
@@ -328,7 +378,7 @@ extension API {
         if (isFavorite) { condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: 1) }
         
         let result = database.select(tableName: tableName.bookmarks(), type: BookmarkSite.self, where: condition, orderBy: orderBy, limit: limit)
-                
+        
         return result.array
     }
 }

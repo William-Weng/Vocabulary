@@ -18,8 +18,10 @@ final class ReviewResultViewController: UIViewController {
     @IBOutlet weak var indicatorLabel: UILabel!
 
     private let reviewDetailSegue = "ReviewDetailSegue"
-    
+    private let titleString = "複習總覽"
+
     private var isAnimationStop = false
+    private var isFavorite = false
     private var isNeededUpdate = true
     
     private var reviewResultType: Constant.ReviewResultType = .alphabet
@@ -54,8 +56,10 @@ final class ReviewResultViewController: UIViewController {
         pauseBackgroundAnimation()
     }
 
-    @objc func refreshReviewResultList(_ sender: UIRefreshControl) { relaodReviewResultList(with: reviewResultType) }
-    @objc func reviewCount(_ sender: UITapGestureRecognizer) { reviewCountAction() }
+    @objc func refreshReviewResultList(_ sender: UIRefreshControl) { relaodReviewResultList(with: reviewResultType, isFavorite: isFavorite) }
+    @objc func reviewCount(_ sender: UITapGestureRecognizer) { reviewCountAction(isFavorite: isFavorite) }
+    
+    @IBAction func filterFavorite(_ sender: UIBarButtonItem) { filterFavoriteAction(with: sender) }
     
     deinit {
         ReviewResultTableViewCell.reviewResultListArray = []
@@ -85,22 +89,25 @@ private extension ReviewResultViewController {
         myTableView.addSubview(refreshControl)
         myTableView.tableFooterView = UIView()
         
-        relaodReviewResultList(with: reviewResultType)
+        relaodReviewResultList(with: reviewResultType, isFavorite: isFavorite)
     }
     
     /// 重新讀取複習過的單字列表
-    /// - Parameter type: 搜尋排列的類型
-    func relaodReviewResultList(with type: Constant.ReviewResultType) {
+    /// - Parameters:
+    ///   - type: 搜尋排列的類型
+    ///   - isFavorite: Bool
+    func relaodReviewResultList(with type: Constant.ReviewResultType, isFavorite: Bool) {
         
         defer { refreshControl.endRefreshing() }
         
         ReviewResultTableViewCell.reviewResultListArray = []
-        ReviewResultTableViewCell.reviewResultListArray = API.shared.searchReviewList(for: Constant.currentTableName, type: type, offset: ReviewResultTableViewCell.reviewResultListArray.count)
+        ReviewResultTableViewCell.reviewResultListArray = API.shared.searchReviewList(for: Constant.currentTableName, type: type, isFavorite: isFavorite, offset: ReviewResultTableViewCell.reviewResultListArray.count)
         
         let listCount = ReviewResultTableViewCell.reviewResultListArray.count
-        titleSetting(with: listCount)
+        titleSetting(titleString, count: listCount)
+        
         isNeededUpdate = (listCount < Constant.searchCount) ? false : true
-                
+        
         myTableView._reloadData() { [weak self] in
             
             guard let this = self,
@@ -117,11 +124,11 @@ private extension ReviewResultViewController {
     }
 
     /// 顯示複習總覽總數量
-    func reviewCountAction() {
+    func reviewCountAction(isFavorite: Bool) {
         
         let version = Bundle.main._appVersion()
         let message = "v\(version.app ?? "1.0.0") - \(version.build ?? "0")"
-        let title = "複習總覽 - \(reviewCount())"
+        let title = "單字數量 - \(reviewCount(isFavorite: isFavorite))"
         
         informationHint(with: title, message: message)
     }
@@ -186,10 +193,10 @@ private extension ReviewResultViewController {
         defer { refreshControl.endRefreshing() }
         
         let oldListCount = ReviewResultTableViewCell.reviewResultListArray.count
-        ReviewResultTableViewCell.reviewResultListArray += API.shared.searchReviewList(for: Constant.currentTableName, type: type, offset: oldListCount)
+        ReviewResultTableViewCell.reviewResultListArray += API.shared.searchReviewList(for: Constant.currentTableName, type: type, isFavorite: isFavorite, offset: oldListCount)
 
         let newListCount = ReviewResultTableViewCell.reviewResultListArray.count
-        titleSetting(with: newListCount)
+        titleSetting(titleString, count: newListCount)
         
         let indexPaths = (oldListCount..<newListCount).map { IndexPath(row: $0, section: 0) }
         myTableView._insertRows(at: indexPaths, animation: .automatic, animated: false)
@@ -219,13 +226,14 @@ private extension ReviewResultViewController {
     }
     
     /// 取得複習總覽總數量
+    /// - Parameter isFavorite: Bool
     /// - Returns: Int
-    func reviewCount() -> Int {
+    func reviewCount(isFavorite: Bool) -> Int {
         
         let key = "word"
         let field = "\(key)Count"
         
-        guard let result = API.shared.searchReviewCount(for: Constant.currentTableName, key: key).first,
+        guard let result = API.shared.searchReviewCount(for: Constant.currentTableName, key: key, isFavorite: isFavorite).first,
               let value = result["\(field)"],
               let count = Int("\(value)", radix: 10)
         else {
@@ -237,25 +245,22 @@ private extension ReviewResultViewController {
     
     /// 設定標題
     /// - Parameter count: Int
-    func titleSetting(with count: Int) {
-        
-        let title = "複習總覽 - \(count)"
-        
-        guard let titleView = navigationItem.titleView as? UILabel else { titleViewSetting(with: title); return }
-        
-        titleView.sizeToFit()
-        titleView.text = title
+    func titleSetting(_ title: String, count: Int) {
+
+        guard let titleView = navigationItem.titleView as? UILabel else { titleViewSetting(with: title, count: count); return }
+        Utility.shared.titleViewSetting(with: titleView, title: title, count: count)
     }
     
     /// 標題文字相關設定
     /// - Parameter word: String
-    func titleViewSetting(with title: String) {
-        
+    func titleViewSetting(with title: String, count: Int) {
+
         let titleView = Utility.shared.titleLabelMaker(with: title)
         let gesture = UITapGestureRecognizer(target: self, action: #selector(Self.reviewCount(_:)))
         
         titleView.isUserInteractionEnabled = true
         titleView.addGestureRecognizer(gesture)
+        Utility.shared.titleViewSetting(with: titleView, title: title, count: count)
         
         navigationItem.titleView = titleView
     }
@@ -269,6 +274,16 @@ private extension ReviewResultViewController {
         alertController.addAction(actionOK)
         
         present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 過濾是否為Favorite的單字
+    /// - Parameter sender: UIBarButtonItem
+    func filterFavoriteAction(with sender: UIBarButtonItem) {
+        
+        isFavorite.toggle()
+        
+        sender.image = Utility.shared.favoriteIcon(isFavorite)
+        relaodReviewResultList(with: reviewResultType, isFavorite: isFavorite)
     }
 }
 
@@ -301,7 +316,7 @@ private extension ReviewResultViewController {
             guard let this = self else { return }
             
             this.reviewResultType = type
-            this.relaodReviewResultList(with: type)
+            this.relaodReviewResultList(with: type, isFavorite: this.isFavorite)
         }
         
         return action

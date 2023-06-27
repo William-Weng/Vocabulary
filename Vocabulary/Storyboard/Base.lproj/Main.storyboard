@@ -1189,29 +1189,40 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ReviewResultTableViewCell" id="yGr-4Q-LtM" customClass="ReviewResultTableViewCell" customModule="Vocabulary" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="158"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="241.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yGr-4Q-LtM" id="U1x-cj-AQT">
-                                            <rect key="frame" x="0.0" y="0.0" width="383.5" height="158"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="383.5" height="241.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kjK-Dn-L7J">
-                                                    <rect key="frame" x="8" y="8" width="375.5" height="142"/>
+                                                    <rect key="frame" x="8" y="8" width="375.5" height="225.5"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Kg6-f9-8PE">
-                                                            <rect key="frame" x="0.0" y="0.0" width="311.5" height="142"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="311.5" height="225.5"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="あい십일早安" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ma-bR-hOX">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="311.5" height="98"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="36" id="Rht-wN-TuZ"/>
-                                                                    </constraints>
-                                                                    <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="30"/>
-                                                                    <color key="textColor" systemColor="systemBlueColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="g4v-aD-V74">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="311.5" height="181.5"/>
+                                                                    <subviews>
+                                                                        <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Notice_Off" translatesAutoresizingMaskIntoConstraints="NO" id="kJO-yl-p5f">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="30" height="181.5"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="30" id="FGN-9a-bNN"/>
+                                                                            </constraints>
+                                                                        </imageView>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="あい십일早安" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ma-bR-hOX">
+                                                                            <rect key="frame" x="34" y="0.0" width="277.5" height="181.5"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="36" id="Rht-wN-TuZ"/>
+                                                                            </constraints>
+                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="30"/>
+                                                                            <color key="textColor" systemColor="systemBlueColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                </stackView>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qbz-Le-eLh">
-                                                                    <rect key="frame" x="0.0" y="106" width="311.5" height="36"/>
+                                                                    <rect key="frame" x="0.0" y="189.5" width="311.5" height="36"/>
                                                                     <subviews>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jwd-Eq-5hs">
                                                                             <rect key="frame" x="0.0" y="0.0" width="152" height="36"/>
@@ -1271,10 +1282,10 @@
                                                             </subviews>
                                                         </stackView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oNj-i5-n1a">
-                                                            <rect key="frame" x="311.5" y="0.0" width="64" height="142"/>
+                                                            <rect key="frame" x="311.5" y="0.0" width="64" height="225.5"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zCQ-ru-4NQ">
-                                                                    <rect key="frame" x="11" y="50" width="42.5" height="42.5"/>
+                                                                    <rect key="frame" x="11" y="91.5" width="42.5" height="42.5"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                     <state key="normal" image="Sound"/>
                                                                     <connections>
@@ -1302,6 +1313,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
                                             <outlet property="correctCountLabel" destination="xdJ-Wl-9GQ" id="F6i-Fm-El5"/>
+                                            <outlet property="favoriteImageView" destination="kJO-yl-p5f" id="4W7-M7-Nuy"/>
                                             <outlet property="mistakeCountLabel" destination="F73-4n-KmR" id="N1X-IT-T3K"/>
                                             <outlet property="wordLabel" destination="5Ma-bR-hOX" id="FtT-uD-biq"/>
                                         </connections>
@@ -1337,7 +1349,14 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="複習總覽" id="LQp-Ju-6Ou">
-                        <barButtonItem key="rightBarButtonItem" image="Level" id="Ipc-s9-4eM"/>
+                        <rightBarButtonItems>
+                            <barButtonItem image="Level" id="Ipc-s9-4eM"/>
+                            <barButtonItem image="Notice_Off" id="6CO-qD-ccs">
+                                <connections>
+                                    <action selector="filterFavorite:" destination="RKl-zh-38u" id="tLP-2T-eeZ"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="activityViewIndicator" destination="GA5-ke-y3h" id="a9O-sc-W2v"/>
@@ -1350,7 +1369,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0fB-PC-gSV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="808.69565217391312" y="2380.5803571428569"/>
+            <point key="canvasLocation" x="809" y="2427"/>
         </scene>
         <!--Talking View Controller-->
         <scene sceneID="Ewh-2T-XFT">
@@ -1360,7 +1379,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Talking" translatesAutoresizingMaskIntoConstraints="NO" id="8OC-Ha-sEW">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppIcon" translatesAutoresizingMaskIntoConstraints="NO" id="8OC-Ha-sEW">
                                 <rect key="frame" x="143" y="384" width="128" height="128"/>
                             </imageView>
                         </subviews>
@@ -1378,7 +1397,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CSi-dM-KQc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1040" y="2428"/>
+            <point key="canvasLocation" x="-972" y="2427"/>
         </scene>
         <!--My Tab Bar Controller-->
         <scene sceneID="HBU-mM-Zg0">
@@ -1463,17 +1482,17 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SentenceTableViewCell" id="7kq-cM-I72" customClass="SentenceTableViewCell" customModule="Vocabulary" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="304"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="305.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7kq-cM-I72" id="OoA-Pn-cp2">
-                                            <rect key="frame" x="0.0" y="0.0" width="383.5" height="304"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="383.5" height="305.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tAd-5F-WZQ">
-                                                    <rect key="frame" x="8" y="8" width="375.5" height="288"/>
+                                                    <rect key="frame" x="8" y="8" width="375.5" height="289.5"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Tus-cj-5mI">
-                                                            <rect key="frame" x="0.0" y="0.0" width="311.5" height="288"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="311.5" height="289.5"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="6rr-hR-SCM">
                                                                     <rect key="frame" x="0.0" y="0.0" width="311.5" height="30"/>
@@ -1509,13 +1528,13 @@
                                                                     </constraints>
                                                                 </stackView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Example Example Example Example Example Example Example Example" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H6l-1O-BW6">
-                                                                    <rect key="frame" x="0.0" y="34" width="311.5" height="218"/>
+                                                                    <rect key="frame" x="0.0" y="34" width="311.5" height="219.5"/>
                                                                     <fontDescription key="fontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="24"/>
                                                                     <color key="textColor" systemColor="systemBlueColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Translate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="VAz-ar-QAy">
-                                                                    <rect key="frame" x="0.0" y="256" width="311.5" height="32"/>
+                                                                    <rect key="frame" x="0.0" y="257.5" width="311.5" height="32"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="32" id="LPr-Ko-1fw"/>
                                                                     </constraints>
@@ -1526,10 +1545,10 @@
                                                             </subviews>
                                                         </stackView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aOk-iN-3sV">
-                                                            <rect key="frame" x="311.5" y="0.0" width="64" height="288"/>
+                                                            <rect key="frame" x="311.5" y="0.0" width="64" height="289.5"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRE-Mv-jkZ">
-                                                                    <rect key="frame" x="14" y="126" width="36" height="36"/>
+                                                                    <rect key="frame" x="14" y="127" width="36" height="36"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" secondItem="TRE-Mv-jkZ" secondAttribute="height" multiplier="1:1" id="KSn-do-Psy"/>
                                                                         <constraint firstAttribute="height" constant="36" id="ddL-2p-rnS"/>
@@ -1615,7 +1634,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="精選例句" id="G8k-sM-Y5D">
                         <leftBarButtonItems>
-                            <barButtonItem image="License" id="9HI-69-nwc">
+                            <barButtonItem image="Information" id="9HI-69-nwc">
                                 <connections>
                                     <action selector="licensePage:" destination="4GH-0f-Srn" id="Ptt-iM-ho4"/>
                                 </connections>
@@ -1649,7 +1668,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TnI-EW-xFE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1482.608695652174" y="1625.2232142857142"/>
+            <point key="canvasLocation" x="-1433" y="1625"/>
         </scene>
         <!--單字複習-->
         <scene sceneID="iKe-kO-Bkm">
@@ -1687,7 +1706,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kYI-rs-MxB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1482" y="822"/>
+            <point key="canvasLocation" x="-1432" y="822"/>
         </scene>
         <!--其它設定-->
         <scene sceneID="cUI-HZ-a8u">
@@ -1721,6 +1740,7 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Add" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="AppIcon" width="128" height="128"/>
         <image name="Books" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Cry" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Dictionary" width="21.333333969116211" height="21.333333969116211"/>
@@ -1729,8 +1749,8 @@
         <image name="FountainPen" width="21.333333969116211" height="21.333333969116211"/>
         <image name="GoBack" width="21.333333969116211" height="21.333333969116211"/>
         <image name="GoForward" width="21.333333969116211" height="21.333333969116211"/>
+        <image name="Information" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Level" width="21.333333969116211" height="21.333333969116211"/>
-        <image name="License" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Music" width="21.333333969116211" height="21.333333969116211"/>
         <image name="NoVolume" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Notice_Off" width="21.333333969116211" height="21.333333969116211"/>
@@ -1746,7 +1766,6 @@
         <image name="SoundWaves" width="170.66667175292969" height="170.66667175292969"/>
         <image name="SpeedoMeter" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Star" width="21.333333969116211" height="21.333333969116211"/>
-        <image name="Talking" width="128" height="128"/>
         <image name="Test" width="21.333333969116211" height="21.333333969116211"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

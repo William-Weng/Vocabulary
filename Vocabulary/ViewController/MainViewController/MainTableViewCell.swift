@@ -80,7 +80,7 @@ private extension MainTableViewCell {
         levelButton.showsMenuAsPrimaryAction = true
         levelButton.menu = UIMenu(title: "請選擇等級", children: levelMenuActionMaker())
         
-        favoriteImageView.image = (!isFavorite) ? UIImage(imageLiteralResourceName: "Notice_Off") : UIImage(imageLiteralResourceName: "Notice_On")
+        favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)
         initFavoriteImageViewTapGestureRecognizer()
     }
     
@@ -140,7 +140,7 @@ private extension MainTableViewCell {
         let isSuccess = API.shared.updateVocabularyFavoriteToList(vocabularyList.id, isFavorite: isFavorite, for: Constant.currentTableName)
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
         
-        favoriteImageView.image = (!isFavorite) ? UIImage(imageLiteralResourceName: "Notice_Off") : UIImage(imageLiteralResourceName: "Notice_On")
+        favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)
         updateFavoriteDictionary(isFavorite, with: indexPath)
     }
     

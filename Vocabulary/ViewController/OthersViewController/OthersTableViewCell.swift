@@ -83,7 +83,7 @@ private extension OthersTableViewCell {
         iconImageView.addGestureRecognizer(tapRecognizer)
         iconImageView.WW.downloadImage(with: bookmarkSite.icon, defaultImage: Self.defaultImage)
         
-        favoriteImageView.image = (!isFavorite) ? UIImage(imageLiteralResourceName: "Notice_Off") : UIImage(imageLiteralResourceName: "Notice_On")
+        favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)
         initFavoriteImageViewTapGestureRecognizer()
     }
     
@@ -126,7 +126,7 @@ private extension OthersTableViewCell {
         let isSuccess = API.shared.updateBookmarkFavoriteToList(bookmark.id, isFavorite: isFavorite, for: Constant.currentTableName)
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
         
-        favoriteImageView.image = (!isFavorite) ? UIImage(imageLiteralResourceName: "Notice_Off") : UIImage(imageLiteralResourceName: "Notice_On")
+        favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)
         updateFavoriteDictionary(isFavorite, with: indexPath)
     }
     

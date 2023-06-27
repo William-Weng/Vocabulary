@@ -208,6 +208,8 @@ final class VocabularyReviewList: Codable {
     let word: String        // 單字
     let correctCount: Int   // 答對的次數
     let mistakeCount: Int   // 答錯的次數
+    let wordId: Int         // 列表單字編號
+    let favorite: Int?      // 我的最愛
     let createTime: Date    // 建立時間
     let updateTime: Date    // 更新時間
     
@@ -375,6 +377,8 @@ extension VocabularyReviewList: SQLite3SchemeDelegate {
             (key: "word", type: .TEXT(attribute: (isNotNull: true, isNoCase: true, isUnique: true), defaultValue: nil)),
             (key: "correctCount", type: .INTEGER()),
             (key: "mistakeCount", type: .INTEGER()),
+            (key: "wordId", type: .INTEGER()),
+            (key: "favorite", type: .INTEGER()),
             (key: "createTime", type: .TIMESTAMP()),
             (key: "updateTime", type: .TIMESTAMP()),
         ]

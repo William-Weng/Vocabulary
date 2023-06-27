@@ -51,6 +51,19 @@ extension Set where Self.Element: Hashable {
     }
 }
 
+// MARK: - Array (class function)
+extension Array {
+    
+    /// [仿javaScript的forEach()](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
+    /// - Parameter forEach: (Int, Element, Self)
+    func _forEach(_ forEach: (Int, Element, Self) -> Void) {
+                
+        for (index, object) in self.enumerated() {
+            forEach(index, object, self)
+        }
+    }
+}
+
 // MARK: - Encodable (function)
 extension Encodable {
     

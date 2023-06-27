@@ -80,33 +80,34 @@ extension Utility {
         let navigationBarHeight = navigationController?._navigationBarHeight(for: UIWindow._keyWindow(hasScene: false)) ?? .zero
         let offset = scrollView.frame.height + scrollView.contentOffset.y - scrollView.contentSize.height
         var percent = 1.0 - (Constant.updateScrolledHeight - offset) / (Constant.updateScrolledHeight - navigationBarHeight)
-
-        if (scrollView.frame.height > scrollView.contentSize.height) {
+        
+        if (scrollView.frame.height > (scrollView.contentSize.height + navigationBarHeight)) {
             percent = (scrollView.contentOffset.y + navigationBarHeight) / (Constant.updateScrolledHeight - navigationBarHeight)
         }
         
         return percent
     }
-}
-
-// MARK: - 選單
-extension Utility {
     
-    /// 取得被點到的Cell with CellReusable
+    /// 設定UILabel標題
     /// - Parameters:
-    ///   - tableView: UITableView
-    ///   - indexPath: IndexPath
-    /// - Returns: T?
-    func didSelectedCell<T: CellReusable>(_ tableView: UITableView, with indexPath: IndexPath) -> T? {
+    ///   - titleView: UILabel
+    ///   - title: String
+    ///   - count: Int
+    func titleViewSetting(with titleView: UILabel, title: String, count: Int) {
         
-        var cell: T?
+        let title = "\(title) - \(count)"
         
-        tableView.visibleCells.forEach { visibleCell in
-            guard let visibleCell = visibleCell as? T else { return }
-            if (visibleCell.indexPath == indexPath) { cell = visibleCell }
-        }
-        
-        return cell
+        titleView.sizeToFit()
+        titleView.textAlignment = .center
+        titleView.frame = CGRect(origin: titleView.frame.origin, size: CGSize(width: titleView.frame.width + 10, height: titleView.frame.height + 10))
+        titleView.text = title
+    }
+    
+    /// 我的最愛ICON
+    /// - Parameter isFavorite: Bool
+    /// - Returns: UIImage
+    func favoriteIcon(_ isFavorite: Bool) -> UIImage {
+        return (!isFavorite) ? UIImage(imageLiteralResourceName: "Notice_Off") : UIImage(imageLiteralResourceName: "Notice_On")
     }
     
     /// 產生NavigationItem標題的LabelView

@@ -63,6 +63,7 @@ final class ReviewResultViewController: UIViewController {
     
     deinit {
         ReviewResultTableViewCell.reviewResultListArray = []
+        NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
         wwPrint("\(Self.self) deinit")
     }
 }
@@ -88,6 +89,8 @@ private extension ReviewResultViewController {
         myTableView._delegateAndDataSource(with: self)
         myTableView.addSubview(refreshControl)
         myTableView.tableFooterView = UIView()
+        
+        viewDidTransitionAction()
         
         relaodReviewResultList(with: reviewResultType, isFavorite: isFavorite)
     }
@@ -185,6 +188,11 @@ private extension ReviewResultViewController {
         
         if (contentOffsetY < 0) { return }
         if (offset > contentHeight) { appendReviewResultList(with: type) }
+    }
+    
+    /// 畫面旋轉的動作
+    func viewDidTransitionAction() {
+        NotificationCenter.default._register(name: .viewDidTransition) { _ in Utility.shared.updateScrolledHeightSetting() }
     }
     
     /// 新複習過的單字列表
@@ -351,27 +359,6 @@ private extension ReviewResultViewController {
         
         activityViewIndicator.alpha = alpha
         indicatorLabel.alpha = alpha
-        indicatorLabel.text = updateActivityViewIndicatorTitle(with: percent, isNeededUpdate: isNeededUpdate)
-    }
-    
-    /// 下滑到底更新的顯示Title
-    /// - Parameter percent: CGFloat
-    /// - Returns: String
-    func updateActivityViewIndicatorTitle(with percent: CGFloat, isNeededUpdate: Bool) -> String {
-        
-        if (!isNeededUpdate) { return "無更新資料" }
-        
-        var _percent = percent
-        if (percent > 1.0) { _percent = 1.0 }
-        
-        let title = String(format: "%.2f", _percent * 100)
-        return "\(title) %"
-    }
-    
-    /// 更新下滑更新的高度基準值
-    /// - Parameter percent: KeyWindow高度的25%
-    func updateScrolledHeightSetting(percent: CGFloat = 0.25) {
-        guard let keyWindow = UIWindow._keyWindow(hasScene: false) else { return }
-        Constant.updateScrolledHeight = keyWindow.frame.height * percent
+        indicatorLabel.text = Utility.shared.updateActivityViewIndicatorTitle(with: percent, isNeededUpdate: isNeededUpdate)
     }
 }

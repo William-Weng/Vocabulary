@@ -80,6 +80,7 @@ final class SearchWordViewController: UIViewController {
     
     deinit {
         SearchTableViewCell.vocabularyListArray = []
+        NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
         wwPrint("\(Self.self) deinit")
     }
 }
@@ -139,6 +140,8 @@ private extension SearchWordViewController {
         myTableView._delegateAndDataSource(with: self)
         myTableView.addSubview(refreshControl)
         myTableView.tableFooterView = UIView()
+        
+        viewDidTransitionAction()
         
         navigationItem.backBarButtonItem = UIBarButtonItem()
     }
@@ -325,6 +328,11 @@ private extension SearchWordViewController {
         
         return dictionary
     }
+    
+    /// 畫面旋轉的動作
+    func viewDidTransitionAction() {
+        NotificationCenter.default._register(name: .viewDidTransition) { _ in Utility.shared.updateScrolledHeightSetting() }
+    }
 }
 
 // MARK: - 下滑更新
@@ -356,29 +364,6 @@ private extension SearchWordViewController {
         
         activityViewIndicator.alpha = percent
         indicatorLabel.alpha = percent
-        indicatorLabel.text = updateActivityViewIndicatorTitle(with: percent, isNeededUpdate: isNeededUpdate)
-    }
-    
-    /// 下滑到底更新的顯示Title
-    /// - Parameters:
-    ///   - percent: CGFloat
-    ///   - isNeededUpdate: Bool
-    /// - Returns: String
-    func updateActivityViewIndicatorTitle(with percent: CGFloat, isNeededUpdate: Bool) -> String {
-        
-        if (!isNeededUpdate) { return "無更新資料" }
-        
-        var _percent = percent
-        if (percent > 1.0) { _percent = 1.0 }
-        
-        let title = String(format: "%.2f", _percent * 100)
-        return "\(title) %"
-    }
-    
-    /// 更新下滑更新的高度基準值
-    /// - Parameter percent: KeyWindow高度的25%
-    func updateScrolledHeightSetting(percent: CGFloat = 0.25) {
-        guard let keyWindow = UIWindow._keyWindow(hasScene: false) else { return }
-        Constant.updateScrolledHeight = keyWindow.frame.height * percent
+        indicatorLabel.text = Utility.shared.updateActivityViewIndicatorTitle(with: percent, isNeededUpdate: isNeededUpdate)
     }
 }

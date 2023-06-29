@@ -14,6 +14,7 @@ final class SearchTableViewCell: UITableViewCell, CellReusable {
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var alphabetLabel: UILabel!
     @IBOutlet weak var interpretListStackView: UIStackView!
+    @IBOutlet weak var favoriteImageView: UIImageView!
     
     static var searchType: Constant.SearchType = .word
     static var vocabularyListArray: [[String : Any]] = [] { didSet { Self.updateWordsDetailArray() }}
@@ -22,16 +23,24 @@ final class SearchTableViewCell: UITableViewCell, CellReusable {
     
     private static var vocabularyDeteilListArray: [[String : Any]] = []
     
+    private var isFavorite = false
     private var vocabularyList: VocabularyList?
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        
         interpretListStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        favoriteImageView.gestureRecognizers?.forEach({ favoriteImageView.removeGestureRecognizer($0) })
     }
     
     func configure(with indexPath: IndexPath) { configure(for: indexPath) }
     
     @IBAction func playSound(_ sender: UIButton) { playWordSound() }
+    
+    @objc func updateFavorite(_ recognizer: UITapGestureRecognizer) {
+        isFavorite.toggle()
+        updateFavorite(isFavorite, with: indexPath)
+    }
     
     deinit { wwPrint("\(Self.self) deinit") }
 }
@@ -123,12 +132,16 @@ private extension SearchTableViewCell {
                 
         self.indexPath = indexPath
         self.vocabularyList = vocabularyList
+        self.isFavorite = ((vocabularyList.favorite ?? 0) != 0)
         
         wordLabel.font = Constant.currentTableName.font() ?? UIFont.systemFont(ofSize: 36.0)
         wordLabel.text = vocabularyList.word
         
         alphabetLabel.text = vocabularyList.alphabet
-                
+        
+        favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)
+        initFavoriteImageViewTapGestureRecognizer()
+        
         vocabularyDeteilArray.forEach { vocabulary in
             
             let subLabel = InterpretView()
@@ -142,5 +155,40 @@ private extension SearchTableViewCell {
     func playWordSound() {
         guard let vocabularyList = vocabularyList else { return }
         Utility.shared.speak(string: vocabularyList.word, voice: Constant.currentTableName)
+    }
+    
+    /// FavoriteImageView點擊功能
+    func initFavoriteImageViewTapGestureRecognizer() {
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(Self.updateFavorite(_:)))
+        favoriteImageView.addGestureRecognizer(recognizer)
+    }
+    
+    /// 更新Favorite狀態
+    /// - Parameters:
+    ///   - isFavorite: Bool
+    ///   - indexPath: IndexPath
+    func updateFavorite(_ isFavorite: Bool, with indexPath: IndexPath) {
+        
+        guard let vocabularyList = Self.vocabularyList(with: indexPath) else { return }
+        
+        let isSuccess = API.shared.updateVocabularyFavoriteToList(vocabularyList.id, isFavorite: isFavorite, for: Constant.currentTableName)
+        if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
+
+        favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)
+        updateFavoriteDictionary(isFavorite, with: indexPath)
+    }
+    
+    /// 更新暫存的我的最愛資訊
+    /// - Parameters:
+    ///   - isFavorite: Bool
+    ///   - indexPath: IndexPath
+    func updateFavoriteDictionary(_ isFavorite: Bool, with indexPath: IndexPath) {
+        
+        guard var dictionary = Self.vocabularyListArray[safe: indexPath.row] else { return }
+
+        let favorite = isFavorite._int()
+        dictionary["favorite"] = favorite
+        
+        Self.vocabularyListArray[indexPath.row] = dictionary
     }
 }

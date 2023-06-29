@@ -290,8 +290,8 @@ extension Constant {
         
         var description: String { toString() }
         
-        case word = 0
-        case interpret = 1
+        case word = 0       // 單字
+        case interpret = 1  // 字義
         
         /// 轉成中文字
         /// - Returns: String

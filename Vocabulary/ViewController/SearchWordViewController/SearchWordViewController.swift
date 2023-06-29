@@ -13,11 +13,15 @@ final class SearchWordViewController: UIViewController {
     
     @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var myTableView: UITableView!
+    @IBOutlet weak var activityViewIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var indicatorLabel: UILabel!
     
     private let searchListTableViewSegue = "SearchListTableViewSegue"
-    
-    private var word: String = ""
+
     private var isAnimationStop = false
+    private var isNeededUpdate = false
+    private var word: String = ""
+    
     private var disappearImage: UIImage?
     private var titleSearchBar = UISearchBar()
     private var refreshControl: UIRefreshControl!
@@ -86,8 +90,10 @@ extension SearchWordViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return SearchTableViewCell.vocabularyListArray.count }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { return searchTableViewCell(tableView, cellForRowAt: indexPath) }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { performSegue(withIdentifier: searchListTableViewSegue, sender: indexPath) }
-    func scrollViewDidScroll(_ scrollView: UIScrollView) { dismissKeyboard(with: titleSearchBar.searchTextField) }
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) { updateSearchData(for: scrollView, height: Constant.updateScrolledHeight) }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        dismissKeyboard(with: titleSearchBar.searchTextField)
+        updateHeightPercentAction(with: scrollView, isNeededUpdate: isNeededUpdate)
+    }
 }
 
 // MARK: - UISearchBarDelegate
@@ -179,20 +185,6 @@ private extension SearchWordViewController {
         return cell
     }
     
-    /// 下滑到底更新資料
-    /// - Parameters:
-    ///   - scrollView: UIScrollView
-    ///   - height: CGFloat
-    func updateSearchData(for scrollView: UIScrollView, height: CGFloat) {
-        
-        let contentOffsetY = scrollView.contentOffset.y
-        let offset = scrollView.frame.height + contentOffsetY - height
-        let contentHeight = scrollView.contentSize.height
-        
-        if (contentOffsetY < 0) { return }
-        if (offset > contentHeight) { appendSearchWordList(like: titleSearchBar.searchTextField.text) }
-    }
-    
     /// 刪除該列資料
     /// - Parameter indexPath: IndexPath
     func deleteRowAction(with indexPath: IndexPath) {
@@ -230,20 +222,23 @@ private extension SearchWordViewController {
     /// 搜尋相似的單字
     /// - Parameter word: 以它為開頭的單字
     func searchWordList(like word: String?) {
-        
+                
         defer {
+            
+            let listCount = SearchTableViewCell.vocabularyListArray.count
+            isNeededUpdate = (listCount < Constant.searchCount) ? false : true
+            
             refreshControl.endRefreshing()
             myTableView.reloadData()
         }
         
-        SearchTableViewCell.vocabularyListArray = []
-        
         guard let word = word?._removeWhiteSpacesAndNewlines(),
               !word.isEmpty
         else {
-            return
+            SearchTableViewCell.vocabularyListArray = []; return
         }
         
+        SearchTableViewCell.vocabularyListArray = []
         SearchTableViewCell.vocabularyListArray = vocabularyListArrayMaker(like: word, searchType: currentSearchType, for: Constant.currentTableName, offset: 0)
     }
     
@@ -266,7 +261,8 @@ private extension SearchWordViewController {
         let indexPaths = (oldListCount..<newListCount).map { IndexPath(row: $0, section: 0) }
         myTableView._insertRows(at: indexPaths, animation: .automatic, animated: false)
         
-        if (newListCount > oldListCount) { Utility.shared.flashHUD(with: .success) }
+        if (newListCount > oldListCount) { Utility.shared.flashHUD(with: .success); return }
+        isNeededUpdate = false
     }
     
     /// 設定單字列表頁的相關數值
@@ -328,5 +324,61 @@ private extension SearchWordViewController {
         }
         
         return dictionary
+    }
+}
+
+// MARK: - 下滑更新
+private extension SearchWordViewController {
+    
+    /// 下滑到底更新的動作設定
+    /// - Parameters:
+    ///   - scrollView: UIScrollView
+    ///   - criticalValue: 要更新的臨界值 => 120%才更新
+    ///   - isNeededUpdate: Bool
+    func updateHeightPercentAction(with scrollView: UIScrollView, criticalValue: CGFloat = 1.2, isNeededUpdate: Bool) {
+        
+        var percent = Utility.shared.updateHeightPercent(with: scrollView, navigationController: navigationController)
+        
+        if isNeededUpdate && (percent > criticalValue) {
+            percent = 0.0
+            Utility.shared.impactEffect()
+            appendSearchWordList(like: titleSearchBar.searchTextField.text)
+        }
+        
+        updateActivityViewIndicatorSetting(with: percent, isNeededUpdate: isNeededUpdate)
+    }
+    
+    /// 下滑到底更新的轉圈圈設定 => 根據百分比
+    /// - Parameters:
+    ///   - percent: CGFloat
+    ///   - isNeededUpdate: Bool
+    func updateActivityViewIndicatorSetting(with percent: CGFloat, isNeededUpdate: Bool) {
+        
+        activityViewIndicator.alpha = percent
+        indicatorLabel.alpha = percent
+        indicatorLabel.text = updateActivityViewIndicatorTitle(with: percent, isNeededUpdate: isNeededUpdate)
+    }
+    
+    /// 下滑到底更新的顯示Title
+    /// - Parameters:
+    ///   - percent: CGFloat
+    ///   - isNeededUpdate: Bool
+    /// - Returns: String
+    func updateActivityViewIndicatorTitle(with percent: CGFloat, isNeededUpdate: Bool) -> String {
+        
+        if (!isNeededUpdate) { return "無更新資料" }
+        
+        var _percent = percent
+        if (percent > 1.0) { _percent = 1.0 }
+        
+        let title = String(format: "%.2f", _percent * 100)
+        return "\(title) %"
+    }
+    
+    /// 更新下滑更新的高度基準值
+    /// - Parameter percent: KeyWindow高度的25%
+    func updateScrolledHeightSetting(percent: CGFloat = 0.25) {
+        guard let keyWindow = UIWindow._keyWindow(hasScene: false) else { return }
+        Constant.updateScrolledHeight = keyWindow.frame.height * percent
     }
 }

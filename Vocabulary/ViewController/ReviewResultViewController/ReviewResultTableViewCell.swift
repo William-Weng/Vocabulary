@@ -103,7 +103,7 @@ private extension ReviewResultTableViewCell {
     
     /// 更新暫存的我的最愛資訊
     /// - Parameters:
-    ///   - level: Vocabulary.Level
+    ///   - isFavorite: Bool
     ///   - indexPath: IndexPath
     func updateFavoriteDictionary(_ isFavorite: Bool, with indexPath: IndexPath) {
 

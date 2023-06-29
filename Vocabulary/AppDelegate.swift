@@ -25,7 +25,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         _ = WWWebImage.initDatabase(for: .caches, expiredDays: 90)
-        
+
         initDatabase()
         backgroundPlayAudio()
         appVersionShortcutItem(with: application)

@@ -243,9 +243,9 @@ private extension ListViewController {
             
             guard let this = self,
                   let textFields = textFields,
-                  let interpret = textFields.first?.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-                  let example = textFields[safe: 1]?.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-                  let translate = textFields.last?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+                  let interpret = textFields.first?.text?._removeWhiteSpacesAndNewlines(),
+                  let example = textFields[safe: 1]?.text?._removeWhiteSpacesAndNewlines(),
+                  let translate = textFields.last?.text?._removeWhiteSpacesAndNewlines()
             else {
                 return
             }

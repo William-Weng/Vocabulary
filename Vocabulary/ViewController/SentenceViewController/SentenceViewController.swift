@@ -398,8 +398,8 @@ private extension SentenceViewController {
         let actionOK = UIAlertAction(title: "確認", style: .default) { [weak self] _ in
             
             guard let this = self,
-                  let inputExampleText = textFields?.first?.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-                  let inputTranslateText = textFields?.last?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+                  let inputExampleText = textFields?.first?.text?._removeWhiteSpacesAndNewlines(),
+                  let inputTranslateText = textFields?.last?.text?._removeWhiteSpacesAndNewlines()
             else {
                 return
             }

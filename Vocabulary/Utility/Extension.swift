@@ -27,9 +27,9 @@ extension Int {
     /// - Parameter range: Range<Int>
     /// - Returns: Int
     static func _random(in range: Range<Int>) -> Int {
-      var generator = SystemRandomNumberGenerator()
-      let number = Int.random(in: range, using: &generator)
-      return number
+        var generator = SystemRandomNumberGenerator()
+        let number = Int.random(in: range, using: &generator)
+        return number
     }
 }
 
@@ -959,6 +959,10 @@ extension UIApplication {
 // MARK: - UINavigationBar (function)
 extension UINavigationBar {
     
+    /// 取得第一個SubView
+    /// - Returns: UIView?
+    func _rootView() -> UIView? { return subviews.first }
+    
     /// [透明背景 (透明底線) => application(_:didFinishLaunchingWithOptions:)](https://sarunw.com/posts/uinavigationbar-changes-in-ios13/)
     func _transparent() {
         self.standardAppearance = UINavigationBarAppearance()._transparent()
@@ -994,10 +998,6 @@ extension UINavigationBar {
         let settings = UINavigationBarAppearance()._transparent()._backgroundColor(color)._backgroundImage(image)._hasShadow(hasShadow)
         self.scrollEdgeAppearance = settings
     }
-    
-    /// 取得第一個SubView
-    /// - Returns: UIView?
-    func _rootView() -> UIView? { return subviews.first }
 }
 
 // MARK: - UINavigationBarAppearance (function)
@@ -1016,7 +1016,7 @@ extension UINavigationBarAppearance {
     /// - Parameter image: UIImage?
     /// - Returns: UINavigationBarAppearance
     func _backgroundImage(_ image: UIImage?) -> Self { backgroundImage = image; return self }
-
+    
     /// 設定下底線是否透明
     /// - Parameter hasShadow: 是否透明
     /// - Returns: UINavigationBarAppearance

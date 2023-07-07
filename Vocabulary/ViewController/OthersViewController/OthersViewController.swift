@@ -345,8 +345,8 @@ private extension OthersViewController {
         let actionOK = UIAlertAction(title: "確認", style: .default) { [weak self] _ in
             
             guard let this = self,
-                  let inputTitle = alertController.textFields?.first?.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-                  let inputWebUrl = alertController.textFields?.last?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+                  let inputTitle = alertController.textFields?.first?.text?._removeWhiteSpacesAndNewlines(),
+                  let inputWebUrl = alertController.textFields?.last?.text?._removeWhiteSpacesAndNewlines()
             else {
                 return
             }
@@ -484,7 +484,7 @@ private extension OthersViewController {
         }
         
         let actionOK = UIAlertAction(title: "確認", style: .default) { _ in
-            guard let url = alertController.textFields?.first?.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+            guard let url = alertController.textFields?.first?.text?._removeWhiteSpacesAndNewlines() else { return }
             action(url)
         }
         
@@ -512,7 +512,7 @@ private extension OthersViewController {
         
         bookmark["icon"] = iconUrl
         OthersTableViewCell.bookmarksArray[indexPath.row] = bookmark
-                
+        
         return API.shared.updateBookmarkIconToList(bookmarkId, iconUrl: iconUrl, for: Constant.currentTableName)
     }
     
@@ -579,7 +579,7 @@ private extension OthersViewController {
         
         guard let databaseUrl = Constant.database?.fileURL,
               let fileUrl = urls.first,
-              let backupUrl = Constant.backupDirectory?._appendPath("\(Date()._localTime()).\(Constant.databaseFileExtension)")
+              let backupUrl = Utility.shared.databaseBackupUrl()
         else {
             downloadDocumentHint(target: self, title: "備份路徑錯誤", message: nil); return
         }

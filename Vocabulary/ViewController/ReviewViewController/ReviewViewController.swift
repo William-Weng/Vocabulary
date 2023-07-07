@@ -288,7 +288,7 @@ private extension ReviewViewController {
         }
         
         let actionOK = UIAlertAction(title: "確認", style: .default) { _ in
-            guard let inputWord = alertController.textFields?.first?.text?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
+            guard let inputWord = alertController.textFields?.first?.text?._removeWhiteSpacesAndNewlines() else { return }
             action(inputWord)
         }
         
@@ -386,7 +386,7 @@ private extension ReviewViewController {
                 // this.initVocabularyLevelButton(with: vocabularyList)
             }
             
-            if (vocabularyList.word.lowercased() != inputWord.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()) { isCorrect = false; return }
+            if (vocabularyList.word.lowercased() != inputWord._removeWhiteSpacesAndNewlines().lowercased()) { isCorrect = false; return }
             isCorrect = true
         }
     }

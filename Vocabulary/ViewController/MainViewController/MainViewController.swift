@@ -372,7 +372,7 @@ private extension MainViewController {
         let actionOK = UIAlertAction(title: "確認", style: .default) { [weak self] _ in
             
             guard let this = self,
-                  let inputWord = textFields?.first?.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+                  let inputWord = textFields?.first?.text?._removeWhiteSpacesAndNewlines()
             else {
                 return
             }
@@ -585,13 +585,12 @@ private extension MainViewController {
         }
     }
     
-    /// 備份資料庫
+    /// 備份資料庫 (以時間命名)
     /// - Returns: Result<Bool, Error>
     func backupDatabase() -> Result<String?, Error> {
         
         guard let databaseUrl = Constant.database?.fileURL,
-              let filename = Optional.some("\(Date()._localTime(dateFormat: "yyyy-MM-dd HH:mm:ss ZZZ", timeZone: .current)).\(Constant.databaseFileExtension)"),
-              let backupUrl = Constant.backupDirectory?._appendPath(filename)
+              let backupUrl = Utility.shared.databaseBackupUrl()
         else {
             return .failure(Constant.MyError.notOpenURL)
         }
@@ -600,7 +599,7 @@ private extension MainViewController {
         
         switch result {
         case .failure(let error): return .failure(error)
-        case .success(let isSuccess): return (isSuccess ? .success(filename) : .success(nil))
+        case .success(let isSuccess): return (isSuccess ? .success(backupUrl.lastPathComponent) : .success(nil))
         }
     }
     

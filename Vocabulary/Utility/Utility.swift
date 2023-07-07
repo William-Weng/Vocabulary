@@ -96,10 +96,11 @@ extension Utility {
     func titleViewSetting(with titleView: UILabel, title: String, count: Int) {
         
         let title = "\(title) - \(count)"
+        let gap = 16.0
         
         titleView.sizeToFit()
         titleView.textAlignment = .center
-        titleView.frame = CGRect(origin: titleView.frame.origin, size: CGSize(width: titleView.frame.width + 10, height: titleView.frame.height + 10))
+        titleView.frame = CGRect(origin: titleView.frame.origin, size: CGSize(width: titleView.frame.width + gap, height: titleView.frame.height + gap))
         titleView.text = title
     }
     
@@ -148,5 +149,13 @@ extension Utility {
     func updateScrolledHeightSetting(percent: CGFloat = 0.25) {
         guard let keyWindow = UIWindow._keyWindow(hasScene: false) else { return }
         Constant.updateScrolledHeight = keyWindow.frame.height * percent
+    }
+    
+    /// 資料庫備份路徑
+    /// - Parameter dateFormat: "yyyy-MM-dd HH:mm:ss ZZZ"
+    /// - Returns: URL?
+    func databaseBackupUrl(_ dateFormat: String = "yyyy-MM-dd HH:mm:ss ZZZ") -> URL? {
+        let url = Constant.backupDirectory?._appendPath("\(Date()._localTime(dateFormat: dateFormat, timeZone: .current)).\(Constant.databaseFileExtension)")
+        return url
     }
 }

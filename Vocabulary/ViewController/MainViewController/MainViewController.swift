@@ -12,6 +12,7 @@ import WWToast
 
 // MARK: - MainViewDelegate
 protocol MainViewDelegate {
+    
     func deleteRow(with indexPath: IndexPath)
     func updateCountLabel(with indexPath: IndexPath, count: Int)
     func tabBarHidden(_ isHidden: Bool)
@@ -37,6 +38,7 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var indicatorLabel: UILabel!
     
     private let titleString = "我愛背單字"
+    private let appendTextHintTitle = "請輸入單字"
     
     private var isFixed = false
     private var isAnimationStop = false
@@ -105,11 +107,28 @@ extension MainViewController: MainViewDelegate {
     func updateCountLabel(with indexPath: IndexPath, count: Int) { updateCountLabelAction(with: indexPath, count: count) }
     func tabBarHidden(_ isHidden: Bool) { tabBarHiddenAction(isHidden) }
     func navigationBarHidden(_ isHidden: Bool) { navigationBarHiddenAction(isHidden) }
+    func updateColorSetting(with indexPath: IndexPath) {
+        wwPrint(indexPath)
+    }
 }
 
 // MARK: - MyNavigationControllerDelegate
 extension MainViewController: MyNavigationControllerDelegate {
     func refreshRootViewController() { reloadVocabulary(isFavorite: isFavorite) }
+}
+
+// MARK: - for DeepLink
+extension MainViewController {
+    
+    /// 新增單字的動作
+    /// - Parameter defaultText: String?
+    func appendWord(with defaultText: String? = nil) {
+        
+        appendTextHint(title: appendTextHintTitle, defaultText: defaultText) { [weak self] inputWord in
+            guard let this = self else { return false }
+            return this.appendWord(inputWord, for: Constant.currentTableName)
+        }
+    }
 }
 
 // MARK: - 小工具
@@ -125,7 +144,6 @@ private extension MainViewController {
         
         myTableView._delegateAndDataSource(with: self)
         myTableView.addSubview(refreshControl)
-        myTableView.tableFooterView = UIView()
         
         reloadVocabulary(isFavorite: isFavorite)
         
@@ -328,12 +346,8 @@ private extension MainViewController {
     
     /// 新增單字的動作
     /// - Parameter sender: UIButton
-    func appendTextHintAction(_ sender: UIButton) {
-        
-        appendTextHint(title: "請輸入單字") { [weak self] inputWord in
-            guard let this = self else { return false }
-            return this.appendWord(inputWord, for: Constant.currentTableName)
-        }
+    func appendTextHintAction(_ sender: UIButton) {        
+        appendWord()
     }
     
     /// 新增文字的提示框

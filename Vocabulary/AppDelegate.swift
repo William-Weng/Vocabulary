@@ -23,18 +23,12 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     private var audioRecorder: AVAudioRecorder?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        _ = WWWebImage.initDatabase(for: .caches, expiredDays: 90)
-
-        initDatabase()
-        backgroundPlayAudio()
-        appVersionShortcutItem(with: application)
-        
-        backgroundBarColor(.black.withAlphaComponent(0.1))
-        audioInterruptionNotification()
-        
-        _ = animationFolderUrlMaker()
-        
+        initSetting(application, didFinishLaunchingWithOptions: launchOptions)
+        return true
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        deepLinkURL(with: url)
         return true
     }
     
@@ -65,6 +59,22 @@ extension AppDelegate: AVAudioRecorderDelegate {
 
 // MARK: - 小工具
 extension AppDelegate {
+    
+    /// 初始化設定
+    func initSetting(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
+        
+        _ = WWWebImage.initDatabase(for: .caches, expiredDays: 90)
+        
+        initCurrentTableName()
+        initDatabase()
+        backgroundPlayAudio()
+        appVersionShortcutItem(with: application)
+        
+        backgroundBarColor(.black.withAlphaComponent(0.1))
+        audioInterruptionNotification()
+        
+        _ = animationFolderUrlMaker()
+    }
     
     /// 初始化資料表 / 資料庫
     func initDatabase() {
@@ -130,6 +140,18 @@ extension AppDelegate {
 
 // MARK: - 小工具
 private extension AppDelegate {
+    
+    /// 取得之前設定的資料庫名稱
+    func initCurrentTableName() {
+        
+        guard let tableName = Constant.tableName,
+              let voiceCode = Constant.VoiceCode(rawValue: tableName)
+        else {
+            return
+        }
+        
+        Constant.currentTableName = voiceCode
+    }
     
     /// 建立該語言的資料庫群
     /// - Parameters:
@@ -234,9 +256,10 @@ private extension AppDelegate {
     func appVersionShortcutItem(with application: UIApplication) {
         
         let version = Bundle.main._appVersion()
+        let installType = Bundle.main._appInstallSource() ?? .Simulator
         let info = UIDevice._systemInformation()
         let icon = UIApplicationShortcutIcon(type: .love)
-        let title = "版本 for \(info.name) \(info.version)"
+        let title = "\(info.name) \(info.version) for \(installType.rawValue)"
         let subtitle = "v\(version.app ?? "0.0.0") (\(version.build ?? "0"))"
         let shortcutItem = UIApplicationShortcutItem._build(localizedTitle: title, localizedSubtitle: subtitle, icon: icon)
         
@@ -244,4 +267,60 @@ private extension AppDelegate {
     }
 }
 
+// MARK: - for Deep Link
+extension AppDelegate {
+    
+    /// [使用UrlScheme功能的相關設定](https://youtu.be/OyzFPrVIlQ8)
+    /// => [在info.plist設定](https://cg2010studio.com/2014/11/13/ios-客製化-url-scheme-custom-url-scheme/)
+    func deepLinkURL(with url: URL) {
+        
+        guard let components = url._components(),
+              Constant.urlScheme == components.scheme?.lowercased()
+        else {
+            return
+        }
+        
+        guard let host = components.host?.lowercased(),
+              let action = Constant.DeepLinkAction(rawValue: host)
+        else {
+            return
+        }
+        
+        switch action {
+        case .append: appendWord(with: components)
+        }
+    }
+    
+    /// 由DeepLink功能加入新單字 (word://append/<新單字>)
+    /// - Parameter components: URLComponents
+    func appendWord(with components: URLComponents) {
+
+        guard let word = components.path.split(separator: "/").first else { return}
+        
+        tabbarRootViewController(with: 0) { viewController in
+            if let viewController = viewController as? MainViewController {
+                viewController.appendWord(with: String(word))
+            }
+        }
+    }
+    
+    /// 取得Tabbar上的ViewController
+    /// - Parameter index: Int
+    /// - Returns: T?
+    func tabbarRootViewController(with index: Int, completion: @escaping ((UIViewController) -> Void)) {
+        
+        guard let tabBarController = window?.rootViewController as? MyTabBarController,
+              let navigationController = tabBarController.viewControllers?[safe: index] as? MyNavigationController,
+              let viewController = navigationController.viewControllers.first
+        else {
+            return
+        }
+        
+        tabBarController.selectedIndex = index
+        
+        _ = navigationController._popToRootViewController {
+            completion(viewController)
+        }
+    }
+}
 

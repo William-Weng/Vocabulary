@@ -44,6 +44,7 @@
 		81BA793E29876CE000C0FD6C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 81BA793D29876CE000C0FD6C /* README.md */; };
 		81BA794029876DA800C0FD6C /* SearchWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA793F29876DA800C0FD6C /* SearchWordViewController.swift */; };
 		81BA794429877ACC00C0FD6C /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA794329877ACC00C0FD6C /* SearchTableViewCell.swift */; };
+		81BB8E192A64F2DB00D26939 /* PropertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BB8E182A64F2DB00D26939 /* PropertyWrapper.swift */; };
 		81CD85CC2990F03A009C39FF /* SentenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD85CB2990F03A009C39FF /* SentenceViewController.swift */; };
 		81E1F8F02A1F2C8100EB0139 /* WWHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 81E1F8EF2A1F2C8100EB0139 /* WWHUD */; };
 		81E1F8F32A1F2C9A00EB0139 /* WWSQLite3Manager in Frameworks */ = {isa = PBXBuildFile; productRef = 81E1F8F22A1F2C9A00EB0139 /* WWSQLite3Manager */; };
@@ -95,6 +96,7 @@
 		81BA793D29876CE000C0FD6C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		81BA793F29876DA800C0FD6C /* SearchWordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWordViewController.swift; sourceTree = "<group>"; };
 		81BA794329877ACC00C0FD6C /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
+		81BB8E182A64F2DB00D26939 /* PropertyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyWrapper.swift; sourceTree = "<group>"; };
 		81CD85CB2990F03A009C39FF /* SentenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceViewController.swift; sourceTree = "<group>"; };
 		81F52F33299DE87A005F9DF2 /* MyTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -219,6 +221,7 @@
 				642858A5297BC40E00DD7D88 /* Constant.swift */,
 				642858A3297BC38200DD7D88 /* Extension.swift */,
 				64C184F4297E5CC600D1D1B2 /* Protocol.swift */,
+				81BB8E182A64F2DB00D26939 /* PropertyWrapper.swift */,
 				64C18501297E861800D1D1B2 /* Utility.swift */,
 			);
 			path = Utility;
@@ -451,6 +454,7 @@
 				81201C4C298B58C200291485 /* InterpretView.swift in Sources */,
 				8196323329933CEF00B96960 /* MyNavigationController.swift in Sources */,
 				642858A6297BC40E00DD7D88 /* Constant.swift in Sources */,
+				81BB8E192A64F2DB00D26939 /* PropertyWrapper.swift in Sources */,
 				818E261329922FFE00385705 /* ReviewResultViewController.swift in Sources */,
 				64ED74D82998C5EF00948C77 /* LicenseWebViewController.swift in Sources */,
 				819D69D2298E31E1001AF48E /* SolutionTableViewCell.swift in Sources */,
@@ -601,7 +605,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20230707;
+				CURRENT_PROJECT_VERSION = 20230720;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -620,7 +624,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6.6;
+				MARKETING_VERSION = 1.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -639,7 +643,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20230707;
+				CURRENT_PROJECT_VERSION = 20230720;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -658,7 +662,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6.6;
+				MARKETING_VERSION = 1.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

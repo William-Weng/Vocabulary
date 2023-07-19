@@ -142,7 +142,6 @@ private extension OthersViewController {
         
         myTableView._delegateAndDataSource(with: self)
         myTableView.addSubview(refreshControl)
-        myTableView.tableFooterView = UIView()
     }
     
     /// 重新讀取書籤
@@ -705,6 +704,7 @@ extension OthersViewController {
         let menu = UIMenu(title: "請選擇字典", children: actions)
         
         dictionaryButtonItem.menu = menu
+        dictionaryButtonItem.title = Constant.currentTableName.flagEmoji()
     }
     
     /// 產生字典資料庫選單

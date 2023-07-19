@@ -144,7 +144,6 @@ private extension SentenceViewController {
         
         myTableView._delegateAndDataSource(with: self)
         myTableView.addSubview(refreshControl)
-        myTableView.tableFooterView = UIView()
         
         reloadSentenceList(with: currentSpeech, isFavorite: isFavorite)
     }

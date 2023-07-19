@@ -133,21 +133,6 @@ extension Array {
     }
 }
 
-// MARK: - Array (function)
-extension Array where Self.Element: Hashable {
-        
-    /// [兩者不重複的值 => 差集](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes/)
-    /// - Parameter other: [Element]
-    /// - Returns: [Element]
-    func _symmetricDifference(with other: [Element]) -> [Element] {
-        
-        let set = Set(self)
-        let otherSet = Set(other)
-        
-        return Array(set.symmetricDifference(otherSet))
-    }
-}
-
 // MARK: - Dictionary (function)
 extension Dictionary {
     
@@ -357,6 +342,41 @@ extension Bundle {
         guard let build = self._infoDictionary(with: .CFBundleVersion) as? String else { return nil }
         return build
     }
+    
+    /// [測試App是從哪裡安裝的](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/從零開始開發-ios-app-的-in-app-purchase-iap-45250cf2174)
+    /// - Returns: Constant.AppInstallSource?
+    func _appInstallSource() -> Constant.AppInstallSource? {
+        
+        guard let receiptPath = appStoreReceiptURL?.path else { return .none }
+        
+        if receiptPath.contains("CoreSimulator") { return .Simulator }
+        if receiptPath.contains("sandboxReceipt") { return .TestFlight }
+        return .AppStore
+    }
+}
+
+// MARK: - URLComponents (static function)
+extension URLComponents {
+    
+    /// 產生URLComponents
+    /// - Parameters:
+    ///   - urlString: UrlString
+    ///   - queryItems: Query參數
+    /// - Returns: URLComponents?
+    static func _build(urlString: String, queryItems: [URLQueryItem]? = nil) -> URLComponents? {
+        
+        guard var urlComponents = URLComponents(string: urlString) else { return nil }
+        
+        if let queryItems = queryItems {
+            
+            let urlComponentsQueryItems = urlComponents.queryItems ?? []
+            let newQueryItems = (urlComponentsQueryItems + queryItems)
+            
+            urlComponents.queryItems = newQueryItems
+        }
+        
+        return urlComponents
+    }
 }
 
 // MARK: - URL (static function)
@@ -417,6 +437,12 @@ extension URL {
     func _pathExtension(isUppercased: Bool = true) -> String {
         if (isUppercased) { return pathExtension.uppercased() }
         return pathExtension.lowercased()
+    }
+    
+    /// [將URL => URLComponents](https://youtu.be/OyzFPrVIlQ8)
+    /// - Returns: [URLComponents?](https://cg2010studio.com/2014/11/13/ios-客製化-url-scheme-custom-url-scheme/)
+    func _components() -> URLComponents? {
+        return URLComponents._build(urlString: absoluteString, queryItems: nil)
     }
 }
 
@@ -863,9 +889,8 @@ extension UIWindow {
     static func _keyWindow(hasScene: Bool = true) -> UIWindow? {
         
         var keyWindow: UIWindow?
-                
-        keyWindow = UIApplication.shared.connectedScenes.filter({$0.activationState == .foregroundActive}).compactMap({$0 as? UIWindowScene}).first?.windows.filter({$0.isKeyWindow}).first
         
+        keyWindow = UIApplication.shared.connectedScenes.filter({$0.activationState == .foregroundActive}).compactMap({$0 as? UIWindowScene}).first?.windows.filter({$0.isKeyWindow}).first
         if (!hasScene) { keyWindow = UIApplication.shared.keyWindow }
         
         return keyWindow
@@ -1170,9 +1195,12 @@ extension UITableView {
     
     /// 初始化Protocal
     /// - Parameter this: UITableViewDelegate & UITableViewDataSource
-    func _delegateAndDataSource(with this: UITableViewDelegate & UITableViewDataSource) {
+    func _delegateAndDataSource(with this: UITableViewDelegate & UITableViewDataSource, isFooterViewHidden: Bool = true) {
+        
         self.delegate = this
         self.dataSource = this
+        
+        if(isFooterViewHidden) { self._tableFooterViewHidden() }
     }
     
     /// 取得UITableViewCell
@@ -1207,6 +1235,9 @@ extension UITableView {
         insertRows(at: indexPaths, with: .none)
         UIView.setAnimationsEnabled(true)
     }
+    
+    /// 沒有資料的部分不要有分隔線
+    func _tableFooterViewHidden() { tableFooterView = UIView() }
     
     /// 修正TableView滿版，而不使用SafeArea的位置問題 (contentInsetAdjustmentBehavior = .never)
     /// => UINavigationBar切換 / 隱藏時會造成Inset變動的問題

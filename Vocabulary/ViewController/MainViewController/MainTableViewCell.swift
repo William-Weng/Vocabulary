@@ -106,6 +106,7 @@ private extension MainTableViewCell {
                 guard let this = self else { return }
                 this.updateLevel(level, with: this.indexPath)
             }
+            
             return action
         }
         

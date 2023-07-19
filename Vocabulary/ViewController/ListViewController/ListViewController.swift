@@ -89,7 +89,6 @@ private extension ListViewController {
         refreshControl = UIRefreshControl._build(title: "重新讀取", target: self, action: #selector(Self.refreshVocabularyList(_:)))
         
         myTableView.addSubview(refreshControl)
-        myTableView.tableFooterView = UIView()
         myTableView._delegateAndDataSource(with: self)
         
         reloadExampleList()

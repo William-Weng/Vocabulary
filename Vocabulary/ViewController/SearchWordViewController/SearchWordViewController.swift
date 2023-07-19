@@ -139,7 +139,6 @@ private extension SearchWordViewController {
         
         myTableView._delegateAndDataSource(with: self)
         myTableView.addSubview(refreshControl)
-        myTableView.tableFooterView = UIView()
         
         viewDidTransitionAction()
         

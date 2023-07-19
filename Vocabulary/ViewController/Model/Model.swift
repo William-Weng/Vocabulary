@@ -45,9 +45,9 @@ final class Vocabulary: Codable {
         func backgroundColor() -> UIColor {
             
             switch self {
-            case .easy: return .systemGreen
-            case .medium: return .systemBlue
-            case .hard: return .systemRed
+            case .easy: return #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
+            case .medium: return #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+            case .hard: return #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
             }
         }
     }
@@ -135,38 +135,38 @@ final class Vocabulary: Codable {
             
             switch self {
             
-            case .noue: return .systemGray
-            case .pronoue: return .systemBlue
-            case .verb: return .systemRed
-            case .adverb: return .black
-            case .adjective: return .systemOrange
-            case .preposition: return .systemBrown
-            case .conjunction: return .darkGray
-            case .determiner: return .systemGray
-            case .interjection: return .systemIndigo
-            case .numeral: return .systemBlue
-            case .phrase: return .darkGray
-            case .addreviation: return .systemGray
+            case .noue: return #colorLiteral(red: 0.537254902, green: 0.5490196078, blue: 0.568627451, alpha: 1)
+            case .pronoue: return #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+            case .verb: return #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+            case .adverb: return #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+            case .adjective: return #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+            case .preposition: return #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1)
+            case .conjunction: return #colorLiteral(red: 0.8446564078, green: 0.5145705342, blue: 1, alpha: 1)
+            case .determiner: return #colorLiteral(red: 0.476841867, green: 0.5048075914, blue: 1, alpha: 1)
+            case .interjection: return #colorLiteral(red: 0.5058823824, green: 0.3372549117, blue: 0.06666667014, alpha: 1)
+            case .numeral: return #colorLiteral(red: 0.370555222, green: 0.3705646992, blue: 0.3705595732, alpha: 1)
+            case .phrase: return #colorLiteral(red: 0.1764705926, green: 0.01176470611, blue: 0.5607843399, alpha: 1)
+            case .addreviation: return #colorLiteral(red: 0.5807225108, green: 0.066734083, blue: 0, alpha: 1)
             
-            case .めいし: return .systemGray
-            case .けいようし: return .systemBlue
-            case .けいようどうし: return .systemOrange
-            case .どうし: return .systemRed
-            case .ふくし: return .darkGray
-            case .れんたいし: return .systemBlue
-            case .せつぞくし: return .systemIndigo
-            case .じょし: return .systemBlue
-            case .じょどうし: return .systemPink
-            case .かんどうし: return .systemOrange
-                
-            case .nom: return .systemGray
-            case .déterminant: return .systemBlue
-            case .adjectif: return  .systemOrange
-            case .pronom: return .systemRed
-            case .verbe: return .darkGray
-            case .adverbe: return .systemBlue
-            case .préposition: return .systemIndigo
-            case .conjonction: return .systemPink
+            case .めいし: return #colorLiteral(red: 0.537254902, green: 0.5490196078, blue: 0.568627451, alpha: 1)
+            case .けいようし: return #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+            case .けいようどうし: return #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+            case .どうし: return #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+            case .ふくし: return #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+            case .れんたいし: return #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1)
+            case .せつぞくし: return #colorLiteral(red: 0.8446564078, green: 0.5145705342, blue: 1, alpha: 1)
+            case .じょし: return #colorLiteral(red: 0.476841867, green: 0.5048075914, blue: 1, alpha: 1)
+            case .じょどうし: return #colorLiteral(red: 0.5058823824, green: 0.3372549117, blue: 0.06666667014, alpha: 1)
+            case .かんどうし: return #colorLiteral(red: 0.1764705926, green: 0.01176470611, blue: 0.5607843399, alpha: 1)
+            
+            case .nom: return #colorLiteral(red: 0.537254902, green: 0.5490196078, blue: 0.568627451, alpha: 1)
+            case .déterminant: return #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)
+            case .adjectif: return #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+            case .pronom: return #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1)
+            case .verbe: return #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+            case .adverbe: return #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1)
+            case .préposition: return #colorLiteral(red: 0.476841867, green: 0.5048075914, blue: 1, alpha: 1)
+            case .conjonction: return #colorLiteral(red: 0.5058823824, green: 0.3372549117, blue: 0.06666667014, alpha: 1)
             }
         }
         
@@ -260,13 +260,13 @@ final class VocabularySentenceList: Codable {
         func backgroundColor() -> UIColor {
             
             switch self {
-            case .general: return .systemGray
-            case .proverb: return .systemRed
-            case .movie: return .systemBlue
-            case .article: return .systemOrange
-            case .locution: return .systemGreen
-            case .celebrity: return .darkGray
-            case .slang: return .systemIndigo
+            case .general: return #colorLiteral(red: 0.5704585314, green: 0.5704723597, blue: 0.5704649091, alpha: 1)
+            case .proverb: return #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+            case .movie: return #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)
+            case .article: return #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1)
+            case .locution: return #colorLiteral(red: 0, green: 0.5628422499, blue: 0.3188166618, alpha: 1)
+            case .celebrity: return #colorLiteral(red: 0.5810584426, green: 0.1285524964, blue: 0.5745313764, alpha: 1)
+            case .slang: return #colorLiteral(red: 0.5818830132, green: 0.2156915367, blue: 1, alpha: 1)
             }
         }
     }

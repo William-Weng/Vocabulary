@@ -11,6 +11,8 @@ import WWSQLite3Manager
 // MARK: - Constant
 final class Constant: NSObject {
     
+    @UserDefault("CurrentTableName") static var tableName: String?
+    
     static let duration: TimeInterval = 0.15
     static let autoBackupDays = 7
     static let autoBackupDelaySecond: TimeInterval = 2
@@ -19,14 +21,20 @@ final class Constant: NSObject {
     static let searchDelayTime: TimeInterval = 0.3
     static let databaseName = "Vocabulary.db"
     static let databaseFileExtension = "db"
+    static let urlScheme = "word"
     
     static var volume: Float = 0.1
     static var speakingSpeed: Float = 0.4
     static var updateScrolledHeight: CGFloat = 128.0
     static var database: SQLite3Database?
-    
     static var backupDirectory = FileManager.default._documentDirectory()
-    static var currentTableName: Constant.VoiceCode = .english { didSet { NotificationCenter.default._post(name: .refreshViewController) }}
+    
+    static var currentTableName: Constant.VoiceCode = .english {
+        didSet {
+            tableName = currentTableName.rawValue
+            NotificationCenter.default._post(name: .refreshViewController)
+        }
+    }
 }
 
 // MARK: - Typealias
@@ -50,6 +58,31 @@ extension Constant {
         case down
         case left
         case right
+    }
+    
+    /// 由URL所產生的功能
+    /// => word://append/<單字>
+    enum DeepLinkAction: String {
+        case append // 加入新單字
+    }
+    
+    /// App是從哪裡安裝的
+    enum AppInstallSource: String {
+        
+        case Simulator = "Simulator"    // 使用模擬器安裝
+        case TestFlight = "TestFlight"  // 使用TestFlight or 實機安裝 (ipa)
+        case AppStore = "AppStore"      // 使用AppStore安裝
+        
+        /// 文字訊息
+        /// - Returns: String
+        func message() -> String {
+            
+            switch self {
+            case .Simulator: return "模擬器"
+            case .TestFlight: return "實機"
+            case .AppStore: return "App商店"
+            }
+        }
     }
     
     /// 複習單字結果排列
@@ -105,7 +138,7 @@ extension Constant {
         case CFBundleVersion = "CFBundleVersion"                            // Build的代號 => 202001011
     }
     
-    // MARK: - 單字內容的資料庫名稱
+    /// 單字內容的資料庫名稱
     enum VoiceCode: String, CaseIterable {
         
         case english = "English"
@@ -216,7 +249,7 @@ extension Constant {
         }
     }
     
-    // MARK: - 自定義錯誤
+    /// 自定義錯誤
     enum MyError: Error, LocalizedError {
         
         var errorDescription: String { errorMessage() }
@@ -236,7 +269,7 @@ extension Constant {
         }
     }
     
-    // MARK: - 問題等級
+    /// 問題等級
     enum QuestionLevel: CaseIterable {
         
         case read       // 看到中文解譯
@@ -321,6 +354,7 @@ extension Constant {
         }
     }
     
+    /// 單字相關的動作功能 => CRUD
     enum WordActionType {
         case append     // 新增
         case update     // 修改

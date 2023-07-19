@@ -80,10 +80,7 @@ private extension SolutionViewController {
     
     /// UITableView的初始化設定
     func initSetting() {
-        
         myTableView._delegateAndDataSource(with: self)
-        myTableView.tableFooterView = UIView()
-        
         navigationItem.backBarButtonItem = UIBarButtonItem()
     }
     

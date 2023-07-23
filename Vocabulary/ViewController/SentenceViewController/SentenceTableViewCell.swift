@@ -36,7 +36,7 @@ final class SentenceTableViewCell: UITableViewCell, CellReusable {
 
     @IBAction func playSound(_ sender: UIButton) { playExampleSound() }
     
-    deinit { wwPrint("\(Self.self) deinit") }
+    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
 }
 
 // MARK: - 小工具

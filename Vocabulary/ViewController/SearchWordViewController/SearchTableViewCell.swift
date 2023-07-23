@@ -42,7 +42,7 @@ final class SearchTableViewCell: UITableViewCell, CellReusable {
         updateFavorite(isFavorite, with: indexPath)
     }
     
-    deinit { wwPrint("\(Self.self) deinit") }
+    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
 }
 
 // MARK: - 小工具

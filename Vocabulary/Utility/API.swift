@@ -141,7 +141,7 @@ extension API {
             array.append(dict)
             
         }, completion: { isCompleted in
-            wwPrint(isCompleted)
+            wwPrint(isCompleted, isShow: Constant.isPrint)
         })
         
         return array
@@ -353,7 +353,7 @@ extension API {
             array.append(dict)
             
         }, completion: { isCompleted in
-            wwPrint(isCompleted)
+            wwPrint(isCompleted, isShow: Constant.isPrint)
         })
         
         return array

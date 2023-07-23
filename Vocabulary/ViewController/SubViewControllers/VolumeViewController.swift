@@ -49,7 +49,7 @@ final class VolumeViewController: UIViewController {
     deinit {
         mainViewDelegate = nil
         NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
-        wwPrint("\(Self.self) deinit")
+        wwPrint("\(Self.self) deinit", isShow: Constant.isPrint)
     }
 }
 

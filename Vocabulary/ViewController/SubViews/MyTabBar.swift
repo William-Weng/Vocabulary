@@ -29,7 +29,7 @@ final class MyTabBar: UITabBar {
     
     @objc func centerButtonClicked(_ sender: UIButton) { NotificationCenter.default._post(name: .displayCanvasView, object: nil) }
     
-    deinit { wwPrint("\(Self.self) deinit") }
+    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
 }
 
 // MARK: - 小工具

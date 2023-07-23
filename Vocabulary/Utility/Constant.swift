@@ -16,18 +16,27 @@ final class Constant: NSObject {
     static let duration: TimeInterval = 0.15
     static let autoBackupDays = 7
     static let autoBackupDelaySecond: TimeInterval = 2
-    static let searchCount = 10
-    static let searchCountWithLevel: SearchCountWithLevel = [.easy: 3, .medium: 4, .hard: 3]
     static let searchDelayTime: TimeInterval = 0.3
     static let databaseName = "Vocabulary.db"
     static let databaseFileExtension = "db"
     static let urlScheme = "word"
-    
+    static let searchCountWithLevel: SearchCountWithLevel = [.easy: 3, .medium: 4, .hard: 3]
+
     static var volume: Float = 0.1
     static var speakingSpeed: Float = 0.4
     static var updateScrolledHeight: CGFloat = 128.0
     static var database: SQLite3Database?
     static var backupDirectory = FileManager.default._documentDirectory()
+
+    static var searchCount: Int { return Self.searchCountWithLevel.reduce(0) { $0 + $1.value }}
+
+    static var isPrint: Bool {
+        #if DEBUG
+        return true
+        #else
+        return false
+        #endif
+    }
     
     static var currentTableName: Constant.VoiceCode = .english {
         didSet {
@@ -66,21 +75,23 @@ extension Constant {
         case append // 加入新單字
     }
     
-    /// App是從哪裡安裝的
-    enum AppInstallSource: String {
+    /// Tabbar的首頁ViewController
+    enum TabbarRootViewController {
         
-        case Simulator = "Simulator"    // 使用模擬器安裝
-        case TestFlight = "TestFlight"  // 使用TestFlight or 實機安裝 (ipa)
-        case AppStore = "AppStore"      // 使用AppStore安裝
+        case Main       // 單字記憶
+        case Sentence   // 精選例句
+        case Solution   // 複習單字
+        case Other      // 其它設定
         
-        /// 文字訊息
-        /// - Returns: String
-        func message() -> String {
+        /// TabbarViewController的selectedIndex
+        /// - Returns: Int
+        func index() -> Int {
             
             switch self {
-            case .Simulator: return "模擬器"
-            case .TestFlight: return "實機"
-            case .AppStore: return "App商店"
+            case .Main: return 0
+            case .Sentence: return 1
+            case .Solution: return 3
+            case .Other: return 4
             }
         }
     }

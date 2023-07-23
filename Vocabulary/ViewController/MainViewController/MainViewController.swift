@@ -83,7 +83,7 @@ final class MainViewController: UIViewController {
     deinit {
         MainTableViewCell.vocabularyListArray = []
         NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
-        wwPrint("\(Self.self) deinit")
+        wwPrint("\(Self.self) deinit", isShow: Constant.isPrint)
     }
 }
 
@@ -107,9 +107,6 @@ extension MainViewController: MainViewDelegate {
     func updateCountLabel(with indexPath: IndexPath, count: Int) { updateCountLabelAction(with: indexPath, count: count) }
     func tabBarHidden(_ isHidden: Bool) { tabBarHiddenAction(isHidden) }
     func navigationBarHidden(_ isHidden: Bool) { navigationBarHiddenAction(isHidden) }
-    func updateColorSetting(with indexPath: IndexPath) {
-        wwPrint(indexPath)
-    }
 }
 
 // MARK: - MyNavigationControllerDelegate
@@ -221,10 +218,7 @@ private extension MainViewController {
                 return
             }
             
-            let topIndexPath = IndexPath(row: 0, section: 0)
-            this.myTableView.scrollToRow(at: topIndexPath, at: .top, animated: true)
-            
-            Utility.shared.flashHUD(with: .success)
+            this.myTableView._scrollToRow(with: IndexPath(row: 0, section: 0), at: .top) { Utility.shared.flashHUD(with: .success) }
         }
     }
     
@@ -471,7 +465,7 @@ private extension MainViewController {
             guard let this = self else { return }
             
             switch result {
-            case .failure(let error): wwPrint(error)
+            case .failure(let error): wwPrint(error, isShow: Constant.isPrint)
             case .success(let info):
                 info.pointer.pointee = this.isAnimationStop
                 if (this.isAnimationStop) { this.myImageView.image = this.disappearImage }
@@ -551,7 +545,7 @@ private extension MainViewController {
         let result = FileManager.default._createDirectory(with: musicFolderUrl, path: "")
         
         switch result {
-        case .failure(let error): wwPrint(error); return nil
+        case .failure(let error): wwPrint(error, isShow: Constant.isPrint); return nil
         case .success(let isSuccess): return (!isSuccess) ? nil : musicFolderUrl
         }
     }
@@ -565,7 +559,7 @@ private extension MainViewController {
         let result = FileManager.default._fileList(with: musicFolder)
         
         switch result {
-        case .failure(let error): wwPrint(error); return nil
+        case .failure(let error): wwPrint(error, isShow: Constant.isPrint); return nil
         case .success(let list): return list
         }
     }
@@ -646,7 +640,7 @@ private extension MainViewController {
         var lastBackupDate: Date?
         
         switch result {
-        case .failure(let error): wwPrint(error); break
+        case .failure(let error): wwPrint(error, isShow: Constant.isPrint); break
         case .success(let fileList):
             
             guard let fileList = fileList else { break }

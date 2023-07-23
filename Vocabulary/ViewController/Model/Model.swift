@@ -22,7 +22,7 @@ final class Vocabulary: Codable {
     let createTime: Date    // 建立時間
     let updateTime: Date    // 更新時間
     
-    deinit { wwPrint("\(Self.self) deinit") }
+    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
     
     // 單字難度等級
     public enum Level: Int, CaseIterable {
@@ -198,7 +198,7 @@ final class VocabularyList: Codable {
     let createTime: Date    // 建立時間
     let updateTime: Date    // 更新時間
     
-    deinit { wwPrint("\(Self.self) deinit") }
+    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
 }
 
 // MARK: - 單字複習列表
@@ -213,7 +213,7 @@ final class VocabularyReviewList: Codable {
     let createTime: Date    // 建立時間
     let updateTime: Date    // 更新時間
     
-    deinit { wwPrint("\(Self.self) deinit") }
+    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
 }
 
 // MARK: - 單字例句列表
@@ -227,7 +227,7 @@ final class VocabularySentenceList: Codable {
     let createTime: Date    // 建立時間
     let updateTime: Date    // 更新時間
     
-    deinit { wwPrint("\(Self.self) deinit") }
+    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
     
     // 例句詞性
     public enum Speech: Int, CaseIterable {
@@ -287,7 +287,7 @@ final class BookmarkSite: Codable {
     /// - Returns: String
     func iconName() -> String { return url._sha1() }
     
-    deinit { wwPrint("\(Self.self) deinit") }
+    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
 }
 
 // MARK: - 背景音樂

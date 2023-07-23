@@ -87,7 +87,7 @@ final class ReviewViewController: UIViewController {
     @IBAction func refreshQuestion(_ sender: UIBarButtonItem) { initReviewWordList(count: searchTotalCount()); Utility.shared.flashHUD(with: .nice) }
     @IBAction func speedRate(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegue.speakingRateView.rawValue, sender: nil) }
     
-    deinit { wwPrint("\(Self.self) deinit") }
+    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
 }
 
 // MARK: - AVSpeechSynthesizerDelegate
@@ -168,7 +168,7 @@ private extension ReviewViewController {
             guard let this = self else { return }
             
             switch result {
-            case .failure(let error): wwPrint(error)
+            case .failure(let error): wwPrint(error, isShow: Constant.isPrint)
             case .success(let info):
                                 
                 if (this.isGuessAnimationStop && info.index == 0) {
@@ -215,7 +215,7 @@ private extension ReviewViewController {
             guard let this = self else { return }
             
             switch result {
-            case .failure(let error): wwPrint(error)
+            case .failure(let error): wwPrint(error, isShow: Constant.isPrint)
             case .success(let info):
                 info.pointer.pointee = this.isAnimationStop
                 if (this.isAnimationStop) { this.myImageView.image = this.disappearImage }

@@ -48,7 +48,7 @@ final class LicenseWebViewController: UIViewController {
     deinit {
         sentenceViewDelegate = nil
         observation = nil
-        wwPrint("\(Self.self) deinit")
+        wwPrint("\(Self.self) deinit", isShow: Constant.isPrint)
     }
 }
 
@@ -58,8 +58,8 @@ extension LicenseWebViewController: WKNavigationDelegate, WKUIDelegate {
     func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) { goItemSetting(with: webView) }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        webView._disableUserSelectAndTouch { result in wwPrint(result) }
-        webView._disableUserScale{ result in wwPrint(result) }
+        webView._disableUserSelectAndTouch { result in wwPrint(result, isShow: Constant.isPrint) }
+        webView._disableUserScale{ result in wwPrint(result, isShow: Constant.isPrint) }
     }
 }
 

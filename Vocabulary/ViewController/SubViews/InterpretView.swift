@@ -30,7 +30,7 @@ final class InterpretView: UIView {
     /// - Parameter vocabulary: Vocabulary
     func configure(with vocabulary: Vocabulary) { configure(for: vocabulary) }
     
-    deinit { wwPrint("\(Self.self) deinit") }
+    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
 }
 
 // MARK: - 小工具

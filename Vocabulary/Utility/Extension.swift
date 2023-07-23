@@ -342,17 +342,6 @@ extension Bundle {
         guard let build = self._infoDictionary(with: .CFBundleVersion) as? String else { return nil }
         return build
     }
-    
-    /// [測試App是從哪裡安裝的](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/從零開始開發-ios-app-的-in-app-purchase-iap-45250cf2174)
-    /// - Returns: Constant.AppInstallSource?
-    func _appInstallSource() -> Constant.AppInstallSource? {
-        
-        guard let receiptPath = appStoreReceiptURL?.path else { return .none }
-        
-        if receiptPath.contains("CoreSimulator") { return .Simulator }
-        if receiptPath.contains("sandboxReceipt") { return .TestFlight }
-        return .AppStore
-    }
 }
 
 // MARK: - URLComponents (static function)
@@ -1194,13 +1183,17 @@ extension UIScrollView {
 extension UITableView {
     
     /// 初始化Protocal
-    /// - Parameter this: UITableViewDelegate & UITableViewDataSource
-    func _delegateAndDataSource(with this: UITableViewDelegate & UITableViewDataSource, isFooterViewHidden: Bool = true) {
+    /// - Parameters:
+    ///   - this: UITableViewDelegate & UITableViewDataSource
+    ///   - isFooterViewHidden: 要不要隱藏空Cell
+    ///   - isPrefetchingEnabled: 要不要預先處理資料
+    func _delegateAndDataSource(with this: UITableViewDelegate & UITableViewDataSource, isFooterViewHidden: Bool = true, isPrefetchingEnabled: Bool = false) {
         
         self.delegate = this
         self.dataSource = this
         
-        if(isFooterViewHidden) { self._tableFooterViewHidden() }
+        if (isFooterViewHidden) { self._tableFooterViewHidden() }
+        if #available(iOS 15.0, *) { self._isPrefetchingEnabled(isPrefetchingEnabled) }
     }
     
     /// 取得UITableViewCell
@@ -1220,6 +1213,21 @@ extension UITableView {
         CATransaction.setCompletionBlock(completion)
         
         reloadData()
+        
+        CATransaction.commit()
+    }
+    
+    /// 加強版的scrollToRow => 動畫完成後
+    /// - Parameters:
+    ///   - indexPath: IndexPath
+    ///   - scrollPosition: UITableView.ScrollPosition
+    ///   - completion: (() -> Void)?
+    func _scrollToRow(with indexPath: IndexPath, at scrollPosition: UITableView.ScrollPosition, completion: (() -> Void)?) {
+        
+        CATransaction.begin()
+        CATransaction.setCompletionBlock(completion)
+        
+        scrollToRow(at: indexPath, at: scrollPosition, animated: true)
         
         CATransaction.commit()
     }
@@ -1252,6 +1260,13 @@ extension UITableView {
         contentInset.bottom = height
         
         if let indexPath = indexPath { scrollToRow(at: indexPath, at: .top, animated: false) }
+    }
+    
+    /// [設定要不要預先處理資料](https://ithelp.ithome.com.tw/articles/10289725)
+    /// - Parameter isEnabled: [Bool](https://ithelp.ithome.com.tw/articles/10289725)
+    @available(iOS 15.0, *)
+    func _isPrefetchingEnabled(_ isEnabled: Bool = false) {
+        self.isPrefetchingEnabled = isEnabled
     }
 }
 

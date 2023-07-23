@@ -43,7 +43,7 @@ final class MyTabBarController: UITabBarController {
     
     deinit {
         NotificationCenter.default._remove(observer: self, name: .displayCanvasView)
-        wwPrint("\(Self.self) deinit")
+        wwPrint("\(Self.self) deinit", isShow: Constant.isPrint)
     }
 }
 

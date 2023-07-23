@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6414E9B229BC71E5005B3EAD /* License.html in Resources */ = {isa = PBXBuildFile; fileRef = 6414E9B129BC71E5005B3EAD /* License.html */; };
+		6418FC1A2A6DCDED00493B8D /* WWAppInstallSource in Frameworks */ = {isa = PBXBuildFile; productRef = 6418FC192A6DCDED00493B8D /* WWAppInstallSource */; };
 		641B5CA72984BEB500AB1C56 /* VolumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641B5CA62984BEB500AB1C56 /* VolumeViewController.swift */; };
 		6428588B297BBF8600DD7D88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6428588A297BBF8600DD7D88 /* AppDelegate.swift */; };
 		6428588F297BBF8600DD7D88 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6428588E297BBF8600DD7D88 /* MainViewController.swift */; };
@@ -110,6 +111,7 @@
 				81E1F8FF2A1F2D9B00EB0139 /* WWNetworking in Frameworks */,
 				81EB0ED92A1F2E1300EE2A83 /* WWNetworking-UIImage in Frameworks */,
 				81E1F8F62A1F2CCA00EB0139 /* WWSlider in Frameworks */,
+				6418FC1A2A6DCDED00493B8D /* WWAppInstallSource in Frameworks */,
 				81E1F8F32A1F2C9A00EB0139 /* WWSQLite3Manager in Frameworks */,
 				81E1F8F02A1F2C8100EB0139 /* WWHUD in Frameworks */,
 			);
@@ -358,6 +360,7 @@
 				81E1F8F92A1F2D2700EB0139 /* WWToast */,
 				81E1F8FE2A1F2D9B00EB0139 /* WWNetworking */,
 				81EB0ED82A1F2E1300EE2A83 /* WWNetworking-UIImage */,
+				6418FC192A6DCDED00493B8D /* WWAppInstallSource */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -394,6 +397,7 @@
 				81E1F8F82A1F2D2700EB0139 /* XCRemoteSwiftPackageReference "WWToast" */,
 				81E1F8FD2A1F2D9B00EB0139 /* XCRemoteSwiftPackageReference "WWNetworking" */,
 				81EB0ED72A1F2E1300EE2A83 /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */,
+				6418FC182A6DCDED00493B8D /* XCRemoteSwiftPackageReference "WWAppInstallSource" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -605,7 +609,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20230720;
+				CURRENT_PROJECT_VERSION = 20230724;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -624,7 +628,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7.0;
+				MARKETING_VERSION = 1.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -643,7 +647,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20230720;
+				CURRENT_PROJECT_VERSION = 20230724;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -662,7 +666,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.7.0;
+				MARKETING_VERSION = 1.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -698,6 +702,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		6418FC182A6DCDED00493B8D /* XCRemoteSwiftPackageReference "WWAppInstallSource" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWAppInstallSource.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		81E1F8EE2A1F2C8100EB0139 /* XCRemoteSwiftPackageReference "WWHUD" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWHUD";
@@ -749,6 +761,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		6418FC192A6DCDED00493B8D /* WWAppInstallSource */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6418FC182A6DCDED00493B8D /* XCRemoteSwiftPackageReference "WWAppInstallSource" */;
+			productName = WWAppInstallSource;
+		};
 		81E1F8EF2A1F2C8100EB0139 /* WWHUD */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 81E1F8EE2A1F2C8100EB0139 /* XCRemoteSwiftPackageReference "WWHUD" */;

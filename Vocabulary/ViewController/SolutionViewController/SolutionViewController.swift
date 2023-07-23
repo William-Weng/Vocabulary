@@ -40,7 +40,7 @@ final class SolutionViewController: UIViewController {
         
         switch viewSegueType {
         case .solutionDetail: vocabularyListPageSetting(for: segue, sender: sender)
-        case .reviewResult: wwPrint(viewSegueType)
+        case .reviewResult: wwPrint(viewSegueType, isShow: Constant.isPrint)
         }
     }
     
@@ -63,7 +63,7 @@ final class SolutionViewController: UIViewController {
     
     deinit {
         SolutionTableViewCell.vocabularyReviewListArray = []
-        wwPrint("\(Self.self) deinit")
+        wwPrint("\(Self.self) deinit", isShow: Constant.isPrint)
     }
 }
 
@@ -103,7 +103,7 @@ private extension SolutionViewController {
             guard let this = self else { return }
             
             switch result {
-            case .failure(let error): wwPrint(error)
+            case .failure(let error): wwPrint(error, isShow: Constant.isPrint)
             case .success(let info):
                 info.pointer.pointee = this.isAnimationStop
                 if (this.isAnimationStop) { this.myImageView.image = this.disappearImage }

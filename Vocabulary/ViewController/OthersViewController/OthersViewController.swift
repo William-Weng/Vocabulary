@@ -80,7 +80,7 @@ final class OthersViewController: UIViewController {
         OthersTableViewCell.bookmarksArray = []
         OthersTableViewCell.othersViewDelegate = nil
         NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
-        wwPrint("\(Self.self) init")
+        wwPrint("\(Self.self) init", isShow: Constant.isPrint)
     }
 }
 
@@ -165,10 +165,7 @@ private extension OthersViewController {
                 return
             }
             
-            let topIndexPath = IndexPath(row: 0, section: 0)
-            this.myTableView.scrollToRow(at: topIndexPath, at: .top, animated: true)
-            
-            Utility.shared.flashHUD(with: .success)
+            this.myTableView._scrollToRow(with: IndexPath(row: 0, section: 0), at: .top) { Utility.shared.flashHUD(with: .success) }
         }
     }
     
@@ -217,7 +214,7 @@ private extension OthersViewController {
             guard let this = self else { return }
             
             switch result {
-            case .failure(let error): wwPrint(error)
+            case .failure(let error): wwPrint(error, isShow: Constant.isPrint)
             case .success(let info):
                 info.pointer.pointee = this.isAnimationStop
                 if (this.isAnimationStop) { this.myImageView.image = this.disappearImage }

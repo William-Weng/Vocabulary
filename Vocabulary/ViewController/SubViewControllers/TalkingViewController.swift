@@ -31,7 +31,7 @@ final class TalkingViewController: UIViewController {
     
     deinit {
         isAnimationStop = true
-        wwPrint("\(Self.self) deinit")
+        wwPrint("\(Self.self) deinit", isShow: Constant.isPrint)
     }
 }
 
@@ -51,7 +51,7 @@ private extension TalkingViewController {
             guard let this = self else { return }
             
             switch result {
-            case .failure(let error): wwPrint(error)
+            case .failure(let error): wwPrint(error, isShow: Constant.isPrint)
             case .success(let info):
                 
                 info.pointer.pointee = this.isAnimationStop

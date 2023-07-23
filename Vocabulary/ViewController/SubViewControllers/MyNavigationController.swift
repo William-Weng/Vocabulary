@@ -23,7 +23,7 @@ final class MyNavigationController: UINavigationController {
     
     deinit {
         NotificationCenter.default._remove(observer: self, name: .refreshViewController)
-        wwPrint("\(Self.self) deinit")
+        wwPrint("\(Self.self) deinit", isShow: Constant.isPrint)
     }
 }
 

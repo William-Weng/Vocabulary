@@ -6,7 +6,7 @@
 ![](./@Image/001.png) ![](./@Image/002.png) ![](./@Image/003.png)
 ![](./@Image/004.png) ![](./@Image/005.png) ![](./@Image/006.png)
 ![](./@Image/007.png) ![](./@Image/008.png) ![](./@Image/009.png)
-![](./@Image/000.png)
+![](./@Image/010.png) ![](./@Image/000.png)
 ![](./@Image/Storyboard.png)
 
 # 附錄：資源下載說明
@@ -20,6 +20,7 @@
 1. [WWNetworking](https://github.com/William-Weng/WWNetworking.git)
 1. [WWToast](https://github.com/William-Weng/WWToast.git)
 1. [WWNetworking-UIImage](https://github.com/William-Weng/WWNetworking-UIImage.git)
+1. [WWAppInstallSource](https://github.com/William-Weng/WWAppInstallSource.git)
 
 ### [相關圖示](https://www.flaticon.com)
 1. AppIcon - [dictionary_2080699.png](https://www.flaticon.com/free-icon/dictionary_2080699)

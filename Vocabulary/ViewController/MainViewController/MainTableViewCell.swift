@@ -39,7 +39,7 @@ final class MainTableViewCell: UITableViewCell, CellReusable {
     
     @IBAction func playSound(_ sender: UIButton) { playWordSound() }    
     
-    deinit { wwPrint("\(Self.self) deinit") }
+    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
 }
 
 // MARK: - 小工具

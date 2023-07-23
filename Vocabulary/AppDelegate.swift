@@ -10,6 +10,7 @@ import AVFAudio
 import WWPrint
 import WWSQLite3Manager
 import WWNetworking_UIImage
+import WWAppInstallSource
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -40,7 +41,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    deinit { wwPrint("\(Self.self) deinit") }
+    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
 }
 
 // MARK: - AVAudioRecorderDelegate
@@ -54,7 +55,7 @@ extension AppDelegate: AVAudioRecorderDelegate {
         recordlayer.play()
     }
     
-    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) { wwPrint(error) }
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) { wwPrint(error, isShow: Constant.isPrint) }
 }
 
 // MARK: - 小工具
@@ -88,7 +89,7 @@ extension AppDelegate {
             Constant.database = database
             Constant.VoiceCode.allCases.forEach { _ = createDatabase(database, for: $0) }
             
-            wwPrint(database.fileURL)
+            wwPrint(database.fileURL, isShow: Constant.isPrint)
         }
     }
     
@@ -180,7 +181,7 @@ private extension AppDelegate {
         let result = FileManager.default._createDirectory(with: musicFolderUrl, path: "")
         
         switch result {
-        case .failure(let error): wwPrint(error); return nil
+        case .failure(let error): wwPrint(error, isShow: Constant.isPrint); return nil
         case .success(let isSuccess): return (!isSuccess) ? nil : musicFolderUrl
         }
     }
@@ -229,7 +230,7 @@ private extension AppDelegate {
         let result = audioRecorder._record()
         
         switch result {
-        case .failure(let error): wwPrint(error); return false
+        case .failure(let error): wwPrint(error, isShow: Constant.isPrint); return false
         case .success(let isSuccess): return isSuccess
         }
     }
@@ -241,7 +242,7 @@ private extension AppDelegate {
         guard let result = audioRecorder?._stop() else { return false }
         
         switch result {
-        case .failure(let error): wwPrint(error); return false
+        case .failure(let error): wwPrint(error, isShow: Constant.isPrint); return false
         case .success(let isSuccess): return isSuccess
         }
     }
@@ -256,7 +257,7 @@ private extension AppDelegate {
     func appVersionShortcutItem(with application: UIApplication) {
         
         let version = Bundle.main._appVersion()
-        let installType = Bundle.main._appInstallSource() ?? .Simulator
+        let installType = WWAppInstallSource.shared.detect() ?? .Simulator
         let info = UIDevice._systemInformation()
         let icon = UIApplicationShortcutIcon(type: .love)
         let title = "\(info.name) \(info.version) for \(installType.rawValue)"
@@ -295,28 +296,27 @@ extension AppDelegate {
     /// - Parameter components: URLComponents
     func appendWord(with components: URLComponents) {
 
-        guard let word = components.path.split(separator: "/").first else { return}
+        guard let word = components.path.split(separator: "/").first else { return }
         
-        tabbarRootViewController(with: 0) { viewController in
-            if let viewController = viewController as? MainViewController {
-                viewController.appendWord(with: String(word))
-            }
+        tabbarRootViewController(with: Constant.TabbarRootViewController.Main) { viewController in
+            if let viewController = viewController as? MainViewController { viewController.appendWord(with: String(word)) }
         }
     }
     
     /// 取得Tabbar上的ViewController
-    /// - Parameter index: Int
-    /// - Returns: T?
-    func tabbarRootViewController(with index: Int, completion: @escaping ((UIViewController) -> Void)) {
+    /// - Parameters:
+    ///   - index: Int
+    ///   - completion: (UIViewController) -> Void
+    func tabbarRootViewController(with rootViewController: Constant.TabbarRootViewController, completion: @escaping ((UIViewController) -> Void)) {
         
         guard let tabBarController = window?.rootViewController as? MyTabBarController,
-              let navigationController = tabBarController.viewControllers?[safe: index] as? MyNavigationController,
+              let navigationController = tabBarController.viewControllers?[safe: rootViewController.index()] as? MyNavigationController,
               let viewController = navigationController.viewControllers.first
         else {
             return
         }
         
-        tabBarController.selectedIndex = index
+        tabBarController.selectedIndex = rootViewController.index()
         
         _ = navigationController._popToRootViewController {
             completion(viewController)

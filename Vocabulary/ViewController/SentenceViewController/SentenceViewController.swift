@@ -89,7 +89,7 @@ final class SentenceViewController: UIViewController {
         SentenceTableViewCell.sentenceListArray = []
         SentenceTableViewCell.sentenceViewDelegate = nil
         NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
-        wwPrint("\(Self.self) deinit")
+        wwPrint("\(Self.self) deinit", isShow: Constant.isPrint)
     }
 }
 
@@ -184,10 +184,7 @@ private extension SentenceViewController {
                 return
             }
             
-            let topIndexPath = IndexPath(row: 0, section: 0)
-            this.myTableView.scrollToRow(at: topIndexPath, at: .top, animated: true)
-
-            Utility.shared.flashHUD(with: .success)
+            this.myTableView._scrollToRow(with: IndexPath(row: 0, section: 0), at: .top) { Utility.shared.flashHUD(with: .success) }
         }
     }
     
@@ -254,7 +251,7 @@ private extension SentenceViewController {
             guard let this = self else { return }
                         
             switch result {
-            case .failure(let error): wwPrint(error)
+            case .failure(let error): wwPrint(error, isShow: Constant.isPrint)
             case .success(let info):
                 info.pointer.pointee = this.isAnimationStop
                 if (this.isAnimationStop) { this.myImageView.image = this.disappearImage }

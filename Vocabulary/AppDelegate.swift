@@ -29,7 +29,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        deepLinkURL(with: url)
+        deepLinkURL(url)
         return true
     }
     
@@ -273,7 +273,7 @@ extension AppDelegate {
     
     /// [使用UrlScheme功能的相關設定](https://youtu.be/OyzFPrVIlQ8)
     /// => [在info.plist設定](https://cg2010studio.com/2014/11/13/ios-客製化-url-scheme-custom-url-scheme/)
-    func deepLinkURL(with url: URL) {
+    func deepLinkURL(_ url: URL) {
         
         guard let components = url._components(),
               Constant.urlScheme == components.scheme?.lowercased()

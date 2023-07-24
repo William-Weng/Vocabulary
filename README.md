@@ -9,75 +9,93 @@
 ![](./@Image/010.png) ![](./@Image/000.png)
 ![](./@Image/Storyboard.png)
 
-# 附錄：資源下載說明
-## 所有資源都是從網路下載，僅作程式分享教學之用，並無侵權之意，資源版權皆屬於原作者所有…
+# 附錄：資源下載說明 (所有資源都是從網路下載，僅作程式分享教學之用，並無侵權之意，資源版權皆屬於原作者所有…)
+## [引用套件](https://github.com/William-Weng/SwiftPackageManager)
 
-### [引用套件](https://github.com/William-Weng/SwiftPackageManager)
-1. [WWPrint](https://github.com/William-Weng/WWPrint)
-1. [WWSQLite3Manager](https://github.com/William-Weng/WWSQLite3Manager.git)
-1. [WWHUD](https://github.com/William-Weng/WWHUD.git)
-1. [WWSlider](https://github.com/William-Weng/WWSlider.git)
-1. [WWNetworking](https://github.com/William-Weng/WWNetworking.git)
-1. [WWToast](https://github.com/William-Weng/WWToast.git)
-1. [WWNetworking-UIImage](https://github.com/William-Weng/WWNetworking-UIImage.git)
-1. [WWAppInstallSource](https://github.com/William-Weng/WWAppInstallSource.git)
+|套件|功能|
+|-|-|
+|[WWPrint](https://github.com/William-Weng/WWPrint)|Print小工具|
+|[WWSQLite3Manager](https://github.com/William-Weng/WWSQLite3Manager)|SQLite簡易小工具|
+|[WWHUD](https://github.com/William-Weng/WWHUD)|Loading動畫小工具|
+|[WWSlider](https://github.com/William-Weng/WWSlider)|音量控制條UI|
+|[WWNetworking](https://github.com/William-Weng/WWNetworking)|網路下載套件|
+|[WWToast](https://github.com/William-Weng/WWToast)|提示訊息小工具|
+|[WWNetworking-UIImage](https://github.com/William-Weng/WWNetworking-UIImage)|網路下載圖片小工具|
+|[WWAppInstallSource](https://github.com/William-Weng/WWAppInstallSource)|取得APP在哪裡安裝的小工具|
 
-### [相關圖示](https://www.flaticon.com)
-1. AppIcon - [dictionary_2080699.png](https://www.flaticon.com/free-icon/dictionary_2080699)
-1. Sound - [volume_727269.png](https://www.flaticon.com/free-icon/volume_727269)
-1. Search - [search_3128287.png](https://www.flaticon.com/free-icon/search_3128287)
-1. Music - [musical-note_2995101.png](https://www.flaticon.com/free-icon/musical-note_2995101)
-1. Volume - [volume_7566455.png](https://www.flaticon.com/free-icon/volume_7566455)
-1. NoVolume - [volume_7566449.png](https://www.flaticon.com/free-icon/volume_7566449)
-1. Add - [plus_7887095.png](https://www.flaticon.com/free-icon/plus_7887095)
-1. Dictionary - [search_9562555.png](https://www.flaticon.com/free-icon/search_9562555)
-1. Refresh - [circular-arrow_3227520](https://www.flaticon.com/free-icon/circular-arrow_3227520)
-1. Book - [circular-book_2232688](https://www.flaticon.com/free-icon/book_2232688)
-1. Test - [exam_3403504](https://www.flaticon.com/free-icon/exam_3403504)
-1. Star - [star_1985879](https://www.flaticon.com/free-icon/star_1985879)
-1. Cry - [cry_9600663](https://www.flaticon.com/free-icon/cry_9600663)
-1. Filter - [choice_4047250](https://www.flaticon.com/free-icon/choice_4047250)
-1. Others - [other_7245102](https://www.flaticon.com/free-icon/other_7245102)
-1. Picture - [picture_2659360](https://www.flaticon.com/free-icon/picture_2659360)
-1. GoBack - [back_786298](https://www.flaticon.com/free-icon/back_786298)
-1. GoForward - [back_786298](https://www.flaticon.com/free-icon/back_786298)
-1. Level - [level-up_7634463](https://www.flaticon.com/free-icon/level-up_7634463)
-1. SpeedMeter - [level-up_7634463](https://www.flaticon.com/free-icon/speedometer_571685)
-1. SoundWaves - [waves_875590](https://www.flaticon.com/free-icon/sound-waves_875590)
-1. Recorder - [google-voice_3128290](https://www.flaticon.com/free-icon/google-voice_3128290)
-1. Information - [information_9485469](https://www.flaticon.com/free-icon/information_9485469)
-1. Pencil - [pencil_1142618](https://www.flaticon.com/free-icon/pencil_1142618)
-1. Close - [close_9068699](https://www.flaticon.com/free-icon/close_9068699)
-1. Clean - [blackboard-eraser_3303661](https://www.flaticon.com/free-icon/blackboard-eraser_3303661)
-1. Share - [share_4212381](https://www.flaticon.com/free-icon/share_4212381)
-1. Download - [download_3039520](https://www.flaticon.com/free-icon/download_3039520)
-1. NextArrow - [next_709586](https://www.flaticon.com/free-icon/next_709586)
-1. Notice_On - [heart_2589175](https://www.flaticon.com/free-icon/heart_2589175)
-1. Notice_Off - [heart_2589197](https://www.flaticon.com/free-icon/heart_2589197)
+## [相關圖示](https://www.flaticon.com)
 
-### [背景音樂 - .mp3 / .m4a (請在iTunes上自行加入)](http://amachamusic.chagasi.com/)
-1. [夏の霧.m4a - 甘茶の音楽工房](http://amachamusic.chagasi.com/music_natsunokiri.html)
-1. [桜雲.m4a - 甘茶の音楽工房](http://amachamusic.chagasi.com/music_ouun.html)
-1. [TheBeatOfNature.mp3 - Pixabay](https://pixabay.com/music/solo-guitar-the-beat-of-nature-122841/)
-1. [一小時睡眠舒壓音樂詩歌.mp3 - 來婉音樂](https://youtu.be/WYW-GO7uXuM)
+|套件|功能|
+|-|-|
+|[AppIcon](https://www.flaticon.com/free-icon/dictionary_2080699)|App圖示|
+|[Sound](https://www.flaticon.com/free-icon/volume_727269)|音量調整|
+|[Search](https://www.flaticon.com/free-icon/search_3128287)|單字搜尋|
+|[Music](https://www.flaticon.com/free-icon/musical-note_2995101)|選擇背景音樂|
+|[Volume](https://www.flaticon.com/free-icon/volume_7566455)|設定音量|
+|[NoVolume](https://www.flaticon.com/free-icon/volume_7566449)|無音量|
+|[Add](https://www.flaticon.com/free-icon/plus_7887095)|新增單字|
+|[Dictionary](https://www.flaticon.com/free-icon/search_9562555)|搜尋單字|
+|[Refresh](https://www.flaticon.com/free-icon/circular-arrow_3227520)|單字複習題庫更新|
+|[Book](https://www.flaticon.com/free-icon/book_2232688)|單字記憶Tab圖示|
+|[Test](https://www.flaticon.com/free-icon/exam_3403504)|單字複習Tab圖示|
+|[Star](https://www.flaticon.com/free-icon/star_1985879)|單字答對圖示|
+|[Cry](https://www.flaticon.com/free-icon/cry_9600663)|單字答錯圖示|
+|[Filter](https://www.flaticon.com/free-icon/choice_4047250)|例句屬性選擇|
+|[Others](https://www.flaticon.com/free-icon/other_7245102)|其它設定Tab圖示|
+|[Picture](https://www.flaticon.com/free-icon/picture_2659360)|書籤預設圖示|
+|[GoBack](https://www.flaticon.com/free-icon/back_786298)|網頁上一頁|
+|[GoForward](https://www.flaticon.com/free-icon/back_786298)|網頁下一頁|
+|[Level](https://www.flaticon.com/free-icon/level-up_7634463)|單字複習等級|
+|[SpeedMeter](https://www.flaticon.com/free-icon/speedometer_571685)|單字讀速|
+|[SoundWaves](https://www.flaticon.com/free-icon/sound-waves_875590)|單字複習動作鍵|
+|[Recorder](https://www.flaticon.com/free-icon/google-voice_3128290)|聲音錄製功能|
+|[Information](https://www.flaticon.com/free-icon/information_9485469)|程式原始碼網頁|
+|[Pencil](https://www.flaticon.com/free-icon/pencil_1142618)|手寫功能|
+|[Close](https://www.flaticon.com/free-icon/close_9068699)|手寫功能關閉|
+|[Clean](https://www.flaticon.com/free-icon/blackboard-eraser_3303661)|手寫功能板擦|
+|[Share](https://www.flaticon.com/free-icon/share_4212381)|檔案分享功能|
+|[Download](https://www.flaticon.com/free-icon/download_3039520)|檔案下載功能|
+|[NextArrow](https://www.flaticon.com/free-icon/next_709586)|Cell的下一頁指示|
+|[Notice_On](https://www.flaticon.com/free-icon/heart_2589175)|我的最愛開啟|
+|[Notice_Off](https://www.flaticon.com/free-icon/heart_2589197)|我的最愛關閉|
+|[Question](https://www.flaticon.com/free-icon/request_7887104)|快速單字搜尋功能|
 
-### [動畫圖示 (請在iTunes上自行加入)](https://imgur.com/)
-1. Studing.gif - [桌布-會動的可愛小白熊-1](https://imgur.com/CsxYiU3)
-1. Reading.gif - [桌布-會動的可愛小白熊-1](https://imgur.com/bM0UnMb)
-1. Search.gif - [桌布-會動的可愛小白熊-1](https://imgur.com/1y04NEk)
-1. Working.gif - [桌布-會動的可愛小白熊-2](https://imgur.com/uXEipP5)
-1. Solution.gif - [桌布-會動的可愛小白熊-4](https://imgur.com/9KkmcGe)
-1. Sentence.gif - [桌布-會動的可愛小白熊-2](https://imgur.com/BzWWaem)
-1. Review.gif - [桌布-會動的可愛小白熊-3](https://imgur.com/yh92O1W)
-1. Success.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
-1. Fail.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
-1. Nice.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
-1. Speak.gif - [media-amazon.com](https://m.media-amazon.com/images/G/01/digital/music/player/web/EQ_accent.gif)
-1. Others.gif - [小白呆萌溫馨動漫gif動圖_動態圖_表情包下載_SOOGIF](http://img.soogif.com/xUsqykJ9IjXSgbL1v4yxlFDlTlhApFVw.gif)
-1. Download.gif - [https://in.pinterest.com/meghaumrania/cute-love-gif/](https://i.pinimg.com/originals/d4/89/0e/d4890e94b9e0ff70bf52c392a5e8d752.gif)
-1. Talking.gif - [LINE-BROWN & FRIENDS（擬聲樂趣篇♪）](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)
+## [背景音樂 - .mp3 / .m4a (請在iTunes上自行加入)](http://amachamusic.chagasi.com/)
 
-### [語言字型](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/為-ios-app-加入客製字型-custom-font-d2b28b0269e0)
-1. KleeOne-SemiBold.ttf - [Google Fonts - KleeOne](https://fonts.google.com/specimen/Klee+One)
-1. GamjaFlower-Regular.ttf - [Google Fonts - Gamja Flower](https://fonts.google.com/specimen/Gamja+Flower?query=Gamja+Flower)
-1. jf-openhuninn-1.1.ttf - [open 粉圓 - justfont](https://justfont.com/huninn/)
+|音樂|出處|
+|-|-|
+|[夏の霧.m4a](http://amachamusic.chagasi.com/music_natsunokiri.html)|[甘茶の音楽工房](http://amachamusic.chagasi.com)|
+|[桜雲.m4a](http://amachamusic.chagasi.com/music_ouun.html)|[甘茶の音楽工房](http://amachamusic.chagasi.com)|
+|[TheBeatOfNature.mp3](https://pixabay.com/music/solo-guitar-the-beat-of-nature-122841/)|[Olexy - Pixabay](https://pixabay.com/users/olexy-25300778/)|
+|[一小時睡眠舒壓音樂詩歌.mp3](https://youtu.be/WYW-GO7uXuM)|[來婉音樂](https://www.youtube.com/hashtag/來婉音樂)|
+
+## [動畫圖示 (請在iTunes上自行加入)](https://imgur.com/)
+
+|動畫|出處|功能|
+|-|-|-|
+|[Studing.gif](https://imgur.com/CsxYiU3)|[Imgur](https://imgur.com/)|動畫背景|
+|[Reading.gif](https://imgur.com/bM0UnMb)|[Imgur](https://imgur.com/)|動畫背景|
+|[Search.gif](https://imgur.com/1y04NEk)|[Imgur](https://imgur.com/)|動畫背景|
+|[Working.gif](https://imgur.com/uXEipP5)|[Imgur](https://imgur.com/)|動畫背景|
+|[Solution.gif](https://imgur.com/9KkmcGe)|[Imgur](https://imgur.com/)|動畫背景|
+|[Sentence.gif](https://imgur.com/BzWWaem)|[Imgur](https://imgur.com/)|動畫背景|
+|[Review.gif](https://imgur.com/yh92O1W)|[Imgur](https://imgur.com/)|動畫背景|
+|[Solution.gif](https://imgur.com/9KkmcGe)|[Imgur](https://imgur.com/)|動畫背景|
+|[Success.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[https://www.ilikesticker.com](LINE Stickers & Themes)|HUD圖示|
+|[Fail.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[https://www.ilikesticker.com](LINE Stickers & Themes)|HUD圖示|
+|[Nice.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[https://www.ilikesticker.com](LINE Stickers & Themes)|HUD圖示|
+|[Success.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[https://www.ilikesticker.com](LINE Stickers & Themes)|HUD圖示|
+|[Success.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[https://www.ilikesticker.com](LINE Stickers & Themes)|HUD圖示|
+|[Success.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[https://www.ilikesticker.com](LINE Stickers & Themes)|HUD圖示|
+|[Talking.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[https://www.ilikesticker.com](LINE Stickers & Themes)|HUD圖示|
+|[Speak.gif](https://m.media-amazon.com/images/G/01/digital/music/player/web/EQ_accent.gif)|[media-amazon](https://m.media-amazon.com)|單字複習功能|
+|[Others.gif](http://img.soogif.com/xUsqykJ9IjXSgbL1v4yxlFDlTlhApFVw.gif)|[img.soogif.com](http://img.soogif.com)|動畫背景|
+|[Download.gif](https://i.pinimg.com/originals/d4/89/0e/d4890e94b9e0ff70bf52c392a5e8d752.gif)|[in.pinterest.com](https://in.pinterest.com/meghaumrania/cute-love-gif/)|下載圖片|
+
+## [語言字型](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/為-ios-app-加入客製字型-custom-font-d2b28b0269e0)
+
+|字型|出處|功能|
+|-|-|-|
+|[KleeOne-SemiBold.ttf](https://fonts.google.com/specimen/Klee+One)|[Google-Font](https://fonts.google.com)|日文字型|
+|[GamjaFlower-Regular.ttf](https://fonts.google.com/specimen/Gamja+Flower?query=Gamja+Flower)|[Google-Font](https://fonts.google.com)|韓文字型|
+|[jf-openhuninn-1.1.ttf](https://justfont.com/huninn/)|[open 粉圓 - justfont](https://justfont.com/)|中文字型|

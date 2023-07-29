@@ -867,23 +867,6 @@ extension UIDevice {
         let info: Constant.SystemInformation = (name: UIDevice.current.systemName, version: UIDevice.current.systemVersion, model: UIDevice.current.model, idiom: UIDevice.current.userInterfaceIdiom)
         return info
     }
-    
-    /// [取得鍵盤相關資訊](https://medium.com/彼得潘的-swift-ios-app-開發教室/18-ios-鍵盤通知-監聽-d45bd97841a6)
-    /// - UIResponder.keyboardDidShowNotification / UIResponder.keyboardDidHideNotification
-    /// - Parameter notification: 鍵盤的notification
-    /// - Returns: Constant.KeyboardInfomation?
-    static func _keyboardInfomation(notification: Notification) -> Constant.KeyboardInfomation? {
-        
-        guard let userInfo = notification.userInfo,
-              let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double,
-              let curve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt,
-              let frame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
-        else {
-            return nil
-        }
-        
-        return (duration: duration, curve: curve, frame: frame)
-    }
 }
 
 // MARK: - UIWindow (static function)

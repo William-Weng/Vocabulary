@@ -409,7 +409,7 @@ private extension ListViewController {
     func presentSearchVocabularyViewController(with viewController: UIViewController?) {
 
         let floatingViewController = WWFloatingView.shared.maker()
-        floatingViewController.configure(backgroundColor: .clear, multiplier: 0.45, completePercent: 0.5, currentView: viewController?.view)
+        floatingViewController.configure(backgroundColor: .clear, multiplier: 0.6, completePercent: 0.5, currentView: viewController?.view)
         
         present(floatingViewController, animated: false)
     }

@@ -20,7 +20,7 @@ final class Utility: NSObject {
     private override init() {}
 }
 
-// MARK: - Utility (class function)
+// MARK: - Utility (function)
 extension Utility {
     
     /// [顯示HUD](https://augmentedcode.io/2019/09/01/animating-gifs-and-apngs-with-cganimateimageaturlwithblock-in-swift/)
@@ -88,6 +88,22 @@ extension Utility {
         return percent
     }
     
+    /// 計算下滑到底更新的距離百分比 for 快速搜尋單字小幫手 (UIRefreshControl的另一邊)
+    /// - Parameters:
+    ///   - scrollView: UIScrollView
+    ///   - tableView: UITableView
+    /// - Returns: CGFloat
+    func updateSearchHeightPercent(with scrollView: UIScrollView) -> CGFloat {
+        
+        var percent = (scrollView.contentOffset.y + scrollView.bounds.height - scrollView.contentSize.height) / Constant.updateSearchScrolledHeight
+        
+        if (scrollView.frame.height > scrollView.contentSize.height) {
+            percent = scrollView.contentOffset.y / Constant.updateSearchScrolledHeight
+        }
+
+        return percent
+    }
+    
     /// 設定UILabel標題
     /// - Parameters:
     ///   - titleView: UILabel
@@ -135,7 +151,7 @@ extension Utility {
     /// - Returns: String
     func updateActivityViewIndicatorTitle(with percent: CGFloat, isNeededUpdate: Bool) -> String {
         
-        if (!isNeededUpdate) { return "無更新資料" }
+        if (!isNeededUpdate) { return Constant.noDataUpdate }
         
         var _percent = percent
         if (percent > 1.0) { _percent = 1.0 }
@@ -157,5 +173,64 @@ extension Utility {
     func databaseBackupUrl(_ dateFormat: String = "yyyy-MM-dd HH:mm:ss ZZZ") -> URL? {
         let url = Constant.backupDirectory?._appendPath("\(Date()._localTime(dateFormat: dateFormat, timeZone: .current)).\(Constant.databaseFileExtension)")
         return url
+    }
+}
+
+// MARK: - SearchWordViewController / SearchVocabularyViewController
+extension Utility {
+    
+    /// 設定搜尋的類型按鈕 => 單字 / 字義
+    /// - Parameters:
+    ///   - title: String
+    ///   - backgroundColor: UIColor
+    /// - Returns: UIButton
+    func searchTypeButtonMaker(with type: Constant.SearchType, backgroundColor: UIColor) -> UIButton {
+        
+        let button = UIButton()
+        
+        button.backgroundColor = type.backgroundColor()
+        button.setTitle("  \(type)  ", for: .normal)
+        button.layer._maskedCorners(radius: 8.0)
+        
+        return button
+    }
+    
+    /// 切換搜尋類型的相關動作
+    /// - Parameters:
+    ///   - searchBar: UISearchBar
+    ///   - searchType: Constant.SearchType
+    func switchSearchTypeAction(_ searchBar: UISearchBar, for searchType: Constant.SearchType) {
+        
+        guard let leftButton = searchBar.searchTextField.leftView as? UIButton else { return }
+        
+        leftButton.setTitle("  \(searchType)  ", for: .normal)
+        leftButton.backgroundColor = searchType.backgroundColor()
+        searchBar.placeholder = "請輸入需要搜尋的\(searchType)"
+    }
+    
+    /// 取得單字列表 for 分類
+    /// - Parameters:
+    ///   - text: String
+    ///   - searchType: Constant.SearchType
+    ///   - tableName: Constant.VoiceCode
+    ///   - offset: Int
+    /// - Returns: [[String : Any]]
+    func vocabularyListArrayMaker(like text: String, searchType: Constant.SearchType, for tableName: Constant.VoiceCode, offset: Int) -> [[String : Any]] {
+        
+        let dictionary: [[String : Any]]
+        
+        switch searchType {
+        case .word:
+            dictionary = API.shared.searchList(like: text, searchType: searchType, for: Constant.currentTableName, offset: offset)
+            
+        case .interpret:
+            
+            let array = API.shared.searchList(like: text, searchType: searchType, for: Constant.currentTableName, count: nil, offset: 0)
+            let words = array.compactMap { $0._jsonClass(for: Vocabulary.self)?.word }
+            
+            dictionary = API.shared.searchWordListDetail(in: words, for: Constant.currentTableName, offset: offset)
+        }
+        
+        return dictionary
     }
 }

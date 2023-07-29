@@ -867,6 +867,23 @@ extension UIDevice {
         let info: Constant.SystemInformation = (name: UIDevice.current.systemName, version: UIDevice.current.systemVersion, model: UIDevice.current.model, idiom: UIDevice.current.userInterfaceIdiom)
         return info
     }
+    
+    /// [取得鍵盤相關資訊](https://medium.com/彼得潘的-swift-ios-app-開發教室/18-ios-鍵盤通知-監聽-d45bd97841a6)
+    /// - UIResponder.keyboardDidShowNotification / UIResponder.keyboardDidHideNotification
+    /// - Parameter notification: 鍵盤的notification
+    /// - Returns: Constant.KeyboardInfomation?
+    static func _keyboardInfomation(notification: Notification) -> Constant.KeyboardInfomation? {
+        
+        guard let userInfo = notification.userInfo,
+              let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double,
+              let curve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt,
+              let frame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+        else {
+            return nil
+        }
+        
+        return (duration: duration, curve: curve, frame: frame)
+    }
 }
 
 // MARK: - UIWindow (static function)
@@ -894,6 +911,22 @@ extension UIWindow {
     func _hasSafeArea() -> Bool {
         let bottom = safeAreaInsets.bottom
         return bottom > 0
+    }
+}
+
+// MARK: - UIStoryboard (static function)
+extension UIStoryboard {
+    
+    /// 由UIStoryboard => ViewController
+    /// - Parameters:
+    ///   - name: Storyboard的名稱 => Main.storyboard
+    ///   - storyboardBundleOrNil: Bundle名稱
+    ///   - identifier: ViewController的代號 (記得要寫)
+    /// - Returns: T (泛型) => UIViewController
+    static func _instantiateViewController<T: UIViewController>(name: String = "Main", bundle storyboardBundleOrNil: Bundle? = nil, identifier: String = String(describing: T.self)) -> T {
+        
+        let viewController = Self(name: name, bundle: storyboardBundleOrNil).instantiateViewController(identifier: identifier) as T
+        return viewController
     }
 }
 
@@ -1131,6 +1164,14 @@ extension UIActivityViewController {
     }
 }
 
+// MARK: - UITabBar (function)
+extension UITextField {
+    
+    /// [退鍵盤](https://medium.com/彼得潘的-swift-ios-app-開發教室/uitextfield如何讓鍵盤消失-)
+    /// - Parameter textField: UITextField
+    func _dismissKeyboard() { self.resignFirstResponder() }
+}
+
 // MARK: - UITabBar (static function)
 extension UITabBar {
     
@@ -1159,6 +1200,15 @@ extension UITabBar {
         self._transparent()
         self.backgroundColor = color
     }
+}
+
+// MARK: - UISearchBar (function)
+extension UISearchBar {
+    
+    /// [SearchBar的背景樣式調整](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/uisearchbar-的樣式調整-763767570b11)
+    /// - Parameters:
+    ///   - style: UISearchBar.Style
+    func _searchBarStyle(with style: UISearchBar.Style = .default) { self.searchBarStyle = style }
 }
 
 // MARK: - UIScrollView (function)
@@ -1191,7 +1241,7 @@ extension UITableView {
         
         self.delegate = this
         self.dataSource = this
-        
+                
         if (isFooterViewHidden) { self._tableFooterViewHidden() }
         if #available(iOS 15.0, *) { self._isPrefetchingEnabled(isPrefetchingEnabled) }
     }
@@ -1279,19 +1329,34 @@ extension UIRefreshControl {
     ///   - target: 要設定的位置
     ///   - action: 向下拉要做什麼？
     ///   - controlEvents: 事件 => 值改變的時候
+    ///   - tintColor: UIColor
+    ///   - backgroundColor: UIColor
     /// - Returns: UIRefreshControl
-    static func _build(title: String? = nil, target: Any?, action: Selector, for controlEvents: UIControl.Event = [.valueChanged], tintColor: UIColor = .black, backgroundColor: UIColor? = nil) -> UIRefreshControl {
+    static func _build(title: String? = nil, target: Any?, tintColor: UIColor = .black, backgroundColor: UIColor? = nil, for controlEvents: UIControl.Event = [.valueChanged], action: Selector) -> UIRefreshControl {
         
         let refreshControl = UIRefreshControl()
         
         refreshControl.addTarget(target, action: action, for: controlEvents)
         refreshControl.tintColor = tintColor
         refreshControl.backgroundColor = backgroundColor
-        refreshControl.attributedTitle = NSAttributedString(string: title ?? "")
+        refreshControl._attributedTitle(string: title ?? "", attributes: [.foregroundColor: tintColor])
         
         return refreshControl
     }
 }
+
+// MARK: - UIRefreshControl (function)
+extension UIRefreshControl {
+
+    /// 設定attributedTitle
+    /// - Parameters:
+    ///   - string: 文字
+    ///   - attributes: 屬性設定
+    func _attributedTitle(string: String, attributes: [NSAttributedString.Key : Any] = [:]) {
+        self.attributedTitle = NSAttributedString(string: string, attributes: attributes)
+    }
+}
+
 
 // MARK: - UICollectionView (static function)
 extension UIContextualAction {

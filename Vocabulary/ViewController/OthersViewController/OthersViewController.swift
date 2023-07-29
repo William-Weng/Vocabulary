@@ -135,7 +135,7 @@ private extension OthersViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem()
         OthersTableViewCell.othersViewDelegate = self
         
-        refreshControl = UIRefreshControl._build(title: "重新讀取", target: self, action: #selector(Self.refreshBookmarks(_:)))
+        refreshControl = UIRefreshControl._build(title: Constant.reload, target: self, action: #selector(Self.refreshBookmarks(_:)))
         fakeTabBarHeightConstraint.constant = self.tabBarController?.tabBar.frame.height ?? 0
         
         reloadBookmarks(isFavorite: isFavorite)

@@ -1,5 +1,5 @@
 //
-//  SearchTableViewCell.swift
+//  SearchWordTableViewCell.swift
 //  Vocabulary
 //
 //  Created by William.Weng on 2023/1/30.
@@ -9,7 +9,7 @@ import UIKit
 import WWPrint
 
 // MARK: - 搜尋的單字列表Cell
-final class SearchTableViewCell: UITableViewCell, CellReusable {
+final class SearchWordTableViewCell: UITableViewCell, CellReusable {
     
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var alphabetLabel: UILabel!
@@ -46,7 +46,7 @@ final class SearchTableViewCell: UITableViewCell, CellReusable {
 }
 
 // MARK: - 小工具
-private extension SearchTableViewCell {
+private extension SearchWordTableViewCell {
     
     /// 取得單字列表
     /// - Parameter indexPath: IndexPath
@@ -120,7 +120,7 @@ private extension SearchTableViewCell {
 }
 
 // MARK: - 小工具
-private extension SearchTableViewCell {
+private extension SearchWordTableViewCell {
     
     /// 畫面設定
     /// - Parameter indexPath: IndexPath

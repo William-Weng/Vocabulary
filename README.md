@@ -6,7 +6,8 @@
 ![](./@Image/001.png) ![](./@Image/002.png) ![](./@Image/003.png)
 ![](./@Image/004.png) ![](./@Image/005.png) ![](./@Image/006.png)
 ![](./@Image/007.png) ![](./@Image/008.png) ![](./@Image/009.png)
-![](./@Image/010.png) ![](./@Image/000.png)
+![](./@Image/010.png) ![](./@Image/011.png)
+![](./@Image/000.png)
 ![](./@Image/Storyboard.png)
 
 # 附錄：資源下載說明 (所有資源都是從網路下載，僅作程式分享教學之用，並無侵權之意，資源版權皆屬於原作者所有…)
@@ -22,6 +23,7 @@
 |[WWToast](https://github.com/William-Weng/WWToast)|提示訊息小工具|
 |[WWNetworking-UIImage](https://github.com/William-Weng/WWNetworking-UIImage)|網路下載圖片小工具|
 |[WWAppInstallSource](https://github.com/William-Weng/WWAppInstallSource)|取得APP在哪裡安裝的小工具|
+|[WWFloatingView](https://github.com/William-Weng/WWFloatingView)|一個簡單的懸浮拖曳視窗|
 
 ## [相關圖示](https://www.flaticon.com)
 
@@ -84,9 +86,6 @@
 |[Success.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[https://www.ilikesticker.com](LINE Stickers & Themes)|HUD圖示|
 |[Fail.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[https://www.ilikesticker.com](LINE Stickers & Themes)|HUD圖示|
 |[Nice.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[https://www.ilikesticker.com](LINE Stickers & Themes)|HUD圖示|
-|[Success.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[https://www.ilikesticker.com](LINE Stickers & Themes)|HUD圖示|
-|[Success.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[https://www.ilikesticker.com](LINE Stickers & Themes)|HUD圖示|
-|[Success.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[https://www.ilikesticker.com](LINE Stickers & Themes)|HUD圖示|
 |[Talking.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[https://www.ilikesticker.com](LINE Stickers & Themes)|HUD圖示|
 |[Speak.gif](https://m.media-amazon.com/images/G/01/digital/music/player/web/EQ_accent.gif)|[media-amazon](https://m.media-amazon.com)|單字複習功能|
 |[Others.gif](http://img.soogif.com/xUsqykJ9IjXSgbL1v4yxlFDlTlhApFVw.gif)|[img.soogif.com](http://img.soogif.com)|動畫背景|

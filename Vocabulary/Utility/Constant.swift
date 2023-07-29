@@ -20,11 +20,14 @@ final class Constant: NSObject {
     static let databaseName = "Vocabulary.db"
     static let databaseFileExtension = "db"
     static let urlScheme = "word"
+    static let reload = "重新讀取"
+    static let noDataUpdate = "無更新資料"
     static let searchCountWithLevel: SearchCountWithLevel = [.easy: 3, .medium: 4, .hard: 3]
 
     static var volume: Float = 0.1
     static var speakingSpeed: Float = 0.4
     static var updateScrolledHeight: CGFloat = 128.0
+    static var updateSearchScrolledHeight: CGFloat = 96.0
     static var database: SQLite3Database?
     static var backupDirectory = FileManager.default._documentDirectory()
 
@@ -55,6 +58,8 @@ extension Constant {
     typealias FileInfomation = (isExist: Bool, isDirectory: Bool)                                               // 檔案相關資訊 (是否存在 / 是否為資料夾)
     typealias AppVersion = (app: String?, build: String?)                                                       // APP版本號
     typealias SystemInformation = (name: String, version: String, model: String, idiom: UIUserInterfaceIdiom)   // 系統資訊 => (iOS, 12.1, iPhone, 0)
+    typealias KeyboardInfomation = (duration: Double, curve: UInt, frame: CGRect)                               // 取得系統鍵盤的相關資訊
+
 }
 
 // MARK: - Enumeration

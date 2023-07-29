@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "wwfloatingview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWFloatingView.git",
+      "state" : {
+        "revision" : "4150aa0a93aee52da6e1449fc22b6687bebacd51",
+        "version" : "1.0.0"
+      }
+    },
+    {
       "identity" : "wwhud",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWHUD",

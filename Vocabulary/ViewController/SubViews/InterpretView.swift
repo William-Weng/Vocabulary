@@ -28,7 +28,7 @@ final class InterpretView: UIView {
     
     /// 相關畫面設定
     /// - Parameter vocabulary: Vocabulary
-    func configure(with vocabulary: Vocabulary) { configure(for: vocabulary) }
+    func configure(with vocabulary: Vocabulary, textColor: UIColor = .label) { configure(for: vocabulary, textColor: textColor) }
     
     deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
 }
@@ -49,7 +49,7 @@ private extension InterpretView {
     
     /// 畫面設定
     /// - Parameter vocabulary: Vocabulary
-    func configure(for vocabulary: Vocabulary) {
+    func configure(for vocabulary: Vocabulary, textColor: UIColor = .label) {
         
         let speechType = Vocabulary.Speech(rawValue: vocabulary.speech) ?? .noue
         
@@ -57,5 +57,6 @@ private extension InterpretView {
         speechLabel.backgroundColor = speechType.backgroundColor()
         
         interpretLabel.text = vocabulary.interpret
+        interpretLabel.textColor = textColor
     }
 }

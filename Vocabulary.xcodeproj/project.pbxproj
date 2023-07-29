@@ -44,7 +44,7 @@
 		81AB5EF9299643960035216F /* OthersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AB5EF8299643960035216F /* OthersViewController.swift */; };
 		81BA793E29876CE000C0FD6C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 81BA793D29876CE000C0FD6C /* README.md */; };
 		81BA794029876DA800C0FD6C /* SearchWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA793F29876DA800C0FD6C /* SearchWordViewController.swift */; };
-		81BA794429877ACC00C0FD6C /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA794329877ACC00C0FD6C /* SearchTableViewCell.swift */; };
+		81BA794429877ACC00C0FD6C /* SearchWordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA794329877ACC00C0FD6C /* SearchWordTableViewCell.swift */; };
 		81BB8E192A64F2DB00D26939 /* PropertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BB8E182A64F2DB00D26939 /* PropertyWrapper.swift */; };
 		81CD85CC2990F03A009C39FF /* SentenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD85CB2990F03A009C39FF /* SentenceViewController.swift */; };
 		81E1F8F02A1F2C8100EB0139 /* WWHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 81E1F8EF2A1F2C8100EB0139 /* WWHUD */; };
@@ -52,6 +52,9 @@
 		81E1F8F62A1F2CCA00EB0139 /* WWSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 81E1F8F52A1F2CCA00EB0139 /* WWSlider */; };
 		81E1F8FA2A1F2D2700EB0139 /* WWToast in Frameworks */ = {isa = PBXBuildFile; productRef = 81E1F8F92A1F2D2700EB0139 /* WWToast */; };
 		81E1F8FF2A1F2D9B00EB0139 /* WWNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 81E1F8FE2A1F2D9B00EB0139 /* WWNetworking */; };
+		81E4078E2A7239A200230C3A /* WWFloatingViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 81E4078D2A7239A200230C3A /* WWFloatingViewController */; };
+		81E407902A723C4E00230C3A /* SearchVocabularyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E4078F2A723C4E00230C3A /* SearchVocabularyViewController.swift */; };
+		81E56B6B2A725DA6004400D6 /* SearchVocabularyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E56B6A2A725DA6004400D6 /* SearchVocabularyTableViewCell.swift */; };
 		81EB0ED92A1F2E1300EE2A83 /* WWNetworking-UIImage in Frameworks */ = {isa = PBXBuildFile; productRef = 81EB0ED82A1F2E1300EE2A83 /* WWNetworking-UIImage */; };
 		81F52F34299DE87A005F9DF2 /* MyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F52F33299DE87A005F9DF2 /* MyTabBarController.swift */; };
 /* End PBXBuildFile section */
@@ -96,9 +99,11 @@
 		81AB5EF8299643960035216F /* OthersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OthersViewController.swift; sourceTree = "<group>"; };
 		81BA793D29876CE000C0FD6C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		81BA793F29876DA800C0FD6C /* SearchWordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWordViewController.swift; sourceTree = "<group>"; };
-		81BA794329877ACC00C0FD6C /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
+		81BA794329877ACC00C0FD6C /* SearchWordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWordTableViewCell.swift; sourceTree = "<group>"; };
 		81BB8E182A64F2DB00D26939 /* PropertyWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyWrapper.swift; sourceTree = "<group>"; };
 		81CD85CB2990F03A009C39FF /* SentenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceViewController.swift; sourceTree = "<group>"; };
+		81E4078F2A723C4E00230C3A /* SearchVocabularyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVocabularyViewController.swift; sourceTree = "<group>"; };
+		81E56B6A2A725DA6004400D6 /* SearchVocabularyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVocabularyTableViewCell.swift; sourceTree = "<group>"; };
 		81F52F33299DE87A005F9DF2 /* MyTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -108,6 +113,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81E1F8FA2A1F2D2700EB0139 /* WWToast in Frameworks */,
+				81E4078E2A7239A200230C3A /* WWFloatingViewController in Frameworks */,
 				81E1F8FF2A1F2D9B00EB0139 /* WWNetworking in Frameworks */,
 				81EB0ED92A1F2E1300EE2A83 /* WWNetworking-UIImage in Frameworks */,
 				81E1F8F62A1F2CCA00EB0139 /* WWSlider in Frameworks */,
@@ -179,6 +185,7 @@
 				818E2616299231D400385705 /* ReviewResultViewController */,
 				819D69CE298E30F1001AF48E /* SolutionViewController */,
 				81D8E09D298A1146001D2581 /* SearchWordViewController */,
+				81E56B6C2A725DD6004400D6 /* SearchVocabularyViewController */,
 				81CD85CD2990F040009C39FF /* SentenceViewController */,
 				81AB5EF72996437B0035216F /* OthersViewController */,
 				64F6F42A29991B40001F4F66 /* LicenseWebViewController */,
@@ -306,7 +313,7 @@
 			isa = PBXGroup;
 			children = (
 				81BA793F29876DA800C0FD6C /* SearchWordViewController.swift */,
-				81BA794329877ACC00C0FD6C /* SearchTableViewCell.swift */,
+				81BA794329877ACC00C0FD6C /* SearchWordTableViewCell.swift */,
 			);
 			path = SearchWordViewController;
 			sourceTree = "<group>";
@@ -337,6 +344,15 @@
 			path = ReviewViewController;
 			sourceTree = "<group>";
 		};
+		81E56B6C2A725DD6004400D6 /* SearchVocabularyViewController */ = {
+			isa = PBXGroup;
+			children = (
+				81E4078F2A723C4E00230C3A /* SearchVocabularyViewController.swift */,
+				81E56B6A2A725DA6004400D6 /* SearchVocabularyTableViewCell.swift */,
+			);
+			path = SearchVocabularyViewController;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -361,6 +377,7 @@
 				81E1F8FE2A1F2D9B00EB0139 /* WWNetworking */,
 				81EB0ED82A1F2E1300EE2A83 /* WWNetworking-UIImage */,
 				6418FC192A6DCDED00493B8D /* WWAppInstallSource */,
+				81E4078D2A7239A200230C3A /* WWFloatingViewController */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -398,6 +415,7 @@
 				81E1F8FD2A1F2D9B00EB0139 /* XCRemoteSwiftPackageReference "WWNetworking" */,
 				81EB0ED72A1F2E1300EE2A83 /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */,
 				6418FC182A6DCDED00493B8D /* XCRemoteSwiftPackageReference "WWAppInstallSource" */,
+				81E4078C2A7239A200230C3A /* XCRemoteSwiftPackageReference "WWFloatingView" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -440,15 +458,17 @@
 				646E44A42980A726002BCBC8 /* ReviewViewController.swift in Sources */,
 				642858A4297BC38200DD7D88 /* Extension.swift in Sources */,
 				64C184F7297E5D4C00D1D1B2 /* MainTableViewCell.swift in Sources */,
+				81E56B6B2A725DA6004400D6 /* SearchVocabularyTableViewCell.swift in Sources */,
 				6428588F297BBF8600DD7D88 /* MainViewController.swift in Sources */,
 				81CD85CC2990F03A009C39FF /* SentenceViewController.swift in Sources */,
 				81BA794029876DA800C0FD6C /* SearchWordViewController.swift in Sources */,
 				818E2615299230B300385705 /* ReviewResultTableViewCell.swift in Sources */,
+				81E407902A723C4E00230C3A /* SearchVocabularyViewController.swift in Sources */,
 				64C18507297EC01700D1D1B2 /* ListTableViewCell.swift in Sources */,
 				64C18504297EB8E700D1D1B2 /* ListViewController.swift in Sources */,
 				64BA9EA2299764E600226DC8 /* OthersTableViewCell.swift in Sources */,
 				815E14782990F47700EC571D /* SentenceTableViewCell.swift in Sources */,
-				81BA794429877ACC00C0FD6C /* SearchTableViewCell.swift in Sources */,
+				81BA794429877ACC00C0FD6C /* SearchWordTableViewCell.swift in Sources */,
 				64C184F5297E5CC600D1D1B2 /* Protocol.swift in Sources */,
 				6428588B297BBF8600DD7D88 /* AppDelegate.swift in Sources */,
 				64C184F9297E5F7A00D1D1B2 /* API.swift in Sources */,
@@ -609,7 +629,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20230724;
+				CURRENT_PROJECT_VERSION = 20230729;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -647,7 +667,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20230724;
+				CURRENT_PROJECT_VERSION = 20230729;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -750,6 +770,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		81E4078C2A7239A200230C3A /* XCRemoteSwiftPackageReference "WWFloatingView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWFloatingView.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		81EB0ED72A1F2E1300EE2A83 /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWNetworking-UIImage";
@@ -790,6 +818,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 81E1F8FD2A1F2D9B00EB0139 /* XCRemoteSwiftPackageReference "WWNetworking" */;
 			productName = WWNetworking;
+		};
+		81E4078D2A7239A200230C3A /* WWFloatingViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 81E4078C2A7239A200230C3A /* XCRemoteSwiftPackageReference "WWFloatingView" */;
+			productName = WWFloatingViewController;
 		};
 		81EB0ED82A1F2E1300EE2A83 /* WWNetworking-UIImage */ = {
 			isa = XCSwiftPackageProductDependency;

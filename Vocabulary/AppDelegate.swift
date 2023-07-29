@@ -260,8 +260,8 @@ private extension AppDelegate {
         let installType = WWAppInstallSource.shared.detect() ?? .Simulator
         let info = UIDevice._systemInformation()
         let icon = UIApplicationShortcutIcon(type: .love)
-        let title = "\(info.name) \(info.version) for \(installType.rawValue)"
-        let subtitle = "v\(version.app ?? "0.0.0") (\(version.build ?? "0"))"
+        let title = "v\(version.app ?? "0.0.0") (\(version.build ?? "0"))"
+        let subtitle = "\(info.name) \(info.version) for \(installType.rawValue)"
         let shortcutItem = UIApplicationShortcutItem._build(localizedTitle: title, localizedSubtitle: subtitle, icon: icon)
         
         application.shortcutItems = [shortcutItem]

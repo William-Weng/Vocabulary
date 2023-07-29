@@ -10,6 +10,7 @@ import SafariServices
 import WWPrint
 import WWSQLite3Manager
 import WWHUD
+import WWFloatingViewController
 
 // MARK: - 單字列表
 final class ListViewController: UIViewController {
@@ -27,6 +28,7 @@ final class ListViewController: UIViewController {
     private var refreshControl: UIRefreshControl!
     private var disappearImage: UIImage?
     private var translateDisplayArray: Set<Int> = []
+    private var searchVocabularyViewController: SearchVocabularyViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +56,11 @@ final class ListViewController: UIViewController {
     @IBAction func dictionaryNet(_ sender: UIBarButtonItem) { netDictionary(with: vocabularyList.word) }
     @IBAction func refreshVocabularyList(_ sender: UIRefreshControl) { reloadExampleList() }
     @IBAction func recordingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: "RecordingWaveSegue", sender: nil) }
+        
+    @IBAction func searchVocabulary(_ sender: UIButton) {
+        searchVocabularyViewController = UIStoryboard._instantiateViewController() as SearchVocabularyViewController
+        presentSearchVocabularyViewController(with: searchVocabularyViewController)
+    }
     
     deinit {
         ListTableViewCell.exmapleList = []
@@ -86,7 +93,7 @@ private extension ListViewController {
                 
         titleViewSetting(with: vocabularyList.word)
         
-        refreshControl = UIRefreshControl._build(title: "重新讀取", target: self, action: #selector(Self.refreshVocabularyList(_:)))
+        refreshControl = UIRefreshControl._build(title: Constant.reload, target: self, action: #selector(Self.refreshVocabularyList(_:)))
         
         myTableView.addSubview(refreshControl)
         myTableView._delegateAndDataSource(with: self)
@@ -396,4 +403,15 @@ private extension ListViewController {
         
         self.translateDisplayArray = Set(_translateDisplayArray)
     }
+    
+    /// 產生WWFloatingViewController
+    /// - Parameter viewController: UIViewController?
+    func presentSearchVocabularyViewController(with viewController: UIViewController?) {
+
+        let floatingViewController = WWFloatingView.shared.maker()
+        floatingViewController.configure(backgroundColor: .clear, multiplier: 0.45, completePercent: 0.5, currentView: viewController?.view)
+        
+        present(floatingViewController, animated: false)
+    }
 }
+

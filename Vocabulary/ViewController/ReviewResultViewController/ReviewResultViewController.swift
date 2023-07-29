@@ -84,7 +84,7 @@ private extension ReviewResultViewController {
     func initSetting() {
         
         navigationItem.backBarButtonItem = UIBarButtonItem()
-        refreshControl = UIRefreshControl._build(title: "重新讀取", target: self, action: #selector(Self.refreshReviewResultList(_:)))
+        refreshControl = UIRefreshControl._build(title: Constant.reload, target: self, action: #selector(Self.refreshReviewResultList(_:)))
         
         myTableView._delegateAndDataSource(with: self)
         myTableView.addSubview(refreshControl)

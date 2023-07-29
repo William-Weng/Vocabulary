@@ -75,6 +75,8 @@ private extension LicenseWebViewController {
         let url = Bundle.main.url(forResource: "License", withExtension: "html")
         _ = webView._load(urlString: url?.absoluteString, timeoutInterval: 60)
         
+        webView.scrollView.showsHorizontalScrollIndicator = false
+        
         fixContentInset(with: webView)
         estimatedProgress(with: webView)
     }

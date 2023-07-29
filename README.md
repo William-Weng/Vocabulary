@@ -83,10 +83,10 @@
 |[Sentence.gif](https://imgur.com/BzWWaem)|[Imgur](https://imgur.com/)|動畫背景|
 |[Review.gif](https://imgur.com/yh92O1W)|[Imgur](https://imgur.com/)|動畫背景|
 |[Solution.gif](https://imgur.com/9KkmcGe)|[Imgur](https://imgur.com/)|動畫背景|
-|[Success.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[https://www.ilikesticker.com](LINE Stickers & Themes)|HUD圖示|
-|[Fail.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[https://www.ilikesticker.com](LINE Stickers & Themes)|HUD圖示|
-|[Nice.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[https://www.ilikesticker.com](LINE Stickers & Themes)|HUD圖示|
-|[Talking.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[https://www.ilikesticker.com](LINE Stickers & Themes)|HUD圖示|
+|[Success.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[LINE Stickers & Themes](https://www.ilikesticker.com)|HUD圖示|
+|[Fail.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[LINE Stickers & Themes](https://www.ilikesticker.com)|HUD圖示|
+|[Nice.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[LINE Stickers & Themes](https://www.ilikesticker.com)|HUD圖示|
+|[Talking.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[LINE Stickers & Themes](https://www.ilikesticker.com)|HUD圖示|
 |[Speak.gif](https://m.media-amazon.com/images/G/01/digital/music/player/web/EQ_accent.gif)|[media-amazon](https://m.media-amazon.com)|單字複習功能|
 |[Others.gif](http://img.soogif.com/xUsqykJ9IjXSgbL1v4yxlFDlTlhApFVw.gif)|[img.soogif.com](http://img.soogif.com)|動畫背景|
 |[Download.gif](https://i.pinimg.com/originals/d4/89/0e/d4890e94b9e0ff70bf52c392a5e8d752.gif)|[in.pinterest.com](https://in.pinterest.com/meghaumrania/cute-love-gif/)|下載圖片|

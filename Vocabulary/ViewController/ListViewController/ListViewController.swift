@@ -23,6 +23,8 @@ final class ListViewController: UIViewController {
     var vocabularyList: VocabularyList!
     var mainViewDelegate: MainViewDelegate?
     
+    private let recordingWaveSegue = "RecordingWaveSegue"
+    
     private var isAnimationStop = false
     private var isSafariViewControllerDismiss = true
     private var refreshControl: UIRefreshControl!
@@ -55,11 +57,11 @@ final class ListViewController: UIViewController {
     
     @IBAction func dictionaryNet(_ sender: UIBarButtonItem) { netDictionary(with: vocabularyList.word) }
     @IBAction func refreshVocabularyList(_ sender: UIRefreshControl) { reloadExampleList() }
-    @IBAction func recordingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: "RecordingWaveSegue", sender: nil) }
-        
+    @IBAction func recordingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: recordingWaveSegue, sender: nil) }
+    
     @IBAction func searchVocabulary(_ sender: UIButton) {
         searchVocabularyViewController = UIStoryboard._instantiateViewController() as SearchVocabularyViewController
-        presentSearchVocabularyViewController(with: searchVocabularyViewController)
+        presentSearchVocabularyViewController(with: searchVocabularyViewController?.view)
     }
     
     deinit {
@@ -405,11 +407,11 @@ private extension ListViewController {
     }
     
     /// 產生WWFloatingViewController
-    /// - Parameter viewController: UIViewController?
-    func presentSearchVocabularyViewController(with viewController: UIViewController?) {
-
+    /// - Parameter currentView: UIView?
+    func presentSearchVocabularyViewController(with currentView: UIView?) {
+        
         let floatingViewController = WWFloatingView.shared.maker()
-        floatingViewController.configure(backgroundColor: .clear, multiplier: 0.6, completePercent: 0.5, currentView: viewController?.view)
+        floatingViewController.configure(animationDuration: 0.25, backgroundColor: .clear, multiplier: 0.6, completePercent: 0.5, currentView: currentView)
         
         present(floatingViewController, animated: false)
     }

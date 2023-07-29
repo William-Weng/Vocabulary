@@ -103,7 +103,7 @@ private extension SentenceTableViewCell {
     /// - Returns: UIImageView
     func accessoryViewMaker() -> UIImageView {
         
-        let imageView = UIImageView(image: UIImage(imageLiteralResourceName: "NextArrow"))
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "NextArrow"))
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(Self.persentNetDictionary(_:)))
         
         imageView.isUserInteractionEnabled = true

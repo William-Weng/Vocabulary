@@ -24,7 +24,7 @@ final class Utility: NSObject {
 extension Utility {
     
     /// [顯示HUD](https://augmentedcode.io/2019/09/01/animating-gifs-and-apngs-with-cganimateimageaturlwithblock-in-swift/)
-    /// - Parameter type: [Utility.HudGifType](https://www.swiftjectivec.com/animating-images-using-image-io/)
+    /// - Parameter type: [Constant.HudGifType](https://www.swiftjectivec.com/animating-images-using-image-io/)
     func flashHUD(with type: Constant.HudGifType) {
         
         guard let gifUrl = type.fileURL(),
@@ -37,7 +37,8 @@ extension Utility {
         WWHUD.shared.flash(effect: .gif(url: gifUrl, options: options), height: 256.0, backgroundColor: .black.withAlphaComponent(0.3), animation: 0.75, completion: nil)
     }
     
-    /// [播放HUD](https://augmentedcode.io/2019/09/01/animating-gifs-and-apngs-with-cganimateimageaturlwithblock-in-swift/)
+    /// 播放HUD
+    /// - Parameter type: Constant.HudGifType
     func diplayHUD(with type: Constant.HudGifType) {
 
         guard let gifUrl = type.fileURL(),
@@ -123,9 +124,7 @@ extension Utility {
     /// 我的最愛ICON
     /// - Parameter isFavorite: Bool
     /// - Returns: UIImage
-    func favoriteIcon(_ isFavorite: Bool) -> UIImage {
-        return (!isFavorite) ? UIImage(imageLiteralResourceName: "Notice_Off") : UIImage(imageLiteralResourceName: "Notice_On")
-    }
+    func favoriteIcon(_ isFavorite: Bool) -> UIImage { return (!isFavorite) ? #imageLiteral(resourceName: "Notice_Off") : #imageLiteral(resourceName: "Notice_On") }
     
     /// 產生NavigationItem標題的LabelView
     /// - Parameters:

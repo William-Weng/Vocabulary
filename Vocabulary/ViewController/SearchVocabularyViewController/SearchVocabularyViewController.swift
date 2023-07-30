@@ -65,6 +65,7 @@ extension SearchVocabularyViewController: UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return SearchVocabularyTableViewCell.vocabularyListArray.count }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { return searchTableViewCell(tableView, cellForRowAt: indexPath) }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { self._dismissKeyboard() }
     func scrollViewDidScroll(_ scrollView: UIScrollView) { mySearchBar.searchTextField._dismissKeyboard(); updateHeightPercentAction(with: scrollView, isNeededUpdate: isNeededUpdate) }
 }
 

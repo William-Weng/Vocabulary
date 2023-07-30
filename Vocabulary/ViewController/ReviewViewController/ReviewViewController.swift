@@ -383,7 +383,6 @@ private extension ReviewViewController {
                 Utility.shared.flashHUD(with: hudType)
                 
                 this.levelMenu(target: this, vocabularyList: vocabularyList, sourceView: sender)
-                // this.initVocabularyLevelButton(with: vocabularyList)
             }
             
             if (vocabularyList.word.lowercased() != inputWord._removeWhiteSpacesAndNewlines().lowercased()) { isCorrect = false; return }
@@ -475,17 +474,6 @@ extension ReviewViewController {
         questionLevelButtonItem.menu = menu
     }
     
-    // TODO: 初始化問題等級Button
-    func initVocabularyLevelButton(with vocabularyList: VocabularyList?) {
-                
-        let actions = Vocabulary.Level.allCases.map { vocabularyLevelActionMaker($0, vocabularyList: vocabularyList) }
-        let menu = UIMenu(title: "請選擇等級", children: actions)
-
-        answearButton.showsMenuAsPrimaryAction = true
-        answearButton.menu = menu
-        answearButton.sendActions(for: .primaryActionTriggered)
-    }
-    
     /// 問題等級功能
     /// - Parameter level: Constant.QuestionLevel
     /// - Returns: UIAction
@@ -522,27 +510,3 @@ extension ReviewViewController {
         return action
     }
 }
-
-extension ReviewViewController: UIContextMenuInteractionDelegate {
-    
-    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
-        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil, actionProvider: { suggestedActions in
-            return self.makeContextMenu()
-        })
-    }
-    
-    func makeContextMenu() -> UIMenu {
-        // 建立你的 UIMenu 選項
-        let action1 = UIAction(title: "選項1", image: UIImage(systemName: "option1")) { action in
-            // 在這裡實作選項1的動作
-        }
-        
-        let action2 = UIAction(title: "選項2", image: UIImage(systemName: "option2")) { action in
-            // 在這裡實作選項2的動作
-        }
-        
-        // 返回 UIMenu
-        return UIMenu(title: "選單標題", children: [action1, action2])
-    }
-}
-

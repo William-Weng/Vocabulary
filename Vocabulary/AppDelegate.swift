@@ -62,6 +62,9 @@ extension AppDelegate: AVAudioRecorderDelegate {
 extension AppDelegate {
     
     /// 初始化設定
+    /// - Parameters:
+    ///   - application: UIApplication
+    ///   - launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     func initSetting(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
         
         _ = WWWebImage.initDatabase(for: .caches, expiredDays: 90)

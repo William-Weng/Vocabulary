@@ -22,6 +22,7 @@ final class Constant: NSObject {
     static let urlScheme = "word"
     static let reload = "重新讀取"
     static let noDataUpdate = "無更新資料"
+    static let recordFilename = "record.wav"
     static let searchCountWithLevel: SearchCountWithLevel = [.easy: 3, .medium: 4, .hard: 3]
 
     static var volume: Float = 0.1

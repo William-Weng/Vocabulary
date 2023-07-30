@@ -132,8 +132,9 @@ extension AppDelegate {
     }
     
     /// 錄製聲音
+    /// - Returns: Bool
     func recordWave() -> Bool {
-        guard let recordURL = FileManager.default._temporaryDirectory()._appendPath("record.wav") else { return false }
+        guard let recordURL = FileManager.default._temporaryDirectory()._appendPath(Constant.recordFilename) else { return false }
         return recordSound(with: recordURL)
     }
     

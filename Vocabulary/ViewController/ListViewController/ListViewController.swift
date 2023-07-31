@@ -82,9 +82,7 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - SFSafariViewControllerDelegate
 extension ListViewController: SFSafariViewControllerDelegate {
     
-    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        isSafariViewControllerDismiss = true
-    }
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) { isSafariViewControllerDismiss = true }
 }
 
 // MARK: - 小工具

@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWFloatingView.git",
       "state" : {
-        "revision" : "4150aa0a93aee52da6e1449fc22b6687bebacd51",
-        "version" : "1.0.0"
+        "revision" : "de7c2eb3966b0f06615280cc7e496c456b96fbb2",
+        "version" : "1.1.0"
       }
     },
     {

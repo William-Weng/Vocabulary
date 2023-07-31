@@ -29,10 +29,12 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        deepLinkURL(url)
+        deepLinkURL(app, open: url, options: options)
         return true
     }
     
+    /// 重新播放音樂
+    /// - Parameter notificaiton: Notification
     @objc func replayMusic(_ notificaiton: Notification) {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
@@ -41,6 +43,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    /// [還模擬器一個乾乾淨淨的 Xcode Console - OS_ACTIVITY_MODE](https://apppeterpan.medium.com/還模擬器一個乾乾淨淨的-xcode-console-a630992448d5)
     deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
 }
 
@@ -256,14 +259,14 @@ private extension AppDelegate {
         try? AVAudioSession.sharedInstance().setCategory(.playback)
     }
     
-    /// 設定ShortcutItem
+    /// [設定ShortcutItem](https://www.jianshu.com/p/e49b8bfea475)
     /// - Parameter application: UIApplication
     func appVersionShortcutItem(with application: UIApplication) {
         
         let version = Bundle.main._appVersion()
         let installType = WWAppInstallSource.shared.detect() ?? .Simulator
         let info = UIDevice._systemInformation()
-        let icon = UIApplicationShortcutIcon(type: .love)
+        let icon = UIApplicationShortcutIcon(type: .confirmation)
         let title = "v\(version.app ?? "0.0.0") (\(version.build ?? "0"))"
         let subtitle = "\(info.name) \(info.version) for \(installType.rawValue)"
         let shortcutItem = UIApplicationShortcutItem._build(localizedTitle: title, localizedSubtitle: subtitle, icon: icon)
@@ -277,7 +280,11 @@ extension AppDelegate {
     
     /// [使用UrlScheme功能的相關設定](https://youtu.be/OyzFPrVIlQ8)
     /// => [在info.plist設定](https://cg2010studio.com/2014/11/13/ios-客製化-url-scheme-custom-url-scheme/)
-    func deepLinkURL(_ url: URL) {
+    /// - Parameters:
+    ///   - app: UIApplication
+    ///   - url: URL
+    ///   - options: [UIApplication.OpenURLOptionsKey : Any]
+    func deepLinkURL(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) {
         
         guard let components = url._components(),
               Constant.urlScheme == components.scheme?.lowercased()

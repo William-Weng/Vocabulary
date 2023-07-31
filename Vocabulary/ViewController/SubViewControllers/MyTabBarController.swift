@@ -14,6 +14,8 @@ final class MyTabBarController: UITabBarController {
     
     static var isHidden = true
     
+    private let safeAreaGap = 24.0
+    
     private var canvasView: PKCanvasView?
     private var toolPicker: PKToolPicker?
     private var dismissButton: UIButton?
@@ -150,7 +152,7 @@ private extension MyTabBarController {
     func dismissButtonCenter(gap: CGFloat) -> CGPoint {
         
         var center = CGPoint(x: view.frame.width - gap, y: gap)
-        if let window = view.window, window._hasSafeArea() { center = CGPoint(x: view.frame.width - gap, y: gap + 24.0) }
+        if let window = view.window, window._hasSafeArea() { center = CGPoint(x: view.frame.width - gap, y: gap + safeAreaGap) }
         
         return center
     }
@@ -161,7 +163,7 @@ private extension MyTabBarController {
     func cleanDrawingButtonCenter(gap: CGFloat) -> CGPoint {
         
         var center = CGPoint(x: gap, y: gap)
-        if let window = view.window, window._hasSafeArea() { center = CGPoint(x: gap, y: gap + 24.0) }
+        if let window = view.window, window._hasSafeArea() { center = CGPoint(x: gap, y: gap + safeAreaGap) }
         
         return center
     }

@@ -60,6 +60,9 @@ final class MainViewController: UIViewController {
         animatedBackground(with: .studing)
     }
     
+    /// [View Controller 生命週期更新 - iOS 17](https://xiaozhuanlan.com/topic/0651384792 )
+    // override func viewIsAppearing(_ animated: Bool) { super.viewIsAppearing(animated) }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if (!isFixed) { fixTableViewInsetForSafeArea(for: IndexPath(row: 0, section: 0)); isFixed = true }

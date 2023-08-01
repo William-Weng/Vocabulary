@@ -22,7 +22,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     private var audioPlayer: AVAudioPlayer?
     private var recordlayer: AVAudioPlayer?
     private var audioRecorder: AVAudioRecorder?
+    private var musicLoopType: Constant.MusicLoopType = .infinity
     
+    /// [setNeedsDisplay 和 setNeedsLayout 以及 layoutIfNeeded的愛恨情仇](https://blog.csdn.net/chermon_love15/article/details/88192135)
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         initSetting(application, didFinishLaunchingWithOptions: launchOptions)
         return true
@@ -35,16 +37,37 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     /// 重新播放音樂
     /// - Parameter notificaiton: Notification
-    @objc func replayMusic(_ notificaiton: Notification) {
+    func replayMusic(with player: AVAudioPlayer) {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             guard let this = self else { return }
-            this.audioPlayer?._play(queue: this.audioPlayerQueue)
+            player._play(queue: this.audioPlayerQueue)
         }
     }
     
     /// [還模擬器一個乾乾淨淨的 Xcode Console - OS_ACTIVITY_MODE](https://apppeterpan.medium.com/還模擬器一個乾乾淨淨的-xcode-console-a630992448d5)
     deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
+}
+
+// MARK: - AVAudioPlayerDelegate
+extension AppDelegate: AVAudioPlayerDelegate {
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        
+        guard (player == audioPlayer) else { return }
+        
+        switch musicLoopType {
+        case .mute: break
+        case .infinity: break
+        case .random:
+            guard let music = Utility.shared.randomMusic() else { return }
+            _ = playBackgroundMusic(with: music, volume: Constant.volume, musicLoopType: musicLoopType)
+        }
+    }
+    
+    func audioPlayerBeginInterruption(_ player: AVAudioPlayer) { replayMusic(with: player) }
+ 
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) { if let error = error { wwPrint(error) }}
 }
 
 // MARK: - AVAudioRecorderDelegate
@@ -61,28 +84,9 @@ extension AppDelegate: AVAudioRecorderDelegate {
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) { wwPrint(error, isShow: Constant.isPrint) }
 }
 
-// MARK: - 小工具
+// MARK: - 小工具 (公開)
 extension AppDelegate {
-    
-    /// 初始化設定
-    /// - Parameters:
-    ///   - application: UIApplication
-    ///   - launchOptions: [UIApplication.LaunchOptionsKey: Any]?
-    func initSetting(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
         
-        _ = WWWebImage.initDatabase(for: .caches, expiredDays: 90)
-        
-        initCurrentTableName()
-        initDatabase()
-        backgroundPlayAudio()
-        appVersionShortcutItem(with: application)
-        
-        backgroundBarColor(.black.withAlphaComponent(0.1))
-        audioInterruptionNotification()
-        
-        _ = animationFolderUrlMaker()
-    }
-    
     /// 初始化資料表 / 資料庫
     func initDatabase() {
         
@@ -103,20 +107,43 @@ extension AppDelegate {
     /// - Parameters:
     ///   - music: 音樂檔案
     ///   - volume: 音量大小
+    ///   - loopType: MusicLoopType
     /// - Returns: Bool
-    func playBackgroundMusic(with music: Music, volume: Float) -> Bool {
+    func playBackgroundMusic(with music: Music?, volume: Float, musicLoopType: Constant.MusicLoopType) -> Bool {
         
-        audioPlayer?.stop()
-        audioPlayer = nil
+        var currentMusic: Music?
         
-        guard let audioPlayer = musicPlayerMaker(with: music) else { return false }
+        _ = stopMusic()
+        self.musicLoopType = musicLoopType
+        
+        switch musicLoopType {
+        case .mute: currentMusic = nil
+        case .infinity: currentMusic = music
+        case .random: currentMusic = Utility.shared.randomMusic()
+        }
+        
+        guard let currentMusic = currentMusic,
+              let audioPlayer = musicPlayerMaker(with: currentMusic)
+        else {
+            return false
+        }
         
         self.audioPlayer = audioPlayer
         
         audioPlayer.volume = volume
-        audioPlayer.numberOfLoops = -1
+        audioPlayer.numberOfLoops = musicLoopType.number()
+        audioPlayer.delegate = self
         audioPlayer.prepareToPlay()
         audioPlayer._play(queue: audioPlayerQueue)
+        
+        return true
+    }
+    
+    /// 停止播放音樂
+    func stopMusic() -> Bool {
+        
+        audioPlayer?.stop()
+        audioPlayer = nil
         
         return true
     }
@@ -148,6 +175,24 @@ extension AppDelegate {
 
 // MARK: - 小工具
 private extension AppDelegate {
+    
+    /// 初始化設定
+    /// - Parameters:
+    ///   - application: UIApplication
+    ///   - launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    func initSetting(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
+        
+        _ = WWWebImage.initDatabase(for: .caches, expiredDays: 90)
+        
+        initCurrentTableName()
+        initDatabase()
+        backgroundPlayAudio()
+        appVersionShortcutItem(with: application)
+        
+        backgroundBarColor(.black.withAlphaComponent(0.1))
+        
+        _ = animationFolderUrlMaker()
+    }
     
     /// 取得之前設定的資料庫名稱
     func initCurrentTableName() {
@@ -217,11 +262,6 @@ private extension AppDelegate {
         return audioPlayer
     }
     
-    /// 註冊音樂被中斷的通知 (Safari播放單字聲音時，音樂會被中斷)
-    func audioInterruptionNotification() {
-        NotificationCenter.default.addObserver(self, selector: #selector(Self.replayMusic(_:)), name: AVAudioSession.interruptionNotification, object: nil)
-    }
-    
     /// 開始錄音 (.wav)
     /// - Parameter recordURL: URL
     /// - Returns: Bool
@@ -276,7 +316,7 @@ private extension AppDelegate {
 }
 
 // MARK: - for Deep Link
-extension AppDelegate {
+private extension AppDelegate {
     
     /// [使用UrlScheme功能的相關設定](https://youtu.be/OyzFPrVIlQ8)
     /// => [在info.plist設定](https://cg2010studio.com/2014/11/13/ios-客製化-url-scheme-custom-url-scheme/)
@@ -300,17 +340,7 @@ extension AppDelegate {
         
         switch action {
         case .append: appendWord(with: components)
-        }
-    }
-    
-    /// 由DeepLink功能加入新單字 (word://append/<新單字>)
-    /// - Parameter components: URLComponents
-    func appendWord(with components: URLComponents) {
-
-        guard let word = components.path.split(separator: "/").first else { return }
-        
-        tabbarRootViewController(with: Constant.TabbarRootViewController.Main) { viewController in
-            if let viewController = viewController as? MainViewController { viewController.appendWord(with: String(word)) }
+        case .search: searchWord(with: components)
         }
     }
     
@@ -328,9 +358,32 @@ extension AppDelegate {
         }
         
         tabBarController.selectedIndex = rootViewController.index()
+        _ = navigationController._popToRootViewController { completion(viewController) }
+    }
+}
+
+// MARK: - Deep Link Action
+private extension AppDelegate {
+    
+    /// 由DeepLink功能加入新單字 (word://append/<單字>)
+    /// - Parameter components: URLComponents
+    func appendWord(with components: URLComponents) {
         
-        _ = navigationController._popToRootViewController {
-            completion(viewController)
+        guard let word = components.path.split(separator: "/").first else { return }
+        
+        tabbarRootViewController(with: Constant.TabbarRootViewController.Main) { viewController in
+            if let viewController = viewController as? MainViewController { viewController.appendWord(with: String(word)) }
+        }
+    }
+    
+    /// 由DeepLink功能搜尋該單字 (word://search/<單字>)
+    /// - Parameter components: URLComponents
+    func searchWord(with components: URLComponents) {
+        
+        guard let word = components.path.split(separator: "/").first else { return }
+        
+        tabbarRootViewController(with: Constant.TabbarRootViewController.Main) { viewController in
+            if let viewController = viewController as? MainViewController { viewController.searchWord(with: String(word)) }
         }
     }
 }

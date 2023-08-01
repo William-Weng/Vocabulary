@@ -126,6 +126,11 @@ extension Utility {
     /// - Returns: UIImage
     func favoriteIcon(_ isFavorite: Bool) -> UIImage { return (!isFavorite) ? #imageLiteral(resourceName: "Notice_Off") : #imageLiteral(resourceName: "Notice_On") }
     
+    /// 音量ICON
+    /// - Parameter isFavorite: Bool
+    /// - Returns: UIImage
+    func volumeIcon(_ isSuccess: Bool) -> UIImage { return (!isSuccess) ? #imageLiteral(resourceName: "NoVolume") : #imageLiteral(resourceName: "Volume") }
+    
     /// 產生NavigationItem標題的LabelView
     /// - Parameters:
     ///   - text: 標題文字
@@ -172,6 +177,13 @@ extension Utility {
     func databaseBackupUrl(_ dateFormat: String = "yyyy-MM-dd HH:mm:ss ZZZ") -> URL? {
         let url = Constant.backupDirectory?._appendPath("\(Date()._localTime(dateFormat: dateFormat, timeZone: .current)).\(Constant.databaseFileExtension)")
         return url
+    }
+    
+    /// 隨機播放的Music
+    /// - Returns: Music?
+    func randomMusic() -> Music? {
+        guard let filename = Constant.musicFileList?.randomElement() else { return nil }
+        return Music(filename: filename)
     }
 }
 

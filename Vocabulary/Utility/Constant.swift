@@ -31,7 +31,8 @@ final class Constant: NSObject {
     static var updateSearchScrolledHeight: CGFloat = 96.0
     static var database: SQLite3Database?
     static var backupDirectory = FileManager.default._documentDirectory()
-
+    static var musicFileList: [String]?
+    
     static var searchCount: Int { return Self.searchCountWithLevel.reduce(0) { $0 + $1.value }}
 
     static var isPrint: Bool {
@@ -78,7 +79,8 @@ extension Constant {
     /// 由URL所產生的功能
     /// => word://append/<單字>
     enum DeepLinkAction: String {
-        case append // 加入新單字
+        case append     // 加入新單字
+        case search     // 搜尋該單字
     }
     
     /// Tabbar的首頁ViewController
@@ -377,5 +379,35 @@ extension Constant {
         case update     // 修改
         case delete     // 刪除
         case search     // 查詢
+    }
+    
+    /// 音樂播放類型
+    enum MusicLoopType {
+        
+        case mute
+        case infinity
+        case random
+
+        /// 播放次數
+        /// - Returns: Int
+        func number() -> Int {
+            
+            switch self {
+            case .mute: return 0
+            case .infinity: return -1
+            case .random: return 1
+            }
+        }
+        
+        /// 說明文字
+        /// - Returns: String
+        func toString() -> String {
+            
+            switch self {
+            case .mute: return "靜音"
+            case .infinity: return "循環"
+            case .random: return "隨機"
+            }
+        }
     }
 }

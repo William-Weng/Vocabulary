@@ -129,6 +129,10 @@ extension MainViewController {
             return this.appendWord(inputWord, for: Constant.currentTableName)
         }
     }
+    
+    func searchWord(with word: String?) {
+        performSegue(for: .searchView, sender: word)
+    }
 }
 
 // MARK: - 小工具
@@ -189,7 +193,7 @@ private extension MainViewController {
         switch segueType {
         case .listTableView: vocabularyListPageSetting(for: segue, sender: sender)
         case .volumeView: volumePageSetting(for: segue, sender: sender)
-        case .searchView: break
+        case .searchView: searchWordViewControllerSetting(for: segue, sender: sender)
         }
     }
     
@@ -455,6 +459,21 @@ private extension MainViewController {
         tabBarHidden(true)
     }
     
+    /// 單字搜尋頁的相關數值
+    /// - Parameters:
+    ///   - segue: UIStoryboardSegue
+    ///   - sender: Any?
+    func searchWordViewControllerSetting(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let viewController = segue.destination as? SearchWordViewController,
+              let searchText = sender as? String
+        else {
+            return
+        }
+        
+        viewController.searchText = searchText
+    }
+    
     /// 動畫背景設定
     /// - Parameter type: Utility.HudGifType
     func animatedBackground(with type: Constant.HudGifType) {
@@ -577,9 +596,9 @@ private extension MainViewController {
             
             let date = this.lastBackupDatabaseDate()
             let backUpIfNeeded = this.autoBackupDatabaseRule(lastDate: date, days: Constant.autoBackupDays)
-                        
+            
             if (backUpIfNeeded) {
-
+                
                 let result = this.backupDatabase()
                 var message: Any
                 
@@ -591,7 +610,9 @@ private extension MainViewController {
                 }
                 
                 let backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1).withAlphaComponent(0.7)
-                WWToast.shared.makeText(target: this, text: message, backgroundColor: backgroundColor)
+                let height = this.navigationController?._navigationBarHeight(for: UIWindow._keyWindow(hasScene: false)) ?? .zero
+                
+                WWToast.shared.makeText(target: this, text: message, backgroundColor: backgroundColor, height: height)
             }
         }
     }
@@ -764,24 +785,36 @@ private extension MainViewController {
     /// - Parameter sender: UIBarButtonItem
     func initMusicItemMenu() {
         
-        guard var musicList = musicFileList()?.sorted() else { return }
+        guard let musicList = musicFileList()?.sorted() else { Constant.musicFileList = nil; return }
         
-        musicList.append("靜音")
+        var actions = musicList.map({ musicItemMenuActionMaker(filename: $0) })
         
-        let actions = musicList.map({ musicItemMenuActionMaker(filename: $0) })
+        actions.append(musicItemMenuActionMaker(filename: "隨機", musicLoopType: .random))
+        actions.append(musicItemMenuActionMaker(filename: "靜音", musicLoopType: .mute))
+
+        Constant.musicFileList = musicList
+        
         let menu = UIMenu(title: "請選擇背景音樂 (.mp3 / .m4a)", children: actions)
-        
         musicButtonItem.menu = menu
     }
     
-    /// 產生音樂選單
-    /// - Parameter filename: String
+    /// 產生音樂選單功能 (隨機 / 靜音)
+    /// - Parameters:
+    ///   - filename: String
+    ///   - type: Constant.MusicLoopType
     /// - Returns: UIAction
-    func musicItemMenuActionMaker(filename: String) -> UIAction {
+    func musicItemMenuActionMaker(filename: String, musicLoopType: Constant.MusicLoopType = .infinity) -> UIAction {
         
         let music = Music(filename: filename)
+        var title = "🎧 - \(music.filename)"
         
-        let action = UIAction(title: "\(music.filename)") { [weak self] _ in
+        switch musicLoopType {
+        case .infinity: title = "🎧 - \(music.filename)"
+        case .random: title = "☀️ - \(musicLoopType.toString())"
+        case .mute: title = "🌧️ - \(musicLoopType.toString())"
+        }
+        
+        let action = UIAction(title: title) { [weak self] _ in
             
             guard let this = self,
                   let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -789,9 +822,16 @@ private extension MainViewController {
                 return
             }
             
-            let isSuccess = appDelegate.playBackgroundMusic(with: music, volume: Constant.volume)
+            var isSuccess = false
             
-            this.volumeButtonItem.image = !isSuccess ? UIImage(named: "NoVolume") : UIImage(named: "Volume")
+            switch musicLoopType {
+            case .infinity: isSuccess = appDelegate.playBackgroundMusic(with: music, volume: Constant.volume, musicLoopType: musicLoopType)
+            case .random: isSuccess = appDelegate.playBackgroundMusic(with: nil, volume: Constant.volume, musicLoopType: musicLoopType)
+            case .mute: isSuccess = !appDelegate.stopMusic()
+            }
+            
+            this.musicButtonItem.image = (musicLoopType == .random) ? #imageLiteral(resourceName: "Shuffle") : #imageLiteral(resourceName: "Music")
+            this.volumeButtonItem.image = Utility.shared.volumeIcon(isSuccess)
             this.volumeButtonItem.isEnabled = isSuccess
         }
         

@@ -16,12 +16,12 @@ final class SearchWordViewController: UIViewController {
     @IBOutlet weak var activityViewIndicator: UIActivityIndicatorView!
     @IBOutlet weak var indicatorLabel: UILabel!
     
+    var searchText: String?
+    
     private let searchListTableViewSegue = "SearchListTableViewSegue"
 
     private var isAnimationStop = false
     private var isNeededUpdate = false
-    private var word: String = ""
-    
     private var disappearImage: UIImage?
     private var titleSearchBar = UISearchBar()
     private var refreshControl: UIRefreshControl!
@@ -29,7 +29,7 @@ final class SearchWordViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initSearchBar(with: currentSearchType)
+        initSearchBar(with: currentSearchType, text: searchText)
         initSetting()
     }
     
@@ -141,15 +141,18 @@ private extension SearchWordViewController {
     
     /// [初始化搜尋列](https://jjeremy-xue.medium.com/swift-客製化-navigation-bar-customized-navigation-bar-8e4eaf188d7c)
     /// - Parameter type: [Constant.SearchType](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/uitextfield-的-leftview-rightview-以放大鏡-密碼顯示開關為例-7813fa9fd4f1)
-    func initSearchBar(with type: Constant.SearchType) {
+    func initSearchBar(with type: Constant.SearchType, text: String?) {
         
         let leftButton = Utility.shared.searchTypeButtonMaker(with: type, backgroundColor: .systemRed)
         leftButton.addTarget(self, action: #selector(Self.switchSearchType(_:)), for: .touchUpInside)
         
         titleSearchBar.placeholder = "請輸入需要搜尋的\(type)"
         titleSearchBar.delegate = self
+        titleSearchBar.searchTextField.text = text
         titleSearchBar.searchTextField.delegate = self
         titleSearchBar.searchTextField.leftView = leftButton
+        
+        if let text = text { searchBar(titleSearchBar, textDidChange: text) }
         
         navigationItem.titleView = titleSearchBar
     }

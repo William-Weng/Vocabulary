@@ -1,7 +1,15 @@
 # [Vocabulary](https://github.com/William-Weng/Vocabulary) - [for iPhone](https://youtu.be/8bYvKdA5gkc) / [for iPad](https://youtu.be/LCbHuw8ONWI)
-我愛背單字 - 針對身為外語苦手的我，量身訂製的APP，有輕快的背景音樂，也有發音，加上可愛的動畫，還可以直接使用[Depp Link - word://append/<新單字>](word://append/vocabulary)，加入新單字…
+我愛背單字 - 針對身為外語苦手的我，量身訂製的APP，有輕快的背景音樂，也有發音，加上可愛的動畫，還可以直接使用[Depp Link功能](word://append/vocabulary)…
 
 [![Swift-5.7](https://img.shields.io/badge/Swift-5.7-orange.svg?style=flat)](https://developer.apple.com/swift/) [![iOS 14.0](https://img.shields.io/badge/iOS-14.0-pink.svg?style=flat)](https://developer.apple.com/swift/) ![](https://img.shields.io/github/v/tag/William-Weng/Vocabulary) [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=flat)](https://developer.apple.com/swift/)
+
+## Depp Link功能
+|連結|功能|
+|-|-|
+|[word://append/<單字>](word://append/<新單字>)|加入新單字|
+|[word://search/<單字>](word://search/<新單字>)|搜尋該單字|
+
+## 擷圖
 
 ![](./@Image/001.png) ![](./@Image/002.png) ![](./@Image/003.png)
 ![](./@Image/004.png) ![](./@Image/005.png) ![](./@Image/006.png)
@@ -33,6 +41,7 @@
 |[Sound](https://www.flaticon.com/free-icon/volume_727269)|音量調整|
 |[Search](https://www.flaticon.com/free-icon/search_3128287)|單字搜尋|
 |[Music](https://www.flaticon.com/free-icon/musical-note_2995101)|選擇背景音樂|
+|[Shuffle](https://www.flaticon.com/free-icon/shuffle_4562470)|隨機背景音樂|
 |[Volume](https://www.flaticon.com/free-icon/volume_7566455)|設定音量|
 |[NoVolume](https://www.flaticon.com/free-icon/volume_7566449)|無音量|
 |[Add](https://www.flaticon.com/free-icon/plus_7887095)|新增單字|

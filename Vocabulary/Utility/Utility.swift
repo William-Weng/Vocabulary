@@ -179,11 +179,31 @@ extension Utility {
         return url
     }
     
-    /// 隨機播放的Music
+    /// 要播放的Music列表
+    /// - Parameter type: Constant.MusicLoopType
+    /// - Returns: [Music]
+    func musicList(for type: Constant.MusicLoopType) -> [Music] {
+        
+        switch type {
+        case .mute: return []
+        case .infinity: return []
+        case .loop: return loopMusics()
+        case .shuffle: return shuffleMusics()
+        }
+    }
+    
+    /// [隨機播放的Music列表](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/swift-4-2-更方便的亂數-random-function-85fa69a08215)
     /// - Returns: Music?
-    func randomMusic() -> Music? {
-        guard let filename = Constant.musicFileList?.randomElement() else { return nil }
-        return Music(filename: filename)
+    func shuffleMusics() -> [Music] {
+        guard let filenames = Constant.musicFileList?.shuffled() else { return [] }
+        return filenames.map { Music(filename:$0) }
+    }
+    
+    /// 循序播放的Music列表
+    /// - Returns: [Music]
+    func loopMusics() -> [Music] {
+        guard let filenames = Constant.musicFileList?.sorted() else { return [] }
+        return filenames.map { Music(filename:$0) }
     }
 }
 

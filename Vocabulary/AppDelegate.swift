@@ -52,22 +52,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 // MARK: - AVAudioPlayerDelegate
 extension AppDelegate: AVAudioPlayerDelegate {
     
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        
-        guard (player == audioPlayer) else { return }
-        
-        switch musicLoopType {
-        case .mute: break
-        case .infinity: break
-        case .random:
-            guard let music = Utility.shared.randomMusic() else { return }
-            _ = playBackgroundMusic(with: music, volume: Constant.volume, musicLoopType: musicLoopType)
-        }
-    }
-    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) { audioPlayerDidFinishPlayingAction(player, successfully: flag) }
     func audioPlayerBeginInterruption(_ player: AVAudioPlayer) { replayMusic(with: player) }
- 
-    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) { if let error = error { wwPrint(error) }}
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) { if let error = error { wwPrint(error, isShow: Constant.isPrint) }}
 }
 
 // MARK: - AVAudioRecorderDelegate
@@ -110,20 +97,12 @@ extension AppDelegate {
     ///   - loopType: MusicLoopType
     /// - Returns: Bool
     func playBackgroundMusic(with music: Music?, volume: Float, musicLoopType: Constant.MusicLoopType) -> Bool {
-        
-        var currentMusic: Music?
-        
+                
         _ = stopMusic()
         self.musicLoopType = musicLoopType
-        
-        switch musicLoopType {
-        case .mute: currentMusic = nil
-        case .infinity: currentMusic = music
-        case .random: currentMusic = Utility.shared.randomMusic()
-        }
-        
-        guard let currentMusic = currentMusic,
-              let audioPlayer = musicPlayerMaker(with: currentMusic)
+                
+        guard let music = music,
+              let audioPlayer = musicPlayerMaker(with: music)
         else {
             return false
         }
@@ -295,8 +274,27 @@ private extension AppDelegate {
     }
     
     /// [背景播放音樂 => Background Modes](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/設定-background-mode-在背景播放音樂-9bab5db75cc9)
-    func backgroundPlayAudio() {
-        try? AVAudioSession.sharedInstance().setCategory(.playback)
+    func backgroundPlayAudio() { try? AVAudioSession.sharedInstance().setCategory(.playback) }
+    
+    /// 音樂播完後的動作 => 全曲隨機 / 全曲循環
+    /// - Parameters:
+    ///   - player: AVAudioPlayer
+    ///   - flag: Bool
+    func audioPlayerDidFinishPlayingAction(_ player: AVAudioPlayer, successfully flag: Bool) {
+        
+        guard (player == audioPlayer) else { return }
+        
+        let currentMusic: Music?
+        
+        switch musicLoopType {
+        case .mute: currentMusic = nil
+        case .infinity: currentMusic = nil
+        case .loop: currentMusic = Constant.playingMusicList._popFirst()
+        case .shuffle: currentMusic = Constant.playingMusicList.popLast()
+        }
+        
+        if (Constant.playingMusicList.isEmpty) { Constant.playingMusicList = Utility.shared.musicList(for: musicLoopType) }
+        _ = playBackgroundMusic(with: currentMusic, volume: Constant.volume, musicLoopType: musicLoopType)
     }
     
     /// [設定ShortcutItem](https://www.jianshu.com/p/e49b8bfea475)

@@ -40,6 +40,20 @@ extension Collection {
     subscript(safe index: Index) -> Element? { return indices.contains(index) ? self[index] : nil }
 }
 
+// MARK: - Collection (mutating function)
+extension Collection where Self == [Music] {
+    
+    /// [彈出第一個](https://stackoverflow.com/questions/32869999/how-do-you-use-swift-2-0-popfirst-on-an-array)
+    /// - Returns: Music?
+    mutating func _popFirst() -> Music? {
+        
+        var slice = self[self.indices]
+        
+        defer { self = Array(slice) }
+        return slice.popFirst()
+    }
+}
+
 // MARK: - Set (function)
 extension Set where Self.Element: Hashable {
     

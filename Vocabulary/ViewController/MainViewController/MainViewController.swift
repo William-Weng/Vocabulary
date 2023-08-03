@@ -789,9 +789,10 @@ private extension MainViewController {
         
         var actions = musicList.map({ musicItemMenuActionMaker(filename: $0) })
         
-        actions.append(musicItemMenuActionMaker(filename: "隨機", musicLoopType: .random))
-        actions.append(musicItemMenuActionMaker(filename: "靜音", musicLoopType: .mute))
-
+        actions.append(musicItemMenuActionMaker(filename: Constant.MusicLoopType.loop.toString(), musicLoopType: .loop))
+        actions.append(musicItemMenuActionMaker(filename: Constant.MusicLoopType.shuffle.toString(), musicLoopType: .shuffle))
+        actions.append(musicItemMenuActionMaker(filename: Constant.MusicLoopType.mute.toString(), musicLoopType: .mute))
+        
         Constant.musicFileList = musicList
         
         let menu = UIMenu(title: "請選擇背景音樂 (.mp3 / .m4a)", children: actions)
@@ -806,12 +807,13 @@ private extension MainViewController {
     func musicItemMenuActionMaker(filename: String, musicLoopType: Constant.MusicLoopType = .infinity) -> UIAction {
         
         let music = Music(filename: filename)
-        var title = "🎧 - \(music.filename)"
+        let title: String
         
         switch musicLoopType {
         case .infinity: title = "🎧 - \(music.filename)"
-        case .random: title = "☀️ - \(musicLoopType.toString())"
-        case .mute: title = "🌧️ - \(musicLoopType.toString())"
+        case .loop: title = "🎹 - \(musicLoopType.toString())"
+        case .shuffle: title = "🎹 - \(musicLoopType.toString())"
+        case .mute: title = "🔒 - \(musicLoopType.toString())"
         }
         
         let action = UIAction(title: title) { [weak self] _ in
@@ -822,15 +824,26 @@ private extension MainViewController {
                 return
             }
             
-            var isSuccess = false
+            let isSuccess: Bool
+            Constant.playingMusicList = []
             
             switch musicLoopType {
-            case .infinity: isSuccess = appDelegate.playBackgroundMusic(with: music, volume: Constant.volume, musicLoopType: musicLoopType)
-            case .random: isSuccess = appDelegate.playBackgroundMusic(with: nil, volume: Constant.volume, musicLoopType: musicLoopType)
-            case .mute: isSuccess = !appDelegate.stopMusic()
+            case .infinity:
+                isSuccess = appDelegate.playBackgroundMusic(with: music, volume: Constant.volume, musicLoopType: musicLoopType)
+                this.musicButtonItem.image = #imageLiteral(resourceName: "Music")
+            case .loop:
+                Constant.playingMusicList = Utility.shared.loopMusics()
+                isSuccess = appDelegate.playBackgroundMusic(with: Constant.playingMusicList._popFirst(), volume: Constant.volume, musicLoopType: musicLoopType)
+                this.musicButtonItem.image = #imageLiteral(resourceName: "Loop")
+            case .shuffle:
+                Constant.playingMusicList = Utility.shared.shuffleMusics()
+                isSuccess = appDelegate.playBackgroundMusic(with: Constant.playingMusicList.popLast(), volume: Constant.volume, musicLoopType: musicLoopType)
+                this.musicButtonItem.image = #imageLiteral(resourceName: "Shuffle")
+            case .mute:
+                isSuccess = !appDelegate.stopMusic()
+                this.musicButtonItem.image = #imageLiteral(resourceName: "Music")
             }
             
-            this.musicButtonItem.image = (musicLoopType == .random) ? #imageLiteral(resourceName: "Shuffle") : #imageLiteral(resourceName: "Music")
             this.volumeButtonItem.image = Utility.shared.volumeIcon(isSuccess)
             this.volumeButtonItem.isEnabled = isSuccess
         }

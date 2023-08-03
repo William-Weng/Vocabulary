@@ -32,7 +32,7 @@ final class Constant: NSObject {
     static var database: SQLite3Database?
     static var backupDirectory = FileManager.default._documentDirectory()
     static var musicFileList: [String]?
-    
+    static var playingMusicList: [Music] = []
     static var searchCount: Int { return Self.searchCountWithLevel.reduce(0) { $0 + $1.value }}
 
     static var isPrint: Bool {
@@ -386,7 +386,8 @@ extension Constant {
         
         case mute
         case infinity
-        case random
+        case loop
+        case shuffle
 
         /// 播放次數
         /// - Returns: Int
@@ -395,7 +396,8 @@ extension Constant {
             switch self {
             case .mute: return 0
             case .infinity: return -1
-            case .random: return 1
+            case .loop: return 0
+            case .shuffle: return 0
             }
         }
         
@@ -405,8 +407,9 @@ extension Constant {
             
             switch self {
             case .mute: return "靜音"
-            case .infinity: return "循環"
-            case .random: return "隨機"
+            case .infinity: return "單曲循環"
+            case .loop: return "全曲循環"
+            case .shuffle: return "全曲隨機"
             }
         }
     }

@@ -41,7 +41,8 @@
 |[Sound](https://www.flaticon.com/free-icon/volume_727269)|音量調整|
 |[Search](https://www.flaticon.com/free-icon/search_3128287)|單字搜尋|
 |[Music](https://www.flaticon.com/free-icon/musical-note_2995101)|選擇背景音樂|
-|[Shuffle](https://www.flaticon.com/free-icon/shuffle_4562470)|隨機背景音樂|
+|[Shuffle](https://www.flaticon.com/free-icon/shuffle_1082440)|隨機播放背景音樂|
+|[Loop](https://www.flaticon.com/free-icon/loop_9053363)|循環播放背景音樂|
 |[Volume](https://www.flaticon.com/free-icon/volume_7566455)|設定音量|
 |[NoVolume](https://www.flaticon.com/free-icon/volume_7566449)|無音量|
 |[Add](https://www.flaticon.com/free-icon/plus_7887095)|新增單字|

@@ -126,7 +126,7 @@ private extension ReviewResultViewController {
     func reviewCountAction(isFavorite: Bool) {
         
         let version = Bundle.main._appVersion()
-        let message = "v\(version.app ?? "1.0.0") - \(version.build ?? "0")"
+        let message = "v\(version.app) - \(version.build)"
         let title = "單字數量 - \(reviewCount(isFavorite: isFavorite))"
         
         informationHint(with: title, message: message)

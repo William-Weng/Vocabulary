@@ -172,7 +172,7 @@ private extension MainViewController {
     func vocabularyCountAction() {
 
         let version = Bundle.main._appVersion()
-        let message = "v\(version.app ?? "1.0.0") - \(version.build ?? "0")"
+        let message = "v\(version.app) - \(version.build)"
         let title = "單字數量 - \(vocabularyCount(isFavorite: isFavorite))"
         
         informationHint(with: title, message: message)
@@ -404,7 +404,7 @@ private extension MainViewController {
         return actionOK
     }
     
-    /// 右側滑動按鈕
+    /// 右側滑動按鈕 => 設定音標 / 複製單字
     /// - Parameter indexPath: IndexPath
     /// - Returns: [UIContextualAction]
     func trailingSwipeActionsMaker(with indexPath: IndexPath) -> [UIContextualAction] {
@@ -421,8 +421,24 @@ private extension MainViewController {
                 return this.updateAlphabetLabel(with: indexPath, id: vocabularyList.id, alphabet: alphabet, for: Constant.currentTableName)
             }
         }
-                
-        return [updateAction]
+        
+        let copyAction = UIContextualAction._build(with: "複製", color: #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)) { [weak self] in
+            
+            guard let this = self,
+                  let vocabularyList = MainTableViewCell.vocabularyList(with: indexPath)
+            else {
+                return
+            }
+            
+            DispatchQueue._GCD {
+                UIPasteboard._paste(string: vocabularyList.word)
+            } mainAction: {
+                let setting = Utility.shared.toastSetting(for: this)
+                WWToast.shared.makeText(target: this, text: vocabularyList.word, backgroundColor: setting.backgroundColor, height: setting.height)
+            }
+        }
+        
+        return [updateAction, copyAction]
     }
     
     /// 設定單字列表頁的相關數值
@@ -609,10 +625,8 @@ private extension MainViewController {
                     if let filename = filename { message = filename }
                 }
                 
-                let backgroundColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1).withAlphaComponent(0.7)
-                let height = this.navigationController?._navigationBarHeight(for: UIWindow._keyWindow(hasScene: false)) ?? .zero
-                
-                WWToast.shared.makeText(target: this, text: message, backgroundColor: backgroundColor, height: height)
+                let setting = Utility.shared.toastSetting(for: this)
+                WWToast.shared.makeText(target: this, text: message, backgroundColor: setting.backgroundColor, height: setting.height)
             }
         }
     }

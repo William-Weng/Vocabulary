@@ -195,7 +195,7 @@ private extension OthersViewController {
     func bookmarkCountAction() {
         
         let version = Bundle.main._appVersion()
-        let message = "v\(version.app ?? "1.0.0") - \(version.build ?? "0")"
+        let message = "v\(version.app) - \(version.build)"
         let title = "書籤數量 - \(bookmarkCount())"
         
         informationHint(with: title, message: message)
@@ -691,7 +691,7 @@ private extension OthersViewController {
 }
 
 // MARK: - UIMenu
-extension OthersViewController {
+private extension OthersViewController {
     
     /// 初始化字典選單 (UIMenu)
     /// - Parameter sender: UIBarButtonItem

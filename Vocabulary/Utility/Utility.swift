@@ -50,6 +50,15 @@ extension Utility {
         WWHUD.shared.display(effect: .gif(url: gifUrl, options: nil), height: 256.0, backgroundColor: .black.withAlphaComponent(0.3))
     }
     
+    /// WWToast的顏色 / 高度設定
+    /// - Parameter viewController: UIViewController?
+    /// - Returns: (backgroundColor: UIColor, height: CGFloat)
+    func toastSetting(for viewController: UIViewController?) -> (backgroundColor: UIColor, height: CGFloat) {
+        
+        let setting: (backgroundColor: UIColor, height: CGFloat) = (#colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1).withAlphaComponent(0.7), viewController?.navigationController?._navigationBarHeight(for: UIWindow._keyWindow(hasScene: false)) ?? .zero)
+        return setting
+    }
+    
     /// [讀出文字 / 文字發聲](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/讓開不了口的-app-開口說話-48c674f8f69e)
     /// - Parameters:
     ///   - string: 要讀出的文字

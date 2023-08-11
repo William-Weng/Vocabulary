@@ -58,7 +58,7 @@ extension Constant {
     typealias GIFImageInformation = (index: Int, cgImage: CGImage, pointer: UnsafeMutablePointer<Bool>)         // GIF動畫: (第幾張, CGImage, UnsafeMutablePointer<Bool>)
     typealias SearchCountWithLevel = [Vocabulary.Level: Int]                                                    // 複習單字的數量
     typealias FileInfomation = (isExist: Bool, isDirectory: Bool)                                               // 檔案相關資訊 (是否存在 / 是否為資料夾)
-    typealias AppVersion = (app: String?, build: String?)                                                       // APP版本號
+    typealias AppVersion = (app: String, build: String)                                                         // APP版本號 (公開版號, 內測版號)
     typealias SystemInformation = (name: String, version: String, model: String, idiom: UIUserInterfaceIdiom)   // 系統資訊 => (iOS, 12.1, iPhone, 0)
     typealias KeyboardInfomation = (duration: Double, curve: UInt, frame: CGRect)                               // 取得系統鍵盤的相關資訊
 

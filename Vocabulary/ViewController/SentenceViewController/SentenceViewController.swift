@@ -155,7 +155,7 @@ private extension SentenceViewController {
     func sentenceCountAction(with speech: VocabularySentenceList.Speech?, isFavorite: Bool) {
         
         let version = Bundle.main._appVersion()
-        let message = "v\(version.app ?? "1.0.0") - \(version.build ?? "0")"
+        let message = "v\(version.app) - \(version.build)"
         let title = "\(titleString) - \(sentenceCount(with: speech, isFavorite: isFavorite))"
 
         informationHint(with: title, message: message)

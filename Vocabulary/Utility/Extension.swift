@@ -33,6 +33,23 @@ extension Int {
     }
 }
 
+// MARK: - DispatchQueue (function)
+extension DispatchQueue {
+    
+    /// [GCD - Grand Central Dispatch](https://ithelp.ithome.com.tw/articles/10227071)
+    /// - Parameters:
+    ///   - qos: DispatchQoS.QoSClass
+    ///   - globalAction: 次線程的動作
+    ///   - mainAction: 主線程的動作
+    static func _GCD(qos: DispatchQoS.QoSClass = .default, globalAction: @escaping (() -> Void), mainAction: @escaping (() -> Void)) {
+        
+        DispatchQueue.global(qos: qos).async {
+            globalAction()
+            DispatchQueue.main.async { mainAction() }
+        }
+    }
+}
+
 // MARK: - Collection (override class function)
 extension Collection {
 
@@ -332,11 +349,12 @@ extension Bundle {
     
     /// 取得APP版本號 (外部 / 內部)
     /// - info.plist => Version
+    /// - Parameter `default`: 預設值
     /// - Returns: String?
-    func _appVersion() -> Constant.AppVersion {
+    func _appVersion(`default`: Constant.AppVersion = (app: "0.0.0", build: "1970101")) -> Constant.AppVersion {
         
-        let app = self._appVersionString()
-        let build = self._appBuildString()
+        let app = self._appVersionString() ?? `default`.app
+        let build = self._appBuildString() ?? `default`.build
         
         return (app: app, build: build)
     }
@@ -355,6 +373,17 @@ extension Bundle {
     func _appBuildString() -> String? {
         guard let build = self._infoDictionary(with: .CFBundleVersion) as? String else { return nil }
         return build
+    }
+}
+
+// MARK: - UIPasteboard (static function)
+extension UIPasteboard {
+ 
+    /// 剪貼簿 (全域)
+    /// - Parameter string: 要複製的文字
+    static func _paste(string: String) {
+        let pasteboard = UIPasteboard.general
+        pasteboard.string = string
     }
 }
 

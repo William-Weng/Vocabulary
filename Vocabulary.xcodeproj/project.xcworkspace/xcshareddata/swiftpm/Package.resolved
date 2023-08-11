@@ -77,8 +77,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWToast",
       "state" : {
-        "revision" : "011dbcf90783b67694a5d8c56441e9c9bbf3826f",
-        "version" : "1.0.2"
+        "revision" : "a5c029033c0be6018fdd943cb8f07778b2a58ca2",
+        "version" : "1.0.1"
       }
     }
   ],

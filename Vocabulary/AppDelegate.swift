@@ -24,28 +24,16 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     private var audioRecorder: AVAudioRecorder?
     private var musicLoopType: Constant.MusicLoopType = .infinity
     
-    /// [setNeedsDisplay 和 setNeedsLayout 以及 layoutIfNeeded的愛恨情仇](https://blog.csdn.net/chermon_love15/article/details/88192135)
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         initSetting(application, didFinishLaunchingWithOptions: launchOptions)
         return true
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         deepLinkURL(app, open: url, options: options)
         return true
     }
-    
-    /// 重新播放音樂
-    /// - Parameter notificaiton: Notification
-    func replayMusic(with player: AVAudioPlayer) {
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            guard let this = self else { return }
-            player._play(queue: this.audioPlayerQueue)
-        }
-    }
-    
-    /// [還模擬器一個乾乾淨淨的 Xcode Console - OS_ACTIVITY_MODE](https://apppeterpan.medium.com/還模擬器一個乾乾淨淨的-xcode-console-a630992448d5)
     deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
 }
 
@@ -74,7 +62,7 @@ extension AppDelegate: AVAudioRecorderDelegate {
 // MARK: - 小工具 (公開)
 extension AppDelegate {
         
-    /// 初始化資料表 / 資料庫
+    /// [初始化資料表 / 資料庫](https://apppeterpan.medium.com/還模擬器一個乾乾淨淨的-xcode-console-a630992448d5)
     func initDatabase() {
         
         let result = WWSQLite3Manager.shared.connent(for: .documents, filename: Constant.databaseName)
@@ -87,6 +75,16 @@ extension AppDelegate {
             Constant.VoiceCode.allCases.forEach { _ = createDatabase(database, for: $0) }
             
             wwPrint(database.fileURL, isShow: Constant.isPrint)
+        }
+    }
+    
+    /// [重新播放音樂](https://juejin.cn/post/7163440404480655367)
+    /// - Parameter notificaiton: Notification
+    func replayMusic(with player: AVAudioPlayer) {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            guard let this = self else { return }
+            player._play(queue: this.audioPlayerQueue)
         }
     }
     
@@ -305,7 +303,7 @@ private extension AppDelegate {
         let installType = WWAppInstallSource.shared.detect() ?? .Simulator
         let info = UIDevice._systemInformation()
         let icon = UIApplicationShortcutIcon(type: .confirmation)
-        let title = "v\(version.app ?? "0.0.0") (\(version.build ?? "0"))"
+        let title = "v\(version.app) (\(version.build))"
         let subtitle = "\(info.name) \(info.version) for \(installType.rawValue)"
         let shortcutItem = UIApplicationShortcutItem._build(localizedTitle: title, localizedSubtitle: subtitle, icon: icon)
         

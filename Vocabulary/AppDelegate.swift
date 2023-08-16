@@ -164,7 +164,7 @@ private extension AppDelegate {
         initCurrentTableName()
         initDatabase()
         backgroundPlayAudio()
-        appVersionShortcutItem(with: application)
+        appShortcutItem(with: application)
         
         backgroundBarColor(.black.withAlphaComponent(0.1))
         
@@ -297,17 +297,41 @@ private extension AppDelegate {
     
     /// [設定ShortcutItem](https://www.jianshu.com/p/e49b8bfea475)
     /// - Parameter application: UIApplication
-    func appVersionShortcutItem(with application: UIApplication) {
+    func appShortcutItem(with application: UIApplication) {
+        
+        let launchTimeShortcutItem = appLaunchTimeShortcutItem(with: application)
+        let versionShortcutItem = appVersionShortcutItem(with: application)
+        
+        application.shortcutItems = [launchTimeShortcutItem, versionShortcutItem]
+    }
+    
+    /// 產生版本號的ShortcutItem
+    /// - Parameter application: UIApplication
+    /// - Returns: UIApplicationShortcutItem
+    func appVersionShortcutItem(with application: UIApplication) -> UIApplicationShortcutItem {
         
         let version = Bundle.main._appVersion()
         let installType = WWAppInstallSource.shared.detect() ?? .Simulator
         let info = UIDevice._systemInformation()
         let icon = UIApplicationShortcutIcon(type: .confirmation)
         let title = "v\(version.app) (\(version.build))"
-        let subtitle = "\(info.name) \(info.version) for \(installType.rawValue)"
+        let subtitle = "\(info.name) \(info.version) by \(installType.rawValue)"
         let shortcutItem = UIApplicationShortcutItem._build(localizedTitle: title, localizedSubtitle: subtitle, icon: icon)
         
-        application.shortcutItems = [shortcutItem]
+        return shortcutItem
+    }
+    
+    /// 產生該上次使用時間的ShortcutItem
+    /// - Parameter application: UIApplication
+    /// - Returns: UIApplicationShortcutItem
+    func appLaunchTimeShortcutItem(with application: UIApplication) -> UIApplicationShortcutItem {
+        
+        let icon = UIApplicationShortcutIcon(type: .time)
+        let title = "上次使用時間 -"
+        let subtitle = "\(Date()._localTime(timeZone: .current))"
+        let shortcutItem = UIApplicationShortcutItem._build(localizedTitle: title, localizedSubtitle: subtitle, icon: icon)
+        
+        return shortcutItem
     }
 }
 

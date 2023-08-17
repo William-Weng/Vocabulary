@@ -50,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWPrint.git",
       "state" : {
-        "revision" : "e1f455ca59b652441954e64dd468fbe0f0f893cc",
-        "version" : "1.1.0"
+        "revision" : "6b70fabaa1dbeac95b224384819e231a1220900a",
+        "version" : "1.2.0"
       }
     },
     {
@@ -77,8 +77,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWToast",
       "state" : {
-        "revision" : "011dbcf90783b67694a5d8c56441e9c9bbf3826f",
-        "version" : "1.0.2"
+        "revision" : "69f4fd4df2a64725d7910632434fbc8388cb3189",
+        "version" : "1.0.3"
       }
     }
   ],

@@ -159,7 +159,7 @@ private extension AppDelegate {
     ///   - launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     func initSetting(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
         
-        _ = WWWebImage.initDatabase(for: .caches, expiredDays: 90)
+        _ = WWWebImage.initDatabase(for: .caches, expiredDays: Constant.webImageExpiredDays)
         
         initCurrentTableName()
         initDatabase()

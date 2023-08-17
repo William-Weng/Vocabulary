@@ -13,6 +13,7 @@ final class Constant: NSObject {
     
     @UserDefault("CurrentTableName") static var tableName: String?
     
+    static let webImageExpiredDays = 90
     static let duration: TimeInterval = 0.15
     static let autoBackupDays = 7
     static let autoBackupDelaySecond: TimeInterval = 2

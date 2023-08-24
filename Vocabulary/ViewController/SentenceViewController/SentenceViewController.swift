@@ -76,7 +76,7 @@ final class SentenceViewController: UIViewController {
 
     @IBAction func recordingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: recordingSegue, sender: nil) }
     @IBAction func licensePage(_ sender: UIBarButtonItem) { performSegue(withIdentifier: licenseWebViewSegue, sender: nil) }
-    @IBAction func filterFavorite(_ sender: UIBarButtonItem) { filterFavoriteAction(sender) }
+    @IBAction func filterFavorite(_ sender: UIBarButtonItem) { translateDisplayArray = []; filterFavoriteAction(sender) }
     @IBAction func appendSentenceAction(_ sender: UIButton) {
         
         appendSentenceHint(title: "請輸入例句") { [weak self] (example, translate) in

@@ -327,7 +327,7 @@ private extension AppDelegate {
     func appLaunchTimeShortcutItem(with application: UIApplication) -> UIApplicationShortcutItem {
         
         let icon = UIApplicationShortcutIcon(type: .time)
-        let title = "上次使用時間 -"
+        let title = "上次使用時間"
         let subtitle = "\(Date()._localTime(timeZone: .current))"
         let shortcutItem = UIApplicationShortcutItem._build(localizedTitle: title, localizedSubtitle: subtitle, icon: icon)
         

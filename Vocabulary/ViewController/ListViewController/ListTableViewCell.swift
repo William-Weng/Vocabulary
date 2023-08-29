@@ -16,15 +16,27 @@ final class ListTableViewCell: UITableViewCell, CellReusable {
     @IBOutlet weak var exampleLabel: UILabel!
     @IBOutlet weak var translateLabel: UILabel!
     @IBOutlet weak var speechButton: UIButton!
-
+    @IBOutlet weak var hardWorkImageView: UIImageView!
+    
     static var exmapleList: [[String : Any]] = []
 
     var indexPath: IndexPath = []
     
+    private var isHardWork = false
     private var vocabulary: Vocabulary?
-        
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        hardWorkImageView.gestureRecognizers?.forEach({ hardWorkImageView.removeGestureRecognizer($0) })
+    }
+    
     func configure(with indexPath: IndexPath) { configure(for: indexPath) }
-        
+    
+    @objc func updateHardWork(_ recognizer: UITapGestureRecognizer) {
+        isHardWork.toggle()
+        updateHardWork(isHardWork, with: indexPath)
+    }
+    
     @IBAction func playSound(_ sender: UIButton) { playExampleSound() }
     
     deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
@@ -55,6 +67,7 @@ private extension ListTableViewCell {
         
         self.indexPath = indexPath
         self.vocabulary = vocabulary
+        self.isHardWork = ((vocabulary.hardwork ?? 0) != 0)
         
         interpretLabel.text = vocabulary.interpret ?? ""
         interpretLabel.textColor = .clear
@@ -69,6 +82,9 @@ private extension ListTableViewCell {
         speechButton.backgroundColor = speechType.backgroundColor()
         speechButton.showsMenuAsPrimaryAction = true
         speechButton.menu = UIMenu(title: "請選擇詞性", children: speechMenuActionMaker())
+        
+        hardWorkImageView.image = Utility.shared.hardWorkIcon(isHardWork)
+        initHardWorkImageViewTapGestureRecognizer()
     }
     
     /// 讀出例句
@@ -127,6 +143,41 @@ private extension ListTableViewCell {
         guard var dictionary = Self.exmapleList[safe: indexPath.row] else { return }
         
         dictionary["speech"] = speech.rawValue
+        Self.exmapleList[indexPath.row] = dictionary
+    }
+    
+    /// HardWorkImageView點擊功能
+    func initHardWorkImageViewTapGestureRecognizer() {
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(Self.updateHardWork(_:)))
+        hardWorkImageView.addGestureRecognizer(recognizer)
+    }
+    
+    /// 更新HardWork狀態
+    /// - Parameters:
+    ///   - isHardWork: Bool
+    ///   - indexPath: IndexPath
+    func updateHardWork(_ isHardWork: Bool, with indexPath: IndexPath) {
+        
+        guard let vocabulary = Self.vocabulary(with: indexPath) else { return }
+        
+        let isSuccess = API.shared.updateHardWorkToList(vocabulary.id, isHardWork: isHardWork, for: Constant.currentTableName.rawValue)
+        if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
+        
+        hardWorkImageView.image = Utility.shared.hardWorkIcon(isHardWork)
+        updateHardWorkDictionary(isHardWork, with: indexPath)
+    }
+    
+    /// 更新暫存的翻譯難度資訊
+    /// - Parameters:
+    ///   - isHardWork: Bool
+    ///   - indexPath: IndexPath
+    func updateHardWorkDictionary(_ isHardWork: Bool, with indexPath: IndexPath) {
+        
+        guard var dictionary = Self.exmapleList[safe: indexPath.row] else { return }
+        
+        let hardWork = isHardWork._int()
+        dictionary["hardwork"] = hardWork
+        
         Self.exmapleList[indexPath.row] = dictionary
     }
 }

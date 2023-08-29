@@ -140,6 +140,11 @@ extension Utility {
     /// - Returns: UIImage
     func volumeIcon(_ isSuccess: Bool) -> UIImage { return (!isSuccess) ? #imageLiteral(resourceName: "NoVolume") : #imageLiteral(resourceName: "Volume") }
     
+    /// 單字翻譯難度ICON
+    /// - Parameter isHardWork: Bool
+    /// - Returns: UIImage
+    func hardWorkIcon(_ isHardWork: Bool) -> UIImage { return (!isHardWork) ? #imageLiteral(resourceName: "HardWork_Off") : #imageLiteral(resourceName: "HardWork_On") }
+    
     /// 產生NavigationItem標題的LabelView
     /// - Parameters:
     ///   - text: 標題文字

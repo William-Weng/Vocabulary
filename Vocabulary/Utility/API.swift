@@ -157,7 +157,7 @@ extension API {
         guard let database = Constant.database else { return [] }
         
         let condition = SQLite3Condition.Where().isCompare(key: "word", type: .equal, value: word)
-        let orderBy = SQLite3Condition.OrderBy().item(key: "createTime", type: .ascending)
+        let orderBy = SQLite3Condition.OrderBy().item(key: "hardwork", type: .descending).addItem(key: "createTime", type: .ascending)
         let result = database.select(tableName: tableName.rawValue, type: Vocabulary.self, where: condition, orderBy: orderBy, limit: nil)
         
         return result.array
@@ -599,6 +599,28 @@ extension API {
         
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
         let result = database.update(tableName: tableName.vocabularyList(), items: items, where: condition)
+        
+        return result.isSussess
+    }
+    
+    /// 更新『翻譯難度』 => hardWork
+    /// - Parameters:
+    ///   - id: Int
+    ///   - isHardWork: Bool
+    ///   - tableName: String
+    /// - Returns: Bool
+    func updateHardWorkToList(_ id: Int, isHardWork: Bool, for tableName: String) -> Bool {
+        
+        guard let database = Constant.database else { return false }
+        
+        let _isHardWork = isHardWork ? 1 : 0
+        
+        let items: [SQLite3Database.InsertItem] = [
+            (key: "hardWork", value: _isHardWork),
+        ]
+        
+        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let result = database.update(tableName: tableName, items: items, where: condition)
         
         return result.isSussess
     }

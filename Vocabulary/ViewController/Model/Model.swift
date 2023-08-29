@@ -16,6 +16,7 @@ final class Vocabulary: Codable {
     let id: Int             // 編號
     let speech: Int         // 詞性
     let word: String        // 單字
+    let hardwork: Int?     // 翻譯難度 (有讀過了嗎？)
     let interpret: String?  // 單字翻譯
     let example: String?    // 例句範例
     let translate: String?  // 例句翻譯
@@ -331,6 +332,7 @@ extension Vocabulary: SQLite3SchemeDelegate {
             (key: "id", type: .INTEGER()),
             (key: "speech", type: .INTEGER()),
             (key: "word", type: .TEXT(attribute: (isNotNull: true, isNoCase: true, isUnique: false), defaultValue: nil)),
+            (key: "hardwork", type: .INTEGER()),
             (key: "interpret", type: .TEXT(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),
             (key: "example", type: .TEXT(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),
             (key: "translate", type: .TEXT(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),

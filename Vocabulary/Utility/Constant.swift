@@ -62,7 +62,6 @@ extension Constant {
     typealias AppVersion = (app: String, build: String)                                                         // APP版本號 (公開版號, 內測版號)
     typealias SystemInformation = (name: String, version: String, model: String, idiom: UIUserInterfaceIdiom)   // 系統資訊 => (iOS, 12.1, iPhone, 0)
     typealias KeyboardInfomation = (duration: Double, curve: UInt, frame: CGRect)                               // 取得系統鍵盤的相關資訊
-
 }
 
 // MARK: - Enumeration

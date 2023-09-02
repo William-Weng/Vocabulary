@@ -53,8 +53,6 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         initSetting()
         initMenu()
-        
-        wwPrint(Constant.currentTableName.rawValue)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -395,12 +393,9 @@ private extension MainViewController {
             }
             
             if (!action(inputWord)) { Utility.shared.flashHUD(with: .fail); return }
+            if let indexPath = indexPath { this.myTableView.reloadRows(at: [indexPath], with: .automatic); return }
             
-            if let indexPath = indexPath {
-                this.myTableView.reloadRows(at: [indexPath], with: .automatic)
-            } else {
-                this.reloadVocabulary()
-            }
+            this.reloadVocabulary()
         }
         
         return actionOK

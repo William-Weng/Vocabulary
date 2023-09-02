@@ -192,11 +192,8 @@ extension VolumeViewController {
             
             guard let this = self else { return }
             
-            if let mainViewDelegate = this.mainViewDelegate {
-                mainViewDelegate.tabBarHidden(false)
-            } else {
-                this.tabBarHidden(false)
-            }
+            if let mainViewDelegate = this.mainViewDelegate { mainViewDelegate.tabBarHidden(false); return }
+            this.tabBarHidden(false)
         }
     }
     

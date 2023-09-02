@@ -393,7 +393,11 @@ extension API {
     /// - Returns: Bool
     func insertNewWord(_ word: String, for tableName: Constant.VoiceCode) -> Bool {
         
-        guard let database = Constant.database else { return false }
+        guard let database = Constant.database,
+              !word.isEmpty
+        else {
+            return false
+        }
         
         let items: [SQLite3Database.InsertItem] = [
             (key: "word", value: word),
@@ -460,7 +464,11 @@ extension API {
     /// - Returns: Bool
     func insertSentenceToList(_ example: String, translate: String, for tableName: Constant.VoiceCode) -> Bool {
         
-        guard let database = Constant.database else { return false }
+        guard let database = Constant.database,
+              !example.isEmpty
+        else {
+            return false
+        }
         
         let items: [SQLite3Database.InsertItem] = [
             (key: "speech", value: 0),
@@ -481,7 +489,11 @@ extension API {
     /// - Returns: Bool
     func insertBookmarkToList(_ title: String, webUrl: String, for tableName: Constant.VoiceCode) -> Bool {
         
-        guard let database = Constant.database else { return false }
+        guard let database = Constant.database,
+              !webUrl.isEmpty
+        else {
+            return false
+        }
         
         let items: [SQLite3Database.InsertItem] = [
             (key: "title", value: title),

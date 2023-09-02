@@ -36,10 +36,10 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var activityViewIndicator: UIActivityIndicatorView!
     @IBOutlet weak var indicatorLabel: UILabel!
-    
-    private let titleString = "我愛背單字"
+       
     private let appendTextHintTitle = "請輸入單字"
     
+    private var titleString: String { Constant.currentTableName.name() }
     private var isFixed = false
     private var isAnimationStop = false
     private var isFavorite = false
@@ -53,6 +53,8 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         initSetting()
         initMenu()
+        
+        wwPrint(Constant.currentTableName.rawValue)
     }
     
     override func viewWillAppear(_ animated: Bool) {

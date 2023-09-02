@@ -20,6 +20,7 @@
 		642858AB297BC51E00DD7D88 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642858AA297BC51E00DD7D88 /* Model.swift */; };
 		642C5E722A18487800AC290B /* @Image in Resources */ = {isa = PBXBuildFile; fileRef = 642C5E712A18487800AC290B /* @Image */; };
 		646E44A42980A726002BCBC8 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646E44A32980A726002BCBC8 /* ReviewViewController.swift */; };
+		64768B0D2AA3EB080005EF3A /* WWToast in Frameworks */ = {isa = PBXBuildFile; productRef = 64768B0C2AA3EB080005EF3A /* WWToast */; };
 		6492ADD52986B8E900E1B59B /* KleeOne-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADD42986B8E900E1B59B /* KleeOne-SemiBold.ttf */; };
 		6492ADD72986BBFA00E1B59B /* GamjaFlower-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADD62986BBFA00E1B59B /* GamjaFlower-Regular.ttf */; };
 		6492ADDD2986BF6E00E1B59B /* jf-openhuninn-1.1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADDC2986BF6D00E1B59B /* jf-openhuninn-1.1.ttf */; };
@@ -50,7 +51,6 @@
 		81E1F8F02A1F2C8100EB0139 /* WWHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 81E1F8EF2A1F2C8100EB0139 /* WWHUD */; };
 		81E1F8F32A1F2C9A00EB0139 /* WWSQLite3Manager in Frameworks */ = {isa = PBXBuildFile; productRef = 81E1F8F22A1F2C9A00EB0139 /* WWSQLite3Manager */; };
 		81E1F8F62A1F2CCA00EB0139 /* WWSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 81E1F8F52A1F2CCA00EB0139 /* WWSlider */; };
-		81E1F8FA2A1F2D2700EB0139 /* WWToast in Frameworks */ = {isa = PBXBuildFile; productRef = 81E1F8F92A1F2D2700EB0139 /* WWToast */; };
 		81E1F8FF2A1F2D9B00EB0139 /* WWNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 81E1F8FE2A1F2D9B00EB0139 /* WWNetworking */; };
 		81E4078E2A7239A200230C3A /* WWFloatingViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 81E4078D2A7239A200230C3A /* WWFloatingViewController */; };
 		81E407902A723C4E00230C3A /* SearchVocabularyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E4078F2A723C4E00230C3A /* SearchVocabularyViewController.swift */; };
@@ -112,7 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81E1F8FA2A1F2D2700EB0139 /* WWToast in Frameworks */,
+				64768B0D2AA3EB080005EF3A /* WWToast in Frameworks */,
 				81E4078E2A7239A200230C3A /* WWFloatingViewController in Frameworks */,
 				81E1F8FF2A1F2D9B00EB0139 /* WWNetworking in Frameworks */,
 				81EB0ED92A1F2E1300EE2A83 /* WWNetworking-UIImage in Frameworks */,
@@ -373,11 +373,11 @@
 				81E1F8EF2A1F2C8100EB0139 /* WWHUD */,
 				81E1F8F22A1F2C9A00EB0139 /* WWSQLite3Manager */,
 				81E1F8F52A1F2CCA00EB0139 /* WWSlider */,
-				81E1F8F92A1F2D2700EB0139 /* WWToast */,
 				81E1F8FE2A1F2D9B00EB0139 /* WWNetworking */,
 				81EB0ED82A1F2E1300EE2A83 /* WWNetworking-UIImage */,
 				6418FC192A6DCDED00493B8D /* WWAppInstallSource */,
 				81E4078D2A7239A200230C3A /* WWFloatingViewController */,
+				64768B0C2AA3EB080005EF3A /* WWToast */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -411,11 +411,11 @@
 				81E1F8EE2A1F2C8100EB0139 /* XCRemoteSwiftPackageReference "WWHUD" */,
 				81E1F8F12A1F2C9A00EB0139 /* XCRemoteSwiftPackageReference "WWSQLite3Manager" */,
 				81E1F8F42A1F2CCA00EB0139 /* XCRemoteSwiftPackageReference "WWSlider" */,
-				81E1F8F82A1F2D2700EB0139 /* XCRemoteSwiftPackageReference "WWToast" */,
 				81E1F8FD2A1F2D9B00EB0139 /* XCRemoteSwiftPackageReference "WWNetworking" */,
 				81EB0ED72A1F2E1300EE2A83 /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */,
 				6418FC182A6DCDED00493B8D /* XCRemoteSwiftPackageReference "WWAppInstallSource" */,
 				81E4078C2A7239A200230C3A /* XCRemoteSwiftPackageReference "WWFloatingView" */,
+				64768B0B2AA3EB080005EF3A /* XCRemoteSwiftPackageReference "WWToast" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -629,7 +629,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20230902;
+				CURRENT_PROJECT_VERSION = 20230903;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -648,7 +648,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.6;
+				MARKETING_VERSION = 1.8.8;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -667,7 +667,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20230902;
+				CURRENT_PROJECT_VERSION = 20230903;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -686,7 +686,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.6;
+				MARKETING_VERSION = 1.8.8;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -730,6 +730,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		64768B0B2AA3EB080005EF3A /* XCRemoteSwiftPackageReference "WWToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWToast";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		81E1F8EE2A1F2C8100EB0139 /* XCRemoteSwiftPackageReference "WWHUD" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWHUD";
@@ -749,14 +757,6 @@
 		81E1F8F42A1F2CCA00EB0139 /* XCRemoteSwiftPackageReference "WWSlider" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWSlider";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-		81E1F8F82A1F2D2700EB0139 /* XCRemoteSwiftPackageReference "WWToast" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/William-Weng/WWToast";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;
@@ -794,6 +794,11 @@
 			package = 6418FC182A6DCDED00493B8D /* XCRemoteSwiftPackageReference "WWAppInstallSource" */;
 			productName = WWAppInstallSource;
 		};
+		64768B0C2AA3EB080005EF3A /* WWToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 64768B0B2AA3EB080005EF3A /* XCRemoteSwiftPackageReference "WWToast" */;
+			productName = WWToast;
+		};
 		81E1F8EF2A1F2C8100EB0139 /* WWHUD */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 81E1F8EE2A1F2C8100EB0139 /* XCRemoteSwiftPackageReference "WWHUD" */;
@@ -808,11 +813,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 81E1F8F42A1F2CCA00EB0139 /* XCRemoteSwiftPackageReference "WWSlider" */;
 			productName = WWSlider;
-		};
-		81E1F8F92A1F2D2700EB0139 /* WWToast */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 81E1F8F82A1F2D2700EB0139 /* XCRemoteSwiftPackageReference "WWToast" */;
-			productName = WWToast;
 		};
 		81E1F8FE2A1F2D9B00EB0139 /* WWNetworking */ = {
 			isa = XCSwiftPackageProductDependency;

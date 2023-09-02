@@ -33,6 +33,42 @@ extension Int {
     }
 }
 
+// MARK: - TimeInterval (function)
+extension TimeInterval {
+ 
+    /// [秒 => 時間 (210.2799sec => 3 minutes, 30 seconds)](https://stackoverflow.com/questions/26794703/swift-integer-conversion-to-hours-minutes-seconds)
+    /// - Parameter unitsStyle: 輸出的方式 => .full
+    /// - Parameter allowedUnits: 想要看的單位 => [.hour, .minute, .second]
+    /// - Parameter localeIdentifier: 語言代號 => en-US
+    /// - Returns: String?
+    func _time(unitsStyle: DateComponentsFormatter.UnitsStyle = .full, allowedUnits: NSCalendar.Unit = [.hour, .minute, .second], localeIdentifier: String = "en-US") -> String? {
+        
+        let calendar = Calendar._build(localeIdentifier: localeIdentifier)
+        let formatter = DateComponentsFormatter()
+        
+        formatter.calendar = calendar
+        formatter.allowedUnits = allowedUnits
+        formatter.unitsStyle = unitsStyle
+        
+        return formatter.string(from: self)
+    }
+}
+
+// MARK: - Calendar (static function)
+extension Calendar {
+    
+    /// 產生本地端的日曆
+    /// - Parameter localeIdentifier: [語言代號 (zh-Hant-TW)](http://www.iana.org/assignments/language-subtag-registry/language-subtag-registry)
+    /// - Returns: Calendar
+    static func _build(localeIdentifier: String = "en-US") -> Self {
+        
+        var calendar = Calendar.current
+        calendar.locale = Locale(identifier: localeIdentifier)
+
+        return calendar
+    }
+}
+
 // MARK: - DispatchQueue (function)
 extension DispatchQueue {
     

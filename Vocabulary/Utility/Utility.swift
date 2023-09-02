@@ -55,7 +55,7 @@ extension Utility {
     /// - Returns: (backgroundColor: UIColor, height: CGFloat)
     func toastSetting(for viewController: UIViewController?) -> (backgroundColor: UIColor, height: CGFloat) {
         
-        let setting: (backgroundColor: UIColor, height: CGFloat) = (#colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1).withAlphaComponent(0.7), viewController?.navigationController?._navigationBarHeight(for: UIWindow._keyWindow(hasScene: false)) ?? .zero)
+        let setting: (backgroundColor: UIColor, height: CGFloat) = (#colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1), viewController?.navigationController?._navigationBarHeight(for: UIWindow._keyWindow(hasScene: false)) ?? .zero)
         return setting
     }
     

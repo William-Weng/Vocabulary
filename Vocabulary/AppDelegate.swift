@@ -8,6 +8,7 @@
 import UIKit
 import AVFAudio
 import WWPrint
+import WWToast
 import WWSQLite3Manager
 import WWNetworking_UIImage
 import WWAppInstallSource
@@ -235,8 +236,25 @@ private extension AppDelegate {
         else {
             return nil
         }
+                
+        musicPlayerHint(audioPlayer)
         
         return audioPlayer
+    }
+    
+    /// [音樂檔名提示](http://furnacedigital.blogspot.com/2010/12/avfoundation.html)
+    /// - Parameter player: AVAudioPlayer
+    func musicPlayerHint(_ player: AVAudioPlayer) {
+        
+        guard let window = self.window,
+              let filename = player.url?.lastPathComponent,
+              let duration = player.duration._time(unitsStyle: .positional)
+        else {
+            return
+        }
+        
+        let backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        WWToast.shared.makeText(targetFrame: window.frame, text: "[\(duration)] \(filename)", backgroundColor: backgroundColor)
     }
     
     /// 開始錄音 (.wav)

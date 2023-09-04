@@ -48,6 +48,7 @@
 		81BA794029876DA800C0FD6C /* SearchWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA793F29876DA800C0FD6C /* SearchWordViewController.swift */; };
 		81BA794429877ACC00C0FD6C /* SearchWordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA794329877ACC00C0FD6C /* SearchWordTableViewCell.swift */; };
 		81CD85CC2990F03A009C39FF /* SentenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD85CB2990F03A009C39FF /* SentenceViewController.swift */; };
+		81D31C482AA5BAB8009454E7 /* Settings.json in Resources */ = {isa = PBXBuildFile; fileRef = 81D31C472AA5BAB8009454E7 /* Settings.json */; };
 		81E1F8F02A1F2C8100EB0139 /* WWHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 81E1F8EF2A1F2C8100EB0139 /* WWHUD */; };
 		81E1F8F32A1F2C9A00EB0139 /* WWSQLite3Manager in Frameworks */ = {isa = PBXBuildFile; productRef = 81E1F8F22A1F2C9A00EB0139 /* WWSQLite3Manager */; };
 		81E1F8F62A1F2CCA00EB0139 /* WWSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 81E1F8F52A1F2CCA00EB0139 /* WWSlider */; };
@@ -101,6 +102,7 @@
 		81BA793F29876DA800C0FD6C /* SearchWordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWordViewController.swift; sourceTree = "<group>"; };
 		81BA794329877ACC00C0FD6C /* SearchWordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWordTableViewCell.swift; sourceTree = "<group>"; };
 		81CD85CB2990F03A009C39FF /* SentenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceViewController.swift; sourceTree = "<group>"; };
+		81D31C472AA5BAB8009454E7 /* Settings.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Settings.json; sourceTree = "<group>"; };
 		81E4078F2A723C4E00230C3A /* SearchVocabularyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVocabularyViewController.swift; sourceTree = "<group>"; };
 		81E56B6A2A725DA6004400D6 /* SearchVocabularyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVocabularyTableViewCell.swift; sourceTree = "<group>"; };
 		81F52F33299DE87A005F9DF2 /* MyTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTabBarController.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 			children = (
 				64285898297BBF8700DD7D88 /* Info.plist */,
 				642C5E702A182C8700AC290B /* Vocabulary.entitlements */,
+				81D31C472AA5BAB8009454E7 /* Settings.json */,
 			);
 			name = Setting;
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6492ADD52986B8E900E1B59B /* KleeOne-SemiBold.ttf in Resources */,
+				81D31C482AA5BAB8009454E7 /* Settings.json in Resources */,
 				64285897297BBF8700DD7D88 /* LaunchScreen.storyboard in Resources */,
 				64285894297BBF8700DD7D88 /* Assets.xcassets in Resources */,
 				81BA793E29876CE000C0FD6C /* README.md in Resources */,

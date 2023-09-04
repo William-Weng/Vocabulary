@@ -80,6 +80,15 @@
         "revision" : "30473509e4066c4b1f47920787f0ae7d88aa0a72",
         "version" : "1.1.0"
       }
+    },
+    {
+      "identity" : "wwuserdefaults",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWUserDefaults.git",
+      "state" : {
+        "revision" : "03c70e58d4121ab5f6f3ef395b04c0a564e84019",
+        "version" : "1.0.0"
+      }
     }
   ],
   "version" : 2

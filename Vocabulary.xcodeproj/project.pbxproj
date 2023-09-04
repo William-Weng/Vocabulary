@@ -37,6 +37,7 @@
 		81201C4D298B58C200291485 /* InterpretView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81201C4B298B58C200291485 /* InterpretView.xib */; };
 		812C5444299F73DC003F942A /* TalkingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812C5443299F73DC003F942A /* TalkingViewController.swift */; };
 		815E14782990F47700EC571D /* SentenceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815E14772990F47700EC571D /* SentenceTableViewCell.swift */; };
+		817BDE462AA596650093AD92 /* WWUserDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = 817BDE452AA596650093AD92 /* WWUserDefaults */; };
 		818E261329922FFE00385705 /* ReviewResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818E261229922FFE00385705 /* ReviewResultViewController.swift */; };
 		818E2615299230B300385705 /* ReviewResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818E2614299230B300385705 /* ReviewResultTableViewCell.swift */; };
 		8196323329933CEF00B96960 /* MyNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8196323229933CEF00B96960 /* MyNavigationController.swift */; };
@@ -113,6 +114,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				64768B0D2AA3EB080005EF3A /* WWToast in Frameworks */,
+				817BDE462AA596650093AD92 /* WWUserDefaults in Frameworks */,
 				81E4078E2A7239A200230C3A /* WWFloatingViewController in Frameworks */,
 				81E1F8FF2A1F2D9B00EB0139 /* WWNetworking in Frameworks */,
 				81EB0ED92A1F2E1300EE2A83 /* WWNetworking-UIImage in Frameworks */,
@@ -378,6 +380,7 @@
 				6418FC192A6DCDED00493B8D /* WWAppInstallSource */,
 				81E4078D2A7239A200230C3A /* WWFloatingViewController */,
 				64768B0C2AA3EB080005EF3A /* WWToast */,
+				817BDE452AA596650093AD92 /* WWUserDefaults */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -416,6 +419,7 @@
 				6418FC182A6DCDED00493B8D /* XCRemoteSwiftPackageReference "WWAppInstallSource" */,
 				81E4078C2A7239A200230C3A /* XCRemoteSwiftPackageReference "WWFloatingView" */,
 				64768B0B2AA3EB080005EF3A /* XCRemoteSwiftPackageReference "WWToast" */,
+				817BDE442AA596650093AD92 /* XCRemoteSwiftPackageReference "WWUserDefaults" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -629,7 +633,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20230903;
+				CURRENT_PROJECT_VERSION = 20230904;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -648,7 +652,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.8;
+				MARKETING_VERSION = 1.8.9;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -667,7 +671,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20230903;
+				CURRENT_PROJECT_VERSION = 20230904;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -686,7 +690,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.8;
+				MARKETING_VERSION = 1.8.9;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -733,6 +737,14 @@
 		64768B0B2AA3EB080005EF3A /* XCRemoteSwiftPackageReference "WWToast" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWToast";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		817BDE442AA596650093AD92 /* XCRemoteSwiftPackageReference "WWUserDefaults" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWUserDefaults.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;
@@ -798,6 +810,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 64768B0B2AA3EB080005EF3A /* XCRemoteSwiftPackageReference "WWToast" */;
 			productName = WWToast;
+		};
+		817BDE452AA596650093AD92 /* WWUserDefaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 817BDE442AA596650093AD92 /* XCRemoteSwiftPackageReference "WWUserDefaults" */;
+			productName = WWUserDefaults;
 		};
 		81E1F8EF2A1F2C8100EB0139 /* WWHUD */ = {
 			isa = XCSwiftPackageProductDependency;

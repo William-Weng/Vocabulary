@@ -468,10 +468,10 @@ extension ReviewViewController {
         let alertController = UIAlertController(title: "請選擇等級", message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
         
-        Vocabulary.Level.allCases.forEach { level in
+        Constant.vocabularyLevelInformations.forEach { info in
             
-            let action = UIAlertAction(title: level.value(), style: .default) { _ in
-                let isSuccess = API.shared.updateLevelToList(vocabularyList.id, level: level, for: Constant.currentTableName)
+            let action = UIAlertAction(title: info.name, style: .default) { _ in
+                let isSuccess = API.shared.updateLevelToList(vocabularyList.id, info: info, for: Constant.currentTableName)
                 if (!isSuccess) { Utility.shared.flashHUD(with: .fail) }
             }
             
@@ -511,25 +511,7 @@ extension ReviewViewController {
         
         return action
     }
-    
-    /// 單字等級功能
-    /// - Parameters:
-    ///   - level: Vocabulary.Level
-    ///   - vocabularyList: VocabularyList?
-    /// - Returns: UIAction
-    func vocabularyLevelActionMaker(_ level: Vocabulary.Level, vocabularyList: VocabularyList?) -> UIAction {
         
-        let action = UIAction(title: level.value()) { _ in
-            
-            guard let vocabularyList = vocabularyList else { return }
-            
-            let isSuccess = API.shared.updateLevelToList(vocabularyList.id, level: level, for: Constant.currentTableName)
-            if (!isSuccess) { Utility.shared.flashHUD(with: .fail) }
-        }
-        
-        return action
-    }
-    
     /// 提示問題的難度類型
     /// - Parameter level: Constant.QuestionLevel
     func reviewQuestionLevelAction(_ level: Constant.QuestionLevel) {

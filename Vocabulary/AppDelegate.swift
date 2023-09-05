@@ -183,8 +183,8 @@ private extension AppDelegate {
         }.sorted {
             $1.value > $0.value
         }
-        
-        wwPrint(array)
+                
+        Constant.vocabularyLevelInformations = array
     }
 }
 

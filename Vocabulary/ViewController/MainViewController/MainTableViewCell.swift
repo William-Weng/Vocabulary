@@ -100,35 +100,62 @@ private extension MainTableViewCell {
     /// - Returns: [UIAction]
     func levelMenuActionMaker() -> [UIAction] {
         
-        let actions = Vocabulary.Level.allCases.map { level in
+        let actions = Constant.vocabularyLevelInformations.map { info in
             
-            let action = UIAction(title: level.value()) { [weak self] action in
+            let action = UIAction(title: info.name) { [weak self] action in
                 guard let this = self else { return }
-                this.updateLevel(level, with: this.indexPath)
+                this.updateLevel(info, with: this.indexPath)
             }
             
             return action
         }
         
+//        let actions = Vocabulary.Level.allCases.map { level in
+//
+//            let action = UIAction(title: level.value()) { [weak self] action in
+//                guard let this = self else { return }
+//                this.updateLevel(level, with: this.indexPath)
+//            }
+//
+//            return action
+//        }
+        
         return actions
+    }
+        
+    /// 更新LevelButton文字
+    /// - Parameters:
+    ///   - level: Vocabulary.Level
+    ///   - indexPath: IndexPath
+    func updateLevel(_ info: VocabularyLevelInformation, with indexPath: IndexPath) {
+        
+        guard let vocabularyList = Self.vocabularyList(with: indexPath) else { return }
+        
+        let isSuccess = API.shared.updateLevelToList(vocabularyList.id, info: info, for: Constant.currentTableName)
+        if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
+        
+        levelButton.setTitle(info.name, for: .normal)
+        // levelButton.backgroundColor = level.backgroundColor()
+        
+        updateLevelDictionary(info, with: indexPath)
     }
     
     /// 更新LevelButton文字
     /// - Parameters:
     ///   - level: Vocabulary.Level
     ///   - indexPath: IndexPath
-    func updateLevel(_ level: Vocabulary.Level, with indexPath: IndexPath) {
-        
-        guard let vocabularyList = Self.vocabularyList(with: indexPath) else { return }
-        
-        let isSuccess = API.shared.updateLevelToList(vocabularyList.id, level: level, for: Constant.currentTableName)
-        if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
-        
-        levelButton.setTitle(level.value(), for: .normal)
-        levelButton.backgroundColor = level.backgroundColor()
-        
-        updateLevelDictionary(level, with: indexPath)
-    }
+//    func updateLevel(_ level: Vocabulary.Level, with indexPath: IndexPath) {
+//
+//        guard let vocabularyList = Self.vocabularyList(with: indexPath) else { return }
+//
+//        let isSuccess = API.shared.updateLevelToList(vocabularyList.id, level: level, for: Constant.currentTableName)
+//        if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
+//
+//        levelButton.setTitle(level.value(), for: .normal)
+//        levelButton.backgroundColor = level.backgroundColor()
+//
+//        updateLevelDictionary(level, with: indexPath)
+//    }
     
     /// 更新Favorite狀態
     /// - Parameters:
@@ -149,13 +176,26 @@ private extension MainTableViewCell {
     /// - Parameters:
     ///   - level: Vocabulary.Level
     ///   - indexPath: IndexPath
-    func updateLevelDictionary(_ level: Vocabulary.Level, with indexPath: IndexPath) {
+    func updateLevelDictionary(_ info: VocabularyLevelInformation, with indexPath: IndexPath) {
         
         guard var dictionary = Self.vocabularyListArray[safe: indexPath.row] else { return }
         
-        dictionary["level"] = level.rawValue
+        dictionary["level"] = info.value
         Self.vocabularyListArray[indexPath.row] = dictionary
     }
+
+    
+    /// 更新暫存的單字列表資訊
+    /// - Parameters:
+    ///   - level: Vocabulary.Level
+    ///   - indexPath: IndexPath
+//    func updateLevelDictionary(_ level: Vocabulary.Level, with indexPath: IndexPath) {
+//
+//        guard var dictionary = Self.vocabularyListArray[safe: indexPath.row] else { return }
+//
+//        dictionary["level"] = level.rawValue
+//        Self.vocabularyListArray[indexPath.row] = dictionary
+//    }
     
     /// 更新暫存的我的最愛資訊
     /// - Parameters:

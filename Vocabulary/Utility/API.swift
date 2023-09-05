@@ -601,12 +601,12 @@ extension API {
     ///   - level: 等級
     ///   - tableName: 資料表名稱
     /// - Returns: Bool
-    func updateLevelToList(_ id: Int, level: Vocabulary.Level, for tableName: Constant.VoiceCode) -> Bool {
+    func updateLevelToList(_ id: Int, info: VocabularyLevelInformation, for tableName: Constant.VoiceCode) -> Bool {
         
         guard let database = Constant.database else { return false }
         
         let items: [SQLite3Database.InsertItem] = [
-            (key: "level", value: level.rawValue),
+            (key: "level", value: info.value),
         ]
         
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
@@ -614,6 +614,21 @@ extension API {
         
         return result.isSussess
     }
+    
+//    func updateLevelToList(_ id: Int, level: Vocabulary.Level, for tableName: Constant.VoiceCode) -> Bool {
+//        
+//        guard let database = Constant.database else { return false }
+//        
+//        let items: [SQLite3Database.InsertItem] = [
+//            (key: "level", value: level.rawValue),
+//        ]
+//        
+//        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+//        let result = database.update(tableName: tableName.vocabularyList(), items: items, where: condition)
+//        
+//        return result.isSussess
+//    }
+
     
     /// 更新『翻譯難度』 => hardWork
     /// - Parameters:

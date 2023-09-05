@@ -165,7 +165,6 @@ extension Constant {
         case japanese = "Japenese"
         case french = "French"
         case korean = "Korean"
-        case chinese = "Chinese"
         
         /// 單字列表的資料庫名稱 => EnglishList
         /// - Returns: String
@@ -191,7 +190,6 @@ extension Constant {
             case .japanese: return "ja-JP"
             case .french: return "fr-FR"
             case .korean: return "ko-KR"
-            case .chinese: return "zh-TW"
             }
         }
         
@@ -205,7 +203,6 @@ extension Constant {
             case .japanese: return "https://dictionary.goo.ne.jp/word/\(word)"
             case .french: return "https://www.frdic.com/dicts/fr/\(word)"
             case .korean: return "https://dic.daum.net/search.do?dic=ch&q=\(word)"
-            case .chinese: return "https://cdict.net/?q=\(word)"
             }
         }
         
@@ -225,7 +222,6 @@ extension Constant {
             case .japanese: return "\(flagEmoji()) 日文字典"
             case .french: return "\(flagEmoji()) 法文字典"
             case .korean: return "\(flagEmoji()) 韓文字典"
-            case .chinese: return "\(flagEmoji()) 中文字典"
             }
         }
         
@@ -238,7 +234,6 @@ extension Constant {
             case .japanese: return "JP"._flagEmoji()
             case .french: return "FR"._flagEmoji()
             case .korean: return "KR"._flagEmoji()
-            case .chinese: return "TW"._flagEmoji()
             }
         }
         
@@ -251,7 +246,6 @@ extension Constant {
             case .japanese: return UIFont(name: "KleeOne-SemiBold", size: fontSize)
             case .french: return UIFont(name: "Bradley Hand", size: fontSize)
             case .korean: return UIFont(name: "GamjaFlower-Regular", size: fontSize)
-            case .chinese: return UIFont(name: "jf-openhuninn-1.1", size: fontSize)
             }
         }
         
@@ -264,7 +258,6 @@ extension Constant {
             case .japanese: return 100
             case .french: return 200
             case .korean: return 300
-            case .chinese: return 400
             }
         }
     }

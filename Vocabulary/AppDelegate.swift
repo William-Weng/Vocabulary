@@ -151,6 +151,43 @@ extension AppDelegate {
     func stopRecordingWave() -> Bool { stopRecorder() }
 }
 
+// MARK: - 實驗
+private extension AppDelegate {
+    
+    func settings() {
+        
+        let tableName = Constant.tableName ?? "English"
+        
+        guard let jsonString = FileManager.default._readText(from: Bundle.main.bundleURL.appendingPathComponent("Settings.json")),
+              let dictionary = jsonString._jsonObject() as? [String: Any],
+              let settings = dictionary[tableName] as? [String: Any],
+              let vocabularyLevel = settings["settings"] as? [String: Any],
+              let information = vocabularyLevel["vocabularyLevel"] as? [String: Any]
+        else {
+            return
+        }
+        
+        let array = information.keys.compactMap { key -> VocabularyLevelInformation? in
+            
+            guard let info = information[key] as? [String: Any],
+                  let name = info["name"] as? String,
+                  let value = info["value"] as? Int,
+                  let backgroundColor = info["backgroundColor"] as? String,
+                  let color = info["color"] as? String
+            else {
+                return nil
+            }
+            
+            return VocabularyLevelInformation(key: key, name: name, value: value, backgroundColor: backgroundColor, color: color)
+            
+        }.sorted {
+            $1.value > $0.value
+        }
+        
+        wwPrint(array)
+    }
+}
+
 // MARK: - 小工具
 private extension AppDelegate {
     
@@ -170,6 +207,8 @@ private extension AppDelegate {
         backgroundBarColor(.black.withAlphaComponent(0.1))
         
         _ = animationFolderUrlMaker()
+        
+        settings()
     }
     
     /// 取得之前設定的資料庫名稱

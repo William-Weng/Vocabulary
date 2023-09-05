@@ -114,6 +114,15 @@ extension Utility {
         return percent
     }
     
+    /// 字型
+    /// - Returns: UIFont?
+    /// - Parameters:
+    ///   - name: 字型名稱
+    ///   - fontSize: CGFloat
+    func font(name: String = "jf-openhuninn-1.1", size: CGFloat = 36.0) -> UIFont? {
+        return UIFont(name: name, size: size)
+    }
+    
     /// 設定UILabel標題
     /// - Parameters:
     ///   - titleView: UILabel
@@ -125,13 +134,25 @@ extension Utility {
         let title = "\(title) - \(count)"
         titleViewSetting(titleView, title: title, gap: gap)
     }
-    
+        
+    /// 設定UILabel標題 for 單字複習
+    /// - Parameters:
+    ///   - titleView: UILabel
+    ///   - title: String
+    ///   - count: Int
+    ///   - searchWordCount: Int
+    ///   - gap: CGFloat
     func titleViewSetting(with titleView: UILabel, title: String, count: Int, searchWordCount: Int, gap: CGFloat = 16.0) {
         
         let title = "\(title) - \(count) / \(searchWordCount)"
         titleViewSetting(titleView, title: title, gap: gap)
     }
     
+    /// 設定UILabel標題 for 單字複習
+    /// - Parameters:
+    ///   - titleView: UILabel
+    ///   - title: String
+    ///   - gap: CGFloat
     func titleViewSetting(_ titleView: UILabel, title: String, gap: CGFloat = 16.0) {
         
         titleView.sizeToFit()

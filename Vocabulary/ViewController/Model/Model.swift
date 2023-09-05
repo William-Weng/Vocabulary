@@ -10,13 +10,22 @@ import AVFoundation
 import WWPrint
 import WWSQLite3Manager
 
+struct VocabularyLevelInformation {
+    
+    let key: String
+    let name: String
+    let value: Int
+    let backgroundColor: String
+    let color: String
+}
+
 // MARK: - 單字內容
 final class Vocabulary: Codable {
     
     let id: Int             // 編號
     let speech: Int         // 詞性
     let word: String        // 單字
-    let hardwork: Int?     // 翻譯難度 (有讀過了嗎？)
+    let hardwork: Int?      // 翻譯難度 (有讀過了嗎？)
     let interpret: String?  // 單字翻譯
     let example: String?    // 例句範例
     let translate: String?  // 例句翻譯

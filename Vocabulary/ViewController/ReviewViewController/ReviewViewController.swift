@@ -281,7 +281,7 @@ private extension ReviewViewController {
         
         switch level {
         case .read:
-            interpretLabel.font = Constant.VoiceCode.chinese.font(size: 24.0)
+            interpretLabel.font = Utility.shared.font(name: "jf-openhuninn-1.1", size: 24.0)
             interpretLabel.textColor = level.color()
             interpretLabel.text = vocabulary?.interpret
         case .listen:

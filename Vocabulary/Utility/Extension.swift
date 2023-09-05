@@ -279,6 +279,32 @@ extension String {
         
         return dateFormatter.date(from: self)
     }
+    
+    /// String => Data
+    /// - Parameters:
+    ///   - encoding: 字元編碼
+    ///   - isLossyConversion: 失真轉換
+    /// - Returns: Data?
+    func _data(using encoding: String.Encoding = .utf8, isLossyConversion: Bool = false) -> Data? {
+        let data = self.data(using: encoding, allowLossyConversion: isLossyConversion)
+        return data
+    }
+    
+    /// JSON String => JSON Object
+    /// - Parameters:
+    ///   - encoding: 字元編碼
+    ///   - options: JSON序列化讀取方式
+    /// - Returns: Any?
+    func _jsonObject(encoding: String.Encoding = .utf8, options: JSONSerialization.ReadingOptions = .allowFragments) -> Any? {
+        
+        guard let data = self._data(using: encoding),
+              let jsonObject = try? JSONSerialization.jsonObject(with: data, options: options)
+        else {
+            return nil
+        }
+        
+        return jsonObject
+    }
 }
 
 // MARK: - String (private class function)
@@ -868,6 +894,22 @@ extension FileManager {
         let isExist = fileExists(atPath: url.path, isDirectory: &isDirectory)
         
         return (isExist, isDirectory.boolValue)
+    }
+    
+    /// 讀取檔案文字
+    /// - Parameters:
+    ///   - url: 文件的URL
+    ///   - encoding: 編碼格式
+    /// - Returns: String?
+    func _readText(from url: URL?, encoding: String.Encoding = .utf8) -> String? {
+        
+        guard let url = url,
+              let readedText = try? String(contentsOf: url, encoding: encoding)
+        else {
+            return nil
+        }
+        
+        return readedText
     }
     
     /// 移除檔案

@@ -156,7 +156,7 @@ private extension AppDelegate {
     
     func settings() {
         
-        let tableName = Constant.tableName ?? "English"
+        let tableName = Constant.tableName?.capitalized ?? "English"
         
         guard let jsonString = FileManager.default._readText(from: Bundle.main.bundleURL.appendingPathComponent("Settings.json")),
               let dictionary = jsonString._jsonObject() as? [String: Any],

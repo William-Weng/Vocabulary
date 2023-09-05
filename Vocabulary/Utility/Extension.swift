@@ -33,6 +33,50 @@ extension Int {
     }
 }
 
+// MARK: - UIColr (init function)
+extension UIColor {
+    
+    /// UIColor(red: 255, green: 255, blue: 255, alpha: 255)
+    /// - Parameters:
+    ///   - red: 紅色 => 0~255
+    ///   - green: 綠色 => 0~255
+    ///   - blue: 藍色 => 0~255
+    ///   - alpha: 透明度 => 0~255
+    convenience init(red: Int, green: Int, blue: Int, alpha: Int) { self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: CGFloat(alpha) / 255.0) }
+    
+    /// UIColor(red: 255, green: 255, blue: 255)
+    /// - Parameters:
+    ///   - red: 紅色 => 0~255
+    ///   - green: 綠色 => 0~255
+    ///   - blue: 藍色 => 0~255
+    convenience init(red: Int, green: Int, blue: Int) { self.init(red: red, green: green, blue: blue, alpha: 255) }
+    
+    /// UIColor(rgb: 0xFFFFFF)
+    /// - Parameter rgb: 顏色色碼的16進位值數字
+    convenience init(rgb: Int) { self.init(red: (rgb >> 16) & 0xFF, green: (rgb >> 8) & 0xFF, blue: rgb & 0xFF) }
+    
+    /// UIColor(rgba: 0xFFFFFFFF)
+    /// - Parameter rgba: 顏色的16進位值數字
+    convenience init(rgba: Int) { self.init(red: (rgba >> 24) & 0xFF, green: (rgba >> 16) & 0xFF, blue: (rgba >> 8) & 0xFF, alpha: (rgba) & 0xFF) }
+    
+    /// UIColor(rgb: #FFFFFF)
+    /// - Parameter rgb: 顏色的16進位值字串
+    convenience init(rgb: String) {
+        
+        let ruleRGB = "^#[0-9A-Fa-f]{6}$"
+        let predicateRGB = Constant.Predicate.matches(regex: ruleRGB).build()
+        
+        guard predicateRGB.evaluate(with: rgb),
+              let string = rgb.split(separator: "#").last,
+              let number = Int.init(string, radix: 16)
+        else {
+            self.init(red: 0, green: 0, blue: 0, alpha: 0); return
+        }
+        
+        self.init(rgb: number)
+    }
+}
+
 // MARK: - TimeInterval (function)
 extension TimeInterval {
  

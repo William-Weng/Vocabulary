@@ -408,4 +408,18 @@ extension Constant {
             }
         }
     }
+    
+    /// [比對用的NSPredicate](https://zh-tw.coderbridge.com/series/01d31194cb3c428d9ca2575c91e8b997/posts/11802227e6ad4e52b027d66f8f527f03)
+    enum Predicate {
+        
+        case matches(regex: String) // [正則表達式 (正規式)](https://swift.gg/2019/11/19/nspredicate-objective-c/)
+
+        /// [產生NSPredicate](https://www.jianshu.com/p/bfdacbdf37a7)
+        /// - Returns: NSPredicate
+        func build() -> NSPredicate {
+            switch self {
+            case .matches(let regex): return NSPredicate(format: "SELF MATCHES %@", regex)
+            }
+        }
+    }
 }

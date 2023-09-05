@@ -10,14 +10,35 @@ import AVFoundation
 import WWPrint
 import WWSQLite3Manager
 
+// MARK: - 單字等級設定
 struct VocabularyLevelInformation {
     
-    let key: String
-    let name: String
-    let value: Int
-    let backgroundColor: String
-    let color: String
-    let guessCount: Int
+    let key: String                 // 英文代碼
+    let name: String                // 顯示名稱
+    let value: Int                  // 資料庫數值
+    let backgroundColor: String     // 背景顏色
+    let color: String               // 文字顏色
+    let guessCount: Int             // 複習題數量
+    
+    /// 快速建立VocabularyLevelInformation
+    /// - Parameters:
+    ///   - information: [String : Any]
+    ///   - key: String
+    /// - Returns: VocabularyLevelInformation?
+    static func build(with informations: [String : Any], forKey key: String) -> VocabularyLevelInformation? {
+        
+        guard let info = informations[key] as? [String: Any],
+              let name = info["name"] as? String,
+              let value = info["value"] as? Int,
+              let backgroundColor = info["backgroundColor"] as? String,
+              let color = info["color"] as? String,
+              let guessCount = info["guessCount"] as? Int
+        else {
+            return nil
+        }
+        
+        return VocabularyLevelInformation(key: key, name: name, value: value, backgroundColor: backgroundColor, color: color, guessCount: guessCount)
+    }
 }
 
 // MARK: - 單字內容

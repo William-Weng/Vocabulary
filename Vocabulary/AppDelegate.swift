@@ -151,44 +151,6 @@ extension AppDelegate {
     func stopRecordingWave() -> Bool { stopRecorder() }
 }
 
-// MARK: - 實驗
-private extension AppDelegate {
-    
-    func settings() {
-        
-        let tableName = Constant.tableName?.capitalized ?? "English"
-        
-        guard let jsonString = FileManager.default._readText(from: Bundle.main.bundleURL.appendingPathComponent("Settings.json")),
-              let dictionary = jsonString._jsonObject() as? [String: Any],
-              let settings = dictionary[tableName] as? [String: Any],
-              let vocabularyLevel = settings["settings"] as? [String: Any],
-              let information = vocabularyLevel["vocabularyLevel"] as? [String: Any]
-        else {
-            return
-        }
-        
-        let array = information.keys.compactMap { key -> VocabularyLevelInformation? in
-            
-            guard let info = information[key] as? [String: Any],
-                  let name = info["name"] as? String,
-                  let value = info["value"] as? Int,
-                  let backgroundColor = info["backgroundColor"] as? String,
-                  let color = info["color"] as? String,
-                  let guessCount = info["guessCount"] as? Int
-            else {
-                return nil
-            }
-            
-            return VocabularyLevelInformation(key: key, name: name, value: value, backgroundColor: backgroundColor, color: color, guessCount: guessCount)
-            
-        }.sorted {
-            $1.value > $0.value
-        }
-        
-        Constant.vocabularyLevelInformations = array
-    }
-}
-
 // MARK: - 小工具
 private extension AppDelegate {
     
@@ -209,7 +171,7 @@ private extension AppDelegate {
         
         _ = animationFolderUrlMaker()
         
-        settings()
+        initSettings()
     }
     
     /// 取得之前設定的資料庫名稱
@@ -390,6 +352,57 @@ private extension AppDelegate {
         let shortcutItem = UIApplicationShortcutItem._build(localizedTitle: title, localizedSubtitle: subtitle, icon: icon)
         
         return shortcutItem
+    }
+}
+
+// MARK: - Settings.json
+private extension AppDelegate {
+    
+    /// 初始化設定值 => Settings.json
+    func initSettings() {
+        
+        guard let dictionary = settingsDictionary(with: Constant.tableName),
+              let settings = dictionary["settings"] as? [String: Any]
+        else {
+            return
+        }
+        
+        Constant.vocabularyLevelInformations = vocabularyLevelInformations(with: settings)
+    }
+    
+    /// 取得該語言的設定檔
+    /// - Parameters:
+    ///   - tableName: String?
+    ///   - filename: String
+    /// - Returns: [String: Any]?
+    func settingsDictionary(with tableName: String?, filename: String = "Settings.json") -> [String: Any]? {
+        
+        let currentTableName = tableName ?? "English"
+        
+        guard let jsonString = FileManager.default._readText(from: Bundle.main.bundleURL.appendingPathComponent(filename)),
+              let dictionary = jsonString._jsonObject() as? [String: Any],
+              let settings = dictionary[currentTableName] as? [String: Any]
+        else {
+            return nil
+        }
+        
+        return settings
+    }
+    
+    /// 解析單字等級的設定值
+    /// - Parameter settings: [String: Any]
+    /// - Returns: [VocabularyLevelInformation]
+    func vocabularyLevelInformations(with settings: [String: Any]) -> [VocabularyLevelInformation] {
+        
+        guard let informations = settings["vocabularyLevel"] as? [String: Any] else { return [] }
+        
+        let array = informations.keys.compactMap { key -> VocabularyLevelInformation? in
+            return VocabularyLevelInformation.build(with: informations, forKey: key)
+        }.sorted {
+            return $1.value > $0.value
+        }
+        
+        return array
     }
 }
 

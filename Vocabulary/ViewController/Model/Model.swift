@@ -35,34 +35,6 @@ final class Vocabulary: Codable {
     
     deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
     
-    // 單字難度等級
-    public enum Level: Int, CaseIterable {
-        
-        case easy = 0
-        case medium = 1
-        case hard = 2
-        
-        /// 單字等級
-        func value() -> String {
-            switch self {
-            case .easy: return "簡單"
-            case .medium: return "一般"
-            case .hard: return "困難"
-            }
-        }
-        
-        /// 等級背景色
-        /// - Returns: UIColor
-        func backgroundColor() -> UIColor {
-            
-            switch self {
-            case .easy: return #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
-            case .medium: return #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
-            case .hard: return #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
-            }
-        }
-    }
-    
     // 單字詞性
     public enum Speech: Int, CaseIterable {
         

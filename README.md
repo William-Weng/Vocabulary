@@ -74,6 +74,7 @@
 |[Question](https://www.flaticon.com/free-icon/request_7887104)|快速單字搜尋功能|
 |[HardWork_On](https://www.flaticon.com/free-icon/goal_1600071)|單字翻譯難度 (已讀)|
 |[HardWork_Off](https://www.flaticon.com/free-icon/goal_1599969)|單字翻譯難度 (未讀)|
+|[Palette](https://www.flaticon.com/free-icon/color-palette_3214398)|調色盤|
 
 ## [背景音樂 - .mp3 / .m4a (請在iTunes上自行加入)](http://amachamusic.chagasi.com/)
 

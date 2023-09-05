@@ -22,7 +22,6 @@ final class OthersViewController: UIViewController {
     
     @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var myTableView: UITableView!
-    @IBOutlet weak var dictionaryButtonItem: UIBarButtonItem!
     @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var appendBookmarkButton: UIButton!
     @IBOutlet weak var activityViewIndicator: UIActivityIndicatorView!
@@ -43,7 +42,6 @@ final class OthersViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
-        initDictionaryItemMenu()
         viewDidTransitionAction()
     }
     
@@ -687,38 +685,6 @@ private extension OthersViewController {
         
         appendBookmarkButton.isHidden = isFavorite
         reloadBookmarks(isFavorite: isFavorite)
-    }
-}
-
-// MARK: - UIMenu
-private extension OthersViewController {
-    
-    /// 初始化字典選單 (UIMenu)
-    /// - Parameter sender: UIBarButtonItem
-    func initDictionaryItemMenu() {
-        
-        let actions = Constant.VoiceCode.allCases.map { dictionaryItemMenuActionMaker(tableName: $0) }
-        let menu = UIMenu(title: "請選擇字典", children: actions)
-        
-        dictionaryButtonItem.menu = menu
-        dictionaryButtonItem.title = Constant.currentTableName.flagEmoji()
-    }
-    
-    /// 產生字典資料庫選單
-    /// - Parameter tableName: Constant.VoiceCode
-    /// - Returns: UIAction
-    func dictionaryItemMenuActionMaker(tableName: Constant.VoiceCode) -> UIAction {
-        
-        let action = UIAction(title: tableName.name()) { [weak self] _ in
-            
-            guard let this = self else { return }
-            
-            Constant.currentTableName = tableName
-            this.dictionaryButtonItem.title = tableName.flagEmoji()
-            NotificationCenter.default._post(name: .refreshViewController)
-        }
-        
-        return action
     }
 }
 

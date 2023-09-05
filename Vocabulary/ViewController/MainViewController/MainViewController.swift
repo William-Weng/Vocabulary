@@ -765,10 +765,45 @@ private extension MainViewController {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let actionOK = UIAlertAction(title: "確認", style: .default) { _ in }
-        
+        let actionSelectDatabase = UIAlertAction(title: "選擇字典", style: .default) { [weak self] _ in
+            guard let this = self else { return }
+            this.dictionaryAlertAction(target: this)
+        }
+
+        alertController.addAction(actionSelectDatabase)
         alertController.addAction(actionOK)
-        
+
         present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 字典選單
+    /// - Parameter target: UIViewController
+    func dictionaryAlertAction(target: UIViewController) {
+        
+        let alertController = UIAlertController(title: "請選擇等級", message: nil, preferredStyle: .actionSheet)
+        let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
+        
+        Constant.VoiceCode.allCases.forEach { code in
+            let action = dictionaryAlertActionMaker(tableName: code)
+            alertController.addAction(action)
+        }
+        
+        alertController.addAction(action)
+        
+        target.present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 產生字典資料庫選單
+    /// - Parameter tableName: Constant.VoiceCode
+    /// - Returns: UIAction
+    func dictionaryAlertActionMaker(tableName: Constant.VoiceCode) -> UIAlertAction {
+        
+        let action = UIAlertAction(title: tableName.name(), style: .default) { _ in
+            Constant.currentTableName = tableName
+            NotificationCenter.default._post(name: .refreshViewController)
+        }
+        
+        return action
     }
     
     /// 過濾是否為Favorite的單字

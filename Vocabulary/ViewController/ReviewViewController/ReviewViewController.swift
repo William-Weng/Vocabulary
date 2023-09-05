@@ -9,7 +9,7 @@ import UIKit
 import WWPrint
 import AVFAudio
 
-// MARK: - 複習單字頁面
+// MARK: - 單字複習頁面
 final class ReviewViewController: UIViewController {
     
     enum ViewSegue: String {

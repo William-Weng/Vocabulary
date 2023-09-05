@@ -36,7 +36,7 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var activityViewIndicator: UIActivityIndicatorView!
     @IBOutlet weak var indicatorLabel: UILabel!
-       
+    
     private let appendTextHintTitle = "請輸入單字"
     
     private var titleString: String { Constant.currentTableName.name() }

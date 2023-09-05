@@ -119,10 +119,20 @@ extension Utility {
     ///   - titleView: UILabel
     ///   - title: String
     ///   - count: Int
-    func titleViewSetting(with titleView: UILabel, title: String, count: Int) {
+    ///   - gap: CGFloat
+    func titleViewSetting(with titleView: UILabel, title: String, count: Int, gap: CGFloat = 16.0) {
         
         let title = "\(title) - \(count)"
-        let gap = 16.0
+        titleViewSetting(titleView, title: title, gap: gap)
+    }
+    
+    func titleViewSetting(with titleView: UILabel, title: String, count: Int, searchWordCount: Int, gap: CGFloat = 16.0) {
+        
+        let title = "\(title) - \(count) / \(searchWordCount)"
+        titleViewSetting(titleView, title: title, gap: gap)
+    }
+    
+    func titleViewSetting(_ titleView: UILabel, title: String, gap: CGFloat = 16.0) {
         
         titleView.sizeToFit()
         titleView.textAlignment = .center

@@ -17,6 +17,7 @@ final class Constant: NSObject {
     static let webImageExpiredDays = 90
     static let duration: TimeInterval = 0.15
     static let autoBackupDays = 7
+    static let searchCount = 10
     static let autoBackupDelaySecond: TimeInterval = 2
     static let searchDelayTime: TimeInterval = 0.3
     static let databaseName = "Vocabulary.db"
@@ -25,8 +26,8 @@ final class Constant: NSObject {
     static let reload = "重新讀取"
     static let noDataUpdate = "無更新資料"
     static let recordFilename = "record.wav"
-    static let searchCountWithLevel: SearchCountWithLevel = [.easy: 3, .medium: 4, .hard: 3]
-
+    static let reviewCountWithLevel: SearchCountWithLevel = [.easy: 3, .medium: 4, .hard: 3]
+    
     static var volume: Float = 0.1
     static var speakingSpeed: Float = 0.4
     static var updateScrolledHeight: CGFloat = 128.0
@@ -35,7 +36,6 @@ final class Constant: NSObject {
     static var backupDirectory = FileManager.default._documentDirectory()
     static var musicFileList: [String]?
     static var playingMusicList: [Music] = []
-    static var searchCount: Int { return Self.searchCountWithLevel.reduce(0) { $0 + $1.value }}
 
     static var isPrint: Bool {
         #if DEBUG

@@ -45,7 +45,7 @@ final class ReviewViewController: UIViewController {
         super.viewDidLoad()
         initSetting()
         initSpeakImage()
-        initReviewWordList(count: searchTotalCount())
+        initReviewWordList()
         initQuestionLevelItem()
     }
     
@@ -81,10 +81,11 @@ final class ReviewViewController: UIViewController {
     }
     
     @objc func guessVocabulary(_ tapGesture: UITapGestureRecognizer) { speakVocabularyAction() }
+    @objc func reviewQuestionLevel(_ sender: UITapGestureRecognizer) { reviewQuestionLevelAction(questionLevel) }
     
     @IBAction func guessAnswear(_ sender: UIButton) { answearAction(sender) }
     @IBAction func reviewSolution(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegue.solutionView.rawValue, sender: vocabularyArray) }
-    @IBAction func refreshQuestion(_ sender: UIBarButtonItem) { initReviewWordList(count: searchTotalCount()); Utility.shared.flashHUD(with: .nice) }
+    @IBAction func refreshQuestion(_ sender: UIBarButtonItem) { initReviewWordList(); Utility.shared.flashHUD(with: .nice) }
     @IBAction func speedRate(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegue.speakingRateView.rawValue, sender: nil) }
     
     deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
@@ -99,7 +100,7 @@ extension ReviewViewController: AVSpeechSynthesizerDelegate {
 
 // MARK: - MyNavigationControllerDelegate
 extension ReviewViewController: MyNavigationControllerDelegate {
-    func refreshRootViewController() { initReviewWordList(count: searchTotalCount()) }
+    func refreshRootViewController() { initReviewWordList() }
 }
 
 // MARK: - 小工具
@@ -128,10 +129,8 @@ private extension ReviewViewController {
     
     /// 產生猜單字的字組
     /// - Parameter count: 一次要搜尋的單字數量
-    func initReviewWordList(count: Int) {
-        
-        initTitle(with: "單字複習")
-        
+    func initReviewWordList() {
+                
         isNextVocabulary = true
         answerLabel.text = ""
         interpretLabel.text = ""
@@ -141,13 +140,33 @@ private extension ReviewViewController {
         
         reviewWordList = reviewWordRandomListArray()
         searchWordCount = reviewWordList.count
+        
+        titleViewSetting(with: "單字複習", count: 0, searchWordCount: searchWordCount)
     }
     
-    /// 設定Title
-    func initTitle(with text: String?) {
-        let label = UILabel()
-        label.text = text
-        navigationItem.titleView = label
+    /// 標題文字相關設定
+    /// - Parameters:
+    ///   - title: String
+    ///   - count: Int
+    func titleViewSetting(with title: String, count: Int, searchWordCount: Int) {
+        
+        let titleView = Utility.shared.titleLabelMaker(with: "\(title) - \(count) / \(searchWordCount)")
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(Self.reviewQuestionLevel(_:)))
+        
+        titleView.isUserInteractionEnabled = true
+        titleView.addGestureRecognizer(gesture)
+                
+        navigationItem.titleView = titleView
+    }
+    
+    /// 設定標題
+    /// - Parameters:
+    ///   - title: String
+    ///   - count: Int
+    func titleSetting(_ title: String, count: Int, searchWordCount: Int) {
+        
+        guard let titleView = navigationItem.titleView as? UILabel else { titleViewSetting(with: title, count: count, searchWordCount: searchWordCount); return }
+        Utility.shared.titleViewSetting(with: titleView, title: title, count: count, searchWordCount: searchWordCount)
     }
     
     /// [按下語音播放猜單字的動作 (聲音播完 && 動畫完成)](https://stackoverflow.com/questions/40856037/how-to-know-when-an-avspeechutterance-has-finished-so-as-to-continue-app-activi)
@@ -303,7 +322,7 @@ private extension ReviewViewController {
     /// 取得各難度的搜尋總數量
     /// - Returns: Int
     func searchTotalCount() -> Int {
-        let totalCount = Constant.searchCountWithLevel.reduce(0) { return $0 + $1.value }
+        let totalCount = Constant.reviewCountWithLevel.reduce(0) { return $0 + $1.value }
         return totalCount
     }
     
@@ -318,7 +337,7 @@ private extension ReviewViewController {
         
         if (reviewWordList.isEmpty) { refreshQuestionButtonItem.isEnabled = true }
     }
-    
+        
     /// 讀出要複習的單字語音
     func speakVocabularyAction() {
         
@@ -331,7 +350,8 @@ private extension ReviewViewController {
         }
         
         let count = searchWordCount - reviewWordList.count
-        initTitle(with: "單字複習 - \(count) / \(searchWordCount)")
+        
+        titleSetting("單字複習", count: count, searchWordCount: searchWordCount)
         speakVocabulary(vocabularyList, level: questionLevel)
     }
     
@@ -396,7 +416,7 @@ private extension ReviewViewController {
         
         var list: [[String : Any]] = []
         
-        for (level, count) in Constant.searchCountWithLevel {
+        for (level, count) in Constant.reviewCountWithLevel {
             list += API.shared.searchGuessWordList(with: level, for: Constant.currentTableName, count: count, offset: 0)
         }
         
@@ -469,7 +489,7 @@ extension ReviewViewController {
     func initQuestionLevelItem() {
         
         let actions = Constant.QuestionLevel.allCases.map { questionLevelActionMaker($0) }
-        let menu = UIMenu(title: "請選擇等級", children: actions)
+        let menu = UIMenu(title: "請選擇問題等級", children: actions)
         
         questionLevelButtonItem.menu = menu
     }
@@ -484,7 +504,7 @@ extension ReviewViewController {
             guard let this = self else { return }
             
             this.questionLevel = level
-            this.initReviewWordList(count: this.searchTotalCount())
+            this.initReviewWordList()
             
             Utility.shared.flashHUD(with: .nice)
         }
@@ -508,5 +528,30 @@ extension ReviewViewController {
         }
         
         return action
+    }
+    
+    /// 提示問題的難度類型
+    /// - Parameter level: Constant.QuestionLevel
+    func reviewQuestionLevelAction(_ level: Constant.QuestionLevel) {
+        
+        let version = Bundle.main._appVersion()
+        let message = "v\(version.app) - \(version.build)"
+        let title = "問題難度：\(level.value())"
+        
+        informationHint(with: title, message: message)
+    }
+    
+    /// 顯示版本 / 問題的難度類型
+    /// - Parameters:
+    ///   - title: String?
+    ///   - message: String?
+    func informationHint(with title: String?, message: String?) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let actionOK = UIAlertAction(title: "確認", style: .default) { _ in }
+        
+        alertController.addAction(actionOK)
+        
+        present(alertController, animated: true, completion: nil)
     }
 }

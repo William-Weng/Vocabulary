@@ -10,7 +10,7 @@ import AVFoundation
 import WWPrint
 import WWSQLite3Manager
 
-// MARK: - 單字等級設定
+// MARK: - 單字等級設定 (Settings.json)
 struct VocabularyLevelInformation {
     
     let key: String                 // 英文代碼
@@ -38,6 +38,65 @@ struct VocabularyLevelInformation {
         }
         
         return VocabularyLevelInformation(key: key, name: name, value: value, backgroundColor: backgroundColor, color: color, guessCount: guessCount)
+    }
+}
+
+// MARK: - 精選例句類型設定 (Settings.json)
+struct SentenceSpeechInformation {
+    
+    let key: String                 // 英文代碼
+    let name: String                // 顯示名稱
+    let value: Int                  // 資料庫數值
+    let backgroundColor: String     // 背景顏色
+    let color: String               // 文字顏色
+    
+    /// 快速建立VocabularyLevelInformation
+    /// - Parameters:
+    ///   - information: [String : Any]
+    ///   - key: String
+    /// - Returns: VocabularyLevelInformation?
+    static func build(with informations: [String : Any], forKey key: String) -> SentenceSpeechInformation? {
+        
+        guard let info = informations[key] as? [String: Any],
+              let name = info["name"] as? String,
+              let value = info["value"] as? Int,
+              let backgroundColor = info["backgroundColor"] as? String,
+              let color = info["color"] as? String
+        else {
+            return nil
+        }
+                
+        return SentenceSpeechInformation(key: key, name: name, value: value, backgroundColor: backgroundColor, color: color)
+    }
+}
+
+
+// MARK: - 精選例句類型設定 (Settings.json)
+struct WordSpeechInformation {
+    
+    let key: String                 // 英文代碼
+    let name: String                // 顯示名稱
+    let value: Int                  // 資料庫數值
+    let backgroundColor: String     // 背景顏色
+    let color: String               // 文字顏色
+    
+    /// 快速建立VocabularyLevelInformation
+    /// - Parameters:
+    ///   - information: [String : Any]
+    ///   - key: String
+    /// - Returns: VocabularyLevelInformation?
+    static func build(with informations: [String : Any], forKey key: String) -> WordSpeechInformation? {
+        
+        guard let info = informations[key] as? [String: Any],
+              let name = info["name"] as? String,
+              let value = info["value"] as? Int,
+              let backgroundColor = info["backgroundColor"] as? String,
+              let color = info["color"] as? String
+        else {
+            return nil
+        }
+                
+        return WordSpeechInformation(key: key, name: name, value: value, backgroundColor: backgroundColor, color: color)
     }
 }
 

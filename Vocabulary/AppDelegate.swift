@@ -368,6 +368,8 @@ private extension AppDelegate {
         }
         
         Constant.vocabularyLevelInformations = vocabularyLevelInformations(with: settings)
+        Constant.sentenceSpeechInformations = sentenceSpeechInformations(with: settings)
+        Constant.wordSpeechInformations = wordSpeechInformations(with: settings)
     }
     
     /// 取得該語言的設定檔
@@ -404,6 +406,39 @@ private extension AppDelegate {
         
         return array
     }
+    
+    /// 解析精選例句類型的設定值
+    /// - Parameter settings: [String: Any]
+    /// - Returns: [SentenceSpeechInformation]
+    func sentenceSpeechInformations(with settings: [String: Any]) -> [SentenceSpeechInformation] {
+        
+        guard let informations = settings["sentenceSpeech"] as? [String: Any] else { return [] }
+                
+        let array = informations.keys.compactMap { key -> SentenceSpeechInformation? in
+            return SentenceSpeechInformation.build(with: informations, forKey: key)
+        }.sorted {
+            return $1.value > $0.value
+        }
+        
+        return array
+    }
+    
+    /// 解析單字型態的設定值
+    /// - Parameter settings: [String: Any]
+    /// - Returns: [SentenceSpeechInformation]
+    func wordSpeechInformations(with settings: [String: Any]) -> [WordSpeechInformation] {
+        
+        guard let informations = settings["wordSpeech"] as? [String: Any] else { return [] }
+        
+        let array = informations.keys.compactMap { key -> WordSpeechInformation? in
+            return WordSpeechInformation.build(with: informations, forKey: key)
+        }.sorted {
+            return $1.value > $0.value
+        }
+        
+        return array
+    }
+
 }
 
 // MARK: - for Deep Link

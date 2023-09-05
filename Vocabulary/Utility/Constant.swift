@@ -36,6 +36,8 @@ final class Constant: NSObject {
     static var musicFileList: [String]?
     static var playingMusicList: [Music] = []
     static var vocabularyLevelInformations: [VocabularyLevelInformation] = []
+    static var sentenceSpeechInformations: [SentenceSpeechInformation] = []
+    static var wordSpeechInformations: [WordSpeechInformation] = []
     
     static var isPrint: Bool {
         #if DEBUG

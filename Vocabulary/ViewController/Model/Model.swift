@@ -17,6 +17,7 @@ struct VocabularyLevelInformation {
     let value: Int
     let backgroundColor: String
     let color: String
+    let guessCount: Int
 }
 
 // MARK: - 單字內容

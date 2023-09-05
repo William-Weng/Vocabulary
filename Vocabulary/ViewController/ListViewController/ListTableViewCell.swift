@@ -136,7 +136,7 @@ private extension ListTableViewCell {
     
     /// 更新暫存的例句列表資訊
     /// - Parameters:
-    ///   - level: Vocabulary.Level
+    ///   - speech: Vocabulary.Speech
     ///   - indexPath: IndexPath
     func updateSpeechDictionary(_ speech: Vocabulary.Speech, with indexPath: IndexPath) {
         

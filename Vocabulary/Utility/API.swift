@@ -240,22 +240,21 @@ extension API {
     
     /// 搜尋要猜的單字列表 (複習)
     /// - Parameters:
-    ///   - level: 難度等級
+    ///   - info: 難度等級資訊
     ///   - days: 幾天前後的資料
     ///   - tableName: 資料表名稱
-    ///   - count: 數量
     ///   - offset: 偏移量
     /// - Returns: [[String : Any]]
-    func searchGuessWordList(with level: Vocabulary.Level, days: Int = -3, for tableName: Constant.VoiceCode, count: Int = Constant.searchCount, offset: Int) -> [[String : Any]] {
+    func searchGuessWordList(with info: VocabularyLevelInformation, days: Int = -3, for tableName: Constant.VoiceCode, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database,
               let time = Date()._adding(component: .day, value: days)?._localTime()
         else {
             return []
         }
-        
-        let condition = SQLite3Condition.Where().isCompare(key: "level", type: .equal, value: level.rawValue).andCompare(key: "createTime", type: .lessThan, value: time)
-        let limit = SQLite3Condition.Limit().build(count: count, offset: 0)
+                
+        let condition = SQLite3Condition.Where().isCompare(key: "level", type: .equal, value: info.value).andCompare(key: "createTime", type: .lessThan, value: time)
+        let limit = SQLite3Condition.Limit().build(count: info.guessCount, offset: 0)
         let orderBy = SQLite3Condition.OrderBy().item(key: "level", type: .ascending).addItem(key: "review", type: .ascending).addItem(key: "createTime", type: .descending)
         let result = database.select(tableName: tableName.vocabularyList(), type: VocabularyList.self, where: condition, orderBy: orderBy, limit: limit)
         
@@ -421,7 +420,7 @@ extension API {
         let items: [SQLite3Database.InsertItem] = [
             (key: "word", value: word),
             (key: "count", value: 1),
-            (key: "level", value: Vocabulary.Level.medium.rawValue),
+            (key: "level", value: 0),
         ]
         
         let result = database.insert(tableName: tableName.vocabularyList(), itemsArray: [items])
@@ -614,21 +613,6 @@ extension API {
         
         return result.isSussess
     }
-    
-//    func updateLevelToList(_ id: Int, level: Vocabulary.Level, for tableName: Constant.VoiceCode) -> Bool {
-//        
-//        guard let database = Constant.database else { return false }
-//        
-//        let items: [SQLite3Database.InsertItem] = [
-//            (key: "level", value: level.rawValue),
-//        ]
-//        
-//        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
-//        let result = database.update(tableName: tableName.vocabularyList(), items: items, where: condition)
-//        
-//        return result.isSussess
-//    }
-
     
     /// 更新『翻譯難度』 => hardWork
     /// - Parameters:

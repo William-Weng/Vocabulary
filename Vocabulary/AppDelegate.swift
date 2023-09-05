@@ -173,17 +173,18 @@ private extension AppDelegate {
                   let name = info["name"] as? String,
                   let value = info["value"] as? Int,
                   let backgroundColor = info["backgroundColor"] as? String,
-                  let color = info["color"] as? String
+                  let color = info["color"] as? String,
+                  let guessCount = info["guessCount"] as? Int
             else {
                 return nil
             }
             
-            return VocabularyLevelInformation(key: key, name: name, value: value, backgroundColor: backgroundColor, color: color)
+            return VocabularyLevelInformation(key: key, name: name, value: value, backgroundColor: backgroundColor, color: color, guessCount: guessCount)
             
         }.sorted {
             $1.value > $0.value
         }
-                
+        
         Constant.vocabularyLevelInformations = array
     }
 }

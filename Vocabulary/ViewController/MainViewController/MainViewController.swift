@@ -331,20 +331,6 @@ private extension MainViewController {
         return API.shared.updateAlphabetToList(id, alphabet: alphabet, for: tableName)
     }
     
-    /// 更新等級Level文字
-    /// - Parameters:
-    ///   - indexPath: IndexPath
-    ///   - level: 等級
-    func updateLevelLabel(with indexPath: IndexPath, level: Vocabulary.Level) {
-        
-        guard var dictionary = MainTableViewCell.vocabularyListArray[safe: indexPath.row] else { return }
-        
-        dictionary["level"] = level.rawValue
-        MainTableViewCell.vocabularyListArray[indexPath.row] = dictionary
-        
-        myTableView.reloadRows(at: [indexPath], with: .automatic)
-    }
-    
     /// 新增單字的動作
     /// - Parameter sender: UIButton
     func appendTextHintAction(_ sender: UIButton) {        

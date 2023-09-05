@@ -319,13 +319,6 @@ private extension ReviewViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    /// 取得各難度的搜尋總數量
-    /// - Returns: Int
-    func searchTotalCount() -> Int {
-        let totalCount = Constant.reviewCountWithLevel.reduce(0) { return $0 + $1.value }
-        return totalCount
-    }
-    
     /// 設定解答按鍵 / 重新產生題目按鈕的狀態
     /// - Parameter isEnabled: Bool
     func answearButtonStatus(isEnabled: Bool) {
@@ -416,8 +409,8 @@ private extension ReviewViewController {
         
         var list: [[String : Any]] = []
         
-        for (level, count) in Constant.reviewCountWithLevel {
-            list += API.shared.searchGuessWordList(with: level, for: Constant.currentTableName, count: count, offset: 0)
+        Constant.vocabularyLevelInformations.forEach { info in
+            list += API.shared.searchGuessWordList(with: info, for: Constant.currentTableName, offset: 0)
         }
         
         return list.shuffled()

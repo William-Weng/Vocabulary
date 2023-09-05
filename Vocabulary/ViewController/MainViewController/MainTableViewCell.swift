@@ -63,7 +63,7 @@ private extension MainTableViewCell {
                 
         guard let vocabularyList = Self.vocabularyList(with: indexPath) else { return }
         
-        let level = Vocabulary.Level(rawValue: vocabularyList.level) ?? .easy
+        let info = Constant.vocabularyLevelInformations[safe: vocabularyList.level]
         
         self.indexPath = indexPath
         self.vocabularyList = vocabularyList
@@ -74,16 +74,15 @@ private extension MainTableViewCell {
         
         wordLabel.font = Constant.currentTableName.font() ?? UIFont.systemFont(ofSize: 36.0)
         wordLabel.text = vocabularyList.word
-        
-        levelButton.setTitle(level.value(), for: .normal)
-        levelButton.backgroundColor = level.backgroundColor()
+                
+        levelButtonSetting(levelButton, with: info)
         levelButton.showsMenuAsPrimaryAction = true
         levelButton.menu = UIMenu(title: "請選擇等級", children: levelMenuActionMaker())
         
         favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)
         initFavoriteImageViewTapGestureRecognizer()
     }
-    
+        
     /// FavoriteImageView點擊功能
     func initFavoriteImageViewTapGestureRecognizer() {
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(Self.updateFavorite(_:)))
@@ -115,7 +114,7 @@ private extension MainTableViewCell {
         
     /// 更新LevelButton文字
     /// - Parameters:
-    ///   - level: Vocabulary.Level
+    ///   - info: VocabularyLevelInformation
     ///   - indexPath: IndexPath
     func updateLevel(_ info: VocabularyLevelInformation, with indexPath: IndexPath) {
         
@@ -123,12 +122,20 @@ private extension MainTableViewCell {
         
         let isSuccess = API.shared.updateLevelToList(vocabularyList.id, info: info, for: Constant.currentTableName)
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
-        
-        levelButton.setTitle(info.name, for: .normal)
-        levelButton.setTitleColor(UIColor(rgb: info.color), for: .normal)
-        levelButton.backgroundColor = UIColor(rgb: info.backgroundColor)
-        
+                
+        levelButtonSetting(levelButton, with: info)
         updateLevelDictionary(info, with: indexPath)
+    }
+    
+    /// levelButton文字顏字設定
+    /// - Parameters:
+    ///   - button: UIButton
+    ///   - info: VocabularyLevelInformation?
+    func levelButtonSetting(_ button: UIButton, with info: VocabularyLevelInformation?) {
+        
+        button.setTitle(info?.name ?? "一般", for: .normal)
+        button.setTitleColor(UIColor(rgb: info?.color ?? "#ffffff"), for: .normal)
+        button.backgroundColor = UIColor(rgb: info?.backgroundColor ?? "#000000")
     }
     
     /// 更新Favorite狀態
@@ -148,7 +155,7 @@ private extension MainTableViewCell {
     
     /// 更新暫存的單字列表資訊
     /// - Parameters:
-    ///   - level: Vocabulary.Level
+    ///   - info: VocabularyLevelInformation
     ///   - indexPath: IndexPath
     func updateLevelDictionary(_ info: VocabularyLevelInformation, with indexPath: IndexPath) {
         

@@ -36,9 +36,10 @@ final class Constant: NSObject {
     static var backupDirectory = FileManager.default._documentDirectory()
     static var musicFileList: [String]?
     static var playingMusicList: [Music] = []
-    static var vocabularyLevelInformations: [VocabularyLevelInformation] = []
-    static var sentenceSpeechInformations: [SentenceSpeechInformation] = []
-    static var wordSpeechInformations: [WordSpeechInformation] = []
+    static var vocabularyLevelInformations: [Settings.VocabularyLevelInformation] = []
+    static var sentenceSpeechInformations: [Settings.SentenceSpeechInformation] = []
+    static var wordSpeechInformations: [Settings.WordSpeechInformation] = []
+    static var generalInformations: [String: Settings.GeneralInformation] = [:]
     
     static var isPrint: Bool {
         #if DEBUG

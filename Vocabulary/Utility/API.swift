@@ -245,7 +245,7 @@ extension API {
     ///   - tableName: 資料表名稱
     ///   - offset: 偏移量
     /// - Returns: [[String : Any]]
-    func searchGuessWordList(with info: VocabularyLevelInformation, days: Int = -3, for tableName: Constant.VoiceCode, offset: Int) -> [[String : Any]] {
+    func searchGuessWordList(with info: Settings.VocabularyLevelInformation, days: Int = -3, for tableName: Constant.VoiceCode, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database,
               let time = Date()._adding(component: .day, value: days)?._localTime()
@@ -600,7 +600,7 @@ extension API {
     ///   - level: 等級
     ///   - tableName: 資料表名稱
     /// - Returns: Bool
-    func updateLevelToList(_ id: Int, info: VocabularyLevelInformation, for tableName: Constant.VoiceCode) -> Bool {
+    func updateLevelToList(_ id: Int, info: Settings.VocabularyLevelInformation, for tableName: Constant.VoiceCode) -> Bool {
         
         guard let database = Constant.database else { return false }
         

@@ -361,15 +361,38 @@ private extension AppDelegate {
     /// 初始化設定值 => Settings.json
     func initSettings() {
         
-        guard let dictionary = settingsDictionary(with: Constant.tableName, filename: Constant.settingsJSON),
+        guard let parseSettingsDictionary = parseSettingsDictionary(with: Constant.settingsJSON),
+              let dictionary = settingsDictionary(with: Constant.tableName, dictionary: parseSettingsDictionary),
               let settings = dictionary["settings"] as? [String: Any]
         else {
             return
         }
         
+        Constant.generalInformations = generalInformations(with: parseSettingsDictionary)
         Constant.vocabularyLevelInformations = vocabularyLevelInformations(with: settings)
         Constant.sentenceSpeechInformations = sentenceSpeechInformations(with: settings)
         Constant.wordSpeechInformations = wordSpeechInformations(with: settings)
+    }
+    
+    /// 取得一般般的設定檔
+    /// - Parameter dictionary: [String: Any]
+    /// - Returns: [String: Settings.GeneralInformation]
+    func generalInformations(with dictionary: [String: Any]) -> [String: Settings.GeneralInformation] {
+        
+        var infos: [String: Settings.GeneralInformation] = [:]
+        
+        for (key, value) in dictionary {
+            
+            guard let dict = value as? [String: Any],
+                  let info = dict._jsonClass(for: Settings.GeneralInformation.self)
+            else {
+                continue
+            }
+            
+            infos[key] = info
+        }
+        
+        return infos
     }
     
     /// 取得該語言的設定檔
@@ -377,41 +400,48 @@ private extension AppDelegate {
     ///   - tableName: String?
     ///   - filename: String
     /// - Returns: [String: Any]?
-    func settingsDictionary(with tableName: String?, filename: String) -> [String: Any]? {
+    func settingsDictionary(with tableName: String?, dictionary: [String: Any]) -> [String: Any]? {
         
         let currentTableName = tableName ?? "English"
         
+        guard let settings = dictionary[currentTableName] as? [String: Any] else { return nil }
+        return settings
+    }
+    
+    /// 解析完整的SettingsJSON的設定檔
+    /// - Returns: [String: Any]?
+    func parseSettingsDictionary(with filename: String) -> [String: Any]? {
+        
         guard let jsonString = FileManager.default._readText(from: Bundle.main.bundleURL.appendingPathComponent(filename)),
-              let dictionary = jsonString._jsonObject() as? [String: Any],
-              let settings = dictionary[currentTableName] as? [String: Any]
+              let dictionary = jsonString._jsonObject() as? [String: Any]
         else {
             return nil
         }
         
-        return settings
+        return dictionary
     }
     
     /// 解析單字等級的設定值 (排序由小到大)
     /// - Parameter settings: [String: Any]
     /// - Returns: [VocabularyLevelInformation]
-    func vocabularyLevelInformations(with settings: [String: Any]) -> [VocabularyLevelInformation] {
-        let array = colorSettingsArray(with: settings, key: .vocabularyLevel, type: VocabularyLevelInformation.self)
+    func vocabularyLevelInformations(with settings: [String: Any]) -> [Settings.VocabularyLevelInformation] {
+        let array = colorSettingsArray(with: settings, key: .vocabularyLevel, type: Settings.VocabularyLevelInformation.self)
         return array.sorted { return $1.value > $0.value }
     }
     
     /// 解析精選例句類型的設定值
     /// - Parameter settings: [String: Any]
     /// - Returns: [SentenceSpeechInformation]
-    func sentenceSpeechInformations(with settings: [String: Any]) -> [SentenceSpeechInformation] {
-        let array = colorSettingsArray(with: settings, key: .sentenceSpeech, type: SentenceSpeechInformation.self)
+    func sentenceSpeechInformations(with settings: [String: Any]) -> [Settings.SentenceSpeechInformation] {
+        let array = colorSettingsArray(with: settings, key: .sentenceSpeech, type: Settings.SentenceSpeechInformation.self)
         return array.sorted { return $1.value > $0.value }
     }
     
     /// 解析單字型態的設定值
     /// - Parameter settings: [String: Any]
     /// - Returns: [SentenceSpeechInformation]
-    func wordSpeechInformations(with settings: [String: Any]) -> [WordSpeechInformation] {
-        let array = colorSettingsArray(with: settings, key: .wordSpeech, type: WordSpeechInformation.self)
+    func wordSpeechInformations(with settings: [String: Any]) -> [Settings.WordSpeechInformation] {
+        let array = colorSettingsArray(with: settings, key: .wordSpeech, type: Settings.WordSpeechInformation.self)
         return array.sorted { return $1.value > $0.value }
     }
     

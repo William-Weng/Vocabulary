@@ -116,7 +116,7 @@ private extension MainTableViewCell {
     /// - Parameters:
     ///   - info: VocabularyLevelInformation
     ///   - indexPath: IndexPath
-    func updateLevel(_ info: VocabularyLevelInformation, with indexPath: IndexPath) {
+    func updateLevel(_ info: Settings.VocabularyLevelInformation, with indexPath: IndexPath) {
         
         guard let vocabularyList = Self.vocabularyList(with: indexPath) else { return }
         
@@ -131,7 +131,7 @@ private extension MainTableViewCell {
     /// - Parameters:
     ///   - button: UIButton
     ///   - info: VocabularyLevelInformation?
-    func levelButtonSetting(_ button: UIButton, with info: VocabularyLevelInformation?) {
+    func levelButtonSetting(_ button: UIButton, with info: Settings.VocabularyLevelInformation?) {
         
         button.setTitle(info?.name ?? "一般", for: .normal)
         button.setTitleColor(UIColor(rgb: info?.color ?? "#ffffff"), for: .normal)
@@ -157,7 +157,7 @@ private extension MainTableViewCell {
     /// - Parameters:
     ///   - info: VocabularyLevelInformation
     ///   - indexPath: IndexPath
-    func updateLevelDictionary(_ info: VocabularyLevelInformation, with indexPath: IndexPath) {
+    func updateLevelDictionary(_ info: Settings.VocabularyLevelInformation, with indexPath: IndexPath) {
         
         guard var dictionary = Self.vocabularyListArray[safe: indexPath.row] else { return }
         

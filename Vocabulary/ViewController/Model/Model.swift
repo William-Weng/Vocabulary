@@ -10,35 +10,51 @@ import AVFoundation
 import WWPrint
 import WWSQLite3Manager
 
-// MARK: - 單字等級設定 (Settings.json)
-struct VocabularyLevelInformation: Codable {
+// MARK: - Settings.json設定檔Model
+final class Settings {
     
-    let key: String                 // 英文代碼
-    let name: String                // 顯示名稱
-    let value: Int                  // 資料庫數值
-    let backgroundColor: String     // 背景顏色
-    let color: String               // 文字顏色
-    let guessCount: Int             // 複習題數量
-}
+    // MARK: - 一般般設定
+    struct GeneralInformation: Decodable {
+        
+        let code: String                // 國別簡寫 (US)
+        let voice: String               // 語音代碼 (en-US)
+        let name: String                // 顯示名稱
+        let value: Int                  // 資料庫數值
+        let font: String                // 語言字型 (Bradley Hand)
+        let dictionaryURL: String       // 語言字典URL
+        let defineURL: String           // 語言定義URL
+    }
+    
+    // MARK: - 單字等級設定
+    struct VocabularyLevelInformation: Decodable {
+        
+        let key: String                 // 英文代碼
+        let name: String                // 顯示名稱
+        let value: Int                  // 資料庫數值
+        let backgroundColor: String     // 背景顏色
+        let color: String               // 文字顏色
+        let guessCount: Int             // 複習題數量
+    }
 
-// MARK: - 精選例句類型設定 (Settings.json)
-struct SentenceSpeechInformation: Codable {
-    
-    let key: String                 // 英文代碼
-    let name: String                // 顯示名稱
-    let value: Int                  // 資料庫數值
-    let backgroundColor: String     // 背景顏色
-    let color: String               // 文字顏色
-}
+    // MARK: - 精選例句類型設定
+    struct SentenceSpeechInformation: Decodable {
+        
+        let key: String                 // 英文代碼
+        let name: String                // 顯示名稱
+        let value: Int                  // 資料庫數值
+        let backgroundColor: String     // 背景顏色
+        let color: String               // 文字顏色
+    }
 
-// MARK: - 精選例句類型設定 (Settings.json)
-struct WordSpeechInformation: Codable {
-    
-    let key: String                 // 英文代碼
-    let name: String                // 顯示名稱
-    let value: Int                  // 資料庫數值
-    let backgroundColor: String     // 背景顏色
-    let color: String               // 文字顏色
+    // MARK: - 精選例句類型設定 (Settings.json)
+    struct WordSpeechInformation: Decodable {
+        
+        let key: String                 // 英文代碼
+        let name: String                // 顯示名稱
+        let value: Int                  // 資料庫數值
+        let backgroundColor: String     // 背景顏色
+        let color: String               // 文字顏色
+    }
 }
 
 // MARK: - 單字內容

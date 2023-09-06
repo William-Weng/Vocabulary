@@ -64,7 +64,7 @@ private extension ReviewResultTableViewCell {
         self.vocabularyReviewList = vocabularyReviewList
         self.isFavorite = ((vocabularyReviewList.favorite ?? 0) != 0)
 
-        wordLabel.font = Constant.currentTableName.font() ?? UIFont.systemFont(ofSize: 36.0)
+        wordLabel.font = Utility.shared.dictionaryFont(with: Constant.tableNameIndex, size: 36.0)
         wordLabel.text = "\(vocabularyReviewList.word)"
         
         correctCountLabel.text = "\(vocabularyReviewList.correctCount)"

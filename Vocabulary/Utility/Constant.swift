@@ -232,19 +232,7 @@ extension Constant {
             case .korean: return "KR"._flagEmoji()
             }
         }
-        
-        /// 字型
-        /// - Returns: UIFont?
-        func font(size fontSize: CGFloat = 36.0) -> UIFont? {
-            
-            switch self {
-            case .english: return UIFont(name: "Bradley Hand", size: fontSize)
-            case .japanese: return UIFont(name: "KleeOne-SemiBold", size: fontSize)
-            case .french: return UIFont(name: "Bradley Hand", size: fontSize)
-            case .korean: return UIFont(name: "GamjaFlower-Regular", size: fontSize)
-            }
-        }
-        
+                
         /// 分類 / 分組號碼 (0xx / 1xx / 2xx / ...)
         /// => 要跟Vocabulary.Speech配合
         /// - Returns: Int

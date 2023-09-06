@@ -286,7 +286,7 @@ private extension ReviewViewController {
             interpretLabel.textColor = level.color()
             interpretLabel.text = vocabulary?.interpret
         case .listen:
-            interpretLabel.font = Constant.currentTableName.font(size: 24.0)
+            interpretLabel.font = Utility.shared.dictionaryFont(with: Constant.tableNameIndex, size: 24.0)
             interpretLabel.textColor = level.color()
             interpretLabel.text = vocabulary?.example
         }

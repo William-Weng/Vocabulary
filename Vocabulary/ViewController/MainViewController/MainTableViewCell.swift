@@ -72,7 +72,7 @@ private extension MainTableViewCell {
         countLabel.text = "\(vocabularyList.count)"
         alphabetLabel.text = vocabularyList.alphabet
         
-        wordLabel.font = Constant.currentTableName.font() ?? UIFont.systemFont(ofSize: 36.0)
+        wordLabel.font = Utility.shared.dictionaryFont(with: Constant.tableNameIndex, size: 36.0)
         wordLabel.text = vocabularyList.word
                 
         levelButtonSetting(levelButton, with: info)

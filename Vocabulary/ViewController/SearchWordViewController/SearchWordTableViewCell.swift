@@ -134,7 +134,7 @@ private extension SearchWordTableViewCell {
         self.vocabularyList = vocabularyList
         self.isFavorite = ((vocabularyList.favorite ?? 0) != 0)
         
-        wordLabel.font = Constant.currentTableName.font() ?? UIFont.systemFont(ofSize: 36.0)
+        wordLabel.font = Utility.shared.dictionaryFont(with: Constant.tableNameIndex, size: 36.0)
         wordLabel.text = vocabularyList.word
         
         alphabetLabel.text = vocabularyList.alphabet

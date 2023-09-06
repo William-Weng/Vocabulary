@@ -69,7 +69,7 @@ private extension SentenceTableViewCell {
         
         translateLabel.text = sentenceList.translate
         
-        exampleLabel.font = Constant.currentTableName.font(size: 24.0) ?? .systemFont(ofSize: 24.0)
+        exampleLabel.font = Utility.shared.dictionaryFont(with: Constant.tableNameIndex, size: 24.0)
         exampleLabel.text = sentenceList.example
         
         speechButtonSetting(speechButton, with: info)

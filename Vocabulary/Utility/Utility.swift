@@ -309,6 +309,28 @@ extension Utility {
         
         return dictionary
     }
+}
+
+// MARK: - Settings.json
+extension Utility {
+    
+    /// 取得字典設定字型 (有預設值)
+    /// - Parameters:
+    ///   - index: Int
+    ///   - size: CGFloat
+    ///   - default: UIFont
+    /// - Returns: UIFont
+    func dictionaryFont(with index: Int, size: CGFloat) -> UIFont {
+        
+        guard let settings = Utility.shared.generalSettings(index: index),
+              let font = UIFont(name: settings.font, size: size)
+        else {
+            return UIFont.systemFont(ofSize: size)
+        }
+        
+        return font
+    }
+    
     
     /// 取得基本設定 (Settings.json)
     /// - Parameter index: Int

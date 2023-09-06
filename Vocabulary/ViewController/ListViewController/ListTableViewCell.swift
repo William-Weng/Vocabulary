@@ -73,8 +73,8 @@ private extension ListTableViewCell {
         interpretLabel.textColor = .clear
 
         exampleLabel.text = vocabulary.example ?? ""
-        exampleLabel.font = Constant.currentTableName.font(size: 24.0) ?? UIFont.systemFont(ofSize: 24.0)
-
+        exampleLabel.font = Utility.shared.dictionaryFont(with: Constant.tableNameIndex, size: 24.0)
+        
         translateLabel.text = vocabulary.translate ?? ""
         translateLabel.textColor = .clear
         

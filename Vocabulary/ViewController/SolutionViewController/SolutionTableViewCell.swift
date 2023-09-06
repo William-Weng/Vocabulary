@@ -67,7 +67,7 @@ private extension SolutionTableViewCell {
         alphabetLabel.text = vocabularyList.alphabet
 
         wordLabel.text = vocabularyList.word
-        wordLabel.font = Constant.currentTableName.font() ?? UIFont.systemFont(ofSize: 36.0)
+        wordLabel.font = Utility.shared.dictionaryFont(with: Constant.tableNameIndex, size: 36.0)
         
         favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)
         initFavoriteImageViewTapGestureRecognizer()

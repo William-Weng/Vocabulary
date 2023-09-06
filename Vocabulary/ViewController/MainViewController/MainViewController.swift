@@ -39,7 +39,7 @@ final class MainViewController: UIViewController {
     
     private let appendTextHintTitle = "請輸入單字"
     
-    private var titleString: String { Constant.currentTableName.name() }
+    private var titleString: String { Utility.shared.mainViewContrillerTitle(with: Constant.tableNameIndex, default: "字典") }
     private var isFixed = false
     private var isAnimationStop = false
     private var isFavorite = false
@@ -769,8 +769,9 @@ private extension MainViewController {
         let alertController = UIAlertController(title: "請選擇等級", message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
         
-        Constant.VoiceCode.allCases.forEach { code in
-            let action = dictionaryAlertActionMaker(tableName: code)
+        Constant.SettingsJSON.generalInformations.forEach { info in
+            
+            let action = dictionaryAlertActionMaker(with: info)
             alertController.addAction(action)
         }
         
@@ -782,10 +783,10 @@ private extension MainViewController {
     /// 產生字典資料庫選單
     /// - Parameter tableName: Constant.VoiceCode
     /// - Returns: UIAction
-    func dictionaryAlertActionMaker(tableName: Constant.VoiceCode) -> UIAlertAction {
+    func dictionaryAlertActionMaker(with info: Settings.GeneralInformation) -> UIAlertAction {
         
-        let action = UIAlertAction(title: tableName.name(), style: .default) { _ in
-            Constant.currentTableName = tableName
+        let action = UIAlertAction(title: info.name, style: .default) { _ in
+            Constant.currentTableName = info.key.capitalized
             NotificationCenter.default._post(name: .refreshViewController)
         }
         

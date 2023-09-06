@@ -331,6 +331,14 @@ extension Utility {
         return font
     }
     
+    /// 單字記憶頁的Title
+    /// - Parameter index: Int
+    /// - Returns: String?
+    func mainViewContrillerTitle(with index: Int, `default`: String) -> String {
+        
+        guard let settings = Utility.shared.generalSettings(index: index) else { return `default` }
+        return "\(settings.code._flagEmoji()) \(settings.name)"
+    }
     
     /// 取得基本設定 (Settings.json)
     /// - Parameter index: Int

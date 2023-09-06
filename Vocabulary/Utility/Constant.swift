@@ -208,30 +208,6 @@ extension Constant {
         /// 常用書籤 => EnglishBookmarkSite
         /// - Returns: String
         func bookmarks() -> String { return "\(self.rawValue)BookmarkSite" }
-                        
-        /// 字典名稱
-        /// - Returns: String
-        func name() -> String {
-            
-            switch self {
-            case .english: return "\(flagEmoji()) 英文字典"
-            case .japanese: return "\(flagEmoji()) 日文字典"
-            case .french: return "\(flagEmoji()) 法文字典"
-            case .korean: return "\(flagEmoji()) 韓文字典"
-            }
-        }
-        
-        /// 國旗顏文字
-        /// - Returns: String
-        func flagEmoji() -> String {
-            
-            switch self {
-            case .english: return "US"._flagEmoji()
-            case .japanese: return "JP"._flagEmoji()
-            case .french: return "FR"._flagEmoji()
-            case .korean: return "KR"._flagEmoji()
-            }
-        }
                 
         /// 分類 / 分組號碼 (0xx / 1xx / 2xx / ...)
         /// => 要跟Vocabulary.Speech配合

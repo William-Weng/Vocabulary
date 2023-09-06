@@ -38,7 +38,8 @@ final class SentenceViewController: UIViewController {
     private var disappearImage: UIImage?
     private var refreshControl: UIRefreshControl!
     private var currentScrollDirection: Constant.ScrollDirection = .down
-    private var currentSpeech: VocabularySentenceList.Speech? = nil
+    private var currentSpeechInformation: Settings.SentenceSpeechInformation? = nil
+    
     private var translateDisplayArray: Set<Int> = []
 
     override func viewDidLoad() {
@@ -71,8 +72,8 @@ final class SentenceViewController: UIViewController {
         if (identifier == licenseWebViewSegue) { licenseViewSetting(for: segue, sender: sender); return }
     }
     
-    @objc func refreshSentenceList(_ sender: UIRefreshControl) { translateDisplayArray = []; reloadSentenceList(with: currentSpeech, isFavorite: isFavorite) }
-    @objc func sentenceCount(_ sender: UITapGestureRecognizer) { sentenceCountAction(with: currentSpeech, isFavorite: isFavorite) }
+    @objc func refreshSentenceList(_ sender: UIRefreshControl) { translateDisplayArray = []; reloadSentenceList(with: currentSpeechInformation, isFavorite: isFavorite) }
+    @objc func sentenceCount(_ sender: UITapGestureRecognizer) { sentenceCountAction(with: currentSpeechInformation, isFavorite: isFavorite) }
 
     @IBAction func recordingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: recordingSegue, sender: nil) }
     @IBAction func licensePage(_ sender: UIBarButtonItem) { performSegue(withIdentifier: licenseWebViewSegue, sender: nil) }
@@ -125,8 +126,8 @@ extension SentenceViewController: SentenceViewDelegate {
 extension SentenceViewController: MyNavigationControllerDelegate {
     
     func refreshRootViewController() {
-        currentSpeech = nil
-        reloadSentenceList(with: currentSpeech, isFavorite: isFavorite)
+        currentSpeechInformation = nil
+        reloadSentenceList(with: currentSpeechInformation, isFavorite: isFavorite)
     }
 }
 
@@ -145,32 +146,35 @@ private extension SentenceViewController {
         myTableView._delegateAndDataSource(with: self)
         myTableView.addSubview(refreshControl)
         
-        reloadSentenceList(with: currentSpeech, isFavorite: isFavorite)
+        reloadSentenceList(with: currentSpeechInformation, isFavorite: isFavorite)
     }
     
     /// 顯示精選例句總數量
     /// - Parameters:
     ///   - speech: VocabularySentenceList.Speech?
     ///   - isFavorite: Bool
-    func sentenceCountAction(with speech: VocabularySentenceList.Speech?, isFavorite: Bool) {
+    func sentenceCountAction(with info: Settings.SentenceSpeechInformation?, isFavorite: Bool) {
         
         let version = Bundle.main._appVersion()
         let message = "v\(version.app) - \(version.build)"
-        let title = "\(titleString) - \(sentenceCount(with: speech, isFavorite: isFavorite))"
+        let title = "\(titleString) - \(sentenceCount(with: info, isFavorite: isFavorite))"
 
         informationHint(with: title, message: message)
     }
     
     /// 重新讀取單字
-    func reloadSentenceList(with speech: VocabularySentenceList.Speech?, isFavorite: Bool) {
+    /// - Parameters:
+    ///   - info: Settings.SentenceSpeechInformation?
+    ///   - isFavorite: Bool
+    func reloadSentenceList(with info: Settings.SentenceSpeechInformation?, isFavorite: Bool) {
         
         defer {
-            appendWordButtonHidden(with: speech, isFavorite: isFavorite)
+            appendWordButtonHidden(with: info, isFavorite: isFavorite)
             refreshControl.endRefreshing()
         }
         
         SentenceTableViewCell.sentenceListArray = []
-        SentenceTableViewCell.sentenceListArray = API.shared.searchSentenceList(with: speech, isFavorite: isFavorite, for: Constant.currentTableName, offset: 0)
+        SentenceTableViewCell.sentenceListArray = API.shared.searchSentenceList(with: info, isFavorite: isFavorite, for: Constant.currentTableName, offset: 0)
         
         let listCount = SentenceTableViewCell.sentenceListArray.count
         titleSetting(titleString, count: listCount)
@@ -189,12 +193,15 @@ private extension SentenceViewController {
     }
     
     /// [新增例句列表](https://medium.com/@daoseng33/我說那個-uitableview-insertrows-uicollectionview-insertitems-呀-56b8758b2efb)
-    func appendSentenceList(with speech: VocabularySentenceList.Speech?, isFavorite: Bool) {
+    /// - Parameters:
+    ///   - info: Settings.SentenceSpeechInformation?
+    ///   - isFavorite: Bool
+    func appendSentenceList(with info: Settings.SentenceSpeechInformation?, isFavorite: Bool) {
         
         defer { refreshControl.endRefreshing() }
         
         let oldListCount = SentenceTableViewCell.sentenceListArray.count
-        SentenceTableViewCell.sentenceListArray += API.shared.searchSentenceList(with: speech, isFavorite: isFavorite, for: Constant.currentTableName, offset: oldListCount)
+        SentenceTableViewCell.sentenceListArray += API.shared.searchSentenceList(with: info, isFavorite: isFavorite, for: Constant.currentTableName, offset: oldListCount)
         
         let newListCount = SentenceTableViewCell.sentenceListArray.count
         titleSetting(titleString, count: newListCount)
@@ -410,7 +417,7 @@ private extension SentenceViewController {
             }
             
             this.fixTranslateDisplayArray(with: IndexPath(row: 0, section: 0), type: .append)
-            this.reloadSentenceList(with: this.currentSpeech, isFavorite: this.isFavorite)
+            this.reloadSentenceList(with: this.currentSpeechInformation, isFavorite: this.isFavorite)
         }
         
         return actionOK
@@ -436,7 +443,7 @@ private extension SentenceViewController {
         let contentHeight = scrollView.contentSize.height
         
         if (contentOffsetY < 0) { return }
-        if (offset > contentHeight) { appendSentenceList(with: currentSpeech, isFavorite: isFavorite) }
+        if (offset > contentHeight) { appendSentenceList(with: currentSpeechInformation, isFavorite: isFavorite) }
     }
     
     /// 更新例句 (句子 / 翻譯)
@@ -535,12 +542,12 @@ private extension SentenceViewController {
     ///   - speech: VocabularySentenceList.Speech?
     ///   - isFavorite: Bool
     /// - Returns: Int
-    func sentenceCount(with speech: VocabularySentenceList.Speech?, isFavorite: Bool) -> Int {
+    func sentenceCount(with info: Settings.SentenceSpeechInformation?, isFavorite: Bool) -> Int {
         
         let key = "speech"
         let field = "\(key)Count"
         
-        guard let result = API.shared.searchSentenceCount(for: Constant.currentTableName, key: key, speech: speech, isFavorite: isFavorite).first,
+        guard let result = API.shared.searchSentenceCount(for: Constant.currentTableName, key: key, info: info, isFavorite: isFavorite).first,
               let value = result["\(field)"],
               let count = Int("\(value)", radix: 10)
         else {
@@ -625,16 +632,16 @@ private extension SentenceViewController {
     func filterFavoriteAction(_ sender: UIBarButtonItem) {
         isFavorite.toggle()
         sender.image = Utility.shared.favoriteIcon(isFavorite)
-        reloadSentenceList(with: currentSpeech, isFavorite: isFavorite)
+        reloadSentenceList(with: currentSpeechInformation, isFavorite: isFavorite)
     }
     
     /// 設定新增例句按鍵是否顯示
-    func appendWordButtonHidden(with speech: VocabularySentenceList.Speech?, isFavorite: Bool) {
+    func appendWordButtonHidden(with info: Settings.SentenceSpeechInformation?, isFavorite: Bool) {
         
         var isHidden = false
         
         if (isFavorite) { isHidden = true }
-        if (speech != nil) { isHidden = true }
+        if (info != nil) { isHidden = true }
 
         appendWordButton.isHidden = isHidden
     }
@@ -653,8 +660,8 @@ private extension SentenceViewController {
     /// - Parameter sender: UIBarButtonItem
     func initSpeechItemMenu() {
                 
-        let action = speechItemMenuActionMaker(speech: nil)
-        var actions = VocabularySentenceList.Speech.allCases.map { speechItemMenuActionMaker(speech: $0) }
+        let action = speechItemMenuActionMaker(info: nil)
+        var actions = Constant.SettingsJSON.sentenceSpeechInformations.map { speechItemMenuActionMaker(info: $0) }
         
         actions.insert(action, at: 0)
         
@@ -665,17 +672,17 @@ private extension SentenceViewController {
     /// 產生字典資料庫選單
     /// - Parameter tableName: Constant.VoiceCode
     /// - Returns: UIAction
-    func speechItemMenuActionMaker(speech: VocabularySentenceList.Speech?) -> UIAction {
+    func speechItemMenuActionMaker(info: Settings.SentenceSpeechInformation?) -> UIAction {
         
-        let title = speech?.value() ?? "全部"
+        let title = info?.name ?? "全部"
         
         let action = UIAction(title: title) { [weak self] _ in
             
             guard let this = self else { return }
             
-            this.currentSpeech = speech
+            this.currentSpeechInformation = info
             this.fixTranslateDisplayArray(with: IndexPath(row: 0, section: 0), type: .search)
-            this.reloadSentenceList(with: speech, isFavorite: this.isFavorite)
+            this.reloadSentenceList(with: info, isFavorite: this.isFavorite)
         }
         
         return action
@@ -696,7 +703,7 @@ private extension SentenceViewController {
         if isNeededUpdate && (percent > criticalValue) {
             percent = 0.0
             Utility.shared.impactEffect()
-            appendSentenceList(with: currentSpeech, isFavorite: isFavorite)
+            appendSentenceList(with: currentSpeechInformation, isFavorite: isFavorite)
         }
         
         updateActivityViewIndicatorSetting(with: percent, isNeededUpdate: isNeededUpdate)

@@ -114,23 +114,24 @@ private extension SentenceTableViewCell {
     /// 產生LevelButton選到時的動作
     /// - Returns: [UIAction]
     func speechMenuActionMaker() -> [UIAction] {
+        let actions = Constant.SettingsJSON.sentenceSpeechInformations.map { return speechActionMaker(with: $0) }
+        return actions
+    }
+    
+    /// 產生LevelButton選到時的動作
+    /// - Parameter info: Settings.SentenceSpeechInformation
+    /// - Returns: UIAction
+    func speechActionMaker(with info: Settings.SentenceSpeechInformation) -> UIAction {
         
-        let actions = Constant.SettingsJSON.sentenceSpeechInformations.map { info in
+        let action = UIAction(title: info.name) { [weak self] _ in
             
-            let action = UIAction(title: info.name) { [weak self] _ in
-                
-                guard let this = self else { return }
-                
-                wwPrint(info.value)
-                
-                this.updateSpeech(info, with: this.indexPath)
-                this.updateLevelDictionary(info, with:this.indexPath)
-            }
-            
-            return action
+            guard let this = self else { return }
+                            
+            this.updateSpeech(info, with: this.indexPath)
+            this.updateLevelDictionary(info, with:this.indexPath)
         }
         
-        return actions
+        return action
     }
     
     /// 更新SpeechButton文字

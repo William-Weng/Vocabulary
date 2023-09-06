@@ -98,18 +98,20 @@ private extension MainTableViewCell {
     /// 產生LevelButton選到時的動作
     /// - Returns: [UIAction]
     func levelMenuActionMaker() -> [UIAction] {
-        
-        let actions = Constant.SettingsJSON.vocabularyLevelInformations.map { info in
-            
-            let action = UIAction(title: info.name) { [weak self] _ in
-                guard let this = self else { return }
-                this.updateLevel(info, with: this.indexPath)
-            }
-            
-            return action
-        }
-                
+        let actions = Constant.SettingsJSON.vocabularyLevelInformations.map { return levelActionMaker($0) }
         return actions
+    }
+    
+    /// 產生LevelButton選到時的動作
+    /// - Returns: [UIAction]
+    func levelActionMaker(_ info: Settings.VocabularyLevelInformation) -> UIAction {
+        
+        let action = UIAction(title: info.name) { [weak self] _ in
+            guard let this = self else { return }
+            this.updateLevel(info, with: this.indexPath)
+        }
+        
+        return action
     }
         
     /// 更新LevelButton文字

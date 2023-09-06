@@ -91,23 +91,24 @@ extension API {
     /// - Parameters:
     ///   - tableName: 資料表名稱
     ///   - key: 欄位名稱
+    ///   - info: Settings.SentenceSpeechInformation?
     ///   - isFavorite: Bool
     /// - Returns: [[String : Any]]
-    func searchSentenceCount(for tableName: Constant.VoiceCode, key: String? = nil, speech: VocabularySentenceList.Speech?, isFavorite: Bool) -> [[String : Any]] {
+    func searchSentenceCount(for tableName: Constant.VoiceCode, key: String? = nil, info: Settings.SentenceSpeechInformation?, isFavorite: Bool) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
         var condition: SQLite3Condition.Where?
 
-        if let speech = speech {
-            var _condition = SQLite3Condition.Where().isCompare(key: "speech", type: .equal, value: speech.rawValue)
+        if let info = info {
+            var _condition = SQLite3Condition.Where().isCompare(key: "speech", type: .equal, value: info.value)
             if isFavorite { _condition = _condition.andCompare(key: "favorite", type: .equal, value: isFavorite._int()) }
             condition = _condition
         }
         
         if isFavorite {
             var _condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: isFavorite._int())
-            if let speech = speech { _condition = _condition.andCompare(key: "speech", type: .equal, value: speech.rawValue) }
+            if let info = info { _condition = _condition.andCompare(key: "speech", type: .equal, value: info.value) }
             condition = _condition
         }
         
@@ -285,7 +286,7 @@ extension API {
     ///   - offset: 偏移量
     ///   - isFavorite: 我的最愛
     /// - Returns: [[String : Any]]
-    func searchSentenceList(with speech: VocabularySentenceList.Speech? = nil, isFavorite: Bool = false, for tableName: Constant.VoiceCode, count: Int = Constant.searchCount, offset: Int) -> [[String : Any]] {
+    func searchSentenceList(with info: Settings.SentenceSpeechInformation? = nil, isFavorite: Bool = false, for tableName: Constant.VoiceCode, count: Int = Constant.searchCount, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
@@ -293,15 +294,15 @@ extension API {
         let orderBy = SQLite3Condition.OrderBy().item(key: "createTime", type: .descending)
         var condition: SQLite3Condition.Where?
 
-        if let speech = speech {
-            var _condition = SQLite3Condition.Where().isCompare(key: "speech", type: .equal, value: speech.rawValue)
+        if let info = info {
+            var _condition = SQLite3Condition.Where().isCompare(key: "speech", type: .equal, value: info.value)
             if isFavorite { _condition = _condition.andCompare(key: "favorite", type: .equal, value: isFavorite._int()) }
             condition = _condition
         }
         
         if isFavorite {
             var _condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: isFavorite._int())
-            if let speech = speech { _condition = _condition.andCompare(key: "speech", type: .equal, value: speech.rawValue) }
+            if let info = info { _condition = _condition.andCompare(key: "speech", type: .equal, value: info.value) }
             condition = _condition
         }
         

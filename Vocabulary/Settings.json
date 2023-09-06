@@ -9,21 +9,21 @@
     "font": "Bradley Hand",
     "settings": {
       "wordSpeech": {
-        "noue": { "name": "名詞", "value": 0, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-        "pronoue": { "name": "代名詞", "value": 1, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-        "verb": { "name": "動詞", "value": 2, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-        "adverb": { "name": "副詞", "value": 3, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-        "adjective": { "name": "形容詞", "value": 4, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-        "preposition": { "name": "介系詞", "value": 5, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-        "conjunction": { "name": "連接詞", "value": 6, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-        "determiner": { "name": "限定詞", "value": 7, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-        "interjection": { "name": "感嘆詞", "value": 8, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-        "numeral": { "name": "數詞", "value": 9, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-        "phrase": { "name": "片語", "value": 10, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-        "addreviation": { "name": "縮寫", "value": 11, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" }
+        "noue": { "name": "名詞", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b" },
+        "pronoue": { "name": "代名詞", "value": 1, "color": "#f7fffc", "backgroundColor": "#00b373" },
+        "verb": { "name": "動詞", "value": 2, "color": "#f7fffc", "backgroundColor": "#e10000" },
+        "adverb": { "name": "副詞", "value": 3, "color": "#f7fffc", "backgroundColor": "#0a4eff" },
+        "adjective": { "name": "形容詞", "value": 4, "color": "#f7fffc", "backgroundColor": "#e0566f" },
+        "preposition": { "name": "介系詞", "value": 5, "color": "#f7fffc", "backgroundColor": "#e056de" },
+        "conjunction": { "name": "連接詞", "value": 6, "color": "#f7fffc", "backgroundColor": "#7920b0" },
+        "determiner": { "name": "限定詞", "value": 7, "color": "#f7fffc", "backgroundColor": "#3366ff" },
+        "interjection": { "name": "感嘆詞", "value": 8, "color": "#f7fffc", "backgroundColor": "#666666" },
+        "numeral": { "name": "數詞", "value": 9, "color": "#f7fffc", "backgroundColor": "#ff6600" },
+        "phrase": { "name": "片語", "value": 10, "color": "#f7fffc", "backgroundColor": "#999966" },
+        "addreviation": { "name": "縮寫", "value": 11, "color": "#f7fffc", "backgroundColor": "#66cc99" }
       },
       "sentenceSpeech": {
-         "general": { "name": "一般", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b" },
+         "general": { "name": "一般", "value": 0, "color": "#f7fffc", "backgroundColor": "#f7fffc" },
          "proverb": { "name": "諺語", "value": 1, "color": "#f7fffc", "backgroundColor": "#00b373" },
          "movie": { "name": "電影", "value": 2, "color": "#f7fffc", "backgroundColor": "#0a4eff" },
          "article": { "name": "文章", "value": 3, "color": "#f7fffc", "backgroundColor": "#e10000" },
@@ -60,13 +60,13 @@
         "かんどうし": { "name": "感動詞", "value": 9, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" }
       },
       "sentenceSpeech": {
-         "general": { "name": "一般", "value": 0, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-         "proverb": { "name": "諺語", "value": 1, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-         "movie": { "name": "電影", "value": 2, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-         "article": { "name": "文章", "value": 3, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-         "locution": { "name": "慣用語", "value": 4, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-         "celebrity": { "name": "名人", "value": 5, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-         "slang": { "name": "俚語", "value": 6, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" }
+          "general": { "name": "一般", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b" },
+          "proverb": { "name": "諺語", "value": 1, "color": "#f7fffc", "backgroundColor": "#00b373" },
+          "movie": { "name": "電影", "value": 2, "color": "#f7fffc", "backgroundColor": "#0a4eff" },
+          "article": { "name": "文章", "value": 3, "color": "#f7fffc", "backgroundColor": "#e10000" },
+          "locution": { "name": "慣用語", "value": 4, "color": "#f7fffc", "backgroundColor": "#e0566f" },
+          "celebrity": { "name": "名人", "value": 5, "color": "#f7fffc", "backgroundColor": "#e056de" },
+          "slang": { "name": "俚語", "value": 6, "color": "#f7fffc", "backgroundColor": "#7920b0" }
       },
       "vocabularyLevel": {
           "easy": { "name": "簡單", "value": 0, "color": "#f7fffc", "backgroundColor": "#00b373", "guessCount": 3 },
@@ -92,13 +92,13 @@
         "동사": { "name": "動詞", "value": 4, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" }
       },
       "sentenceSpeech": {
-         "general": { "name": "一般", "value": 0, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-         "proverb": { "name": "諺語", "value": 1, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-         "movie": { "name": "電影", "value": 2, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-         "article": { "name": "文章", "value": 3, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-         "locution": { "name": "慣用語", "value": 4, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-         "celebrity": { "name": "名人", "value": 5, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" },
-         "slang": { "name": "俚語", "value": 6, "color": "#1c1c1b", "backgroundColor": "#1c1c1b" }
+          "general": { "name": "一般", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b" },
+          "proverb": { "name": "諺語", "value": 1, "color": "#f7fffc", "backgroundColor": "#00b373" },
+          "movie": { "name": "電影", "value": 2, "color": "#f7fffc", "backgroundColor": "#0a4eff" },
+          "article": { "name": "文章", "value": 3, "color": "#f7fffc", "backgroundColor": "#e10000" },
+          "locution": { "name": "慣用語", "value": 4, "color": "#f7fffc", "backgroundColor": "#e0566f" },
+          "celebrity": { "name": "名人", "value": 5, "color": "#f7fffc", "backgroundColor": "#e056de" },
+          "slang": { "name": "俚語", "value": 6, "color": "#f7fffc", "backgroundColor": "#7920b0" }
       },
       "vocabularyLevel": {
           "easy": { "name": "簡單", "value": 0, "color": "#f7fffc", "backgroundColor": "#00b373", "guessCount": 3 },

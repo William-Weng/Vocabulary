@@ -578,15 +578,15 @@ extension API {
     /// 更新單字詞性
     /// - Parameters:
     ///   - id: Int
-    ///   - speech: 詞性
+    ///   - info: Settings.WordSpeechInformation
     ///   - tableName: 資料表名稱
     /// - Returns: Bool
-    func updateSpeechToList(_ id: Int, speech: Vocabulary.Speech, for tableName: Constant.VoiceCode) -> Bool {
+    func updateSpeechToList(_ id: Int, info: Settings.WordSpeechInformation, for tableName: Constant.VoiceCode) -> Bool {
         
         guard let database = Constant.database else { return false }
         
         let items: [SQLite3Database.InsertItem] = [
-            (key: "speech", value: speech.rawValue),
+            (key: "speech", value: info.value),
         ]
         
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)

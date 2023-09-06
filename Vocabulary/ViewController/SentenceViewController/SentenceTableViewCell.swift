@@ -154,7 +154,7 @@ private extension SentenceTableViewCell {
     ///   - info: Settings.SentenceSpeechInformation?
     func speechButtonSetting(_ button: UIButton, with info: Settings.SentenceSpeechInformation?) {
         
-        button.setTitle(info?.name ?? "名詞", for: .normal)
+        button.setTitle(info?.name ?? "一般", for: .normal)
         button.setTitleColor(UIColor(rgb: info?.color ?? "#ffffff"), for: .normal)
         button.backgroundColor = UIColor(rgb: info?.backgroundColor ?? "#000000")
     }

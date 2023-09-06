@@ -46,8 +46,8 @@ final class Settings {
         let backgroundColor: String     // 背景顏色
         let color: String               // 文字顏色
     }
-
-    // MARK: - 精選例句類型設定 (Settings.json)
+    
+    // MARK: - 單字詞性類型設定 (Settings.json)
     struct WordSpeechInformation: Decodable {
         
         let key: String                 // 英文代碼

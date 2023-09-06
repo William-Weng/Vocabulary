@@ -63,8 +63,8 @@ private extension ListTableViewCell {
         
         guard let vocabulary = Self.vocabulary(with: indexPath) else { return }
         
-        let speechType = Vocabulary.Speech(rawValue: vocabulary.speech) ?? .noue
-        
+        let info = Constant.SettingsJSON.wordSpeechInformations[safe: vocabulary.speech]
+
         self.indexPath = indexPath
         self.vocabulary = vocabulary
         self.isHardWork = ((vocabulary.hardwork ?? 0) != 0)
@@ -78,8 +78,7 @@ private extension ListTableViewCell {
         translateLabel.text = vocabulary.translate ?? ""
         translateLabel.textColor = .clear
         
-        speechButton.setTitle(speechType.value(), for: .normal)
-        speechButton.backgroundColor = speechType.backgroundColor()
+        speechButtonSetting(speechButton, with: info)
         speechButton.showsMenuAsPrimaryAction = true
         speechButton.menu = UIMenu(title: "請選擇詞性", children: speechMenuActionMaker())
         
@@ -103,35 +102,46 @@ private extension ListTableViewCell {
     /// - Returns: [UIAction]
     func speechMenuActionMaker() -> [UIAction] {
         
-        let actions = Vocabulary.Speech.list(for: Constant.currentTableName).map { speech in
+        let actions = Constant.SettingsJSON.wordSpeechInformations.map { speechActionMaker(with: $0) }
+        return actions
+    }
+
+    func speechActionMaker(with info: Settings.WordSpeechInformation) -> UIAction {
+        
+        let action = UIAction(title: info.name) { [weak self] _ in
             
-            let action = UIAction(title: speech.value()) { [weak self] _ in
-                
-                guard let this = self else { return }
-                
-                this.updateSpeech(speech, with: this.indexPath)
-                this.updateSpeechDictionary(speech, with: this.indexPath)
-            }
+            guard let this = self else { return }
             
-            return action
+            this.updateSpeech(info, with: this.indexPath)
+            // this.updateSpeechDictionary(speech, with: this.indexPath)
         }
         
-        return actions
+        return action
     }
     
     /// 更新SpeechButton文字
     /// - Parameters:
-    ///   - speech: Vocabulary.Speech
+    ///   - info: Settings.WordSpeechInformation
     ///   - indexPath: IndexPath
-    func updateSpeech(_ speech: Vocabulary.Speech, with indexPath: IndexPath) {
+    func updateSpeech(_ info: Settings.WordSpeechInformation, with indexPath: IndexPath) {
         
         guard let vocabulary = Self.vocabulary(with: indexPath) else { return }
         
-        let isSuccess = API.shared.updateSpeechToList(vocabulary.id, speech: speech, for: Constant.currentTableName)
+        let isSuccess = API.shared.updateSpeechToList(vocabulary.id, info: info, for: Constant.currentTableName)
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
         
-        speechButton.setTitle(speech.value(), for: .normal)
-        speechButton.backgroundColor = speech.backgroundColor()
+        speechButtonSetting(speechButton, with: info)
+    }
+    
+    /// levelButton文字顏色設定
+    /// - Parameters:
+    ///   - button: UIButton
+    ///   - info: Settings.WordSpeechInformation?
+    func speechButtonSetting(_ button: UIButton, with info: Settings.WordSpeechInformation?) {
+        
+        button.setTitle(info?.name ?? "名詞", for: .normal)
+        button.setTitleColor(UIColor(rgb: info?.color ?? "#ffffff"), for: .normal)
+        button.backgroundColor = UIColor(rgb: info?.backgroundColor ?? "#000000")
     }
     
     /// 更新暫存的例句列表資訊

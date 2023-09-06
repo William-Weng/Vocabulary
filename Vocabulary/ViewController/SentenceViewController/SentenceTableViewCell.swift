@@ -60,7 +60,7 @@ private extension SentenceTableViewCell {
         
         guard let sentenceList = Self.sentenceList(with: indexPath) else { return }
         
-        let speechType = VocabularySentenceList.Speech(rawValue: sentenceList.speech) ?? .general
+        let info = Constant.SettingsJSON.sentenceSpeechInformations[safe: sentenceList.speech]
 
         self.accessoryView = accessoryViewMaker()
         self.indexPath = indexPath
@@ -72,8 +72,7 @@ private extension SentenceTableViewCell {
         exampleLabel.font = Constant.currentTableName.font(size: 24.0) ?? .systemFont(ofSize: 24.0)
         exampleLabel.text = sentenceList.example
         
-        speechButton.setTitle(speechType.value(), for: .normal)
-        speechButton.backgroundColor = speechType.backgroundColor()
+        speechButtonSetting(speechButton, with: info)
         speechButton.showsMenuAsPrimaryAction = true
         speechButton.menu = UIMenu(title: "請選擇分類", children: speechMenuActionMaker())
         
@@ -116,14 +115,16 @@ private extension SentenceTableViewCell {
     /// - Returns: [UIAction]
     func speechMenuActionMaker() -> [UIAction] {
         
-        let actions = VocabularySentenceList.Speech.allCases.map { speech in
+        let actions = Constant.SettingsJSON.sentenceSpeechInformations.map { info in
             
-            let action = UIAction(title: speech.value()) { [weak self] action in
+            let action = UIAction(title: info.name) { [weak self] _ in
                 
                 guard let this = self else { return }
                 
-                this.updateSpeech(speech, with: this.indexPath)
-                this.updateLevelDictionary(speech, with:this.indexPath)
+                wwPrint(info.value)
+                
+                this.updateSpeech(info, with: this.indexPath)
+                this.updateLevelDictionary(info, with:this.indexPath)
             }
             
             return action
@@ -134,18 +135,27 @@ private extension SentenceTableViewCell {
     
     /// 更新SpeechButton文字
     /// - Parameters:
-    ///   - level: VocabularySentenceList.Speech
+    ///   - info: Settings.SentenceSpeechInformation
     ///   - indexPath: IndexPath
-    func updateSpeech(_ speech: VocabularySentenceList.Speech, with indexPath: IndexPath) {
+    func updateSpeech(_ info: Settings.SentenceSpeechInformation, with indexPath: IndexPath) {
         
         guard let sentenceList = Self.sentenceList(with: indexPath) else { return }
         
-        let isSuccess = API.shared.updateSentenceSpeechToList(sentenceList.id, speech: speech, for: Constant.currentTableName)
+        let isSuccess = API.shared.updateSentenceSpeechToList(sentenceList.id, info: info, for: Constant.currentTableName)
 
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail) }
+        speechButtonSetting(speechButton, with: info)
+    }
+    
+    /// speechButton文字顏色設定
+    /// - Parameters:
+    ///   - button: UIButton
+    ///   - info: Settings.SentenceSpeechInformation?
+    func speechButtonSetting(_ button: UIButton, with info: Settings.SentenceSpeechInformation?) {
         
-        speechButton.setTitle(speech.value(), for: .normal)
-        speechButton.backgroundColor = speech.backgroundColor()
+        button.setTitle(info?.name ?? "名詞", for: .normal)
+        button.setTitleColor(UIColor(rgb: info?.color ?? "#ffffff"), for: .normal)
+        button.backgroundColor = UIColor(rgb: info?.backgroundColor ?? "#000000")
     }
     
     /// 更新Favorite狀態
@@ -165,13 +175,13 @@ private extension SentenceTableViewCell {
     
     /// 更新暫存的單字內容列表資訊
     /// - Parameters:
-    ///   - level: VocabularySentenceList.Speech
+    ///   - info: Settings.SentenceSpeechInformation
     ///   - indexPath: IndexPath
-    func updateLevelDictionary(_ speech: VocabularySentenceList.Speech, with indexPath: IndexPath) {
+    func updateLevelDictionary(_ info: Settings.SentenceSpeechInformation, with indexPath: IndexPath) {
         
         guard var dictionary = Self.sentenceListArray[safe: indexPath.row] else { return }
         
-        dictionary["speech"] = speech.rawValue
+        dictionary["speech"] = info.value
         Self.sentenceListArray[indexPath.row] = dictionary
     }
     

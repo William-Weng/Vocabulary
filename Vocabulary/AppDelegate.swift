@@ -419,7 +419,7 @@ private extension AppDelegate {
     
     /// 解析單字等級的設定值 (排序由小到大)
     /// - Parameter settings: [String: Any]
-    /// - Returns: [VocabularyLevelInformation]
+    /// - Returns: [Settings.VocabularyLevelInformation]
     func vocabularyLevelInformations(with settings: [String: Any]) -> [Settings.VocabularyLevelInformation] {
         let array = colorSettingsArray(with: settings, key: .vocabularyLevel, type: Settings.VocabularyLevelInformation.self)
         return array.sorted { return $1.value > $0.value }
@@ -435,7 +435,7 @@ private extension AppDelegate {
     
     /// 解析單字型態的設定值
     /// - Parameter settings: [String: Any]
-    /// - Returns: [SentenceSpeechInformation]
+    /// - Returns: [Settings.SentenceSpeechInformation]
     func wordSpeechInformations(with settings: [String: Any]) -> [Settings.WordSpeechInformation] {
         let array = colorSettingsArray(with: settings, key: .wordSpeech, type: Settings.WordSpeechInformation.self)
         return array.sorted { return $1.value > $0.value }

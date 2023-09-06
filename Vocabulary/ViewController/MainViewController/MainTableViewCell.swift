@@ -101,7 +101,7 @@ private extension MainTableViewCell {
         
         let actions = Constant.SettingsJSON.vocabularyLevelInformations.map { info in
             
-            let action = UIAction(title: info.name) { [weak self] action in
+            let action = UIAction(title: info.name) { [weak self] _ in
                 guard let this = self else { return }
                 this.updateLevel(info, with: this.indexPath)
             }
@@ -114,7 +114,7 @@ private extension MainTableViewCell {
         
     /// 更新LevelButton文字
     /// - Parameters:
-    ///   - info: VocabularyLevelInformation
+    ///   - info: Settings.VocabularyLevelInformation
     ///   - indexPath: IndexPath
     func updateLevel(_ info: Settings.VocabularyLevelInformation, with indexPath: IndexPath) {
         
@@ -127,10 +127,10 @@ private extension MainTableViewCell {
         updateLevelDictionary(info, with: indexPath)
     }
     
-    /// levelButton文字顏字設定
+    /// levelButton文字顏色設定
     /// - Parameters:
     ///   - button: UIButton
-    ///   - info: VocabularyLevelInformation?
+    ///   - info: Settings.VocabularyLevelInformation?
     func levelButtonSetting(_ button: UIButton, with info: Settings.VocabularyLevelInformation?) {
         
         button.setTitle(info?.name ?? "一般", for: .normal)
@@ -155,7 +155,7 @@ private extension MainTableViewCell {
     
     /// 更新暫存的單字列表資訊
     /// - Parameters:
-    ///   - info: VocabularyLevelInformation
+    ///   - info: Settings.VocabularyLevelInformation
     ///   - indexPath: IndexPath
     func updateLevelDictionary(_ info: Settings.VocabularyLevelInformation, with indexPath: IndexPath) {
         

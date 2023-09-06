@@ -737,15 +737,15 @@ extension API {
     /// 更新常用例句分類
     /// - Parameters:
     ///   - id: Int
-    ///   - speech: 分類
+    ///   - info: Settings.SentenceSpeechInformation
     ///   - tableName: 資料表名稱
     /// - Returns: Bool
-    func updateSentenceSpeechToList(_ id: Int, speech: VocabularySentenceList.Speech, for tableName: Constant.VoiceCode) -> Bool {
+    func updateSentenceSpeechToList(_ id: Int, info: Settings.SentenceSpeechInformation, for tableName: Constant.VoiceCode) -> Bool {
         
         guard let database = Constant.database else { return false }
         
         let items: [SQLite3Database.InsertItem] = [
-            (key: "speech", value: speech.rawValue),
+            (key: "speech", value: info.value),
             (key: "updateTime", value: Date()._localTime()),
         ]
         

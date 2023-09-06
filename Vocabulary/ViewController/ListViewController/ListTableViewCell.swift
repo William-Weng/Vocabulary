@@ -105,7 +105,7 @@ private extension ListTableViewCell {
         
         let actions = Vocabulary.Speech.list(for: Constant.currentTableName).map { speech in
             
-            let action = UIAction(title: speech.value()) { [weak self] action in
+            let action = UIAction(title: speech.value()) { [weak self] _ in
                 
                 guard let this = self else { return }
                 

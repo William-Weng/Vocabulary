@@ -1574,7 +1574,6 @@ extension UIRefreshControl {
     }
 }
 
-
 // MARK: - UICollectionView (static function)
 extension UIContextualAction {
     

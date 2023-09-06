@@ -26,6 +26,7 @@ final class Constant: NSObject {
     static let reload = "重新讀取"
     static let noDataUpdate = "無更新資料"
     static let recordFilename = "record.wav"
+    static let settingsJSON = "Settings.json"
     
     static var volume: Float = 0.1
     static var speakingSpeed: Float = 0.4
@@ -84,6 +85,24 @@ extension Constant {
     enum DeepLinkAction: String {
         case append     // 加入新單字
         case search     // 搜尋該單字
+    }
+    
+    /// 能夠設定顏色的Settings設定檔
+    enum SettingsColorKey: String {
+        
+        case vocabularyLevel
+        case sentenceSpeech
+        case wordSpeech
+        
+        /// 顯示名稱
+        /// - Returns: String
+        func name() -> String {
+            switch self {
+            case .vocabularyLevel: return "單字等級"
+            case .sentenceSpeech: return "精選例句"
+            case .wordSpeech: return "單字型態"
+            }
+        }
     }
     
     /// Tabbar的首頁ViewController

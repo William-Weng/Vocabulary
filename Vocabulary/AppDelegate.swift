@@ -361,7 +361,7 @@ private extension AppDelegate {
     /// 初始化設定值 => Settings.json
     func initSettings() {
         
-        guard let dictionary = settingsDictionary(with: Constant.tableName),
+        guard let dictionary = settingsDictionary(with: Constant.tableName, filename: Constant.settingsJSON),
               let settings = dictionary["settings"] as? [String: Any]
         else {
             return
@@ -377,7 +377,7 @@ private extension AppDelegate {
     ///   - tableName: String?
     ///   - filename: String
     /// - Returns: [String: Any]?
-    func settingsDictionary(with tableName: String?, filename: String = "Settings.json") -> [String: Any]? {
+    func settingsDictionary(with tableName: String?, filename: String) -> [String: Any]? {
         
         let currentTableName = tableName ?? "English"
         
@@ -391,54 +391,50 @@ private extension AppDelegate {
         return settings
     }
     
-    /// 解析單字等級的設定值
+    /// 解析單字等級的設定值 (排序由小到大)
     /// - Parameter settings: [String: Any]
     /// - Returns: [VocabularyLevelInformation]
     func vocabularyLevelInformations(with settings: [String: Any]) -> [VocabularyLevelInformation] {
-        
-        guard let informations = settings["vocabularyLevel"] as? [String: Any] else { return [] }
-        
-        let array = informations.keys.compactMap { key -> VocabularyLevelInformation? in
-            return VocabularyLevelInformation.build(with: informations, forKey: key)
-        }.sorted {
-            return $1.value > $0.value
-        }
-        
-        return array
+        let array = colorSettingsArray(with: settings, key: .vocabularyLevel, type: VocabularyLevelInformation.self)
+        return array.sorted { return $1.value > $0.value }
     }
     
     /// 解析精選例句類型的設定值
     /// - Parameter settings: [String: Any]
     /// - Returns: [SentenceSpeechInformation]
     func sentenceSpeechInformations(with settings: [String: Any]) -> [SentenceSpeechInformation] {
-        
-        guard let informations = settings["sentenceSpeech"] as? [String: Any] else { return [] }
-                
-        let array = informations.keys.compactMap { key -> SentenceSpeechInformation? in
-            return SentenceSpeechInformation.build(with: informations, forKey: key)
-        }.sorted {
-            return $1.value > $0.value
-        }
-        
-        return array
+        let array = colorSettingsArray(with: settings, key: .sentenceSpeech, type: SentenceSpeechInformation.self)
+        return array.sorted { return $1.value > $0.value }
     }
     
     /// 解析單字型態的設定值
     /// - Parameter settings: [String: Any]
     /// - Returns: [SentenceSpeechInformation]
     func wordSpeechInformations(with settings: [String: Any]) -> [WordSpeechInformation] {
+        let array = colorSettingsArray(with: settings, key: .wordSpeech, type: WordSpeechInformation.self)
+        return array.sorted { return $1.value > $0.value }
+    }
+    
+    /// 解析Settings有關顏色的設定檔值
+    /// - Parameters:
+    ///   - settings: [String: Any]
+    ///   - key: Constant.SettingsColorKey
+    ///   - type: T.Type
+    /// - Returns: [T]
+    func colorSettingsArray<T: Decodable>(with settings: [String: Any], key: Constant.SettingsColorKey, type: T.Type) -> [T] {
         
-        guard let informations = settings["wordSpeech"] as? [String: Any] else { return [] }
+        guard let informations = settings[key.rawValue] as? [String: Any] else { return [] }
         
-        let array = informations.keys.compactMap { key -> WordSpeechInformation? in
-            return WordSpeechInformation.build(with: informations, forKey: key)
-        }.sorted {
-            return $1.value > $0.value
+        let array = informations.keys.compactMap { key -> T? in
+            
+            guard var dictionary = informations[key] as? [String: Any] else { return nil }
+            dictionary["key"] = key
+            
+            return dictionary._jsonClass(for: T.self)
         }
         
         return array
     }
-
 }
 
 // MARK: - for Deep Link

@@ -92,7 +92,7 @@ extension Constant {
         case append     // 加入新單字
         case search     // 搜尋該單字
     }
-    
+        
     /// 能夠設定顏色的Settings設定檔
     enum SettingsColorKey: String {
         
@@ -184,7 +184,7 @@ extension Constant {
         case CFBundleShortVersionString = "CFBundleShortVersionString"      // Version版本號 => 1.0.0
         case CFBundleVersion = "CFBundleVersion"                            // Build的代號 => 202001011
     }
-    
+        
     /// 單字內容的資料庫名稱
     enum VoiceCode: String, CaseIterable {
         
@@ -208,38 +208,7 @@ extension Constant {
         /// 常用書籤 => EnglishBookmarkSite
         /// - Returns: String
         func bookmarks() -> String { return "\(self.rawValue)BookmarkSite" }
-        
-        /// [AVSpeechSynthesisVoice List](https://stackoverflow.com/questions/35492386/how-to-get-a-list-of-all-voices-on-ios-9/43576853)
-        /// - Returns: String
-        func code() -> String {
-            switch self {
-            case .english: return "en-US"
-            case .japanese: return "ja-JP"
-            case .french: return "fr-FR"
-            case .korean: return "ko-KR"
-            }
-        }
-        
-        /// 線上字典的URL
-        /// - Parameter word: 要查詢的單字
-        /// - Returns: String
-        func dictionaryURL(with word: String) -> String {
-            
-            switch self {
-            case .english: return "https://tw.dictionary.search.yahoo.com/search?p=\(word)"
-            case .japanese: return "https://dictionary.goo.ne.jp/word/\(word)"
-            case .french: return "https://www.frdic.com/dicts/fr/\(word)"
-            case .korean: return "https://dic.daum.net/search.do?dic=ch&q=\(word)"
-            }
-        }
-        
-        /// [找出定義或字源的URL](https://youtu.be/cC1tlq5NUHM)
-        /// - Parameter word: 要查詢的單字
-        /// - Returns: String
-        func defineVocabularyURL(with word: String) -> String {
-            return "https://www.google.com/search?q=define+\(word)"
-        }
-        
+                        
         /// 字典名稱
         /// - Returns: String
         func name() -> String {

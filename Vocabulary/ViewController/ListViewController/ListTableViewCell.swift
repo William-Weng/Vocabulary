@@ -90,12 +90,13 @@ private extension ListTableViewCell {
     func playExampleSound() {
         
         guard let vocabulary = vocabulary,
-              let example = vocabulary.example
+              let example = vocabulary.example,
+              let settings = Utility.shared.generalSettings(index: Constant.tableNameIndex)
         else {
             return
         }
         
-        Utility.shared.speak(string: example, voice: Constant.currentTableName)
+        Utility.shared.speak(string: example, code: settings.code)
     }
     
     /// 產生SpeechButton選到時的動作
@@ -105,7 +106,10 @@ private extension ListTableViewCell {
         let actions = Constant.SettingsJSON.wordSpeechInformations.map { speechActionMaker(with: $0) }
         return actions
     }
-
+    
+    /// 產生SpeechButton選到時的動作
+    /// - Parameter info: Settings.WordSpeechInformation
+    /// - Returns: UIAction
     func speechActionMaker(with info: Settings.WordSpeechInformation) -> UIAction {
         
         let action = UIAction(title: info.name) { [weak self] _ in
@@ -113,7 +117,7 @@ private extension ListTableViewCell {
             guard let this = self else { return }
             
             this.updateSpeech(info, with: this.indexPath)
-            // this.updateSpeechDictionary(speech, with: this.indexPath)
+            this.updateSpeechDictionary(info, with: this.indexPath)
         }
         
         return action
@@ -146,13 +150,13 @@ private extension ListTableViewCell {
     
     /// 更新暫存的例句列表資訊
     /// - Parameters:
-    ///   - speech: Vocabulary.Speech
+    ///   - info: Settings.WordSpeechInformation
     ///   - indexPath: IndexPath
-    func updateSpeechDictionary(_ speech: Vocabulary.Speech, with indexPath: IndexPath) {
+    func updateSpeechDictionary(_ info: Settings.WordSpeechInformation, with indexPath: IndexPath) {
         
         guard var dictionary = Self.exmapleList[safe: indexPath.row] else { return }
         
-        dictionary["speech"] = speech.rawValue
+        dictionary["speech"] = info.value
         Self.exmapleList[indexPath.row] = dictionary
     }
     

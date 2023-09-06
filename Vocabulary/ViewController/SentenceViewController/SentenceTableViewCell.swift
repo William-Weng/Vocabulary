@@ -90,12 +90,13 @@ private extension SentenceTableViewCell {
     func playExampleSound() {
         
         guard let sentenceList = sentenceList,
-              let example = sentenceList.example
+              let example = sentenceList.example,
+              let settings = Utility.shared.generalSettings(index: Constant.tableNameIndex)
         else {
             return
         }
         
-        Utility.shared.speak(string: example, voice: Constant.currentTableName)
+        Utility.shared.speak(string: example, code: settings.code)
     }
     
     /// 最右側的箭頭View

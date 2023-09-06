@@ -206,7 +206,8 @@ private extension ReviewViewController {
     func playWordSound(with level: Constant.QuestionLevel) {
         
         guard let answerText = answerLabel.text,
-              let interpretText = interpretLabel.text
+              let interpretText = interpretLabel.text,
+              let settings = Utility.shared.generalSettings(index: Constant.tableNameIndex)
         else {
             return
         }
@@ -218,7 +219,7 @@ private extension ReviewViewController {
         case .listen: string = "\(answerText). \(interpretText)"
         }
         
-        speechSynthesizer._speak(string: string, voice: Constant.currentTableName, rate: Constant.speakingSpeed)
+        speechSynthesizer._speak(string: string, code: settings.code, rate: Constant.speakingSpeed)
     }
     
     /// 動畫背景設定

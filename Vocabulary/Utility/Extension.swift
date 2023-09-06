@@ -714,9 +714,9 @@ extension AVSpeechSynthesizer {
     ///   - rate: 語度 (0% ~ 100%)
     ///   - pitchMultiplier: 音調 (50% ~ 200%)
     ///   - volume: 音量 (0% ~ 100%)
-    func _speak(string: String, voice: Constant.VoiceCode = .english, rate: Float = 0.5, pitchMultiplier: Float = 1.5, volume: Float = 1.0) {
-        
-        let utterance = AVSpeechUtterance._build(string: string, voice: voice)
+    func _speak(string: String, code: String, rate: Float = 0.5, pitchMultiplier: Float = 1.5, volume: Float = 1.0) {
+                
+        let utterance = AVSpeechUtterance._build(string: string, code: code)
         
         utterance.rate = rate
         utterance.pitchMultiplier = pitchMultiplier
@@ -730,15 +730,15 @@ extension AVSpeechSynthesizer {
 // MARK: - AVSpeechUtterance (static function)
 extension AVSpeechUtterance {
     
-    /// 產生AVSpeechUtterance
+    /// [產生AVSpeechUtterance](https://stackoverflow.com/questions/35492386/how-to-get-a-list-of-all-voices-on-ios-9/43576853)
     /// - Parameters:
     ///   - string: 要讀的文字
-    ///   - voice: 使用的聲音語言
+    ///   - code: 使用的聲音語言
     /// - Returns: AVSpeechUtterance
-    static func _build(string: String, voice: Constant.VoiceCode = .english) -> AVSpeechUtterance {
-
+    static func _build(string: String, code: String) -> AVSpeechUtterance {
+        
         let utterance = AVSpeechUtterance(string: string)
-        utterance.voice = AVSpeechSynthesisVoice(language: voice.code())
+        utterance.voice = AVSpeechSynthesisVoice(language: code)
 
         return utterance
     }

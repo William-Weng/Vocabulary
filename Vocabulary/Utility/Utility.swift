@@ -62,12 +62,12 @@ extension Utility {
     /// [讀出文字 / 文字發聲](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/讓開不了口的-app-開口說話-48c674f8f69e)
     /// - Parameters:
     ///   - string: 要讀出的文字
-    ///   - voice: 使用的聲音語言
+    ///   - code: 使用的聲音語言
     ///   - rate: 語速 (0% ~ 100%)
     ///   - pitchMultiplier: 音調 (50% ~ 200%)
     ///   - volume: 音量 (0% ~ 100%)
-    func speak(string: String, voice: Constant.VoiceCode = .english, rate: Float = 0.4, pitchMultiplier: Float = 1.5, volume: Float = 1.0) {
-        self.synthesizer._speak(string: string, voice: voice, rate: rate, pitchMultiplier: pitchMultiplier, volume: volume)
+    func speak(string: String, code: String, rate: Float = 0.4, pitchMultiplier: Float = 1.5, volume: Float = 1.0) {
+        self.synthesizer._speak(string: string, code: code, rate: rate, pitchMultiplier: pitchMultiplier, volume: volume)
     }
     
     /// 震動功能
@@ -308,5 +308,12 @@ extension Utility {
         }
         
         return dictionary
+    }
+    
+    /// 取得基本設定 (Settings.json)
+    /// - Parameter index: Int
+    /// - Returns: Settings.GeneralInformation?
+    func generalSettings(index: Int) -> Settings.GeneralInformation? {
+        return Constant.SettingsJSON.generalInformations[safe: index]
     }
 }

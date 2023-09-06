@@ -91,8 +91,14 @@ private extension MainTableViewCell {
     
     /// 讀出單字
     func playWordSound() {
-        guard let vocabularyList = vocabularyList else { return }
-        Utility.shared.speak(string: vocabularyList.word, voice: Constant.currentTableName)
+        
+        guard let vocabularyList = vocabularyList,
+              let settings = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+        else {
+            return
+        }
+        
+        Utility.shared.speak(string: vocabularyList.word, code: settings.code)
     }
     
     /// 產生LevelButton選到時的動作

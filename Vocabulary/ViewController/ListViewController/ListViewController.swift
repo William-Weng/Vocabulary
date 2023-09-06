@@ -144,12 +144,10 @@ private extension ListViewController {
     ///   - indexPath: IndexPath
     ///   - speech: 詞性
     ///   - info: 相關文字
-    func updateCellLabel(with indexPath: IndexPath, speech: Vocabulary.Speech?, info: Constant.ExampleInfomation?) {
+    func updateCellLabel(with indexPath: IndexPath, info: Constant.ExampleInfomation?) {
         
         guard var dictionary = ListTableViewCell.exmapleList[safe: indexPath.row] else { return }
-        
-        if let speech = speech { dictionary["speech"] = speech.rawValue }
-        
+                
         if let info = info {
             dictionary["example"] = info.example
             dictionary["interpret"] = info.interpret
@@ -164,15 +162,27 @@ private extension ListViewController {
     /// - Parameter word: 單字
     func netDictionary(with word: String) {
         
-        let url = URL._standardization(string: Constant.currentTableName.dictionaryURL(with: word))
+        guard let settings = Utility.shared.generalSettings(index: Constant.tableNameIndex),
+              let dictionaryURL = Optional.some(settings.dictionaryURL.replacingOccurrences(of: "<word>", with: word)),
+              let url = Optional.some(URL._standardization(string: dictionaryURL))
+        else {
+            return
+        }
+        
         openUrlWithInside(with: url)
     }
     
-    /// 尋找單字定義
+    /// [尋找單字定義](https://youtu.be/cC1tlq5NUHM)
     /// - Parameter word: 單字
     func defineVocabularyAction(with word: String) {
         
-        let url = URL._standardization(string: Constant.currentTableName.defineVocabularyURL(with: word))
+        guard let settings = Utility.shared.generalSettings(index: Constant.tableNameIndex),
+              let defineURL = Optional.some(settings.defineURL.replacingOccurrences(of: "<word>", with: word)),
+              let url = Optional.some(URL._standardization(string: defineURL))
+        else {
+            return
+        }
+        
         openUrlWithInside(with: url)
     }
     
@@ -261,7 +271,7 @@ private extension ListViewController {
             if (!action(info)) { Utility.shared.flashHUD(with: .fail); return }
             
             this.fixTranslateDisplayArray(with: indexPath, type: .update)
-            this.updateCellLabel(with: indexPath, speech: nil, info: info)
+            this.updateCellLabel(with: indexPath, info: info)
         }
         
         return actionOK

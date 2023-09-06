@@ -76,8 +76,14 @@ private extension ReviewResultTableViewCell {
     
     /// 讀出單字
     func playWordSound() {
-        guard let vocabularyReviewList = vocabularyReviewList else { return }
-        Utility.shared.speak(string: vocabularyReviewList.word, voice: Constant.currentTableName)
+        
+        guard let vocabularyReviewList = vocabularyReviewList,
+              let settings = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+        else {
+            return
+        }
+        
+        Utility.shared.speak(string: vocabularyReviewList.word, code: settings.code)
     }
     
     /// FavoriteImageView點擊功能

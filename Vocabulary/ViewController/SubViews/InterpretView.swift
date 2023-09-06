@@ -51,12 +51,22 @@ private extension InterpretView {
     /// - Parameter vocabulary: Vocabulary
     func configure(for vocabulary: Vocabulary, textColor: UIColor = .label) {
         
-        let speechType = Vocabulary.Speech(rawValue: vocabulary.speech) ?? .noue
+        guard let info = Constant.SettingsJSON.wordSpeechInformations[safe: vocabulary.speech] else { return }
         
-        speechLabel.text = speechType.value()
-        speechLabel.backgroundColor = speechType.backgroundColor()
+        speechLabelSetting(speechLabel, with: info)
         
         interpretLabel.text = vocabulary.interpret
         interpretLabel.textColor = textColor
+    }
+    
+    /// speechLabel文字顏色設定
+    /// - Parameters:
+    ///   - label: UILabel
+    ///   - info: Settings.WordSpeechInformation?
+    func speechLabelSetting(_ label: UILabel, with info: Settings.WordSpeechInformation) {
+        
+        label.text = info.name
+        label.textColor = UIColor(rgb: info.color)
+        label.backgroundColor = UIColor(rgb: info.backgroundColor)
     }
 }

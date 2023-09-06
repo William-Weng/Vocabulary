@@ -409,7 +409,7 @@ private extension ReviewViewController {
         
         var list: [[String : Any]] = []
         
-        Constant.vocabularyLevelInformations.forEach { info in
+        Constant.SettingsJSON.vocabularyLevelInformations.forEach { info in
             list += API.shared.searchGuessWordList(with: info, for: Constant.currentTableName, offset: 0)
         }
         
@@ -461,7 +461,7 @@ extension ReviewViewController {
         let alertController = UIAlertController(title: "請選擇等級", message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
         
-        Constant.vocabularyLevelInformations.forEach { info in
+        Constant.SettingsJSON.vocabularyLevelInformations.forEach { info in
             
             let action = UIAlertAction(title: info.name, style: .default) { _ in
                 let isSuccess = API.shared.updateLevelToList(vocabularyList.id, info: info, for: Constant.currentTableName)

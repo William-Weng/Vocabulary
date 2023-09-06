@@ -368,31 +368,27 @@ private extension AppDelegate {
             return
         }
         
-        Constant.generalInformations = generalInformations(with: parseSettingsDictionary)
-        Constant.vocabularyLevelInformations = vocabularyLevelInformations(with: settings)
-        Constant.sentenceSpeechInformations = sentenceSpeechInformations(with: settings)
-        Constant.wordSpeechInformations = wordSpeechInformations(with: settings)
+        Constant.SettingsJSON.generalInformations = generalInformations(with: parseSettingsDictionary)
+        Constant.SettingsJSON.vocabularyLevelInformations = vocabularyLevelInformations(with: settings)
+        Constant.SettingsJSON.sentenceSpeechInformations = sentenceSpeechInformations(with: settings)
+        Constant.SettingsJSON.wordSpeechInformations = wordSpeechInformations(with: settings)
+        Constant.tableNameIndex = Constant.SettingsJSON.generalInformations.first { $0.key.capitalized == Constant.tableName?.capitalized }?.value ?? 0
     }
     
     /// 取得一般般的設定檔
     /// - Parameter dictionary: [String: Any]
     /// - Returns: [String: Settings.GeneralInformation]
-    func generalInformations(with dictionary: [String: Any]) -> [String: Settings.GeneralInformation] {
+    func generalInformations(with dictionary: [String: Any]) -> [Settings.GeneralInformation] {
         
-        var infos: [String: Settings.GeneralInformation] = [:]
-        
-        for (key, value) in dictionary {
+        let array = dictionary.keys.compactMap { key -> Settings.GeneralInformation? in
             
-            guard let dict = value as? [String: Any],
-                  let info = dict._jsonClass(for: Settings.GeneralInformation.self)
-            else {
-                continue
-            }
+            guard var dictionary = dictionary[key] as? [String: Any] else { return nil }
+            dictionary["key"] = key
             
-            infos[key] = info
+            return dictionary._jsonClass(for: Settings.GeneralInformation.self)
         }
         
-        return infos
+        return array.sorted { return $1.value > $0.value }
     }
     
     /// 取得該語言的設定檔

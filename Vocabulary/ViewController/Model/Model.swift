@@ -16,6 +16,7 @@ final class Settings {
     // MARK: - 一般般設定
     struct GeneralInformation: Decodable {
         
+        let key: String                 // 字碼代號
         let code: String                // 國別簡寫 (US)
         let voice: String               // 語音代碼 (en-US)
         let name: String                // 顯示名稱

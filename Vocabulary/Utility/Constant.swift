@@ -12,6 +12,14 @@ import WWSQLite3Manager
 // MARK: - Constant
 final class Constant: NSObject {
     
+    // MARK: - SettingsJSON
+    final class SettingsJSON {
+        static var vocabularyLevelInformations: [Settings.VocabularyLevelInformation] = []
+        static var sentenceSpeechInformations: [Settings.SentenceSpeechInformation] = []
+        static var wordSpeechInformations: [Settings.WordSpeechInformation] = []
+        static var generalInformations: [Settings.GeneralInformation] = []
+    }
+    
     @WWUserDefaults("CurrentTableName") static var tableName: String?
     
     static let webImageExpiredDays = 90
@@ -28,6 +36,7 @@ final class Constant: NSObject {
     static let recordFilename = "record.wav"
     static let settingsJSON = "Settings.json"
     
+    static var tableNameIndex: Int = 0
     static var volume: Float = 0.1
     static var speakingSpeed: Float = 0.4
     static var updateScrolledHeight: CGFloat = 128.0
@@ -36,10 +45,6 @@ final class Constant: NSObject {
     static var backupDirectory = FileManager.default._documentDirectory()
     static var musicFileList: [String]?
     static var playingMusicList: [Music] = []
-    static var vocabularyLevelInformations: [Settings.VocabularyLevelInformation] = []
-    static var sentenceSpeechInformations: [Settings.SentenceSpeechInformation] = []
-    static var wordSpeechInformations: [Settings.WordSpeechInformation] = []
-    static var generalInformations: [String: Settings.GeneralInformation] = [:]
     
     static var isPrint: Bool {
         #if DEBUG

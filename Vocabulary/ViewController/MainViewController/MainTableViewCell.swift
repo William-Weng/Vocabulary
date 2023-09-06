@@ -63,7 +63,7 @@ private extension MainTableViewCell {
                 
         guard let vocabularyList = Self.vocabularyList(with: indexPath) else { return }
         
-        let info = Constant.vocabularyLevelInformations[safe: vocabularyList.level]
+        let info = Constant.SettingsJSON.vocabularyLevelInformations[safe: vocabularyList.level]
         
         self.indexPath = indexPath
         self.vocabularyList = vocabularyList
@@ -99,7 +99,7 @@ private extension MainTableViewCell {
     /// - Returns: [UIAction]
     func levelMenuActionMaker() -> [UIAction] {
         
-        let actions = Constant.vocabularyLevelInformations.map { info in
+        let actions = Constant.SettingsJSON.vocabularyLevelInformations.map { info in
             
             let action = UIAction(title: info.name) { [weak self] action in
                 guard let this = self else { return }

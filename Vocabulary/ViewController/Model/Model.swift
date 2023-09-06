@@ -249,48 +249,6 @@ final class VocabularySentenceList: Codable {
     let updateTime: Date    // 更新時間
     
     deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
-    
-    // 例句詞性
-    public enum Speech: Int, CaseIterable {
-        
-        case general = 000
-        case proverb = 001
-        case movie = 002
-        case article = 003
-        case locution = 004
-        case celebrity = 005
-        case slang = 006
-        
-        /// 例句詞性
-        /// - Returns: String
-        func value() -> String {
-            
-            switch self {
-            case .general: return "一般"
-            case .proverb: return "諺語"
-            case .movie: return "電影"
-            case .article: return "文章"
-            case .locution: return "慣用語"
-            case .celebrity: return "名人"
-            case .slang: return "俚語"
-            }
-        }
-        
-        /// 詞性背景色
-        /// - Returns: UIColor
-        func backgroundColor() -> UIColor {
-            
-            switch self {
-            case .general: return #colorLiteral(red: 0.5704585314, green: 0.5704723597, blue: 0.5704649091, alpha: 1)
-            case .proverb: return #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
-            case .movie: return #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)
-            case .article: return #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1)
-            case .locution: return #colorLiteral(red: 0, green: 0.5628422499, blue: 0.3188166618, alpha: 1)
-            case .celebrity: return #colorLiteral(red: 0.5810584426, green: 0.1285524964, blue: 0.5745313764, alpha: 1)
-            case .slang: return #colorLiteral(red: 0.5818830132, green: 0.2156915367, blue: 1, alpha: 1)
-            }
-        }
-    }
 }
 
 // MARK: - 網址書籤

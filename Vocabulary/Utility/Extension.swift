@@ -11,6 +11,7 @@ import SafariServices
 import CommonCrypto
 import PencilKit
 import WebKit
+import WWPrint
 
 // MARK: - Bool (function)
 extension Bool {
@@ -74,6 +75,74 @@ extension UIColor {
         }
         
         self.init(rgb: number)
+    }
+}
+
+// MARK: - CGColor (function)
+extension CGColor {
+    
+    /// [取得顏色的RGBA值 => 0% ~ 100%](https://stackoverflow.com/questions/28644311/how-to-get-the-rgb-code-int-from-an-uicolor-in-swift)
+    /// - Returns: Constant.RGBAInformation?
+    func _rgba() -> Constant.RGBAInformation? {
+        
+        guard let components = components,
+              !components.isEmpty
+        else {
+            return nil
+        }
+        
+        guard let red = components[safe: 0],
+              let green = components[safe: 1],
+              let blue = components[safe: 2],
+              let alpha = components[safe: 3]
+        else {
+            return nil
+        }
+        
+        return (red: red, green: green, blue: blue, alpha: alpha)
+    }
+    
+    /// RGB => HexString
+    /// - (0.0, 1.0, 0.0, 1.0) => (#00FF00FF)
+    /// - Parameters:
+    ///   - colorSpace: [色域](http://m.pjtime.com/2021/10/m282732658448.shtml)
+    ///   - intent: CGColorRenderingIntent
+    ///   - options: CFDictionary? = nil
+    /// - Returns: String?
+    func _hexString(by colorSpace: CGColorSpace? = .init(name: CGColorSpace.sRGB), intent: CGColorRenderingIntent = .defaultIntent, options: CFDictionary? = nil) -> String? {
+        
+        guard let colorSpace = colorSpace,
+              let cgColor = convertColorSpace(colorSpace, intent: intent, options: options),
+              let colorRGBA = cgColor._rgba()
+        else {
+            return nil
+        }
+        
+        let multiplier = CGFloat(255.999999)
+        let red = Int(colorRGBA.red * multiplier)
+        let green = Int(colorRGBA.green * multiplier)
+        let blue = Int(colorRGBA.blue * multiplier)
+        let alpha = Int(colorRGBA.alpha * multiplier)
+        
+        if (colorRGBA.alpha == 1.0) { return String(format: "#%02lX%02lX%02lX", red, green, blue) }
+        return String(format: "#%02lX%02lX%02lX%02lX", String(format: "#%02lX%02lX%02lX", red, green, blue, alpha))
+    }
+    
+    /// [色域轉換](https://stackoverflow.com/questions/74608754/convert-display-p3-to-esrgb-by-hex-color-in-ios-swift)
+    /// - Parameters:
+    ///   - colorSpace: [DisplayP3 -> SRGB](https://colorgeek.co/2022/08/04/what_is_p3_color/)
+    ///   - intent: CGColorRenderingIntent
+    ///   - options: CFDictionary?
+    /// - Returns: CGColor?
+    func convertColorSpace(_ colorSpace: CGColorSpace? = .init(name: CGColorSpace.sRGB), intent: CGColorRenderingIntent = .defaultIntent, options: CFDictionary? = nil) -> CGColor? {
+        
+        guard let colorSpace = colorSpace,
+              let cgColor = converted(to: colorSpace, intent: intent, options: options)
+        else {
+            return nil
+        }
+        
+        return cgColor
     }
 }
 
@@ -1707,6 +1776,21 @@ extension WKWebView {
         }
         
         return observation
+    }
+}
+
+// MARK: - UIColorPickerViewController (static function)
+extension UIColorPickerViewController {
+    
+    /// [產生UIColorPickerViewController](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/ios-sdk-選東西的-view-controller-delegate-範例-c3f0b5238933)
+    /// - Parameter delegate: UIColorPickerViewControllerDelegate
+    /// - Returns: UIColorPickerViewController
+    static func _build(delegate: UIColorPickerViewControllerDelegate?) -> UIColorPickerViewController {
+        
+        let controller = UIColorPickerViewController()
+        controller.delegate = delegate
+
+        return controller
     }
 }
 

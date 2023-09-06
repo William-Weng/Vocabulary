@@ -74,6 +74,14 @@ final class OthersViewController: UIViewController {
         }
     }
     
+    @IBAction func paletteAction(_ sender: UIBarButtonItem) {
+        
+        let colorPicker = UIColorPickerViewController._build(delegate: self)
+        colorPicker.supportsAlpha = false
+        
+        present(colorPicker, animated: true)
+    }
+    
     deinit {
         OthersTableViewCell.bookmarksArray = []
         OthersTableViewCell.othersViewDelegate = nil
@@ -109,6 +117,18 @@ extension OthersViewController: UIDocumentPickerDelegate {
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         downloadDocumentAction(controller, didPickDocumentsAt: urls)
+    }
+}
+
+// MARK: - UIColorPickerViewControllerDelegate
+extension OthersViewController: UIColorPickerViewControllerDelegate {
+    
+    func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
+        
+        let selectedCGColor = viewController.selectedColor.cgColor
+        
+        wwPrint(selectedCGColor.colorSpace)
+        wwPrint(selectedCGColor._hexString())
     }
 }
 

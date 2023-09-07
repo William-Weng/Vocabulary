@@ -79,6 +79,24 @@ extension AppDelegate {
         }
     }
     
+    /// 初始化設定值 => Settings.json
+    func initSettings() {
+                
+        guard let parseSettingsDictionary = parseSettingsDictionary(with: Constant.settingsJSON),
+              let dictionary = settingsDictionary(with: Constant.tableName, dictionary: parseSettingsDictionary),
+              let settings = dictionary["settings"] as? [String: Any]
+        else {
+            return
+        }
+        
+        Constant.SettingsJSON.generalInformations = generalInformations(with: parseSettingsDictionary)
+        Constant.SettingsJSON.vocabularyLevelInformations = vocabularyLevelInformations(with: settings)
+        Constant.SettingsJSON.sentenceSpeechInformations = sentenceSpeechInformations(with: settings)
+        Constant.SettingsJSON.wordSpeechInformations = wordSpeechInformations(with: settings)
+        Constant.tableNameIndex = Constant.SettingsJSON.generalInformations.first { $0.key.capitalized == Constant.tableName?.capitalized }?.value ?? 0
+    }
+
+    
     /// [重新播放音樂](https://juejin.cn/post/7163440404480655367)
     /// - Parameter notificaiton: Notification
     func replayMusic(with player: AVAudioPlayer) {
@@ -159,19 +177,17 @@ private extension AppDelegate {
     ///   - application: UIApplication
     ///   - launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     func initSetting(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
-        
-        _ = WWWebImage.initDatabase(for: .caches, expiredDays: Constant.webImageExpiredDays)
-        
+                
+        initSettings()
         initCurrentTableName()
         initDatabase()
+        
         backgroundPlayAudio()
         appShortcutItem(with: application)
-        
         backgroundBarColor(.black.withAlphaComponent(0.1))
         
         _ = animationFolderUrlMaker()
-        
-        initSettings()
+        _ = WWWebImage.initDatabase(for: .caches, expiredDays: Constant.webImageExpiredDays)
     }
     
     /// 取得之前設定的資料庫名稱
@@ -357,24 +373,7 @@ private extension AppDelegate {
 
 // MARK: - Settings.json
 private extension AppDelegate {
-    
-    /// 初始化設定值 => Settings.json
-    func initSettings() {
         
-        guard let parseSettingsDictionary = parseSettingsDictionary(with: Constant.settingsJSON),
-              let dictionary = settingsDictionary(with: Constant.tableName, dictionary: parseSettingsDictionary),
-              let settings = dictionary["settings"] as? [String: Any]
-        else {
-            return
-        }
-        
-        Constant.SettingsJSON.generalInformations = generalInformations(with: parseSettingsDictionary)
-        Constant.SettingsJSON.vocabularyLevelInformations = vocabularyLevelInformations(with: settings)
-        Constant.SettingsJSON.sentenceSpeechInformations = sentenceSpeechInformations(with: settings)
-        Constant.SettingsJSON.wordSpeechInformations = wordSpeechInformations(with: settings)
-        Constant.tableNameIndex = Constant.SettingsJSON.generalInformations.first { $0.key.capitalized == Constant.tableName?.capitalized }?.value ?? 0
-    }
-    
     /// 取得一般般的設定檔
     /// - Parameter dictionary: [String: Any]
     /// - Returns: [String: Settings.GeneralInformation]
@@ -399,6 +398,7 @@ private extension AppDelegate {
     func settingsDictionary(with tableName: String?, dictionary: [String: Any]) -> [String: Any]? {
         
         let currentTableName = tableName ?? "English"
+        Constant.tableName = currentTableName
         
         guard let settings = dictionary[currentTableName] as? [String: Any] else { return nil }
         return settings

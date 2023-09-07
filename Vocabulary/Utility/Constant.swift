@@ -184,7 +184,31 @@ extension Constant {
         case CFBundleShortVersionString = "CFBundleShortVersionString"      // Version版本號 => 1.0.0
         case CFBundleVersion = "CFBundleVersion"                            // Build的代號 => 202001011
     }
+    
+    /// 單字內容的資料庫名稱
+    enum DataTableType {
         
+        case `default`(_ language: String)      // 單字的資料庫名稱 => English
+        case list(_ language: String)           // 單字列表的資料庫名稱 => EnglishList
+        case review(_ language: String)         // 複習單字列表的資料庫名稱 => EnglishReview
+        case sentence(_ language: String)       // 常用例句的資料庫名稱 => EnglishSentence
+        case bookmarkSite(_ language: String)   // 常用書籤 => EnglishBookmarkSite
+        
+        /// 產生資料表名稱
+        /// => English / EnglishList / EnglishReview / EnglishSentence / EnglishBookmarkSite
+        /// - Returns: String
+        func name() -> String {
+            
+            switch self {
+            case .`default`(let language): return language
+            case .list(let language): return "\(language)List"
+            case .review(let language): return "\(language)Review"
+            case .sentence(let language): return "\(language)Sentence"
+            case .bookmarkSite(let language): return "\(language)BookmarkSite"
+            }
+        }
+    }
+    
     /// 單字內容的資料庫名稱
     enum VoiceCode: String, CaseIterable {
         

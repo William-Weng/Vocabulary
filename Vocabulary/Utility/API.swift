@@ -64,12 +64,12 @@ extension API {
     ///   - tableName: Constant.VoiceCode
     ///   - key: String?
     /// - Returns: [[String : Any]]
-    func searchWordDetailListCount(_ word: String, for tableName: Constant.VoiceCode, key: String? = nil) -> [[String : Any]] {
+    func searchWordDetailListCount(_ word: String, for type: Constant.DataTableType, key: String? = nil) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
         let condition = SQLite3Condition.Where().isCompare(key: "word", type: .equal, value: word)
-        let result = database.select(tableName: tableName.rawValue, functions: [.count(key, .INTEGER())], where: condition)
+        let result = database.select(tableName: type.name(), functions: [.count(key, .INTEGER())], where: condition)
         
         return result.array
     }

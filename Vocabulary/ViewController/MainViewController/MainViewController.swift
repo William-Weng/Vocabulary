@@ -51,6 +51,7 @@ final class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+                
         initSetting()
         initMenu()
     }
@@ -710,7 +711,8 @@ private extension MainViewController {
         let key = "word"
         let field = "\(key)Count"
         
-        guard let result = API.shared.searchWordDetailListCount(word, for: Constant.currentTableName, key: key).first,
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex),
+              let result = API.shared.searchWordDetailListCount(word, for: .list(info.key), key: key).first,
               let value = result["\(field)"],
               let count = Int("\(value)", radix: 10)
         else {
@@ -766,7 +768,7 @@ private extension MainViewController {
     /// - Parameter target: UIViewController
     func dictionaryAlertAction(target: UIViewController) {
         
-        let alertController = UIAlertController(title: "請選擇等級", message: nil, preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: "請選擇字典", message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
         
         Constant.SettingsJSON.generalInformations.forEach { info in
@@ -785,10 +787,8 @@ private extension MainViewController {
     /// - Returns: UIAction
     func dictionaryAlertActionMaker(with info: Settings.GeneralInformation) -> UIAlertAction {
         
-        let action = UIAlertAction(title: info.name, style: .default) { _ in
-            Constant.currentTableName = info.key.capitalized
-            NotificationCenter.default._post(name: .refreshViewController)
-        }
+        let title = "\(info.code._flagEmoji()) \(info.name)"
+        let action = UIAlertAction(title: title, style: .default) { _ in Utility.shared.changeDictionary(with: info) }
         
         return action
     }

@@ -20,7 +20,27 @@ final class Utility: NSObject {
     private override init() {}
 }
 
-// MARK: - Utility (function)
+// MARK: - 資料庫相關 (function)
+extension Utility {
+    
+    /// 切換字典檔
+    /// - Parameter info: Settings.GeneralInformation
+    func changeDictionary(with info: Settings.GeneralInformation) {
+        
+        Constant.tableName = info.key
+        NotificationCenter.default._post(name: .refreshViewController)
+    }
+    
+    /// 資料庫備份路徑
+    /// - Parameter dateFormat: "yyyy-MM-dd HH:mm:ss ZZZ"
+    /// - Returns: URL?
+    func databaseBackupUrl(_ dateFormat: String = "yyyy-MM-dd HH:mm:ss ZZZ") -> URL? {
+        let url = Constant.backupDirectory?._appendPath("\(Date()._localTime(dateFormat: dateFormat, timeZone: .current)).\(Constant.databaseFileExtension)")
+        return url
+    }
+}
+
+// MARK: - 提示相關 (function)
 extension Utility {
     
     /// [顯示HUD](https://augmentedcode.io/2019/09/01/animating-gifs-and-apngs-with-cganimateimageaturlwithblock-in-swift/)
@@ -40,7 +60,7 @@ extension Utility {
     /// 播放HUD
     /// - Parameter type: Constant.HudGifType
     func diplayHUD(with type: Constant.HudGifType) {
-
+        
         guard let gifUrl = type.fileURL(),
               FileManager.default._fileExists(with: gifUrl).isExist
         else {
@@ -58,6 +78,10 @@ extension Utility {
         let setting: (backgroundColor: UIColor, height: CGFloat) = (#colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1), viewController?.navigationController?._navigationBarHeight(for: UIWindow._keyWindow(hasScene: false)) ?? .zero)
         return setting
     }
+}
+
+// MARK: - 發音相關 (function)
+extension Utility {
     
     /// [讀出文字 / 文字發聲](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/讓開不了口的-app-開口說話-48c674f8f69e)
     /// - Parameters:
@@ -79,6 +103,10 @@ extension Utility {
     func isWebUrlString(_ urlString: String) -> Bool {
         return urlString.hasPrefix("http://") || urlString.hasPrefix("https://")
     }
+}
+
+// MARK: - UI相關 (function)
+extension Utility {
     
     /// 計算下滑到底更新的距離百分比 (UIRefreshControl的另一邊)
     /// - Parameters:
@@ -110,17 +138,8 @@ extension Utility {
         if (scrollView.frame.height > scrollView.contentSize.height) {
             percent = scrollView.contentOffset.y / Constant.updateSearchScrolledHeight
         }
-
+        
         return percent
-    }
-    
-    /// 字型
-    /// - Returns: UIFont?
-    /// - Parameters:
-    ///   - name: 字型名稱
-    ///   - fontSize: CGFloat
-    func font(name: String = "jf-openhuninn-1.1", size: CGFloat = 36.0) -> UIFont? {
-        return UIFont(name: name, size: size)
     }
     
     /// 設定UILabel標題
@@ -134,7 +153,7 @@ extension Utility {
         let title = "\(title) - \(count)"
         titleViewSetting(titleView, title: title, gap: gap)
     }
-        
+    
     /// 設定UILabel標題 for 單字複習
     /// - Parameters:
     ///   - titleView: UILabel
@@ -216,13 +235,18 @@ extension Utility {
         Constant.updateScrolledHeight = keyWindow.frame.height * percent
     }
     
-    /// 資料庫備份路徑
-    /// - Parameter dateFormat: "yyyy-MM-dd HH:mm:ss ZZZ"
-    /// - Returns: URL?
-    func databaseBackupUrl(_ dateFormat: String = "yyyy-MM-dd HH:mm:ss ZZZ") -> URL? {
-        let url = Constant.backupDirectory?._appendPath("\(Date()._localTime(dateFormat: dateFormat, timeZone: .current)).\(Constant.databaseFileExtension)")
-        return url
+    /// 字型
+    /// - Returns: UIFont?
+    /// - Parameters:
+    ///   - name: 字型名稱
+    ///   - fontSize: CGFloat
+    func font(name: String, size: CGFloat = 36.0) -> UIFont? {
+        return UIFont(name: name, size: size)
     }
+}
+
+// MARK: - 音樂相關 (function)
+extension Utility {
     
     /// 要播放的Music列表
     /// - Parameter type: Constant.MusicLoopType
@@ -314,7 +338,7 @@ extension Utility {
 // MARK: - Settings.json
 extension Utility {
     
-    /// 取得字典設定字型 (有預設值)
+    /// 取得字典外語設定字型 (有預設值)
     /// - Parameters:
     ///   - index: Int
     ///   - size: CGFloat
@@ -337,7 +361,7 @@ extension Utility {
     func mainViewContrillerTitle(with index: Int, `default`: String) -> String {
         
         guard let settings = Utility.shared.generalSettings(index: index) else { return `default` }
-        return "\(settings.code._flagEmoji()) \(settings.name)"
+        return settings.name
     }
     
     /// 取得基本設定 (Settings.json)

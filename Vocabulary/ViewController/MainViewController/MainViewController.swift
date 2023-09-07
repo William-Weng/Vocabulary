@@ -334,16 +334,16 @@ private extension MainViewController {
     /// - Parameters:
     ///   - word: 單字
     ///   - alphabet: 音標
-    ///   - tableName: 資料表名稱
+    ///   - info: Settings.GeneralInformation
     /// - Returns: Bool
-    func updateAlphabetLabel(with indexPath: IndexPath, id: Int, alphabet: String, for tableName: Constant.VoiceCode) -> Bool {
+    func updateAlphabetLabel(with indexPath: IndexPath, id: Int, alphabet: String, info: Settings.GeneralInformation) -> Bool {
         
         guard var dictionary = MainTableViewCell.vocabularyListArray[safe: indexPath.row] else { return false }
         
         dictionary["alphabet"] = alphabet
         MainTableViewCell.vocabularyListArray[indexPath.row] = dictionary
         
-        return API.shared.updateAlphabetToList(id, alphabet: alphabet, for: tableName)
+        return API.shared.updateAlphabetToList(id, alphabet: alphabet, info: info)
     }
     
     /// 新增單字的動作
@@ -410,13 +410,14 @@ private extension MainViewController {
         let updateAction = UIContextualAction._build(with: "音標", color: #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)) { [weak self] in
             
             guard let this = self,
+                  let info = Utility.shared.generalSettings(index: Constant.tableNameIndex),
                   let vocabularyList = MainTableViewCell.vocabularyList(with: indexPath)
             else {
                 return
             }
             
             this.appendTextHint(with: indexPath, title: "請輸入音標", defaultText: vocabularyList.alphabet) { alphabet in
-                return this.updateAlphabetLabel(with: indexPath, id: vocabularyList.id, alphabet: alphabet, for: Constant.currentTableName)
+                return this.updateAlphabetLabel(with: indexPath, id: vocabularyList.id, alphabet: alphabet, info: info)
             }
         }
         
@@ -706,7 +707,8 @@ private extension MainViewController {
         let key = "word"
         let field = "\(key)Count"
         
-        guard let result = API.shared.searchVocabularyCount(for: Constant.currentTableName, key: key, isFavorite: isFavorite).first,
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex),
+              let result = API.shared.searchVocabularyCount(info: info, key: key, isFavorite: isFavorite).first,
               let value = result["\(field)"],
               let count = Int("\(value)", radix: 10)
         else {

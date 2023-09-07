@@ -73,7 +73,7 @@ extension AppDelegate {
         case .success(let database):
             
             Constant.database = database
-            Constant.VoiceCode.allCases.forEach { _ = createDatabase(database, for: $0) }
+            Constant.SettingsJSON.generalInformations.forEach { info in _ = createDatabase(database, info: info) }
             
             wwPrint(database.fileURL, isShow: Constant.isPrint)
         }
@@ -204,16 +204,18 @@ private extension AppDelegate {
     /// 建立該語言的資料庫群
     /// - Parameters:
     ///   - database: SQLite3Database
-    ///   - tableName: Constant.VoiceCode
+    ///   - info: Settings.GeneralInformation
     /// - Returns: [SQLite3Database.ExecuteResult]
-    func createDatabase(_ database: SQLite3Database, for tableName: Constant.VoiceCode) -> [SQLite3Database.ExecuteResult] {
+    func createDatabase(_ database: SQLite3Database, info: Settings.GeneralInformation) -> [SQLite3Database.ExecuteResult] {
+        
+        let language = info.key
         
         let result = [
-            database.create(tableName: tableName.rawValue, type: Vocabulary.self, isOverwrite: false),
-            database.create(tableName: tableName.vocabularyList(), type: VocabularyList.self, isOverwrite: false),
-            database.create(tableName: tableName.vocabularyReviewList(), type: VocabularyReviewList.self, isOverwrite: false),
-            database.create(tableName: tableName.vocabularySentenceList(), type: VocabularySentenceList.self, isOverwrite: false),
-            database.create(tableName: tableName.bookmarks(), type: BookmarkSite.self, isOverwrite: false),
+            database.create(tableName: Constant.DataTableType.default(language).name(), type: Vocabulary.self, isOverwrite: false),
+            database.create(tableName: Constant.DataTableType.list(language).name(), type: VocabularyList.self, isOverwrite: false),
+            database.create(tableName: Constant.DataTableType.review(language).name(), type: VocabularyReviewList.self, isOverwrite: false),
+            database.create(tableName: Constant.DataTableType.sentence(language).name(), type: VocabularySentenceList.self, isOverwrite: false),
+            database.create(tableName: Constant.DataTableType.bookmarkSite(language).name(), type: BookmarkSite.self, isOverwrite: false),
         ]
         
         return result

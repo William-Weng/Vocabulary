@@ -45,16 +45,17 @@ extension API {
     
     /// 搜尋單字列表總數量
     /// - Parameters:
-    ///   - tableName: 資料表名稱
+    ///   - info: Settings.GeneralInformation
     ///   - key: 欄位名稱
     ///   - isFavorite: Bool
     /// - Returns: [[String : Any]]
-    func searchVocabularyCount(for tableName: Constant.VoiceCode, key: String? = nil, isFavorite: Bool = false) -> [[String : Any]] {
+    func searchVocabularyCount(info: Settings.GeneralInformation, key: String? = nil, isFavorite: Bool = false) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
+        let type: Constant.DataTableType = .list(info.key)
         let condition: SQLite3Condition.Where? = (isFavorite) ? SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: isFavorite._int()) : nil
-        let result = database.select(tableName: tableName.vocabularyList(), functions: [.count(key, .INTEGER())], where: condition)
+        let result = database.select(tableName: type.name(), functions: [.count(key, .INTEGER())], where: condition)
         
         return result.array
     }
@@ -546,18 +547,20 @@ extension API {
     /// - Parameters:
     ///   - id: Int
     ///   - alphabet: 音標
-    ///   - tableName: 資料表名稱
+    ///   - info: Settings.GeneralInformation
     /// - Returns: Bool
-    func updateAlphabetToList(_ id: Int, alphabet: String, for tableName: Constant.VoiceCode) -> Bool {
+    func updateAlphabetToList(_ id: Int, alphabet: String, info: Settings.GeneralInformation) -> Bool {
         
         guard let database = Constant.database else { return false }
         
+        let type: Constant.DataTableType = .list(info.key)
+
         let items: [SQLite3Database.InsertItem] = [
             (key: "alphabet", value: alphabet.fixSqliteSingleQuote()),
         ]
         
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
-        let result = database.update(tableName: tableName.vocabularyList(), items: items, where: condition)
+        let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
     }

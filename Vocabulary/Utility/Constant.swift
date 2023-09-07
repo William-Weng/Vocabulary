@@ -232,18 +232,6 @@ extension Constant {
         /// 常用書籤 => EnglishBookmarkSite
         /// - Returns: String
         func bookmarks() -> String { return "\(self.rawValue)BookmarkSite" }
-                
-        /// 分類 / 分組號碼 (0xx / 1xx / 2xx / ...)
-        /// => 要跟Vocabulary.Speech配合
-        /// - Returns: Int
-        func groupNumber() -> Int {
-            switch self {
-            case .english: return 000
-            case .japanese: return 100
-            case .french: return 200
-            case .korean: return 300
-            }
-        }
     }
     
     /// 自定義錯誤

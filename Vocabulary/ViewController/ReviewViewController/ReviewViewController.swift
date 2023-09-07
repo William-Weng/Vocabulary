@@ -270,7 +270,9 @@ private extension ReviewViewController {
     ///   - level: Constant.QuestionLevel
     func interpretLabelAction(_ vocabularyList: VocabularyList, level: Constant.QuestionLevel) {
         
-        if (reviewWordDetailList.isEmpty) { reviewWordDetailList = API.shared.searchWordDetailList(vocabularyList.word, for: Constant.currentTableName) }
+        if (reviewWordDetailList.isEmpty), let info = Utility.shared.generalSettings(index: Constant.tableNameIndex) {
+            reviewWordDetailList = API.shared.searchWordDetailList(vocabularyList.word, for: .default(info.key))
+        }
         
         guard let detailList = reviewWordDetailList.popLast() else { interpretLabel.text = ""; return }
         

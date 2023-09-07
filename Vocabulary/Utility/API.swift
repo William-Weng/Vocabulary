@@ -22,12 +22,12 @@ extension API {
     /// 搜尋單字列表
     /// - Parameters:
     ///   - words: 特定單字群
-    ///   - tableName: 資料表名稱
+    ///   - type: Constant.DataTableType
     ///   - count: 單次搜尋的數量
     ///   - offset: 搜尋的偏移量
     ///   - isFavorite: 我的最愛
     /// - Returns: [[String : Any]]
-    func searchVocabularyList(in words: [String]? = nil, isFavorite: Bool = false, for tableName: Constant.VoiceCode, count: Int = Constant.searchCount, offset: Int) -> [[String : Any]] {
+    func searchVocabularyList(in words: [String]? = nil, isFavorite: Bool = false, for type: Constant.DataTableType, count: Int = Constant.searchCount, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
@@ -38,7 +38,7 @@ extension API {
         if let words = words, !words.isEmpty { condition = SQLite3Condition.Where().in(key: "word", values: words); orderBy = SQLite3Condition.OrderBy().item(key: "word", type: .ascending) }
         if (isFavorite) { condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: 1) }
         
-        let result = database.select(tableName: tableName.vocabularyList(), type: VocabularyList.self, where: condition, orderBy: orderBy, limit: limit)
+        let result = database.select(tableName: type.name(), type: VocabularyList.self, where: condition, orderBy: orderBy, limit: limit)
         return result.array
     }
     
@@ -151,15 +151,15 @@ extension API {
     /// 搜尋單字內容列表
     /// - Parameters:
     ///   - word: 單字
-    ///   - tableName: 資料表名稱
+    ///   - type: Constant.DataTableType
     /// - Returns: [[String : Any]]
-    func searchWordDetailList(_ word: String, for tableName: Constant.VoiceCode) -> [[String : Any]] {
+    func searchWordDetailList(_ word: String, for type: Constant.DataTableType) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
         let condition = SQLite3Condition.Where().isCompare(key: "word", type: .equal, value: word)
         let orderBy = SQLite3Condition.OrderBy().item(key: "hardwork", type: .descending).addItem(key: "createTime", type: .ascending)
-        let result = database.select(tableName: tableName.rawValue, type: Vocabulary.self, where: condition, orderBy: orderBy, limit: nil)
+        let result = database.select(tableName: type.name(), type: Vocabulary.self, where: condition, orderBy: orderBy, limit: nil)
         
         return result.array
     }

@@ -27,8 +27,29 @@ extension Utility {
     /// - Parameter info: Settings.GeneralInformation
     func changeDictionary(with info: Settings.GeneralInformation) {
         
+        guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
         Constant.tableName = info.key
+        Constant.tableNameIndex = tableNameIndex(info.key)
+        
+        delegate.initSettings()
         NotificationCenter.default._post(name: .refreshViewController)
+    }
+    
+    /// 搜尋字典檔的index
+    /// - Parameters:
+    ///   - tableName: String
+    ///   - `default`: Int
+    /// - Returns: Int
+    func tableNameIndex(_ tableName: String?, `default`: Int = 0) -> Int {
+        
+        guard let tableName = tableName,
+              let index = Constant.SettingsJSON.generalInformations.first(where: { $0.key.capitalized == tableName.capitalized })?.value
+        else {
+            return `default`
+        }
+        
+        return index
     }
     
     /// 資料庫備份路徑

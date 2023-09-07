@@ -86,8 +86,16 @@ private extension SolutionViewController {
     
     /// 初始化複習的單字列表
     func initReviewListArray() {
+        
         if (words.isEmpty) { return }
-        SolutionTableViewCell.vocabularyReviewListArray = API.shared.searchVocabularyList(in: words, for: Constant.currentTableName, count: words.count, offset: 0)
+        
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex),
+              !words.isEmpty
+        else {
+            return
+        }
+        
+        SolutionTableViewCell.vocabularyReviewListArray = API.shared.searchVocabularyList(in: words, for: .list(info.key), count: words.count, offset: 0)
     }
     
     /// 動畫背景設定

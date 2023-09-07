@@ -211,8 +211,10 @@ private extension MainViewController {
         
         defer { refreshControl.endRefreshing() }
         
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex) else { return }
+        
         MainTableViewCell.vocabularyListArray = []
-        MainTableViewCell.vocabularyListArray = API.shared.searchVocabularyList(isFavorite: isFavorite, for: Constant.currentTableName, offset: MainTableViewCell.vocabularyListArray.count)
+        MainTableViewCell.vocabularyListArray = API.shared.searchVocabularyList(isFavorite: isFavorite, for: .list(info.key), offset: MainTableViewCell.vocabularyListArray.count)
         
         let listCount = MainTableViewCell.vocabularyListArray.count
         titleSetting(titleString, count: listCount)
@@ -288,8 +290,10 @@ private extension MainViewController {
         
         defer { refreshControl.endRefreshing() }
         
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex) else { return }
+        
         let oldListCount = MainTableViewCell.vocabularyListArray.count
-        MainTableViewCell.vocabularyListArray += API.shared.searchVocabularyList(isFavorite: isFavorite, for: Constant.currentTableName, offset: oldListCount)
+        MainTableViewCell.vocabularyListArray += API.shared.searchVocabularyList(isFavorite: isFavorite, for: .list(info.key), offset: oldListCount)
         
         let newListCount = MainTableViewCell.vocabularyListArray.count
         titleSetting(titleString, count: newListCount)

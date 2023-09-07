@@ -93,9 +93,8 @@ extension AppDelegate {
         Constant.SettingsJSON.vocabularyLevelInformations = vocabularyLevelInformations(with: settings)
         Constant.SettingsJSON.sentenceSpeechInformations = sentenceSpeechInformations(with: settings)
         Constant.SettingsJSON.wordSpeechInformations = wordSpeechInformations(with: settings)
-        Constant.tableNameIndex = Constant.SettingsJSON.generalInformations.first { $0.key.capitalized == Constant.tableName?.capitalized }?.value ?? 0
+        Constant.tableNameIndex = Utility.shared.tableNameIndex(Constant.tableName)
     }
-
     
     /// [重新播放音樂](https://juejin.cn/post/7163440404480655367)
     /// - Parameter notificaiton: Notification

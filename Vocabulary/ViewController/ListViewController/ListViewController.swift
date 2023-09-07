@@ -116,7 +116,9 @@ private extension ListViewController {
     /// 重新讀取單字列表
     func reloadExampleList() {
         
-        ListTableViewCell.exmapleList = API.shared.searchWordDetailList(vocabularyList.word, for: Constant.currentTableName)
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex) else { return }
+        
+        ListTableViewCell.exmapleList = API.shared.searchWordDetailList(vocabularyList.word, for: .default(info.key))
         
         translateDisplayArray = []
         myTableView.reloadData()

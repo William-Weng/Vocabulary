@@ -366,10 +366,14 @@ private extension ListViewController {
     /// - Parameter count: Int
     func updateExampleCount(_ count: Int) {
         
-        if (ListTableViewCell.exmapleList.isEmpty) { return }
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex),
+              !ListTableViewCell.exmapleList.isEmpty
+        else {
+            return
+        }
         
         let count = ListTableViewCell.exmapleList.count
-        let isSuccess = API.shared.updateWordToList(vocabularyList.word, for: Constant.currentTableName, count: count, hasUpdateTime: false)
+        let isSuccess = API.shared.updateWordToList(vocabularyList.word, info: info, count: count, hasUpdateTime: false)
         
         if (isSuccess) { mainViewDelegate?.updateCountLabel(with: vocabularyListIndexPath, count: count) }
     }

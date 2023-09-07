@@ -219,7 +219,7 @@ private extension ReviewResultViewController {
               let indexPath = sender as? IndexPath,
               let reviewResultList = ReviewResultTableViewCell.reviewResultList(with: indexPath),
               let info = Utility.shared.generalSettings(index: Constant.tableNameIndex),
-              let vocabularyList = API.shared.searchVocabularyList(in: [reviewResultList.word], for: .list(info.key), offset: 0).first?._jsonClass(for: VocabularyList.self)
+              let vocabularyList = API.shared.searchVocabularyList(in: [reviewResultList.word], info: info, offset: 0).first?._jsonClass(for: VocabularyList.self)
         else {
             return
         }

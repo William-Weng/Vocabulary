@@ -22,15 +22,16 @@ extension API {
     /// 搜尋單字列表
     /// - Parameters:
     ///   - words: 特定單字群
-    ///   - type: Constant.DataTableType
+    ///   - info: Settings.SentenceSpeechInformation
     ///   - count: 單次搜尋的數量
     ///   - offset: 搜尋的偏移量
     ///   - isFavorite: 我的最愛
     /// - Returns: [[String : Any]]
-    func searchVocabularyList(in words: [String]? = nil, isFavorite: Bool = false, for type: Constant.DataTableType, count: Int = Constant.searchCount, offset: Int) -> [[String : Any]] {
+    func searchVocabularyList(in words: [String]? = nil, isFavorite: Bool = false, info: Settings.GeneralInformation, count: Int = Constant.searchCount, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
+        let type: Constant.DataTableType = .list(info.key)
         let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
         var condition: SQLite3Condition.Where?
         var orderBy: SQLite3Condition.OrderBy? = SQLite3Condition.OrderBy().item(key: "updateTime", type: .descending)
@@ -61,13 +62,14 @@ extension API {
     /// 搜尋該單字數量
     /// - Parameters:
     ///   - word: String
-    ///   - tableName: Constant.VoiceCode
+    ///   - info: Settings.GeneralInformation
     ///   - key: String?
     /// - Returns: [[String : Any]]
-    func searchWordDetailListCount(_ word: String, for type: Constant.DataTableType, key: String? = nil) -> [[String : Any]] {
+    func searchWordDetailListCount(_ word: String, info: Settings.GeneralInformation, key: String? = nil) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
+        let type: Constant.DataTableType = .default(info.key)
         let condition = SQLite3Condition.Where().isCompare(key: "word", type: .equal, value: word)
         let result = database.select(tableName: type.name(), functions: [.count(key, .INTEGER())], where: condition)
         
@@ -389,9 +391,9 @@ extension API {
     /// 新增單字
     /// - Parameters:
     ///   - word: 單字
-    ///   - tableName: 資料表名稱
+    ///   - info: Settings.GeneralInformation
     /// - Returns: Bool
-    func insertNewWord(_ word: String, for tableName: Constant.VoiceCode) -> Bool {
+    func insertNewWord(_ word: String, info: Settings.GeneralInformation) -> Bool {
         
         guard let database = Constant.database,
               !word.isEmpty
@@ -399,12 +401,14 @@ extension API {
             return false
         }
         
+        let type: Constant.DataTableType = .default(info.key)
+        
         let items: [SQLite3Database.InsertItem] = [
             (key: "word", value: word),
-            (key: "speech", value: tableName.groupNumber()),
+            (key: "speech", value: 0),
         ]
         
-        let result = database.insert(tableName: tableName.rawValue, itemsArray: [items])
+        let result = database.insert(tableName: type.name(), itemsArray: [items])
         
         return result?.isSussess ?? false
     }
@@ -412,11 +416,13 @@ extension API {
     /// 新增單字到列表
     /// - Parameters:
     ///   - word: 單字
-    ///   - tableName: 資料表名稱
+    ///   - info: Settings.GeneralInformation
     /// - Returns: Bool
-    func insertWordToList(_ word: String, for tableName: Constant.VoiceCode) -> Bool {
+    func insertWordToList(_ word: String, info: Settings.GeneralInformation) -> Bool {
         
         guard let database = Constant.database else { return false }
+        
+        let type: Constant.DataTableType = .list(info.key)
         
         let items: [SQLite3Database.InsertItem] = [
             (key: "word", value: word),
@@ -424,7 +430,7 @@ extension API {
             (key: "level", value: 0),
         ]
         
-        let result = database.insert(tableName: tableName.vocabularyList(), itemsArray: [items])
+        let result = database.insert(tableName: type.name(), itemsArray: [items])
         
         return result?.isSussess ?? false
     }
@@ -512,13 +518,17 @@ extension API {
     /// 更新單字例句數量
     /// - Parameters:
     ///   - word: 單字
-    ///   - tableName: 資料表名稱
+    ///   - info: Settings.GeneralInformation
     ///   - count: 例句數量
     ///   - hasUpdateTime: 要不要加上更新時間
     /// - Returns: Bool
-    func updateWordToList(_ word: String, for tableName: Constant.VoiceCode, count: Int, hasUpdateTime: Bool = true) -> Bool {
+    func updateWordToList(_ word: String, info: Settings.GeneralInformation, count: Int, hasUpdateTime: Bool = true) -> Bool {
         
-        guard let database = Constant.database else { return false }
+        guard let database = Constant.database,
+              let type: Constant.DataTableType = Optional.some(.list(info.key))
+        else {
+            return false
+        }
         
         var items: [SQLite3Database.InsertItem] = [
             (key: "count", value: count),
@@ -527,7 +537,7 @@ extension API {
         if (hasUpdateTime) { items.append(SQLite3Database.InsertItem((key: "updateTime", value: Date()._localTime()))) }
         
         let condition = SQLite3Condition.Where().isCompare(key: "word", type: .equal, value: word)
-        let result = database.update(tableName: tableName.vocabularyList(), items: items, where: condition)
+        let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
     }

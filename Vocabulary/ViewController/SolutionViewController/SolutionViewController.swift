@@ -95,7 +95,7 @@ private extension SolutionViewController {
             return
         }
         
-        SolutionTableViewCell.vocabularyReviewListArray = API.shared.searchVocabularyList(in: words, for: .list(info.key), count: words.count, offset: 0)
+        SolutionTableViewCell.vocabularyReviewListArray = API.shared.searchVocabularyList(in: words, info: info, count: words.count, offset: 0)
     }
     
     /// 動畫背景設定

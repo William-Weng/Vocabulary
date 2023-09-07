@@ -85,10 +85,10 @@
     "font": "GamjaFlower-Regular",
     "settings": {
       "wordSpeech": {
-        "대명사": { "name": "代詞", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b" },
+        "대명사": { "name": "代詞", "value": 0, "color": "#f7fffc", "backgroundColor": "#00b373" },
         "명사": { "name": "名詞", "value": 1, "color": "#f7fffc", "backgroundColor": "#1c1c1b" },
-        "조사": { "name": "助詞", "value": 2, "color": "#f7fffc", "backgroundColor": "#1c1c1b" },
-        "수사": { "name": "數詞", "value": 3, "color": "#f7fffc", "backgroundColor": "#1c1c1b" },
+        "조사": { "name": "助詞", "value": 2, "color": "#f7fffc", "backgroundColor": "#0a4eff" },
+        "수사": { "name": "數詞", "value": 3, "color": "#f7fffc", "backgroundColor": "#666666" },
         "동사": { "name": "動詞", "value": 4, "color": "#f7fffc", "backgroundColor": "#e10000" }
       },
       "sentenceSpeech": {

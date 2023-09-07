@@ -126,8 +126,14 @@ extension MainViewController {
     func appendWord(with defaultText: String? = nil) {
         
         appendTextHint(title: appendTextHintTitle, defaultText: defaultText) { [weak self] inputWord in
-            guard let this = self else { return false }
-            return this.appendWord(inputWord, for: Constant.currentTableName)
+            
+            guard let this = self,
+                  let info = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+            else {
+                return false
+            }
+            
+            return this.appendWord(inputWord, info: info)
         }
     }
     
@@ -214,7 +220,7 @@ private extension MainViewController {
         guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex) else { return }
         
         MainTableViewCell.vocabularyListArray = []
-        MainTableViewCell.vocabularyListArray = API.shared.searchVocabularyList(isFavorite: isFavorite, for: .list(info.key), offset: MainTableViewCell.vocabularyListArray.count)
+        MainTableViewCell.vocabularyListArray = API.shared.searchVocabularyList(isFavorite: isFavorite, info: info, offset: MainTableViewCell.vocabularyListArray.count)
         
         let listCount = MainTableViewCell.vocabularyListArray.count
         titleSetting(titleString, count: listCount)
@@ -293,7 +299,7 @@ private extension MainViewController {
         guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex) else { return }
         
         let oldListCount = MainTableViewCell.vocabularyListArray.count
-        MainTableViewCell.vocabularyListArray += API.shared.searchVocabularyList(isFavorite: isFavorite, for: .list(info.key), offset: oldListCount)
+        MainTableViewCell.vocabularyListArray += API.shared.searchVocabularyList(isFavorite: isFavorite, info: info, offset: oldListCount)
         
         let newListCount = MainTableViewCell.vocabularyListArray.count
         titleSetting(titleString, count: newListCount)
@@ -305,19 +311,23 @@ private extension MainViewController {
         isNeededUpdate = false
     }
     
-    /// 新增/更新單字
+    /// 新增 / 更新單字
     /// - Parameters:
     ///   - word: 單字
-    ///   - tableName: 資料表
+    ///   - info: Settings.GeneralInformation
     /// - Returns: Bool
-    func appendWord(_ word: String, for tableName: Constant.VoiceCode) -> Bool {
+    func appendWord(_ word: String, info: Settings.GeneralInformation) -> Bool {
         
-        guard API.shared.insertNewWord(word, for: tableName) else { return false }
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex),
+              API.shared.insertNewWord(word, info: info)
+        else {
+            return false
+        }
         
         let count = vocabularyDetailListCount(with: word)
-        if (count > 1) { return API.shared.updateWordToList(word, for: tableName, count: count) }
+        if (count > 1) { return API.shared.updateWordToList(word, info: info, count: count) }
         
-        return API.shared.insertWordToList(word, for: tableName)
+        return API.shared.insertWordToList(word, info: info)
     }
     
     /// 更新單字音標
@@ -716,7 +726,7 @@ private extension MainViewController {
         let field = "\(key)Count"
         
         guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex),
-              let result = API.shared.searchWordDetailListCount(word, for: .list(info.key), key: key).first,
+              let result = API.shared.searchWordDetailListCount(word, info: info, key: key).first,
               let value = result["\(field)"],
               let count = Int("\(value)", radix: 10)
         else {

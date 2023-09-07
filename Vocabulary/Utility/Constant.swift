@@ -188,11 +188,11 @@ extension Constant {
     /// 單字內容的資料庫名稱
     enum DataTableType {
         
-        case `default`(_ language: String)      // 單字的資料庫名稱 => English
-        case list(_ language: String)           // 單字列表的資料庫名稱 => EnglishList
-        case review(_ language: String)         // 複習單字列表的資料庫名稱 => EnglishReview
-        case sentence(_ language: String)       // 常用例句的資料庫名稱 => EnglishSentence
-        case bookmarkSite(_ language: String)   // 常用書籤 => EnglishBookmarkSite
+        case `default`(_ language: String)      // 單字的資料庫名稱 (English)
+        case list(_ language: String)           // 單字列表的資料庫名稱 (EnglishList)
+        case review(_ language: String)         // 複習單字列表的資料庫名稱 (EnglishReview)
+        case sentence(_ language: String)       // 常用例句的資料庫名稱 (EnglishSentence)
+        case bookmarkSite(_ language: String)   // 常用書籤 (EnglishBookmarkSite)
         
         /// 產生資料表名稱
         /// => English / EnglishList / EnglishReview / EnglishSentence / EnglishBookmarkSite

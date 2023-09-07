@@ -176,9 +176,13 @@ private extension SearchVocabularyTableViewCell {
     ///   - indexPath: IndexPath
     func updateFavorite(_ isFavorite: Bool, with indexPath: IndexPath) {
         
-        guard let vocabularyList = Self.vocabularyList(with: indexPath) else { return }
+        guard let vocabularyList = Self.vocabularyList(with: indexPath),
+              let info = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+        else {
+            return
+        }
         
-        let isSuccess = API.shared.updateVocabularyFavoriteToList(vocabularyList.id, isFavorite: isFavorite, for: Constant.currentTableName)
+        let isSuccess = API.shared.updateVocabularyFavoriteToList(vocabularyList.id, info: info, isFavorite: isFavorite)
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
 
         favoriteImageViewSetting(isFavorite: isFavorite)

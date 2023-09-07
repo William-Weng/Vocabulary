@@ -459,15 +459,19 @@ extension ReviewViewController {
     ///   - sourceView: UIView?
     func levelMenu(target: UIViewController, vocabularyList: VocabularyList?, sourceView: UIView? = nil) {
         
-        guard let vocabularyList = vocabularyList else { return }
+        guard let vocabularyList = vocabularyList,
+              let generalInfo = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+        else {
+            return
+        }
         
         let alertController = UIAlertController(title: "請選擇等級", message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
         
-        Constant.SettingsJSON.vocabularyLevelInformations.forEach { info in
+        Constant.SettingsJSON.vocabularyLevelInformations.forEach { levelInfo in
             
-            let action = UIAlertAction(title: info.name, style: .default) { _ in
-                let isSuccess = API.shared.updateLevelToList(vocabularyList.id, info: info, for: Constant.currentTableName)
+            let action = UIAlertAction(title: levelInfo.name, style: .default) { _ in
+                let isSuccess = API.shared.updateLevelToList(vocabularyList.id, levelInfo: levelInfo, generalInfo: generalInfo)
                 if (!isSuccess) { Utility.shared.flashHUD(with: .fail) }
             }
             

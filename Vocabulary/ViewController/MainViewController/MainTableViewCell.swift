@@ -119,20 +119,24 @@ private extension MainTableViewCell {
         
         return action
     }
-        
+    
     /// 更新LevelButton文字
     /// - Parameters:
     ///   - info: Settings.VocabularyLevelInformation
     ///   - indexPath: IndexPath
-    func updateLevel(_ info: Settings.VocabularyLevelInformation, with indexPath: IndexPath) {
+    func updateLevel(_ levelInfo: Settings.VocabularyLevelInformation, with indexPath: IndexPath) {
         
-        guard let vocabularyList = Self.vocabularyList(with: indexPath) else { return }
+        guard let vocabularyList = Self.vocabularyList(with: indexPath),
+              let generalInfo = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+        else {
+            return
+        }
         
-        let isSuccess = API.shared.updateLevelToList(vocabularyList.id, info: info, for: Constant.currentTableName)
+        let isSuccess = API.shared.updateLevelToList(vocabularyList.id, levelInfo: levelInfo, generalInfo: generalInfo)
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
-                
-        levelButtonSetting(levelButton, with: info)
-        updateLevelDictionary(info, with: indexPath)
+        
+        levelButtonSetting(levelButton, with: levelInfo)
+        updateLevelDictionary(levelInfo, with: indexPath)
     }
     
     /// levelButton文字顏色設定
@@ -152,9 +156,13 @@ private extension MainTableViewCell {
     ///   - indexPath: IndexPath
     func updateFavorite(_ isFavorite: Bool, with indexPath: IndexPath) {
         
-        guard let vocabularyList = Self.vocabularyList(with: indexPath) else { return }
+        guard let vocabularyList = Self.vocabularyList(with: indexPath),
+              let info = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+        else {
+            return
+        }
         
-        let isSuccess = API.shared.updateVocabularyFavoriteToList(vocabularyList.id, isFavorite: isFavorite, for: Constant.currentTableName)
+        let isSuccess = API.shared.updateVocabularyFavoriteToList(vocabularyList.id, info: info, isFavorite: isFavorite)
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
         
         favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)

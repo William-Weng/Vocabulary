@@ -608,19 +608,21 @@ extension API {
     /// 更新單字等級
     /// - Parameters:
     ///   - id: Int
-    ///   - level: 等級
-    ///   - tableName: 資料表名稱
+    ///   - info: Settings.VocabularyLevelInformation
+    ///   - generalInfo: Settings.GeneralInformation
     /// - Returns: Bool
-    func updateLevelToList(_ id: Int, info: Settings.VocabularyLevelInformation, for tableName: Constant.VoiceCode) -> Bool {
+    func updateLevelToList(_ id: Int, levelInfo: Settings.VocabularyLevelInformation, generalInfo: Settings.GeneralInformation) -> Bool {
         
         guard let database = Constant.database else { return false }
         
+        let type: Constant.DataTableType = .list(generalInfo.key)
+        
         let items: [SQLite3Database.InsertItem] = [
-            (key: "level", value: info.value),
+            (key: "level", value: levelInfo.value),
         ]
         
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
-        let result = database.update(tableName: tableName.vocabularyList(), items: items, where: condition)
+        let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
     }
@@ -672,11 +674,13 @@ extension API {
     /// 更新單字『我的最愛』
     /// - Parameters:
     ///   - id: Int
+    ///   - info: Settings.GeneralInformation
     ///   - isFavorite: Bool
-    ///   - tableName: Constant.VoiceCode
     /// - Returns: Bool
-    func updateVocabularyFavoriteToList(_ id: Int, isFavorite: Bool, for tableName: Constant.VoiceCode) -> Bool {
-        return updateFavoriteToList(id, isFavorite: isFavorite, for: tableName.vocabularyList())
+    func updateVocabularyFavoriteToList(_ id: Int, info: Settings.GeneralInformation, isFavorite: Bool) -> Bool {
+        
+        let type: Constant.DataTableType = .list(info.key)
+        return updateFavoriteToList(id, isFavorite: isFavorite, for: type.name())
     }
     
     /// 更新例句『我的最愛』

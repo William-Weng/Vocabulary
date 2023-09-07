@@ -97,9 +97,13 @@ private extension SolutionTableViewCell {
     ///   - indexPath: IndexPath
     func updateFavorite(_ isFavorite: Bool, with indexPath: IndexPath) {
 
-        guard let vocabularyReviewList = Self.vocabularyReviewList(with: indexPath) else { return }
+        guard let vocabularyReviewList = Self.vocabularyReviewList(with: indexPath),
+              let info = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+        else {
+            return
+        }
         
-        let isSuccess = API.shared.updateVocabularyFavoriteToList(vocabularyReviewList.id, isFavorite: isFavorite, for: Constant.currentTableName)
+        let isSuccess = API.shared.updateVocabularyFavoriteToList(vocabularyReviewList.id, info: info, isFavorite: isFavorite)
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
         
         favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)

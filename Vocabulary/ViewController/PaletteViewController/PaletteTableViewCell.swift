@@ -7,14 +7,15 @@
 
 import UIKit
 
+// MARK: - 調色盤Cell
 final class PaletteTableViewCell: UITableViewCell, CellReusable {
     
     @IBOutlet weak var myView: UIView!
     @IBOutlet weak var myLabel: UILabel!
     
     static var paletteViewDelegate: PaletteViewDelegate?
-    static var colorKeys: [Constant.SettingsColorKey] = []
-
+    static var colorSettings: [[ColorSettings]] = []
+    
     var indexPath: IndexPath = []
     
     override func prepareForReuse() {
@@ -54,11 +55,13 @@ extension PaletteTableViewCell {
     /// - Parameter indexPath: IndexPath
     func configure(for indexPath: IndexPath) {
         
-        guard let coloeKey = Self.colorKeys[safe: indexPath.section],
-              let info = coloeKey.informations()?[safe: indexPath.row]
+        guard let colorSetting = Self.colorSettings[safe: indexPath.section],
+              let info = colorSetting[safe: indexPath.row]
         else {
             return
         }
+        
+        self.indexPath = indexPath
         
         myLabel.text = info.name
         myLabel.textColor = UIColor(rgb: info.color)

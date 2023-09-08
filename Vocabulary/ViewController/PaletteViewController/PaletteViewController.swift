@@ -36,7 +36,7 @@ final class PaletteViewController: UIViewController {
     }
     
     deinit {
-        PaletteTableViewCell.colorKeys = []
+        PaletteTableViewCell.colorSettings = []
         myPrint("\(Self.self) init")
     }
 }
@@ -45,18 +45,13 @@ final class PaletteViewController: UIViewController {
 extension PaletteViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return PaletteTableViewCell.colorKeys.count
+        return PaletteTableViewCell.colorSettings.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        guard let settings = PaletteTableViewCell.colorKeys[safe: section],
-              let informations = settings.informations()
-        else {
-            return 0
-        }
-        
-        return informations.count
+        guard let setting = PaletteTableViewCell.colorSettings[safe: section] else { return 0 }
+        return setting.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -103,7 +98,7 @@ private extension PaletteViewController {
     func initSetting() {
         
         PaletteTableViewCell.paletteViewDelegate = self
-        PaletteTableViewCell.colorKeys = Constant.SettingsColorKey.allCases
+        PaletteTableViewCell.colorSettings = Constant.SettingsColorKey.allCases.compactMap { $0.informations() }
         
         myTableView._delegateAndDataSource(with: self)
         initPalettePicker()
@@ -141,7 +136,7 @@ private extension PaletteViewController {
         let headerView = UIView()
         let label = UILabel()
         
-        label.frame = CGRect(x: 15, y: 5, width: tableView.frame.size.width - 100, height: 20)
+        label.frame = CGRect(x: tableView.frame.size.width - 110, y: 10, width: tableView.frame.size.width - 100, height: 20)
         label.text = groupTitle(with: section)
         label.textColor = .black
         
@@ -156,7 +151,7 @@ private extension PaletteViewController {
     /// - Returns: String?
     func groupTitle(with section: Int) -> String? {
         
-        guard let colorKey = PaletteTableViewCell.colorKeys[safe: section] else { return nil }
+        guard let colorKey = Constant.SettingsColorKey.allCases[safe: section] else { return nil }
         return colorKey.name()
     }
 }
@@ -203,7 +198,7 @@ private extension PaletteViewController {
         case .text: cell.myLabel.textColor = color
         case .background: cell.myView.backgroundColor = color
         }
-        
+                
         didSelectPaletteInfo = (nil, nil, nil)
     }
     

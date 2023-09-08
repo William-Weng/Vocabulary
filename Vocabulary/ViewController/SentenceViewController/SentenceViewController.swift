@@ -308,10 +308,8 @@ private extension SentenceViewController {
     func tabBarHiddenAction(_ isHidden: Bool) {
         
         guard let tabBarController = tabBarController else { return }
-        
-        let duration = Constant.duration
-        
-        tabBarController._tabBarHidden(isHidden, duration: duration)
+                
+        tabBarController._tabBarHidden(isHidden, duration: Constant.duration)
         NotificationCenter.default._post(name: .viewDidTransition, object: isHidden)
     }
     

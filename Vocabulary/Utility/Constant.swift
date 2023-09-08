@@ -65,6 +65,8 @@ extension Constant {
     typealias SystemInformation = (name: String, version: String, model: String, idiom: UIUserInterfaceIdiom)   // 系統資訊 => (iOS, 12.1, iPhone, 0)
     typealias KeyboardInfomation = (duration: Double, curve: UInt, frame: CGRect)                               // 取得系統鍵盤的相關資訊
     typealias RGBAInformation = (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)                                       // [RGBA色彩模式的數值](https://stackoverflow.com/questions/28644311/how-to-get-the-rgb-code-int-from-an-uicolor-in-swift)
+    typealias PaletteInformation = (color: UIColor?, backgroundColor: UIColor?)                                 // 調色盤選的顏色 (文字, 背景)
+    typealias SelectedPaletteInformation = (indexPath: IndexPath?, color: UIColor?)                             // 調色盤選暫存色 (位置, 背景)
 }
 
 // MARK: - Enumeration

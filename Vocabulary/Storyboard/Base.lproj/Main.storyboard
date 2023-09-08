@@ -70,11 +70,15 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WEA-Uv-6Yw">
-                                                    <rect key="frame" x="63" y="8" width="248" height="62"/>
+                                                    <rect key="frame" x="8" y="8" width="358" height="62"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="名詞" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8GQ-Ou-4Aq">
-                                                            <rect key="frame" x="4" y="4" width="240" height="54"/>
-                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="名詞" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8GQ-Ou-4Aq">
+                                                            <rect key="frame" x="129" y="0.0" width="100" height="62"/>
+                                                            <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="36" id="Iz3-oh-Dhb"/>
+                                                                <constraint firstAttribute="width" constant="100" id="eGd-gY-pzu"/>
+                                                            </constraints>
                                                             <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="24"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -82,11 +86,9 @@
                                                     </subviews>
                                                     <color key="backgroundColor" systemColor="systemGreenColor"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="8GQ-Ou-4Aq" secondAttribute="trailing" constant="4" id="Qt2-ky-ZYr"/>
-                                                        <constraint firstItem="8GQ-Ou-4Aq" firstAttribute="top" secondItem="WEA-Uv-6Yw" secondAttribute="top" constant="4" id="TaU-Rp-a45"/>
-                                                        <constraint firstAttribute="width" secondItem="WEA-Uv-6Yw" secondAttribute="height" multiplier="4" id="k5g-1X-ixf"/>
-                                                        <constraint firstItem="8GQ-Ou-4Aq" firstAttribute="centerY" secondItem="WEA-Uv-6Yw" secondAttribute="centerY" id="kGW-r7-ZST"/>
-                                                        <constraint firstItem="8GQ-Ou-4Aq" firstAttribute="centerX" secondItem="WEA-Uv-6Yw" secondAttribute="centerX" id="xZw-dd-zhu"/>
+                                                        <constraint firstItem="8GQ-Ou-4Aq" firstAttribute="top" secondItem="WEA-Uv-6Yw" secondAttribute="top" id="C2X-sC-2PG"/>
+                                                        <constraint firstItem="8GQ-Ou-4Aq" firstAttribute="centerX" secondItem="WEA-Uv-6Yw" secondAttribute="centerX" id="Gb2-vj-VNS"/>
+                                                        <constraint firstItem="8GQ-Ou-4Aq" firstAttribute="centerY" secondItem="WEA-Uv-6Yw" secondAttribute="centerY" id="lpM-68-xj7"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -97,10 +99,10 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstItem="WEA-Uv-6Yw" firstAttribute="centerX" secondItem="nSF-3Y-xBa" secondAttribute="centerX" id="8zX-5H-lVi"/>
-                                                <constraint firstItem="WEA-Uv-6Yw" firstAttribute="top" secondItem="nSF-3Y-xBa" secondAttribute="top" constant="8" id="Y98-QG-LlU"/>
-                                                <constraint firstAttribute="bottom" secondItem="WEA-Uv-6Yw" secondAttribute="bottom" constant="8" id="Y9C-Ai-WAY"/>
-                                                <constraint firstItem="WEA-Uv-6Yw" firstAttribute="centerY" secondItem="nSF-3Y-xBa" secondAttribute="centerY" id="rvI-wb-dK7"/>
+                                                <constraint firstAttribute="bottom" secondItem="WEA-Uv-6Yw" secondAttribute="bottom" constant="8" id="8pI-8h-hEa"/>
+                                                <constraint firstItem="WEA-Uv-6Yw" firstAttribute="top" secondItem="nSF-3Y-xBa" secondAttribute="top" constant="8" id="cbb-Nt-Cmz"/>
+                                                <constraint firstItem="WEA-Uv-6Yw" firstAttribute="leading" secondItem="nSF-3Y-xBa" secondAttribute="leading" constant="8" id="m2j-MJ-RWr"/>
+                                                <constraint firstAttribute="trailing" secondItem="WEA-Uv-6Yw" secondAttribute="trailing" constant="8" id="oZ8-7A-XRG"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.19911527317880795" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

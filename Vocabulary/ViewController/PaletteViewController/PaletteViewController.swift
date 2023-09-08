@@ -7,16 +7,20 @@
 
 import UIKit
 
+// MARK: - OthersViewDelegate
+protocol PaletteViewDelegate {
+    func palette(with indexPath: IndexPath, info: Constant.PaletteInformation)
+}
+
 // MARK: - 調色盤
 final class PaletteViewController: UIViewController {
 
-    typealias PaletteInformation = (color: UIColor?, backgroundColor: UIColor?)
-    typealias SelectedPaletteInformation = (indexPath: IndexPath?, color: UIColor?)
-
     @IBOutlet weak var myTableView: UITableView!
     
-    private var didSelectPaletteInfo: SelectedPaletteInformation = (nil, nil)
-    private var paletteInformation: [IndexPath: PaletteInformation] = [:]
+    static var paletteViewDelegate: OthersViewDelegate?
+    
+    private var didSelectPaletteInfo: Constant.SelectedPaletteInformation = (nil, nil)
+    private var paletteInformation: [IndexPath: Constant.PaletteInformation] = [:]
     private var colorPicker: UIColorPickerViewController?
     
     override func viewDidLoad() {
@@ -58,10 +62,6 @@ extension PaletteViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        return palettePicker(with: indexPath)
-    }
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30.0
     }
@@ -79,11 +79,21 @@ extension PaletteViewController: UIColorPickerViewControllerDelegate {
     }
 }
 
+extension PaletteViewController: PaletteViewDelegate {
+ 
+    func palette(with indexPath: IndexPath, info: Constant.PaletteInformation) {
+        palettePicker(with: indexPath, info: info)
+    }
+}
+
 // MARK: - 小工具
 private extension PaletteViewController {
     
     /// 初始化設定
     func initSetting() {
+        
+        PaletteTableViewCell.paletteViewDelegate = self
+        
         myTableView._delegateAndDataSource(with: self)
         initPalettePicker()
     }
@@ -144,18 +154,20 @@ private extension PaletteViewController {
 private extension PaletteViewController {
         
     /// 彈出調色盤Picker
-    /// - Parameter indexPath: IndexPath?
-    func palettePicker(with indexPath: IndexPath) {
-                
+    /// - Parameters:
+    ///   - indexPath: IndexPath
+    ///   - info: Constant.PaletteInformation
+    func palettePicker(with indexPath: IndexPath, info: Constant.PaletteInformation) {
+        
         guard let colorPicker = colorPicker,
-              let informations = PaletteTableViewCell.colorKeys[safe: indexPath.section]?.informations(),
-              let info = informations[safe: indexPath.row]
+              let color = info.color,
+              let backgroundColor = info.backgroundColor
         else {
             return
         }
-
+        
         didSelectPaletteInfo.indexPath = indexPath
-        colorPicker.selectedColor = UIColor(rgb: info.backgroundColor)
+        colorPicker.selectedColor = backgroundColor
         
         present(colorPicker, animated: true)
     }

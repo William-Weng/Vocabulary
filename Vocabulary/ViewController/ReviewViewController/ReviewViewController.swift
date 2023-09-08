@@ -37,7 +37,7 @@ final class ReviewViewController: UIViewController {
     
     private var vocabularyList: VocabularyList?
     private var disappearImage: UIImage?
-        
+    
     private lazy var speechSynthesizer = AVSpeechSynthesizer._build(delegate: self)
     
     override func viewDidLoad() {
@@ -218,7 +218,7 @@ private extension ReviewViewController {
         case .listen: string = "\(answerText). \(interpretText)"
         }
         
-        speechSynthesizer._speak(string: string, code: settings.code, rate: Constant.speakingSpeed)
+        speechSynthesizer._speak(string: string, code: settings.voice, rate: Constant.speakingSpeed)
     }
     
     /// 動畫背景設定

@@ -95,7 +95,7 @@ private extension SentenceTableViewCell {
             return
         }
         
-        Utility.shared.speak(string: example, code: settings.code)
+        Utility.shared.speak(string: example, code: settings.voice)
     }
     
     /// 最右側的箭頭View

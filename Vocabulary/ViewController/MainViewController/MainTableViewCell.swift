@@ -97,7 +97,7 @@ private extension MainTableViewCell {
             return
         }
         
-        Utility.shared.speak(string: vocabularyList.word, code: settings.code)
+        Utility.shared.speak(string: vocabularyList.word, code: settings.voice)
     }
     
     /// 產生LevelButton選到時的動作

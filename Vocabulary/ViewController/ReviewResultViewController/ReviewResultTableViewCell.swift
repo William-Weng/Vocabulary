@@ -82,7 +82,7 @@ private extension ReviewResultTableViewCell {
             return
         }
         
-        Utility.shared.speak(string: vocabularyReviewList.word, code: settings.code)
+        Utility.shared.speak(string: vocabularyReviewList.word, code: settings.voice)
     }
     
     /// FavoriteImageView點擊功能

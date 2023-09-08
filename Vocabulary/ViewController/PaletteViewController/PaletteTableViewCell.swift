@@ -11,9 +11,9 @@ final class PaletteTableViewCell: UITableViewCell, CellReusable {
     
     @IBOutlet weak var myView: UIView!
     @IBOutlet weak var myLabel: UILabel!
-
+    
     static var paletteViewDelegate: PaletteViewDelegate?
-    static var colorKeys = Constant.SettingsColorKey.allCases
+    static var colorKeys: [Constant.SettingsColorKey] = []
 
     var indexPath: IndexPath = []
     
@@ -26,22 +26,32 @@ final class PaletteTableViewCell: UITableViewCell, CellReusable {
     
     func configure(with indexPath: IndexPath) { configure(for: indexPath) }
     
+    /// 選擇文字顏色
+    /// - Parameter sender: UITapGestureRecognizer
     @objc func selectTextColor(_ sender: UITapGestureRecognizer) {
         
-        let info: Constant.PaletteInformation = (.white, .black)
-        Self.paletteViewDelegate?.palette(with: indexPath, info: info)
+        let info: Constant.PaletteInformation = (myLabel.textColor, myView.backgroundColor)
+        Self.paletteViewDelegate?.palette(with: indexPath, colorType: .text, info: info)
     }
     
+    /// 選擇背景顏色
+    /// - Parameter sender: UITapGestureRecognizer
     @objc func selectBackgroundColor(_ sender: UITapGestureRecognizer) {
         
-        let info: Constant.PaletteInformation = (.white, .black)
-        Self.paletteViewDelegate?.palette(with: indexPath, info: info)
+        let info: Constant.PaletteInformation = (myLabel.textColor, myView.backgroundColor)
+        Self.paletteViewDelegate?.palette(with: indexPath, colorType: .background, info: info)
+    }
+    
+    deinit {
+        myPrint("\(Self.self) init")
     }
 }
 
 // MARK: - 小工具
 extension PaletteTableViewCell {
     
+    /// 初始化設定
+    /// - Parameter indexPath: IndexPath
     func configure(for indexPath: IndexPath) {
         
         guard let coloeKey = Self.colorKeys[safe: indexPath.section],
@@ -56,5 +66,13 @@ extension PaletteTableViewCell {
         
         myView.backgroundColor = UIColor(rgb: info.backgroundColor)
         myView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(Self.selectBackgroundColor(_:))))
+    }
+    
+    /// 被點選到的顏色資訊
+    /// - Returns: Constant.PaletteInformation
+    func selectColorInformation() -> Constant.PaletteInformation {
+        
+        let info: Constant.PaletteInformation = (myLabel.textColor, myView.backgroundColor)
+        return info
     }
 }

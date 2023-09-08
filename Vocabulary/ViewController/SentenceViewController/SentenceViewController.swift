@@ -17,6 +17,11 @@ protocol SentenceViewDelegate {
 // MARK: - 精選例句
 final class SentenceViewController: UIViewController {
 
+    enum ViewSegueType: String {
+        case recording = "RecordingSegue"
+        case license = "LicenseWebViewSegue"
+    }
+    
     @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var appendWordButton: UIButton!
@@ -25,8 +30,6 @@ final class SentenceViewController: UIViewController {
     @IBOutlet weak var activityViewIndicator: UIActivityIndicatorView!
     @IBOutlet weak var indicatorLabel: UILabel!
     
-    private let recordingSegue = "RecordingSegue"
-    private let licenseWebViewSegue = "LicenseWebViewSegue"
     private let titleString = "精選例句"
 
     private var isAnimationStop = false
@@ -65,17 +68,23 @@ final class SentenceViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        guard let identifier = segue.identifier else { return }
+        guard let identifier = segue.identifier,
+              let viewSegueType = ViewSegueType(rawValue: identifier)
+        else {
+            return
+        }
         
-        if (identifier == recordingSegue) { talkingViewSetting(for: segue, sender: sender); return }
-        if (identifier == licenseWebViewSegue) { licenseViewSetting(for: segue, sender: sender); return }
+        switch viewSegueType {
+        case .recording: talkingViewSetting(for: segue, sender: sender)
+        case .license: licenseViewSetting(for: segue, sender: sender)
+        }
     }
     
     @objc func refreshSentenceList(_ sender: UIRefreshControl) { translateDisplayArray = []; reloadSentenceList(with: currentSpeechInformation, isFavorite: isFavorite) }
     @objc func sentenceCount(_ sender: UITapGestureRecognizer) { sentenceCountAction(with: currentSpeechInformation, isFavorite: isFavorite) }
 
-    @IBAction func recordingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: recordingSegue, sender: nil) }
-    @IBAction func licensePage(_ sender: UIBarButtonItem) { performSegue(withIdentifier: licenseWebViewSegue, sender: nil) }
+    @IBAction func recordingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.recording.rawValue, sender: nil) }
+    @IBAction func licensePage(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.license.rawValue, sender: nil) }
     @IBAction func filterFavorite(_ sender: UIBarButtonItem) { translateDisplayArray = []; filterFavoriteAction(sender) }
     @IBAction func appendSentenceAction(_ sender: UIButton) {
         

@@ -11,7 +11,7 @@ import AVFAudio
 // MARK: - 單字複習頁面
 final class ReviewViewController: UIViewController {
     
-    enum ViewSegue: String {
+    enum ViewSegueType: String {
         case solutionView = "SolutionViewSegue"
         case speakingRateView = "SpeakingRateViewSegue"
     }
@@ -68,7 +68,7 @@ final class ReviewViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         guard let identifier = segue.identifier,
-              let viewSegue = ViewSegue(rawValue: identifier)
+              let viewSegue = ViewSegueType(rawValue: identifier)
         else {
             return
         }
@@ -83,9 +83,9 @@ final class ReviewViewController: UIViewController {
     @objc func reviewQuestionLevel(_ sender: UITapGestureRecognizer) { reviewQuestionLevelAction(questionLevel) }
     
     @IBAction func guessAnswear(_ sender: UIButton) { answearAction(sender) }
-    @IBAction func reviewSolution(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegue.solutionView.rawValue, sender: vocabularyArray) }
+    @IBAction func reviewSolution(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.solutionView.rawValue, sender: vocabularyArray) }
     @IBAction func refreshQuestion(_ sender: UIBarButtonItem) { initReviewWordList(); Utility.shared.flashHUD(with: .nice) }
-    @IBAction func speedRate(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegue.speakingRateView.rawValue, sender: nil) }
+    @IBAction func speedRate(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.speakingRateView.rawValue, sender: nil) }
     
     deinit { myPrint("\(Self.self) deinit") }
 }

@@ -10,15 +10,15 @@ import UIKit
 // MARK: - 複習單字解答頁面
 final class SolutionViewController: UIViewController {
     
-    @IBOutlet weak var myTableView: UITableView!
-    @IBOutlet weak var myImageView: UIImageView!
-    
-    var words: [String] = []
-    
     enum ViewSegueType: String {
         case solutionDetail = "SolutionDetailSegue"
         case reviewResult = "ReviewResultViewSegue"
     }
+    
+    @IBOutlet weak var myTableView: UITableView!
+    @IBOutlet weak var myImageView: UIImageView!
+    
+    var words: [String] = []
         
     private var isAnimationStop = false
     private var disappearImage: UIImage?

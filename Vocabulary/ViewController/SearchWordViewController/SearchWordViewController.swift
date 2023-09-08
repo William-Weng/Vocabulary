@@ -215,14 +215,15 @@ private extension SearchWordViewController {
             myTableView.reloadData()
         }
         
-        guard let word = word?._removeWhiteSpacesAndNewlines(),
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex),
+              let word = word?._removeWhiteSpacesAndNewlines(),
               !word.isEmpty
         else {
             SearchWordTableViewCell.vocabularyListArray = []; return
         }
         
         SearchWordTableViewCell.vocabularyListArray = []
-        SearchWordTableViewCell.vocabularyListArray = Utility.shared.vocabularyListArrayMaker(like: word, searchType: currentSearchType, for: Constant.currentTableName, offset: 0)
+        SearchWordTableViewCell.vocabularyListArray = Utility.shared.vocabularyListArrayMaker(like: word, searchType: currentSearchType, info: info, offset: 0)
     }
     
     /// 增加相似的單字
@@ -231,14 +232,15 @@ private extension SearchWordViewController {
         
         defer { refreshControl.endRefreshing() }
         
-        guard let word = word,
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex),
+              let word = word,
               !word.isEmpty
         else {
             return
         }
         
         let oldListCount = SearchWordTableViewCell.vocabularyListArray.count
-        SearchWordTableViewCell.vocabularyListArray += Utility.shared.vocabularyListArrayMaker(like: word, searchType: currentSearchType, for: Constant.currentTableName, offset: oldListCount)
+        SearchWordTableViewCell.vocabularyListArray += Utility.shared.vocabularyListArrayMaker(like: word, searchType: currentSearchType, info: info, offset: oldListCount)
         
         let newListCount = SearchWordTableViewCell.vocabularyListArray.count
         let indexPaths = (oldListCount..<newListCount).map { IndexPath(row: $0, section: 0) }

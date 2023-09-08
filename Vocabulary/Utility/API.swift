@@ -172,28 +172,31 @@ extension API {
     /// - Parameters:
     ///   - text: 相似的文字
     ///   - searchType: Constant.SearchType
-    ///   - tableName: Constant.VoiceCode
+    ///   - info: Settings.GeneralInformation
     ///   - count: 單次搜尋的數量
     ///   - offset: 搜尋的偏移量
     /// - Returns: [[String : Any]]
-    func searchList(like text: String, searchType: Constant.SearchType, for tableName: Constant.VoiceCode, count: Int? = Constant.searchCount, offset: Int) -> [[String : Any]] {
+    func searchList(like text: String, searchType: Constant.SearchType, info: Settings.GeneralInformation, count: Int? = Constant.searchCount, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
         let condition: SQLite3Condition.Where
-        var limit: SQLite3Condition.Limit?
         let orderBy = SQLite3Condition.OrderBy().item(key: "word", type: .ascending)
         let result: SQLite3Database.SelectResult
-        
+
+        var limit: SQLite3Condition.Limit?
+
         if let count = count { limit = SQLite3Condition.Limit().build(count: count, offset: offset) }
         
         switch searchType {
         case .word:
+            let type: Constant.DataTableType = .list(info.key)
             condition = SQLite3Condition.Where().like(key: "\(searchType.field())", condition: "\(text)%")
-            result = database.select(tableName: tableName.vocabularyList(), type: VocabularyList.self, where: condition, orderBy: orderBy, limit: limit)
+            result = database.select(tableName: type.name(), type: VocabularyList.self, where: condition, orderBy: orderBy, limit: limit)
         case .interpret:
+            let type: Constant.DataTableType = .default(info.key)
             condition = SQLite3Condition.Where().like(key: "\(searchType.field())", condition: "%\(text)%")
-            result = database.select(tableName: tableName.rawValue, type: Vocabulary.self, where: condition, orderBy: orderBy, limit: limit)
+            result = database.select(tableName: type.name(), type: Vocabulary.self, where: condition, orderBy: orderBy, limit: limit)
         }
         
         return result.array
@@ -222,11 +225,11 @@ extension API {
     /// 搜尋單字組內容
     /// - Parameters:
     ///   - words: [String]
-    ///   - tableName: Constant.VoiceCode
+    ///   - info: Settings.GeneralInformation
     ///   - count: Int
     ///   - offset: Int
     /// - Returns: [[String : Any]]
-    func searchWordListDetail(in words: [String], for tableName: Constant.VoiceCode, count: Int = Constant.searchCount, offset: Int) -> [[String : Any]] {
+    func searchWordListDetail(in words: [String], info: Settings.GeneralInformation, count: Int = Constant.searchCount, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database,
               !words.isEmpty
@@ -234,10 +237,11 @@ extension API {
             return []
         }
         
+        let type: Constant.DataTableType = .list(info.key)
         let condition = SQLite3Condition.Where().in(key: "word", values: words)
         let orderBy = SQLite3Condition.OrderBy().item(key: "word", type: .ascending)
         let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
-        let result = database.select(tableName: tableName.vocabularyList(), type: VocabularyList.self, where: condition, orderBy: orderBy, limit: limit)
+        let result = database.select(tableName: type.name(), type: VocabularyList.self, where: condition, orderBy: orderBy, limit: limit)
         
         return result.array
     }

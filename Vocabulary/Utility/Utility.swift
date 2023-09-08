@@ -333,23 +333,23 @@ extension Utility {
     /// - Parameters:
     ///   - text: String
     ///   - searchType: Constant.SearchType
-    ///   - tableName: Constant.VoiceCode
+    ///   - info: Settings.GeneralInformation
     ///   - offset: Int
     /// - Returns: [[String : Any]]
-    func vocabularyListArrayMaker(like text: String, searchType: Constant.SearchType, for tableName: Constant.VoiceCode, offset: Int) -> [[String : Any]] {
+    func vocabularyListArrayMaker(like text: String, searchType: Constant.SearchType, info: Settings.GeneralInformation, offset: Int) -> [[String : Any]] {
         
         let dictionary: [[String : Any]]
         
         switch searchType {
         case .word:
-            dictionary = API.shared.searchList(like: text, searchType: searchType, for: Constant.currentTableName, offset: offset)
+            dictionary = API.shared.searchList(like: text, searchType: searchType, info: info, offset: offset)
             
         case .interpret:
             
-            let array = API.shared.searchList(like: text, searchType: searchType, for: Constant.currentTableName, count: nil, offset: 0)
+            let array = API.shared.searchList(like: text, searchType: searchType, info: info, count: nil, offset: 0)
             let words = array.compactMap { $0._jsonClass(for: Vocabulary.self)?.word }
             
-            dictionary = API.shared.searchWordListDetail(in: words, for: Constant.currentTableName, offset: offset)
+            dictionary = API.shared.searchWordListDetail(in: words, info: info, offset: offset)
         }
         
         return dictionary

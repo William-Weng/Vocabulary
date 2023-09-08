@@ -19,7 +19,7 @@ final class SearchVocabularyViewController: UIViewController {
     private var isNeededUpdate = false
     private var currentSearchType: Constant.SearchType = .word { didSet { Utility.shared.switchSearchTypeAction(mySearchBar, for: currentSearchType) }}
     private var refreshControl: UIRefreshControl!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initSearchBar(with: .word)
@@ -144,14 +144,15 @@ private extension SearchVocabularyViewController {
             myTableView.reloadData()
         }
         
-        guard let word = word?._removeWhiteSpacesAndNewlines(),
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex),
+              let word = word?._removeWhiteSpacesAndNewlines(),
               !word.isEmpty
         else {
             SearchVocabularyTableViewCell.vocabularyListArray = []; return
         }
         
         SearchVocabularyTableViewCell.vocabularyListArray = []
-        SearchVocabularyTableViewCell.vocabularyListArray = Utility.shared.vocabularyListArrayMaker(like: word, searchType: currentSearchType, for: Constant.currentTableName, offset: 0)
+        SearchVocabularyTableViewCell.vocabularyListArray = Utility.shared.vocabularyListArrayMaker(like: word, searchType: currentSearchType, info: info, offset: 0)
     }
     
     /// 增加相似的單字
@@ -160,14 +161,15 @@ private extension SearchVocabularyViewController {
         
         defer { refreshControl.endRefreshing() }
         
-        guard let word = word,
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex),
+              let word = word,
               !word.isEmpty
         else {
             return
         }
         
         let oldListCount = SearchVocabularyTableViewCell.vocabularyListArray.count
-        SearchVocabularyTableViewCell.vocabularyListArray += Utility.shared.vocabularyListArrayMaker(like: word, searchType: currentSearchType, for: Constant.currentTableName, offset: oldListCount)
+        SearchVocabularyTableViewCell.vocabularyListArray += Utility.shared.vocabularyListArrayMaker(like: word, searchType: currentSearchType, info: info, offset: oldListCount)
         
         let newListCount = SearchVocabularyTableViewCell.vocabularyListArray.count
         let indexPaths = (oldListCount..<newListCount).map { IndexPath(row: $0, section: 0) }

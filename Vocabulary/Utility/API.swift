@@ -578,23 +578,23 @@ extension API {
     
     /// 更新單字範例相關內容
     /// - Parameters:
-    ///   - id: Int
-    ///   - alphabet: 音標
-    ///   - tableName: 資料表名稱
+    ///   - exampleInfo: Constant.ExampleInfomation
+    ///   - generalInfo: Settings.GeneralInformation
     /// - Returns: Bool
-    func updateExmapleToList(_ id: Int, info: Constant.ExampleInfomation, for tableName: Constant.VoiceCode) -> Bool {
+    func updateExmapleToList(_ exampleInfo: Constant.ExampleInfomation, generalInfo: Settings.GeneralInformation) -> Bool {
         
         guard let database = Constant.database else { return false }
         
         let items: [SQLite3Database.InsertItem] = [
-            (key: "interpret", value: info.interpret),
-            (key: "example", value: info.example.fixSqliteSingleQuote()),
-            (key: "translate", value: info.translate),
+            (key: "interpret", value: exampleInfo.interpret),
+            (key: "example", value: exampleInfo.example.fixSqliteSingleQuote()),
+            (key: "translate", value: exampleInfo.translate),
             (key: "updateTime", value: Date()._localTime()),
         ]
         
-        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
-        let result = database.update(tableName: tableName.rawValue, items: items, where: condition)
+        let type: Constant.DataTableType = .default(generalInfo.key)
+        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: exampleInfo.id)
+        let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
     }
@@ -602,19 +602,20 @@ extension API {
     /// 更新單字詞性
     /// - Parameters:
     ///   - id: Int
-    ///   - info: Settings.WordSpeechInformation
-    ///   - tableName: 資料表名稱
+    ///   - speechInfo: Settings.WordSpeechInformation
+    ///   - generalInfo: Settings.GeneralInformation
     /// - Returns: Bool
-    func updateSpeechToList(_ id: Int, info: Settings.WordSpeechInformation, for tableName: Constant.VoiceCode) -> Bool {
+    func updateSpeechToList(_ id: Int, speechInfo: Settings.WordSpeechInformation, generalInfo: Settings.GeneralInformation) -> Bool {
         
         guard let database = Constant.database else { return false }
         
         let items: [SQLite3Database.InsertItem] = [
-            (key: "speech", value: info.value),
+            (key: "speech", value: speechInfo.value),
         ]
         
+        let type: Constant.DataTableType = .default(generalInfo.key)
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
-        let result = database.update(tableName: tableName.rawValue, items: items, where: condition)
+        let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
     }
@@ -645,9 +646,9 @@ extension API {
     /// - Parameters:
     ///   - id: Int
     ///   - isHardWork: Bool
-    ///   - tableName: String
+    ///   - info: Settings.GeneralInformation
     /// - Returns: Bool
-    func updateHardWorkToList(_ id: Int, isHardWork: Bool, for tableName: String) -> Bool {
+    func updateHardWorkToList(_ id: Int, isHardWork: Bool, info: Settings.GeneralInformation) -> Bool {
         
         guard let database = Constant.database else { return false }
         
@@ -657,8 +658,9 @@ extension API {
             (key: "hardWork", value: _isHardWork),
         ]
         
+        let type: Constant.DataTableType = .default(info.key)
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
-        let result = database.update(tableName: tableName, items: items, where: condition)
+        let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
     }
@@ -860,14 +862,15 @@ extension API {
     /// 刪除單字範例
     /// - Parameters:
     ///   - id: Int
-    ///   - tableName: Constant.VoiceCode
+    ///   - info: Settings.GeneralInformation
     /// - Returns: Bool
-    func deleteWord(with id: Int, for tableName: Constant.VoiceCode) -> Bool {
+    func deleteWord(with id: Int, info: Settings.GeneralInformation) -> Bool {
         
         guard let database = Constant.database else { return false }
         
+        let type: Constant.DataTableType = .default(info.key)
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
-        let result = database.delete(tableName: tableName.rawValue, where: condition)
+        let result = database.delete(tableName: type.name(), where: condition)
         
         return result.isSussess
     }
@@ -875,14 +878,15 @@ extension API {
     /// 刪除列表單字
     /// - Parameters:
     ///   - id: Int
-    ///   - tableName: Constant.VoiceCode
+    ///   - info: Settings.GeneralInformation
     /// - Returns: Bool
-    func deleteWordList(with id: Int, for tableName: Constant.VoiceCode) -> Bool {
+    func deleteWordList(with id: Int, info: Settings.GeneralInformation) -> Bool {
         
         guard let database = Constant.database else { return false }
         
+        let type: Constant.DataTableType = .list(info.key)
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
-        let result = database.delete(tableName: tableName.vocabularyList(), where: condition)
+        let result = database.delete(tableName: type.name(), where: condition)
         
         return result.isSussess
     }

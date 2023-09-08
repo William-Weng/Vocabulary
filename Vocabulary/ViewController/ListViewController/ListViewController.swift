@@ -278,19 +278,18 @@ private extension ListViewController {
         
         return actionOK
     }
-        
+    
     /// 右側滑動按鈕
     /// - Parameter indexPath: IndexPath
     /// - Returns: [UIContextualAction]
     func trailingSwipeActionsMaker(with indexPath: IndexPath) -> [UIContextualAction] {
         
+        guard let generalInfo = Utility.shared.generalSettings(index: Constant.tableNameIndex) else { return [] }
+        
         let updateAction = UIContextualAction._build(with: "更新", color: #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)) { [weak self] in
             
             guard let this = self else { return }
-            
-            this.appendTextHint(with: indexPath, title: "請輸入相關文字") { info in
-                return API.shared.updateExmapleToList(info.id, info: info, for: Constant.currentTableName)
-            }
+            this.appendTextHint(with: indexPath, title: "請輸入相關文字") { return API.shared.updateExmapleToList($0, generalInfo: generalInfo) }
         }
         
         let deleteAction = UIContextualAction._build(with: "刪除", color: #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)) { [weak self] in
@@ -301,7 +300,7 @@ private extension ListViewController {
                 return
             }
             
-            let isSuccess = API.shared.deleteWord(with: vocabulary.id, for: Constant.currentTableName)
+            let isSuccess = API.shared.deleteWord(with: vocabulary.id, info: generalInfo)
             if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
             
             ListTableViewCell.exmapleList.remove(at: indexPath.row)
@@ -346,12 +345,14 @@ private extension ListViewController {
             Utility.shared.flashHUD(with: hudGifType)
         }
         
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex) else { return }
+        
         if (!ListTableViewCell.exmapleList.isEmpty) {
             isSuccess = true
             refreshControl.endRefreshing(); return
         }
         
-        isSuccess = API.shared.deleteWordList(with: vocabularyList.id, for: Constant.currentTableName)
+        isSuccess = API.shared.deleteWordList(with: vocabularyList.id, info: info)
         mainViewDelegate?.deleteRow(with: vocabularyListIndexPath)
         navigationController?.popViewController(animated: true)
     }

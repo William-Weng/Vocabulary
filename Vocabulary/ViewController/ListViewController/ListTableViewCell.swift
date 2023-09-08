@@ -127,14 +127,18 @@ private extension ListTableViewCell {
     /// - Parameters:
     ///   - info: Settings.WordSpeechInformation
     ///   - indexPath: IndexPath
-    func updateSpeech(_ info: Settings.WordSpeechInformation, with indexPath: IndexPath) {
+    func updateSpeech(_ speechInfo: Settings.WordSpeechInformation, with indexPath: IndexPath) {
         
-        guard let vocabulary = Self.vocabulary(with: indexPath) else { return }
+        guard let vocabulary = Self.vocabulary(with: indexPath),
+              let generalInfo = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+        else {
+            return
+        }
         
-        let isSuccess = API.shared.updateSpeechToList(vocabulary.id, info: info, for: Constant.currentTableName)
+        let isSuccess = API.shared.updateSpeechToList(vocabulary.id, speechInfo: speechInfo, generalInfo: generalInfo)
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
         
-        speechButtonSetting(speechButton, with: info)
+        speechButtonSetting(speechButton, with: speechInfo)
     }
     
     /// levelButton文字顏色設定
@@ -172,9 +176,13 @@ private extension ListTableViewCell {
     ///   - indexPath: IndexPath
     func updateHardWork(_ isHardWork: Bool, with indexPath: IndexPath) {
         
-        guard let vocabulary = Self.vocabulary(with: indexPath) else { return }
+        guard let vocabulary = Self.vocabulary(with: indexPath),
+              let info = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+        else {
+            return
+        }
         
-        let isSuccess = API.shared.updateHardWorkToList(vocabulary.id, isHardWork: isHardWork, for: Constant.currentTableName.rawValue)
+        let isSuccess = API.shared.updateHardWorkToList(vocabulary.id, isHardWork: isHardWork, info: info)
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
         
         hardWorkImageView.image = Utility.shared.hardWorkIcon(isHardWork)

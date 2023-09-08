@@ -81,8 +81,14 @@ final class SentenceViewController: UIViewController {
     @IBAction func appendSentenceAction(_ sender: UIButton) {
         
         appendSentenceHint(title: "請輸入例句") { [weak self] (example, translate) in
-            guard let this = self else { return false }
-            return this.appendSentence(example, translate: translate, for: Constant.currentTableName)
+            
+            guard let this = self,
+                  let info = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+            else {
+                return false
+            }
+            
+            return this.appendSentence(example, translate: translate, info: info)
         }
     }
     
@@ -166,15 +172,17 @@ private extension SentenceViewController {
     /// - Parameters:
     ///   - info: Settings.SentenceSpeechInformation?
     ///   - isFavorite: Bool
-    func reloadSentenceList(with info: Settings.SentenceSpeechInformation?, isFavorite: Bool) {
+    func reloadSentenceList(with speechInfo: Settings.SentenceSpeechInformation?, isFavorite: Bool) {
         
         defer {
-            appendWordButtonHidden(with: info, isFavorite: isFavorite)
+            appendWordButtonHidden(with: speechInfo, isFavorite: isFavorite)
             refreshControl.endRefreshing()
         }
         
+        guard let generalInfo = Utility.shared.generalSettings(index: Constant.tableNameIndex) else { return }
+        
         SentenceTableViewCell.sentenceListArray = []
-        SentenceTableViewCell.sentenceListArray = API.shared.searchSentenceList(with: info, isFavorite: isFavorite, for: Constant.currentTableName, offset: 0)
+        SentenceTableViewCell.sentenceListArray = API.shared.searchSentenceList(with: speechInfo, isFavorite: isFavorite, generalInfo: generalInfo, offset: 0)
         
         let listCount = SentenceTableViewCell.sentenceListArray.count
         titleSetting(titleString, count: listCount)
@@ -196,12 +204,14 @@ private extension SentenceViewController {
     /// - Parameters:
     ///   - info: Settings.SentenceSpeechInformation?
     ///   - isFavorite: Bool
-    func appendSentenceList(with info: Settings.SentenceSpeechInformation?, isFavorite: Bool) {
+    func appendSentenceList(with speechInfo: Settings.SentenceSpeechInformation?, isFavorite: Bool) {
         
         defer { refreshControl.endRefreshing() }
         
+        guard let generalInfo = Utility.shared.generalSettings(index: Constant.tableNameIndex) else { return }
+        
         let oldListCount = SentenceTableViewCell.sentenceListArray.count
-        SentenceTableViewCell.sentenceListArray += API.shared.searchSentenceList(with: info, isFavorite: isFavorite, for: Constant.currentTableName, offset: oldListCount)
+        SentenceTableViewCell.sentenceListArray += API.shared.searchSentenceList(with: speechInfo, isFavorite: isFavorite, generalInfo: generalInfo, offset: oldListCount)
         
         let newListCount = SentenceTableViewCell.sentenceListArray.count
         titleSetting(titleString, count: newListCount)
@@ -427,9 +437,10 @@ private extension SentenceViewController {
     /// - Parameters:
     ///   - example: 例句
     ///   - tableName: 翻譯
+    ///   - info: Settings.GeneralInformation
     /// - Returns: Bool
-    func appendSentence(_ example: String, translate: String, for tableName: Constant.VoiceCode) -> Bool {
-        return API.shared.insertSentenceToList(example, translate: translate, for: Constant.currentTableName)
+    func appendSentence(_ example: String, translate: String, info: Settings.GeneralInformation) -> Bool {
+        return API.shared.insertSentenceToList(example, translate: translate, info: info)
     }
     
     /// 下滑到底更新資料
@@ -450,7 +461,11 @@ private extension SentenceViewController {
     /// - Parameter indexPath: IndexPath
     func updateSentence(with indexPath: IndexPath) {
         
-        guard let sentenceList = SentenceTableViewCell.sentenceList(with: indexPath) else { return }
+        guard let sentenceList = SentenceTableViewCell.sentenceList(with: indexPath),
+              let info = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+        else {
+            return
+        }
         
         appendSentenceHint(with: indexPath, title: "請更新例句", exampleText: sentenceList.example, translateText: sentenceList.translate) { (exampleInput, translateInput) in
             
@@ -460,7 +475,7 @@ private extension SentenceViewController {
             dictionary["translate"] = translateInput
             SentenceTableViewCell.sentenceListArray[indexPath.row] = dictionary
             
-            return API.shared.updateSentenceToList(sentenceList.id, example: exampleInput, translate: translateInput, for: Constant.currentTableName)
+            return API.shared.updateSentenceToList(sentenceList.id, example: exampleInput, translate: translateInput, info: info)
         }
     }
     
@@ -468,9 +483,13 @@ private extension SentenceViewController {
     /// - Parameter indexPath: IndexPath
     func deleteSentence(with indexPath: IndexPath) {
         
-        guard let sentenceList = SentenceTableViewCell.sentenceList(with: indexPath) else { return }
+        guard let sentenceList = SentenceTableViewCell.sentenceList(with: indexPath),
+              let info = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+        else {
+            return
+        }
         
-        let isSuccess = API.shared.deleteSentenceList(with: sentenceList.id, for: Constant.currentTableName)
+        let isSuccess = API.shared.deleteSentenceList(with: sentenceList.id, info: info)
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
         
         SentenceTableViewCell.sentenceListArray.remove(at: indexPath.row)
@@ -539,15 +558,16 @@ private extension SentenceViewController {
     
     /// 取得精選例句總數量
     /// - Parameters:
-    ///   - speech: VocabularySentenceList.Speech?
+    ///   - speechInfo: VocabularySentenceList.Speech?
     ///   - isFavorite: Bool
     /// - Returns: Int
-    func sentenceCount(with info: Settings.SentenceSpeechInformation?, isFavorite: Bool) -> Int {
+    func sentenceCount(with speechInfo: Settings.SentenceSpeechInformation?, isFavorite: Bool) -> Int {
         
         let key = "speech"
         let field = "\(key)Count"
         
-        guard let result = API.shared.searchSentenceCount(for: Constant.currentTableName, key: key, info: info, isFavorite: isFavorite).first,
+        guard let generalInfo = Utility.shared.generalSettings(index: Constant.tableNameIndex),
+              let result = API.shared.searchSentenceCount(generalInfo: generalInfo, key: key, speechInfo: speechInfo, isFavorite: isFavorite).first,
               let value = result["\(field)"],
               let count = Int("\(value)", radix: 10)
         else {

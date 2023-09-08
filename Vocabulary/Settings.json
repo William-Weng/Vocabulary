@@ -60,7 +60,7 @@
         "かんどうし": { "name": "感動詞", "value": 9, "color": "#f7fffc", "backgroundColor": "#ff6600" }
       },
       "sentenceSpeech": {
-          "general": { "name": "一般", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b" },
+          "general": { "name": "@一般", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b" },
           "proverb": { "name": "諺語", "value": 1, "color": "#f7fffc", "backgroundColor": "#00b373" },
           "movie": { "name": "電影", "value": 2, "color": "#f7fffc", "backgroundColor": "#0a4eff" },
           "article": { "name": "文章", "value": 3, "color": "#f7fffc", "backgroundColor": "#e10000" },

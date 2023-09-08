@@ -92,30 +92,31 @@ extension API {
     
     /// 搜尋精選例句總數量
     /// - Parameters:
-    ///   - tableName: 資料表名稱
+    ///   - info: Settings.GeneralInformation
     ///   - key: 欄位名稱
-    ///   - info: Settings.SentenceSpeechInformation?
+    ///   - speechInfo: Settings.SentenceSpeechInformation?
     ///   - isFavorite: Bool
     /// - Returns: [[String : Any]]
-    func searchSentenceCount(for tableName: Constant.VoiceCode, key: String? = nil, info: Settings.SentenceSpeechInformation?, isFavorite: Bool) -> [[String : Any]] {
+    func searchSentenceCount(generalInfo: Settings.GeneralInformation, key: String? = nil, speechInfo: Settings.SentenceSpeechInformation?, isFavorite: Bool) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
+        let type: Constant.DataTableType = .sentence(generalInfo.key)
         var condition: SQLite3Condition.Where?
 
-        if let info = info {
-            var _condition = SQLite3Condition.Where().isCompare(key: "speech", type: .equal, value: info.value)
+        if let speechInfo = speechInfo {
+            var _condition = SQLite3Condition.Where().isCompare(key: "speech", type: .equal, value: speechInfo.value)
             if isFavorite { _condition = _condition.andCompare(key: "favorite", type: .equal, value: isFavorite._int()) }
             condition = _condition
         }
         
         if isFavorite {
             var _condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: isFavorite._int())
-            if let info = info { _condition = _condition.andCompare(key: "speech", type: .equal, value: info.value) }
+            if let speechInfo = speechInfo { _condition = _condition.andCompare(key: "speech", type: .equal, value: speechInfo.value) }
             condition = _condition
         }
         
-        let result = database.select(tableName: tableName.vocabularySentenceList(), functions: [.count(key, .INTEGER())], where: condition)
+        let result = database.select(tableName: type.name(), functions: [.count(key, .INTEGER())], where: condition)
         
         return result.array
     }
@@ -287,33 +288,35 @@ extension API {
     
     /// 搜尋例句內容的列表
     /// - Parameters:
-    ///   - speech: 例句的詞性
-    ///   - tableName: 資料表名稱
+    ///   - speechInfo: Settings.SentenceSpeechInformation?
+    ///   - generalInfo: Settings.GeneralInformation
     ///   - count: 數量
     ///   - offset: 偏移量
     ///   - isFavorite: 我的最愛
     /// - Returns: [[String : Any]]
-    func searchSentenceList(with info: Settings.SentenceSpeechInformation? = nil, isFavorite: Bool = false, for tableName: Constant.VoiceCode, count: Int = Constant.searchCount, offset: Int) -> [[String : Any]] {
+    func searchSentenceList(with speechInfo: Settings.SentenceSpeechInformation? = nil, isFavorite: Bool = false, generalInfo: Settings.GeneralInformation, count: Int = Constant.searchCount, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
+        let type: Constant.DataTableType = .sentence(generalInfo.key)
         let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
         let orderBy = SQLite3Condition.OrderBy().item(key: "createTime", type: .descending)
+        
         var condition: SQLite3Condition.Where?
 
-        if let info = info {
-            var _condition = SQLite3Condition.Where().isCompare(key: "speech", type: .equal, value: info.value)
+        if let speechInfo = speechInfo {
+            var _condition = SQLite3Condition.Where().isCompare(key: "speech", type: .equal, value: speechInfo.value)
             if isFavorite { _condition = _condition.andCompare(key: "favorite", type: .equal, value: isFavorite._int()) }
             condition = _condition
         }
         
         if isFavorite {
             var _condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: isFavorite._int())
-            if let info = info { _condition = _condition.andCompare(key: "speech", type: .equal, value: info.value) }
+            if let speechInfo = speechInfo { _condition = _condition.andCompare(key: "speech", type: .equal, value: speechInfo.value) }
             condition = _condition
         }
         
-        let result = database.select(tableName: tableName.vocabularySentenceList(), type: VocabularySentenceList.self, where: condition, orderBy: orderBy, limit: limit)
+        let result = database.select(tableName: type.name(), type: VocabularySentenceList.self, where: condition, orderBy: orderBy, limit: limit)
         
         return result.array
     }
@@ -471,9 +474,9 @@ extension API {
     /// - Parameters:
     ///   - example: 常用例句
     ///   - translate: 例句翻譯
-    ///   - tableName: 資料表名稱
+    ///   - info: Settings.GeneralInformation
     /// - Returns: Bool
-    func insertSentenceToList(_ example: String, translate: String, for tableName: Constant.VoiceCode) -> Bool {
+    func insertSentenceToList(_ example: String, translate: String, info: Settings.GeneralInformation) -> Bool {
         
         guard let database = Constant.database,
               !example.isEmpty
@@ -487,7 +490,8 @@ extension API {
             (key: "translate", value: translate),
         ]
         
-        let result = database.insert(tableName: tableName.vocabularySentenceList(), itemsArray: [items])
+        let type: Constant.DataTableType = .sentence(info.key)
+        let result = database.insert(tableName: type.name(), itemsArray: [items])
         
         return result?.isSussess ?? false
     }
@@ -782,9 +786,9 @@ extension API {
     ///   - id: Int
     ///   - example: 常用例句
     ///   - translate: 例句翻譯
-    ///   - tableName: 資料表名稱
+    ///   - info: Settings.GeneralInformation
     /// - Returns: Bool
-    func updateSentenceToList(_ id: Int, example: String, translate: String, for tableName: Constant.VoiceCode) -> Bool {
+    func updateSentenceToList(_ id: Int, example: String, translate: String, info: Settings.GeneralInformation) -> Bool {
         
         guard let database = Constant.database else { return false }
         
@@ -794,8 +798,9 @@ extension API {
             (key: "updateTime", value: Date()._localTime())
         ]
         
+        let type: Constant.DataTableType = .sentence(info.key)
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
-        let result = database.update(tableName: tableName.vocabularySentenceList(), items: items, where: condition)
+        let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
     }
@@ -880,14 +885,15 @@ extension API {
     /// 刪除常用例句
     /// - Parameters:
     ///   - id: Int
-    ///   - tableName: Constant.VoiceCode
+    ///   - info: Settings.GeneralInformation
     /// - Returns: Bool
-    func deleteSentenceList(with id: Int, for tableName: Constant.VoiceCode) -> Bool {
+    func deleteSentenceList(with id: Int, info: Settings.GeneralInformation) -> Bool {
         
         guard let database = Constant.database else { return false }
         
+        let type: Constant.DataTableType = .sentence(info.key)
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
-        let result = database.delete(tableName: tableName.vocabularySentenceList(), where: condition)
+        let result = database.delete(tableName: type.name(), where: condition)
         
         return result.isSussess
     }

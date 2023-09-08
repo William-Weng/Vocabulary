@@ -122,7 +122,7 @@ private extension MainTableViewCell {
     
     /// 更新LevelButton文字
     /// - Parameters:
-    ///   - info: Settings.VocabularyLevelInformation
+    ///   - levelInfo: Settings.VocabularyLevelInformation
     ///   - indexPath: IndexPath
     func updateLevel(_ levelInfo: Settings.VocabularyLevelInformation, with indexPath: IndexPath) {
         

@@ -7,6 +7,16 @@
 
 import UIKit
 
+// MARK: - 顏色設定檔 (Settings.json)
+protocol ColorSettings {
+    
+    var key: String { get set }                 // 英文代碼
+    var name: String { get set }                // 顯示名稱
+    var value: Int { get set }                  // 資料庫數值
+    var backgroundColor: String { get set }     // 背景顏色
+    var color: String { get set }               // 文字顏色
+}
+
 // MARK: - 可重複使用的Cell (UITableViewCell / UICollectionViewCell)
 protocol CellReusable: AnyObject {
     

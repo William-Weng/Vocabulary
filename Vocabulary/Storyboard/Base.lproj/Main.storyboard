@@ -58,17 +58,83 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ColorPalette" translatesAutoresizingMaskIntoConstraints="NO" id="Ocl-Gj-SPo">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="rY5-5G-TaN">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PaletteTableViewCell" rowHeight="78" id="Zt4-rx-mfb" customClass="PaletteTableViewCell" customModule="Vocabulary" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="55.5" width="374" height="78"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Zt4-rx-mfb" id="nSF-3Y-xBa">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="78"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WEA-Uv-6Yw">
+                                                    <rect key="frame" x="63" y="8" width="248" height="62"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="名詞" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8GQ-Ou-4Aq">
+                                                            <rect key="frame" x="4" y="4" width="240" height="54"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="24"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="8GQ-Ou-4Aq" secondAttribute="trailing" constant="4" id="Qt2-ky-ZYr"/>
+                                                        <constraint firstItem="8GQ-Ou-4Aq" firstAttribute="top" secondItem="WEA-Uv-6Yw" secondAttribute="top" constant="4" id="TaU-Rp-a45"/>
+                                                        <constraint firstAttribute="width" secondItem="WEA-Uv-6Yw" secondAttribute="height" multiplier="4" id="k5g-1X-ixf"/>
+                                                        <constraint firstItem="8GQ-Ou-4Aq" firstAttribute="centerY" secondItem="WEA-Uv-6Yw" secondAttribute="centerY" id="kGW-r7-ZST"/>
+                                                        <constraint firstItem="8GQ-Ou-4Aq" firstAttribute="centerX" secondItem="WEA-Uv-6Yw" secondAttribute="centerX" id="xZw-dd-zhu"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="8"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="WEA-Uv-6Yw" firstAttribute="centerX" secondItem="nSF-3Y-xBa" secondAttribute="centerX" id="8zX-5H-lVi"/>
+                                                <constraint firstItem="WEA-Uv-6Yw" firstAttribute="top" secondItem="nSF-3Y-xBa" secondAttribute="top" constant="8" id="Y98-QG-LlU"/>
+                                                <constraint firstAttribute="bottom" secondItem="WEA-Uv-6Yw" secondAttribute="bottom" constant="8" id="Y9C-Ai-WAY"/>
+                                                <constraint firstItem="WEA-Uv-6Yw" firstAttribute="centerY" secondItem="nSF-3Y-xBa" secondAttribute="centerY" id="rvI-wb-dK7"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.19911527317880795" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outlet property="myLabel" destination="8GQ-Ou-4Aq" id="6XG-8p-vv0"/>
+                                            <outlet property="myView" destination="WEA-Uv-6Yw" id="PMN-tc-qVT"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ozz-F6-LnA"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Ocl-Gj-SPo" firstAttribute="leading" secondItem="ozz-F6-LnA" secondAttribute="leading" id="Fnu-e0-7E8"/>
                             <constraint firstItem="ozz-F6-LnA" firstAttribute="trailing" secondItem="Ocl-Gj-SPo" secondAttribute="trailing" id="H3u-Cv-TTb"/>
+                            <constraint firstItem="rY5-5G-TaN" firstAttribute="trailing" secondItem="ozz-F6-LnA" secondAttribute="trailing" id="NeC-i8-VJr"/>
                             <constraint firstAttribute="bottom" secondItem="Ocl-Gj-SPo" secondAttribute="bottom" id="TpY-HI-aaG"/>
+                            <constraint firstAttribute="bottom" secondItem="rY5-5G-TaN" secondAttribute="bottom" id="Tw4-WV-sBj"/>
+                            <constraint firstItem="rY5-5G-TaN" firstAttribute="leading" secondItem="ozz-F6-LnA" secondAttribute="leading" id="XTR-r9-foA"/>
                             <constraint firstItem="Ocl-Gj-SPo" firstAttribute="top" secondItem="gY9-e7-Ny4" secondAttribute="top" id="c8S-og-29M"/>
+                            <constraint firstItem="rY5-5G-TaN" firstAttribute="top" secondItem="gY9-e7-Ny4" secondAttribute="top" id="lhg-5W-HgH"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="調色盤" id="7JP-8Q-l7I"/>
+                    <navigationItem key="navigationItem" title="調色盤" id="7JP-8Q-l7I">
+                        <barButtonItem key="rightBarButtonItem" image="Palette" id="Yux-dn-dAO">
+                            <connections>
+                                <action selector="changeSystemColor:" destination="61e-Ac-1O2" id="EyY-J5-grK"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="myTableView" destination="rY5-5G-TaN" id="sX7-Zj-UQp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CEn-EB-chP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2031,7 +2097,7 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="wwR-4x-yc0"/>
+        <segue reference="aTr-M4-697"/>
         <segue reference="FBH-lM-RI1"/>
         <segue reference="Ypq-4K-ZAg"/>
     </inferredMetricsTieBreakers>
@@ -2079,6 +2145,9 @@
         </systemColor>
         <systemColor name="systemGray2Color">
             <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

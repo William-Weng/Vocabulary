@@ -34,6 +34,7 @@
 		64C18507297EC01700D1D1B2 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C18506297EC01700D1D1B2 /* ListTableViewCell.swift */; };
 		64ED74D82998C5EF00948C77 /* LicenseWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ED74D72998C5EF00948C77 /* LicenseWebViewController.swift */; };
 		811DFC402AAAEFE600BF480C /* PaletteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811DFC3F2AAAEFE600BF480C /* PaletteViewController.swift */; };
+		811DFC432AAAFE1200BF480C /* PaletteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811DFC422AAAFE1200BF480C /* PaletteTableViewCell.swift */; };
 		81201C4C298B58C200291485 /* InterpretView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81201C4A298B58C200291485 /* InterpretView.swift */; };
 		81201C4D298B58C200291485 /* InterpretView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81201C4B298B58C200291485 /* InterpretView.xib */; };
 		812C5444299F73DC003F942A /* TalkingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812C5443299F73DC003F942A /* TalkingViewController.swift */; };
@@ -90,6 +91,7 @@
 		64C18506297EC01700D1D1B2 /* ListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		64ED74D72998C5EF00948C77 /* LicenseWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseWebViewController.swift; sourceTree = "<group>"; };
 		811DFC3F2AAAEFE600BF480C /* PaletteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteViewController.swift; sourceTree = "<group>"; };
+		811DFC422AAAFE1200BF480C /* PaletteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaletteTableViewCell.swift; sourceTree = "<group>"; };
 		81201C4A298B58C200291485 /* InterpretView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterpretView.swift; sourceTree = "<group>"; };
 		81201C4B298B58C200291485 /* InterpretView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InterpretView.xib; sourceTree = "<group>"; };
 		812C5443299F73DC003F942A /* TalkingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkingViewController.swift; sourceTree = "<group>"; };
@@ -172,8 +174,6 @@
 				642858A2297BC37700DD7D88 /* Utility */,
 				6428589F297BBFF400DD7D88 /* Storyboard */,
 				6428589E297BBFE300DD7D88 /* ViewController */,
-				811DFC412AAAEFEB00BF480C /* PaletteViewController */,
-				64F6F42A29991B40001F4F66 /* LicenseWebViewController */,
 				6428588A297BBF8600DD7D88 /* AppDelegate.swift */,
 			);
 			path = Vocabulary;
@@ -194,6 +194,8 @@
 				81E56B6C2A725DD6004400D6 /* SearchVocabularyViewController */,
 				81CD85CD2990F040009C39FF /* SentenceViewController */,
 				81AB5EF72996437B0035216F /* OthersViewController */,
+				811DFC412AAAEFEB00BF480C /* PaletteViewController */,
+				64F6F42A29991B40001F4F66 /* LicenseWebViewController */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -282,6 +284,7 @@
 			isa = PBXGroup;
 			children = (
 				811DFC3F2AAAEFE600BF480C /* PaletteViewController.swift */,
+				811DFC422AAAFE1200BF480C /* PaletteTableViewCell.swift */,
 			);
 			path = PaletteViewController;
 			sourceTree = "<group>";
@@ -473,6 +476,7 @@
 				81F52F34299DE87A005F9DF2 /* MyTabBarController.swift in Sources */,
 				811DFC402AAAEFE600BF480C /* PaletteViewController.swift in Sources */,
 				646E44A42980A726002BCBC8 /* ReviewViewController.swift in Sources */,
+				811DFC432AAAFE1200BF480C /* PaletteTableViewCell.swift in Sources */,
 				642858A4297BC38200DD7D88 /* Extension.swift in Sources */,
 				64C184F7297E5D4C00D1D1B2 /* MainTableViewCell.swift in Sources */,
 				81E56B6B2A725DA6004400D6 /* SearchVocabularyTableViewCell.swift in Sources */,

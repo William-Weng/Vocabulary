@@ -87,7 +87,7 @@ extension Constant {
     }
         
     /// 能夠設定顏色的Settings設定檔
-    enum SettingsColorKey: String {
+    enum SettingsColorKey: String, CaseIterable {
         
         case vocabularyLevel
         case sentenceSpeech
@@ -100,6 +100,17 @@ extension Constant {
             case .vocabularyLevel: return "單字等級"
             case .sentenceSpeech: return "精選例句"
             case .wordSpeech: return "單字型態"
+            }
+        }
+        
+        /// 取得Settings的相關數值
+        /// - Returns: [Decodable]
+        func informations() -> [ColorSettings]? {
+            
+            switch self {
+            case .vocabularyLevel: return Constant.SettingsJSON.vocabularyLevelInformations
+            case .sentenceSpeech: return Constant.SettingsJSON.sentenceSpeechInformations
+            case .wordSpeech: return Constant.SettingsJSON.wordSpeechInformations
             }
         }
     }

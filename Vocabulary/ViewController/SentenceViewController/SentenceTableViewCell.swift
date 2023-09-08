@@ -137,16 +137,20 @@ private extension SentenceTableViewCell {
     
     /// 更新SpeechButton文字
     /// - Parameters:
-    ///   - info: Settings.SentenceSpeechInformation
+    ///   - speechInfo: Settings.SentenceSpeechInformation
     ///   - indexPath: IndexPath
-    func updateSpeech(_ info: Settings.SentenceSpeechInformation, with indexPath: IndexPath) {
+    func updateSpeech(_ speechInfo: Settings.SentenceSpeechInformation, with indexPath: IndexPath) {
         
-        guard let sentenceList = Self.sentenceList(with: indexPath) else { return }
+        guard let sentenceList = Self.sentenceList(with: indexPath),
+              let generalInfo = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+        else {
+            return
+        }
         
-        let isSuccess = API.shared.updateSentenceSpeechToList(sentenceList.id, info: info, for: Constant.currentTableName)
+        let isSuccess = API.shared.updateSentenceSpeechToList(sentenceList.id, speechInfo: speechInfo, generalInfo: generalInfo)
 
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail) }
-        speechButtonSetting(speechButton, with: info)
+        speechButtonSetting(speechButton, with: speechInfo)
     }
     
     /// speechButton文字顏色設定
@@ -166,9 +170,13 @@ private extension SentenceTableViewCell {
     ///   - indexPath: IndexPath
     func updateFavorite(_ isFavorite: Bool, with indexPath: IndexPath) {
         
-        guard let sentenceList = Self.sentenceList(with: indexPath) else { return }
+        guard let sentenceList = Self.sentenceList(with: indexPath),
+              let info = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+        else {
+            return
+        }
 
-        let isSuccess = API.shared.updateSentenceFavoriteToList(sentenceList.id, isFavorite: isFavorite, for: Constant.currentTableName)
+        let isSuccess = API.shared.updateSentenceFavoriteToList(sentenceList.id, isFavorite: isFavorite, info: info)
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
 
         favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)

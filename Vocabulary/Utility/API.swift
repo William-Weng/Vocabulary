@@ -79,14 +79,16 @@ extension API {
     
     /// 搜尋書籤總數量
     /// - Parameters:
-    ///   - tableName: 資料表名稱
+    ///   - info: Settings.GeneralInformation
     ///   - key: 欄位名稱
     /// - Returns: [[String : Any]]
-    func searchBookmarkCount(for tableName: Constant.VoiceCode, key: String? = nil) -> [[String : Any]] {
+    func searchBookmarkCount(for info: Settings.GeneralInformation, key: String? = nil) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
-        let result = database.select(tableName: tableName.bookmarks(), functions: [.count(key, .INTEGER())])
+        let type: Constant.DataTableType = .bookmarkSite(info.key)
+        let result = database.select(tableName: type.name(), functions: [.count(key, .INTEGER())])
+        
         return result.array
     }
     
@@ -123,18 +125,20 @@ extension API {
     
     /// 搜尋複習總覽總數量
     /// - Parameters:
-    ///   - tableName: 資料表名稱
+    ///   - info: Settings.GeneralInformation
     ///   - key: 欄位名稱
     ///   - isFavorite: Bool
     /// - Returns: [[String : Any]]
-    func searchReviewCount(for tableName: Constant.VoiceCode, key: String, isFavorite: Bool) -> [[String : Any]] {
+    func searchReviewCount(for info: Settings.GeneralInformation, key: String, isFavorite: Bool) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
+        let reviewType: Constant.DataTableType = .review(info.key)
+        let listType: Constant.DataTableType = .list(info.key)
         let field = "\(key)Count"
-        var array: [[String : Any]] = []
         
-        var sql = "SELECT Count(Review.\(key)) as \(field) FROM \(tableName.vocabularyReviewList()) as Review JOIN \(tableName.vocabularyList()) as List ON Review.word = List.word"
+        var array: [[String : Any]] = []
+        var sql = "SELECT Count(Review.\(key)) as \(field) FROM \(reviewType.name()) as Review JOIN \(listType.name()) as List ON Review.word = List.word"
         
         if (isFavorite) { sql += " WHERE List.favorite = \(isFavorite._int())" }
         
@@ -206,10 +210,10 @@ extension API {
     /// 搜尋單字組的內容細節
     /// - Parameters:
     ///   - words: 單字組
-    ///   - tableName: Constant.VoiceCode
+    ///   - info: Settings.GeneralInformation
     ///   - offset: offset
     /// - Returns: [[String : Any]]
-    func searchWordDetail(in words: [String], for tableName: Constant.VoiceCode, offset: Int) -> [[String : Any]] {
+    func searchWordDetail(in words: [String], info: Settings.GeneralInformation, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database,
               !words.isEmpty
@@ -217,8 +221,9 @@ extension API {
             return []
         }
         
+        let type: Constant.DataTableType = .default(info.key)
         let condition = SQLite3Condition.Where().in(key: "word", values: words)
-        let result = database.select(tableName: "\(tableName)", type: Vocabulary.self, where: condition, orderBy: nil, limit: nil)
+        let result = database.select(tableName: type.name(), type: Vocabulary.self, where: condition, orderBy: nil, limit: nil)
         
         return result.array
     }
@@ -325,15 +330,18 @@ extension API {
     
     /// 搜尋複習過的單字內容總表
     /// - Parameters:
-    ///   - tableName: Constant.VoiceCode
+    ///   - info: Settings.GeneralInformation
     ///   - type: Constant.ReviewResultType
     ///   - isFavorite: Bool
     ///   - count: Int
     ///   - offset: Int
     /// - Returns: [[String : Any]]
-    func searchReviewList(for tableName: Constant.VoiceCode, type: Constant.ReviewResultType = .alphabet, isFavorite: Bool, count: Int = Constant.searchCount, offset: Int) -> [[String : Any]] {
+    func searchReviewList(for info: Settings.GeneralInformation, type: Constant.ReviewResultType = .alphabet, isFavorite: Bool, count: Int = Constant.searchCount, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
+        
+        let reviewType: Constant.DataTableType = .review(info.key)
+        let listType: Constant.DataTableType = .list(info.key)
         
         let limit = "LIMIT \(count) OFFSET \(offset)"
         let condition = "WHERE favorite = \(isFavorite._int())"
@@ -349,7 +357,7 @@ extension API {
         case .mistakeCount: orderBy = "ORDER BY Review.mistakeCount DESC"
         }
         
-        var sql = "SELECT Review.id, Review.word, Review.correctCount, Review.mistakeCount, List.id as wordId, List.favorite as favorite, Review.createTime, Review.updateTime FROM \(tableName.vocabularyReviewList()) as Review JOIN \(tableName.vocabularyList()) as List ON Review.word = List.word"
+        var sql = "SELECT Review.id, Review.word, Review.correctCount, Review.mistakeCount, List.id as wordId, List.favorite as favorite, Review.createTime, Review.updateTime FROM \(reviewType.name()) as Review JOIN \(listType.name()) as List ON Review.word = List.word"
         
         if (isFavorite) { sql += " \(condition)" }
         sql += " \(orderBy) \(limit)"
@@ -373,12 +381,12 @@ extension API {
     
     ///  搜尋書籤列表
     /// - Parameters:
-    ///   - tableName: 資料表名稱
+    ///   - info: Settings.GeneralInformation
     ///   - count: 單次搜尋的數量
     ///   - offset: 搜尋的偏移量
     ///   - isFavorite: 我的最愛
     /// - Returns: [[String : Any]]
-    func searchBookmarkList(isFavorite: Bool, for tableName: Constant.VoiceCode, count: Int? = 10, offset: Int) -> [[String : Any]] {
+    func searchBookmarkList(isFavorite: Bool, info: Settings.GeneralInformation, count: Int? = 10, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
@@ -389,7 +397,8 @@ extension API {
         if let count = count { limit = SQLite3Condition.Limit().build(count: count, offset: offset) }
         if (isFavorite) { condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: 1) }
         
-        let result = database.select(tableName: tableName.bookmarks(), type: BookmarkSite.self, where: condition, orderBy: orderBy, limit: limit)
+        let type: Constant.DataTableType = .bookmarkSite(info.key)
+        let result = database.select(tableName: type.name(), type: BookmarkSite.self, where: condition, orderBy: orderBy, limit: limit)
         
         return result.array
     }
@@ -503,9 +512,9 @@ extension API {
     /// - Parameters:
     ///   - title: 網頁標題
     ///   - webUrl: 網頁網址
-    ///   - tableName: 資料表名稱
+    ///   - info: Settings.GeneralInformation
     /// - Returns: Bool
-    func insertBookmarkToList(_ title: String, webUrl: String, for tableName: Constant.VoiceCode) -> Bool {
+    func insertBookmarkToList(_ title: String, webUrl: String, info: Settings.GeneralInformation) -> Bool {
         
         guard let database = Constant.database,
               !webUrl.isEmpty
@@ -518,7 +527,8 @@ extension API {
             (key: "url", value: webUrl),
         ]
         
-        let result = database.insert(tableName: tableName.bookmarks(), itemsArray: [items])
+        let type: Constant.DataTableType = .bookmarkSite(info.key)
+        let result = database.insert(tableName: type.name(), itemsArray: [items])
         
         return result?.isSussess ?? false
     }
@@ -703,20 +713,22 @@ extension API {
     /// - Parameters:
     ///   - id: Int
     ///   - isFavorite: Bool
-    ///   - tableName: Constant.VoiceCode
+    ///   - info: Settings.GeneralInformation
     /// - Returns: Bool
-    func updateSentenceFavoriteToList(_ id: Int, isFavorite: Bool, for tableName: Constant.VoiceCode) -> Bool {
-        return updateFavoriteToList(id, isFavorite: isFavorite, for: tableName.vocabularySentenceList())
+    func updateSentenceFavoriteToList(_ id: Int, isFavorite: Bool, info: Settings.GeneralInformation) -> Bool {
+        let type: Constant.DataTableType = .sentence(info.key)
+        return updateFavoriteToList(id, isFavorite: isFavorite, for: type.name())
     }
     
     /// 更新書籤『我的最愛』
     /// - Parameters:
     ///   - id: Int
     ///   - isFavorite: Bool
-    ///   - tableName: Constant.VoiceCode
+    ///   - info: Settings.GeneralInformation
     /// - Returns: Bool
-    func updateBookmarkFavoriteToList(_ id: Int, isFavorite: Bool, for tableName: Constant.VoiceCode) -> Bool {
-        return updateFavoriteToList(id, isFavorite: isFavorite, for: tableName.bookmarks())
+    func updateBookmarkFavoriteToList(_ id: Int, isFavorite: Bool, info: Settings.GeneralInformation) -> Bool {
+        let type: Constant.DataTableType = .bookmarkSite(info.key)
+        return updateFavoriteToList(id, isFavorite: isFavorite, for: type.name())
     }
     
     /// 更新單字複習次數
@@ -770,20 +782,21 @@ extension API {
     /// 更新常用例句分類
     /// - Parameters:
     ///   - id: Int
-    ///   - info: Settings.SentenceSpeechInformation
-    ///   - tableName: 資料表名稱
+    ///   - speechInfo: Settings.SentenceSpeechInformation
+    ///   - generalInfo: Settings.GeneralInformation
     /// - Returns: Bool
-    func updateSentenceSpeechToList(_ id: Int, info: Settings.SentenceSpeechInformation, for tableName: Constant.VoiceCode) -> Bool {
+    func updateSentenceSpeechToList(_ id: Int, speechInfo: Settings.SentenceSpeechInformation, generalInfo: Settings.GeneralInformation) -> Bool {
         
         guard let database = Constant.database else { return false }
         
         let items: [SQLite3Database.InsertItem] = [
-            (key: "speech", value: info.value),
+            (key: "speech", value: speechInfo.value),
             (key: "updateTime", value: Date()._localTime()),
         ]
         
+        let type: Constant.DataTableType = .sentence(generalInfo.key)
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
-        let result = database.update(tableName: tableName.vocabularySentenceList(), items: items, where: condition)
+        let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
     }
@@ -817,9 +830,9 @@ extension API {
     ///   - id: Int
     ///   - title: 標題
     ///   - webUrl: 網址
-    ///   - tableName: 資料表名稱
+    ///   - info: Settings.GeneralInformation
     /// - Returns: Bool
-    func updateBookmarkToList(_ id: Int, title: String, webUrl: String, for tableName: Constant.VoiceCode) -> Bool {
+    func updateBookmarkToList(_ id: Int, title: String, webUrl: String, info: Settings.GeneralInformation) -> Bool {
         
         guard let database = Constant.database else { return false }
         
@@ -829,8 +842,9 @@ extension API {
             (key: "updateTime", value: Date()._localTime()),
         ]
         
+        let type: Constant.DataTableType = .bookmarkSite(info.key)
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
-        let result = database.update(tableName: tableName.bookmarks(), items: items, where: condition)
+        let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
     }
@@ -840,8 +854,9 @@ extension API {
     ///   - id: Int
     ///   - iconUrl: 圖片網址
     ///   - webUrl: 資料表名稱
+    ///   - info: Settings.GeneralInformation
     /// - Returns: Bool
-    func updateBookmarkIconToList(_ id: Int, iconUrl: String, for tableName: Constant.VoiceCode) -> Bool {
+    func updateBookmarkIconToList(_ id: Int, iconUrl: String, info: Settings.GeneralInformation) -> Bool {
         
         guard let database = Constant.database else { return false }
         
@@ -849,8 +864,9 @@ extension API {
             (key: "icon", value: iconUrl),
         ]
         
+        let type: Constant.DataTableType = .bookmarkSite(info.key)
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
-        let result = database.update(tableName: tableName.bookmarks(), items: items, where: condition)
+        let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
     }
@@ -910,14 +926,15 @@ extension API {
     /// 刪除書籤
     /// - Parameters:
     ///   - id: Int
-    ///   - tableName: Constant.VoiceCode
+    ///   - info: Settings.GeneralInformation
     /// - Returns: Bool
-    func deleteBookmark(with id: Int, for tableName: Constant.VoiceCode) -> Bool {
+    func deleteBookmark(with id: Int, info: Settings.GeneralInformation) -> Bool {
         
         guard let database = Constant.database else { return false }
         
+        let type: Constant.DataTableType = .bookmarkSite(info.key)
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
-        let result = database.delete(tableName: tableName.bookmarks(), where: condition)
+        let result = database.delete(tableName: type.name(), where: condition)
         
         return result.isSussess
     }

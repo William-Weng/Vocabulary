@@ -78,8 +78,11 @@ private extension SearchVocabularyTableViewCell {
     
     /// 更新特定單字群的列表 => in(["word", "detail"])
     static func updateWordsDetailArray() {
+        
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex) else { return }
+        
         let words = Self.words(with: Self.vocabularyListArray.count)
-        Self.vocabularyDeteilListArray = API.shared.searchWordDetail(in: Array(words), for: Constant.currentTableName, offset: 0)
+        Self.vocabularyDeteilListArray = API.shared.searchWordDetail(in: Array(words), info: info, offset: 0)
     }
     
     /// 取得整體的word列表

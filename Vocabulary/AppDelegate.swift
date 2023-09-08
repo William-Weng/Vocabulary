@@ -178,7 +178,6 @@ private extension AppDelegate {
     func initSetting(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
                 
         initSettings()
-        initCurrentTableName()
         initDatabase()
         
         backgroundPlayAudio()
@@ -188,19 +187,7 @@ private extension AppDelegate {
         _ = animationFolderUrlMaker()
         _ = WWWebImage.initDatabase(for: .caches, expiredDays: Constant.webImageExpiredDays)
     }
-    
-    /// 取得之前設定的資料庫名稱
-    func initCurrentTableName() {
         
-        guard let tableName = Constant.tableName,
-              let voiceCode = Constant.VoiceCode(rawValue: tableName)
-        else {
-            return
-        }
-        
-        Constant.currentTableName = voiceCode
-    }
-    
     /// 建立該語言的資料庫群
     /// - Parameters:
     ///   - database: SQLite3Database

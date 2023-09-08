@@ -53,13 +53,6 @@ final class Constant: NSObject {
         return false
         #endif
     }
-    
-    static var currentTableName: Constant.VoiceCode = .english {
-        didSet {
-            tableName = currentTableName.rawValue
-            NotificationCenter.default._post(name: .refreshViewController)
-        }
-    }
 }
 
 // MARK: - Typealias
@@ -207,31 +200,6 @@ extension Constant {
             case .bookmarkSite(let language): return "\(language)BookmarkSite"
             }
         }
-    }
-    
-    /// 單字內容的資料庫名稱
-    enum VoiceCode: String, CaseIterable {
-        
-        case english = "English"
-        case japanese = "Japenese"
-        case french = "French"
-        case korean = "Korean"
-        
-        /// 單字列表的資料庫名稱 => EnglishList
-        /// - Returns: String
-        func vocabularyList() -> String { return "\(self.rawValue)List" }
-        
-        /// 複習單字列表的資料庫名稱 => EnglishReview
-        /// - Returns: String
-        func vocabularyReviewList() -> String { return "\(self.rawValue)Review" }
-        
-        /// 常用例句的資料庫名稱 => EnglishSentence
-        /// - Returns: String
-        func vocabularySentenceList() -> String { return "\(self.rawValue)Sentence" }
-        
-        /// 常用書籤 => EnglishBookmarkSite
-        /// - Returns: String
-        func bookmarks() -> String { return "\(self.rawValue)BookmarkSite" }
     }
     
     /// 自定義錯誤

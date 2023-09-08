@@ -690,7 +690,7 @@ private extension SentenceViewController {
     }
     
     /// 產生字典資料庫選單
-    /// - Parameter tableName: Constant.VoiceCode
+    /// - Parameter info: Settings.SentenceSpeechInformation?
     /// - Returns: UIAction
     func speechItemMenuActionMaker(info: Settings.SentenceSpeechInformation?) -> UIAction {
         

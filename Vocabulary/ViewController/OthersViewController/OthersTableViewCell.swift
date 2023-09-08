@@ -121,9 +121,13 @@ private extension OthersTableViewCell {
     ///   - indexPath: IndexPath
     func updateFavorite(_ isFavorite: Bool, with indexPath: IndexPath) {
         
-        guard let bookmark = Self.bookmarkSite(with: indexPath) else { return }
+        guard let bookmark = Self.bookmarkSite(with: indexPath),
+              let info = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+        else {
+            return
+        }
         
-        let isSuccess = API.shared.updateBookmarkFavoriteToList(bookmark.id, isFavorite: isFavorite, for: Constant.currentTableName)
+        let isSuccess = API.shared.updateBookmarkFavoriteToList(bookmark.id, isFavorite: isFavorite, info: info)
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
         
         favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)

@@ -69,8 +69,14 @@ final class OthersViewController: UIViewController {
     @IBAction func appendBookmarkAction(_ sender: UIButton) {
         
         appendBookmarkHint(title: "請輸入網址") { [weak self] (title, webUrl) in
-            guard let this = self else { return false }
-            return this.appendBookmark(title, webUrl: webUrl, for: Constant.currentTableName)
+            
+            guard let this = self,
+                  let info = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+            else {
+                return false
+            }
+            
+            return this.appendBookmark(title, webUrl: webUrl, info: info)
         }
     }
     
@@ -168,8 +174,10 @@ private extension OthersViewController {
         
         defer { refreshControl.endRefreshing() }
         
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex) else { return }
+        
         OthersTableViewCell.bookmarksArray = []
-        OthersTableViewCell.bookmarksArray = API.shared.searchBookmarkList(isFavorite: isFavorite, for: Constant.currentTableName, offset: 0)
+        OthersTableViewCell.bookmarksArray = API.shared.searchBookmarkList(isFavorite: isFavorite, info: info, offset: 0)
         
         let listCount = OthersTableViewCell.bookmarksArray.count
         titleSetting(titleString, count: listCount)
@@ -190,10 +198,10 @@ private extension OthersViewController {
     /// 新增書籤
     /// - Parameters:
     ///   - example: 例句
-    ///   - tableName: 翻譯
+    ///   - info: Settings.GeneralInformation
     /// - Returns: Bool
-    func appendBookmark(_ title: String, webUrl: String, for tableName: Constant.VoiceCode) -> Bool {
-        return API.shared.insertBookmarkToList(title, webUrl: webUrl, for: tableName)
+    func appendBookmark(_ title: String, webUrl: String, info: Settings.GeneralInformation) -> Bool {
+        return API.shared.insertBookmarkToList(title, webUrl: webUrl, info: info)
     }
     
     /// 產生OthersTableViewCell
@@ -411,8 +419,10 @@ private extension OthersViewController {
         
         defer { refreshControl.endRefreshing() }
         
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex) else { return }
+        
         let oldListCount = OthersTableViewCell.bookmarksArray.count
-        OthersTableViewCell.bookmarksArray += API.shared.searchBookmarkList(isFavorite: isFavorite, for: Constant.currentTableName, offset: oldListCount)
+        OthersTableViewCell.bookmarksArray += API.shared.searchBookmarkList(isFavorite: isFavorite, info: info, offset: oldListCount)
         
         let newListCount = OthersTableViewCell.bookmarksArray.count
         titleSetting(titleString, count: newListCount)
@@ -428,7 +438,9 @@ private extension OthersViewController {
     /// - Parameter indexPath: IndexPath
     /// - Returns: [UIContextualAction]
     func trailingSwipeActionsMaker(with indexPath: IndexPath) -> [UIContextualAction] {
-                
+        
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex) else { return [] }
+        
         let updateAction = UIContextualAction._build(with: "更新", color: #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)) { [weak self] in
             
             guard let this = self,
@@ -438,7 +450,7 @@ private extension OthersViewController {
             }
             
             this.appendBookmarkHint(with: indexPath, title: "請輸入相關文字", titleText: bookmarkSite.title, webUrlText: bookmarkSite.url) { (title, webUrl) in
-                return API.shared.updateBookmarkToList(bookmarkSite.id, title: title, webUrl: webUrl, for: Constant.currentTableName)
+                return API.shared.updateBookmarkToList(bookmarkSite.id, title: title, webUrl: webUrl, info: info)
             }
         }
         
@@ -454,9 +466,13 @@ private extension OthersViewController {
     /// - Parameter indexPath: IndexPath
     func deleteBookmarkAction(with indexPath: IndexPath) {
         
-        guard let bookmarkSite = OthersTableViewCell.bookmarkSite(with: indexPath) else { return }
+        guard let bookmarkSite = OthersTableViewCell.bookmarkSite(with: indexPath),
+              let info = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+        else {
+            return
+        }
         
-        let isSuccess = API.shared.deleteBookmark(with: bookmarkSite.id, for: Constant.currentTableName)
+        let isSuccess = API.shared.deleteBookmark(with: bookmarkSite.id, info: info)
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
         
         OthersTableViewCell.bookmarksArray.remove(at: indexPath.row)
@@ -518,6 +534,7 @@ private extension OthersViewController {
     func updateIconUrl(with indexPath: IndexPath, iconUrl: String) -> Bool {
         
         guard var bookmark = OthersTableViewCell.bookmarksArray[safe: indexPath.row],
+              let info = Utility.shared.generalSettings(index: Constant.tableNameIndex),
               let id = bookmark["id"],
               let bookmarkId = Int("\(id)")
         else {
@@ -527,7 +544,7 @@ private extension OthersViewController {
         bookmark["icon"] = iconUrl
         OthersTableViewCell.bookmarksArray[indexPath.row] = bookmark
         
-        return API.shared.updateBookmarkIconToList(bookmarkId, iconUrl: iconUrl, for: Constant.currentTableName)
+        return API.shared.updateBookmarkIconToList(bookmarkId, iconUrl: iconUrl, info: info)
     }
     
     /// 打開書籤網址
@@ -649,7 +666,8 @@ private extension OthersViewController {
         let key = "url"
         let field = "\(key)Count"
         
-        guard let result = API.shared.searchBookmarkCount(for: Constant.currentTableName, key: key).first,
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex),
+              let result = API.shared.searchBookmarkCount(for: info, key: key).first,
               let value = result["\(field)"],
               let count = Int("\(value)", radix: 10)
         else {

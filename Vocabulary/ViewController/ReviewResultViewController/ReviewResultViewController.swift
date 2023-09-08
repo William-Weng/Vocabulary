@@ -102,8 +102,10 @@ private extension ReviewResultViewController {
         
         defer { refreshControl.endRefreshing() }
         
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex) else { return }
+        
         ReviewResultTableViewCell.reviewResultListArray = []
-        ReviewResultTableViewCell.reviewResultListArray = API.shared.searchReviewList(for: Constant.currentTableName, type: type, isFavorite: isFavorite, offset: ReviewResultTableViewCell.reviewResultListArray.count)
+        ReviewResultTableViewCell.reviewResultListArray = API.shared.searchReviewList(for: info, type: type, isFavorite: isFavorite, offset: ReviewResultTableViewCell.reviewResultListArray.count)
         
         let listCount = ReviewResultTableViewCell.reviewResultListArray.count
         titleSetting(titleString, count: listCount)
@@ -196,8 +198,10 @@ private extension ReviewResultViewController {
         
         defer { refreshControl.endRefreshing() }
         
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex) else { return }
+        
         let oldListCount = ReviewResultTableViewCell.reviewResultListArray.count
-        ReviewResultTableViewCell.reviewResultListArray += API.shared.searchReviewList(for: Constant.currentTableName, type: type, isFavorite: isFavorite, offset: oldListCount)
+        ReviewResultTableViewCell.reviewResultListArray += API.shared.searchReviewList(for: info, type: type, isFavorite: isFavorite, offset: oldListCount)
 
         let newListCount = ReviewResultTableViewCell.reviewResultListArray.count
         titleSetting(titleString, count: newListCount)
@@ -238,7 +242,8 @@ private extension ReviewResultViewController {
         let key = "word"
         let field = "\(key)Count"
         
-        guard let result = API.shared.searchReviewCount(for: Constant.currentTableName, key: key, isFavorite: isFavorite).first,
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex),
+              let result = API.shared.searchReviewCount(for: info, key: key, isFavorite: isFavorite).first,
               let value = result["\(field)"],
               let count = Int("\(value)", radix: 10)
         else {

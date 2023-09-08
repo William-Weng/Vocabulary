@@ -357,26 +357,32 @@ private extension ReviewViewController {
     ///   - vocabularyList: VocabularyList
     func solutionAction(with vocabularyList: VocabularyList, isCorrect: Bool) -> Bool {
         
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex) else { return false }
+        
+        solutionActionSetting()
+        vocabularyArray.append(vocabularyList.word)
+        _ = API.shared.updateReviewCountToList(vocabularyList.id, count: vocabularyList.review + 1, info: info)
+        
+        let reviewWordList = API.shared.searchReviewWordList(vocabularyList.word, info: info)
+        
+        guard !reviewWordList.isEmpty,
+              let list = reviewWordList.first?._jsonClass(for: VocabularyReviewList.self)
+        else {
+            return API.shared.insertReviewWordToList(vocabularyList.word, info: info, isCorrect: isCorrect)
+        }
+        
+        return API.shared.updateReviewResultToList(list, isCorrect: isCorrect, info: info)
+    }
+    
+    /// 填寫解答之後的相關設定
+    func solutionActionSetting() {
+        
         isNextVocabulary = true
         answearButtonStatus(isEnabled: false)
         reviewWordDetailList = []
         
         answerLabel.textColor = .systemBlue
         interpretLabel.textColor = .darkText
-        
-        vocabularyArray.append(vocabularyList.word)
-        
-        _ = API.shared.updateReviewCountToList(vocabularyList.id, count: vocabularyList.review + 1, for: Constant.currentTableName)
-        
-        let reviewWordList = API.shared.searchReviewWordList(vocabularyList.word, for: Constant.currentTableName)
-        
-        guard !reviewWordList.isEmpty,
-              let list = reviewWordList.first?._jsonClass(for: VocabularyReviewList.self)
-        else {
-            return API.shared.insertReviewWordToList(vocabularyList.word, for: Constant.currentTableName, isCorrect: isCorrect)
-        }
-        
-        return API.shared.updateReviewResultToList(list, isCorrect: isCorrect, for: Constant.currentTableName)
     }
     
     /// 送出所填寫的解答
@@ -410,11 +416,10 @@ private extension ReviewViewController {
     /// - Returns: [[String : Any]]
     func reviewWordRandomListArray() -> [[String : Any]] {
         
-        var list: [[String : Any]] = []
+        guard let generalInfo = Utility.shared.generalSettings(index: Constant.tableNameIndex) else { return [] }
         
-        Constant.SettingsJSON.vocabularyLevelInformations.forEach { info in
-            list += API.shared.searchGuessWordList(with: info, for: Constant.currentTableName, offset: 0)
-        }
+        var list: [[String : Any]] = []
+        Constant.SettingsJSON.vocabularyLevelInformations.forEach { list += API.shared.searchGuessWordList(with: $0, generalInfo: generalInfo, offset: 0) }
         
         return list.shuffled()
     }

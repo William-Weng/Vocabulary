@@ -249,23 +249,24 @@ extension API {
     
     /// 搜尋要猜的單字列表 (複習)
     /// - Parameters:
-    ///   - info: 難度等級資訊
+    ///   - levelInfo: 難度等級資訊
     ///   - days: 幾天前後的資料
-    ///   - tableName: 資料表名稱
+    ///   - generalInfo: Settings.GeneralInformation
     ///   - offset: 偏移量
     /// - Returns: [[String : Any]]
-    func searchGuessWordList(with info: Settings.VocabularyLevelInformation, days: Int = -3, for tableName: Constant.VoiceCode, offset: Int) -> [[String : Any]] {
+    func searchGuessWordList(with levelInfo: Settings.VocabularyLevelInformation, days: Int = -3, generalInfo: Settings.GeneralInformation, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database,
               let time = Date()._adding(component: .day, value: days)?._localTime()
         else {
             return []
         }
-                
-        let condition = SQLite3Condition.Where().isCompare(key: "level", type: .equal, value: info.value).andCompare(key: "createTime", type: .lessThan, value: time)
-        let limit = SQLite3Condition.Limit().build(count: info.guessCount, offset: 0)
+        
+        let type: Constant.DataTableType = .list(generalInfo.key)
+        let condition = SQLite3Condition.Where().isCompare(key: "level", type: .equal, value: levelInfo.value).andCompare(key: "createTime", type: .lessThan, value: time)
+        let limit = SQLite3Condition.Limit().build(count: levelInfo.guessCount, offset: 0)
         let orderBy = SQLite3Condition.OrderBy().item(key: "level", type: .ascending).addItem(key: "review", type: .ascending).addItem(key: "createTime", type: .descending)
-        let result = database.select(tableName: tableName.vocabularyList(), type: VocabularyList.self, where: condition, orderBy: orderBy, limit: limit)
+        let result = database.select(tableName: type.name(), type: VocabularyList.self, where: condition, orderBy: orderBy, limit: limit)
         
         return result.array
     }
@@ -273,15 +274,16 @@ extension API {
     /// 搜尋複習單字內容的列表
     /// - Parameters:
     ///   - word: 單字
-    ///   - tableName: 資料表名稱
+    ///   - info: Settings.GeneralInformation
     /// - Returns: [[String : Any]]
-    func searchReviewWordList(_ word: String, for tableName: Constant.VoiceCode) -> [[String : Any]] {
+    func searchReviewWordList(_ word: String, info: Settings.GeneralInformation) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
+        let type: Constant.DataTableType = .review(info.key)
         let condition = SQLite3Condition.Where().isCompare(key: "word", type: .equal, value: word)
         let orderBy = SQLite3Condition.OrderBy().item(key: "createTime", type: .ascending)
-        let result = database.select(tableName: tableName.vocabularyReviewList(), type: VocabularyReviewList.self, where: condition, orderBy: orderBy, limit: nil)
+        let result = database.select(tableName: type.name(), type: VocabularyReviewList.self, where: condition, orderBy: orderBy, limit: nil)
         
         return result.array
     }
@@ -446,10 +448,10 @@ extension API {
     /// 新增複習過單字到列表
     /// - Parameters:
     ///   - word: 單字
-    ///   - tableName: 資料表名稱
+    ///   - info: Settings.GeneralInformation
     ///   - isCorrect: 是否答題正確
     /// - Returns: Bool
-    func insertReviewWordToList(_ word: String, for tableName: Constant.VoiceCode, isCorrect: Bool) -> Bool {
+    func insertReviewWordToList(_ word: String, info: Settings.GeneralInformation, isCorrect: Bool) -> Bool {
         
         guard let database = Constant.database else { return false }
         
@@ -465,7 +467,8 @@ extension API {
             items.append(SQLite3Database.InsertItem(key: "mistakeCount", value: 0))
         }
         
-        let result = database.insert(tableName: tableName.vocabularyReviewList(), itemsArray: [items])
+        let type: Constant.DataTableType = .review(info.key)
+        let result = database.insert(tableName: type.name(), itemsArray: [items])
         
         return result?.isSussess ?? false
     }
@@ -718,9 +721,9 @@ extension API {
     /// - Parameters:
     ///   - id: Int
     ///   - level: 等級
-    ///   - tableName: 資料表名稱
+    ///   - info: Settings.GeneralInformation
     /// - Returns: Bool
-    func updateReviewCountToList(_ id: Int, count: Int, for tableName: Constant.VoiceCode) -> Bool {
+    func updateReviewCountToList(_ id: Int, count: Int, info: Settings.GeneralInformation) -> Bool {
         
         guard let database = Constant.database else { return false }
         
@@ -728,8 +731,9 @@ extension API {
             (key: "review", value: count),
         ]
         
+        let type: Constant.DataTableType = .list(info.key)
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
-        let result = database.update(tableName: tableName.vocabularyList(), items: items, where: condition)
+        let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
     }
@@ -738,9 +742,9 @@ extension API {
     /// - Parameters:
     ///   - list: VocabularyReviewList
     ///   - isCorrect: 是否答題正題
-    ///   - tableName: Constant.VoiceCode
+    ///   - info: Settings.GeneralInformation
     /// - Returns: Bool
-    func updateReviewResultToList(_ list: VocabularyReviewList, isCorrect: Bool, for tableName: Constant.VoiceCode) -> Bool {
+    func updateReviewResultToList(_ list: VocabularyReviewList, isCorrect: Bool, info: Settings.GeneralInformation) -> Bool {
         
         guard let database = Constant.database else { return false }
         
@@ -754,8 +758,9 @@ extension API {
             items.append(SQLite3Database.InsertItem(key: "correctCount", value: list.correctCount + 1))
         }
         
+        let type: Constant.DataTableType = .review(info.key)
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: list.id)
-        let result = database.update(tableName: tableName.vocabularyReviewList(), items: items, where: condition)
+        let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
     }

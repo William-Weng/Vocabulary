@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import WWPrint
 
 // MARK: - 例句列表
 final class SentenceTableViewCell: UITableViewCell, CellReusable {
@@ -36,7 +35,7 @@ final class SentenceTableViewCell: UITableViewCell, CellReusable {
 
     @IBAction func playSound(_ sender: UIButton) { playExampleSound() }
     
-    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
+    deinit { myPrint("\(Self.self) deinit") }
 }
 
 // MARK: - 小工具

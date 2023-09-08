@@ -7,7 +7,6 @@
 
 import UIKit
 import WWSQLite3Manager
-import WWPrint
 
 // MARK: - API (單例)
 final class API: NSObject {
@@ -150,7 +149,7 @@ extension API {
             array.append(dict)
             
         }, completion: { isCompleted in
-            wwPrint(isCompleted, isShow: Constant.isPrint)
+            myPrint(isCompleted)
         })
         
         return array
@@ -373,7 +372,7 @@ extension API {
             array.append(dict)
             
         }, completion: { isCompleted in
-            wwPrint(isCompleted, isShow: Constant.isPrint)
+            myPrint(isCompleted)
         })
         
         return array

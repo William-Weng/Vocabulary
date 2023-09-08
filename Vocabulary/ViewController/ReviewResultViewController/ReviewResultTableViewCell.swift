@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import WWPrint
 
 // MARK: - 複習單字結果的Cell
 final class ReviewResultTableViewCell: UITableViewCell, CellReusable {
@@ -37,7 +36,7 @@ final class ReviewResultTableViewCell: UITableViewCell, CellReusable {
         updateFavorite(isFavorite, with: indexPath)
     }
     
-    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
+    deinit { myPrint("\(Self.self) deinit") }
 }
 
 // MARK: - 小工具

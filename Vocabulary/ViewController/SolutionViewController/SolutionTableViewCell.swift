@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import WWPrint
 
 // MARK: - 複習單字解答列表
 final class SolutionTableViewCell: UITableViewCell, CellReusable {
@@ -36,7 +35,7 @@ final class SolutionTableViewCell: UITableViewCell, CellReusable {
     
     @IBAction func playSound(_ sender: UIButton) { playWordSound() }
     
-    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
+    deinit { myPrint("\(Self.self) deinit") }
 }
 
 // MARK: - 小工具

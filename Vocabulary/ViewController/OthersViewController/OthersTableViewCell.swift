@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import WWPrint
 import WWNetworking_UIImage
 
 // MARK: - 其它設定Cell
@@ -48,7 +47,7 @@ final class OthersTableViewCell: UITableViewCell, CellReusable {
         updateFavorite(isFavorite, with: indexPath)
     }
     
-    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
+    deinit { myPrint("\(Self.self) deinit") }
 }
 
 // MARK: - 小工具

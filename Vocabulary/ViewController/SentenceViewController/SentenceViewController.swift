@@ -7,7 +7,6 @@
 
 import UIKit
 import SafariServices
-import WWPrint
 
 // MARK: - SentenceViewDelegate
 protocol SentenceViewDelegate {
@@ -96,7 +95,7 @@ final class SentenceViewController: UIViewController {
         SentenceTableViewCell.sentenceListArray = []
         SentenceTableViewCell.sentenceViewDelegate = nil
         NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
-        wwPrint("\(Self.self) deinit", isShow: Constant.isPrint)
+        myPrint("\(Self.self) deinit")
     }
 }
 
@@ -268,7 +267,7 @@ private extension SentenceViewController {
             guard let this = self else { return }
                         
             switch result {
-            case .failure(let error): wwPrint(error, isShow: Constant.isPrint)
+            case .failure(let error): myPrint(error)
             case .success(let info):
                 info.pointer.pointee = this.isAnimationStop
                 if (this.isAnimationStop) { this.myImageView.image = this.disappearImage }

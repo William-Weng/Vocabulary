@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import WWPrint
 import AVFAudio
 
 // MARK: - 單字列表Cell
@@ -39,7 +38,7 @@ final class ListTableViewCell: UITableViewCell, CellReusable {
     
     @IBAction func playSound(_ sender: UIButton) { playExampleSound() }
     
-    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
+    deinit { myPrint("\(Self.self) deinit") }
 }
 
 // MARK: - 小工具

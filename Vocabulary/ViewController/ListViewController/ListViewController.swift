@@ -7,7 +7,6 @@
 
 import UIKit
 import SafariServices
-import WWPrint
 import WWSQLite3Manager
 import WWHUD
 import WWFloatingViewController
@@ -66,7 +65,7 @@ final class ListViewController: UIViewController {
     
     deinit {
         ListTableViewCell.exmapleList = []
-        wwPrint("\(Self.self) deinit", isShow: Constant.isPrint)
+        myPrint("\(Self.self) deinit")
     }
 }
 
@@ -327,7 +326,7 @@ private extension ListViewController {
             guard let this = self else { return }
             
             switch result {
-            case .failure(let error): wwPrint(error, isShow: Constant.isPrint)
+            case .failure(let error): myPrint(error)
             case .success(let info):
                 info.pointer.pointee = this.isAnimationStop
                 if (this.isAnimationStop) { this.myImageView.image = this.disappearImage }

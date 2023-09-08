@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import WWPrint
 
 @IBDesignable
 final class MyTabBar: UITabBar {
@@ -29,7 +28,7 @@ final class MyTabBar: UITabBar {
     
     @objc func centerButtonClicked(_ sender: UIButton) { NotificationCenter.default._post(name: .displayCanvasView, object: nil) }
     
-    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
+    deinit { myPrint("\(Self.self) deinit") }
 }
 
 // MARK: - 小工具

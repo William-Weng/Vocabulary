@@ -7,7 +7,13 @@
 
 import AVFoundation
 import UIKit
+import WWPrint
 import WWHUD
+
+/// WWPrint再包一層 => 容易切換顯不顯示
+func myPrint<T>(_ message: T, file: String = #file, method: String = #function, line: Int = #line) {
+    wwPrint(message, file: file, method: method, line: line, isShow: Constant.isPrint)
+}
 
 // MARK: - Utility (單例)
 final class Utility: NSObject {

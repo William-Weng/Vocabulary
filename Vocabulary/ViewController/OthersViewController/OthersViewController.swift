@@ -7,7 +7,6 @@
 
 import UIKit
 import SafariServices
-import WWPrint
 import WWNetworking
 import UniformTypeIdentifiers
 
@@ -80,19 +79,11 @@ final class OthersViewController: UIViewController {
         }
     }
     
-    @IBAction func paletteAction(_ sender: UIBarButtonItem) {
-        
-        let colorPicker = UIColorPickerViewController._build(delegate: self)
-        colorPicker.supportsAlpha = false
-        
-        present(colorPicker, animated: true)
-    }
-    
     deinit {
         OthersTableViewCell.bookmarksArray = []
         OthersTableViewCell.othersViewDelegate = nil
         NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
-        wwPrint("\(Self.self) init", isShow: Constant.isPrint)
+        myPrint("\(Self.self) init")
     }
 }
 
@@ -123,18 +114,6 @@ extension OthersViewController: UIDocumentPickerDelegate {
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         downloadDocumentAction(controller, didPickDocumentsAt: urls)
-    }
-}
-
-// MARK: - UIColorPickerViewControllerDelegate
-extension OthersViewController: UIColorPickerViewControllerDelegate {
-    
-    func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
-        
-        let selectedCGColor = viewController.selectedColor.cgColor
-        
-        wwPrint(selectedCGColor.colorSpace)
-        wwPrint(selectedCGColor._hexString())
     }
 }
 
@@ -240,7 +219,7 @@ private extension OthersViewController {
             guard let this = self else { return }
             
             switch result {
-            case .failure(let error): wwPrint(error, isShow: Constant.isPrint)
+            case .failure(let error): myPrint(error)
             case .success(let info):
                 info.pointer.pointee = this.isAnimationStop
                 if (this.isAnimationStop) { this.myImageView.image = this.disappearImage }

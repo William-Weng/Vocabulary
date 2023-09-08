@@ -7,7 +7,6 @@
 
 import UIKit
 import PencilKit
-import WWPrint
 
 // MARK: - 自定義的UITabBarController
 final class MyTabBarController: UITabBarController {
@@ -45,7 +44,7 @@ final class MyTabBarController: UITabBarController {
     
     deinit {
         NotificationCenter.default._remove(observer: self, name: .displayCanvasView)
-        wwPrint("\(Self.self) deinit", isShow: Constant.isPrint)
+        myPrint("\(Self.self) deinit")
     }
 }
 

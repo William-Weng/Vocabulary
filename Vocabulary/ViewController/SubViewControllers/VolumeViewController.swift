@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import WWPrint
 import WWSlider
 
 // MARK: - 設定背景音樂音量大小
@@ -49,7 +48,7 @@ final class VolumeViewController: UIViewController {
     deinit {
         mainViewDelegate = nil
         NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
-        wwPrint("\(Self.self) deinit", isShow: Constant.isPrint)
+        myPrint("\(Self.self) deinit")
     }
 }
 

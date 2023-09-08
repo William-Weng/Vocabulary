@@ -7,7 +7,6 @@
 
 import UIKit
 import AVFoundation
-import WWPrint
 import WWSQLite3Manager
 
 // MARK: - Settings.json設定檔Model
@@ -71,7 +70,7 @@ final class Vocabulary: Codable {
     let createTime: Date    // 建立時間
     let updateTime: Date    // 更新時間
     
-    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
+    deinit { myPrint("\(Self.self) deinit") }
 }
 
 // MARK: - 單字列表內容
@@ -87,7 +86,7 @@ final class VocabularyList: Codable {
     let createTime: Date    // 建立時間
     let updateTime: Date    // 更新時間
     
-    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
+    deinit { myPrint("\(Self.self) deinit") }
 }
 
 // MARK: - 單字複習列表
@@ -102,7 +101,7 @@ final class VocabularyReviewList: Codable {
     let createTime: Date    // 建立時間
     let updateTime: Date    // 更新時間
     
-    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
+    deinit { myPrint("\(Self.self) deinit") }
 }
 
 // MARK: - 單字例句列表
@@ -116,7 +115,7 @@ final class VocabularySentenceList: Codable {
     let createTime: Date    // 建立時間
     let updateTime: Date    // 更新時間
     
-    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
+    deinit { myPrint("\(Self.self) deinit") }
 }
 
 // MARK: - 網址書籤
@@ -134,7 +133,7 @@ final class BookmarkSite: Codable {
     /// - Returns: String
     func iconName() -> String { return url._sha1() }
     
-    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
+    deinit { myPrint("\(Self.self) deinit") }
 }
 
 // MARK: - 背景音樂

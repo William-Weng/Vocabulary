@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import WWPrint
 
 // MARK: - 快速搜尋單字小幫手
 final class SearchVocabularyViewController: UIViewController {
@@ -56,7 +55,7 @@ final class SearchVocabularyViewController: UIViewController {
     
     deinit {
         SearchVocabularyTableViewCell.vocabularyListArray = []
-        wwPrint("\(Self.self) deinit", isShow: Constant.isPrint)
+        myPrint("\(Self.self) deinit")
     }
 }
 

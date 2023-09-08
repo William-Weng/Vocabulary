@@ -7,7 +7,6 @@
 
 import UIKit
 import AVFAudio
-import WWPrint
 import WWToast
 import WWSQLite3Manager
 import WWNetworking_UIImage
@@ -35,7 +34,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
         
-    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
+    deinit { myPrint("\(Self.self) deinit") }
 }
 
 // MARK: - AVAudioPlayerDelegate
@@ -43,7 +42,7 @@ extension AppDelegate: AVAudioPlayerDelegate {
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) { audioPlayerDidFinishPlayingAction(player, successfully: flag) }
     func audioPlayerBeginInterruption(_ player: AVAudioPlayer) { replayMusic(with: player) }
-    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) { if let error = error { wwPrint(error, isShow: Constant.isPrint) }}
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) { if let error = error { myPrint(error) }}
 }
 
 // MARK: - AVAudioRecorderDelegate
@@ -57,7 +56,7 @@ extension AppDelegate: AVAudioRecorderDelegate {
         recordlayer.play()
     }
     
-    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) { wwPrint(error, isShow: Constant.isPrint) }
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) { myPrint(error) }
 }
 
 // MARK: - 小工具 (公開)
@@ -75,7 +74,7 @@ extension AppDelegate {
             Constant.database = database
             Constant.SettingsJSON.generalInformations.forEach { info in _ = createDatabase(database, info: info) }
             
-            wwPrint(database.fileURL, isShow: Constant.isPrint)
+            myPrint(database.fileURL)
         }
     }
     
@@ -217,7 +216,7 @@ private extension AppDelegate {
         let result = FileManager.default._createDirectory(with: musicFolderUrl, path: "")
         
         switch result {
-        case .failure(let error): wwPrint(error, isShow: Constant.isPrint); return nil
+        case .failure(let error): myPrint(error); return nil
         case .success(let isSuccess): return (!isSuccess) ? nil : musicFolderUrl
         }
     }
@@ -278,7 +277,7 @@ private extension AppDelegate {
         let result = audioRecorder._record()
         
         switch result {
-        case .failure(let error): wwPrint(error, isShow: Constant.isPrint); return false
+        case .failure(let error): myPrint(error); return false
         case .success(let isSuccess): return isSuccess
         }
     }
@@ -290,7 +289,7 @@ private extension AppDelegate {
         guard let result = audioRecorder?._stop() else { return false }
         
         switch result {
-        case .failure(let error): wwPrint(error, isShow: Constant.isPrint); return false
+        case .failure(let error): myPrint(error); return false
         case .success(let isSuccess): return isSuccess
         }
     }

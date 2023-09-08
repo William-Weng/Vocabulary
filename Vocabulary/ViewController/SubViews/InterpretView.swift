@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import WWPrint
 
 // MARK: - 搜尋結果單字詞性 / 解譯
 final class InterpretView: UIView {
@@ -30,7 +29,7 @@ final class InterpretView: UIView {
     /// - Parameter vocabulary: Vocabulary
     func configure(with vocabulary: Vocabulary, textColor: UIColor = .label) { configure(for: vocabulary, textColor: textColor) }
     
-    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
+    deinit { myPrint("\(Self.self) deinit") }
 }
 
 // MARK: - 小工具

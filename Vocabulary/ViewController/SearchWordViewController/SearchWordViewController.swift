@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import WWPrint
 
 // MARK: - 單字搜尋頁面
 final class SearchWordViewController: UIViewController {
@@ -81,7 +80,7 @@ final class SearchWordViewController: UIViewController {
     deinit {
         SearchWordTableViewCell.vocabularyListArray = []
         NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
-        wwPrint("\(Self.self) deinit", isShow: Constant.isPrint)
+        myPrint("\(Self.self) deinit")
     }
 }
 
@@ -188,7 +187,7 @@ private extension SearchWordViewController {
             guard let this = self else { return }
                         
             switch result {
-            case .failure(let error): wwPrint(error, isShow: Constant.isPrint)
+            case .failure(let error): myPrint(error)
             case .success(let info):
                 info.pointer.pointee = this.isAnimationStop
                 if (this.isAnimationStop) { this.myImageView.image = this.disappearImage }

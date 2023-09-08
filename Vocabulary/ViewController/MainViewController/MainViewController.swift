@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import WWPrint
 import WWSQLite3Manager
 import WWToast
 
@@ -87,7 +86,7 @@ final class MainViewController: UIViewController {
     deinit {
         MainTableViewCell.vocabularyListArray = []
         NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
-        wwPrint("\(Self.self) deinit", isShow: Constant.isPrint)
+        myPrint("\(Self.self) deinit")
     }
 }
 
@@ -502,7 +501,7 @@ private extension MainViewController {
             guard let this = self else { return }
             
             switch result {
-            case .failure(let error): wwPrint(error, isShow: Constant.isPrint)
+            case .failure(let error): myPrint(error)
             case .success(let info):
                 info.pointer.pointee = this.isAnimationStop
                 if (this.isAnimationStop) { this.myImageView.image = this.disappearImage }
@@ -582,7 +581,7 @@ private extension MainViewController {
         let result = FileManager.default._createDirectory(with: musicFolderUrl, path: "")
         
         switch result {
-        case .failure(let error): wwPrint(error, isShow: Constant.isPrint); return nil
+        case .failure(let error): myPrint(error); return nil
         case .success(let isSuccess): return (!isSuccess) ? nil : musicFolderUrl
         }
     }
@@ -596,7 +595,7 @@ private extension MainViewController {
         let result = FileManager.default._fileList(with: musicFolder)
         
         switch result {
-        case .failure(let error): wwPrint(error, isShow: Constant.isPrint); return nil
+        case .failure(let error): myPrint(error); return nil
         case .success(let list): return list
         }
     }
@@ -677,7 +676,7 @@ private extension MainViewController {
         var lastBackupDate: Date?
         
         switch result {
-        case .failure(let error): wwPrint(error, isShow: Constant.isPrint); break
+        case .failure(let error): myPrint(error); break
         case .success(let fileList):
             
             guard let fileList = fileList else { break }

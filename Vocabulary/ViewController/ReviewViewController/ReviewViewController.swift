@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import WWPrint
 import AVFAudio
 
 // MARK: - 單字複習頁面
@@ -88,7 +87,7 @@ final class ReviewViewController: UIViewController {
     @IBAction func refreshQuestion(_ sender: UIBarButtonItem) { initReviewWordList(); Utility.shared.flashHUD(with: .nice) }
     @IBAction func speedRate(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegue.speakingRateView.rawValue, sender: nil) }
     
-    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
+    deinit { myPrint("\(Self.self) deinit") }
 }
 
 // MARK: - AVSpeechSynthesizerDelegate
@@ -187,7 +186,7 @@ private extension ReviewViewController {
             guard let this = self else { return }
             
             switch result {
-            case .failure(let error): wwPrint(error, isShow: Constant.isPrint)
+            case .failure(let error): myPrint(error)
             case .success(let info):
                                 
                 if (this.isGuessAnimationStop && info.index == 0) {
@@ -235,7 +234,7 @@ private extension ReviewViewController {
             guard let this = self else { return }
             
             switch result {
-            case .failure(let error): wwPrint(error, isShow: Constant.isPrint)
+            case .failure(let error): myPrint(error)
             case .success(let info):
                 info.pointer.pointee = this.isAnimationStop
                 if (this.isAnimationStop) { this.myImageView.image = this.disappearImage }

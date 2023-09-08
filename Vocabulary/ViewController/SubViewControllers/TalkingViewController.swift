@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import WWPrint
 
 // MARK: - 錄音功能
 final class TalkingViewController: UIViewController {
@@ -31,7 +30,7 @@ final class TalkingViewController: UIViewController {
     
     deinit {
         isAnimationStop = true
-        wwPrint("\(Self.self) deinit", isShow: Constant.isPrint)
+        myPrint("\(Self.self) deinit")
     }
 }
 
@@ -51,7 +50,7 @@ private extension TalkingViewController {
             guard let this = self else { return }
             
             switch result {
-            case .failure(let error): wwPrint(error, isShow: Constant.isPrint)
+            case .failure(let error): myPrint(error)
             case .success(let info):
                 
                 info.pointer.pointee = this.isAnimationStop

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import WWPrint
 
 // MARK: - 搜尋的單字列表Cell
 final class SearchWordTableViewCell: UITableViewCell, CellReusable {
@@ -42,7 +41,7 @@ final class SearchWordTableViewCell: UITableViewCell, CellReusable {
         updateFavorite(isFavorite, with: indexPath)
     }
     
-    deinit { wwPrint("\(Self.self) deinit", isShow: Constant.isPrint) }
+    deinit { myPrint("\(Self.self) deinit") }
 }
 
 // MARK: - 小工具

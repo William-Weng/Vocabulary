@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import WWPrint
 
 // MARK: - MyNavigationControllerDelegate
 protocol MyNavigationControllerDelegate {
@@ -23,7 +22,7 @@ final class MyNavigationController: UINavigationController {
     
     deinit {
         NotificationCenter.default._remove(observer: self, name: .refreshViewController)
-        wwPrint("\(Self.self) deinit", isShow: Constant.isPrint)
+        myPrint("\(Self.self) deinit")
     }
 }
 

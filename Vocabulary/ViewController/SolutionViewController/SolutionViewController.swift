@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import WWPrint
 
 // MARK: - 複習單字解答頁面
 final class SolutionViewController: UIViewController {
@@ -40,7 +39,7 @@ final class SolutionViewController: UIViewController {
         
         switch viewSegueType {
         case .solutionDetail: vocabularyListPageSetting(for: segue, sender: sender)
-        case .reviewResult: wwPrint(viewSegueType, isShow: Constant.isPrint)
+        case .reviewResult: myPrint(viewSegueType)
         }
     }
     
@@ -63,7 +62,7 @@ final class SolutionViewController: UIViewController {
     
     deinit {
         SolutionTableViewCell.vocabularyReviewListArray = []
-        wwPrint("\(Self.self) deinit", isShow: Constant.isPrint)
+        myPrint("\(Self.self) deinit")
     }
 }
 
@@ -111,7 +110,7 @@ private extension SolutionViewController {
             guard let this = self else { return }
             
             switch result {
-            case .failure(let error): wwPrint(error, isShow: Constant.isPrint)
+            case .failure(let error): myPrint(error)
             case .success(let info):
                 info.pointer.pointee = this.isAnimationStop
                 if (this.isAnimationStop) { this.myImageView.image = this.disappearImage }

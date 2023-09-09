@@ -10,6 +10,7 @@ import UIKit
 // MARK: - OthersViewDelegate
 protocol PaletteViewDelegate {
     func palette(with indexPath: IndexPath, colorType: PaletteViewController.ColorType, info: Constant.PaletteInformation)
+    func tabBarHidden(_ isHidden: Bool)
 }
 
 // MARK: - 調色盤
@@ -20,19 +21,39 @@ final class PaletteViewController: UIViewController {
         case text
         case background
     }
-    
-    @IBOutlet weak var myTableView: UITableView!
         
+    @IBOutlet weak var myImageView: UIImageView!
+    @IBOutlet weak var myTableView: UITableView!
+    
+    var othersViewDelegate: OthersViewDelegate?
+    
+    private var isAnimationStop = false
+    private var disappearImage: UIImage?
     private var didSelectPaletteInfo: Constant.SelectedPaletteInformation = (nil, nil, nil)
     private var paletteInformation: [IndexPath: Constant.PaletteInformation] = [:]
     private var colorPicker: UIColorPickerViewController?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        othersViewDelegate?.navigationBarHidden(false)
+        othersViewDelegate?.tabBarHidden(true)
+        animatedBackground(with: .palette)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        othersViewDelegate?.navigationBarHidden(false)
+        othersViewDelegate?.tabBarHidden(false)
+        pauseBackgroundAnimation()
+    }
+    
     @IBAction func changeSystemColor(_ sender: UIBarButtonItem) {
+        myPrint(sender)
     }
     
     deinit {
@@ -49,7 +70,6 @@ extension PaletteViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         guard let setting = PaletteTableViewCell.colorSettings[safe: section] else { return 0 }
         return setting.count
     }
@@ -67,7 +87,7 @@ extension PaletteViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40.0
+        return 48.0
     }
 }
 
@@ -88,6 +108,10 @@ extension PaletteViewController: PaletteViewDelegate {
     
     func palette(with indexPath: IndexPath, colorType: ColorType, info: Constant.PaletteInformation) {
         palettePicker(with: indexPath, colorType: colorType, info: info)
+    }
+    
+    func tabBarHidden(_ isHidden: Bool) {
+        tabBarHiddenAction(isHidden)
     }
 }
 
@@ -133,26 +157,10 @@ private extension PaletteViewController {
     /// - Returns: UIView
     func paletteTableViewHeader(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView {
         
-        let headerView = UIView()
-        let label = UILabel()
+        let header = PaletteHeader(frame: tableView.frame)
+        header.configure(with: section)
         
-        label.frame = CGRect(x: tableView.frame.size.width - 110, y: 10, width: tableView.frame.size.width - 100, height: 20)
-        label.text = groupTitle(with: section)
-        label.textColor = .black
-        
-        headerView.backgroundColor = .clear
-        headerView.addSubview(label)
-        
-        return headerView
-    }
-    
-    /// 設定顏色群組的標題文字
-    /// - Parameter section: Int
-    /// - Returns: String?
-    func groupTitle(with section: Int) -> String? {
-        
-        guard let colorKey = Constant.SettingsColorKey.allCases[safe: section] else { return nil }
-        return colorKey.name()
+        return header
     }
 }
 
@@ -221,5 +229,43 @@ private extension PaletteViewController {
         }
         
         return cell as? PaletteTableViewCell
+    }
+    
+    /// 設定TabBar顯示與否功能
+    /// - Parameters:
+    ///   - isHidden: Bool
+    func tabBarHiddenAction(_ isHidden: Bool) {
+        
+        guard let tabBarController = tabBarController else { return }
+        
+        NotificationCenter.default._post(name: .viewDidTransition, object: isHidden)
+        tabBarController._tabBarHidden(isHidden, duration: Constant.duration)
+    }
+    
+    /// 動畫背景設定
+    /// - Parameter type: Utility.HudGifType
+    func animatedBackground(with type: Constant.HudGifType) {
+        
+        guard let gifUrl = type.fileURL() else { return }
+        
+        isAnimationStop = false
+        
+        _ = myImageView._GIF(url: gifUrl) { [weak self] result in
+            
+            guard let this = self else { return }
+            
+            switch result {
+            case .failure(let error): myPrint(error)
+            case .success(let info):
+                info.pointer.pointee = this.isAnimationStop
+                if (this.isAnimationStop) { this.myImageView.image = this.disappearImage }
+            }
+        }
+    }
+    
+    /// 暫停背景動畫
+    func pauseBackgroundAnimation() {
+        disappearImage = myImageView.image
+        isAnimationStop = true
     }
 }

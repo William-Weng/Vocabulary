@@ -14,6 +14,7 @@ import UniformTypeIdentifiers
 protocol OthersViewDelegate {
     func loadImage(with indexPath: IndexPath, filename: String)
     func tabBarHidden(_ isHidden: Bool)
+    func navigationBarHidden(_ isHidden: Bool)
 }
 
 // MARK: - 其它設定
@@ -25,8 +26,8 @@ final class OthersViewController: UIViewController {
     @IBOutlet weak var appendBookmarkButton: UIButton!
     @IBOutlet weak var activityViewIndicator: UIActivityIndicatorView!
     @IBOutlet weak var indicatorLabel: UILabel!
-
-    private let licenseWebViewSegue = "LicenseWebViewSegue"
+    
+    private let paletteSettingsSegue = "PaletteSettingsSegue"
     private let titleString = "常用書籤"
 
     private var isAnimationStop = false
@@ -59,26 +60,17 @@ final class OthersViewController: UIViewController {
         pauseBackgroundAnimation()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) { palettePageSetting(for: segue, sender: sender) }
+        
     @objc func refreshBookmarks(_ sender: UIRefreshControl) { reloadBookmarks(isFavorite: isFavorite) }
     @objc func bookmarkCount(_ sender: UITapGestureRecognizer) { bookmarkCountAction() }
-
+    
     @IBAction func shareDatabase(_ sender: UIBarButtonItem) { shareDatabaseAction(sender) }
     @IBAction func downloadDatabase(_ sender: UIBarButtonItem) { downloadDatabaseAction(sender) }
     @IBAction func filterFavorite(_ sender: UIBarButtonItem) { filterFavoriteAction(with: sender) }
-    @IBAction func appendBookmarkAction(_ sender: UIButton) {
-        
-        appendBookmarkHint(title: "請輸入網址") { [weak self] (title, webUrl) in
-            
-            guard let this = self,
-                  let info = Utility.shared.generalSettings(index: Constant.tableNameIndex)
-            else {
-                return false
-            }
-            
-            return this.appendBookmark(title, webUrl: webUrl, info: info)
-        }
-    }
-    
+    @IBAction func appendBookmarkAction(_ sender: UIButton) { appendBookmarkActionSetting(with: sender) }
+    @IBAction func paletteSettings(_ sender: UIBarButtonItem) { performSegue(withIdentifier: paletteSettingsSegue, sender: nil) }
+
     deinit {
         OthersTableViewCell.bookmarksArray = []
         OthersTableViewCell.othersViewDelegate = nil
@@ -127,6 +119,7 @@ extension OthersViewController: OthersViewDelegate {
     
     func loadImage(with indexPath: IndexPath, filename: String) { loadImageAction(with: indexPath, filename: filename) }
     func tabBarHidden(_ isHidden: Bool) { tabBarHiddenAction(isHidden) }
+    func navigationBarHidden(_ isHidden: Bool) { navigationBarHiddenAction(isHidden) }
 }
 
 // MARK: - 小工具
@@ -579,6 +572,22 @@ private extension OthersViewController {
         present(activityViewController, animated: true)
     }
     
+    /// 新增書籤功能設定
+    /// - Parameter sender: UIButton
+    func appendBookmarkActionSetting(with sender: UIButton) {
+        
+        appendBookmarkHint(title: "請輸入網址") { [weak self] (title, webUrl) in
+            
+            guard let this = self,
+                  let info = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+            else {
+                return false
+            }
+            
+            return this.appendBookmark(title, webUrl: webUrl, info: info)
+        }
+    }
+    
     /// 下載資料庫的相關處理
     /// - Parameters:
     ///   - controller: UIDocumentPickerViewController
@@ -700,6 +709,16 @@ private extension OthersViewController {
         
         appendBookmarkButton.isHidden = isFavorite
         reloadBookmarks(isFavorite: isFavorite)
+    }
+    
+    /// 設定調色盤的相關數值
+    /// - Parameters:
+    ///   - segue: UIStoryboardSegue
+    ///   - sender: Any?
+    func palettePageSetting(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let viewController = segue.destination as? PaletteViewController else { return }
+        viewController.othersViewDelegate = self
     }
 }
 

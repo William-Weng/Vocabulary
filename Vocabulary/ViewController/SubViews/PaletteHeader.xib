@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="jf-openhuninn-1.1.ttf">
+            <string>jf-openhuninn-1.1</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PaletteHeader" customModule="Vocabulary" customModuleProvider="target">
+            <connections>
+                <outlet property="myLabel" destination="Wtb-QC-O38" id="i1p-f7-eaI"/>
+                <outlet property="view" destination="iN0-l3-epB" id="x82-8h-qNb"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="292" height="128"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CrayonPainting" translatesAutoresizingMaskIntoConstraints="NO" id="PLo-2B-DLW">
+                    <rect key="frame" x="26" y="48" width="240" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="32" id="Z9H-08-NNc"/>
+                        <constraint firstAttribute="width" constant="240" id="lbm-Ce-lQi"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="單字等級" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wtb-QC-O38">
+                    <rect key="frame" x="114" y="56" width="64" height="16"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="16"/>
+                    <color key="textColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.10588235294117647" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="Wtb-QC-O38" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Rcn-PB-T1i"/>
+                <constraint firstItem="Wtb-QC-O38" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="gQB-xq-uaA"/>
+                <constraint firstItem="PLo-2B-DLW" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="vQt-Yw-pmw"/>
+                <constraint firstItem="PLo-2B-DLW" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="zvA-KJ-3M2"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="184.73282442748092" y="-102.11267605633803"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="CrayonPainting" width="319.33334350585938" height="66.666664123535156"/>
+    </resources>
+</document>

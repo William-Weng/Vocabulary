@@ -76,6 +76,7 @@
 |[HardWork_Off](https://www.flaticon.com/free-icon/goal_1599969)|單字翻譯難度 (未讀)|
 |[Palette](https://www.flaticon.com/free-icon/color-palette_3214398)|調色盤|
 |[Mark](https://www.flaticon.com/free-icon/mark_10099668)|調色盤設定|
+|[CrayonPainting](https://www.ac-illust.com/main/detail.php?id=1266133)|調色盤Header背景色|
 
 ## [背景音樂 - .mp3 / .m4a (請在iTunes上自行加入)](http://amachamusic.chagasi.com/)
 
@@ -97,7 +98,8 @@
 |[Solution.gif](https://imgur.com/9KkmcGe)|[Imgur](https://imgur.com/)|動畫背景|
 |[Sentence.gif](https://imgur.com/BzWWaem)|[Imgur](https://imgur.com/)|動畫背景|
 |[Review.gif](https://imgur.com/yh92O1W)|[Imgur](https://imgur.com/)|動畫背景|
-|[Solution.gif](https://imgur.com/9KkmcGe)|[Imgur](https://imgur.com/)|動畫背景|
+|[Palette.gif](https://imgur.com/9KkmcGe)|[Imgur](https://imgur.com/)|動畫背景|
+|[Solution.gif](http://mt.sohu.com/20160309/n439891021.shtml)|[搜狐](http://mt.sohu.com/l)|動畫背景|
 |[Success.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[LINE Stickers & Themes](https://www.ilikesticker.com)|HUD圖示|
 |[Fail.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[LINE Stickers & Themes](https://www.ilikesticker.com)|HUD圖示|
 |[Nice.gif](https://www.ilikesticker.com/LineStickerAnimation/S0005943-BROWN-FRIENDS（擬聲樂趣篇♪）/zh-Hant)|[LINE Stickers & Themes](https://www.ilikesticker.com)|HUD圖示|

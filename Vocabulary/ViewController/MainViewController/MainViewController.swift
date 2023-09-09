@@ -265,7 +265,7 @@ private extension MainViewController {
     func tabBarHiddenAction(_ isHidden: Bool) {
         
         guard let tabBarController = tabBarController else { return }
-                
+        
         NotificationCenter.default._post(name: .viewDidTransition, object: isHidden)
         tabBarController._tabBarHidden(isHidden, duration: Constant.duration)
     }

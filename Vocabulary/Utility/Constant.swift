@@ -167,6 +167,7 @@ extension Constant {
         case working = "Working.gif"
         case studing = "Studing.gif"
         case search = "Search.gif"
+        case palette = "Palette.gif"
         case review = "Review.gif"
         case nice = "Nice.gif"
         case speak = "Speak.gif"

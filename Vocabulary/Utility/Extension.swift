@@ -1784,12 +1784,15 @@ extension UIColorPickerViewController {
     /// - Parameters:
     ///   - delegate: UIColorPickerViewControllerDelegate?
     ///   - supportsAlpha: Bool
+    ///   - selectedColor: UIColor?
     /// - Returns: UIColorPickerViewController
-    static func _build(delegate: UIColorPickerViewControllerDelegate?, supportsAlpha: Bool = false) -> UIColorPickerViewController {
+    static func _build(delegate: UIColorPickerViewControllerDelegate?, supportsAlpha: Bool = false, selectedColor: UIColor? = nil) -> UIColorPickerViewController {
         
         let controller = UIColorPickerViewController()
+        
         controller.delegate = delegate
         controller.supportsAlpha = supportsAlpha
+        controller.selectedColor = selectedColor ?? controller.selectedColor
         
         return controller
     }

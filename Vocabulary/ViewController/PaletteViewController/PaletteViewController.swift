@@ -9,6 +9,7 @@ import UIKit
 
 // MARK: - OthersViewDelegate
 protocol PaletteViewDelegate {
+    
     func palette(with indexPath: IndexPath, colorType: PaletteViewController.ColorType, info: Constant.PaletteInformation)
     func tabBarHidden(_ isHidden: Bool)
 }
@@ -39,20 +40,16 @@ final class PaletteViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        othersViewDelegate?.navigationBarHidden(false)
-        othersViewDelegate?.tabBarHidden(true)
-        animatedBackground(with: .palette)
+        viewWillAppearAction()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        othersViewDelegate?.navigationBarHidden(false)
-        othersViewDelegate?.tabBarHidden(false)
-        pauseBackgroundAnimation()
+        viewWillDisappearAction()
     }
     
     @IBAction func changeSystemColor(_ sender: UIBarButtonItem) {
-        myPrint(PaletteTableViewCell.colorSettings)
+        paletteSettingHint()
     }
     
     deinit {
@@ -238,6 +235,20 @@ private extension PaletteViewController {
         return cell as? PaletteTableViewCell
     }
     
+    /// 畫面將要出現的動作
+    func viewWillAppearAction() {
+        othersViewDelegate?.navigationBarHidden(false)
+        othersViewDelegate?.tabBarHidden(true)
+        animatedBackground(with: .palette)
+    }
+    
+    /// 畫面將要消失的動作
+    func viewWillDisappearAction() {
+        othersViewDelegate?.navigationBarHidden(false)
+        othersViewDelegate?.tabBarHidden(false)
+        pauseBackgroundAnimation()
+    }
+    
     /// 設定TabBar顯示與否功能
     /// - Parameters:
     ///   - isHidden: Bool
@@ -274,5 +285,20 @@ private extension PaletteViewController {
     func pauseBackgroundAnimation() {
         disappearImage = myImageView.image
         isAnimationStop = true
+    }
+    
+    func paletteSettingHint(_ title: String? = nil, message: String? = nil) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        
+        let actionSetting = UIAlertAction(title: "記錄", style: .default) {  _ in }
+        let actionRestore = UIAlertAction(title: "選原", style: .destructive) {  _ in }
+        let actionCancel = UIAlertAction(title: "取消", style: .cancel) {  _ in }
+        
+        alertController.addAction(actionSetting)
+        alertController.addAction(actionRestore)
+        alertController.addAction(actionCancel)
+        
+        present(alertController, animated: true, completion: nil)
     }
 }

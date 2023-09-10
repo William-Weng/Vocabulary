@@ -30,7 +30,6 @@ final class PaletteViewController: UIViewController {
     private var isAnimationStop = false
     private var disappearImage: UIImage?
     private var didSelectPaletteInfo: Constant.SelectedPaletteInformation = (nil, nil, nil)
-    private var paletteInformation: [IndexPath: Constant.PaletteInformation] = [:]
     private var colorPicker: UIColorPickerViewController?
 
     override func viewDidLoad() {
@@ -53,7 +52,7 @@ final class PaletteViewController: UIViewController {
     }
     
     @IBAction func changeSystemColor(_ sender: UIBarButtonItem) {
-        myPrint(sender)
+        myPrint(PaletteTableViewCell.colorSettings)
     }
     
     deinit {
@@ -99,7 +98,7 @@ extension PaletteViewController: UIColorPickerViewControllerDelegate {
     }
         
     func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
-        colorPickerViewControllerDidFinishAction(viewController)
+        colorPickerViewControllerDidFinishAction(with: myTableView, info: didSelectPaletteInfo)
     }
 }
 
@@ -132,8 +131,6 @@ private extension PaletteViewController {
     func initPalettePicker() {
         
         let colorPicker = UIColorPickerViewController._build(delegate: self)
-        colorPicker.supportsAlpha = false
-        
         self.colorPicker = colorPicker
     }
     
@@ -190,24 +187,34 @@ private extension PaletteViewController {
         present(colorPicker, animated: true)
     }
     
-    /// 調色盤顏色選好後的動作
-    /// - Parameter viewController: UIColorPickerViewController
-    func colorPickerViewControllerDidFinishAction(_ viewController: UIColorPickerViewController) {
+    /// 調色盤顏色選好後的動作 (記錄數值)
+    /// - Parameters:
+    ///   - tableView: UITableView
+    ///   - info: Constant.SelectedPaletteInformation
+    func colorPickerViewControllerDidFinishAction(with tableView: UITableView, info: Constant.SelectedPaletteInformation) {
         
-        guard let indexPath = didSelectPaletteInfo.indexPath,
-              let color = didSelectPaletteInfo.color,
-              let type = didSelectPaletteInfo.type,
-              let cell = visibleCell(myTableView, cellForRowAt: indexPath)
+        defer { didSelectPaletteInfo = (nil, nil, nil) }
+        
+        guard let indexPath = info.indexPath,
+              let colorSettings = PaletteTableViewCell.colorSettings[safe: indexPath.section],
+              var setting = colorSettings[safe: indexPath.row],
+              let color = info.color,
+              let type = info.type,
+              let cell = visibleCell(tableView, cellForRowAt: indexPath)
         else {
             return
         }
         
         switch type {
-        case .text: cell.myLabel.textColor = color
-        case .background: cell.myView.backgroundColor = color
+        case .text:
+            cell.myLabel.textColor = color
+            setting.color = color.cgColor._hexString() ?? setting.color
+        case .background:
+            cell.myView.backgroundColor = color
+            setting.backgroundColor = color.cgColor._hexString() ?? setting.backgroundColor
         }
-                
-        didSelectPaletteInfo = (nil, nil, nil)
+        
+        PaletteTableViewCell.colorSettings[indexPath.section][indexPath.row] = setting
     }
     
     /// 找出可以要設定的Cell

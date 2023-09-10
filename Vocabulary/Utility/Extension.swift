@@ -1781,13 +1781,16 @@ extension WKWebView {
 extension UIColorPickerViewController {
     
     /// [產生UIColorPickerViewController](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/ios-sdk-選東西的-view-controller-delegate-範例-c3f0b5238933)
-    /// - Parameter delegate: UIColorPickerViewControllerDelegate
+    /// - Parameters:
+    ///   - delegate: UIColorPickerViewControllerDelegate?
+    ///   - supportsAlpha: Bool
     /// - Returns: UIColorPickerViewController
-    static func _build(delegate: UIColorPickerViewControllerDelegate?) -> UIColorPickerViewController {
+    static func _build(delegate: UIColorPickerViewControllerDelegate?, supportsAlpha: Bool = false) -> UIColorPickerViewController {
         
         let controller = UIColorPickerViewController()
         controller.delegate = delegate
-
+        controller.supportsAlpha = supportsAlpha
+        
         return controller
     }
 }

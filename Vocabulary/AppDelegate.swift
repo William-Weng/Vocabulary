@@ -80,7 +80,7 @@ extension AppDelegate {
     
     /// 初始化設定值 => Settings.json
     func initSettings() {
-                
+        
         guard let parseSettingsDictionary = parseSettingsDictionary(with: Constant.settingsJSON),
               let dictionary = settingsDictionary(with: Constant.tableName, dictionary: parseSettingsDictionary),
               let settings = dictionary["settings"] as? [String: Any]

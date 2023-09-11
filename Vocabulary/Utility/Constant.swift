@@ -28,11 +28,11 @@ final class Constant: NSObject {
     static let searchCount = 10
     static let autoBackupDelaySecond: TimeInterval = 2
     static let searchDelayTime: TimeInterval = 0.3
-    static let databaseName = "Vocabulary.db"
-    static let databaseFileExtension = "db"
     static let urlScheme = "word"
     static let reload = "重新讀取"
     static let noDataUpdate = "無更新資料"
+    static let databaseName = "Vocabulary.db"
+    static let databaseFileExtension = "db"
     static let recordFilename = "record.wav"
     static let settingsJSON = "Settings.json"
     

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WWJavaScriptContext
 
 // MARK: - OthersViewDelegate
 protocol PaletteViewDelegate {
@@ -32,12 +33,15 @@ final class PaletteViewController: UIViewController {
     private var disappearImage: UIImage?
     private var didSelectPaletteInfo: Constant.SelectedPaletteInformation = (nil, nil, nil)
     private var colorPicker: UIColorPickerViewController?
+    private var scriptKey = "settingsJSON"
+    private var scriptContext: WWJavaScriptContext?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
+        initScriptContext()
     }
-    
+        
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewWillAppearAction()
@@ -54,6 +58,7 @@ final class PaletteViewController: UIViewController {
     
     deinit {
         PaletteTableViewCell.colorSettings = []
+        scriptContext = nil
         myPrint("\(Self.self) init")
     }
 }
@@ -212,6 +217,7 @@ private extension PaletteViewController {
         }
         
         PaletteTableViewCell.colorSettings[indexPath.section][indexPath.row] = setting
+        settingsJSONAction(with: indexPath)
     }
     
     /// 找出可以要設定的Cell
@@ -291,7 +297,7 @@ private extension PaletteViewController {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         
-        let actionSetting = UIAlertAction(title: "記錄", style: .default) {  _ in }
+        let actionSetting = UIAlertAction(title: "記錄", style: .default) {  _ in self.changeSettingsJSON() }
         let actionRestore = UIAlertAction(title: "選原", style: .destructive) {  _ in }
         let actionCancel = UIAlertAction(title: "取消", style: .cancel) {  _ in }
         
@@ -300,5 +306,54 @@ private extension PaletteViewController {
         alertController.addAction(actionCancel)
         
         present(alertController, animated: true, completion: nil)
+    }
+}
+
+// MARK: - JavaScriptContext
+private extension PaletteViewController {
+    
+    /// 使用JavaScriptContext處理Settings.json => 雖可恥但有用
+    func initScriptContext() {
+        
+        guard let settingsJSON = FileManager.default._readText(from: Bundle.main.bundleURL.appendingPathComponent(Constant.settingsJSON)) else { return }
+                                
+        let script = "var \(scriptKey) = \(settingsJSON)"
+        scriptContext = WWJavaScriptContext.build(script: script)
+    }
+    
+    /// 記錄調色的數值 => English.settings.vocabularyLevel
+    /// - Parameter indexPath: IndexPath
+    func settingsJSONAction(with indexPath: IndexPath) {
+        
+        guard let tableName = Constant.tableName,
+              let settingsColorKey = Constant.SettingsColorKey.allCases[safe: indexPath.section],
+              let scriptContext = scriptContext,
+              let setting = PaletteTableViewCell.colorSettings[safe: indexPath.section]?[safe: indexPath.row]
+        else {
+            return
+        }
+                
+        let paramater = "\(scriptKey).\(tableName).settings.\(settingsColorKey)"
+        let settingScript = """
+        \(paramater).\(setting.key).color = "\(setting.color)"
+        \(paramater).\(setting.key).backgroundColor = "\(setting.backgroundColor)"
+        """
+        
+        _ = scriptContext.evaluateScript(settingScript)
+    }
+    
+    /// 改變 / 記錄系統的設定值 => Settings.json
+    /// - Returns: Result<Bool, Error>
+    func changeSettingsJSON() -> Result<Bool, Error> {
+        
+        guard let scriptContext = scriptContext,
+              let dictionary = scriptContext.evaluateScript("\(scriptKey)")?.toDictionary(),
+              let jsonString = dictionary._jsonData()?._string(),
+              let url = FileManager.default._documentDirectory()?.appendingPathComponent(Constant.settingsJSON, isDirectory: false)
+        else {
+            return .failure(Constant.MyError.isEmpty)
+        }
+                
+        return FileManager.default._writeText(to: url, text: jsonString)
     }
 }

@@ -45,6 +45,7 @@
 		818E261329922FFE00385705 /* ReviewResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818E261229922FFE00385705 /* ReviewResultViewController.swift */; };
 		818E2615299230B300385705 /* ReviewResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818E2614299230B300385705 /* ReviewResultTableViewCell.swift */; };
 		8196323329933CEF00B96960 /* MyNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8196323229933CEF00B96960 /* MyNavigationController.swift */; };
+		819A68C42AAEA2DD00ACE3FF /* WWJavaScriptContext in Frameworks */ = {isa = PBXBuildFile; productRef = 819A68C32AAEA2DD00ACE3FF /* WWJavaScriptContext */; };
 		819D69D0298E311D001AF48E /* SolutionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819D69CF298E311D001AF48E /* SolutionViewController.swift */; };
 		819D69D2298E31E1001AF48E /* SolutionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819D69D1298E31E1001AF48E /* SolutionTableViewCell.swift */; };
 		81AB5EF9299643960035216F /* OthersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AB5EF8299643960035216F /* OthersViewController.swift */; };
@@ -124,6 +125,7 @@
 				64768B0D2AA3EB080005EF3A /* WWToast in Frameworks */,
 				817BDE462AA596650093AD92 /* WWUserDefaults in Frameworks */,
 				81E4078E2A7239A200230C3A /* WWFloatingViewController in Frameworks */,
+				819A68C42AAEA2DD00ACE3FF /* WWJavaScriptContext in Frameworks */,
 				81E1F8FF2A1F2D9B00EB0139 /* WWNetworking in Frameworks */,
 				81EB0ED92A1F2E1300EE2A83 /* WWNetworking-UIImage in Frameworks */,
 				81E1F8F62A1F2CCA00EB0139 /* WWSlider in Frameworks */,
@@ -401,6 +403,7 @@
 				81E4078D2A7239A200230C3A /* WWFloatingViewController */,
 				64768B0C2AA3EB080005EF3A /* WWToast */,
 				817BDE452AA596650093AD92 /* WWUserDefaults */,
+				819A68C32AAEA2DD00ACE3FF /* WWJavaScriptContext */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -440,6 +443,7 @@
 				81E4078C2A7239A200230C3A /* XCRemoteSwiftPackageReference "WWFloatingView" */,
 				64768B0B2AA3EB080005EF3A /* XCRemoteSwiftPackageReference "WWToast" */,
 				817BDE442AA596650093AD92 /* XCRemoteSwiftPackageReference "WWUserDefaults" */,
+				819A68C22AAEA2DD00ACE3FF /* XCRemoteSwiftPackageReference "WWJavaScriptContext" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -774,6 +778,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		819A68C22AAEA2DD00ACE3FF /* XCRemoteSwiftPackageReference "WWJavaScriptContext" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWJavaScriptContext";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		81E1F8EE2A1F2C8100EB0139 /* XCRemoteSwiftPackageReference "WWHUD" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWHUD";
@@ -839,6 +851,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 817BDE442AA596650093AD92 /* XCRemoteSwiftPackageReference "WWUserDefaults" */;
 			productName = WWUserDefaults;
+		};
+		819A68C32AAEA2DD00ACE3FF /* WWJavaScriptContext */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 819A68C22AAEA2DD00ACE3FF /* XCRemoteSwiftPackageReference "WWJavaScriptContext" */;
+			productName = WWJavaScriptContext;
 		};
 		81E1F8EF2A1F2C8100EB0139 /* WWHUD */ = {
 			isa = XCSwiftPackageProductDependency;

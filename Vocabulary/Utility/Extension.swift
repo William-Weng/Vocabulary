@@ -1024,6 +1024,29 @@ extension FileManager {
         return readedText
     }
     
+    /// 寫入檔案文字
+    /// - Parameters:
+    ///   - url: 文字檔的URL
+    ///   - text: 要寫入的文字
+    ///   - encoding: 文字的編碼
+    /// - Returns: Bool
+    func _writeText(to url: URL?, text: String?, encoding: String.Encoding = .utf8) -> Result<Bool, Error> {
+        
+        guard let url = url,
+              let text = text
+        else {
+            return .success(false)
+        }
+        
+        do {
+            try text.write(to: url, atomically: true, encoding: encoding)
+        } catch {
+            return .failure(error)
+        }
+        
+        return .success(true)
+    }
+    
     /// 移除檔案
     /// - Parameter atURL: URL
     /// - Returns: Result<Bool, Error>

@@ -293,13 +293,31 @@ private extension PaletteViewController {
         isAnimationStop = true
     }
     
+    /// 調色盤設定功能Alert
+    /// - Parameters:
+    ///   - title: String?
+    ///   - message: String?
     func paletteSettingHint(_ title: String? = nil, message: String? = nil) {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+
+        let actionSetting = UIAlertAction(title: "記錄", style: .default) { [weak self] _ in
+            
+            guard let this = self else { return }
+            
+            let result = this.changeSettingsJSON()
+            this.settingsActionResult(result)
+        }
         
-        let actionSetting = UIAlertAction(title: "記錄", style: .default) {  _ in self.changeSettingsJSON() }
-        let actionRestore = UIAlertAction(title: "選原", style: .destructive) {  _ in }
-        let actionCancel = UIAlertAction(title: "取消", style: .cancel) {  _ in }
+        let actionRestore = UIAlertAction(title: "選原", style: .destructive) { [weak self] _ in
+            
+            guard let this = self else { return }
+            
+            let result = this.removeSettingsJSON()
+            this.settingsActionResult(result)
+        }
+        
+        let actionCancel = UIAlertAction(title: "取消", style: .cancel) { _ in }
         
         alertController.addAction(actionSetting)
         alertController.addAction(actionRestore)
@@ -309,15 +327,19 @@ private extension PaletteViewController {
     }
 }
 
-// MARK: - JavaScriptContext
+// MARK: - JavaScriptContext (雖可恥但有用)
 private extension PaletteViewController {
     
-    /// 使用JavaScriptContext處理Settings.json => 雖可恥但有用
+    /// 使用JavaScriptContext處理Settings.json
     func initScriptContext() {
+                
+        guard let fileURL = Optional.some(Bundle.main.bundleURL.appendingPathComponent(Constant.settingsJSON)),
+              let jsonString = FileManager.default._readText(from: fileURL)
+        else {
+            return
+        }
         
-        guard let settingsJSON = FileManager.default._readText(from: Bundle.main.bundleURL.appendingPathComponent(Constant.settingsJSON)) else { return }
-                                
-        let script = "var \(scriptKey) = \(settingsJSON)"
+        let script = "var \(scriptKey) = \(jsonString)"
         scriptContext = WWJavaScriptContext.build(script: script)
     }
     
@@ -342,18 +364,39 @@ private extension PaletteViewController {
         _ = scriptContext.evaluateScript(settingScript)
     }
     
-    /// 改變 / 記錄系統的設定值 => Settings.json
+    /// 改變 / 記錄 / 刪除使用者自訂設定值的結果動作顯示
+    /// => 成功就重新讀資料設定 / 失敗就不處理
+    /// - Parameter result: Result<Bool, Error>
+    func settingsActionResult(_ result: Result<Bool, Error>) {
+        
+        switch result {
+        case .failure(let error): myPrint(error); Utility.shared.flashHUD(with: .fail)
+        case .success(let isSuccess):
+            if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
+            Utility.shared.initDictionarySettings()
+        }
+    }
+    
+    /// 改變 / 記錄使用者自訂的設定值 => Settings.json
     /// - Returns: Result<Bool, Error>
     func changeSettingsJSON() -> Result<Bool, Error> {
         
         guard let scriptContext = scriptContext,
               let dictionary = scriptContext.evaluateScript("\(scriptKey)")?.toDictionary(),
               let jsonString = dictionary._jsonData()?._string(),
-              let url = FileManager.default._documentDirectory()?.appendingPathComponent(Constant.settingsJSON, isDirectory: false)
+              let url = FileManager.default._documentDirectory()?.appendingPathComponent(Constant.settingsJSON)
         else {
             return .failure(Constant.MyError.isEmpty)
         }
                 
         return FileManager.default._writeText(to: url, text: jsonString)
+    }
+    
+    /// 刪除使用者自訂的設定值 => Settings.json
+    /// - Returns: Result<Bool, Error>
+    func removeSettingsJSON() -> Result<Bool, Error> {
+        
+        guard let url = FileManager.default._documentDirectory()?.appendingPathComponent(Constant.settingsJSON) else { return .failure(Constant.MyError.isEmpty) }
+        return FileManager.default._removeFile(at: url)
     }
 }

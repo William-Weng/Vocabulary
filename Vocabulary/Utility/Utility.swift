@@ -38,6 +38,14 @@ extension Utility {
         Constant.tableName = info.key
         Constant.tableNameIndex = tableNameIndex(info.key)
         
+        initDictionarySettings()
+    }
+    
+    /// 回復字典檔設定
+    func initDictionarySettings() {
+        
+        guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
         delegate.initSettings()
         NotificationCenter.default._post(name: .refreshViewController)
     }

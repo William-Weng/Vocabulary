@@ -394,14 +394,30 @@ private extension AppDelegate {
     /// 解析完整的SettingsJSON的設定檔
     /// - Returns: [String: Any]?
     func parseSettingsDictionary(with filename: String) -> [String: Any]? {
-        
-        guard let jsonString = FileManager.default._readText(from: Bundle.main.bundleURL.appendingPathComponent(filename)),
-              let dictionary = jsonString._jsonObject() as? [String: Any]
+                
+        guard let fileURL = Optional.some(Bundle.main.bundleURL.appendingPathComponent(filename)),
+              var jsonString = FileManager.default._readText(from: fileURL)
         else {
             return nil
         }
         
-        return dictionary
+        if let _jsonString = parseUserSettingsJSON(with: filename) { jsonString = _jsonString }
+        
+        return jsonString._jsonObject() as? [String: Any]
+    }
+    
+    /// 解析使用者自訂的SettingsJSON的設定檔
+    /// - Parameter filename: String
+    /// - Returns: String?
+    func parseUserSettingsJSON(with filename: String) -> String? {
+        
+        guard let url = FileManager.default._documentDirectory()?.appendingPathComponent(Constant.settingsJSON),
+              let jsonString = FileManager.default._readText(from: url)
+        else {
+            return nil
+        }
+        
+        return jsonString
     }
     
     /// 解析單字等級的設定值 (排序由小到大)

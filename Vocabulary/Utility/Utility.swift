@@ -109,8 +109,9 @@ extension Utility {
     /// - Parameter viewController: UIViewController?
     /// - Returns: (backgroundColor: UIColor, height: CGFloat)
     func toastSetting(for viewController: UIViewController?) -> (backgroundColor: UIColor, height: CGFloat) {
+                
+        let setting: (backgroundColor: UIColor, height: CGFloat) = (#colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1), viewController?.navigationController?._navigationBarHeight(for: UIWindow._keyWindow(hasScene: false)) ?? .zero)
         
-        let setting: (backgroundColor: UIColor, height: CGFloat) = (#colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1), viewController?.navigationController?._navigationBarHeight() ?? .zero)
         return setting
     }
 }
@@ -150,7 +151,7 @@ extension Utility {
     /// - Returns: CGFloat
     func updateHeightPercent(with scrollView: UIScrollView, navigationController: UINavigationController?) -> CGFloat {
         
-        let navigationBarHeight = navigationController?._navigationBarHeight() ?? .zero
+        let navigationBarHeight = navigationController?._navigationBarHeight(for: UIWindow._keyWindow(hasScene: false)) ?? .zero
         let offset = scrollView.frame.height + scrollView.contentOffset.y - scrollView.contentSize.height
         var percent = 1.0 - (Constant.updateScrolledHeight - offset) / (Constant.updateScrolledHeight - navigationBarHeight)
         

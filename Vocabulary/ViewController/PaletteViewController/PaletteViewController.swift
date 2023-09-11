@@ -133,8 +133,9 @@ private extension PaletteViewController {
     
     /// 修正Tabbar對TableView的Bottom影響
     func fixContentInsetForSafeArea() {
-        let navigationBarHeight = navigationController?._navigationBarHeight() ?? .zero
-        myTableView._fixContentInsetForSafeArea(top: navigationBarHeight, bottom: 0, scrollTo: IndexPath(row: 0, section: 0))
+        
+        guard let frame = navigationController?.navigationBar.frame else { return }
+        myTableView._fixContentInsetForSafeArea(top: frame.minY + frame.height, bottom: 0, scrollTo: IndexPath(row: 0, section: 0))
     }
     
     /// 更新TableView的Bottom

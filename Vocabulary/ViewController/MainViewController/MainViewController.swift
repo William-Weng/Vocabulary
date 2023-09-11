@@ -281,7 +281,7 @@ private extension MainViewController {
     /// 修正TableView不使用SafeArea的位置問題
     func fixTableViewInsetForSafeArea(for indexPath: IndexPath? = nil) {
         
-        let navigationBarHeight = navigationController?._navigationBarHeight() ?? .zero
+        let navigationBarHeight = navigationController?._navigationBarHeight(for: UIWindow._keyWindow(hasScene: false)) ?? .zero
         
         if (MainTableViewCell.vocabularyListArray.count != 0) { myTableView._fixContentInsetForSafeArea(height: navigationBarHeight, scrollTo: indexPath); return }
         myTableView._fixContentInsetForSafeArea(height: navigationBarHeight, scrollTo: nil)

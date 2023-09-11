@@ -1332,28 +1332,9 @@ extension UINavigationController {
     }
     
     /// 取得NavigationBar的高度
-    /// - Parameter keyWindow: UIWindow?
     /// - Returns: CGFloat
-    func _navigationBarHeight(for keyWindow: UIWindow? = UIWindow._keyWindow()) -> CGFloat {
-        
-        guard let statusBarManager = UIStatusBarManager._build(for: keyWindow),
-              let navigationBarFrame = Optional.some(navigationBar.frame)
-        else {
-            return .zero
-        }
-        
-        return statusBarManager.statusBarFrame.height + navigationBarFrame.height
-    }
-}
-
-// MARK: - UIStatusBarManager (static function)
-extension UIStatusBarManager {
-    
-    /// [取得UIStatusBarManager](https://www.jianshu.com/p/d60757f13038)
-    /// - Parameter keyWindow: UIWindow?
-    /// - Returns: [UIStatusBarManager?](https://www.jianshu.com/p/e401762d824b)
-    static func _build(for keyWindow: UIWindow? = UIWindow._keyWindow()) -> UIStatusBarManager? {
-        return keyWindow?.windowScene?.statusBarManager
+    func _navigationBarHeight() -> CGFloat {
+        return navigationBar.frame.minY + navigationBar.frame.height
     }
 }
 
@@ -1542,11 +1523,21 @@ extension UITableView {
     ///   - height: height
     ///   - indexPath: IndexPath?
     func _fixContentInsetForSafeArea(height: CGFloat, scrollTo indexPath: IndexPath? = nil) {
+        _fixContentInsetForSafeArea(top: height, bottom: height, scrollTo: indexPath)
+    }
+    
+    /// 修正TableView滿版，而不使用SafeArea的位置問題 (contentInsetAdjustmentBehavior = .never)
+    /// => UINavigationBar切換 / 隱藏時會造成Inset變動的問題
+    /// - Parameters:
+    ///   - topHeight: CGFloat
+    ///   - bottomHeight: CGFloat
+    ///   - indexPath: IndexPath?
+    func _fixContentInsetForSafeArea(top topHeight: CGFloat, bottom bottomHeight: CGFloat, scrollTo indexPath: IndexPath? = nil) {
         
         contentInsetAdjustmentBehavior = .never
         
-        contentInset.top = height
-        contentInset.bottom = height
+        contentInset.top = topHeight
+        contentInset.bottom = bottomHeight
         
         if let indexPath = indexPath { scrollToRow(at: indexPath, at: .top, animated: false) }
     }

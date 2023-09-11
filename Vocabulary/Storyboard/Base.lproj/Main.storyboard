@@ -118,14 +118,14 @@
                         <viewLayoutGuide key="safeArea" id="ozz-F6-LnA"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Ocl-Gj-SPo" firstAttribute="leading" secondItem="ozz-F6-LnA" secondAttribute="leading" id="Fnu-e0-7E8"/>
-                            <constraint firstItem="ozz-F6-LnA" firstAttribute="trailing" secondItem="Ocl-Gj-SPo" secondAttribute="trailing" id="H3u-Cv-TTb"/>
+                            <constraint firstItem="Ocl-Gj-SPo" firstAttribute="centerY" secondItem="gY9-e7-Ny4" secondAttribute="centerY" id="MfA-XQ-JFC"/>
                             <constraint firstItem="rY5-5G-TaN" firstAttribute="trailing" secondItem="ozz-F6-LnA" secondAttribute="trailing" id="NeC-i8-VJr"/>
-                            <constraint firstAttribute="bottom" secondItem="Ocl-Gj-SPo" secondAttribute="bottom" id="TpY-HI-aaG"/>
                             <constraint firstAttribute="bottom" secondItem="rY5-5G-TaN" secondAttribute="bottom" id="Tw4-WV-sBj"/>
                             <constraint firstItem="rY5-5G-TaN" firstAttribute="leading" secondItem="ozz-F6-LnA" secondAttribute="leading" id="XTR-r9-foA"/>
-                            <constraint firstItem="Ocl-Gj-SPo" firstAttribute="top" secondItem="gY9-e7-Ny4" secondAttribute="top" id="c8S-og-29M"/>
+                            <constraint firstItem="Ocl-Gj-SPo" firstAttribute="height" secondItem="gY9-e7-Ny4" secondAttribute="height" id="XyO-rw-Osb"/>
+                            <constraint firstItem="Ocl-Gj-SPo" firstAttribute="width" secondItem="gY9-e7-Ny4" secondAttribute="width" id="duj-UZ-N8o"/>
                             <constraint firstItem="rY5-5G-TaN" firstAttribute="top" secondItem="gY9-e7-Ny4" secondAttribute="top" id="lhg-5W-HgH"/>
+                            <constraint firstItem="Ocl-Gj-SPo" firstAttribute="centerX" secondItem="gY9-e7-Ny4" secondAttribute="centerX" id="nrC-m2-taP"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="調色盤" id="7JP-8Q-l7I">
@@ -1952,17 +1952,17 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SearchVocabularyTableViewCell" id="T8s-fz-6Yt" customClass="SearchVocabularyTableViewCell" customModule="Vocabulary" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="50" width="414" height="209"/>
+                                                <rect key="frame" x="0.0" y="50" width="414" height="209.5"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="T8s-fz-6Yt" id="yWC-Yr-t9H">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="209"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="209.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SEs-UA-rXt">
-                                                            <rect key="frame" x="8" y="8" width="390" height="193"/>
+                                                            <rect key="frame" x="8" y="8" width="390" height="193.5"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="lz5-sf-xaV">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="354" height="193"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="354" height="193.5"/>
                                                                     <subviews>
                                                                         <stackView contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="732-H4-XAb">
                                                                             <rect key="frame" x="0.0" y="0.0" width="354" height="45"/>
@@ -2013,12 +2013,12 @@
                                                                             </constraints>
                                                                         </view>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="mZH-qM-Wal">
-                                                                            <rect key="frame" x="0.0" y="97" width="354" height="96"/>
+                                                                            <rect key="frame" x="0.0" y="97" width="354" height="96.5"/>
                                                                         </stackView>
                                                                     </subviews>
                                                                 </stackView>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NSw-KH-oAk">
-                                                                    <rect key="frame" x="354" y="0.0" width="36" height="193"/>
+                                                                    <rect key="frame" x="354" y="0.0" width="36" height="193.5"/>
                                                                     <subviews>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B77-IF-eLx">
                                                                             <rect key="frame" x="-3" y="75.5" width="42.5" height="42.5"/>
@@ -2103,7 +2103,7 @@
     </designables>
     <inferredMetricsTieBreakers>
         <segue reference="aTr-M4-697"/>
-        <segue reference="FBH-lM-RI1"/>
+        <segue reference="3lo-lz-iJI"/>
         <segue reference="Ypq-4K-ZAg"/>
     </inferredMetricsTieBreakers>
     <resources>

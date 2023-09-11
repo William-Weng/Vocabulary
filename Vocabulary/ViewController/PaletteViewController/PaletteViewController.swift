@@ -57,6 +57,7 @@ final class PaletteViewController: UIViewController {
     }
     
     deinit {
+        NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
         PaletteTableViewCell.colorSettings = []
         scriptContext = nil
         myPrint("\(Self.self) init")
@@ -126,7 +127,23 @@ private extension PaletteViewController {
         PaletteTableViewCell.colorSettings = Constant.SettingsColorKey.allCases.compactMap { $0.informations() }
         
         myTableView._delegateAndDataSource(with: self)
+        updateTableViewBottomActionNotification()
         initPalettePicker()
+    }
+    
+    /// 修正Tabbar對TableView的Bottom影響
+    func fixContentInsetForSafeArea() {
+        let navigationBarHeight = navigationController?._navigationBarHeight() ?? .zero
+        myTableView._fixContentInsetForSafeArea(top: navigationBarHeight, bottom: 0, scrollTo: IndexPath(row: 0, section: 0))
+    }
+    
+    /// 更新TableView的Bottom
+    func updateTableViewBottomActionNotification() {
+        
+        NotificationCenter.default._register(name: .viewDidTransition) { [weak self] _ in
+            guard let this = self else { return }
+            this.fixContentInsetForSafeArea()
+        }
     }
     
     /// 初始化調色盤

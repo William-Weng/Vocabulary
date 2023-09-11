@@ -32,9 +32,11 @@
          "slang": { "name": "俚語", "value": 6, "color": "#f7fffc", "backgroundColor": "#7920b0" }
       },
       "vocabularyLevel": {
-          "easy": { "name": "簡單", "value": 0, "color": "#f7fffc", "backgroundColor": "#00b373", "guessCount": 3 },
-          "medium": { "name": "一般", "value": 1, "color": "#f7fffc", "backgroundColor": "#0a4eff", "guessCount": 4 },
-          "hard": { "name": "困難", "value": 2, "color": "#f7fffc", "backgroundColor": "#e10000", "guessCount": 3 }
+          "simple": { "name": "容易", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "guessCount": 3 },
+          "easy": { "name": "簡單", "value": 1, "color": "#f7fffc", "backgroundColor": "#00b373", "guessCount": 2 },
+          "medium": { "name": "一般", "value": 2, "color": "#f7fffc", "backgroundColor": "#0a4eff", "guessCount": 2 },
+          "hard": { "name": "困難", "value": 3, "color": "#f7fffc", "backgroundColor": "#e056de", "guessCount": 2 },
+          "difficult": { "name": "艱深", "value": 4, "color": "#f7fffc", "backgroundColor": "#e10000", "guessCount": 1 }
       }
     }
   },
@@ -69,9 +71,11 @@
           "slang": { "name": "俚語", "value": 6, "color": "#f7fffc", "backgroundColor": "#7920b0" }
       },
       "vocabularyLevel": {
-          "easy": { "name": "簡單", "value": 0, "color": "#f7fffc", "backgroundColor": "#00b373", "guessCount": 3 },
-          "medium": { "name": "一般", "value": 1, "color": "#f7fffc", "backgroundColor": "#0a4eff", "guessCount": 4 },
-          "hard": { "name": "困難", "value": 2, "color": "#f7fffc", "backgroundColor": "#e10000", "guessCount": 3 }
+          "simple": { "name": "容易", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "guessCount": 3 },
+          "easy": { "name": "簡單", "value": 1, "color": "#f7fffc", "backgroundColor": "#00b373", "guessCount": 2 },
+          "medium": { "name": "一般", "value": 2, "color": "#f7fffc", "backgroundColor": "#0a4eff", "guessCount": 2 },
+          "hard": { "name": "困難", "value": 3, "color": "#f7fffc", "backgroundColor": "#e056de", "guessCount": 2 },
+          "difficult": { "name": "艱深", "value": 4, "color": "#f7fffc", "backgroundColor": "#e10000", "guessCount": 1 }
       }
     }
   },
@@ -101,9 +105,11 @@
           "slang": { "name": "俚語", "value": 6, "color": "#f7fffc", "backgroundColor": "#7920b0" }
       },
       "vocabularyLevel": {
-          "easy": { "name": "簡單", "value": 0, "color": "#f7fffc", "backgroundColor": "#00b373", "guessCount": 3 },
-          "medium": { "name": "一般", "value": 1, "color": "#f7fffc", "backgroundColor": "#0a4eff", "guessCount": 4 },
-          "hard": { "name": "困難", "value": 2, "color": "#f7fffc", "backgroundColor": "#e10000", "guessCount": 3 }
+          "simple": { "name": "容易", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "guessCount": 3 },
+          "easy": { "name": "簡單", "value": 1, "color": "#f7fffc", "backgroundColor": "#00b373", "guessCount": 2 },
+          "medium": { "name": "一般", "value": 2, "color": "#f7fffc", "backgroundColor": "#0a4eff", "guessCount": 2 },
+          "hard": { "name": "困難", "value": 3, "color": "#f7fffc", "backgroundColor": "#e056de", "guessCount": 2 },
+          "difficult": { "name": "艱深", "value": 4, "color": "#f7fffc", "backgroundColor": "#e10000", "guessCount": 1 }
       }
     }
   }

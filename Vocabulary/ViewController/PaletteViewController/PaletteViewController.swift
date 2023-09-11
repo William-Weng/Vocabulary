@@ -53,7 +53,7 @@ final class PaletteViewController: UIViewController {
     }
     
     @IBAction func changeSystemColor(_ sender: UIBarButtonItem) {
-        paletteSettingHint()
+        paletteSettingHint("請選擇功能")
     }
     
     deinit {

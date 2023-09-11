@@ -101,7 +101,7 @@ extension Constant {
             switch self {
             case .vocabularyLevel: return "單字等級"
             case .sentenceSpeech: return "精選例句"
-            case .wordSpeech: return "單字型態"
+            case .wordSpeech: return "單字詞性"
             }
         }
         

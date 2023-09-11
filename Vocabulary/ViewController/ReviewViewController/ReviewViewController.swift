@@ -522,7 +522,7 @@ extension ReviewViewController {
         
         let version = Bundle.main._appVersion()
         let message = "v\(version.app) - \(version.build)"
-        let title = "問題難度：\(level.value())"
+        let title = "問題難度 - \(level.value())"
         
         informationHint(with: title, message: message)
     }

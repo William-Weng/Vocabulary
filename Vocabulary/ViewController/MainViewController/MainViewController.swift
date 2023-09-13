@@ -76,7 +76,7 @@ final class MainViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) { prepareAction(for: segue, sender: sender) }
     
     @objc func refreshVocabularyList(_ sender: UIRefreshControl) { reloadVocabulary(isFavorite: isFavorite) }
-    @objc func vocabularyCount(_ sender: UITapGestureRecognizer) { vocabularyCountAction() }
+    @objc func vocabularyCount(_ sender: UITapGestureRecognizer) { vocabularyCountAction(for: navigationItem.titleView) }
     
     @IBAction func appendWordAction(_ sender: UIButton) { appendTextHintAction(sender) }
     @IBAction func filterFavorite(_ sender: UIBarButtonItem) { filterFavoriteAction(with: sender) }
@@ -175,13 +175,13 @@ private extension MainViewController {
     }
     
     /// 顯示單字總數量
-    func vocabularyCountAction() {
+    func vocabularyCountAction(for sourceView: UIView?) {
 
         let version = Bundle.main._appVersion()
         let message = "v\(version.app) - \(version.build)"
         let title = "單字數量 - \(vocabularyCount(isFavorite: isFavorite))"
         
-        informationHint(with: title, message: message)
+        informationHint(with: title, message: message, sourceView: sourceView)
     }
     
     /// 處理UIStoryboardSegue跳轉到下一頁的功能
@@ -762,13 +762,17 @@ private extension MainViewController {
     }
     
     /// 顯示版本 / 單字數量訊息
-    func informationHint(with title: String?, message: String?) {
+    /// - Parameters:
+    ///   - title: String?
+    ///   - message: String?
+    ///   - sourceView: UIView?
+    func informationHint(with title: String?, message: String?, sourceView: UIView? = nil) {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let actionOK = UIAlertAction(title: "確認", style: .default) { _ in }
         let actionSelectDatabase = UIAlertAction(title: "選擇字典", style: .default) { [weak self] _ in
             guard let this = self else { return }
-            this.dictionaryAlertAction(target: this)
+            this.dictionaryAlertAction(target: this, sourceView: sourceView)
         }
 
         alertController.addAction(actionSelectDatabase)
@@ -778,8 +782,10 @@ private extension MainViewController {
     }
     
     /// 字典選單
-    /// - Parameter target: UIViewController
-    func dictionaryAlertAction(target: UIViewController) {
+    /// - Parameters:
+    ///   - target: UIViewController
+    ///   - sourceView: UIView?
+    func dictionaryAlertAction(target: UIViewController, sourceView: UIView? = nil) {
         
         let alertController = UIAlertController(title: "請選擇字典", message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
@@ -791,6 +797,9 @@ private extension MainViewController {
         }
         
         alertController.addAction(action)
+        
+        alertController.modalPresentationStyle = .popover
+        alertController.popoverPresentationController?.sourceView = sourceView
         
         target.present(alertController, animated: true, completion: nil)
     }

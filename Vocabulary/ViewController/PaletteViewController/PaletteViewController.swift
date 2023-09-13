@@ -53,7 +53,7 @@ final class PaletteViewController: UIViewController {
     }
     
     @IBAction func changeSystemColor(_ sender: UIBarButtonItem) {
-        paletteSettingHint("請選擇功能")
+        paletteSettingHint(target: self, title: "請選擇功能", message: nil, barButtonItem: sender)
     }
     
     deinit {
@@ -311,14 +311,15 @@ private extension PaletteViewController {
         isAnimationStop = true
     }
     
-    /// 調色盤設定功能Alert
+    /// [調色盤設定功能Alert](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/在-iphone-ipad-上顯示-popover-彈出視窗-ac196732e557)
     /// - Parameters:
+    ///   - sender: UIBarButtonItem
     ///   - title: String?
     ///   - message: String?
-    func paletteSettingHint(_ title: String? = nil, message: String? = nil) {
+    func paletteSettingHint(target: UIViewController, title: String? = nil, message: String? = nil, barButtonItem: UIBarButtonItem? = nil) {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
-
+        
         let actionSetting = UIAlertAction(title: "設定", style: .default) { [weak self] _ in
             
             guard let this = self else { return }
@@ -341,7 +342,10 @@ private extension PaletteViewController {
         alertController.addAction(actionRestore)
         alertController.addAction(actionCancel)
         
-        present(alertController, animated: true, completion: nil)
+        alertController.modalPresentationStyle = .popover
+        alertController.popoverPresentationController?.barButtonItem = barButtonItem
+        
+        target.present(alertController, animated: true, completion: nil)
     }
 }
 

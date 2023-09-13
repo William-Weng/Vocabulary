@@ -80,13 +80,17 @@ extension API {
     /// - Parameters:
     ///   - info: Settings.GeneralInformation
     ///   - key: 欄位名稱
+    ///   - isFavorite: Bool
     /// - Returns: [[String : Any]]
-    func searchBookmarkCount(for info: Settings.GeneralInformation, key: String? = nil) -> [[String : Any]] {
+    func searchBookmarkCount(for info: Settings.GeneralInformation, key: String? = nil, isFavorite: Bool) -> [[String : Any]] {
         
         guard let database = Constant.database else { return [] }
         
         let type: Constant.DataTableType = .bookmarkSite(info.key)
-        let result = database.select(tableName: type.name(), functions: [.count(key, .INTEGER())])
+        var condition: SQLite3Condition.Where?
+
+        if (isFavorite) { condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: isFavorite._int()) }
+        let result = database.select(tableName: type.name(), functions: [.count(key, .INTEGER())], where: condition)
         
         return result.array
     }
@@ -394,7 +398,7 @@ extension API {
         var limit: SQLite3Condition.Limit?
         
         if let count = count { limit = SQLite3Condition.Limit().build(count: count, offset: offset) }
-        if (isFavorite) { condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: 1) }
+        if (isFavorite) { condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: isFavorite._int()) }
         
         let type: Constant.DataTableType = .bookmarkSite(info.key)
         let result = database.select(tableName: type.name(), type: BookmarkSite.self, where: condition, orderBy: orderBy, limit: limit)

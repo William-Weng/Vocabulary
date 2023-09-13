@@ -95,6 +95,34 @@ extension AppDelegate {
         Constant.tableNameIndex = Utility.shared.tableNameIndex(Constant.tableName)
     }
     
+    /// 解析預設的SettingsJSON的設定檔
+    /// - Parameter filename: String
+    /// - Returns: String?
+    func parseDefaultSettingsJSON(with filename: String) -> String? {
+        
+        guard let fileURL = Optional.some(Bundle.main.bundleURL.appendingPathComponent(filename)),
+              let jsonString = FileManager.default._readText(from: fileURL)
+        else {
+            return nil
+        }
+        
+        return jsonString
+    }
+    
+    /// 解析使用者自訂的SettingsJSON的設定檔
+    /// - Parameter filename: String
+    /// - Returns: String?
+    func parseUserSettingsJSON(with filename: String) -> String? {
+        
+        guard let url = FileManager.default._documentDirectory()?.appendingPathComponent(Constant.settingsJSON),
+              let jsonString = FileManager.default._readText(from: url)
+        else {
+            return nil
+        }
+        
+        return jsonString
+    }
+    
     /// [重新播放音樂](https://juejin.cn/post/7163440404480655367)
     /// - Parameter notificaiton: Notification
     func replayMusic(with player: AVAudioPlayer) {
@@ -395,29 +423,10 @@ private extension AppDelegate {
     /// - Returns: [String: Any]?
     func parseSettingsDictionary(with filename: String) -> [String: Any]? {
                 
-        guard let fileURL = Optional.some(Bundle.main.bundleURL.appendingPathComponent(filename)),
-              var jsonString = FileManager.default._readText(from: fileURL)
-        else {
-            return nil
-        }
-        
+        guard var jsonString = parseDefaultSettingsJSON(with: filename) else { return nil }
         if let _jsonString = parseUserSettingsJSON(with: filename) { jsonString = _jsonString }
         
         return jsonString._jsonObject() as? [String: Any]
-    }
-    
-    /// 解析使用者自訂的SettingsJSON的設定檔
-    /// - Parameter filename: String
-    /// - Returns: String?
-    func parseUserSettingsJSON(with filename: String) -> String? {
-        
-        guard let url = FileManager.default._documentDirectory()?.appendingPathComponent(Constant.settingsJSON),
-              let jsonString = FileManager.default._readText(from: url)
-        else {
-            return nil
-        }
-        
-        return jsonString
     }
     
     /// 解析單字等級的設定值 (排序由小到大)

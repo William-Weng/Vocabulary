@@ -63,7 +63,7 @@ final class OthersViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) { palettePageSetting(for: segue, sender: sender) }
         
     @objc func refreshBookmarks(_ sender: UIRefreshControl) { reloadBookmarks(isFavorite: isFavorite) }
-    @objc func bookmarkCount(_ sender: UITapGestureRecognizer) { bookmarkCountAction() }
+    @objc func bookmarkCount(_ sender: UITapGestureRecognizer) { bookmarkCountAction(isFavorite: isFavorite) }
     
     @IBAction func shareDatabase(_ sender: UIBarButtonItem) { shareDatabaseAction(sender) }
     @IBAction func downloadDatabase(_ sender: UIBarButtonItem) { downloadDatabaseAction(sender) }
@@ -190,11 +190,12 @@ private extension OthersViewController {
     }
     
     /// 顯示書籤總數量
-    func bookmarkCountAction() {
+    /// - Parameter isFavorite: Bool
+    func bookmarkCountAction(isFavorite: Bool) {
         
         let version = Bundle.main._appVersion()
         let message = "v\(version.app) - \(version.build)"
-        let title = "書籤數量 - \(bookmarkCount())"
+        let title = "書籤數量 - \(bookmarkCount(isFavorite: isFavorite))"
         
         informationHint(with: title, message: message)
     }
@@ -646,14 +647,15 @@ private extension OthersViewController {
     }
     
     /// 取得書籤總數量
+    /// - Parameter isFavorite: Bool
     /// - Returns: Int
-    func bookmarkCount() -> Int {
+    func bookmarkCount(isFavorite: Bool) -> Int {
         
         let key = "url"
         let field = "\(key)Count"
         
         guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex),
-              let result = API.shared.searchBookmarkCount(for: info, key: key).first,
+              let result = API.shared.searchBookmarkCount(for: info, key: key, isFavorite: isFavorite).first,
               let value = result["\(field)"],
               let count = Int("\(value)", radix: 10)
         else {

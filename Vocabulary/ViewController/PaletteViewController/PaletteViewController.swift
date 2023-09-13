@@ -319,7 +319,7 @@ private extension PaletteViewController {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
 
-        let actionSetting = UIAlertAction(title: "記錄", style: .default) { [weak self] _ in
+        let actionSetting = UIAlertAction(title: "設定", style: .default) { [weak self] _ in
             
             guard let this = self else { return }
             
@@ -350,14 +350,16 @@ private extension PaletteViewController {
     
     /// 使用JavaScriptContext處理Settings.json
     func initScriptContext() {
-                
-        guard let fileURL = Optional.some(Bundle.main.bundleURL.appendingPathComponent(Constant.settingsJSON)),
-              let jsonString = FileManager.default._readText(from: fileURL)
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+              var jsonString = appDelegate.parseDefaultSettingsJSON(with: Constant.settingsJSON)
         else {
             return
         }
         
+        if let _jsonString = appDelegate.parseUserSettingsJSON(with: Constant.settingsJSON) { jsonString = _jsonString }
         let script = "var \(scriptKey) = \(jsonString)"
+        
         scriptContext = WWJavaScriptContext.build(script: script)
     }
     

@@ -32,9 +32,7 @@ extension Utility {
     /// 切換字典檔
     /// - Parameter info: Settings.GeneralInformation
     func changeDictionary(with info: Settings.GeneralInformation) {
-        
-        guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
+                
         Constant.tableName = info.key
         Constant.tableNameIndex = tableNameIndex(info.key)
         

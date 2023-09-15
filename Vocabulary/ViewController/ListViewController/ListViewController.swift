@@ -60,7 +60,7 @@ final class ListViewController: UIViewController {
     
     @IBAction func searchVocabulary(_ sender: UIButton) {
         searchVocabularyViewController = UIStoryboard._instantiateViewController() as SearchVocabularyViewController
-        presentSearchVocabularyViewController(with: searchVocabularyViewController?.view)
+        presentSearchVocabularyViewController(target: self, currentView: searchVocabularyViewController?.view)
     }
     
     deinit {
@@ -421,13 +421,15 @@ private extension ListViewController {
     }
     
     /// 產生WWFloatingViewController
-    /// - Parameter currentView: UIView?
-    func presentSearchVocabularyViewController(with currentView: UIView?) {
+    /// - Parameters:
+    ///   - target: UIViewController
+    ///   - currentView: UIView?
+    func presentSearchVocabularyViewController(target: UIViewController, currentView: UIView?) {
         
         let floatingViewController = WWFloatingView.shared.maker()
         floatingViewController.configure(animationDuration: 0.25, backgroundColor: .black.withAlphaComponent(0.1), multiplier: 0.55, completePercent: 0.5, currentView: currentView)
         
-        present(floatingViewController, animated: false)
+        target.present(floatingViewController, animated: false)
     }
 }
 

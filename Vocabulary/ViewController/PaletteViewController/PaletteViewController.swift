@@ -7,12 +7,14 @@
 
 import UIKit
 import WWJavaScriptContext
+import WWFloatingViewController
 
 // MARK: - OthersViewDelegate
 protocol PaletteViewDelegate {
     
     func palette(with indexPath: IndexPath, colorType: PaletteViewController.ColorType, info: Constant.PaletteInformation)
     func tabBarHidden(_ isHidden: Bool)
+    func gallery(with indexPath: IndexPath)
 }
 
 // MARK: - 相關設定 (調色盤 / 動畫設定)
@@ -114,6 +116,10 @@ extension PaletteViewController: PaletteViewDelegate {
     
     func tabBarHidden(_ isHidden: Bool) {
         tabBarHiddenAction(isHidden)
+    }
+    
+    func gallery(with indexPath: IndexPath) {
+        presentSearchVocabularyViewController(target: self, currentView: nil)
     }
 }
 
@@ -257,6 +263,18 @@ private extension PaletteViewController {
         }
         
         return cell as? PaletteTableViewCell
+    }
+    
+    /// 產生WWFloatingViewController
+    /// - Parameters:
+    ///   - target: UIViewController
+    ///   - currentView: UIView?
+    func presentSearchVocabularyViewController(target: UIViewController, currentView: UIView?) {
+        
+        let floatingViewController = WWFloatingView.shared.maker()
+        floatingViewController.configure(animationDuration: 0.25, backgroundColor: .black.withAlphaComponent(0.1), multiplier: 0.55, completePercent: 0.5, currentView: currentView)
+        
+        target.present(floatingViewController, animated: false)
     }
     
     /// 畫面將要出現的動作

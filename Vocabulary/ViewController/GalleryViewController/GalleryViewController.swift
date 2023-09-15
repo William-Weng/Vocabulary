@@ -19,6 +19,7 @@ final class GalleryViewController: UIViewController {
     }
     
     deinit {
+        GalleryTableViewCell.galleryImages = []
         myPrint("\(Self.self) init")
     }
 }
@@ -36,9 +37,27 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        guard let cell = cell as? GalleryTableViewCell else { return }
+        
+        cell.initGifBlockSetting()
+        cell.executeAnimation(with: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        guard let cell = cell as? GalleryTableViewCell else { return }
+        cell.removeGifBlock()
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let list = filterGalleryImageList()
         myPrint(list)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 128.0
     }
 }
 

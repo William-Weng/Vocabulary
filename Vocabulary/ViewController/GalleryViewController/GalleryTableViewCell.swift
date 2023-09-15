@@ -11,8 +11,8 @@ import UIKit
 final class GalleryTableViewCell: UITableViewCell, CellReusable {
     
     @IBOutlet weak var myLabel: UILabel!
-    @IBOutlet weak var myImageView: UIImageView!
-
+    @IBOutlet weak var myImageBaseView: UIView!
+    
     static var galleryImages: [String] = []
     
     var indexPath: IndexPath = []
@@ -63,9 +63,6 @@ private extension GalleryTableViewCell {
     /// - Parameter indexPath: IndexPath
     func configure(for indexPath: IndexPath) {
         
-        removeGifBlock()
-        initGifBlockSetting()
-        
         myLabel.text = Self.animationFilename(with: indexPath)
         
         if let url = Self.animationUrl(with: indexPath) {
@@ -76,7 +73,16 @@ private extension GalleryTableViewCell {
 }
 
 // MARK: - GIF動畫
-private extension GalleryTableViewCell {
+extension GalleryTableViewCell {
+    
+    /// 執行GIF動畫
+    func executeAnimation(with indexPath: IndexPath) {
+        
+        if let url = Self.animationUrl(with: indexPath) {
+            isAnimationStop = false
+            animationBlock?(url)
+        }
+    }
     
     /// 移除GIF動畫Block
     func removeGifBlock() {
@@ -90,14 +96,14 @@ private extension GalleryTableViewCell {
     /// 初始化GIF動畫Block
     func initGifBlockSetting() {
         
-        let gifImageView = UIImageView(frame: myImageView.bounds)
-        gifImageView.contentMode = .scaleAspectFit
-        myImageView.addSubview(gifImageView)
+        let gifImageView = UIImageView(frame: myImageBaseView.bounds)
         
+        gifImageView.contentMode = .scaleAspectFit
+        myImageBaseView.addSubview(gifImageView)
         self.gifImageView = gifImageView
         
         animationBlock = { url in
-                        
+            
             _ = gifImageView._GIF(url: url) { [weak self] result in
                                 
                 guard let this = self else { return }
@@ -106,7 +112,7 @@ private extension GalleryTableViewCell {
                 case .failure(let error): myPrint(error)
                 case .success(let info):
                     info.pointer.pointee = this.isAnimationStop
-                    if (this.isAnimationStop) { this.myImageView.image = nil }
+                    if (this.isAnimationStop) { this.gifImageView?.image = nil }
                 }
             }
         }

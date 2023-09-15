@@ -60,9 +60,10 @@ final class PaletteViewController: UIViewController {
     }
     
     deinit {
-        NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
         PaletteTableViewCell.colorSettings = []
+        PaletteTableViewCell.paletteViewDelegate = nil
         scriptContext = nil
+        NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
         myPrint("\(Self.self) init")
     }
 }
@@ -82,13 +83,27 @@ extension PaletteViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return paletteTableViewHeader(tableView, viewForHeaderInSection: section)
     }
-        
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = paletteTableViewCell(tableView, cellForRowAt: indexPath)
         cell.configure(with: indexPath)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        guard let cell = cell as? PaletteTableViewCell else { return }
+        
+        cell.initGifBlockSetting()
+        cell.executeAnimation(with: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        guard let cell = cell as? PaletteTableViewCell else { return }
+        cell.removeGifBlock()
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

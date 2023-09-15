@@ -12,7 +12,7 @@ final class PaletteTableViewCell: UITableViewCell, CellReusable {
     
     @IBOutlet weak var myView: UIView!
     @IBOutlet weak var myLabel: UILabel!
-    @IBOutlet weak var myImageView: UIImageView!
+    @IBOutlet weak var myImageBaseView: UIView!
     
     static var paletteViewDelegate: PaletteViewDelegate?
     static var colorSettings: [[ColorSettings]] = []
@@ -55,7 +55,6 @@ final class PaletteTableViewCell: UITableViewCell, CellReusable {
     }
     
     deinit {
-        removeGifBlock()
         myPrint("\(Self.self) init")
     }
 }
@@ -68,20 +67,18 @@ private extension PaletteTableViewCell {
     func configure(for indexPath: IndexPath) {
         
         guard let colorSetting = Self.colorSettings[safe: indexPath.section],
-              let info = colorSetting[safe: indexPath.row]
+              let settings = colorSetting[safe: indexPath.row]
         else {
             return
         }
         
         self.indexPath = indexPath
         
-        myLabel.text = info.name
-        myLabel.textColor = UIColor(rgb: info.color)
-        myView.backgroundColor = UIColor(rgb: info.backgroundColor)
+        myLabel.text = settings.name
+        myLabel.textColor = UIColor(rgb: settings.color)
+        myView.backgroundColor = UIColor(rgb: settings.backgroundColor)
         
-        removeGifBlock()
-        initGifBlockSetting()
-        gestureRecognizerSetting(with: indexPath, settings: info)
+        gestureRecognizerSetting(with: indexPath, settings: settings)
     }
     
     /// 設定點下去的功能
@@ -92,20 +89,11 @@ private extension PaletteTableViewCell {
                 
         switch key {
         case .sentenceSpeech, .vocabularyLevel, .wordSpeech:
-            
             myLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(Self.selectTextColor(_:))))
             myView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(Self.selectBackgroundColor(_:))))
-            myImageView.image = nil
 
         case .animation, .background:
-            
-            let folderType: Constant.AnimationGifFolder = (key == .animation) ? .animation : .background
             myView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(Self.animationGallery(_:))))
-            
-            if let url = Constant.AnimationGifType(rawValue: settings.key)?.fileURL(with: folderType) {
-                isAnimationStop = false
-                animationBlock?(url)
-            }
         }
     }
     
@@ -119,7 +107,25 @@ private extension PaletteTableViewCell {
 }
 
 // MARK: - GIF動畫
-private extension PaletteTableViewCell {
+extension PaletteTableViewCell {
+    
+    /// 執行GIF動畫
+    func executeAnimation(with indexPath: IndexPath) {
+        
+        guard let colorSetting = Self.colorSettings[safe: indexPath.section],
+              let settings = colorSetting[safe: indexPath.row],
+              let key = Constant.SettingsColorKey(rawValue: indexPath.section)
+        else {
+            return
+        }
+        
+        let folderType: Constant.AnimationGifFolder = (key == .animation) ? .animation : .background
+        
+        if let url = Constant.AnimationGifType(rawValue: settings.key)?.fileURL(with: folderType) {
+            isAnimationStop = false
+            animationBlock?(url)
+        }
+    }
     
     /// 移除GIF動畫Block
     func removeGifBlock() {
@@ -133,23 +139,23 @@ private extension PaletteTableViewCell {
     /// 初始化GIF動畫Block
     func initGifBlockSetting() {
         
-        let gifImageView = UIImageView(frame: myImageView.bounds)
-        gifImageView.contentMode = .scaleAspectFit
-        myImageView.addSubview(gifImageView)
+        let gifImageView = UIImageView(frame: myImageBaseView.bounds)
         
+        gifImageView.contentMode = .scaleAspectFit
+        myImageBaseView.addSubview(gifImageView)
         self.gifImageView = gifImageView
-                
+        
         animationBlock = {
             
             _ = gifImageView._GIF(url: $0) { [weak self] result in
-                                
+                
                 guard let this = self else { return }
                 
                 switch result {
                 case .failure(let error): myPrint(error)
                 case .success(let info):
                     info.pointer.pointee = this.isAnimationStop
-                    if (this.isAnimationStop) { this.myImageView.image = nil }
+                    if (this.isAnimationStop) { this.gifImageView?.image = nil }
                 }
             }
         }

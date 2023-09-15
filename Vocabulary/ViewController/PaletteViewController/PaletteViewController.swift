@@ -15,7 +15,7 @@ protocol PaletteViewDelegate {
     func tabBarHidden(_ isHidden: Bool)
 }
 
-// MARK: - 調色盤
+// MARK: - 相關設定 (調色盤 / 動畫設定)
 final class PaletteViewController: UIViewController {
     
     /// 要更新的顏色 (文字色 / 背景色)
@@ -285,10 +285,10 @@ private extension PaletteViewController {
     }
     
     /// 動畫背景設定
-    /// - Parameter type: Utility.HudGifType
-    func animatedBackground(with type: Constant.HudGifType) {
+    /// - Parameter type: Constant.AnimationGifType
+    func animatedBackground(with type: Constant.AnimationGifType) {
         
-        guard let gifUrl = type.fileURL() else { return }
+        guard let gifUrl = type.fileURL(with: .background) else { return }
         
         isAnimationStop = false
         
@@ -408,7 +408,7 @@ private extension PaletteViewController {
         else {
             return .failure(Constant.MyError.isEmpty)
         }
-                
+        
         return FileManager.default._writeText(to: url, text: jsonString)
     }
     

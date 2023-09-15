@@ -17,6 +17,11 @@ protocol ColorSettings {
     var color: String { get set }               // 文字顏色
 }
 
+// MARK: - 動畫設定檔 (Settings.json)
+protocol AnimationSettings {
+    var filename: String { get set }            // 動畫檔名
+}
+
 // MARK: - 可重複使用的Cell (UITableViewCell / UICollectionViewCell)
 protocol CellReusable: AnyObject {
     

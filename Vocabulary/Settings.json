@@ -36,25 +36,25 @@
           "medium": { "name": "一般", "value": 1, "color": "#f7fffc", "backgroundColor": "#0a4eff", "guessCount": 4 },
           "hard": { "name": "困難", "value": 2, "color": "#f7fffc", "backgroundColor": "#e10000", "guessCount": 3 }
       },
-      "animationGIF": {
-        "success": { "name": "執行成功", "filename": "Success.gif"},
-        "fail": { "name": "錯誤提示", "filename": "Fail.gif"},
-        "nice": { "name": "答題正確", "filename": "Nice.gif"},
-        "shudder": { "name": "答題錯誤", "filename": "Shudder.gif"},
-        "speak": { "name": "單字複習發聲", "filename": "Speak.gif"},
-        "download": { "name": "下載圖片", "filename": "Download.gif"},
-        "talking": { "name": "自我錄音", "filename": "Talking.gif"}
+      "animation": {
+        "success": { "name": "執行成功", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Success.gif" },
+        "fail": { "name": "錯誤提示", "value": 1, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Fail.gif" },
+        "nice": { "name": "答題正確", "value": 2, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Nice.gif" },
+        "shudder": { "name": "答題錯誤", "value": 3, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Shudder.gif" },
+        "speak": { "name": "單字發聲", "value": 4, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Speak.gif" },
+        "download": { "name": "下載圖片", "value": 5, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Download.gif" }
       },
-      "backgroundGIF" : {
-        "reading": { "name": "單字細節背景", "filename": "Reading.gif"},
-        "working": { "name": "單字複習背景", "filename": "Working.gif"},
-        "studing": { "name": "字典背景", "filename": "Studing.gif"},
-        "search": { "name": "單字搜尋背景", "filename": "Search.gif"},
-        "palette": { "name": "調色盤背景", "filename": "Palette.gif"},
-        "review": { "name": "複習總覽背景", "filename": "Review.gif"},
-        "solution": { "name": "單字解答背景", "filename": "Solution.gif"},
-        "sentence": { "name": "精選例句背景", "filename": "Sentence.gif"},
-        "others": { "name": "常用書籤背景", "filename": "Others.gif"}
+      "background" : {
+        "reading": { "name": "單字細節", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Reading.gif" },
+        "working": { "name": "單字複習", "value": 1, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Working.gif" },
+        "studing": { "name": "首頁字典", "value": 2, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Studing.gif" },
+        "search": { "name": "單字搜尋", "value": 3, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Search.gif" },
+        "palette": { "name": "調色盤", "value": 4, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Palette.gif" },
+        "review": { "name": "複習總覽", "value": 5, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Review.gif" },
+        "solution": { "name": "單字解答", "value": 6, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Solution.gif" },
+        "sentence": { "name": "精選例句", "value": 7, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Sentence.gif" },
+        "others": { "name": "常用書籤", "value": 8, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Others.gif" },
+        "talking": { "name": "自我錄音", "value": 9, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Talking.gif" }
       }
     }
   },
@@ -93,25 +93,25 @@
           "medium": { "name": "一般", "value": 1, "color": "#f7fffc", "backgroundColor": "#0a4eff", "guessCount": 4 },
           "hard": { "name": "困難", "value": 2, "color": "#f7fffc", "backgroundColor": "#e10000", "guessCount": 3 }
       },
-      "animationGIF": {
-        "success": { "name": "執行成功", "filename": "Success.gif"},
-        "fail": { "name": "錯誤提示", "filename": "Fail.gif"},
-        "nice": { "name": "答題正確", "filename": "Nice.gif"},
-        "shudder": { "name": "答題錯誤", "filename": "Shudder.gif"},
-        "speak": { "name": "單字複習發聲", "filename": "Speak.gif"},
-        "download": { "name": "下載圖片", "filename": "Download.gif"},
-        "talking": { "name": "自我錄音", "filename": "Talking.gif"}
+      "animation": {
+        "success": { "name": "執行成功", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Success.gif" },
+        "fail": { "name": "錯誤提示", "value": 1, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Fail.gif" },
+        "nice": { "name": "答題正確", "value": 2, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Nice.gif" },
+        "shudder": { "name": "答題錯誤", "value": 3, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Shudder.gif" },
+        "speak": { "name": "單字發聲", "value": 4, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Speak.gif" },
+        "download": { "name": "下載圖片", "value": 5, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Download.gif" }
       },
-      "backgroundGIF" : {
-        "reading": { "name": "單字細節背景", "filename": "Reading.gif"},
-        "working": { "name": "單字複習背景", "filename": "Working.gif"},
-        "studing": { "name": "字典背景", "filename": "Studing.gif"},
-        "search": { "name": "單字搜尋背景", "filename": "Search.gif"},
-        "palette": { "name": "調色盤背景", "filename": "Palette.gif"},
-        "review": { "name": "複習總覽背景", "filename": "Review.gif"},
-        "solution": { "name": "單字解答背景", "filename": "Solution.gif"},
-        "sentence": { "name": "精選例句背景", "filename": "Sentence.gif"},
-        "others": { "name": "常用書籤背景", "filename": "Others.gif"}
+      "background" : {
+        "reading": { "name": "單字細節", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Reading.gif" },
+        "working": { "name": "單字複習", "value": 1, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Working.gif" },
+        "studing": { "name": "首頁字典", "value": 2, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Studing.gif" },
+        "search": { "name": "單字搜尋", "value": 3, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Search.gif" },
+        "palette": { "name": "調色盤", "value": 4, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Palette.gif" },
+        "review": { "name": "複習總覽", "value": 5, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Review.gif" },
+        "solution": { "name": "單字解答", "value": 6, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Solution.gif" },
+        "sentence": { "name": "精選例句", "value": 7, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Sentence.gif" },
+        "others": { "name": "常用書籤", "value": 8, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Others.gif" },
+        "talking": { "name": "自我錄音", "value": 9, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Talking.gif" }
       }
     }
   },
@@ -145,25 +145,25 @@
           "medium": { "name": "一般", "value": 1, "color": "#f7fffc", "backgroundColor": "#0a4eff", "guessCount": 4 },
           "hard": { "name": "困難", "value": 2, "color": "#f7fffc", "backgroundColor": "#e10000", "guessCount": 3 }
       },
-            "animationGIF": {
-        "success": { "name": "執行成功", "filename": "Success.gif"},
-        "fail": { "name": "錯誤提示", "filename": "Fail.gif"},
-        "nice": { "name": "答題正確", "filename": "Nice.gif"},
-        "shudder": { "name": "答題錯誤", "filename": "Shudder.gif"},
-        "speak": { "name": "單字複習發聲", "filename": "Speak.gif"},
-        "download": { "name": "下載圖片", "filename": "Download.gif"},
-        "talking": { "name": "自我錄音", "filename": "Talking.gif"}
+      "animation": {
+        "success": { "name": "執行成功", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Success.gif" },
+        "fail": { "name": "錯誤提示", "value": 1, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Fail.gif" },
+        "nice": { "name": "答題正確", "value": 2, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Nice.gif" },
+        "shudder": { "name": "答題錯誤", "value": 3, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Shudder.gif" },
+        "speak": { "name": "單字發聲", "value": 4, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Speak.gif" },
+        "download": { "name": "下載圖片", "value": 5, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Download.gif" }
       },
-      "backgroundGIF" : {
-        "reading": { "name": "單字細節背景", "filename": "Reading.gif"},
-        "working": { "name": "單字複習背景", "filename": "Working.gif"},
-        "studing": { "name": "字典背景", "filename": "Studing.gif"},
-        "search": { "name": "單字搜尋背景", "filename": "Search.gif"},
-        "palette": { "name": "調色盤背景", "filename": "Palette.gif"},
-        "review": { "name": "複習總覽背景", "filename": "Review.gif"},
-        "solution": { "name": "單字解答背景", "filename": "Solution.gif"},
-        "sentence": { "name": "精選例句背景", "filename": "Sentence.gif"},
-        "others": { "name": "常用書籤背景", "filename": "Others.gif"}
+      "background" : {
+        "reading": { "name": "單字細節", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Reading.gif" },
+        "working": { "name": "單字複習", "value": 1, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Working.gif" },
+        "studing": { "name": "首頁字典", "value": 2, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Studing.gif" },
+        "search": { "name": "單字搜尋", "value": 3, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Search.gif" },
+        "palette": { "name": "調色盤", "value": 4, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Palette.gif" },
+        "review": { "name": "複習總覽", "value": 5, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Review.gif" },
+        "solution": { "name": "單字解答", "value": 6, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Solution.gif" },
+        "sentence": { "name": "精選例句", "value": 7, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Sentence.gif" },
+        "others": { "name": "常用書籤", "value": 8, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Others.gif" },
+        "talking": { "name": "自我錄音", "value": 9, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "filename": "Talking.gif" }
       }
     }
   }

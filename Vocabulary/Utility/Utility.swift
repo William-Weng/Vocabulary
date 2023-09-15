@@ -77,10 +77,10 @@ extension Utility {
 extension Utility {
     
     /// [顯示HUD](https://augmentedcode.io/2019/09/01/animating-gifs-and-apngs-with-cganimateimageaturlwithblock-in-swift/)
-    /// - Parameter type: [Constant.HudGifType](https://www.swiftjectivec.com/animating-images-using-image-io/)
-    func flashHUD(with type: Constant.HudGifType) {
+    /// - Parameter type: [Constant.AnimationGifType](https://www.swiftjectivec.com/animating-images-using-image-io/)
+    func flashHUD(with type: Constant.AnimationGifType) {
         
-        guard let gifUrl = type.fileURL(),
+        guard let gifUrl = type.fileURL(with: .animation),
               FileManager.default._fileExists(with: gifUrl).isExist
         else {
             WWHUD.shared.flash(effect: .default, backgroundColor: .black.withAlphaComponent(0.3), animation: 0.75, completion: nil); return
@@ -91,10 +91,10 @@ extension Utility {
     }
     
     /// 播放HUD
-    /// - Parameter type: Constant.HudGifType
-    func diplayHUD(with type: Constant.HudGifType) {
+    /// - Parameter type: Constant.AnimationGifType
+    func diplayHUD(with type: Constant.AnimationGifType) {
         
-        guard let gifUrl = type.fileURL(),
+        guard let gifUrl = type.fileURL(with: .animation),
               FileManager.default._fileExists(with: gifUrl).isExist
         else {
             WWHUD.shared.flash(effect: .default, backgroundColor: .black.withAlphaComponent(0.3), animation: 0.75, completion: nil); return

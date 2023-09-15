@@ -60,15 +60,28 @@ extension PaletteTableViewCell {
         else {
             return
         }
-        
+                
         self.indexPath = indexPath
         
         myLabel.text = info.name
         myLabel.textColor = UIColor(rgb: info.color)
-        myLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(Self.selectTextColor(_:))))
-        
         myView.backgroundColor = UIColor(rgb: info.backgroundColor)
-        myView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(Self.selectBackgroundColor(_:))))
+        
+        gestureRecognizerSetting(with: indexPath)
+    }
+    
+    /// 設定點下去的功能
+    /// - Parameter indexPath: IndexPath
+    func gestureRecognizerSetting(with indexPath: IndexPath) {
+        
+        guard let key = Constant.SettingsColorKey(rawValue: indexPath.section) else { return }
+        
+        switch key {
+        case .sentenceSpeech, .vocabularyLevel, .wordSpeech:
+            myLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(Self.selectTextColor(_:))))
+            myView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(Self.selectBackgroundColor(_:))))
+        case .animation, .background: break
+        }
     }
     
     /// 被點選到的顏色資訊

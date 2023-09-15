@@ -37,13 +37,14 @@ final class PaletteViewController: UIViewController {
     private var colorPicker: UIColorPickerViewController?
     private var scriptKey = "settingsJSON"
     private var scriptContext: WWJavaScriptContext?
-
+    private var galleryViewController: GalleryViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
         initScriptContext()
     }
-        
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewWillAppearAction()
@@ -119,7 +120,8 @@ extension PaletteViewController: PaletteViewDelegate {
     }
     
     func gallery(with indexPath: IndexPath) {
-        presentSearchVocabularyViewController(target: self, currentView: nil)
+        galleryViewController = UIStoryboard._instantiateViewController() as GalleryViewController
+        presentSearchVocabularyViewController(target: self, currentView: galleryViewController?.view)
     }
 }
 

@@ -49,6 +49,8 @@
 		819D69D0298E311D001AF48E /* SolutionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819D69CF298E311D001AF48E /* SolutionViewController.swift */; };
 		819D69D2298E31E1001AF48E /* SolutionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819D69D1298E31E1001AF48E /* SolutionTableViewCell.swift */; };
 		81AB5EF9299643960035216F /* OthersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AB5EF8299643960035216F /* OthersViewController.swift */; };
+		81B1AF7F2AB423DD0074103B /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B1AF7E2AB423DD0074103B /* GalleryViewController.swift */; };
+		81B1AF822AB42B0E0074103B /* GalleryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B1AF812AB42B0E0074103B /* GalleryTableViewCell.swift */; };
 		81BA793E29876CE000C0FD6C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 81BA793D29876CE000C0FD6C /* README.md */; };
 		81BA794029876DA800C0FD6C /* SearchWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA793F29876DA800C0FD6C /* SearchWordViewController.swift */; };
 		81BA794429877ACC00C0FD6C /* SearchWordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA794329877ACC00C0FD6C /* SearchWordTableViewCell.swift */; };
@@ -107,6 +109,8 @@
 		819D69CF298E311D001AF48E /* SolutionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolutionViewController.swift; sourceTree = "<group>"; };
 		819D69D1298E31E1001AF48E /* SolutionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolutionTableViewCell.swift; sourceTree = "<group>"; };
 		81AB5EF8299643960035216F /* OthersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OthersViewController.swift; sourceTree = "<group>"; };
+		81B1AF7E2AB423DD0074103B /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
+		81B1AF812AB42B0E0074103B /* GalleryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryTableViewCell.swift; sourceTree = "<group>"; };
 		81BA793D29876CE000C0FD6C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		81BA793F29876DA800C0FD6C /* SearchWordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWordViewController.swift; sourceTree = "<group>"; };
 		81BA794329877ACC00C0FD6C /* SearchWordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWordTableViewCell.swift; sourceTree = "<group>"; };
@@ -201,6 +205,7 @@
 				81CD85CD2990F040009C39FF /* SentenceViewController */,
 				81AB5EF72996437B0035216F /* OthersViewController */,
 				811DFC412AAAEFEB00BF480C /* PaletteViewController */,
+				81B1AF802AB423E20074103B /* GalleryViewController */,
 				64F6F42A29991B40001F4F66 /* LicenseWebViewController */,
 			);
 			path = ViewController;
@@ -322,6 +327,15 @@
 				64BA9EA1299764E600226DC8 /* OthersTableViewCell.swift */,
 			);
 			path = OthersViewController;
+			sourceTree = "<group>";
+		};
+		81B1AF802AB423E20074103B /* GalleryViewController */ = {
+			isa = PBXGroup;
+			children = (
+				81B1AF7E2AB423DD0074103B /* GalleryViewController.swift */,
+				81B1AF812AB42B0E0074103B /* GalleryTableViewCell.swift */,
+			);
+			path = GalleryViewController;
 			sourceTree = "<group>";
 		};
 		81CD85CD2990F040009C39FF /* SentenceViewController */ = {
@@ -501,8 +515,10 @@
 				64C18504297EB8E700D1D1B2 /* ListViewController.swift in Sources */,
 				64BA9EA2299764E600226DC8 /* OthersTableViewCell.swift in Sources */,
 				815E14782990F47700EC571D /* SentenceTableViewCell.swift in Sources */,
+				81B1AF822AB42B0E0074103B /* GalleryTableViewCell.swift in Sources */,
 				81BA794429877ACC00C0FD6C /* SearchWordTableViewCell.swift in Sources */,
 				64C184F5297E5CC600D1D1B2 /* Protocol.swift in Sources */,
+				81B1AF7F2AB423DD0074103B /* GalleryViewController.swift in Sources */,
 				6428588B297BBF8600DD7D88 /* AppDelegate.swift in Sources */,
 				64C184F9297E5F7A00D1D1B2 /* API.swift in Sources */,
 				641B5CA72984BEB500AB1C56 /* VolumeViewController.swift in Sources */,

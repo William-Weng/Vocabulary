@@ -25,8 +25,8 @@ protocol AnimationSettings {
 // MARK: - 可重複使用的Cell (UITableViewCell / UICollectionViewCell)
 protocol CellReusable: AnyObject {
     
-    static var identifier: String { get }           /// Cell的Identifier
-    var indexPath: IndexPath { get set }            /// Cell的IndexPath
+    static var identifier: String { get }       // Cell的Identifier
+    var indexPath: IndexPath { get set }        // Cell的IndexPath
     
     /// Cell的相關設定
     /// - Parameter indexPath: IndexPath

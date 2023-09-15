@@ -54,7 +54,7 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let list = filterGalleryImageList()
-        myPrint(list)
+        myPrint(list[safe: indexPath.row])
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -36,7 +36,7 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
-    
+        
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
         guard let cell = cell as? GalleryTableViewCell else { return }
@@ -52,6 +52,7 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         let list = filterGalleryImageList()
         myPrint(list)
     }
@@ -73,7 +74,7 @@ private extension GalleryViewController {
     /// 過濾GIF動畫資料夾的圖片列表
     /// - Parameter extension: 要留下來的副檔名
     /// - Returns: [String]
-    func filterGalleryImageList(with extension: String = "gif") -> [String] {
+    func filterGalleryImageList(with `extension`: String = "gif") -> [String] {
         
         guard let imageArray = galleryImageList() else { return [] }
         

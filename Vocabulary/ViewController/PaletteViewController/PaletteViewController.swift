@@ -61,7 +61,6 @@ final class PaletteViewController: UIViewController {
     
     deinit {
         PaletteTableViewCell.colorSettings = []
-        PaletteTableViewCell.paletteViewDelegate = nil
         scriptContext = nil
         NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
         myPrint("\(Self.self) init")

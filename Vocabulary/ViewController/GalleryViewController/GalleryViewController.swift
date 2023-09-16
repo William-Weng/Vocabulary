@@ -23,6 +23,7 @@ final class GalleryViewController: UIViewController {
     
     deinit {
         GalleryTableViewCell.galleryImages = []
+        paletteViewDelegate = nil
         myPrint("\(Self.self) init")
     }
 }
@@ -57,7 +58,7 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let filename = GalleryTableViewCell.galleryImages[safe: indexPath.row]
-        paletteViewDelegate?.animation(with: indexPath, filename: filename)
+        paletteViewDelegate?.animation(with: self.indexPath, filename: filename)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

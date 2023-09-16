@@ -62,9 +62,10 @@ final class PaletteViewController: UIViewController {
     }
     
     deinit {
+        NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
         PaletteTableViewCell.colorSettings = []
         scriptContext = nil
-        NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
+        othersViewDelegate = nil
         myPrint("\(Self.self) init")
     }
 }
@@ -130,22 +131,28 @@ extension PaletteViewController: PaletteViewDelegate {
     }
     
     func gallery(with indexPath: IndexPath) {
-        
-        let galleryViewController = UIStoryboard._instantiateViewController() as GalleryViewController
-        
-        galleryViewController.indexPath = indexPath
-        galleryViewController.paletteViewDelegate = self
-        self.galleryViewController = galleryViewController
-        
-        presentSearchVocabularyViewController(target: self, currentView: galleryViewController.view)
+        galleryAction(with: indexPath)
     }
     
     func animation(with indexPath: IndexPath, filename: String?) {
-        
-        guard let filename = filename else { return }
-        myPrint("\(indexPath) -> \(filename)")
-        
+        animationAction(with: indexPath, filename: filename)
         floatingViewController?.dismissViewController()
+    }
+    
+    func animationAction(with indexPath: IndexPath, filename: String?) {
+        
+        guard let filename = filename,
+              var setting = PaletteTableViewCell.colorSetting(with: indexPath) as? AnimationSettings
+        else {
+            return
+        }
+        
+        setting.filename = filename
+        
+        if let setting = setting as? ColorSettings {
+            PaletteTableViewCell.colorSettings[indexPath.section][indexPath.row] = setting
+            settingsJSONAction(with: indexPath, filename: filename)
+        }
     }
 }
 
@@ -267,6 +274,19 @@ private extension PaletteViewController {
         
         PaletteTableViewCell.colorSettings[indexPath.section][indexPath.row] = setting
         settingsJSONAction(with: indexPath)
+    }
+    
+    /// 選擇GIF動畫後的設定
+    /// - Parameter indexPath: IndexPath
+    func galleryAction(with indexPath: IndexPath) {
+        
+        let galleryViewController = UIStoryboard._instantiateViewController() as GalleryViewController
+        
+        galleryViewController.indexPath = indexPath
+        galleryViewController.paletteViewDelegate = self
+        self.galleryViewController = galleryViewController
+        
+        presentSearchVocabularyViewController(target: self, currentView: galleryViewController.view)
     }
     
     /// 找出可以要設定的Cell
@@ -411,23 +431,33 @@ private extension PaletteViewController {
         scriptContext = WWJavaScriptContext.build(script: script)
     }
     
-    /// 記錄調色的數值 => English.settings.vocabularyLevel
-    /// - Parameter indexPath: IndexPath
-    func settingsJSONAction(with indexPath: IndexPath) {
+    /// 記錄調整後的數值 => English.settings.vocabularyLevel
+    /// - Parameters:
+    ///   - indexPath: IndexPath
+    ///   - filename: String?
+    func settingsJSONAction(with indexPath: IndexPath, filename: String? = nil) {
         
         guard let tableName = Constant.tableName,
               let settingsColorKey = Constant.SettingsColorKey.allCases[safe: indexPath.section],
               let scriptContext = scriptContext,
-              let setting = PaletteTableViewCell.colorSetting(with: indexPath)
+              let setting = PaletteTableViewCell.colorSetting(with: indexPath),
+              let paramater = Optional.some("\(scriptKey).\(tableName).settings.\(settingsColorKey)")
         else {
             return
         }
-                
-        let paramater = "\(scriptKey).\(tableName).settings.\(settingsColorKey)"
-        let settingScript = """
-        \(paramater).\(setting.key).color = "\(setting.color)"
-        \(paramater).\(setting.key).backgroundColor = "\(setting.backgroundColor)"
-        """
+        
+        var settingScript = ""
+        
+        if setting is AnimationSettings, let filename = filename {
+            settingScript = """
+            \(paramater).\(setting.key).filename = "\(filename)"
+            """
+        } else {
+            settingScript = """
+            \(paramater).\(setting.key).color = "\(setting.color)"
+            \(paramater).\(setting.key).backgroundColor = "\(setting.backgroundColor)"
+            """
+        }
         
         _ = scriptContext.evaluateScript(settingScript)
     }

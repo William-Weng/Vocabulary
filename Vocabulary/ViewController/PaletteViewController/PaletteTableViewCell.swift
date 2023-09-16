@@ -60,6 +60,28 @@ final class PaletteTableViewCell: UITableViewCell, CellReusable {
 }
 
 // MARK: - 小工具
+extension PaletteTableViewCell {
+    
+    /// 取得該分類的總設定值
+    /// - Parameter section: Int
+    /// - Returns: [ColorSettings]?
+    static func colorSettings(with section: Int) -> [ColorSettings]? {
+        
+        let settings = Self.colorSettings[safe: section]
+        return settings
+    }
+    
+    /// 取得該設定值
+    /// - Parameter indexPath: IndexPath
+    /// - Returns: ColorSettings?
+    static func colorSetting(with indexPath: IndexPath) -> ColorSettings? {
+        
+        let setting = Self.colorSettings[safe: indexPath.section]?[safe: indexPath.row]
+        return setting
+    }
+}
+
+// MARK: - 小工具
 private extension PaletteTableViewCell {
     
     /// 初始化設定

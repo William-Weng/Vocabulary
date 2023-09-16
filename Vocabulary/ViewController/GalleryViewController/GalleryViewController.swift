@@ -13,9 +13,11 @@ final class GalleryViewController: UIViewController {
     @IBOutlet weak var myLabel: UILabel!
     @IBOutlet weak var myTableView: UITableView!
     
+    var indexPath: IndexPath = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        initSetting()
+        initSetting(with: indexPath)
     }
     
     deinit {
@@ -66,9 +68,13 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
 private extension GalleryViewController {
     
     /// 初始化設定
-    func initSetting() {
+    func initSetting(with indexPath: IndexPath) {
+
+        let colorSetting = PaletteTableViewCell.colorSetting(with: indexPath)
+        
         GalleryTableViewCell.galleryImages = filterGalleryImageList()
         myTableView._delegateAndDataSource(with: self)
+        myLabel.text = colorSetting?.name
     }
     
     /// 過濾GIF動畫資料夾的圖片列表

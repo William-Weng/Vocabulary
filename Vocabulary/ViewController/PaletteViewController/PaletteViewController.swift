@@ -75,8 +75,8 @@ extension PaletteViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let setting = PaletteTableViewCell.colorSettings[safe: section] else { return 0 }
-        return setting.count
+        guard let settings = PaletteTableViewCell.colorSettings(with: section) else { return 0 }
+        return settings.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -134,8 +134,12 @@ extension PaletteViewController: PaletteViewDelegate {
     }
     
     func gallery(with indexPath: IndexPath) {
-        galleryViewController = UIStoryboard._instantiateViewController() as GalleryViewController
-        presentSearchVocabularyViewController(target: self, currentView: galleryViewController?.view)
+        
+        let galleryViewController = UIStoryboard._instantiateViewController() as GalleryViewController
+        
+        galleryViewController.indexPath = indexPath
+        self.galleryViewController = galleryViewController
+        presentSearchVocabularyViewController(target: self, currentView: galleryViewController.view)
     }
 }
 
@@ -238,8 +242,7 @@ private extension PaletteViewController {
         defer { didSelectPaletteInfo = (nil, nil, nil) }
         
         guard let indexPath = info.indexPath,
-              let colorSettings = PaletteTableViewCell.colorSettings[safe: indexPath.section],
-              var setting = colorSettings[safe: indexPath.row],
+              var setting = PaletteTableViewCell.colorSetting(with: indexPath),
               let color = info.color,
               let type = info.type,
               let cell = visibleCell(tableView, cellForRowAt: indexPath)
@@ -408,7 +411,7 @@ private extension PaletteViewController {
         guard let tableName = Constant.tableName,
               let settingsColorKey = Constant.SettingsColorKey.allCases[safe: indexPath.section],
               let scriptContext = scriptContext,
-              let setting = PaletteTableViewCell.colorSettings[safe: indexPath.section]?[safe: indexPath.row]
+              let setting = PaletteTableViewCell.colorSetting(with: indexPath)
         else {
             return
         }

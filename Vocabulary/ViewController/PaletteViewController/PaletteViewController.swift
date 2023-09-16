@@ -138,22 +138,6 @@ extension PaletteViewController: PaletteViewDelegate {
         animationAction(with: indexPath, filename: filename)
         floatingViewController?.dismissViewController()
     }
-    
-    func animationAction(with indexPath: IndexPath, filename: String?) {
-        
-        guard let filename = filename,
-              var setting = PaletteTableViewCell.colorSetting(with: indexPath) as? AnimationSettings
-        else {
-            return
-        }
-        
-        setting.filename = filename
-        
-        if let setting = setting as? ColorSettings {
-            PaletteTableViewCell.colorSettings[indexPath.section][indexPath.row] = setting
-            settingsJSONAction(with: indexPath, filename: filename)
-        }
-    }
 }
 
 // MARK: - 小工具
@@ -392,7 +376,7 @@ private extension PaletteViewController {
             this.settingsActionResult(result)
         }
         
-        let actionRestore = UIAlertAction(title: "選原", style: .destructive) { [weak self] _ in
+        let actionRestore = UIAlertAction(title: "還原", style: .destructive) { [weak self] _ in
             
             guard let this = self else { return }
             
@@ -533,5 +517,29 @@ private extension PaletteViewController {
         
         guard let cell = cell as? PaletteTableViewCell else { return }
         cell.removeGifBlock()
+    }
+    
+    /// 動畫取選後的更新動作
+    /// - Parameters:
+    ///   - indexPath: IndexPath
+    ///   - filename: String?
+    func animationAction(with indexPath: IndexPath, filename: String?) {
+        
+        guard let filename = filename,
+              let cell = visibleCell(myTableView, cellForRowAt: indexPath),
+              var setting = PaletteTableViewCell.colorSetting(with: indexPath) as? AnimationSettings
+        else {
+            return
+        }
+        
+        setting.filename = filename
+        
+        if let setting = setting as? ColorSettings {
+            
+            PaletteTableViewCell.colorSettings[indexPath.section][indexPath.row] = setting
+            settingsJSONAction(with: indexPath, filename: filename)
+            animtionDidEndDisplaying(myTableView, willDisplay: cell, forRowAt: indexPath)
+            animtionWillDisplay(myTableView, willDisplay: cell, forRowAt: indexPath)
+        }
     }
 }

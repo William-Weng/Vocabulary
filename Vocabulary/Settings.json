@@ -40,9 +40,8 @@
         "success": { "name": "執行成功", "value": 0, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Success.gif" },
         "fail": { "name": "錯誤提示", "value": 1, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Fail.gif" },
         "nice": { "name": "答題正確", "value": 2, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Nice.gif" },
-        "shudder": { "name": "答題錯誤", "value": 3, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Shudder.gif" },
-        "speak": { "name": "單字發聲", "value": 4, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Speak.gif" },
-        "download": { "name": "下載圖片", "value": 5, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Download.gif" }
+        "shudder": { "name": "問題閱讀", "value": 3, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Shudder.gif" },
+        "speak": { "name": "單字發聲", "value": 4, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Speak.gif" }
       },
       "background" : {
         "reading": { "name": "單字細節", "value": 0, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Reading.gif" },
@@ -98,8 +97,7 @@
         "fail": { "name": "錯誤提示", "value": 1, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Fail.gif" },
         "nice": { "name": "答題正確", "value": 2, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Nice.gif" },
         "shudder": { "name": "答題錯誤", "value": 3, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Shudder.gif" },
-        "speak": { "name": "單字發聲", "value": 4, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Speak.gif" },
-        "download": { "name": "下載圖片", "value": 5, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Download.gif" }
+        "speak": { "name": "問題閱讀", "value": 4, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Speak.gif" }
       },
       "background" : {
         "reading": { "name": "單字細節", "value": 0, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Reading.gif" },
@@ -150,8 +148,7 @@
         "fail": { "name": "錯誤提示", "value": 1, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Fail.gif" },
         "nice": { "name": "答題正確", "value": 2, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Nice.gif" },
         "shudder": { "name": "答題錯誤", "value": 3, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Shudder.gif" },
-        "speak": { "name": "單字發聲", "value": 4, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Speak.gif" },
-        "download": { "name": "下載圖片", "value": 5, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Download.gif" }
+        "speak": { "name": "問題閱讀", "value": 4, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Speak.gif" }
       },
       "background" : {
         "reading": { "name": "單字細節", "value": 0, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Reading.gif" },

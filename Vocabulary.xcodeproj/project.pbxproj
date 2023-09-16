@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6414E9B229BC71E5005B3EAD /* License.html in Resources */ = {isa = PBXBuildFile; fileRef = 6414E9B129BC71E5005B3EAD /* License.html */; };
 		6417E8512AAD285D00512881 /* PaletteHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6417E8502AAD285D00512881 /* PaletteHeader.xib */; };
 		6418FC1A2A6DCDED00493B8D /* WWAppInstallSource in Frameworks */ = {isa = PBXBuildFile; productRef = 6418FC192A6DCDED00493B8D /* WWAppInstallSource */; };
 		641B5CA72984BEB500AB1C56 /* VolumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641B5CA62984BEB500AB1C56 /* VolumeViewController.swift */; };
@@ -26,6 +25,7 @@
 		6492ADD72986BBFA00E1B59B /* GamjaFlower-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADD62986BBFA00E1B59B /* GamjaFlower-Regular.ttf */; };
 		6492ADDD2986BF6E00E1B59B /* jf-openhuninn-1.1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADDC2986BF6D00E1B59B /* jf-openhuninn-1.1.ttf */; };
 		64A11DF829B2315D00688C90 /* MyTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A11DF729B2315D00688C90 /* MyTabBar.swift */; };
+		64B94D7A2AB5DDE8006B317D /* README.html in Resources */ = {isa = PBXBuildFile; fileRef = 64B94D792AB5DDE8006B317D /* README.html */; };
 		64BA9EA2299764E600226DC8 /* OthersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BA9EA1299764E600226DC8 /* OthersTableViewCell.swift */; };
 		64C184F5297E5CC600D1D1B2 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C184F4297E5CC600D1D1B2 /* Protocol.swift */; };
 		64C184F7297E5D4C00D1D1B2 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C184F6297E5D4C00D1D1B2 /* MainTableViewCell.swift */; };
@@ -68,7 +68,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6414E9B129BC71E5005B3EAD /* License.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = License.html; sourceTree = SOURCE_ROOT; };
 		6417E8502AAD285D00512881 /* PaletteHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaletteHeader.xib; sourceTree = "<group>"; };
 		641B5CA62984BEB500AB1C56 /* VolumeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeViewController.swift; sourceTree = "<group>"; };
 		64285887297BBF8600DD7D88 /* Vocabulary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vocabulary.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +87,7 @@
 		6492ADD62986BBFA00E1B59B /* GamjaFlower-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GamjaFlower-Regular.ttf"; sourceTree = "<group>"; };
 		6492ADDC2986BF6D00E1B59B /* jf-openhuninn-1.1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "jf-openhuninn-1.1.ttf"; sourceTree = "<group>"; };
 		64A11DF729B2315D00688C90 /* MyTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabBar.swift; sourceTree = "<group>"; };
+		64B94D792AB5DDE8006B317D /* README.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = README.html; sourceTree = SOURCE_ROOT; };
 		64BA9EA1299764E600226DC8 /* OthersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OthersTableViewCell.swift; sourceTree = "<group>"; };
 		64C184F4297E5CC600D1D1B2 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		64C184F6297E5D4C00D1D1B2 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
@@ -226,7 +226,7 @@
 				642C5E712A18487800AC290B /* @Image */,
 				642448672986B57F0038449E /* Font */,
 				64285893297BBF8700DD7D88 /* Assets.xcassets */,
-				6414E9B129BC71E5005B3EAD /* License.html */,
+				64B94D792AB5DDE8006B317D /* README.html */,
 				81BA793D29876CE000C0FD6C /* README.md */,
 			);
 			path = Material;
@@ -477,6 +477,7 @@
 				81D31C482AA5BAB8009454E7 /* Settings.json in Resources */,
 				64285897297BBF8700DD7D88 /* LaunchScreen.storyboard in Resources */,
 				64285894297BBF8700DD7D88 /* Assets.xcassets in Resources */,
+				64B94D7A2AB5DDE8006B317D /* README.html in Resources */,
 				6417E8512AAD285D00512881 /* PaletteHeader.xib in Resources */,
 				81BA793E29876CE000C0FD6C /* README.md in Resources */,
 				6492ADD72986BBFA00E1B59B /* GamjaFlower-Regular.ttf in Resources */,
@@ -484,7 +485,6 @@
 				81201C4D298B58C200291485 /* InterpretView.xib in Resources */,
 				64285892297BBF8600DD7D88 /* Main.storyboard in Resources */,
 				6492ADDD2986BF6E00E1B59B /* jf-openhuninn-1.1.ttf in Resources */,
-				6414E9B229BC71E5005B3EAD /* License.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -696,7 +696,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.6;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -734,7 +734,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.6;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

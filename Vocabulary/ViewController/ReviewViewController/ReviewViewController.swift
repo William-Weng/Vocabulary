@@ -42,6 +42,7 @@ final class ReviewViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         initSetting()
         initSpeakImage()
         initReviewWordList()
@@ -99,7 +100,12 @@ extension ReviewViewController: AVSpeechSynthesizerDelegate {
 
 // MARK: - MyNavigationControllerDelegate
 extension ReviewViewController: MyNavigationControllerDelegate {
-    func refreshRootViewController() { initReviewWordList() }
+    
+    func refreshRootViewController() {
+        pauseBackgroundAnimation()
+        initSpeakImage()
+        initReviewWordList()
+    }
 }
 
 // MARK: - 小工具
@@ -110,6 +116,7 @@ private extension ReviewViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(Self.guessVocabulary(_:)))
         speakImageView.addGestureRecognizer(tapGesture)
+        speakImageView.image = nil
         
         navigationItem.backBarButtonItem = UIBarButtonItem()
     }

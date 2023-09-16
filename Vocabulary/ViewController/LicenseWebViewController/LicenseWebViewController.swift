@@ -69,9 +69,9 @@ private extension LicenseWebViewController {
     func initSetting() {
         
         let webView = WKWebView._build(delegate: self, frame: view.bounds, contentInsetAdjustmentBehavior: .never)
-        self.view = webView
-        
-        let url = Bundle.main.url(forResource: "License", withExtension: "html")
+        let url = Bundle.main.url(forResource: "README.html", withExtension: nil)
+
+        self.view = webView        
         _ = webView._load(urlString: url?.absoluteString, timeoutInterval: 60)
         
         webView.scrollView.showsHorizontalScrollIndicator = false

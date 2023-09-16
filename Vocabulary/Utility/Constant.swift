@@ -224,13 +224,12 @@ extension Constant {
         case solution
         case sentence
         case others
-        case download
         case talking
 
         /// 檔案路徑
         /// - Returns: URL?
         /// - Parameter folder: AnimationGifFolder
-        func fileURL(with folder: AnimationGifFolder) -> URL? {
+        func fileURL(with folder: AnimationGifFolder, filename: String? = nil) -> URL? {
             
             guard let info = self.info(with: folder),
                   let backgroundFolderUrl = folder.url()
@@ -238,7 +237,7 @@ extension Constant {
                 return nil
             }
             
-            return backgroundFolderUrl._appendPath(info.filename)
+            return backgroundFolderUrl._appendPath(filename ?? info.filename)
         }
         
         /// 取得Settings上的資訊

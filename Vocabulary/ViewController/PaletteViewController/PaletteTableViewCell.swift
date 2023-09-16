@@ -135,15 +135,18 @@ extension PaletteTableViewCell {
     func executeAnimation(with indexPath: IndexPath) {
         
         guard let colorSetting = Self.colorSettings[safe: indexPath.section],
-              let settings = colorSetting[safe: indexPath.row],
-              let key = Constant.SettingsColorKey(rawValue: indexPath.section)
+              let key = Constant.SettingsColorKey(rawValue: indexPath.section),
+              let setting = colorSetting[safe: indexPath.row]
         else {
             return
         }
         
+        var filename: String?
+        
         let folderType: Constant.AnimationGifFolder = (key == .animation) ? .animation : .background
         
-        if let url = Constant.AnimationGifType(rawValue: settings.key)?.fileURL(with: folderType) {
+        if let setting = setting as? AnimationSettings { filename = setting.filename }
+        if let url = Constant.AnimationGifType(rawValue: setting.key)?.fileURL(with: folderType, filename: filename) {
             isAnimationStop = false
             animationBlock?(url)
         }
@@ -154,7 +157,7 @@ extension PaletteTableViewCell {
         
         animationBlock = nil
         isAnimationStop = true
-        gifImageView?.removeFromSuperview()
+        myImageBaseView.subviews.forEach { $0.removeFromSuperview() }
         gifImageView = nil
     }
     

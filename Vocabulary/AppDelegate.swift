@@ -88,11 +88,14 @@ extension AppDelegate {
             return
         }
         
+        Constant.tableNameIndex = Utility.shared.tableNameIndex(Constant.tableName)
+                
         Constant.SettingsJSON.generalInformations = generalInformations(with: parseSettingsDictionary)
         Constant.SettingsJSON.vocabularyLevelInformations = vocabularyLevelInformations(with: settings)
         Constant.SettingsJSON.sentenceSpeechInformations = sentenceSpeechInformations(with: settings)
         Constant.SettingsJSON.wordSpeechInformations = wordSpeechInformations(with: settings)
-        Constant.tableNameIndex = Utility.shared.tableNameIndex(Constant.tableName)
+        Constant.SettingsJSON.animationInformations = animationInformations(with: settings)
+        Constant.SettingsJSON.backgroundInformations = backgroundInformations(with: settings)
     }
     
     /// 解析預設的SettingsJSON的設定檔
@@ -453,6 +456,22 @@ private extension AppDelegate {
         return array.sorted { return $1.value > $0.value }
     }
     
+    /// 解析HUD動畫檔案的設定值
+    /// - Parameter settings: [String: Any]
+    /// - Returns: [Settings.SentenceSpeechInformation]
+    func animationInformations(with settings: [String: Any]) -> [Settings.AnimationInformation] {
+        let array = colorSettingsArray(with: settings, key: .animation, type: Settings.AnimationInformation.self)
+        return array.sorted { return $1.value > $0.value }
+    }
+    
+    /// 解析背景動畫檔案的設定值
+    /// - Parameter settings: [String: Any]
+    /// - Returns: [Settings.SentenceSpeechInformation]
+    func backgroundInformations(with settings: [String: Any]) -> [Settings.BackgroundInformation] {
+        let array = colorSettingsArray(with: settings, key: .background, type: Settings.BackgroundInformation.self)
+        return array.sorted { return $1.value > $0.value }
+    }
+    
     /// 解析Settings有關顏色的設定檔值
     /// - Parameters:
     ///   - settings: [String: Any]
@@ -461,7 +480,7 @@ private extension AppDelegate {
     /// - Returns: [T]
     func colorSettingsArray<T: Decodable>(with settings: [String: Any], key: Constant.SettingsColorKey, type: T.Type) -> [T] {
         
-        guard let informations = settings[key.rawValue] as? [String: Any] else { return [] }
+        guard let informations = settings[key.value()] as? [String: Any] else { return [] }
         
         let array = informations.keys.compactMap { key -> T? in
             

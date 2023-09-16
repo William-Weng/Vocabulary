@@ -117,7 +117,7 @@ private extension ReviewViewController {
     /// 初始化SpeakImage
     func initSpeakImage() {
          
-        guard let fileURL = Constant.HudGifType.speak.fileURL(),
+        guard let fileURL = Constant.AnimationGifType.speak.fileURL(with: .animation),
               let image = UIImage(contentsOfFile: fileURL.path)
         else {
             return
@@ -170,11 +170,11 @@ private extension ReviewViewController {
     
     /// [按下語音播放猜單字的動作 (聲音播完 && 動畫完成)](https://stackoverflow.com/questions/40856037/how-to-know-when-an-avspeechutterance-has-finished-so-as-to-continue-app-activi)
     /// - Parameters:
-    ///   - type: Utility.HudGifType
+    ///   - type: Constant.AnimationGifType
     ///   - loopCount: 動畫次數
-    func speakVocabularyAction(with type: Constant.HudGifType = .speak) {
+    func speakVocabularyAction(with type: Constant.AnimationGifType = .speak) {
         
-        guard let gifUrl = type.fileURL() else { return }
+        guard let gifUrl = type.fileURL(with: .animation) else { return }
         
         isNextVocabulary = false
         isGuessAnimationStop = false
@@ -222,10 +222,10 @@ private extension ReviewViewController {
     }
     
     /// 動畫背景設定
-    /// - Parameter type: Utility.HudGifType
-    func animatedBackground(with type: Constant.HudGifType) {
+    /// - Parameter type: Constant.AnimationGifType
+    func animatedBackground(with type: Constant.AnimationGifType) {
         
-        guard let gifUrl = type.fileURL() else { return }
+        guard let gifUrl = type.fileURL(with: .background) else { return }
         
         isAnimationStop = false
         
@@ -398,7 +398,7 @@ private extension ReviewViewController {
             
             defer {
                 
-                let hudType: Constant.HudGifType = (!isCorrect) ? .shudder : .nice
+                let hudType: Constant.AnimationGifType = (!isCorrect) ? .shudder : .nice
                 
                 _ = this.solutionAction(with: vocabularyList, isCorrect: isCorrect)
                 Utility.shared.flashHUD(with: hudType)

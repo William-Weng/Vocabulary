@@ -14,10 +14,13 @@ final class Constant: NSObject {
     
     // MARK: - SettingsJSON
     final class SettingsJSON {
+        
         static var vocabularyLevelInformations: [Settings.VocabularyLevelInformation] = []
         static var sentenceSpeechInformations: [Settings.SentenceSpeechInformation] = []
         static var wordSpeechInformations: [Settings.WordSpeechInformation] = []
         static var generalInformations: [Settings.GeneralInformation] = []
+        static var animationInformations: [Settings.AnimationInformation] = []
+        static var backgroundInformations: [Settings.BackgroundInformation] = []
     }
     
     @WWUserDefaults("CurrentTableName") static var tableName: String?
@@ -87,21 +90,39 @@ extension Constant {
         case append     // 加入新單字
         case search     // 搜尋該單字
     }
-        
+    
     /// 能夠設定顏色的Settings設定檔
-    enum SettingsColorKey: String, CaseIterable {
+    enum SettingsColorKey: Int, CaseIterable {
         
         case vocabularyLevel
         case sentenceSpeech
         case wordSpeech
+        case animation
+        case background
+        
+        /// 取得Key值
+        /// - Returns: String
+        func value() -> String {
+            
+            switch self {
+            case .vocabularyLevel: return "vocabularyLevel"
+            case .sentenceSpeech: return "sentenceSpeech"
+            case .wordSpeech: return "wordSpeech"
+            case .animation: return "animation"
+            case .background: return "background"
+            }
+        }
         
         /// 顯示名稱
         /// - Returns: String
         func name() -> String {
+            
             switch self {
             case .vocabularyLevel: return "單字等級"
             case .sentenceSpeech: return "精選例句"
             case .wordSpeech: return "單字詞性"
+            case .animation: return "提示動畫"
+            case .background: return "背景動畫"
             }
         }
         
@@ -113,6 +134,8 @@ extension Constant {
             case .vocabularyLevel: return Constant.SettingsJSON.vocabularyLevelInformations
             case .sentenceSpeech: return Constant.SettingsJSON.sentenceSpeechInformations
             case .wordSpeech: return Constant.SettingsJSON.wordSpeechInformations
+            case .animation: return Constant.SettingsJSON.animationInformations
+            case .background: return Constant.SettingsJSON.backgroundInformations
             }
         }
     }
@@ -158,31 +181,64 @@ extension Constant {
         }
     }
     
-    /// HUD動畫Type
-    enum HudGifType: String {
+    /// GIF動畫分類資料夾
+    enum AnimationGifFolder {
         
-        case success = "Success.gif"
-        case fail = "Fail.gif"
-        case reading = "Reading.gif"
-        case working = "Working.gif"
-        case studing = "Studing.gif"
-        case search = "Search.gif"
-        case palette = "Palette.gif"
-        case review = "Review.gif"
-        case nice = "Nice.gif"
-        case speak = "Speak.gif"
-        case shudder = "Shudder.gif"
-        case solution = "Solution.gif"
-        case sentence = "Sentence.gif"
-        case others = "Others.gif"
-        case download = "Download.gif"
-        case talking = "Talking.gif"
+        case animation
+        case background
+        
+        func url() -> URL? {
+            
+            switch self {
+            case .animation: return Constant.FileFolder.animation.url()
+            case .background: return Constant.FileFolder.animation.url()
+            }
+        }
+    }
+    
+    /// GIF動畫Type
+    enum AnimationGifType: String {
+        
+        case success
+        case fail
+        case reading
+        case working
+        case studing
+        case search
+        case palette
+        case review
+        case nice
+        case speak
+        case shudder
+        case solution
+        case sentence
+        case others
+        case download
+        case talking
 
         /// 檔案路徑
         /// - Returns: URL?
-        func fileURL() -> URL? {
-            let backgroundFolderUrl = Constant.FileFolder.animation.url()
-            return backgroundFolderUrl?._appendPath(self.rawValue)
+        /// - Parameter folder: AnimationGifFolder
+        func fileURL(with folder: AnimationGifFolder) -> URL? {
+            
+            guard let info = self.info(with: folder),
+                  let backgroundFolderUrl = folder.url()
+            else {
+                return nil
+            }
+            
+            return backgroundFolderUrl._appendPath(info.filename)
+        }
+        
+        /// 取得Settings上的資訊
+        /// - Parameter folder: AnimationGifFolder
+        /// - Returns: AnimationSettings?
+        func info(with folder: AnimationGifFolder) -> AnimationSettings? {
+            
+            switch folder {
+            case .animation: return Constant.SettingsJSON.animationInformations.first { $0.key == self.rawValue }
+            case .background: return Constant.SettingsJSON.backgroundInformations.first { $0.key == self.rawValue }
+            }
         }
     }
     

@@ -12,11 +12,16 @@ final class PaletteTableViewCell: UITableViewCell, CellReusable {
     
     @IBOutlet weak var myView: UIView!
     @IBOutlet weak var myLabel: UILabel!
+    @IBOutlet weak var myImageBaseView: UIView!
     
     static var paletteViewDelegate: PaletteViewDelegate?
     static var colorSettings: [[ColorSettings]] = []
     
     var indexPath: IndexPath = []
+    
+    private var gifImageView: UIImageView?
+    private var isAnimationStop = false
+    private var animationBlock: ((URL) -> Void)?
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -43,32 +48,53 @@ final class PaletteTableViewCell: UITableViewCell, CellReusable {
         Self.paletteViewDelegate?.palette(with: indexPath, colorType: .background, info: info)
     }
     
+    /// 選擇GIF圖片
+    /// - Parameter sender: UITapGestureRecognizer
+    @objc func animationGallery(_ sender: UITapGestureRecognizer) {
+        Self.paletteViewDelegate?.gallery(with: indexPath)
+    }
+    
     deinit {
         myPrint("\(Self.self) init")
     }
 }
 
 // MARK: - 小工具
-extension PaletteTableViewCell {
+private extension PaletteTableViewCell {
     
     /// 初始化設定
     /// - Parameter indexPath: IndexPath
     func configure(for indexPath: IndexPath) {
         
         guard let colorSetting = Self.colorSettings[safe: indexPath.section],
-              let info = colorSetting[safe: indexPath.row]
+              let settings = colorSetting[safe: indexPath.row]
         else {
             return
         }
         
         self.indexPath = indexPath
         
-        myLabel.text = info.name
-        myLabel.textColor = UIColor(rgb: info.color)
-        myLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(Self.selectTextColor(_:))))
+        myLabel.text = settings.name
+        myLabel.textColor = UIColor(rgb: settings.color)
+        myView.backgroundColor = UIColor(rgb: settings.backgroundColor)
         
-        myView.backgroundColor = UIColor(rgb: info.backgroundColor)
-        myView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(Self.selectBackgroundColor(_:))))
+        gestureRecognizerSetting(with: indexPath, settings: settings)
+    }
+    
+    /// 設定點下去的功能
+    /// - Parameter indexPath: IndexPath
+    func gestureRecognizerSetting(with indexPath: IndexPath, settings: ColorSettings) {
+        
+        guard let key = Constant.SettingsColorKey(rawValue: indexPath.section) else { return }
+                
+        switch key {
+        case .sentenceSpeech, .vocabularyLevel, .wordSpeech:
+            myLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(Self.selectTextColor(_:))))
+            myView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(Self.selectBackgroundColor(_:))))
+
+        case .animation, .background:
+            myView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(Self.animationGallery(_:))))
+        }
     }
     
     /// 被點選到的顏色資訊
@@ -77,5 +103,61 @@ extension PaletteTableViewCell {
         
         let info: Constant.PaletteInformation = (myLabel.textColor, myView.backgroundColor)
         return info
+    }
+}
+
+// MARK: - GIF動畫
+extension PaletteTableViewCell {
+    
+    /// 執行GIF動畫
+    func executeAnimation(with indexPath: IndexPath) {
+        
+        guard let colorSetting = Self.colorSettings[safe: indexPath.section],
+              let settings = colorSetting[safe: indexPath.row],
+              let key = Constant.SettingsColorKey(rawValue: indexPath.section)
+        else {
+            return
+        }
+        
+        let folderType: Constant.AnimationGifFolder = (key == .animation) ? .animation : .background
+        
+        if let url = Constant.AnimationGifType(rawValue: settings.key)?.fileURL(with: folderType) {
+            isAnimationStop = false
+            animationBlock?(url)
+        }
+    }
+    
+    /// 移除GIF動畫Block
+    func removeGifBlock() {
+        
+        animationBlock = nil
+        isAnimationStop = true
+        gifImageView?.removeFromSuperview()
+        gifImageView = nil
+    }
+    
+    /// 初始化GIF動畫Block
+    func initGifBlockSetting() {
+        
+        let gifImageView = UIImageView(frame: myImageBaseView.bounds)
+        
+        gifImageView.contentMode = .scaleAspectFit
+        myImageBaseView.addSubview(gifImageView)
+        self.gifImageView = gifImageView
+        
+        animationBlock = {
+            
+            _ = gifImageView._GIF(url: $0) { [weak self] result in
+                
+                guard let this = self else { return }
+                
+                switch result {
+                case .failure(let error): myPrint(error)
+                case .success(let info):
+                    info.pointer.pointee = this.isAnimationStop
+                    if (this.isAnimationStop) { this.gifImageView?.image = nil }
+                }
+            }
+        }
     }
 }

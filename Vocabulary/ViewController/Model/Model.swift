@@ -55,6 +55,28 @@ final class Settings {
         var backgroundColor: String     // 背景顏色
         var color: String               // 文字顏色
     }
+    
+    // MARK: - HUD動畫類型設定 (Settings.json)
+    struct AnimationInformation: Decodable, ColorSettings, AnimationSettings {
+        
+        var key: String                 // 英文代碼
+        var name: String                // 顯示名稱
+        var value: Int                  // 資料庫數值
+        var backgroundColor: String     // 背景顏色
+        var color: String               // 文字顏色
+        var filename: String            // 檔案名稱
+    }
+    
+    // MARK: - 背景動畫類型設定 (Settings.json)
+    struct BackgroundInformation: Decodable, ColorSettings, AnimationSettings {
+        
+        var key: String                 // 英文代碼
+        var name: String                // 顯示名稱
+        var value: Int                  // 資料庫數值
+        var backgroundColor: String     // 背景顏色
+        var color: String               // 文字顏色
+        var filename: String            // 檔案名稱
+    }
 }
 
 // MARK: - 單字內容

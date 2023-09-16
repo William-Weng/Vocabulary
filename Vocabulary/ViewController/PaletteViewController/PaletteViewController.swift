@@ -7,15 +7,17 @@
 
 import UIKit
 import WWJavaScriptContext
+import WWFloatingViewController
 
 // MARK: - OthersViewDelegate
 protocol PaletteViewDelegate {
     
     func palette(with indexPath: IndexPath, colorType: PaletteViewController.ColorType, info: Constant.PaletteInformation)
     func tabBarHidden(_ isHidden: Bool)
+    func gallery(with indexPath: IndexPath)
 }
 
-// MARK: - 調色盤
+// MARK: - 相關設定 (調色盤 / 動畫設定)
 final class PaletteViewController: UIViewController {
     
     /// 要更新的顏色 (文字色 / 背景色)
@@ -35,13 +37,14 @@ final class PaletteViewController: UIViewController {
     private var colorPicker: UIColorPickerViewController?
     private var scriptKey = "settingsJSON"
     private var scriptContext: WWJavaScriptContext?
-
+    private var galleryViewController: GalleryViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
         initScriptContext()
     }
-        
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewWillAppearAction()
@@ -57,9 +60,9 @@ final class PaletteViewController: UIViewController {
     }
     
     deinit {
-        NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
         PaletteTableViewCell.colorSettings = []
         scriptContext = nil
+        NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
         myPrint("\(Self.self) init")
     }
 }
@@ -79,13 +82,27 @@ extension PaletteViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         return paletteTableViewHeader(tableView, viewForHeaderInSection: section)
     }
-        
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = paletteTableViewCell(tableView, cellForRowAt: indexPath)
         cell.configure(with: indexPath)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        guard let cell = cell as? PaletteTableViewCell else { return }
+        
+        cell.initGifBlockSetting()
+        cell.executeAnimation(with: indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        guard let cell = cell as? PaletteTableViewCell else { return }
+        cell.removeGifBlock()
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -114,6 +131,11 @@ extension PaletteViewController: PaletteViewDelegate {
     
     func tabBarHidden(_ isHidden: Bool) {
         tabBarHiddenAction(isHidden)
+    }
+    
+    func gallery(with indexPath: IndexPath) {
+        galleryViewController = UIStoryboard._instantiateViewController() as GalleryViewController
+        presentSearchVocabularyViewController(target: self, currentView: galleryViewController?.view)
     }
 }
 
@@ -259,6 +281,18 @@ private extension PaletteViewController {
         return cell as? PaletteTableViewCell
     }
     
+    /// 產生WWFloatingViewController
+    /// - Parameters:
+    ///   - target: UIViewController
+    ///   - currentView: UIView?
+    func presentSearchVocabularyViewController(target: UIViewController, currentView: UIView?) {
+        
+        let floatingViewController = WWFloatingView.shared.maker()
+        floatingViewController.configure(animationDuration: 0.25, backgroundColor: .black.withAlphaComponent(0.1), multiplier: 0.55, completePercent: 0.5, currentView: currentView)
+        
+        target.present(floatingViewController, animated: false)
+    }
+    
     /// 畫面將要出現的動作
     func viewWillAppearAction() {
         othersViewDelegate?.navigationBarHidden(false)
@@ -285,10 +319,10 @@ private extension PaletteViewController {
     }
     
     /// 動畫背景設定
-    /// - Parameter type: Utility.HudGifType
-    func animatedBackground(with type: Constant.HudGifType) {
+    /// - Parameter type: Constant.AnimationGifType
+    func animatedBackground(with type: Constant.AnimationGifType) {
         
-        guard let gifUrl = type.fileURL() else { return }
+        guard let gifUrl = type.fileURL(with: .background) else { return }
         
         isAnimationStop = false
         
@@ -412,7 +446,7 @@ private extension PaletteViewController {
         else {
             return .failure(Constant.MyError.isEmpty)
         }
-                
+        
         return FileManager.default._writeText(to: url, text: jsonString)
     }
     

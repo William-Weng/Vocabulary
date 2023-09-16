@@ -17,11 +17,16 @@ protocol ColorSettings {
     var color: String { get set }               // 文字顏色
 }
 
+// MARK: - 動畫設定檔 (Settings.json)
+protocol AnimationSettings {
+    var filename: String { get set }            // 動畫檔名
+}
+
 // MARK: - 可重複使用的Cell (UITableViewCell / UICollectionViewCell)
 protocol CellReusable: AnyObject {
     
-    static var identifier: String { get }           /// Cell的Identifier
-    var indexPath: IndexPath { get set }            /// Cell的IndexPath
+    static var identifier: String { get }       // Cell的Identifier
+    var indexPath: IndexPath { get set }        // Cell的IndexPath
     
     /// Cell的相關設定
     /// - Parameter indexPath: IndexPath

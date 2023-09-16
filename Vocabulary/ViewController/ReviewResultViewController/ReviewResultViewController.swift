@@ -134,10 +134,10 @@ private extension ReviewResultViewController {
     }
     
     /// 動畫背景設定
-    /// - Parameter type: Utility.HudGifType
-    func animatedBackground(with type: Constant.HudGifType) {
+    /// - Parameter type: Constant.AnimationGifType
+    func animatedBackground(with type: Constant.AnimationGifType) {
         
-        guard let gifUrl = type.fileURL() else { return }
+        guard let gifUrl = type.fileURL(with: .background) else { return }
         
         isAnimationStop = false
         

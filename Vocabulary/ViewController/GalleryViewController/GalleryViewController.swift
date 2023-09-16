@@ -80,9 +80,9 @@ private extension GalleryViewController {
     }
     
     /// 過濾GIF動畫資料夾的圖片列表
-    /// - Parameter extension: 要留下來的副檔名
+    /// - Parameter extensions: 要留下來的副檔名們 (gif, png, apng)
     /// - Returns: [String]
-    func filterGalleryImageList(with `extension`: String = "gif") -> [String] {
+    func filterGalleryImageList(with extensions: Set<String> = ["gif", "png", "apng"]) -> [String] {
         
         guard let imageArray = galleryImageList() else { return [] }
         
@@ -91,7 +91,7 @@ private extension GalleryViewController {
             let array = filename.split(separator: ".")
             
             if (array.count < 2 ) { return false }
-            if (array.last?.lowercased() != `extension`.lowercased()) { return false }
+            if (!extensions.contains(array.last?.lowercased() ?? "")) { return false }
             
             return true
         }

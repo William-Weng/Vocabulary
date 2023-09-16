@@ -23,7 +23,7 @@ final class PaletteHeader: UIView {
     }
     
     func configure(with section: Int) {
-        myLabel.text = groupTitle(with: section)
+        myLabel.text = Self.groupColorKey(with: section)?.name()
     }
     
     deinit { myPrint("\(Self.self) deinit") }
@@ -31,6 +31,19 @@ final class PaletteHeader: UIView {
 
 // MARK: - 小工具
 extension PaletteHeader {
+    
+    /// 設定顏色群組的標題設定值
+    /// - Parameter section: Int
+    /// - Returns: String?
+    static func groupColorKey(with section: Int) -> Constant.SettingsColorKey? {
+        
+        guard let colorKey = Constant.SettingsColorKey.allCases[safe: section] else { return nil }
+        return colorKey
+    }
+}
+
+// MARK: - 小工具
+private extension PaletteHeader {
     
     /// 載入XIB的一些基本設定
     func initViewFromXib() {
@@ -41,14 +54,5 @@ extension PaletteHeader {
         bundle.loadNibNamed(xibName, owner: self, options: nil)
         view.frame = bounds
         addSubview(view)
-    }
-    
-    /// 設定顏色群組的標題文字
-    /// - Parameter section: Int
-    /// - Returns: String?
-    func groupTitle(with section: Int) -> String? {
-        
-        guard let colorKey = Constant.SettingsColorKey.allCases[safe: section] else { return nil }
-        return colorKey.name()
     }
 }

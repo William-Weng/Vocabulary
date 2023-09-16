@@ -783,7 +783,7 @@
 			repositoryURL = "https://github.com/William-Weng/WWToast";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.1.0;
 			};
 		};
 		817BDE442AA596650093AD92 /* XCRemoteSwiftPackageReference "WWUserDefaults" */ = {
@@ -807,7 +807,7 @@
 			repositoryURL = "https://github.com/William-Weng/WWHUD";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.1.0;
 			};
 		};
 		81E1F8F12A1F2C9A00EB0139 /* XCRemoteSwiftPackageReference "WWSQLite3Manager" */ = {
@@ -823,7 +823,7 @@
 			repositoryURL = "https://github.com/William-Weng/WWSlider";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.2.0;
 			};
 		};
 		81E1F8FD2A1F2D9B00EB0139 /* XCRemoteSwiftPackageReference "WWNetworking" */ = {
@@ -839,7 +839,7 @@
 			repositoryURL = "https://github.com/William-Weng/WWFloatingView.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.2.0;
 			};
 		};
 		81EB0ED72A1F2E1300EE2A83 /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */ = {

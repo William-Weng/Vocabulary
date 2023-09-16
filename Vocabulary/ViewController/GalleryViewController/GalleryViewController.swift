@@ -14,6 +14,7 @@ final class GalleryViewController: UIViewController {
     @IBOutlet weak var myTableView: UITableView!
     
     var indexPath: IndexPath = []
+    var paletteViewDelegate: PaletteViewDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,8 +56,8 @@ extension GalleryViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let list = filterGalleryImageList()
-        myPrint(list[safe: indexPath.row])
+        let filename = GalleryTableViewCell.galleryImages[safe: indexPath.row]
+        paletteViewDelegate?.animation(with: indexPath, filename: filename)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

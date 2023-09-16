@@ -100,6 +100,17 @@ extension Constant {
         case animation
         case background
         
+        /// 以文字去搜找Key值
+        /// - Parameter value: String?
+        /// - Returns: SettingsColorKey?
+        static func findKey(_ value: String?) -> SettingsColorKey? {
+            
+            guard let value = value else { return nil }
+            
+            let key = Self.allCases.first { value == $0.value() }
+            return key
+        }
+        
         /// 取得Key值
         /// - Returns: String
         func value() -> String {

@@ -15,6 +15,7 @@ protocol PaletteViewDelegate {
     func palette(with indexPath: IndexPath, colorType: PaletteViewController.ColorType, info: Constant.PaletteInformation)
     func tabBarHidden(_ isHidden: Bool)
     func gallery(with indexPath: IndexPath)
+    func animation(with indexPath: IndexPath, filename: String?)
 }
 
 // MARK: - 相關設定 (調色盤 / 動畫設定)
@@ -38,6 +39,7 @@ final class PaletteViewController: UIViewController {
     private var scriptKey = "settingsJSON"
     private var scriptContext: WWJavaScriptContext?
     private var galleryViewController: GalleryViewController?
+    private var floatingViewController: WWFloatingViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,17 +94,11 @@ extension PaletteViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-        guard let cell = cell as? PaletteTableViewCell else { return }
-        
-        cell.initGifBlockSetting()
-        cell.executeAnimation(with: indexPath)
+        animtionWillDisplay(tableView, willDisplay: cell, forRowAt: indexPath)
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-        guard let cell = cell as? PaletteTableViewCell else { return }
-        cell.removeGifBlock()
+        animtionDidEndDisplaying(tableView, willDisplay: cell, forRowAt: indexPath)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -116,7 +112,7 @@ extension PaletteViewController: UIColorPickerViewControllerDelegate {
     func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
         didSelectPaletteInfo.color = viewController.selectedColor
     }
-        
+    
     func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
         colorPickerViewControllerDidFinishAction(with: myTableView, info: didSelectPaletteInfo)
     }
@@ -138,8 +134,18 @@ extension PaletteViewController: PaletteViewDelegate {
         let galleryViewController = UIStoryboard._instantiateViewController() as GalleryViewController
         
         galleryViewController.indexPath = indexPath
+        galleryViewController.paletteViewDelegate = self
         self.galleryViewController = galleryViewController
+        
         presentSearchVocabularyViewController(target: self, currentView: galleryViewController.view)
+    }
+    
+    func animation(with indexPath: IndexPath, filename: String?) {
+        
+        guard let filename = filename else { return }
+        myPrint("\(indexPath) -> \(filename)")
+        
+        floatingViewController?.dismissViewController()
     }
 }
 
@@ -292,6 +298,7 @@ private extension PaletteViewController {
         
         let floatingViewController = WWFloatingView.shared.maker()
         floatingViewController.configure(animationDuration: 0.25, backgroundColor: .black.withAlphaComponent(0.1), multiplier: 0.55, completePercent: 0.5, currentView: currentView)
+        self.floatingViewController = floatingViewController
         
         target.present(floatingViewController, animated: false)
     }
@@ -459,5 +466,42 @@ private extension PaletteViewController {
         
         guard let url = FileManager.default._documentDirectory()?.appendingPathComponent(Constant.settingsJSON) else { return .failure(Constant.MyError.isEmpty) }
         return FileManager.default._removeFile(at: url)
+    }
+}
+
+// MARK: - 處理GIF動畫效能問題
+private extension PaletteViewController {
+    
+    /// GIF動畫Cell要出現時的處理
+    /// - Parameters:
+    ///   - tableView: UITableView
+    ///   - cell: UITableViewCell
+    ///   - indexPath: IndexPath
+    func animtionWillDisplay(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        guard let cell = cell as? PaletteTableViewCell,
+              let colorKey = PaletteHeader.groupColorKey(with: indexPath.section),
+              let key = Constant.SettingsColorKey.findKey(colorKey.value())
+        else {
+            return
+        }
+        
+        switch key {
+        case .sentenceSpeech, .vocabularyLevel, .wordSpeech: break
+        case .animation, .background:
+            cell.initGifBlockSetting()
+            cell.executeAnimation(with: indexPath)
+        }
+    }
+    
+    /// GIF動畫Cell消失後的處理
+    /// - Parameters:
+    ///   - tableView: UITableView
+    ///   - cell: UITableViewCell
+    ///   - indexPath: IndexPath
+    func animtionDidEndDisplaying(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        guard let cell = cell as? PaletteTableViewCell else { return }
+        cell.removeGifBlock()
     }
 }

@@ -87,15 +87,15 @@ extension AppDelegate {
         else {
             return
         }
-        
-        Constant.tableNameIndex = Utility.shared.tableNameIndex(Constant.tableName)
-                
+                        
         Constant.SettingsJSON.generalInformations = generalInformations(with: parseSettingsDictionary)
         Constant.SettingsJSON.vocabularyLevelInformations = vocabularyLevelInformations(with: settings)
         Constant.SettingsJSON.sentenceSpeechInformations = sentenceSpeechInformations(with: settings)
         Constant.SettingsJSON.wordSpeechInformations = wordSpeechInformations(with: settings)
         Constant.SettingsJSON.animationInformations = animationInformations(with: settings)
         Constant.SettingsJSON.backgroundInformations = backgroundInformations(with: settings)
+        
+        Constant.tableNameIndex = Utility.shared.tableNameIndex(Constant.tableName)
     }
     
     /// 解析預設的SettingsJSON的設定檔

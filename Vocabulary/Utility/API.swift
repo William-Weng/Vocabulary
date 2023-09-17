@@ -197,11 +197,14 @@ extension API {
         if let count = count { limit = SQLite3Condition.Limit().build(count: count, offset: offset) }
         
         switch searchType {
-        case .word:
+        case .word, .alphabet:
+            
             let type: Constant.DataTableType = .list(info.key)
             condition = SQLite3Condition.Where().like(key: "\(searchType.field())", condition: "\(text)%")
             result = database.select(tableName: type.name(), type: VocabularyList.self, where: condition, orderBy: orderBy, limit: limit)
+            
         case .interpret:
+            
             let type: Constant.DataTableType = .default(info.key)
             condition = SQLite3Condition.Where().like(key: "\(searchType.field())", condition: "%\(text)%")
             result = database.select(tableName: type.name(), type: Vocabulary.self, where: condition, orderBy: orderBy, limit: limit)

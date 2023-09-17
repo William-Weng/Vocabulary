@@ -354,9 +354,9 @@ extension Utility {
         let dictionary: [[String : Any]]
         
         switch searchType {
-        case .word:
+        case .word, .alphabet:
             dictionary = API.shared.searchList(like: text, searchType: searchType, info: info, offset: offset)
-            
+        
         case .interpret:
             
             let array = API.shared.searchList(like: text, searchType: searchType, info: info, count: nil, offset: 0)

@@ -358,6 +358,7 @@ extension Constant {
         
         case word = 0       // 單字
         case interpret = 1  // 字義
+        case alphabet = 2   // 音標字母
         
         /// 轉成中文字
         /// - Returns: String
@@ -365,6 +366,7 @@ extension Constant {
             switch self {
             case .word: return "單字"
             case .interpret: return "字義"
+            case .alphabet: return "音標"
             }
         }
         
@@ -374,6 +376,7 @@ extension Constant {
             switch self {
             case .word: return "word"
             case .interpret: return "interpret"
+            case .alphabet: return "alphabet"
             }
         }
         
@@ -383,6 +386,7 @@ extension Constant {
             switch self {
             case .word: return .darkGray
             case .interpret: return .systemBlue
+            case .alphabet: return .systemPink
             }
         }
     }

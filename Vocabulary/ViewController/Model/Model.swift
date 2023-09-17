@@ -103,7 +103,7 @@ final class VocabularyList: Codable {
     let count: Int          // 單字內容數量
     let review: Int         // 複習的次數
     let word: String        // 單字
-    let alphabet: String?   // 音標
+    let alphabet: String?   // 音標字母
     let favorite: Int?      // 我的最愛
     let createTime: Date    // 建立時間
     let updateTime: Date    // 更新時間

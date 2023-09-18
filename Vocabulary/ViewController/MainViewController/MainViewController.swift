@@ -47,10 +47,12 @@ final class MainViewController: UIViewController {
     private var currentScrollDirection: Constant.ScrollDirection = .down
     private var disappearImage: UIImage?
     private var refreshControl: UIRefreshControl!
+    private var gifImageView: UIImageView?
+    private var animationBlock: ((URL) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         initSetting()
         initMenu()
     }
@@ -114,6 +116,7 @@ extension MainViewController: MainViewDelegate {
 
 // MARK: - MyNavigationControllerDelegate
 extension MainViewController: MyNavigationControllerDelegate {
+    
     func refreshRootViewController() { reloadVocabulary(isFavorite: isFavorite) }
 }
 
@@ -154,9 +157,9 @@ private extension MainViewController {
         
         myTableView._delegateAndDataSource(with: self)
         myTableView.addSubview(refreshControl)
+        myImageView.image = UIImage()
         
         reloadVocabulary(isFavorite: isFavorite)
-        
         viewDidTransitionAction()
         backupDatabaseAction(delay: Constant.autoBackupDelaySecond)
     }
@@ -486,33 +489,6 @@ private extension MainViewController {
         viewController.searchText = searchText
     }
     
-    /// 動畫背景設定
-    /// - Parameter type: Utility.AnimationGifType
-    func animatedBackground(with type: Constant.AnimationGifType) {
-        
-        guard let gifUrl = type.fileURL(with: .background) else { return }
-        
-        isAnimationStop = false
-        
-        _ = myImageView._GIF(url: gifUrl) { [weak self] result in
-            
-            guard let this = self else { return }
-            
-            switch result {
-            case .failure(let error): myPrint(error)
-            case .success(let info):
-                info.pointer.pointee = this.isAnimationStop
-                if (this.isAnimationStop) { this.myImageView.image = this.disappearImage }
-            }
-        }
-    }
-    
-    /// 暫停背景動畫
-    func pauseBackgroundAnimation() {
-        disappearImage = myImageView.image
-        isAnimationStop = true
-    }
-    
     /// [滑動時TabBar是否隱藏的規則設定 => NavigationBar也一起處理](https://www.jianshu.com/p/539b265bcb5d)
     /// - Parameter scrollView: UIScrollView
     func tabrBarHidden(with scrollView: UIScrollView) {
@@ -810,7 +786,11 @@ private extension MainViewController {
     func dictionaryAlertActionMaker(with info: Settings.GeneralInformation) -> UIAlertAction {
         
         let title = "\(info.code._flagEmoji()) \(info.name)"
-        let action = UIAlertAction(title: title, style: .default) { _ in Utility.shared.changeDictionary(with: info) }
+        let action = UIAlertAction(title: title, style: .default) { _ in
+            Utility.shared.changeDictionary(with: info)
+            self.isAnimationStop = true
+            self.animatedBackground(with: .studing)
+        }
         
         return action
     }
@@ -904,6 +884,62 @@ private extension MainViewController {
         }
         
         return action
+    }
+}
+
+// MARK: - GIF動畫設定
+private extension MainViewController {
+    
+    /// 動畫背景設定
+    /// - Parameter type: Utility.AnimationGifType
+    func animatedBackground(with type: Constant.AnimationGifType) {
+        
+        guard let gifUrl = type.fileURL(with: .background) else { return }
+        
+        removeGifBlock()
+        initGifBlockSetting()
+        isAnimationStop = false
+        animationBlock?(gifUrl)
+    }
+    
+    /// 暫停背景動畫
+    func pauseBackgroundAnimation() {
+        disappearImage = myImageView.image
+        isAnimationStop = true
+    }
+    
+    /// 初始化GIF動畫Block
+    func initGifBlockSetting() {
+        
+        let gifImageView = UIImageView()
+        
+        gifImageView.contentMode = .scaleAspectFill
+        gifImageView._autolayout(on: myImageView)
+        self.gifImageView = gifImageView
+        
+        animationBlock = { url in
+            
+            _ = gifImageView._GIF(url: url) { [weak self] result in
+                                
+                guard let this = self else { return }
+                
+                switch result {
+                case .failure(let error): myPrint(error)
+                case .success(let info):
+                    info.pointer.pointee = this.isAnimationStop
+                    if (this.isAnimationStop) { this.gifImageView?.image = this.disappearImage }
+                }
+            }
+        }
+    }
+    
+    /// 移除GIF動畫Block
+    func removeGifBlock() {
+        
+        isAnimationStop = true
+        animationBlock = nil
+        gifImageView?.removeFromSuperview()
+        gifImageView = nil
     }
 }
 

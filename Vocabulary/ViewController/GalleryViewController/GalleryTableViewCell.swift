@@ -96,10 +96,10 @@ extension GalleryTableViewCell {
     /// 初始化GIF動畫Block
     func initGifBlockSetting() {
         
-        let gifImageView = UIImageView(frame: myImageBaseView.bounds)
+        let gifImageView = UIImageView()
         
         gifImageView.contentMode = .scaleAspectFit
-        myImageBaseView.addSubview(gifImageView)
+        gifImageView._autolayout(on: myImageBaseView)
         self.gifImageView = gifImageView
         
         animationBlock = { url in

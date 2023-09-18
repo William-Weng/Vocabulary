@@ -128,7 +128,7 @@
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ozz-F6-LnA"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.58431372549019611" green="0.81960784313725488" blue="0.76470588235294112" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Ocl-Gj-SPo" firstAttribute="centerY" secondItem="gY9-e7-Ny4" secondAttribute="centerY" id="MfA-XQ-JFC"/>
                             <constraint firstItem="rY5-5G-TaN" firstAttribute="trailing" secondItem="ozz-F6-LnA" secondAttribute="trailing" id="NeC-i8-VJr"/>

@@ -64,7 +64,7 @@
     "name": "日文字典",
     "code": "JP",
     "voice": "ja-JP",
-    "dictionaryURL": "https://dictionary.goo.ne.jp/word/<word>",
+    "dictionaryURL": "https://mazii.net/zh-TW/search/word/jatw/<word>",
     "defineURL": "https://www.google.com/search?q=define+<word>",
     "font": "KleeOne-SemiBold",
     "settings": {

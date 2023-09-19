@@ -157,7 +157,6 @@ private extension MainViewController {
         
         myTableView._delegateAndDataSource(with: self)
         myTableView.addSubview(refreshControl)
-        myImageView.image = UIImage()
         
         reloadVocabulary(isFavorite: isFavorite)
         viewDidTransitionAction()

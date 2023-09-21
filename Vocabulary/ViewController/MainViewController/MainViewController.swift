@@ -844,10 +844,10 @@ private extension MainViewController {
         let title: String
         
         switch musicLoopType {
-        case .infinity: title = "🎧 - \(music.filename)"
-        case .loop: title = "🎹 - \(musicLoopType.toString())"
-        case .shuffle: title = "🎹 - \(musicLoopType.toString())"
-        case .mute: title = "🔒 - \(musicLoopType.toString())"
+        case .infinity: title = "🔊 - \(music.filename)"
+        case .loop: title = "💿 - \(musicLoopType.toString())"
+        case .shuffle: title = "🎧 - \(musicLoopType.toString())"
+        case .mute: title = "🚫 - \(musicLoopType.toString())"
         }
         
         let action = UIAction(title: title) { [weak self] _ in

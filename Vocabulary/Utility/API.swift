@@ -33,10 +33,17 @@ extension API {
         let type: Constant.DataTableType = .list(info.key)
         let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
         var condition: SQLite3Condition.Where?
-        var orderBy: SQLite3Condition.OrderBy? = SQLite3Condition.OrderBy().item(key: "updateTime", type: .descending)
+        var orderBy: SQLite3Condition.OrderBy? = SQLite3Condition.OrderBy().item(key: "createTime", type: .descending)
         
-        if let words = words, !words.isEmpty { condition = SQLite3Condition.Where().in(key: "word", values: words); orderBy = SQLite3Condition.OrderBy().item(key: "word", type: .ascending) }
-        if (isFavorite) { condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: 1) }
+        if let words = words, !words.isEmpty {
+            condition = SQLite3Condition.Where().in(key: "word", values: words)
+            orderBy = SQLite3Condition.OrderBy().item(key: "word", type: .ascending)
+        }
+        
+        if (isFavorite) {
+            condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: isFavorite._int())
+            orderBy = SQLite3Condition.OrderBy().item(key: "updateTime", type: .descending)
+        }
         
         let result = database.select(tableName: type.name(), type: VocabularyList.self, where: condition, orderBy: orderBy, limit: limit)
         return result.array
@@ -313,8 +320,8 @@ extension API {
         
         let type: Constant.DataTableType = .sentence(generalInfo.key)
         let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
-        let orderBy = SQLite3Condition.OrderBy().item(key: "createTime", type: .descending)
         
+        var orderBy = SQLite3Condition.OrderBy().item(key: "createTime", type: .descending)
         var condition: SQLite3Condition.Where?
 
         if let speechInfo = speechInfo {
@@ -326,6 +333,7 @@ extension API {
         if isFavorite {
             var _condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: isFavorite._int())
             if let speechInfo = speechInfo { _condition = _condition.andCompare(key: "speech", type: .equal, value: speechInfo.value) }
+            orderBy = SQLite3Condition.OrderBy().item(key: "updateTime", type: .descending)
             condition = _condition
         }
         
@@ -396,12 +404,16 @@ extension API {
         
         guard let database = Constant.database else { return [] }
         
-        let orderBy = SQLite3Condition.OrderBy().item(key: "updateTime", type: .descending)
+        var orderBy = SQLite3Condition.OrderBy().item(key: "createTime", type: .descending)
         var condition: SQLite3Condition.Where?
         var limit: SQLite3Condition.Limit?
         
         if let count = count { limit = SQLite3Condition.Limit().build(count: count, offset: offset) }
-        if (isFavorite) { condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: isFavorite._int()) }
+        
+        if (isFavorite) {
+            condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: isFavorite._int())
+            orderBy = SQLite3Condition.OrderBy().item(key: "updateTime", type: .descending)
+        }
         
         let type: Constant.DataTableType = .bookmarkSite(info.key)
         let result = database.select(tableName: type.name(), type: BookmarkSite.self, where: condition, orderBy: orderBy, limit: limit)
@@ -695,6 +707,7 @@ extension API {
         
         let items: [SQLite3Database.InsertItem] = [
             (key: "favorite", value: _isFavorite),
+            (key: "updateTime", value: Date()._localTime()),
         ]
         
         let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)

@@ -198,7 +198,7 @@ extension DispatchQueue {
     }
 }
 
-// MARK: - Collection (override class function)
+// MARK: - Collection (override function)
 extension Collection {
 
     /// [為Array加上安全取值特性 => nil](https://stackoverflow.com/questions/25329186/safe-bounds-checked-array-lookup-in-swift-through-optional-bindings)
@@ -230,7 +230,7 @@ extension Set where Self.Element: Hashable {
     }
 }
 
-// MARK: - Array (class function)
+// MARK: - Array (function)
 extension Array {
     
     /// [仿javaScript的forEach()](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
@@ -419,7 +419,7 @@ extension String {
     }
 }
 
-// MARK: - String (private class function)
+// MARK: - String (private function)
 private extension String {
     
     /// [計算SHA家族的雜湊值](https://zh.wikipedia.org/zh-tw/SHA家族)

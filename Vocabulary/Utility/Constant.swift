@@ -38,6 +38,7 @@ final class Constant: NSObject {
     static let databaseFileExtension = "db"
     static let recordFilename = "record.wav"
     static let settingsJSON = "Settings.json"
+    static let fontname = "jf-openhuninn-1.1"
     
     static var tableNameIndex: Int = 0
     static var volume: Float = 0.1

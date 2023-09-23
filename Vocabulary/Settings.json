@@ -32,11 +32,11 @@
          "slang": { "name": "俚語", "value": 6, "color": "#f7fffc", "backgroundColor": "#7920b0" }
       },
       "vocabularyLevel": {
-          "simple": { "name": "容易", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "guessCount": 2 },
+          "simple": { "name": "容易", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "guessCount": 1 },
           "easy": { "name": "簡單", "value": 1, "color": "#f7fffc", "backgroundColor": "#00b373", "guessCount": 2 },
-          "medium": { "name": "一般", "value": 2, "color": "#f7fffc", "backgroundColor": "#0a4eff", "guessCount": 2 },
-          "hard": { "name": "困難", "value": 3, "color": "#f7fffc", "backgroundColor": "#e10000", "guessCount": 2 },
-          "profound": { "name": "深奧", "value": 4, "color": "#f7fffc", "backgroundColor": "#7920b0", "guessCount": 2 }
+          "medium": { "name": "一般", "value": 2, "color": "#f7fffc", "backgroundColor": "#0a4eff", "guessCount": 3 },
+          "hard": { "name": "困難", "value": 3, "color": "#f7fffc", "backgroundColor": "#e10000", "guessCount": 3 },
+          "profound": { "name": "深奧", "value": 4, "color": "#f7fffc", "backgroundColor": "#7920b0", "guessCount": 1 }
       },
       "animation": {
         "success": { "name": "執行成功", "value": 0, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Success.gif" },
@@ -90,11 +90,11 @@
           "slang": { "name": "俚語", "value": 6, "color": "#f7fffc", "backgroundColor": "#7920b0" }
       },
       "vocabularyLevel": {
-          "simple": { "name": "容易", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "guessCount": 2 },
+          "simple": { "name": "容易", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "guessCount": 1 },
           "easy": { "name": "簡單", "value": 1, "color": "#f7fffc", "backgroundColor": "#00b373", "guessCount": 2 },
-          "medium": { "name": "一般", "value": 2, "color": "#f7fffc", "backgroundColor": "#0a4eff", "guessCount": 2 },
-          "hard": { "name": "困難", "value": 3, "color": "#f7fffc", "backgroundColor": "#e10000", "guessCount": 2 },
-          "profound": { "name": "深奧", "value": 4, "color": "#f7fffc", "backgroundColor": "#7920b0", "guessCount": 2 }
+          "medium": { "name": "一般", "value": 2, "color": "#f7fffc", "backgroundColor": "#0a4eff", "guessCount": 3 },
+          "hard": { "name": "困難", "value": 3, "color": "#f7fffc", "backgroundColor": "#e10000", "guessCount": 3 },
+          "profound": { "name": "深奧", "value": 4, "color": "#f7fffc", "backgroundColor": "#7920b0", "guessCount": 1 }
       },
       "animation": {
         "success": { "name": "執行成功", "value": 0, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Success.gif" },
@@ -143,11 +143,11 @@
           "slang": { "name": "俚語", "value": 6, "color": "#f7fffc", "backgroundColor": "#7920b0" }
       },
       "vocabularyLevel": {
-          "simple": { "name": "容易", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "guessCount": 2 },
+          "simple": { "name": "容易", "value": 0, "color": "#f7fffc", "backgroundColor": "#1c1c1b", "guessCount": 1 },
           "easy": { "name": "簡單", "value": 1, "color": "#f7fffc", "backgroundColor": "#00b373", "guessCount": 2 },
-          "medium": { "name": "一般", "value": 2, "color": "#f7fffc", "backgroundColor": "#0a4eff", "guessCount": 2 },
-          "hard": { "name": "困難", "value": 3, "color": "#f7fffc", "backgroundColor": "#e10000", "guessCount": 2 },
-          "profound": { "name": "深奧", "value": 4, "color": "#f7fffc", "backgroundColor": "#7920b0", "guessCount": 2 }
+          "medium": { "name": "一般", "value": 2, "color": "#f7fffc", "backgroundColor": "#0a4eff", "guessCount": 3 },
+          "hard": { "name": "困難", "value": 3, "color": "#f7fffc", "backgroundColor": "#e10000", "guessCount": 3 },
+          "profound": { "name": "深奧", "value": 4, "color": "#f7fffc", "backgroundColor": "#7920b0", "guessCount": 1 }
       },
       "animation": {
         "success": { "name": "執行成功", "value": 0, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Success.gif" },

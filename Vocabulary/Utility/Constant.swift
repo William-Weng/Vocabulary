@@ -39,6 +39,7 @@ final class Constant: NSObject {
     static let recordFilename = "record.wav"
     static let settingsJSON = "Settings.json"
     static let fontname = "jf-openhuninn-1.1"
+    static let searchGuessWordDays = 3
     
     static var tableNameIndex: Int = 0
     static var volume: Float = 0.1

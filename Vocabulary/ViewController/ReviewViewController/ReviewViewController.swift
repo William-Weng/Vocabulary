@@ -425,7 +425,7 @@ private extension ReviewViewController {
         guard let generalInfo = Utility.shared.generalSettings(index: Constant.tableNameIndex) else { return [] }
         
         var list: [[String : Any]] = []
-        Constant.SettingsJSON.vocabularyLevelInformations.forEach { list += API.shared.searchGuessWordList(with: $0, generalInfo: generalInfo, offset: 0) }
+        Constant.SettingsJSON.vocabularyLevelInformations.forEach { list += API.shared.searchGuessWordList(with: $0, days: Constant.searchGuessWordDays, generalInfo: generalInfo, offset: 0) }
         
         return list.shuffled()
     }

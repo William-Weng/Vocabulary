@@ -268,14 +268,14 @@ extension API {
     /// 搜尋要猜的單字列表 (複習)
     /// - Parameters:
     ///   - levelInfo: 難度等級資訊
-    ///   - days: 幾天前後的資料
+    ///   - days: 幾天前的資料
     ///   - generalInfo: Settings.GeneralInformation
     ///   - offset: 偏移量
     /// - Returns: [[String : Any]]
-    func searchGuessWordList(with levelInfo: Settings.VocabularyLevelInformation, days: Int = -3, generalInfo: Settings.GeneralInformation, offset: Int) -> [[String : Any]] {
+    func searchGuessWordList(with levelInfo: Settings.VocabularyLevelInformation, days: Int = 0, generalInfo: Settings.GeneralInformation, offset: Int) -> [[String : Any]] {
         
         guard let database = Constant.database,
-              let time = Date()._adding(component: .day, value: days)?._localTime()
+              let time = Date()._adding(component: .day, value: -days)?._localTime()
         else {
             return []
         }

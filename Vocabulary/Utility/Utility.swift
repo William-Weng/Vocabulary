@@ -124,7 +124,7 @@ extension Utility {
     ///   - rate: 語速 (0% ~ 100%)
     ///   - pitchMultiplier: 音調 (50% ~ 200%)
     ///   - volume: 音量 (0% ~ 100%)
-    func speak(string: String, code: String, rate: Float = 0.4, pitchMultiplier: Float = 1.5, volume: Float = 1.0) {
+    func speak(string: String, code: String, rate: Float = 0.4, pitchMultiplier: Float = 1.0, volume: Float = 1.0) {
         self.synthesizer._speak(string: string, code: code, rate: rate, pitchMultiplier: pitchMultiplier, volume: volume)
     }
     

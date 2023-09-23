@@ -710,10 +710,10 @@ extension AVSpeechSynthesizer {
     /// - Parameters:
     ///   - string: [要讀出的文字](https://medium.com/彼得潘的-swift-ios-app-開發教室/利用-avspeechsynthesizer-講話-14bc4ca4a3a6)
     ///   - voice: 使用的聲音語言
-    ///   - rate: 語度 (0% ~ 100%)
+    ///   - rate: 語速 (0% ~ 100%)
     ///   - pitchMultiplier: 音調 (50% ~ 200%)
     ///   - volume: 音量 (0% ~ 100%)
-    func _speak(string: String, code: String, rate: Float = 0.5, pitchMultiplier: Float = 1.5, volume: Float = 1.0) {
+    func _speak(string: String, code: String, rate: Float = 0.5, pitchMultiplier: Float = 1.0, volume: Float = 1.0) {
         
         let utterance = AVSpeechUtterance._build(string: string, code: code)
         

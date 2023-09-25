@@ -52,7 +52,6 @@ final class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         initSetting()
         initMenu()
     }
@@ -62,7 +61,7 @@ final class MainViewController: UIViewController {
         animatedBackground(with: .studing)
     }
     
-    /// [View Controller 生命週期更新 - iOS 17](https://xiaozhuanlan.com/topic/0651384792 )
+    /// [View Controller 生命週期更新 - iOS 17](https://xiaozhuanlan.com/topic/0651384792)
     // override func viewIsAppearing(_ animated: Bool) { super.viewIsAppearing(animated) }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -139,6 +138,8 @@ extension MainViewController {
         }
     }
     
+    /// 搜尋單字的動作
+    /// - Parameter word: String?
     func searchWord(with word: String?) {
         performSegue(for: .searchView, sender: word)
     }
@@ -177,6 +178,7 @@ private extension MainViewController {
     }
     
     /// 顯示單字總數量
+    /// - Parameter sourceView: UIView?
     func vocabularyCountAction(for sourceView: UIView?) {
 
         let version = Bundle.main._appVersion()
@@ -281,6 +283,7 @@ private extension MainViewController {
     }
     
     /// 修正TableView不使用SafeArea的位置問題
+    /// - Parameter indexPath: IndexPath?
     func fixTableViewInsetForSafeArea(for indexPath: IndexPath? = nil) {
         
         let navigationBarHeight = navigationController?._navigationBarHeight(for: UIWindow._keyWindow(hasScene: false)) ?? .zero

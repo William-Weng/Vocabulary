@@ -212,17 +212,19 @@ private extension ReviewViewController {
     func playWordSound(with level: Constant.QuestionLevel) {
         
         guard let answerText = answerLabel.text,
-              let interpretText = interpretLabel.text,
               let settings = Utility.shared.generalSettings(index: Constant.tableNameIndex)
         else {
-            return
+            isGuessAnimationStop = true; return
         }
         
         let string: String
         
         switch level {
-        case .read: string = answerText
-        case .listen: string = "\(answerText). \(interpretText)"
+        case .read: 
+            string = answerText
+        case .listen:
+            let interpretText = interpretLabel.text ?? ""
+            string = "\(answerText). \(interpretText)"
         }
         
         speechSynthesizer._speak(string: string, code: settings.voice, rate: Constant.speakingSpeed)

@@ -46,16 +46,16 @@
         "speak": { "name": "單字發聲", "value": 4, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Speak.gif" }
       },
       "background" : {
-        "reading": { "name": "單字細節", "value": 0, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Reading.gif" },
-        "working": { "name": "單字複習", "value": 1, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Working.gif" },
-        "studing": { "name": "字典首頁", "value": 2, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Studing.gif" },
-        "search": { "name": "單字搜尋", "value": 3, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Search.gif" },
-        "palette": { "name": "相關設定", "value": 4, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Palette.gif" },
-        "review": { "name": "複習總覽", "value": 5, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Review.gif" },
-        "solution": { "name": "單字解答", "value": 6, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Solution.gif" },
-        "sentence": { "name": "精選例句", "value": 7, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Sentence.gif" },
-        "others": { "name": "常用書籤", "value": 8, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Others.gif" },
-        "talking": { "name": "錄音功能", "value": 9, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Talking.gif" }
+        "studing": { "name": "單字記憶", "value": 0, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Studing.gif" },
+        "sentence": { "name": "精選例句", "value": 1, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Sentence.gif" },
+        "working": { "name": "單字複習", "value": 2, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Working.gif" },
+        "others": { "name": "其它設定", "value": 3, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Others.gif" },
+        "search": { "name": "單字搜尋", "value": 4, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Search.gif" },
+        "reading": { "name": "單字細節", "value": 5, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Reading.gif" },
+        "talking": { "name": "錄音功能", "value": 6, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Talking.gif" },
+        "solution": { "name": "單字解答", "value": 7, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Solution.gif" },
+        "review": { "name": "複習總覽", "value": 8, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Review.gif" },
+        "palette": { "name": "相關設定", "value": 9, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Palette.gif" }
       }
     }
   },
@@ -104,16 +104,16 @@
         "speak": { "name": "問題閱讀", "value": 4, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Speak.gif" }
       },
       "background" : {
-        "reading": { "name": "單字細節", "value": 0, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Reading.gif" },
-        "working": { "name": "單字複習", "value": 1, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Working.gif" },
-        "studing": { "name": "字典首頁", "value": 2, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Studing.gif" },
-        "search": { "name": "單字搜尋", "value": 3, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Search.gif" },
-        "palette": { "name": "相關設定", "value": 4, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Palette.gif" },
-        "review": { "name": "複習總覽", "value": 5, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Review.gif" },
-        "solution": { "name": "單字解答", "value": 6, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Solution.gif" },
-        "sentence": { "name": "精選例句", "value": 7, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Sentence.gif" },
-        "others": { "name": "常用書籤", "value": 8, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Others.gif" },
-        "talking": { "name": "錄音功能", "value": 9, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Talking.gif" }
+        "studing": { "name": "單字記憶", "value": 0, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Studing.gif" },
+        "sentence": { "name": "精選例句", "value": 1, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Sentence.gif" },
+        "working": { "name": "單字複習", "value": 2, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Working.gif" },
+        "others": { "name": "其它設定", "value": 3, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Others.gif" },
+        "search": { "name": "單字搜尋", "value": 4, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Search.gif" },
+        "reading": { "name": "單字細節", "value": 5, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Reading.gif" },
+        "talking": { "name": "錄音功能", "value": 6, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Talking.gif" },
+        "solution": { "name": "單字解答", "value": 7, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Solution.gif" },
+        "review": { "name": "複習總覽", "value": 8, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Review.gif" },
+        "palette": { "name": "相關設定", "value": 9, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Palette.gif" }
       }
     }
   },
@@ -157,16 +157,16 @@
         "speak": { "name": "問題閱讀", "value": 4, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Speak.gif" }
       },
       "background" : {
-        "reading": { "name": "單字細節", "value": 0, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Reading.gif" },
-        "working": { "name": "單字複習", "value": 1, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Working.gif" },
-        "studing": { "name": "字典首頁", "value": 2, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Studing.gif" },
-        "search": { "name": "單字搜尋", "value": 3, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Search.gif" },
-        "palette": { "name": "相關設定", "value": 4, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Palette.gif" },
-        "review": { "name": "複習總覽", "value": 5, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Review.gif" },
-        "solution": { "name": "單字解答", "value": 6, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Solution.gif" },
-        "sentence": { "name": "精選例句", "value": 7, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Sentence.gif" },
-        "others": { "name": "常用書籤", "value": 8, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Others.gif" },
-        "talking": { "name": "錄音功能", "value": 9, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Talking.gif" }
+        "studing": { "name": "單字記憶", "value": 0, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Studing.gif" },
+        "sentence": { "name": "精選例句", "value": 1, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Sentence.gif" },
+        "working": { "name": "單字複習", "value": 2, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Working.gif" },
+        "others": { "name": "其它設定", "value": 3, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Others.gif" },
+        "search": { "name": "單字搜尋", "value": 4, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Search.gif" },
+        "reading": { "name": "單字細節", "value": 5, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Reading.gif" },
+        "talking": { "name": "錄音功能", "value": 6, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Talking.gif" },
+        "solution": { "name": "單字解答", "value": 7, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Solution.gif" },
+        "review": { "name": "複習總覽", "value": 8, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Review.gif" },
+        "palette": { "name": "相關設定", "value": 9, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Palette.gif" }
       }
     }
   }

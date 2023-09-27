@@ -7,6 +7,7 @@
 
 import UIKit
 
+// MARK: - 調色盤設定Header
 final class PaletteHeader: UIView {
     
     @IBOutlet var view: UIView!

@@ -7,6 +7,7 @@
 
 import UIKit
 import AVFAudio
+import WWPrint
 import WWToast
 import WWSQLite3Manager
 import WWNetworking_UIImage
@@ -33,7 +34,12 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         deepLinkURL(app, open: url, options: options)
         return true
     }
-        
+     
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        universalLink(application, continue: userActivity)
+        return true
+    }
+    
     deinit { myPrint("\(Self.self) deinit") }
 }
 
@@ -565,5 +571,12 @@ private extension AppDelegate {
             if let viewController = viewController as? MainViewController { viewController.searchWord(with: String(word)) }
         }
     }
+    
+    /// [使用UniversalLink功能的相關設定](https://medium.com/zrealm-ios-dev/ios-deferred-deep-link-延遲深度連結實作-swift-b08ef940c196)
+    /// => [在info.plist設定](https://medium.com/zrealm-ios-dev/universal-links-新鮮事-12c5026da33d )
+    /// - Parameters:
+    ///   - app: UIApplication
+    ///   - userActivity: NSUserActivity
+    func universalLink(_ application: UIApplication, continue userActivity: NSUserActivity) {}
 }
 

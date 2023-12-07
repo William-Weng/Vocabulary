@@ -157,7 +157,7 @@ extension MainViewController {
         let icons = ["圖示1", "圖示2", "圖示3", "圖示4"]
         let icon = icons[safe: index]
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { Utility.shared.alternateIcons(for: icon) { result in myPrint(result) }}
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) { UIApplication.shared._alternateIcons(for: icon) { result in myPrint(result) }}
     }
 }
 

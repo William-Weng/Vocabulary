@@ -431,7 +431,7 @@ private extension AppDelegate {
     /// 解析完整的SettingsJSON的設定檔
     /// - Returns: [String: Any]?
     func parseSettingsDictionary(with filename: String) -> [String: Any]? {
-                
+        
         guard var jsonString = parseDefaultSettingsJSON(with: filename) else { return nil }
         if let _jsonString = parseUserSettingsJSON(with: filename) { jsonString = _jsonString }
         

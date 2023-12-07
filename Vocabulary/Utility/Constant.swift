@@ -91,6 +91,7 @@ extension Constant {
     enum DeepLinkAction: String {
         case append     // 加入新單字
         case search     // 搜尋該單字
+        case icon       // 更換ICON
     }
     
     /// 能夠設定顏色的Settings設定檔
@@ -292,6 +293,7 @@ extension Constant {
         case notOpenURL
         case notImage
         case isEmpty
+        case notSupports
         
         /// 顯示錯誤說明
         /// - Returns: String
@@ -300,6 +302,7 @@ extension Constant {
             case .notOpenURL: return "打開URL錯誤"
             case .notImage: return "不是圖片檔"
             case .isEmpty: return "資料是空的"
+            case .notSupports: return "功能不支援"
             }
         }
     }

@@ -41,6 +41,10 @@
 		81201C4D298B58C200291485 /* InterpretView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81201C4B298B58C200291485 /* InterpretView.xib */; };
 		812C5444299F73DC003F942A /* TalkingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812C5443299F73DC003F942A /* TalkingViewController.swift */; };
 		815E14782990F47700EC571D /* SentenceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815E14772990F47700EC571D /* SentenceTableViewCell.swift */; };
+		81708BC62B21AD4C00397B27 /* dictionary_7439537.png in Resources */ = {isa = PBXBuildFile; fileRef = 81708BC22B21AD4C00397B27 /* dictionary_7439537.png */; };
+		81708BC72B21AD4C00397B27 /* translate_5146533.png in Resources */ = {isa = PBXBuildFile; fileRef = 81708BC32B21AD4C00397B27 /* translate_5146533.png */; };
+		81708BC82B21AD4C00397B27 /* communication_9893252.png in Resources */ = {isa = PBXBuildFile; fileRef = 81708BC42B21AD4C00397B27 /* communication_9893252.png */; };
+		81708BC92B21AD4C00397B27 /* language-learning_10037728.png in Resources */ = {isa = PBXBuildFile; fileRef = 81708BC52B21AD4C00397B27 /* language-learning_10037728.png */; };
 		817BDE462AA596650093AD92 /* WWUserDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = 817BDE452AA596650093AD92 /* WWUserDefaults */; };
 		818E261329922FFE00385705 /* ReviewResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818E261229922FFE00385705 /* ReviewResultViewController.swift */; };
 		818E2615299230B300385705 /* ReviewResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818E2614299230B300385705 /* ReviewResultTableViewCell.swift */; };
@@ -104,6 +108,10 @@
 		81201C4B298B58C200291485 /* InterpretView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InterpretView.xib; sourceTree = "<group>"; };
 		812C5443299F73DC003F942A /* TalkingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkingViewController.swift; sourceTree = "<group>"; };
 		815E14772990F47700EC571D /* SentenceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceTableViewCell.swift; sourceTree = "<group>"; };
+		81708BC22B21AD4C00397B27 /* dictionary_7439537.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dictionary_7439537.png; sourceTree = "<group>"; };
+		81708BC32B21AD4C00397B27 /* translate_5146533.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = translate_5146533.png; sourceTree = "<group>"; };
+		81708BC42B21AD4C00397B27 /* communication_9893252.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = communication_9893252.png; sourceTree = "<group>"; };
+		81708BC52B21AD4C00397B27 /* language-learning_10037728.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "language-learning_10037728.png"; sourceTree = "<group>"; };
 		818E261229922FFE00385705 /* ReviewResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewResultViewController.swift; sourceTree = "<group>"; };
 		818E2614299230B300385705 /* ReviewResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewResultTableViewCell.swift; sourceTree = "<group>"; };
 		8196323229933CEF00B96960 /* MyNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNavigationController.swift; sourceTree = "<group>"; };
@@ -225,6 +233,7 @@
 		642858A0297BC00700DD7D88 /* Material */ = {
 			isa = PBXGroup;
 			children = (
+				81D07BB72B219E840099AE37 /* AppIcon */,
 				642C5E712A18487800AC290B /* @Image */,
 				642448672986B57F0038449E /* Font */,
 				64285893297BBF8700DD7D88 /* Assets.xcassets */,
@@ -237,10 +246,10 @@
 		642858A1297BC01100DD7D88 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				81C4A9DD2B21760400D28042 /* SimulaterPushNotification.apns */,
 				64285898297BBF8700DD7D88 /* Info.plist */,
 				642C5E702A182C8700AC290B /* Vocabulary.entitlements */,
 				81D31C472AA5BAB8009454E7 /* Settings.json */,
+				81C4A9DD2B21760400D28042 /* SimulaterPushNotification.apns */,
 			);
 			name = Setting;
 			sourceTree = "<group>";
@@ -348,6 +357,17 @@
 				815E14772990F47700EC571D /* SentenceTableViewCell.swift */,
 			);
 			path = SentenceViewController;
+			sourceTree = "<group>";
+		};
+		81D07BB72B219E840099AE37 /* AppIcon */ = {
+			isa = PBXGroup;
+			children = (
+				81708BC42B21AD4C00397B27 /* communication_9893252.png */,
+				81708BC22B21AD4C00397B27 /* dictionary_7439537.png */,
+				81708BC52B21AD4C00397B27 /* language-learning_10037728.png */,
+				81708BC32B21AD4C00397B27 /* translate_5146533.png */,
+			);
+			path = AppIcon;
 			sourceTree = "<group>";
 		};
 		81D8E09D298A1146001D2581 /* SearchWordViewController */ = {
@@ -477,17 +497,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				6492ADD52986B8E900E1B59B /* KleeOne-SemiBold.ttf in Resources */,
+				81708BC72B21AD4C00397B27 /* translate_5146533.png in Resources */,
 				81D31C482AA5BAB8009454E7 /* Settings.json in Resources */,
+				81708BC92B21AD4C00397B27 /* language-learning_10037728.png in Resources */,
 				64285897297BBF8700DD7D88 /* LaunchScreen.storyboard in Resources */,
 				64285894297BBF8700DD7D88 /* Assets.xcassets in Resources */,
 				64B94D7A2AB5DDE8006B317D /* README.html in Resources */,
 				6417E8512AAD285D00512881 /* PaletteHeader.xib in Resources */,
+				81708BC82B21AD4C00397B27 /* communication_9893252.png in Resources */,
 				81BA793E29876CE000C0FD6C /* README.md in Resources */,
 				6492ADD72986BBFA00E1B59B /* GamjaFlower-Regular.ttf in Resources */,
 				81C4A9DE2B21760400D28042 /* SimulaterPushNotification.apns in Resources */,
 				642C5E722A18487800AC290B /* @Image in Resources */,
 				81201C4D298B58C200291485 /* InterpretView.xib in Resources */,
 				64285892297BBF8600DD7D88 /* Main.storyboard in Resources */,
+				81708BC62B21AD4C00397B27 /* dictionary_7439537.png in Resources */,
 				6492ADDD2986BF6E00E1B59B /* jf-openhuninn-1.1.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

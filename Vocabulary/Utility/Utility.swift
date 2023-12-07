@@ -404,4 +404,21 @@ extension Utility {
     func generalSettings(index: Int) -> Settings.GeneralInformation? {
         return Constant.SettingsJSON.generalInformations[safe: index]
     }
+    
+    /// [更換APP ICON](https://github.com/CoderTitan/ChangeIcon)
+    /// - [動態更換APP ICON](https://www.cnblogs.com/zhanggui/p/6674858.html)
+    /// - [會回傳現在使用的ICON名稱](https://www.jianshu.com/p/69313970d0e7)
+    /// - [Key = PrimaryIcon就是原本的ICON => nil](https://www.hackingwithswift.com/example-code/uikit/how-to-change-your-app-icon-dynamically-with-setalternateiconname)
+    /// - Parameters:
+    ///   - key: [要取ICON的Key值](https://medium.com/ios-os-x-development/dynamically-change-the-app-icon-7d4bece820d2)
+    ///   - result: (Result<String?, Error>) -> Void
+    func alternateIcons(for key: String?, result: @escaping ((Result<String?, Error>) -> Void)) {
+        
+        guard UIApplication.shared.supportsAlternateIcons else { result(.failure(Constant.MyError.notSupports)); return }
+        
+        UIApplication.shared.setAlternateIconName(key) { (error) in
+            if let error = error { result(.failure(error)); return }
+            result(.success(UIApplication.shared.alternateIconName))
+        }
+    }
 }

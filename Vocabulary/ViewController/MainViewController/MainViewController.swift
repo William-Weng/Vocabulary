@@ -143,6 +143,22 @@ extension MainViewController {
     func searchWord(with word: String?) {
         performSegue(for: .searchView, sender: word)
     }
+    
+    /// 更新APP圖示
+    /// - Parameter index: String?
+    func alternateIcons(with number: String?) {
+        
+        guard let number = number,
+              let index = Int(number)
+        else {
+            return
+        }
+        
+        let icons = ["圖示1", "圖示2", "圖示3", "圖示4"]
+        let icon = icons[safe: index]
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { Utility.shared.alternateIcons(for: icon) { result in myPrint(result) }}
+    }
 }
 
 // MARK: - 小工具

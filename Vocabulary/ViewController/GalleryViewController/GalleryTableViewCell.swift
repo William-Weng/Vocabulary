@@ -21,6 +21,13 @@ final class GalleryTableViewCell: UITableViewCell, CellReusable {
     private var isAnimationStop = false
     private var animationBlock: ((URL) -> Void)?
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        isAnimationStop = false
+        animationBlock = nil
+    }
+    
     func configure(with indexPath: IndexPath) {
         configure(for: indexPath)
     }

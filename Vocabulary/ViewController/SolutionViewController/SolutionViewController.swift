@@ -43,11 +43,6 @@ final class SolutionViewController: UIViewController, UINavigationControllerDele
         }
     }
     
-    override func willMove(toParent parent: UIViewController?) {
-        super.willMove(toParent: parent)
-        if (parent == nil) { previousPageHint(with: "確定要回上一頁嗎？", message: nil) }
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?._tabBarHidden(true, animated: true)
@@ -159,24 +154,5 @@ private extension SolutionViewController {
         viewController.vocabularyList = vocabularyList
         viewController.vocabularyListIndexPath = indexPath
         viewController.mainViewDelegate = nil
-    }
-    
-    /// 回到上一頁的提示視窗
-    /// - Parameters:
-    ///   - title: String?
-    ///   - message: String?
-    func previousPageHint(with title: String?, message: String?) {
-        
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let actionCancel = UIAlertAction(title: "取消", style: .cancel) { _ in }
-        let actionSelectDatabase = UIAlertAction(title: "確認", style: .default) { [weak self] _ in
-            guard let this = self else { return }
-            this.navigationController?.popViewController(animated: true)
-        }
-        
-        alertController.addAction(actionCancel)
-        alertController.addAction(actionSelectDatabase)
-
-        present(alertController, animated: true, completion: nil)
     }
 }

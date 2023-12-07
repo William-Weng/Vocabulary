@@ -1,0 +1,15 @@
+{
+  "Simulator Target Bundle": "idv.william.example2",
+  "aps": {
+    "alert": {
+      "title": "來測試看看",
+      "subtitle": "會不會出現在通知中心呢？",
+      "body": "下注下注",
+      "badge": 100
+    },
+    "category": "PersonalNotificationCategory"
+  },
+  "payload": {
+    "image": "https://s.yimg.com/os/creatr-uploaded-images/2022-10/d9ea77e0-4522-11ed-bf2e-79b0e9e9e77f"
+  }
+}

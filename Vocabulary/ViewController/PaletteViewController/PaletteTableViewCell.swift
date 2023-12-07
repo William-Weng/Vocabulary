@@ -26,6 +26,8 @@ final class PaletteTableViewCell: UITableViewCell, CellReusable {
     override func prepareForReuse() {
         super.prepareForReuse()
         
+        isAnimationStop = false
+        animationBlock = nil
         myView.gestureRecognizers?.forEach({ myView.removeGestureRecognizer($0) })
         myLabel.gestureRecognizers?.forEach({ myLabel.removeGestureRecognizer($0) })
     }

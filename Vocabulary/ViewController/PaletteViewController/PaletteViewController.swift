@@ -33,6 +33,7 @@ final class PaletteViewController: UIViewController {
     var othersViewDelegate: OthersViewDelegate?
     
     private var isAnimationStop = false
+    private var isGoToPreviousPage = false
     private var disappearImage: UIImage?
     private var didSelectPaletteInfo: Constant.SelectedPaletteInformation = (nil, nil, nil)
     private var colorPicker: UIColorPickerViewController?
@@ -55,6 +56,11 @@ final class PaletteViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         viewWillDisappearAction()
+    }
+    
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+        if (parent == nil && !isGoToPreviousPage) { previousPageHint(with: "記錄設定值了嗎？", message: nil) }
     }
     
     @IBAction func changeSystemColor(_ sender: UIBarButtonItem) {
@@ -394,6 +400,30 @@ private extension PaletteViewController {
         alertController.popoverPresentationController?.barButtonItem = barButtonItem
         
         target.present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 回到上一頁的提示視窗
+    /// - Parameters:
+    ///   - title: String?
+    ///   - message: String?
+    func previousPageHint(with title: String?, message: String?) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let actionCancel = UIAlertAction(title: "取消", style: .cancel) { [weak self] _ in
+            guard let this = self else { return }
+            this.isGoToPreviousPage = false
+        }
+        
+        let actionSelectDatabase = UIAlertAction(title: "確認", style: .default) { [weak self] _ in
+            guard let this = self else { return }
+            this.isGoToPreviousPage = true
+            this.navigationController?.popViewController(animated: true)
+        }
+        
+        alertController.addAction(actionCancel)
+        alertController.addAction(actionSelectDatabase)
+
+        present(alertController, animated: true, completion: nil)
     }
 }
 

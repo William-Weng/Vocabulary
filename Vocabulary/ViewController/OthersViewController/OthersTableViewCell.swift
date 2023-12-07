@@ -15,7 +15,7 @@ final class OthersTableViewCell: UITableViewCell, CellReusable {
     @IBOutlet weak var iconImageView: UIImageView!
     @IBOutlet weak var favoriteImageView: UIImageView!
     
-    static var othersViewDelegate: OthersViewDelegate?
+    static weak var othersViewDelegate: OthersViewDelegate?
     static var bookmarksArray: [[String : Any]] = []
     static var defaultImage = UIImage(named: "Picture")
     

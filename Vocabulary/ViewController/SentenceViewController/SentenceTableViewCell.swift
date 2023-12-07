@@ -17,7 +17,7 @@ final class SentenceTableViewCell: UITableViewCell, CellReusable {
     @IBOutlet weak var speechButton: UIButton!
     @IBOutlet weak var favoriteImageView: UIImageView!
     
-    static var sentenceViewDelegate: SentenceViewDelegate?
+    static weak var sentenceViewDelegate: SentenceViewDelegate?
     
     var indexPath: IndexPath = []
     

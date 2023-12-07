@@ -14,7 +14,7 @@ final class PaletteTableViewCell: UITableViewCell, CellReusable {
     @IBOutlet weak var myLabel: UILabel!
     @IBOutlet weak var myImageBaseView: UIView!
     
-    static var paletteViewDelegate: PaletteViewDelegate?
+    static weak var paletteViewDelegate: PaletteViewDelegate?
     static var colorSettings: [[ColorSettings]] = []
     
     var indexPath: IndexPath = []

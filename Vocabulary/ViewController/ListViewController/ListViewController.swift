@@ -20,7 +20,7 @@ final class ListViewController: UIViewController {
     var canDelete = false
     var vocabularyListIndexPath: IndexPath!
     var vocabularyList: VocabularyList!
-    var mainViewDelegate: MainViewDelegate?
+    weak var mainViewDelegate: MainViewDelegate?
     
     private let recordingWaveSegue = "RecordingWaveSegue"
     

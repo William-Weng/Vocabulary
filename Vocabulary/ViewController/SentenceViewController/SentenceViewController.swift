@@ -9,7 +9,7 @@ import UIKit
 import SafariServices
 
 // MARK: - SentenceViewDelegate
-protocol SentenceViewDelegate {
+protocol SentenceViewDelegate: NSObject {
     func wordDictionary(with indexPath: IndexPath)
     func tabBarHidden(_ isHidden: Bool)
 }

@@ -14,7 +14,7 @@ final class GalleryViewController: UIViewController {
     @IBOutlet weak var myTableView: UITableView!
     
     var indexPath: IndexPath = []
-    var paletteViewDelegate: PaletteViewDelegate?
+    weak var paletteViewDelegate: PaletteViewDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()

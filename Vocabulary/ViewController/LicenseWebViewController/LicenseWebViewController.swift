@@ -14,7 +14,7 @@ final class LicenseWebViewController: UIViewController {
     @IBOutlet weak var goBackItem: UIBarButtonItem!
     @IBOutlet weak var goForwardItem: UIBarButtonItem!
     
-    var sentenceViewDelegate: SentenceViewDelegate?
+    weak var sentenceViewDelegate: SentenceViewDelegate?
     
     private var progressView: UIProgressView!
     private var observation: NSKeyValueObservation?

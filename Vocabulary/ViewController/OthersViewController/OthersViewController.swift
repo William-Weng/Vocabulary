@@ -11,7 +11,7 @@ import WWNetworking
 import UniformTypeIdentifiers
 
 // MARK: - OthersViewDelegate
-protocol OthersViewDelegate {
+protocol OthersViewDelegate: NSObject {
     func loadImage(with indexPath: IndexPath, filename: String)
     func tabBarHidden(_ isHidden: Bool)
     func navigationBarHidden(_ isHidden: Bool)

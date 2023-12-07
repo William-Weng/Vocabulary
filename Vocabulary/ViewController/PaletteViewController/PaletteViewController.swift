@@ -10,7 +10,7 @@ import WWJavaScriptContext
 import WWFloatingViewController
 
 // MARK: - OthersViewDelegate
-protocol PaletteViewDelegate {
+protocol PaletteViewDelegate: NSObject {
     
     func palette(with indexPath: IndexPath, colorType: PaletteViewController.ColorType, info: Constant.PaletteInformation)
     func tabBarHidden(_ isHidden: Bool)
@@ -26,11 +26,11 @@ final class PaletteViewController: UIViewController {
         case text
         case background
     }
-        
+    
     @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var myTableView: UITableView!
     
-    var othersViewDelegate: OthersViewDelegate?
+    weak var othersViewDelegate: OthersViewDelegate?
     
     private var isAnimationStop = false
     private var isGoToPreviousPage = false
@@ -163,7 +163,12 @@ private extension PaletteViewController {
     /// 修正Tabbar對TableView的Bottom影響
     func fixContentInsetForSafeArea() {
         
-        guard let frame = navigationController?.navigationBar.frame else { return }
+        guard let frame = navigationController?.navigationBar.frame,
+              !PaletteTableViewCell.colorSettings.isEmpty
+        else {
+            return
+        }
+        
         myTableView._fixContentInsetForSafeArea(top: frame.minY + frame.height, bottom: 0, scrollTo: IndexPath(row: 0, section: 0))
     }
     

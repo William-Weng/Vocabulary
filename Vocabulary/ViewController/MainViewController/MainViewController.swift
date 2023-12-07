@@ -10,7 +10,7 @@ import WWSQLite3Manager
 import WWToast
 
 // MARK: - MainViewDelegate
-protocol MainViewDelegate {
+protocol MainViewDelegate: NSObject {
     
     func deleteRow(with indexPath: IndexPath)
     func updateCountLabel(with indexPath: IndexPath, count: Int)

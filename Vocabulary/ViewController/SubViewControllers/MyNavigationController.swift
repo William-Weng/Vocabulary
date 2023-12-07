@@ -8,7 +8,7 @@
 import UIKit
 
 // MARK: - MyNavigationControllerDelegate
-protocol MyNavigationControllerDelegate {
+protocol MyNavigationControllerDelegate: NSObject {
     func refreshRootViewController()
 }
 

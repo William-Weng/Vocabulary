@@ -20,7 +20,7 @@ final class VolumeViewController: UIViewController {
     @IBOutlet weak var volumeProgressSlider: WWSlider!
     
     var soundType: AdjustmentSoundType = .volume
-    var mainViewDelegate: MainViewDelegate?
+    weak var mainViewDelegate: MainViewDelegate?
     
     private var isInitSetting = false
     

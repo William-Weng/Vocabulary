@@ -66,5 +66,17 @@
 			</array>
 		</dict>
 	</array>
+    <key>UIAppFonts</key>
+    <array>
+        <string>KleeOne-SemiBold.ttf</string>
+        <string>GamjaFlower-Regular.ttf</string>
+        <string>jf-openhuninn-1.1.ttf</string>
+    </array>
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>audio</string>
+    </array>
+    <key>UIFileSharingEnabled</key>
+    <true/>
 </dict>
 </plist>

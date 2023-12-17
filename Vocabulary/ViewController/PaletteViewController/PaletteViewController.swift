@@ -33,7 +33,6 @@ final class PaletteViewController: UIViewController {
     weak var othersViewDelegate: OthersViewDelegate?
     
     private var isAnimationStop = false
-    private var isGoToPreviousPage = false
     private var disappearImage: UIImage?
     private var didSelectPaletteInfo: Constant.SelectedPaletteInformation = (nil, nil, nil)
     private var colorPicker: UIColorPickerViewController?
@@ -46,6 +45,7 @@ final class PaletteViewController: UIViewController {
         super.viewDidLoad()
         initSetting()
         initScriptContext()
+        initPreviousPageSwipeGestureSetting()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,9 +58,12 @@ final class PaletteViewController: UIViewController {
         viewWillDisappearAction()
     }
     
-    override func willMove(toParent parent: UIViewController?) {
-        super.willMove(toParent: parent)
-        if (parent == nil && !isGoToPreviousPage) { previousPageHint(with: "記錄設定值了嗎？", message: nil) }
+    @objc func previousPageAction(_ recognizer: UISwipeGestureRecognizer) {
+        previousPageHint(with: "記錄設定值了嗎？", message: nil)
+    }
+    
+    @IBAction func previousPage(_ sender: UIBarButtonItem) {
+        previousPageHint(with: "記錄設定值了嗎？", message: nil)
     }
     
     @IBAction func changeSystemColor(_ sender: UIBarButtonItem) {
@@ -158,6 +161,15 @@ private extension PaletteViewController {
         myTableView._delegateAndDataSource(with: self)
         updateTableViewBottomActionNotification()
         initPalettePicker()
+    }
+    
+    /// 初始化回上一頁的手勢 (自訂)
+    func initPreviousPageSwipeGestureSetting() {
+        
+        let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(Self.previousPageAction(_:)))
+        swipeGesture.direction = .right
+        
+        view.addGestureRecognizer(swipeGesture)
     }
     
     /// 修正Tabbar對TableView的Bottom影響
@@ -407,21 +419,16 @@ private extension PaletteViewController {
         target.present(alertController, animated: true, completion: nil)
     }
     
-    /// 回到上一頁的提示視窗
+    /// [回到上一頁的提示視窗](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/開發-ios-app-的-gesture-手勢功能-uikit-版本-f6cb95075705)
     /// - Parameters:
     ///   - title: String?
     ///   - message: String?
     func previousPageHint(with title: String?, message: String?) {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let actionCancel = UIAlertAction(title: "取消", style: .cancel) { [weak self] _ in
-            guard let this = self else { return }
-            this.isGoToPreviousPage = false
-        }
-        
+        let actionCancel = UIAlertAction(title: "取消", style: .cancel) { _ in }
         let actionSelectDatabase = UIAlertAction(title: "確認", style: .default) { [weak self] _ in
             guard let this = self else { return }
-            this.isGoToPreviousPage = true
             this.navigationController?.popViewController(animated: true)
         }
         

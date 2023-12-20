@@ -50,12 +50,10 @@ final class ListViewController: UIViewController {
         talkingViewSetting(for: segue, sender: sender)
     }
     
-    @objc func defineVocabulary(_ sender: UITapGestureRecognizer) {
-        defineVocabularyAction(with: vocabularyList.word)
-    }
-    
+    @objc func defineVocabulary(_ sender: UITapGestureRecognizer) { defineVocabularyAction(with: vocabularyList.word) }
+    @objc func refreshVocabularyList(_ sender: UIRefreshControl) { reloadExampleList() }
+
     @IBAction func dictionaryNet(_ sender: UIBarButtonItem) { netDictionary(with: vocabularyList.word) }
-    @IBAction func refreshVocabularyList(_ sender: UIRefreshControl) { reloadExampleList() }
     @IBAction func recordingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: recordingWaveSegue, sender: nil) }
     
     @IBAction func searchVocabulary(_ sender: UIButton) {

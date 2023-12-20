@@ -279,7 +279,7 @@ private extension MainViewController {
         myTableView.reloadRows(at: [indexPath], with: .automatic)
     }
     
-    /// 設定TabBar顯示與否功能
+    /// [設定TabBar顯示與否功能](https://www.jianshu.com/p/4c94fc74f1e6)
     /// - Parameters:
     ///   - isHidden: Bool
     func tabBarHiddenAction(_ isHidden: Bool) {

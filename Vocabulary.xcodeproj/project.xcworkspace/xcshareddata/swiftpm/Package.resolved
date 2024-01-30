@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWAppInstallSource.git",
       "state" : {
-        "revision" : "22c6423f9aecfefa7b8dc639a6d8980e3f51a60f",
-        "version" : "1.0.0"
+        "revision" : "ac54828542c67b106c4104117a09a5fd51802f97",
+        "version" : "1.0.3"
       }
     },
     {
@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWFloatingView.git",
       "state" : {
-        "revision" : "f1e31801a5377d42171a5bd8cd8d28887865d2a7",
-        "version" : "1.2.0"
+        "revision" : "f712bdc0d7ae65597f833de1f8bab3bb8d95ef83",
+        "version" : "1.2.1"
       }
     },
     {
@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWHUD",
       "state" : {
-        "revision" : "861ce060cfbfaf4be75e40b0779465c21f455bf5",
-        "version" : "1.1.3"
+        "revision" : "7579ebf2b1fee3d81bdd35a829f05ed1e1cbed3c",
+        "version" : "1.1.4"
       }
     },
     {
@@ -41,8 +41,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWNetworking",
       "state" : {
-        "revision" : "eb93e563f2d2aeab9f2a9cea123a8f47af61bf20",
-        "version" : "1.3.0"
+        "revision" : "2629dea62e928536b150e82e2494661abbd4e2b9",
+        "version" : "1.4.1"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWPrint.git",
       "state" : {
-        "revision" : "edb791ed5e59c0f4044810d21a89102a440e2fbd",
-        "version" : "1.2.1"
+        "revision" : "0acf1057863faea81c3ded2057c21b09c3435435",
+        "version" : "1.3.0"
       }
     },
     {
@@ -77,8 +77,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWSQLite3Manager",
       "state" : {
-        "revision" : "b151fa0deef3bfa63e0c7dc35d97402d7fcc8e1a",
-        "version" : "1.4.4"
+        "revision" : "d13b2a1482ac28559311794bebf96e2b4ee9c51f",
+        "version" : "1.4.8"
       }
     },
     {

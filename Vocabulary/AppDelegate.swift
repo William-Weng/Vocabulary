@@ -14,10 +14,11 @@ import WWNetworking_UIImage
 import WWAppInstallSource
 
 @main
-final class AppDelegate: UIResponder, UIApplicationDelegate {
+final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable {
     
     var window: UIWindow?
-    
+    var orientationLock: UIInterfaceOrientationMask?
+
     private let audioPlayerQueue = DispatchQueue(label: "github.com/William-Weng/Vocabulary")
     
     private var audioPlayer: AVAudioPlayer?
@@ -38,6 +39,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         universalLink(application, continue: userActivity)
         return true
+    }
+    
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return orientationLock ?? .all
     }
 
     deinit { myPrint("\(Self.self) deinit") }

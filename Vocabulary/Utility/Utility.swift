@@ -142,6 +142,19 @@ extension Utility {
 // MARK: - UI相關 (function)
 extension Utility {
     
+    /// [強制改變裝置的方向](https://johnchihhonglin.medium.com/限制某個頁面的螢幕旋轉方向-8c7235d5a774)
+    /// - Parameters:
+    ///   - orientation: UIInterfaceOrientationMask
+    ///   - rotateOrientation: UIInterfaceOrientation
+    /// - Returns: Bool
+    func screenOrientation(lock orientation: UIInterfaceOrientationMask, rotate rotateOrientation: UIInterfaceOrientation) -> Bool {
+        
+        guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return false }
+
+        let isSuccess = delegate._orientation(lock: orientation, rotate: rotateOrientation)
+        return isSuccess
+    }
+    
     /// 計算下滑到底更新的距離百分比 (UIRefreshControl的另一邊)
     /// - Parameters:
     ///   - scrollView: UIScrollView

@@ -8,6 +8,7 @@
 |-|-|
 |[word://append/<單字>](word://append/<新單字>)|加入新單字|
 |[word://search/<單字>](word://search/<新單字>)|搜尋該單字|
+|[word://icon/<圖示編號>](word://icon/<圖示編號>)|更新APP圖示|
 
 ## 擷圖
 
@@ -78,6 +79,7 @@
 |[Palette](https://www.flaticon.com/free-icon/color-palette_3214398)|調色盤|
 |[Mark](https://www.flaticon.com/free-icon/mark_10099668)|調色盤設定|
 |[CrayonPainting](https://www.ac-illust.com/main/detail.php?id=1266133)|調色盤Header背景色|
+|[WordCard](https://www.flaticon.com/free-icon/card-games_2118315)|單字卡|
 
 ## [背景音樂 - .mp3 / .m4a (請在iTunes上自行加入)](http://amachamusic.chagasi.com/)
 

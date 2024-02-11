@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWJavaScriptContext",
       "state" : {
-        "revision" : "983111177d7b64ef90f0c77d4db928187b9d756d",
-        "version" : "1.0.1"
+        "revision" : "f434e9ff0196007e25dac838c0da81bdb8f5a1b9",
+        "version" : "1.0.2"
       }
     },
     {
@@ -50,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWNetworking-UIImage",
       "state" : {
-        "revision" : "3d18e9eb96f66fa6cbb9d7e57a7e6d64cee25905",
-        "version" : "1.2.4"
+        "revision" : "7a1e24c5ab959479058ecc96f3d10f4dd5efc513",
+        "version" : "1.2.5"
       }
     },
     {
@@ -77,8 +77,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWSQLite3Manager",
       "state" : {
-        "revision" : "d13b2a1482ac28559311794bebf96e2b4ee9c51f",
-        "version" : "1.4.8"
+        "revision" : "c3350b476e46d78514f6b56eabdb51f83fa32297",
+        "version" : "1.4.9"
       }
     },
     {

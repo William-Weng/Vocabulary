@@ -25,6 +25,7 @@
 		6492ADD72986BBFA00E1B59B /* GamjaFlower-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADD62986BBFA00E1B59B /* GamjaFlower-Regular.ttf */; };
 		6492ADDD2986BF6E00E1B59B /* jf-openhuninn-1.1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADDC2986BF6D00E1B59B /* jf-openhuninn-1.1.ttf */; };
 		64A11DF829B2315D00688C90 /* MyTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A11DF729B2315D00688C90 /* MyTabBar.swift */; };
+		64AB741B2B78508100882826 /* WordCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AB741A2B78508100882826 /* WordCardViewController.swift */; };
 		64B94D7A2AB5DDE8006B317D /* README.html in Resources */ = {isa = PBXBuildFile; fileRef = 64B94D792AB5DDE8006B317D /* README.html */; };
 		64BA9EA2299764E600226DC8 /* OthersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BA9EA1299764E600226DC8 /* OthersTableViewCell.swift */; };
 		64C184F5297E5CC600D1D1B2 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C184F4297E5CC600D1D1B2 /* Protocol.swift */; };
@@ -92,6 +93,7 @@
 		6492ADD62986BBFA00E1B59B /* GamjaFlower-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GamjaFlower-Regular.ttf"; sourceTree = "<group>"; };
 		6492ADDC2986BF6D00E1B59B /* jf-openhuninn-1.1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "jf-openhuninn-1.1.ttf"; sourceTree = "<group>"; };
 		64A11DF729B2315D00688C90 /* MyTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabBar.swift; sourceTree = "<group>"; };
+		64AB741A2B78508100882826 /* WordCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCardViewController.swift; sourceTree = "<group>"; };
 		64B94D792AB5DDE8006B317D /* README.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = README.html; sourceTree = SOURCE_ROOT; };
 		64BA9EA1299764E600226DC8 /* OthersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OthersTableViewCell.swift; sourceTree = "<group>"; };
 		64C184F4297E5CC600D1D1B2 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				81D8E0A0298A11A3001D2581 /* ReviewViewController */,
 				818E2616299231D400385705 /* ReviewResultViewController */,
 				819D69CE298E30F1001AF48E /* SolutionViewController */,
+				64AB74192B78504900882826 /* WordCardViewController */,
 				81D8E09D298A1146001D2581 /* SearchWordViewController */,
 				81E56B6C2A725DD6004400D6 /* SearchVocabularyViewController */,
 				81CD85CD2990F040009C39FF /* SentenceViewController */,
@@ -283,6 +286,14 @@
 				641B5CA62984BEB500AB1C56 /* VolumeViewController.swift */,
 			);
 			path = SubViewControllers;
+			sourceTree = "<group>";
+		};
+		64AB74192B78504900882826 /* WordCardViewController */ = {
+			isa = PBXGroup;
+			children = (
+				64AB741A2B78508100882826 /* WordCardViewController.swift */,
+			);
+			path = WordCardViewController;
 			sourceTree = "<group>";
 		};
 		64C18505297EB8F400D1D1B2 /* SubViews */ = {
@@ -541,6 +552,7 @@
 				81E407902A723C4E00230C3A /* SearchVocabularyViewController.swift in Sources */,
 				64C18507297EC01700D1D1B2 /* ListTableViewCell.swift in Sources */,
 				64C18504297EB8E700D1D1B2 /* ListViewController.swift in Sources */,
+				64AB741B2B78508100882826 /* WordCardViewController.swift in Sources */,
 				64BA9EA2299764E600226DC8 /* OthersTableViewCell.swift in Sources */,
 				815E14782990F47700EC571D /* SentenceTableViewCell.swift in Sources */,
 				81B1AF822AB42B0E0074103B /* GalleryTableViewCell.swift in Sources */,
@@ -705,7 +717,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20231220;
+				CURRENT_PROJECT_VERSION = 20240209;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -724,12 +736,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.15;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -743,7 +756,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20231220;
+				CURRENT_PROJECT_VERSION = 20240209;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -762,12 +775,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.15;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

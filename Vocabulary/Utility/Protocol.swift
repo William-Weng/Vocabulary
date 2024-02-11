@@ -7,6 +7,11 @@
 
 import UIKit
 
+// MARK: - [強制畫面旋轉](https://johnchihhonglin.medium.com/限制某個頁面的螢幕旋轉方向-8c7235d5a774)
+protocol OrientationLockable where Self: AppDelegate {
+    var orientationLock: UIInterfaceOrientationMask? { get set }
+}
+
 // MARK: - 顏色設定檔 (Settings.json)
 protocol ColorSettings {
     

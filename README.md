@@ -80,6 +80,7 @@
 |[Mark](https://www.flaticon.com/free-icon/mark_10099668)|調色盤設定|
 |[CrayonPainting](https://www.ac-illust.com/main/detail.php?id=1266133)|調色盤Header背景色|
 |[WordCard](https://www.flaticon.com/free-icon/card-games_2118315)|單字卡|
+|[SunTreeBorder](https://zh.lovepik.com/image-401216042/sun-tree-border.html)|單字卡背景|
 
 ## [背景音樂 - .mp3 / .m4a (請在iTunes上自行加入)](http://amachamusic.chagasi.com/)
 

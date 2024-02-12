@@ -21,7 +21,7 @@ final class ReviewViewController: UIViewController {
     @IBOutlet weak var answearButton: UIButton!
     @IBOutlet weak var answerLabel: UILabel!
     @IBOutlet weak var interpretLabel: UILabel!
-    @IBOutlet weak var refreshQuestionButton: UIButton!
+    @IBOutlet weak var refreshQuestionButtonItem: UIBarButtonItem!
     @IBOutlet weak var questionLevelButtonItem: UIBarButtonItem!
     @IBOutlet weak var landscapeBottomConstraint: NSLayoutConstraint!
     
@@ -86,10 +86,7 @@ final class ReviewViewController: UIViewController {
     @IBAction func guessAnswear(_ sender: UIButton) { answearAction(sender) }
     @IBAction func reviewSolution(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.solutionView.rawValue, sender: vocabularyArray) }
     @IBAction func speedRate(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.speakingRateView.rawValue, sender: nil) }
-    
-    @IBAction func refreshQuestion(_ sender: UIButton) {
-        initReviewWordList(); Utility.shared.flashHUD(with: .nice)
-    }
+    @IBAction func refreshQuestion(_ sender: UIBarButtonItem) { initReviewWordList(); Utility.shared.flashHUD(with: .nice) }
     
     deinit { myPrint("\(Self.self) deinit") }
 }
@@ -340,9 +337,9 @@ private extension ReviewViewController {
         let backgroundColor: UIColor = (!isEnabled) ? .systemGray : .systemRed
         
         answearButton._isEnabled(isEnabled, backgroundColor: backgroundColor)
-        refreshQuestionButton.isEnabled = isEnabled
+        refreshQuestionButtonItem.isEnabled = isEnabled
         
-        if (reviewWordList.isEmpty) { refreshQuestionButton.isEnabled = true }
+        if (reviewWordList.isEmpty) { refreshQuestionButtonItem.isEnabled = true }
     }
         
     /// 讀出要複習的單字語音

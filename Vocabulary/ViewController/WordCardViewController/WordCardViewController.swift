@@ -13,7 +13,6 @@ final class WordCardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        wwPrint("")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -33,6 +32,7 @@ private extension WordCardViewController {
     /// 鎖定畫面為橫向
     func lockScreenOrientationToLandscape() {
         _ = Utility.shared.screenOrientation(lock: .landscape, rotate: .landscapeRight)
+        tabBarController?._tabBarHidden(true, animated: true)
     }
     
     /// 不鎖定畫面方向

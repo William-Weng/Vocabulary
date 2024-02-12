@@ -55,6 +55,15 @@
       }
     },
     {
+      "identity" : "wwonboardingviewcontroller",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWOnBoardingViewController.git",
+      "state" : {
+        "revision" : "e7e01369ac572261e1b71605ab5ee9ddc481a622",
+        "version" : "1.2.2"
+      }
+    },
+    {
       "identity" : "wwprint",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWPrint.git",

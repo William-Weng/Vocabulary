@@ -21,6 +21,8 @@
 		642C5E722A18487800AC290B /* @Image in Resources */ = {isa = PBXBuildFile; fileRef = 642C5E712A18487800AC290B /* @Image */; };
 		646E44A42980A726002BCBC8 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646E44A32980A726002BCBC8 /* ReviewViewController.swift */; };
 		64768B0D2AA3EB080005EF3A /* WWToast in Frameworks */ = {isa = PBXBuildFile; productRef = 64768B0C2AA3EB080005EF3A /* WWToast */; };
+		6476D7D02B7A1FFD00E0DFC5 /* WWOnBoardingViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6476D7CF2B7A1FFD00E0DFC5 /* WWOnBoardingViewController */; };
+		6476D7D22B7A22A800E0DFC5 /* WordCardPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6476D7D12B7A22A800E0DFC5 /* WordCardPageViewController.swift */; };
 		6492ADD52986B8E900E1B59B /* KleeOne-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADD42986B8E900E1B59B /* KleeOne-SemiBold.ttf */; };
 		6492ADD72986BBFA00E1B59B /* GamjaFlower-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADD62986BBFA00E1B59B /* GamjaFlower-Regular.ttf */; };
 		6492ADDD2986BF6E00E1B59B /* jf-openhuninn-1.1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADDC2986BF6D00E1B59B /* jf-openhuninn-1.1.ttf */; };
@@ -89,6 +91,7 @@
 		642C5E702A182C8700AC290B /* Vocabulary.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Vocabulary.entitlements; sourceTree = "<group>"; };
 		642C5E712A18487800AC290B /* @Image */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "@Image"; sourceTree = SOURCE_ROOT; };
 		646E44A32980A726002BCBC8 /* ReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
+		6476D7D12B7A22A800E0DFC5 /* WordCardPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCardPageViewController.swift; sourceTree = "<group>"; };
 		6492ADD42986B8E900E1B59B /* KleeOne-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "KleeOne-SemiBold.ttf"; sourceTree = "<group>"; };
 		6492ADD62986BBFA00E1B59B /* GamjaFlower-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GamjaFlower-Regular.ttf"; sourceTree = "<group>"; };
 		6492ADDC2986BF6D00E1B59B /* jf-openhuninn-1.1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "jf-openhuninn-1.1.ttf"; sourceTree = "<group>"; };
@@ -146,6 +149,7 @@
 				81EB0ED92A1F2E1300EE2A83 /* WWNetworking-UIImage in Frameworks */,
 				81E1F8F62A1F2CCA00EB0139 /* WWSlider in Frameworks */,
 				6418FC1A2A6DCDED00493B8D /* WWAppInstallSource in Frameworks */,
+				6476D7D02B7A1FFD00E0DFC5 /* WWOnBoardingViewController in Frameworks */,
 				81E1F8F32A1F2C9A00EB0139 /* WWSQLite3Manager in Frameworks */,
 				81E1F8F02A1F2C8100EB0139 /* WWHUD in Frameworks */,
 			);
@@ -292,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				64AB741A2B78508100882826 /* WordCardViewController.swift */,
+				6476D7D12B7A22A800E0DFC5 /* WordCardPageViewController.swift */,
 			);
 			path = WordCardViewController;
 			sourceTree = "<group>";
@@ -452,6 +457,7 @@
 				64768B0C2AA3EB080005EF3A /* WWToast */,
 				817BDE452AA596650093AD92 /* WWUserDefaults */,
 				819A68C32AAEA2DD00ACE3FF /* WWJavaScriptContext */,
+				6476D7CF2B7A1FFD00E0DFC5 /* WWOnBoardingViewController */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -492,6 +498,7 @@
 				64768B0B2AA3EB080005EF3A /* XCRemoteSwiftPackageReference "WWToast" */,
 				817BDE442AA596650093AD92 /* XCRemoteSwiftPackageReference "WWUserDefaults" */,
 				819A68C22AAEA2DD00ACE3FF /* XCRemoteSwiftPackageReference "WWJavaScriptContext" */,
+				6476D7CE2B7A1FFD00E0DFC5 /* XCRemoteSwiftPackageReference "WWOnBoardingViewController" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -544,6 +551,7 @@
 				642858A4297BC38200DD7D88 /* Extension.swift in Sources */,
 				64C184F7297E5D4C00D1D1B2 /* MainTableViewCell.swift in Sources */,
 				81E56B6B2A725DA6004400D6 /* SearchVocabularyTableViewCell.swift in Sources */,
+				6476D7D22B7A22A800E0DFC5 /* WordCardPageViewController.swift in Sources */,
 				64D3E61B2AAC5CB700140716 /* PaletteHeader.swift in Sources */,
 				6428588F297BBF8600DD7D88 /* MainViewController.swift in Sources */,
 				81CD85CC2990F03A009C39FF /* SentenceViewController.swift in Sources */,
@@ -828,6 +836,14 @@
 				minimumVersion = 1.1.0;
 			};
 		};
+		6476D7CE2B7A1FFD00E0DFC5 /* XCRemoteSwiftPackageReference "WWOnBoardingViewController" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWOnBoardingViewController.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.2;
+			};
+		};
 		817BDE442AA596650093AD92 /* XCRemoteSwiftPackageReference "WWUserDefaults" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWUserDefaults.git";
@@ -904,6 +920,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 64768B0B2AA3EB080005EF3A /* XCRemoteSwiftPackageReference "WWToast" */;
 			productName = WWToast;
+		};
+		6476D7CF2B7A1FFD00E0DFC5 /* WWOnBoardingViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6476D7CE2B7A1FFD00E0DFC5 /* XCRemoteSwiftPackageReference "WWOnBoardingViewController" */;
+			productName = WWOnBoardingViewController;
 		};
 		817BDE452AA596650093AD92 /* WWUserDefaults */ = {
 			isa = XCSwiftPackageProductDependency;

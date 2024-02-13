@@ -51,7 +51,6 @@ private extension InterpretView {
     func configure(for vocabulary: Vocabulary, textColor: UIColor = .label) {
         
         guard let info = Constant.SettingsJSON.wordSpeechInformations[safe: vocabulary.speech] else { return }
-        
         speechLabelSetting(speechLabel, with: info)
         
         interpretLabel.text = vocabulary.interpret

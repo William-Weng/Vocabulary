@@ -25,22 +25,30 @@ final class WordCardPageViewController: UIViewController {
     @objc func playWordSound(_ gesture: UITapGestureRecognizer) { playSound(string: wordLabel.text) }
     @objc func playExampleSound(_ gesture: UITapGestureRecognizer) { playSound(string: exampleLabel.text) }
     
+    /// 設定文字 / 外觀
+    /// - Parameter indexPath: IndexPath
     func configure(with indexPath: IndexPath) {
         
         guard let list = MainTableViewCell.vocabularyList(with: indexPath),
-              let info = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+              let settings = Utility.shared.generalSettings(index: Constant.tableNameIndex)
         else {
             return
         }
         
-        ListTableViewCell.exmapleList = API.shared.searchWordDetailList(list.word, for: .default(info.key))
-        let vocabulary = ListTableViewCell.vocabulary(with: IndexPath(row: 0, section: 0))
+        ListTableViewCell.exmapleList = API.shared.searchWordDetailList(list.word, for: .default(settings.key))
+        
+        guard let vocabulary = ListTableViewCell.vocabulary(with: IndexPath(row: 0, section: 0)),
+              let info = Constant.SettingsJSON.wordSpeechInformations[safe: vocabulary.speech]
+        else {
+            return
+        }
         
         wordLabel.text = list.word
         alphabetLabel.text = list.alphabet
-        interpretLabel.text = vocabulary?.interpret ?? "----"
-        exampleLabel.text = vocabulary?.example ?? "----"
-        translateLabel.text = vocabulary?.translate ?? "----"
+        interpretLabel.text = vocabulary.interpret ?? "----"
+        exampleLabel.text = vocabulary.example ?? "----"
+        translateLabel.text = vocabulary.translate ?? "----"
+        speechLabelSetting(speechLabel, with: info)
     }
 }
 
@@ -82,5 +90,16 @@ private extension WordCardPageViewController {
         }
         
         Utility.shared.speak(string: string, code: settings.voice)
+    }
+    
+    /// speechLabel文字顏色設定
+    /// - Parameters:
+    ///   - label: UILabel
+    ///   - info: Settings.WordSpeechInformation?
+    func speechLabelSetting(_ label: UILabel, with info: Settings.WordSpeechInformation) {
+        
+        label.text = info.name
+        label.textColor = UIColor(rgb: info.color)
+        label.backgroundColor = UIColor(rgb: info.backgroundColor)
     }
 }

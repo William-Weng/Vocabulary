@@ -73,7 +73,7 @@ private extension MainTableViewCell {
         
         wordLabel.font = Utility.shared.dictionaryFont(with: Constant.tableNameIndex, size: 36.0)
         wordLabel.text = vocabularyList.word
-                
+        
         levelButtonSetting(levelButton, with: info)
         levelButton.showsMenuAsPrimaryAction = true
         levelButton.menu = UIMenu(title: "請選擇等級", children: levelMenuActionMaker())

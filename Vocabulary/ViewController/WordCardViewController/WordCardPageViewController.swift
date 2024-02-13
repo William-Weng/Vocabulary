@@ -19,15 +19,45 @@ final class WordCardPageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initGestureSetting()
+        initSetting()
     }
     
     @objc func playWordSound(_ gesture: UITapGestureRecognizer) { playSound(string: wordLabel.text) }
     @objc func playExampleSound(_ gesture: UITapGestureRecognizer) { playSound(string: exampleLabel.text) }
+    
+    func configure(with indexPath: IndexPath) {
+        
+        guard let list = MainTableViewCell.vocabularyList(with: indexPath),
+              let info = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+        else {
+            return
+        }
+        
+        ListTableViewCell.exmapleList = API.shared.searchWordDetailList(list.word, for: .default(info.key))
+        let vocabulary = ListTableViewCell.vocabulary(with: IndexPath(row: 0, section: 0))
+        
+        wordLabel.text = list.word
+        alphabetLabel.text = list.alphabet
+        interpretLabel.text = vocabulary?.interpret ?? "----"
+        exampleLabel.text = vocabulary?.example ?? "----"
+        translateLabel.text = vocabulary?.translate ?? "----"
+    }
 }
 
 // MARK: - 小工具
 private extension WordCardPageViewController {
+    
+    /// 初始化設定
+    func initSetting() {
+        initGestureSetting()
+        initLabelSetting()
+    }
+    
+    /// Label設定
+    func initLabelSetting() {
+        wordLabel.font = Utility.shared.dictionaryFont(with: Constant.tableNameIndex, size: 48.0)
+        exampleLabel.font = Utility.shared.dictionaryFont(with: Constant.tableNameIndex, size: 24.0)
+    }
     
     /// 初始化Label點擊功能
     func initGestureSetting() {
@@ -36,8 +66,8 @@ private extension WordCardPageViewController {
         let exampleGesture = UITapGestureRecognizer(target: self, action: #selector(WordCardPageViewController.playExampleSound(_:)))
 
         wordLabel.isUserInteractionEnabled = true
-        exampleLabel.isUserInteractionEnabled = true
         wordLabel.addGestureRecognizer(wordGesture)
+        exampleLabel.isUserInteractionEnabled = true
         exampleLabel.addGestureRecognizer(exampleGesture)
     }
     

@@ -25,6 +25,7 @@ final class MainViewController: UIViewController {
         case listTableView = "ListTableViewSegue"
         case volumeView = "VolumeViewSegue"
         case searchView = "SearchViewSegue"
+        case wordCardView = "WordCardViewSegue"
     }
     
     @IBOutlet weak var myImageView: UIImageView!
@@ -220,6 +221,7 @@ private extension MainViewController {
         case .listTableView: vocabularyListPageSetting(for: segue, sender: sender)
         case .volumeView: volumePageSetting(for: segue, sender: sender)
         case .searchView: searchWordViewControllerSetting(for: segue, sender: sender)
+        case .wordCardView: wordCardControllerSetting(for: segue, sender: sender)
         }
     }
     
@@ -507,6 +509,16 @@ private extension MainViewController {
         viewController.searchText = searchText
     }
     
+    /// 單字卡頁面相關設定
+    /// - Parameters:
+    ///   - segue: UIStoryboardSegue
+    ///   - sender: Any?
+    func wordCardControllerSetting(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let viewController = segue.destination as? WordCardViewController else { return }
+        viewController.mainViewDelegate = self
+    }
+    
     /// [滑動時TabBar是否隱藏的規則設定 => NavigationBar也一起處理](https://www.jianshu.com/p/539b265bcb5d)
     /// - Parameter scrollView: UIScrollView
     func tabrBarHidden(with scrollView: UIScrollView) {
@@ -764,11 +776,10 @@ private extension MainViewController {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let actionOK = UIAlertAction(title: "確認", style: .default) { _ in }
-        let actionSelectDatabase = UIAlertAction(title: "選擇字典", style: .default) { [weak self] _ in
-            guard let this = self else { return }
-            this.dictionaryAlertAction(target: this, sourceView: sourceView)
-        }
+        let actionSelectDatabase = UIAlertAction(title: "選擇字典", style: .default) { [unowned self] _ in dictionaryAlertAction(target: self, sourceView: sourceView) }
+        let actionWordCard = UIAlertAction(title: "單字卡模式", style: .default) { [unowned self] _ in performSegue(for: .wordCardView, sender: nil) }
 
+        alertController.addAction(actionWordCard)
         alertController.addAction(actionSelectDatabase)
         alertController.addAction(actionOK)
 

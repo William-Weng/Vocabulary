@@ -514,9 +514,11 @@ private extension MainViewController {
     ///   - segue: UIStoryboardSegue
     ///   - sender: Any?
     func wordCardControllerSetting(for segue: UIStoryboardSegue, sender: Any?) {
-        
+                
         guard let viewController = segue.destination as? WordCardViewController else { return }
+        
         viewController.mainViewDelegate = self
+        viewController.currentOrientation = UIDevice.current.orientation
     }
     
     /// [滑動時TabBar是否隱藏的規則設定 => NavigationBar也一起處理](https://www.jianshu.com/p/539b265bcb5d)

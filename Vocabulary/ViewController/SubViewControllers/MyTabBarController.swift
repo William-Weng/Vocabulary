@@ -64,7 +64,7 @@ private extension MyTabBarController {
     ///   - size: CGSize
     ///   - coordinator: UIViewControllerTransitionCoordinator
     func viewWillTransitionAction(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        
+                
         coordinator.animate { [weak self] _ in
             
             guard let this = self else { return }

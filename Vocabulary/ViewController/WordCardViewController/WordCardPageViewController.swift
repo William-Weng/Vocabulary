@@ -25,6 +25,11 @@ final class WordCardPageViewController: UIViewController {
     @objc func playWordSound(_ gesture: UITapGestureRecognizer) { playSound(string: wordLabel.text) }
     @objc func playExampleSound(_ gesture: UITapGestureRecognizer) { playSound(string: exampleLabel.text) }
     
+    func speakContent() {
+        playSound(string: wordLabel.text)
+        playSound(string: exampleLabel.text)
+    }
+    
     /// 設定文字 / 外觀
     /// - Parameter indexPath: IndexPath
     func configure(with indexPath: IndexPath) {

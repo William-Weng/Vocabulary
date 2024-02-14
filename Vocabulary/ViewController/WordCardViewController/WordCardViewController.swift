@@ -184,16 +184,20 @@ private extension WordCardViewController {
     /// 鎖定畫面為橫向
     func lockScreenOrientationToLandscape() {
         
-        var interfaceOrientation: UIInterfaceOrientation = .landscapeRight
+        let interfaceOrientation: UIInterfaceOrientation
 
         switch currentOrientation {
         case .portrait, .portraitUpsideDown, .unknown, .faceUp, .faceDown: interfaceOrientation = .landscapeRight
         case .landscapeLeft: interfaceOrientation = .landscapeRight
         case .landscapeRight: interfaceOrientation = .landscapeLeft
-        @unknown default: break
+        @unknown default: interfaceOrientation = .landscapeRight
         }
         
         _ = Utility.shared.screenOrientation(lock: .landscape, rotate: interfaceOrientation)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [unowned self] in
+            orientationbButtonItemImage(name: "Horizontal")
+        }
     }
     
     /// 不鎖定畫面方向 (轉回原來的方向)
@@ -216,7 +220,13 @@ private extension WordCardViewController {
     
     /// 設定畫面旋轉方向的圖示
     func orientationbButtonItemSetting() {
-        let imageName = (UIDevice.current.orientation.isLandscape) ? "Horizontal" : "Vertical"
-        orientationbButtonItem.image = UIImage(named: imageName)
+        let name = (UIDevice.current.orientation.isLandscape) ? "Horizontal" : "Vertical"
+        orientationbButtonItemImage(name: name)
+    }
+    
+    /// 設定圖示
+    /// - Parameter name: String
+    func orientationbButtonItemImage(name: String) {
+        orientationbButtonItem.image = UIImage(named: name)
     }
 }

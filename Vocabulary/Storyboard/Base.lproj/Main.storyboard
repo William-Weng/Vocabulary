@@ -1510,11 +1510,18 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="單字卡模式" id="ITF-5g-g65">
-                        <barButtonItem key="rightBarButtonItem" image="Vertical" id="5zs-wP-32s">
-                            <connections>
-                                <action selector="lockScreenOrientation:" destination="apD-De-WeM" id="UwS-ZH-tgZ"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="Vertical" id="5zs-wP-32s">
+                                <connections>
+                                    <action selector="lockScreenOrientation:" destination="apD-De-WeM" id="UwS-ZH-tgZ"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="WordCard" id="OHW-Ce-mgA">
+                                <connections>
+                                    <action selector="rereadAction:" destination="apD-De-WeM" id="V5V-5a-GSp"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="orientationbButtonItem" destination="5zs-wP-32s" id="xFj-WM-lj4"/>
@@ -2300,7 +2307,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Zw3-fK-0mv">
                                                 <rect key="frame" x="51.5" y="140" width="215" height="101.5"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="suspend" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9gm-nn-cjr">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="suspend" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9gm-nn-cjr" customClass="WWTypewriterLabel" customModule="WWTypewriterLabel">
                                                         <rect key="frame" x="0.0" y="0.0" width="215" height="65.5"/>
                                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="56"/>
                                                         <nil key="textColor"/>
@@ -2372,7 +2379,7 @@
                                                             <constraint firstAttribute="height" constant="30" id="E8J-eB-YFE"/>
                                                         </constraints>
                                                     </stackView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The lamp was suspended from the ceiling." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XM6-ih-Gjc">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The lamp was suspended from the ceiling." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XM6-ih-Gjc" customClass="WWTypewriterLabel" customModule="WWTypewriterLabel">
                                                         <rect key="frame" x="0.0" y="148" width="302" height="60"/>
                                                         <fontDescription key="fontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="24"/>
                                                         <color key="textColor" systemColor="systemBlueColor"/>
@@ -2494,7 +2501,8 @@
         <image name="Star" width="21.333333969116211" height="21.333333969116211"/>
         <image name="SunTreeBorder" width="329.33334350585938" height="295.66665649414062"/>
         <image name="Test" width="21.333333969116211" height="21.333333969116211"/>
-        <image name="Vertical" width="42.666667938232422" height="42.666667938232422"/>
+        <image name="Vertical" width="32" height="32"/>
+        <image name="WordCard" width="42.666667938232422" height="42.666667938232422"/>
         <systemColor name="secondarySystemBackgroundColor">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

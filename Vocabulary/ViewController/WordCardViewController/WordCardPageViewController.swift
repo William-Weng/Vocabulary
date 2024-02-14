@@ -6,15 +6,16 @@
 //
 
 import UIKit
+import WWTypewriterLabel
 
 // MARK: - 單字卡內容
 final class WordCardPageViewController: UIViewController {
 
-    @IBOutlet weak var wordLabel: UILabel!
+    @IBOutlet weak var wordLabel: WWTypewriterLabel!
     @IBOutlet weak var alphabetLabel: UILabel!
     @IBOutlet weak var speechLabel: UILabel!
     @IBOutlet weak var interpretLabel: UILabel!
-    @IBOutlet weak var exampleLabel: UILabel!
+    @IBOutlet weak var exampleLabel: WWTypewriterLabel!
     @IBOutlet weak var translateLabel: UILabel!
     
     override func viewDidLoad() {
@@ -24,11 +25,6 @@ final class WordCardPageViewController: UIViewController {
     
     @objc func playWordSound(_ gesture: UITapGestureRecognizer) { playSound(string: wordLabel.text) }
     @objc func playExampleSound(_ gesture: UITapGestureRecognizer) { playSound(string: exampleLabel.text) }
-    
-    func speakContent() {
-        playSound(string: wordLabel.text)
-        playSound(string: exampleLabel.text)
-    }
     
     /// 設定文字 / 外觀
     /// - Parameter indexPath: IndexPath
@@ -54,6 +50,18 @@ final class WordCardPageViewController: UIViewController {
         exampleLabel.text = vocabulary.example ?? "----"
         translateLabel.text = vocabulary.translate ?? "----"
         speechLabelSetting(speechLabel, with: info)
+    }
+    
+    /// 閱讀文字內容
+    func speakContent() {
+        playSound(string: wordLabel.text)
+        playSound(string: exampleLabel.text)
+    }
+    
+    /// 打字機文字顯示
+    func typewriter() {
+        wordLabel.start(fps: 5, stringType: .general(wordLabel.text))
+        exampleLabel.start(fps: 10, stringType: .general(exampleLabel.text))
     }
 }
 

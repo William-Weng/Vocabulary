@@ -19,6 +19,7 @@
 		642858A6297BC40E00DD7D88 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642858A5297BC40E00DD7D88 /* Constant.swift */; };
 		642858AB297BC51E00DD7D88 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642858AA297BC51E00DD7D88 /* Model.swift */; };
 		642C5E722A18487800AC290B /* @Image in Resources */ = {isa = PBXBuildFile; fileRef = 642C5E712A18487800AC290B /* @Image */; };
+		644FF14B2B7C604C00D3B814 /* WWTypewriterLabel in Frameworks */ = {isa = PBXBuildFile; productRef = 644FF14A2B7C604C00D3B814 /* WWTypewriterLabel */; };
 		646E44A42980A726002BCBC8 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646E44A32980A726002BCBC8 /* ReviewViewController.swift */; };
 		64768B0D2AA3EB080005EF3A /* WWToast in Frameworks */ = {isa = PBXBuildFile; productRef = 64768B0C2AA3EB080005EF3A /* WWToast */; };
 		6476D7D02B7A1FFD00E0DFC5 /* WWOnBoardingViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6476D7CF2B7A1FFD00E0DFC5 /* WWOnBoardingViewController */; };
@@ -147,6 +148,7 @@
 				819A68C42AAEA2DD00ACE3FF /* WWJavaScriptContext in Frameworks */,
 				81E1F8FF2A1F2D9B00EB0139 /* WWNetworking in Frameworks */,
 				81EB0ED92A1F2E1300EE2A83 /* WWNetworking-UIImage in Frameworks */,
+				644FF14B2B7C604C00D3B814 /* WWTypewriterLabel in Frameworks */,
 				81E1F8F62A1F2CCA00EB0139 /* WWSlider in Frameworks */,
 				6418FC1A2A6DCDED00493B8D /* WWAppInstallSource in Frameworks */,
 				6476D7D02B7A1FFD00E0DFC5 /* WWOnBoardingViewController in Frameworks */,
@@ -458,6 +460,7 @@
 				817BDE452AA596650093AD92 /* WWUserDefaults */,
 				819A68C32AAEA2DD00ACE3FF /* WWJavaScriptContext */,
 				6476D7CF2B7A1FFD00E0DFC5 /* WWOnBoardingViewController */,
+				644FF14A2B7C604C00D3B814 /* WWTypewriterLabel */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -499,6 +502,7 @@
 				817BDE442AA596650093AD92 /* XCRemoteSwiftPackageReference "WWUserDefaults" */,
 				819A68C22AAEA2DD00ACE3FF /* XCRemoteSwiftPackageReference "WWJavaScriptContext" */,
 				6476D7CE2B7A1FFD00E0DFC5 /* XCRemoteSwiftPackageReference "WWOnBoardingViewController" */,
+				644FF1492B7C604C00D3B814 /* XCRemoteSwiftPackageReference "WWTypewriterLabel" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -725,7 +729,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20240213;
+				CURRENT_PROJECT_VERSION = 20240214;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -744,7 +748,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.1;
+				MARKETING_VERSION = 2.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -764,7 +768,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20240213;
+				CURRENT_PROJECT_VERSION = 20240214;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -783,7 +787,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.1;
+				MARKETING_VERSION = 2.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -826,6 +830,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;
+			};
+		};
+		644FF1492B7C604C00D3B814 /* XCRemoteSwiftPackageReference "WWTypewriterLabel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWTypewriterLabel.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
 			};
 		};
 		64768B0B2AA3EB080005EF3A /* XCRemoteSwiftPackageReference "WWToast" */ = {
@@ -915,6 +927,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6418FC182A6DCDED00493B8D /* XCRemoteSwiftPackageReference "WWAppInstallSource" */;
 			productName = WWAppInstallSource;
+		};
+		644FF14A2B7C604C00D3B814 /* WWTypewriterLabel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 644FF1492B7C604C00D3B814 /* XCRemoteSwiftPackageReference "WWTypewriterLabel" */;
+			productName = WWTypewriterLabel;
 		};
 		64768B0C2AA3EB080005EF3A /* WWToast */ = {
 			isa = XCSwiftPackageProductDependency;

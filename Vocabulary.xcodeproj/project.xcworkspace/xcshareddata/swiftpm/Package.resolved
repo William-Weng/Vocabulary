@@ -100,6 +100,15 @@
       }
     },
     {
+      "identity" : "wwtypewriterlabel",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWTypewriterLabel.git",
+      "state" : {
+        "revision" : "aedd5572f4293b00c707813301c1f4338fd7f892",
+        "version" : "1.0.2"
+      }
+    },
+    {
       "identity" : "wwuserdefaults",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWUserDefaults.git",

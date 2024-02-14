@@ -36,7 +36,7 @@
 |[WWUserDefaults](https://github.com/William-Weng/WWUserDefaults)|加強版的UserDefaults|
 |[WWJavaScriptContext](https://github.com/William-Weng/WWJavaScriptContext)|JavaScriptCore小工具|
 |[WWOnBoardingViewController](https://github.com/William-Weng/WWOnBoardingViewController)|製作單字卡分頁的小工具|
-
+|[WWTypewriterLabel](https://github.com/William-Weng/WWTypewriterLabel)|打字機效果|
 ## [相關圖示](https://www.flaticon.com)
 
 |套件|功能|
@@ -80,6 +80,7 @@
 |[Palette](https://www.flaticon.com/free-icon/color-palette_3214398)|調色盤|
 |[Mark](https://www.flaticon.com/free-icon/mark_10099668)|調色盤設定|
 |[CrayonPainting](https://www.ac-illust.com/main/detail.php?id=1266133)|調色盤Header背景色|
+|[WordCard](https://www.flaticon.com/free-icon/card-games_2118315)|單字卡|
 |[SunTreeBorder](https://zh.lovepik.com/image-401216042/sun-tree-border.html)|單字卡背景|
 |[Vertical](https://www.flaticon.com/free-icon/smartphones_604609)|畫面旋轉功能|
 

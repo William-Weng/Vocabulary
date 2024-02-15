@@ -28,6 +28,7 @@
 		6492ADDD2986BF6E00E1B59B /* jf-openhuninn-1.1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADDC2986BF6D00E1B59B /* jf-openhuninn-1.1.ttf */; };
 		64A11DF829B2315D00688C90 /* MyTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A11DF729B2315D00688C90 /* MyTabBar.swift */; };
 		64AB741B2B78508100882826 /* WordCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AB741A2B78508100882826 /* WordCardViewController.swift */; };
+		64ACFDED2B7EBDA700863407 /* WWOnBoardingViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 64ACFDEC2B7EBDA700863407 /* WWOnBoardingViewController */; };
 		64B94D7A2AB5DDE8006B317D /* README.html in Resources */ = {isa = PBXBuildFile; fileRef = 64B94D792AB5DDE8006B317D /* README.html */; };
 		64BA9EA2299764E600226DC8 /* OthersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BA9EA1299764E600226DC8 /* OthersTableViewCell.swift */; };
 		64C184F5297E5CC600D1D1B2 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C184F4297E5CC600D1D1B2 /* Protocol.swift */; };
@@ -43,8 +44,6 @@
 		81201C4C298B58C200291485 /* InterpretView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81201C4A298B58C200291485 /* InterpretView.swift */; };
 		81201C4D298B58C200291485 /* InterpretView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81201C4B298B58C200291485 /* InterpretView.xib */; };
 		812C5444299F73DC003F942A /* TalkingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812C5443299F73DC003F942A /* TalkingViewController.swift */; };
-		813892722B7DF3F800D67D98 /* WWOnBoardingViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 813892712B7DF3F800D67D98 /* WWOnBoardingViewController */; };
-		813892782B7E060E00D67D98 /* WWOnBoardingViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 813892772B7E060E00D67D98 /* WWOnBoardingViewController */; };
 		815E14782990F47700EC571D /* SentenceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815E14772990F47700EC571D /* SentenceTableViewCell.swift */; };
 		81708BC62B21AD4C00397B27 /* dictionary_7439537.png in Resources */ = {isa = PBXBuildFile; fileRef = 81708BC22B21AD4C00397B27 /* dictionary_7439537.png */; };
 		81708BC72B21AD4C00397B27 /* translate_5146533.png in Resources */ = {isa = PBXBuildFile; fileRef = 81708BC32B21AD4C00397B27 /* translate_5146533.png */; };
@@ -145,7 +144,7 @@
 			files = (
 				64768B0D2AA3EB080005EF3A /* WWToast in Frameworks */,
 				817BDE462AA596650093AD92 /* WWUserDefaults in Frameworks */,
-				813892722B7DF3F800D67D98 /* WWOnBoardingViewController in Frameworks */,
+				64ACFDED2B7EBDA700863407 /* WWOnBoardingViewController in Frameworks */,
 				81E4078E2A7239A200230C3A /* WWFloatingViewController in Frameworks */,
 				819A68C42AAEA2DD00ACE3FF /* WWJavaScriptContext in Frameworks */,
 				81E1F8FF2A1F2D9B00EB0139 /* WWNetworking in Frameworks */,
@@ -154,7 +153,6 @@
 				81E1F8F62A1F2CCA00EB0139 /* WWSlider in Frameworks */,
 				6418FC1A2A6DCDED00493B8D /* WWAppInstallSource in Frameworks */,
 				81E1F8F32A1F2C9A00EB0139 /* WWSQLite3Manager in Frameworks */,
-				813892782B7E060E00D67D98 /* WWOnBoardingViewController in Frameworks */,
 				81E1F8F02A1F2C8100EB0139 /* WWHUD in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -462,8 +460,7 @@
 				817BDE452AA596650093AD92 /* WWUserDefaults */,
 				819A68C32AAEA2DD00ACE3FF /* WWJavaScriptContext */,
 				644FF14A2B7C604C00D3B814 /* WWTypewriterLabel */,
-				813892712B7DF3F800D67D98 /* WWOnBoardingViewController */,
-				813892772B7E060E00D67D98 /* WWOnBoardingViewController */,
+				64ACFDEC2B7EBDA700863407 /* WWOnBoardingViewController */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -732,7 +729,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20240215;
+				CURRENT_PROJECT_VERSION = 20240216;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -751,7 +748,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.6;
+				MARKETING_VERSION = 2.3.7;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -771,7 +768,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20240215;
+				CURRENT_PROJECT_VERSION = 20240216;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -790,7 +787,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.6;
+				MARKETING_VERSION = 2.3.7;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -941,11 +938,7 @@
 			package = 64768B0B2AA3EB080005EF3A /* XCRemoteSwiftPackageReference "WWToast" */;
 			productName = WWToast;
 		};
-		813892712B7DF3F800D67D98 /* WWOnBoardingViewController */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = WWOnBoardingViewController;
-		};
-		813892772B7E060E00D67D98 /* WWOnBoardingViewController */ = {
+		64ACFDEC2B7EBDA700863407 /* WWOnBoardingViewController */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 813892762B7E060E00D67D98 /* XCRemoteSwiftPackageReference "WWOnBoardingViewController" */;
 			productName = WWOnBoardingViewController;

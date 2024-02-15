@@ -7,6 +7,7 @@
 
 import UIKit
 import WWOnBoardingViewController
+import AVFAudio
 
 // MARK: - 單字卡
 final class WordCardViewController: UIViewController {
@@ -14,9 +15,9 @@ final class WordCardViewController: UIViewController {
     @IBOutlet weak var orientationbButtonItem: UIBarButtonItem!
     
     var currentOrientation: UIDeviceOrientation = .unknown
-    var infinityLoopInfo: WWOnBoardingViewController.InfinityLoopInformation = (hasPrevious: false, hasNext: true)
-
     weak var mainViewDelegate: MainViewDelegate?
+
+    private var infinityLoopInfo: WWOnBoardingViewController.InfinityLoopInformation = (hasPrevious: false, hasNext: true)
     
     private lazy var pageViewControllerArray: [UIViewController] = {
         return [

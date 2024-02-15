@@ -20,8 +20,8 @@ final class Utility: NSObject {
     
     static let shared = Utility()
     
-    private let synthesizer = AVSpeechSynthesizer._build()
     private let feedback = UIImpactFeedbackGenerator._build(style: .medium)
+    private var synthesizer = AVSpeechSynthesizer._build()
 
     private override init() {}
 }
@@ -124,8 +124,18 @@ extension Utility {
     ///   - rate: 語速 (0% ~ 100%)
     ///   - pitchMultiplier: 音調 (50% ~ 200%)
     ///   - volume: 音量 (0% ~ 100%)
+    ///   - boundary: 停止發聲 (單字 / 立刻停止)
     func speak(string: String, code: String, rate: Float = 0.4, pitchMultiplier: Float = 1.0, volume: Float = 1.0) {
-        self.synthesizer._speak(string: string, code: code, rate: rate, pitchMultiplier: pitchMultiplier, volume: volume)
+        pauseSpeaking(at: .immediate)
+        synthesizer._speak(string: string, code: code, rate: rate, pitchMultiplier: pitchMultiplier, volume: volume)
+    }
+    
+    /// 停止發聲
+    /// - Parameters:
+    ///   - boundary: 停止發聲 (單字 / 立刻停止)
+    func pauseSpeaking(at boundary: AVSpeechBoundary) {
+        synthesizer.pauseSpeaking(at: .word)
+        synthesizer = AVSpeechSynthesizer._build()
     }
     
     /// 震動功能

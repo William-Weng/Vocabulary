@@ -67,13 +67,21 @@ final class WordCardPageViewController: UIViewController {
         speechLabelSetting(speechLabel, with: info)
     }
     
-    /// 閱讀文字內容
+    /// 閱讀文字內容 (單字 + 範例)
     func speakContent() {
-        playSound(string: vocabularyList?.word)
-        playSound(string: vocabulary?.example)
+        
+        guard let word = vocabularyList?.word,
+              let example = vocabulary?.example
+        else {
+            return
+        }
+                
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [unowned self] in
+            playSound(string: "\(word) - \(example)")
+        }
     }
     
-    /// 打字機文字顯示
+    /// 打字機文字顯示 (文字效果)
     func typewriter() {
         wordLabel.start(fps: 5, stringType: .general(vocabularyList?.word))
         exampleLabel.start(fps: 10, stringType: .general(vocabulary?.example))

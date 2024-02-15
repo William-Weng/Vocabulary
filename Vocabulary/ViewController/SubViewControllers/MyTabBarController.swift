@@ -64,11 +64,9 @@ private extension MyTabBarController {
     ///   - size: CGSize
     ///   - coordinator: UIViewControllerTransitionCoordinator
     func viewWillTransitionAction(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-                
-        coordinator.animate { [weak self] _ in
-            
-            guard let this = self else { return }
-            this.tabBarStatus(isHidden: Self.isHidden)
+        
+        coordinator.animate { [unowned self] _ in
+            tabBarStatus(isHidden: Self.isHidden)
         }
     }
     
@@ -84,12 +82,9 @@ private extension MyTabBarController {
     /// 註冊CanvasView的顯示設定
     func registerCanvasViewAction() {
         
-        NotificationCenter.default._register(name: .displayCanvasView) { [weak self] _ in
-            
-            guard let this = self else { return }
-            
-            this.canvasViewSetting()
-            this.canvasViewButtonsSetting()
+        NotificationCenter.default._register(name: .displayCanvasView) { [unowned self] _ in
+            canvasViewSetting()
+            canvasViewButtonsSetting()
         }
     }
     

@@ -67,7 +67,11 @@ final class MainViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if (!isFixed) { fixTableViewInsetForSafeArea(for: IndexPath(row: 0, section: 0)); isFixed = true }
+        
+        if (!isFixed) {
+            isFixed = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [unowned self] in fixTableViewInsetForSafeArea(for: IndexPath(row: 0, section: 0)) }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {

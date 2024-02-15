@@ -9,7 +9,7 @@ import UIKit
 import WWJavaScriptContext
 import WWFloatingViewController
 
-// MARK: - OthersViewDelegate
+// MARK: - PaletteViewDelegate
 protocol PaletteViewDelegate: NSObject {
     
     func palette(with indexPath: IndexPath, colorType: PaletteViewController.ColorType, info: Constant.PaletteInformation)

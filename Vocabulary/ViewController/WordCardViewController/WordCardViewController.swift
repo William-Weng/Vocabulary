@@ -62,6 +62,7 @@ final class WordCardViewController: UIViewController {
 extension WordCardViewController: WWOnBoardingViewControllerDelegate {
     
     func viewControllers(onBoardingViewController: WWOnBoardingViewController) -> [UIViewController] {
+        if (MainTableViewCell.vocabularyListArray.isEmpty) { pageViewControllerArray = [UIViewController()] }
         return pageViewControllerArray
     }
     
@@ -82,7 +83,6 @@ private extension WordCardViewController {
     ///   - segue: UIStoryboardSegue
     ///   - sender: Any?
     func initSetting(for segue: UIStoryboardSegue, sender: Any?) {
-        
         pageViewControllerSetting(with: currentIndex, offset: currentIndexOffset)
         speakContent(with: currentIndex, isTypping: true)
         onBoardingViewController = segue.destination as? WWOnBoardingViewController

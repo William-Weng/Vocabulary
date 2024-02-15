@@ -382,6 +382,36 @@ extension Utility {
     }
 }
 
+// MARK: - MainTableViewCell
+extension Utility {
+    
+    /// 更新暫存的單字列表資訊
+    /// - Parameters:
+    ///   - info: Settings.VocabularyLevelInformation
+    ///   - indexPath: IndexPath
+    func updateLevelDictionary(_ info: Settings.VocabularyLevelInformation, with indexPath: IndexPath) {
+        
+        guard var dictionary = MainTableViewCell.vocabularyListArray[safe: indexPath.row] else { return }
+        
+        dictionary["level"] = info.value
+        MainTableViewCell.vocabularyListArray[indexPath.row] = dictionary
+    }
+    
+    /// 更新暫存的我的最愛資訊
+    /// - Parameters:
+    ///   - isFavorite: Bool
+    ///   - indexPath: IndexPath
+    func updateFavoriteDictionary(_ isFavorite: Bool, with indexPath: IndexPath) {
+        
+        guard var dictionary = MainTableViewCell.vocabularyListArray[safe: indexPath.row] else { return }
+        
+        let favorite = isFavorite._int()
+        dictionary["favorite"] = favorite
+        
+        MainTableViewCell.vocabularyListArray[indexPath.row] = dictionary
+    }
+}
+
 // MARK: - Settings.json
 extension Utility {
     

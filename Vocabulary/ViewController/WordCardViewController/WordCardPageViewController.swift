@@ -17,6 +17,12 @@ final class WordCardPageViewController: UIViewController {
     @IBOutlet weak var interpretLabel: UILabel!
     @IBOutlet weak var exampleLabel: WWTypewriterLabel!
     @IBOutlet weak var translateLabel: UILabel!
+    @IBOutlet weak var favoriteButton: UIButton!
+    
+    private var isFavorite = false
+    private var indexPath = IndexPath()
+    private var vocabularyList: VocabularyList?
+    private var vocabulary: Vocabulary?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,17 +32,19 @@ final class WordCardPageViewController: UIViewController {
     @objc func playWordSound(_ gesture: UITapGestureRecognizer) { playSound(string: wordLabel.text) }
     @objc func playExampleSound(_ gesture: UITapGestureRecognizer) { playSound(string: exampleLabel.text) }
     
+    @IBAction func favoriteAction(_ sender: UIButton) { updateFavorite(!isFavorite, with: indexPath) }
+    
     /// 設定文字 / 外觀
     /// - Parameter indexPath: IndexPath
     func configure(with indexPath: IndexPath) {
         
-        guard let list = MainTableViewCell.vocabularyList(with: indexPath),
+        guard let vocabularyList = MainTableViewCell.vocabularyList(with: indexPath),
               let settings = Utility.shared.generalSettings(index: Constant.tableNameIndex)
         else {
             return
         }
         
-        ListTableViewCell.exmapleList = API.shared.searchWordDetailList(list.word, for: .default(settings.key))
+        ListTableViewCell.exmapleList = API.shared.searchWordDetailList(vocabularyList.word, for: .default(settings.key))
         
         guard let vocabulary = ListTableViewCell.vocabulary(with: IndexPath(row: 0, section: 0)),
               let info = Constant.SettingsJSON.wordSpeechInformations[safe: vocabulary.speech]
@@ -44,24 +52,31 @@ final class WordCardPageViewController: UIViewController {
             return
         }
         
-        wordLabel.text = list.word
-        alphabetLabel.text = list.alphabet
-        interpretLabel.text = vocabulary.interpret ?? "----"
-        exampleLabel.text = vocabulary.example ?? "----"
-        translateLabel.text = vocabulary.translate ?? "----"
+        self.indexPath = indexPath
+        self.vocabularyList = vocabularyList
+        self.vocabulary = vocabulary
+        
+        isFavorite = ((vocabularyList.favorite ?? 0) != 0)
+        favoriteButton.setBackgroundImage(Utility.shared.favoriteIcon(isFavorite), for: .normal)
+        
+        wordLabel.text = vocabularyList.word
+        alphabetLabel.text = vocabularyList.alphabet
+        interpretLabel.text = vocabulary.interpret
+        exampleLabel.text = vocabulary.example
+        translateLabel.text = vocabulary.translate
         speechLabelSetting(speechLabel, with: info)
     }
     
     /// 閱讀文字內容
     func speakContent() {
-        playSound(string: wordLabel.text)
-        playSound(string: exampleLabel.text)
+        playSound(string: vocabularyList?.word)
+        playSound(string: vocabulary?.example)
     }
     
     /// 打字機文字顯示
     func typewriter() {
-        wordLabel.start(fps: 5, stringType: .general(wordLabel.text))
-        exampleLabel.start(fps: 10, stringType: .general(exampleLabel.text))
+        wordLabel.start(fps: 5, stringType: .general(vocabularyList?.word))
+        exampleLabel.start(fps: 10, stringType: .general(vocabulary?.example))
     }
 }
 
@@ -87,8 +102,8 @@ private extension WordCardPageViewController {
         let exampleGesture = UITapGestureRecognizer(target: self, action: #selector(WordCardPageViewController.playExampleSound(_:)))
 
         wordLabel.isUserInteractionEnabled = true
-        wordLabel.addGestureRecognizer(wordGesture)
         exampleLabel.isUserInteractionEnabled = true
+        wordLabel.addGestureRecognizer(wordGesture)
         exampleLabel.addGestureRecognizer(exampleGesture)
     }
     
@@ -114,5 +129,24 @@ private extension WordCardPageViewController {
         label.text = info.name
         label.textColor = UIColor(rgb: info.color)
         label.backgroundColor = UIColor(rgb: info.backgroundColor)
+    }
+    
+    /// 更新Favorite狀態
+    /// - Parameters:
+    ///   - isFavorite: Bool
+    ///   - indexPath: IndexPath
+    func updateFavorite(_ isFavorite: Bool, with indexPath: IndexPath) {
+        
+        guard let vocabularyList = MainTableViewCell.vocabularyList(with: indexPath),
+              let info = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+        else {
+            return
+        }
+        
+        let isSuccess = API.shared.updateVocabularyFavoriteToList(vocabularyList.id, info: info, isFavorite: isFavorite)
+        if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
+        
+        favoriteButton.setBackgroundImage(Utility.shared.favoriteIcon(isFavorite), for: .normal)
+        Utility.shared.updateFavoriteDictionary(isFavorite, with: indexPath)
     }
 }

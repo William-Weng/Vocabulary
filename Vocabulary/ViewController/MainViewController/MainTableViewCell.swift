@@ -135,7 +135,7 @@ private extension MainTableViewCell {
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
         
         levelButtonSetting(levelButton, with: levelInfo)
-        updateLevelDictionary(levelInfo, with: indexPath)
+        Utility.shared.updateLevelDictionary(levelInfo, with: indexPath)
     }
     
     /// levelButton文字顏色設定
@@ -165,32 +165,6 @@ private extension MainTableViewCell {
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
         
         favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)
-        updateFavoriteDictionary(isFavorite, with: indexPath)
-    }
-    
-    /// 更新暫存的單字列表資訊
-    /// - Parameters:
-    ///   - info: Settings.VocabularyLevelInformation
-    ///   - indexPath: IndexPath
-    func updateLevelDictionary(_ info: Settings.VocabularyLevelInformation, with indexPath: IndexPath) {
-        
-        guard var dictionary = Self.vocabularyListArray[safe: indexPath.row] else { return }
-        
-        dictionary["level"] = info.value
-        Self.vocabularyListArray[indexPath.row] = dictionary
-    }
-    
-    /// 更新暫存的我的最愛資訊
-    /// - Parameters:
-    ///   - isFavorite: Bool
-    ///   - indexPath: IndexPath
-    func updateFavoriteDictionary(_ isFavorite: Bool, with indexPath: IndexPath) {
-        
-        guard var dictionary = Self.vocabularyListArray[safe: indexPath.row] else { return }
-        
-        let favorite = isFavorite._int()
-        dictionary["favorite"] = favorite
-        
-        Self.vocabularyListArray[indexPath.row] = dictionary
+        Utility.shared.updateFavoriteDictionary(isFavorite, with: indexPath)
     }
 }

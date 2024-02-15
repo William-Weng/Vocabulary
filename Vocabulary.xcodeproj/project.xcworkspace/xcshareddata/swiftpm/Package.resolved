@@ -57,10 +57,10 @@
     {
       "identity" : "wwonboardingviewcontroller",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/William-Weng/WWOnBoardingViewController.git",
+      "location" : "https://github.com/William-Weng/WWOnBoardingViewController",
       "state" : {
-        "revision" : "e7e01369ac572261e1b71605ab5ee9ddc481a622",
-        "version" : "1.2.2"
+        "revision" : "b063f5ee7cca509936020a6d66644678940479e5",
+        "version" : "1.3.1"
       }
     },
     {

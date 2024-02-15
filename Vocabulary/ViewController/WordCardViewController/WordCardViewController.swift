@@ -14,7 +14,8 @@ final class WordCardViewController: UIViewController {
     @IBOutlet weak var orientationbButtonItem: UIBarButtonItem!
     
     var currentOrientation: UIDeviceOrientation = .unknown
-    
+    var infinityLoopInfo: WWOnBoardingViewController.InfinityLoopInformation = (hasPrevious: false, hasNext: true)
+
     weak var mainViewDelegate: MainViewDelegate?
     
     private lazy var pageViewControllerArray: [UIViewController] = {
@@ -24,9 +25,7 @@ final class WordCardViewController: UIViewController {
             pageViewController(with: "WordCardPageViewController"),
         ]
     }()
-    
-    private let isInfinityLoop = true
-    
+        
     private var currentIndex = 0
     private var currentIndexOffset = 0
     private var onBoardingViewController: WWOnBoardingViewController?
@@ -66,6 +65,10 @@ extension WordCardViewController: WWOnBoardingViewControllerDelegate {
         return pageViewControllerArray
     }
     
+    func infinityLoop(onBoardingViewController: WWOnBoardingViewController) -> WWOnBoardingViewController.InfinityLoopInformation {
+        return infinityLoopInfo
+    }
+    
     func willChangeViewController(_ onBoardingViewController: WWOnBoardingViewController, currentIndex: Int, nextIndex: Int, pageRotateDirection: WWOnBoardingViewController.PageRotateDirection, error: WWOnBoardingViewController.OnBoardingError?) {
         willChangeViewControllerAction(onBoardingViewController: onBoardingViewController, currentIndex: currentIndex, nextIndex: nextIndex, pageRotateDirection: pageRotateDirection, error: error)
     }
@@ -86,7 +89,7 @@ private extension WordCardViewController {
         pageViewControllerSetting(with: currentIndex, offset: currentIndexOffset)
         speakContent(with: currentIndex, isTypping: true)
         onBoardingViewController = segue.destination as? WWOnBoardingViewController
-        onBoardingViewController?.setting(onBoardingDelegate: self, isInfinityLoop: isInfinityLoop, currentIndex: currentIndex)
+        onBoardingViewController?.setting(onBoardingDelegate: self, currentIndex: currentIndex)
     }
     
     /// 尋找Storyboard上的ViewController for StoryboardId
@@ -104,15 +107,18 @@ private extension WordCardViewController {
     ///   - pageRotateDirection: WWOnBoardingViewController.PageRotateDirection
     ///   - error: WWOnBoardingViewController.OnBoardingError?
     func willChangeViewControllerAction(onBoardingViewController: WWOnBoardingViewController, currentIndex: Int, nextIndex: Int, pageRotateDirection: WWOnBoardingViewController.PageRotateDirection, error: WWOnBoardingViewController.OnBoardingError?) {
-                
+        
+        if let error = error { fixCurrentIndexOffset(with: error); myPrint(error); return }
+        
         switch pageRotateDirection {
         case .right: currentIndexOffset += 1
         case .left: currentIndexOffset -= 1
         case .none: break
         }
-        
+                
         fixIndexOffset(currentIndexOffset)
         pageViewControllerSetting(with: nextIndex, offset: currentIndexOffset)
+                
         self.currentIndex = currentIndex
     }
     
@@ -139,6 +145,8 @@ private extension WordCardViewController {
         
         guard let viewController = pageViewControllerArray[safe: index] as? WordCardPageViewController else { return }
         
+        title = "單字卡 - \(currentIndexOffset + 1) / \(MainTableViewCell.vocabularyListArray.count)"
+        
         viewController.loadViewIfNeeded()
         viewController.configure(with: IndexPath(row: currentIndexOffset, section: 0))
     }
@@ -159,8 +167,29 @@ private extension WordCardViewController {
     /// 修正offset超過單字範圍的問題
     /// - Parameter offset: Int
     func fixIndexOffset(_ offset: Int) {
-        if (offset < 0) { currentIndexOffset = 0 }
-        if (offset > MainTableViewCell.vocabularyListArray.count - 1) { currentIndexOffset = MainTableViewCell.vocabularyListArray.count - 1 }
+        
+        infinityLoopInfo = (true, true)
+                
+        if (offset <= 0) {
+            infinityLoopInfo.hasPrevious = false
+            currentIndexOffset = 0; return
+        }
+        
+        if (offset >= MainTableViewCell.vocabularyListArray.count - 1) {
+            infinityLoopInfo.hasNext = false
+            currentIndexOffset = MainTableViewCell.vocabularyListArray.count - 1
+        }
+    }
+    
+    /// 修正CurrentIndexOffset的問題 (在第一頁 / 最後一頁)
+    /// - Parameter error: WWOnBoardingViewController.OnBoardingError
+    func fixCurrentIndexOffset(with error: WWOnBoardingViewController.OnBoardingError) {
+        
+        switch error {
+        case .firstPage: currentIndexOffset = 0
+        case .lastPage: currentIndexOffset = MainTableViewCell.vocabularyListArray.count - 2
+        default: break
+        }
     }
     
     /// View將要顯示時的動作

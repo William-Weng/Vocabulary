@@ -22,7 +22,6 @@
 		644FF14B2B7C604C00D3B814 /* WWTypewriterLabel in Frameworks */ = {isa = PBXBuildFile; productRef = 644FF14A2B7C604C00D3B814 /* WWTypewriterLabel */; };
 		646E44A42980A726002BCBC8 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646E44A32980A726002BCBC8 /* ReviewViewController.swift */; };
 		64768B0D2AA3EB080005EF3A /* WWToast in Frameworks */ = {isa = PBXBuildFile; productRef = 64768B0C2AA3EB080005EF3A /* WWToast */; };
-		6476D7D02B7A1FFD00E0DFC5 /* WWOnBoardingViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 6476D7CF2B7A1FFD00E0DFC5 /* WWOnBoardingViewController */; };
 		6476D7D22B7A22A800E0DFC5 /* WordCardPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6476D7D12B7A22A800E0DFC5 /* WordCardPageViewController.swift */; };
 		6492ADD52986B8E900E1B59B /* KleeOne-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADD42986B8E900E1B59B /* KleeOne-SemiBold.ttf */; };
 		6492ADD72986BBFA00E1B59B /* GamjaFlower-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADD62986BBFA00E1B59B /* GamjaFlower-Regular.ttf */; };
@@ -44,6 +43,8 @@
 		81201C4C298B58C200291485 /* InterpretView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81201C4A298B58C200291485 /* InterpretView.swift */; };
 		81201C4D298B58C200291485 /* InterpretView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81201C4B298B58C200291485 /* InterpretView.xib */; };
 		812C5444299F73DC003F942A /* TalkingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812C5443299F73DC003F942A /* TalkingViewController.swift */; };
+		813892722B7DF3F800D67D98 /* WWOnBoardingViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 813892712B7DF3F800D67D98 /* WWOnBoardingViewController */; };
+		813892782B7E060E00D67D98 /* WWOnBoardingViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 813892772B7E060E00D67D98 /* WWOnBoardingViewController */; };
 		815E14782990F47700EC571D /* SentenceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815E14772990F47700EC571D /* SentenceTableViewCell.swift */; };
 		81708BC62B21AD4C00397B27 /* dictionary_7439537.png in Resources */ = {isa = PBXBuildFile; fileRef = 81708BC22B21AD4C00397B27 /* dictionary_7439537.png */; };
 		81708BC72B21AD4C00397B27 /* translate_5146533.png in Resources */ = {isa = PBXBuildFile; fileRef = 81708BC32B21AD4C00397B27 /* translate_5146533.png */; };
@@ -144,6 +145,7 @@
 			files = (
 				64768B0D2AA3EB080005EF3A /* WWToast in Frameworks */,
 				817BDE462AA596650093AD92 /* WWUserDefaults in Frameworks */,
+				813892722B7DF3F800D67D98 /* WWOnBoardingViewController in Frameworks */,
 				81E4078E2A7239A200230C3A /* WWFloatingViewController in Frameworks */,
 				819A68C42AAEA2DD00ACE3FF /* WWJavaScriptContext in Frameworks */,
 				81E1F8FF2A1F2D9B00EB0139 /* WWNetworking in Frameworks */,
@@ -151,8 +153,8 @@
 				644FF14B2B7C604C00D3B814 /* WWTypewriterLabel in Frameworks */,
 				81E1F8F62A1F2CCA00EB0139 /* WWSlider in Frameworks */,
 				6418FC1A2A6DCDED00493B8D /* WWAppInstallSource in Frameworks */,
-				6476D7D02B7A1FFD00E0DFC5 /* WWOnBoardingViewController in Frameworks */,
 				81E1F8F32A1F2C9A00EB0139 /* WWSQLite3Manager in Frameworks */,
+				813892782B7E060E00D67D98 /* WWOnBoardingViewController in Frameworks */,
 				81E1F8F02A1F2C8100EB0139 /* WWHUD in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -459,8 +461,9 @@
 				64768B0C2AA3EB080005EF3A /* WWToast */,
 				817BDE452AA596650093AD92 /* WWUserDefaults */,
 				819A68C32AAEA2DD00ACE3FF /* WWJavaScriptContext */,
-				6476D7CF2B7A1FFD00E0DFC5 /* WWOnBoardingViewController */,
 				644FF14A2B7C604C00D3B814 /* WWTypewriterLabel */,
+				813892712B7DF3F800D67D98 /* WWOnBoardingViewController */,
+				813892772B7E060E00D67D98 /* WWOnBoardingViewController */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -501,8 +504,8 @@
 				64768B0B2AA3EB080005EF3A /* XCRemoteSwiftPackageReference "WWToast" */,
 				817BDE442AA596650093AD92 /* XCRemoteSwiftPackageReference "WWUserDefaults" */,
 				819A68C22AAEA2DD00ACE3FF /* XCRemoteSwiftPackageReference "WWJavaScriptContext" */,
-				6476D7CE2B7A1FFD00E0DFC5 /* XCRemoteSwiftPackageReference "WWOnBoardingViewController" */,
 				644FF1492B7C604C00D3B814 /* XCRemoteSwiftPackageReference "WWTypewriterLabel" */,
+				813892762B7E060E00D67D98 /* XCRemoteSwiftPackageReference "WWOnBoardingViewController" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -748,7 +751,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.5;
+				MARKETING_VERSION = 2.3.6;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -787,7 +790,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.5;
+				MARKETING_VERSION = 2.3.6;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -848,12 +851,12 @@
 				minimumVersion = 1.1.0;
 			};
 		};
-		6476D7CE2B7A1FFD00E0DFC5 /* XCRemoteSwiftPackageReference "WWOnBoardingViewController" */ = {
+		813892762B7E060E00D67D98 /* XCRemoteSwiftPackageReference "WWOnBoardingViewController" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/William-Weng/WWOnBoardingViewController.git";
+			repositoryURL = "https://github.com/William-Weng/WWOnBoardingViewController";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.2;
+				minimumVersion = 1.3.0;
 			};
 		};
 		817BDE442AA596650093AD92 /* XCRemoteSwiftPackageReference "WWUserDefaults" */ = {
@@ -938,9 +941,13 @@
 			package = 64768B0B2AA3EB080005EF3A /* XCRemoteSwiftPackageReference "WWToast" */;
 			productName = WWToast;
 		};
-		6476D7CF2B7A1FFD00E0DFC5 /* WWOnBoardingViewController */ = {
+		813892712B7DF3F800D67D98 /* WWOnBoardingViewController */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 6476D7CE2B7A1FFD00E0DFC5 /* XCRemoteSwiftPackageReference "WWOnBoardingViewController" */;
+			productName = WWOnBoardingViewController;
+		};
+		813892772B7E060E00D67D98 /* WWOnBoardingViewController */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 813892762B7E060E00D67D98 /* XCRemoteSwiftPackageReference "WWOnBoardingViewController" */;
 			productName = WWOnBoardingViewController;
 		};
 		817BDE452AA596650093AD92 /* WWUserDefaults */ = {

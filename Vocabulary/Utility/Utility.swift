@@ -9,6 +9,7 @@ import AVFoundation
 import UIKit
 import WWPrint
 import WWHUD
+import WWFloatingViewController
 
 /// WWPrint再包一層 => 容易切換顯不顯示
 func myPrint<T>(_ message: T, file: String = #file, method: String = #function, line: Int = #line) {
@@ -111,6 +112,19 @@ extension Utility {
         let setting: (backgroundColor: UIColor, height: CGFloat) = (#colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1), viewController?.navigationController?._navigationBarHeight(for: UIWindow._keyWindow(hasScene: false)) ?? .zero)
         
         return setting
+    }
+    
+    /// 產生WWFloatingViewController
+    /// - Parameters:
+    ///   - target: UIViewController & WWFloatingViewDelegate
+    ///   - currentView: UIView?
+    func presentSearchVocabularyViewController(target: UIViewController & WWFloatingViewDelegate, currentView: UIView?) {
+        
+        let floatingViewController = WWFloatingView.shared.maker()
+        floatingViewController.configure(animationDuration: 0.25, backgroundColor: .black.withAlphaComponent(0.1), multiplier: 0.55, completePercent: 0.5, currentView: currentView)
+        floatingViewController.myDelegate = target
+        
+        target.present(floatingViewController, animated: false)
     }
 }
 

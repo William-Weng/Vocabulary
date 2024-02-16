@@ -29,8 +29,15 @@ final class WordCardPageViewController: UIViewController {
         initSetting()
     }
     
-    @objc func playWordSound(_ gesture: UITapGestureRecognizer) { playSound(string: wordLabel.text) }
-    @objc func playExampleSound(_ gesture: UITapGestureRecognizer) { playSound(string: exampleLabel.text) }
+    @objc func playWordSound(_ gesture: UITapGestureRecognizer) {
+        playSound(string: wordLabel.text)
+        wordLabel.start(fps: 5, stringType: .general(vocabularyList?.word))
+    }
+    
+    @objc func playExampleSound(_ gesture: UITapGestureRecognizer) {
+        playSound(string: exampleLabel.text)
+        exampleLabel.start(fps: 15, stringType: .general(vocabulary?.example))
+    }
     
     @IBAction func favoriteAction(_ sender: UIButton) { updateFavorite(!isFavorite, with: indexPath) }
     
@@ -75,14 +82,18 @@ final class WordCardPageViewController: UIViewController {
         else {
             return
         }
-                
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [unowned self] in
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [unowned self] in
             playSound(string: "\(word) - \(example)")
         }
     }
     
     /// 打字機文字顯示 (文字效果)
-    func typewriter() {
+    /// - Parameter isSpeak: Bool
+    func typewriter(isSpeak: Bool = true) {
+        
+        if (isSpeak) { speakContent() }
+        
         wordLabel.start(fps: 5, stringType: .general(vocabularyList?.word))
         exampleLabel.start(fps: 10, stringType: .general(vocabulary?.example))
     }

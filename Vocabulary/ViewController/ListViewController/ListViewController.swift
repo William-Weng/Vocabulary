@@ -58,7 +58,7 @@ final class ListViewController: UIViewController {
     
     @IBAction func searchVocabulary(_ sender: UIButton) {
         searchVocabularyViewController = UIStoryboard._instantiateViewController() as SearchVocabularyViewController
-        presentSearchVocabularyViewController(target: self, currentView: searchVocabularyViewController?.view)
+        Utility.shared.presentSearchVocabularyViewController(target: self, currentView: searchVocabularyViewController?.view)
     }
     
     deinit {
@@ -80,6 +80,16 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
 extension ListViewController: SFSafariViewControllerDelegate {
     
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) { isSafariViewControllerDismiss = true }
+}
+
+// MARK: - WWFloatingViewDelegate
+extension ListViewController: WWFloatingViewDelegate {
+    
+    func willAppear(_ viewController: WWFloatingViewController, completePercent: CGFloat) {}
+    func appearing(_ viewController: WWFloatingViewController, fractionComplete: CGFloat) {}
+    func didAppear(_ viewController: WWFloatingViewController, animatingPosition: UIViewAnimatingPosition) {}
+    func willDisAppear(_ viewController: WWFloatingViewController) {}
+    func didDisAppear(_ viewController: WWFloatingViewController, animatingPosition: UIViewAnimatingPosition) {}
 }
 
 // MARK: - 小工具
@@ -416,17 +426,5 @@ private extension ListViewController {
         }
         
         self.translateDisplayArray = Set(_translateDisplayArray)
-    }
-    
-    /// 產生WWFloatingViewController
-    /// - Parameters:
-    ///   - target: UIViewController
-    ///   - currentView: UIView?
-    func presentSearchVocabularyViewController(target: UIViewController, currentView: UIView?) {
-        
-        let floatingViewController = WWFloatingView.shared.maker()
-        floatingViewController.configure(animationDuration: 0.25, backgroundColor: .black.withAlphaComponent(0.1), multiplier: 0.55, completePercent: 0.5, currentView: currentView)
-        
-        target.present(floatingViewController, animated: false)
     }
 }

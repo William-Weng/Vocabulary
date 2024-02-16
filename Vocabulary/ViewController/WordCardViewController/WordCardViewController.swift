@@ -6,8 +6,9 @@
 //
 
 import UIKit
-import WWOnBoardingViewController
 import AVFAudio
+import WWOnBoardingViewController
+import WWFloatingViewController
 
 // MARK: - 單字卡
 final class WordCardViewController: UIViewController {
@@ -17,6 +18,7 @@ final class WordCardViewController: UIViewController {
     var currentOrientation: UIDeviceOrientation = .unknown
     weak var mainViewDelegate: MainViewDelegate?
 
+    private var currentLockOrientation: UIInterfaceOrientationMask = .all
     private var infinityLoopInfo: WWOnBoardingViewController.InfinityLoopInformation = (hasPrevious: false, hasNext: true)
     
     private lazy var pageViewControllerArray: [UIViewController] = {
@@ -30,7 +32,8 @@ final class WordCardViewController: UIViewController {
     private var currentIndex = 0
     private var currentIndexOffset = 0
     private var onBoardingViewController: WWOnBoardingViewController?
-    
+    private var searchVocabularyViewController: SearchVocabularyViewController?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         orientationbButtonItemSetting()
@@ -54,8 +57,12 @@ final class WordCardViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) { initSetting(for: segue, sender: sender) }
     
-    @IBAction func lockScreenOrientation(_ sender: UIBarButtonItem) { lockScreenOrientationToLandscape() }
-    @IBAction func rereadAction(_ sender: UIBarButtonItem) { speakContent(with: currentIndex) }
+    @IBAction func lockScreenOrientation(_ sender: UIBarButtonItem) { lockScreenOrientation() }
+    
+    @IBAction func searchVocabulary(_ sender: UIBarButtonItem) {
+        searchVocabularyViewController = UIStoryboard._instantiateViewController() as SearchVocabularyViewController
+        Utility.shared.presentSearchVocabularyViewController(target: self, currentView: searchVocabularyViewController?.view)
+    }
 }
 
 // MARK: - WWOnBoardingViewControllerDelegate
@@ -77,6 +84,16 @@ extension WordCardViewController: WWOnBoardingViewControllerDelegate {
     func didChangeViewController(_ onBoardingViewController: WWOnBoardingViewController, finishAnimating finished: Bool, transitionCompleted: Bool, currentIndex: Int, nextIndex: Int, pageRotateDirection: WWOnBoardingViewController.PageRotateDirection, error: WWOnBoardingViewController.OnBoardingError?) {
         didChangeViewControllerAction(onBoardingViewController: onBoardingViewController, finishAnimating: finished, transitionCompleted: transitionCompleted, currentIndex: currentIndex, nextIndex: nextIndex, pageRotateDirection: pageRotateDirection, error: error)
     }
+}
+
+// MARK: - WWFloatingViewDelegate
+extension WordCardViewController: WWFloatingViewDelegate {
+    
+    func willAppear(_ viewController: WWFloatingViewController, completePercent: CGFloat) {}
+    func appearing(_ viewController: WWFloatingViewController, fractionComplete: CGFloat) {}
+    func didAppear(_ viewController: WWFloatingViewController, animatingPosition: UIViewAnimatingPosition) {}
+    func willDisAppear(_ viewController: WWFloatingViewController) {}
+    func didDisAppear(_ viewController: WWFloatingViewController, animatingPosition: UIViewAnimatingPosition) {}
 }
 
 // MARK: - 小工具
@@ -161,8 +178,7 @@ private extension WordCardViewController {
         guard let viewController = pageViewControllerArray[safe: index] as? WordCardPageViewController else { return }
         
         viewController.loadViewIfNeeded()
-        viewController.speakContent()
-        if (isTypping) { viewController.typewriter() }
+        isTypping ? viewController.typewriter() : viewController.speakContent()
     }
     
     /// 修正offset超過單字範圍的問題
@@ -211,11 +227,17 @@ private extension WordCardViewController {
 // MARK: - 小工具
 private extension WordCardViewController {
     
+    /// 鎖定畫面方向
+    func lockScreenOrientation() {
+        if (currentLockOrientation == .landscape) { lockScreenOrientationToPortrait(); return }
+        lockScreenOrientationToLandscape()
+    }
+    
     /// 鎖定畫面為橫向
     func lockScreenOrientationToLandscape() {
         
         let interfaceOrientation: UIInterfaceOrientation
-
+        
         switch currentOrientation {
         case .portrait, .portraitUpsideDown, .unknown, .faceUp, .faceDown: interfaceOrientation = .landscapeRight
         case .landscapeLeft: interfaceOrientation = .landscapeRight
@@ -223,28 +245,23 @@ private extension WordCardViewController {
         @unknown default: interfaceOrientation = .landscapeRight
         }
         
-        _ = Utility.shared.screenOrientation(lock: .landscape, rotate: interfaceOrientation)
+        currentLockOrientation = .landscape
+        _ = Utility.shared.screenOrientation(lock: currentLockOrientation, rotate: interfaceOrientation)
+    }
+    
+    /// 鎖定畫面為直向
+    func lockScreenOrientationToPortrait() {
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [unowned self] in
-            orientationbButtonItemImage(name: "Horizontal")
-        }
+        let interfaceOrientation: UIInterfaceOrientation = .portrait
+        
+        currentLockOrientation = .portrait
+        _ = Utility.shared.screenOrientation(lock: currentLockOrientation, rotate: interfaceOrientation)
     }
     
     /// 不鎖定畫面方向 (轉回原來的方向)
     func unlockScreenOrientation() {
-        
-        var interfaceOrientation: UIInterfaceOrientation = .unknown
-        
-        switch currentOrientation {
-        case .portrait: interfaceOrientation = .portrait
-        case .portraitUpsideDown: interfaceOrientation = .portraitUpsideDown
-        case .landscapeLeft: interfaceOrientation = .landscapeRight
-        case .landscapeRight: interfaceOrientation = .landscapeLeft
-        case .unknown, .faceUp, .faceDown: interfaceOrientation = .unknown
-        @unknown default: break
-        }
-        
-        _ = Utility.shared.screenOrientation(lock: .all, rotate: interfaceOrientation)
+        currentLockOrientation = .all
+        _ = Utility.shared.screenOrientation(lock: currentLockOrientation, rotate: currentOrientation._interfaceOrientation())
         UIViewController.attemptRotationToDeviceOrientation()
     }
     
@@ -258,5 +275,26 @@ private extension WordCardViewController {
     /// - Parameter name: String
     func orientationbButtonItemImage(name: String) {
         orientationbButtonItem.image = UIImage(named: name)
+    }
+}
+
+extension UIDeviceOrientation {
+    
+    /// UIDeviceOrientation => UIInterfaceOrientation
+    /// - Returns: UIInterfaceOrientation
+    func _interfaceOrientation() -> UIInterfaceOrientation {
+        
+        var interfaceOrientation: UIInterfaceOrientation = .unknown
+        
+        switch self {
+        case .portrait: interfaceOrientation = .portrait
+        case .portraitUpsideDown: interfaceOrientation = .portraitUpsideDown
+        case .landscapeLeft: interfaceOrientation = .landscapeRight
+        case .landscapeRight: interfaceOrientation = .landscapeLeft
+        case .unknown, .faceUp, .faceDown: interfaceOrientation = .unknown
+        @unknown default: break
+        }
+        
+        return interfaceOrientation
     }
 }

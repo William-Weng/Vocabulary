@@ -562,7 +562,7 @@ private extension AppDelegate {
         
         guard let word = components.path.split(separator: "/").first else { return }
         
-        tabbarRootViewController(with: Constant.TabbarRootViewController.Main) { viewController in
+        tabbarRootViewController(with: .Main) { viewController in
             if let viewController = viewController as? MainViewController { viewController.appendWord(with: String(word)) }
         }
     }
@@ -573,7 +573,7 @@ private extension AppDelegate {
         
         guard let word = components.path.split(separator: "/").first else { return }
         
-        tabbarRootViewController(with: Constant.TabbarRootViewController.Main) { viewController in
+        tabbarRootViewController(with: .Main) { viewController in
             if let viewController = viewController as? MainViewController { viewController.searchWord(with: String(word)) }
         }
     }
@@ -584,7 +584,7 @@ private extension AppDelegate {
                 
         guard let index = components.path.split(separator: "/").first else { return }
         
-        tabbarRootViewController(with: Constant.TabbarRootViewController.Main) { viewController in
+        tabbarRootViewController(with: .Main) { viewController in
             if let viewController = viewController as? MainViewController { viewController.alternateIcons(with: String(index)) }
         }
     }

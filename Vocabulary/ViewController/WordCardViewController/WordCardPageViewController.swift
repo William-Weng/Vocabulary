@@ -18,6 +18,8 @@ final class WordCardPageViewController: UIViewController {
     @IBOutlet weak var exampleLabel: WWTypewriterLabel!
     @IBOutlet weak var translateLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var levelButton: UIButton!
+    @IBOutlet weak var countLabel: UILabel!
     
     private var isFavorite = false
     private var indexPath = IndexPath()
@@ -39,7 +41,10 @@ final class WordCardPageViewController: UIViewController {
         exampleLabel.start(fps: 15, stringType: .general(vocabulary?.example))
     }
     
-    @IBAction func favoriteAction(_ sender: UIButton) { updateFavorite(!isFavorite, with: indexPath) }
+    @IBAction func favoriteAction(_ sender: UIButton) {
+        isFavorite.toggle()
+        updateFavorite(isFavorite, with: indexPath)
+    }
     
     /// 設定文字 / 外觀
     /// - Parameter indexPath: IndexPath
@@ -60,17 +65,9 @@ final class WordCardPageViewController: UIViewController {
         }
         
         self.indexPath = indexPath
-        self.vocabularyList = vocabularyList
-        self.vocabulary = vocabulary
         
-        isFavorite = ((vocabularyList.favorite ?? 0) != 0)
-        favoriteButton.setBackgroundImage(Utility.shared.favoriteIcon(isFavorite), for: .normal)
-        
-        wordLabel.text = vocabularyList.word
-        alphabetLabel.text = vocabularyList.alphabet
-        interpretLabel.text = vocabulary.interpret
-        exampleLabel.text = vocabulary.example
-        translateLabel.text = vocabulary.translate
+        initSetting(vocabulary: vocabulary)
+        initSetting(vocabularyList: vocabularyList)
         speechLabelSetting(speechLabel, with: info)
     }
     
@@ -126,6 +123,33 @@ private extension WordCardPageViewController {
         exampleLabel.addGestureRecognizer(exampleGesture)
     }
     
+    /// 初始化有關單字的設定
+    /// - Parameter vocabularyList: VocabularyList
+    func initSetting(vocabularyList: VocabularyList) {
+           
+        self.vocabularyList = vocabularyList
+        
+        isFavorite = ((vocabularyList.favorite ?? 0) != 0)
+        favoriteButton.setBackgroundImage(Utility.shared.favoriteIcon(isFavorite), for: .normal)
+        
+        countLabel.text = "\(vocabularyList.count)"
+        wordLabel.text = vocabularyList.word
+        alphabetLabel.text = vocabularyList.alphabet
+        
+        initLevelButtonSetting(vocabularyList: vocabularyList)
+    }
+    
+    /// 初始化有關單字內容的設定
+    /// - Parameter vocabulary: Vocabulary
+    func initSetting(vocabulary: Vocabulary) {
+           
+        self.vocabulary = vocabulary
+        
+        interpretLabel.text = vocabulary.interpret
+        exampleLabel.text = vocabulary.example
+        translateLabel.text = vocabulary.translate
+    }
+    
     /// 讀出文字句子
     /// - Parameter string: String?
     func playSound(string: String?) {
@@ -150,22 +174,72 @@ private extension WordCardPageViewController {
         label.backgroundColor = UIColor(rgb: info.backgroundColor)
     }
     
+    /// 初始化等級設定
+    /// - Parameter vocabularyList: VocabularyList
+    func initLevelButtonSetting(vocabularyList: VocabularyList) {
+        
+        let info = Constant.SettingsJSON.vocabularyLevelInformations[safe: vocabularyList.level]
+
+        levelButton.showsMenuAsPrimaryAction = true
+        levelButton.menu = UIMenu(title: "請選擇等級", children: levelMenuActionMaker())
+        
+        Utility.shared.levelButtonSetting(levelButton, with: info)
+    }
+    
+    /// 產生LevelButton選到時的動作
+    /// - Returns: [UIAction]
+    func levelMenuActionMaker() -> [UIAction] {
+        let actions = Constant.SettingsJSON.vocabularyLevelInformations.map { return levelActionMaker($0) }
+        return actions
+    }
+    
+    /// 產生LevelButton選到時的動作
+    /// - Returns: [UIAction]
+    func levelActionMaker(_ info: Settings.VocabularyLevelInformation) -> UIAction {
+        
+        let action = UIAction(title: info.name) { [weak self] _ in
+            guard let this = self else { return }
+            this.updateLevel(info, with: this.indexPath)
+        }
+        
+        return action
+    }
+    
     /// 更新Favorite狀態
     /// - Parameters:
     ///   - isFavorite: Bool
     ///   - indexPath: IndexPath
     func updateFavorite(_ isFavorite: Bool, with indexPath: IndexPath) {
-        
+                
         guard let vocabularyList = MainTableViewCell.vocabularyList(with: indexPath),
               let info = Utility.shared.generalSettings(index: Constant.tableNameIndex)
         else {
             return
         }
-        
+                
         let isSuccess = API.shared.updateVocabularyFavoriteToList(vocabularyList.id, info: info, isFavorite: isFavorite)
         if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
         
         favoriteButton.setBackgroundImage(Utility.shared.favoriteIcon(isFavorite), for: .normal)
         Utility.shared.updateFavoriteDictionary(isFavorite, with: indexPath)
+    }
+    
+    /// 更新LevelButton文字
+    /// - Parameters:
+    ///   - levelInfo: Settings.VocabularyLevelInformation
+    ///   - indexPath: IndexPath
+    func updateLevel(_ levelInfo: Settings.VocabularyLevelInformation, with indexPath: IndexPath) {
+        
+        guard let vocabularyList = MainTableViewCell.vocabularyList(with: indexPath),
+              let generalInfo = Utility.shared.generalSettings(index: Constant.tableNameIndex)
+        else {
+            return
+        }
+        
+        let isSuccess = API.shared.updateLevelToList(vocabularyList.id, levelInfo: levelInfo, generalInfo: generalInfo)
+        if (!isSuccess) { Utility.shared.flashHUD(with: .fail); return }
+        
+        Utility.shared.levelButtonSetting(levelButton, with: levelInfo)
+        Utility.shared.updateLevelDictionary(levelInfo, with: indexPath)
     }
 }

@@ -434,6 +434,17 @@ extension Utility {
         
         MainTableViewCell.vocabularyListArray[indexPath.row] = dictionary
     }
+    
+    /// levelButton文字顏色設定
+    /// - Parameters:
+    ///   - button: UIButton
+    ///   - info: Settings.VocabularyLevelInformation?
+    func levelButtonSetting(_ button: UIButton, with info: Settings.VocabularyLevelInformation?) {
+        
+        button.setTitle(info?.name ?? "一般", for: .normal)
+        button.setTitleColor(UIColor(rgb: info?.color ?? "#ffffff"), for: .normal)
+        button.backgroundColor = UIColor(rgb: info?.backgroundColor ?? "#000000")
+    }
 }
 
 // MARK: - Settings.json

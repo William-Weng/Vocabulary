@@ -27,6 +27,7 @@ final class Constant: NSObject {
     
     static let webImageExpiredDays = 90
     static let duration: TimeInterval = 0.15
+    static let delay: TimeInterval = 0.25
     static let autoBackupDays = 7
     static let searchCount = 10
     static let autoBackupDelaySecond: TimeInterval = 2

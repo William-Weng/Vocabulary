@@ -80,8 +80,8 @@ final class WordCardPageViewController: UIViewController {
             return
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [unowned self] in
-            playSound(string: "\(word) - \(example)")
+        DispatchQueue.main.asyncAfter(deadline: .now() + Constant.duration) { [unowned self] in
+            playSound(string: "\(word). \(example)")
         }
     }
     

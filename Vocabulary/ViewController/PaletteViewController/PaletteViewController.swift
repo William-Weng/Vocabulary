@@ -324,7 +324,7 @@ private extension PaletteViewController {
     func presentSearchVocabularyViewController(target: UIViewController, currentView: UIView?) {
         
         let floatingViewController = WWFloatingView.shared.maker()
-        floatingViewController.configure(animationDuration: 0.25, backgroundColor: .black.withAlphaComponent(0.1), multiplier: 0.55, completePercent: 0.5, currentView: currentView)
+        floatingViewController.configure(animationDuration: Constant.delay, backgroundColor: .black.withAlphaComponent(0.1), multiplier: 0.55, completePercent: 0.5, currentView: currentView)
         self.floatingViewController = floatingViewController
         
         target.present(floatingViewController, animated: false)

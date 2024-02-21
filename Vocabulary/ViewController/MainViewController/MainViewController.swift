@@ -59,25 +59,17 @@ final class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        if (!isFixed) {
+            isFixed = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [unowned self] in fixTableViewInsetForSafeArea(for: IndexPath(row: 0, section: 0)) }
+        }
+        
         animatedBackground(with: .studing)
     }
     
     /// [View Controller 生命週期更新 - iOS 17](https://xiaozhuanlan.com/topic/0651384792)
     // override func viewIsAppearing(_ animated: Bool) { super.viewIsAppearing(animated) }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if (!isFixed) {
-            isFixed = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { [unowned self] in fixTableViewInsetForSafeArea(for: IndexPath(row: 0, section: 0)) }
-        }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        pauseBackgroundAnimation()
-    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) { prepareAction(for: segue, sender: sender) }
     

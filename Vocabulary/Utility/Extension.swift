@@ -1585,8 +1585,9 @@ extension UITableView {
     /// - Parameters:
     ///   - height: height
     ///   - indexPath: IndexPath?
-    func _fixContentInsetForSafeArea(height: CGFloat, scrollTo indexPath: IndexPath? = nil) {
-        _fixContentInsetForSafeArea(top: height, bottom: height, scrollTo: indexPath)
+    ///   - animated: Bool
+    func _fixContentInsetForSafeArea(height: CGFloat, scrollTo indexPath: IndexPath? = nil, animated: Bool = true) {
+        _fixContentInsetForSafeArea(top: height, bottom: height, scrollTo: indexPath, animated: animated)
     }
     
     /// 修正TableView滿版，而不使用SafeArea的位置問題 (contentInsetAdjustmentBehavior = .never)
@@ -1595,14 +1596,15 @@ extension UITableView {
     ///   - topHeight: CGFloat
     ///   - bottomHeight: CGFloat
     ///   - indexPath: IndexPath?
-    func _fixContentInsetForSafeArea(top topHeight: CGFloat, bottom bottomHeight: CGFloat, scrollTo indexPath: IndexPath? = nil) {
+    ///   - animated: Bool
+    func _fixContentInsetForSafeArea(top topHeight: CGFloat, bottom bottomHeight: CGFloat, scrollTo indexPath: IndexPath? = nil, animated: Bool = true) {
         
         contentInsetAdjustmentBehavior = .never
         
         contentInset.top = topHeight
         contentInset.bottom = bottomHeight
         
-        if let indexPath = indexPath { scrollToRow(at: indexPath, at: .top, animated: false) }
+        if let indexPath = indexPath { scrollToRow(at: indexPath, at: .top, animated: animated) }
     }
     
     /// [設定要不要預先處理資料](https://ithelp.ithome.com.tw/articles/10289725)

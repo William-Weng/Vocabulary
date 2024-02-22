@@ -753,7 +753,7 @@ private extension OthersViewController {
     func updateHeightPercentAction(with scrollView: UIScrollView, criticalValue: CGFloat = 1.2, isNeededUpdate: Bool) {
         
         var percent = Utility.shared.updateHeightPercent(with: scrollView, navigationController: navigationController)
-                
+        
         if isNeededUpdate && (percent > criticalValue) {
             percent = 0.0
             Utility.shared.impactEffect()

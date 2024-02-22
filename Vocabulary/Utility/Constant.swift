@@ -73,6 +73,7 @@ extension Constant {
     typealias RGBAInformation = (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat)                               // [RGBA色彩模式的數值](https://stackoverflow.com/questions/28644311/how-to-get-the-rgb-code-int-from-an-uicolor-in-swift)
     typealias PaletteInformation = (color: UIColor?, backgroundColor: UIColor?)                                             // 調色盤選的顏色 (文字, 背景)
     typealias SelectedPaletteInformation = (indexPath: IndexPath?, type: PaletteViewController.ColorType?, color: UIColor?) // 調色盤選暫存色 (位置, 類型, 背景)
+    typealias ChatMessage = (text: String?, isMe: Bool)                                                                     // 對話文字 (文字, 是不是自己)
 }
 
 // MARK: - Enumeration

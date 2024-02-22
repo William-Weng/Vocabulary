@@ -37,12 +37,21 @@
       }
     },
     {
+      "identity" : "wwkeyboardshadowview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWKeyboardShadowView",
+      "state" : {
+        "revision" : "8a0642628aa0fd9cfdbd955585e8097fb7ec2efd",
+        "version" : "1.0.0"
+      }
+    },
+    {
       "identity" : "wwnetworking",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWNetworking",
       "state" : {
-        "revision" : "2629dea62e928536b150e82e2494661abbd4e2b9",
-        "version" : "1.4.1"
+        "revision" : "03ebe85587b0d647065cfb5eeae944204eeedc75",
+        "version" : "1.5.0"
       }
     },
     {
@@ -70,6 +79,15 @@
       "state" : {
         "revision" : "0acf1057863faea81c3ded2057c21b09c3435435",
         "version" : "1.3.0"
+      }
+    },
+    {
+      "identity" : "wwsimplechatgpt",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWSimpleChatGPT",
+      "state" : {
+        "revision" : "0cdbe9ff9fcca47289b04dacc02a590de075a642",
+        "version" : "0.5.1"
       }
     },
     {

@@ -37,6 +37,9 @@
 |[WWJavaScriptContext](https://github.com/William-Weng/WWJavaScriptContext)|JavaScriptCore小工具|
 |[WWOnBoardingViewController](https://github.com/William-Weng/WWOnBoardingViewController)|製作單字卡分頁的小工具|
 |[WWTypewriterLabel](https://github.com/William-Weng/WWTypewriterLabel)|打字機效果|
+|[WWSimpleChatGPT](https://github.com/William-Weng/WWTypewriterLabel)|使用ChatGPT功能|
+|[WWKeyboardShadowView](https://github.com/William-Weng/WWTypewriterLabel)|處理鍵盤高度問題|
+
 ## [相關圖示](https://www.flaticon.com)
 
 |套件|功能|
@@ -83,6 +86,7 @@
 |[WordCard](https://www.flaticon.com/free-icon/card-games_2118315)|單字卡|
 |[SunTreeBorder](https://zh.lovepik.com/image-401216042/sun-tree-border.html)|單字卡背景|
 |[Vertical](https://www.flaticon.com/free-icon/smartphones_604609)|畫面旋轉功能|
+|[Talking](https://www.flaticon.com/free-icon/talking_3002662)|對談|
 
 ## [背景音樂 - .mp3 / .m4a (請在iTunes上自行加入)](http://amachamusic.chagasi.com/)
 

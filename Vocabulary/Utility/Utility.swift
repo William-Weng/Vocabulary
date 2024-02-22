@@ -104,6 +104,11 @@ extension Utility {
         WWHUD.shared.display(effect: .gif(url: gifUrl, options: nil), height: 256.0, backgroundColor: .black.withAlphaComponent(0.3))
     }
     
+    /// 停止HUD
+    func dismissHUD() {
+        WWHUD.shared.dismiss(completion: nil)
+    }
+    
     /// WWToast的顏色 / 高度設定
     /// - Parameter viewController: UIViewController?
     /// - Returns: (backgroundColor: UIColor, height: CGFloat)

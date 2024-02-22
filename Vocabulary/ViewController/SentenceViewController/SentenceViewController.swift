@@ -19,7 +19,6 @@ final class SentenceViewController: UIViewController {
 
     enum ViewSegueType: String {
         case recording = "RecordingSegue"
-        case license = "LicenseWebViewSegue"
     }
     
     @IBOutlet weak var myImageView: UIImageView!
@@ -76,7 +75,6 @@ final class SentenceViewController: UIViewController {
         
         switch viewSegueType {
         case .recording: talkingViewSetting(for: segue, sender: sender)
-        case .license: licenseViewSetting(for: segue, sender: sender)
         }
     }
     
@@ -84,7 +82,6 @@ final class SentenceViewController: UIViewController {
     @objc func sentenceCount(_ sender: UITapGestureRecognizer) { sentenceCountAction(with: currentSpeechInformation, isFavorite: isFavorite) }
 
     @IBAction func recordingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.recording.rawValue, sender: nil) }
-    @IBAction func licensePage(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.license.rawValue, sender: nil) }
     @IBAction func filterFavorite(_ sender: UIBarButtonItem) { translateDisplayArray = []; filterFavoriteAction(sender) }
     @IBAction func appendSentenceAction(_ sender: UIButton) {
         
@@ -551,15 +548,6 @@ private extension SentenceViewController {
         
         viewController._transparent(.black.withAlphaComponent(0.3))
         tabBarHiddenAction(true)
-    }
-    
-    /// 版權頁設定
-    /// - Parameters:
-    ///   - segue: UIStoryboardSegue
-    ///   - sender: Any?
-    func licenseViewSetting(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let webViewController = segue.destination as? LicenseWebViewController else { return }
-        webViewController.sentenceViewDelegate = self
     }
     
     /// 取得精選例句總數量

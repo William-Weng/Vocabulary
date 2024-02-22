@@ -20,6 +20,11 @@ protocol OthersViewDelegate: NSObject {
 // MARK: - 其它設定
 final class OthersViewController: UIViewController {
     
+    enum ViewSegueType: String {
+        case paletteSettings = "PaletteSettingsSegue"
+        case license = "LicenseWebViewSegue"
+    }
+    
     @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var fakeTabBarHeightConstraint: NSLayoutConstraint!
@@ -27,7 +32,6 @@ final class OthersViewController: UIViewController {
     @IBOutlet weak var activityViewIndicator: UIActivityIndicatorView!
     @IBOutlet weak var indicatorLabel: UILabel!
     
-    private let paletteSettingsSegue = "PaletteSettingsSegue"
     private let titleString = "常用書籤"
 
     private var isAnimationStop = false
@@ -60,7 +64,19 @@ final class OthersViewController: UIViewController {
         pauseBackgroundAnimation()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) { palettePageSetting(for: segue, sender: sender) }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let identifier = segue.identifier,
+              let viewSegueType = ViewSegueType(rawValue: identifier)
+        else {
+            return
+        }
+        
+        switch viewSegueType {
+        case .paletteSettings: palettePageSetting(for: segue, sender: sender)
+        case .license: licenseViewSetting(for: segue, sender: sender)
+        }
+    }
         
     @objc func refreshBookmarks(_ sender: UIRefreshControl) { reloadBookmarks(isFavorite: isFavorite) }
     @objc func bookmarkCount(_ sender: UITapGestureRecognizer) { bookmarkCountAction(isFavorite: isFavorite) }
@@ -69,7 +85,7 @@ final class OthersViewController: UIViewController {
     @IBAction func downloadDatabase(_ sender: UIBarButtonItem) { downloadDatabaseAction(sender) }
     @IBAction func filterFavorite(_ sender: UIBarButtonItem) { filterFavoriteAction(with: sender) }
     @IBAction func appendBookmarkAction(_ sender: UIButton) { appendBookmarkActionSetting(with: sender) }
-    @IBAction func paletteSettings(_ sender: UIBarButtonItem) { performSegue(withIdentifier: paletteSettingsSegue, sender: nil) }
+    @IBAction func paletteSettings(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.paletteSettings.rawValue, sender: nil) }
 
     deinit {
         OthersTableViewCell.bookmarksArray = []
@@ -696,7 +712,9 @@ private extension OthersViewController {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let actionOK = UIAlertAction(title: "確認", style: .default) { _ in }
+        let actionLicense = UIAlertAction(title: "說明", style: .default) { [unowned self] _ in performSegue(withIdentifier: ViewSegueType.license.rawValue, sender: nil) }
         
+        alertController.addAction(actionLicense)
         alertController.addAction(actionOK)
         
         present(alertController, animated: true, completion: nil)
@@ -754,5 +772,14 @@ private extension OthersViewController {
         activityViewIndicator.alpha = percent
         indicatorLabel.alpha = percent
         indicatorLabel.text = Utility.shared.updateActivityViewIndicatorTitle(with: percent, isNeededUpdate: isNeededUpdate)
+    }
+    
+    /// 版權說明頁設定
+    /// - Parameters:
+    ///   - segue: UIStoryboardSegue
+    ///   - sender: Any?
+    func licenseViewSetting(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let webViewController = segue.destination as? LicenseWebViewController else { return }
+        webViewController.othersViewDelegate = self
     }
 }

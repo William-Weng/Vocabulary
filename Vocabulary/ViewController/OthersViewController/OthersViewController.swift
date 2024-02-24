@@ -268,11 +268,7 @@ private extension OthersViewController {
     /// - Parameters:
     ///   - isHidden: Bool
     func tabBarHiddenAction(_ isHidden: Bool) {
-        
-        guard let tabBarController = tabBarController else { return }
-                
-        tabBarController._tabBarHidden(isHidden, duration: Constant.duration)
-        NotificationCenter.default._post(name: .viewDidTransition, object: isHidden)
+        Utility.shared.tabBarHidden(with: tabBarController, isHidden: isHidden)
     }
     
     /// 設定NavigationBar顯示與否功能

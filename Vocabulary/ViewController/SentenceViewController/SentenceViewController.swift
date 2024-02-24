@@ -19,6 +19,7 @@ final class SentenceViewController: UIViewController {
 
     enum ViewSegueType: String {
         case recording = "RecordingSegue"
+        case chatting = "ChattingSegue"
     }
     
     @IBOutlet weak var myImageView: UIImageView!
@@ -75,12 +76,14 @@ final class SentenceViewController: UIViewController {
         
         switch viewSegueType {
         case .recording: talkingViewSetting(for: segue, sender: sender)
+        case .chatting: chattingSetting(for: segue, sender: sender)
         }
     }
     
     @objc func refreshSentenceList(_ sender: UIRefreshControl) { translateDisplayArray = []; reloadSentenceList(with: currentSpeechInformation, isFavorite: isFavorite) }
     @objc func sentenceCount(_ sender: UITapGestureRecognizer) { sentenceCountAction(with: currentSpeechInformation, isFavorite: isFavorite) }
-
+    
+    @IBAction func chattingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.chatting.rawValue, sender: nil) }
     @IBAction func recordingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.recording.rawValue, sender: nil) }
     @IBAction func filterFavorite(_ sender: UIBarButtonItem) { translateDisplayArray = []; filterFavoriteAction(sender) }
     @IBAction func appendSentenceAction(_ sender: UIButton) {
@@ -312,11 +315,7 @@ private extension SentenceViewController {
     /// - Parameters:
     ///   - isHidden: Bool
     func tabBarHiddenAction(_ isHidden: Bool) {
-        
-        guard let tabBarController = tabBarController else { return }
-                
-        tabBarController._tabBarHidden(isHidden, duration: Constant.duration)
-        NotificationCenter.default._post(name: .viewDidTransition, object: isHidden)
+        Utility.shared.tabBarHidden(with: tabBarController, isHidden: isHidden)
     }
     
     /// 設定NavigationBar顯示與否功能
@@ -548,6 +547,16 @@ private extension SentenceViewController {
         
         viewController._transparent(.black.withAlphaComponent(0.3))
         tabBarHiddenAction(true)
+    }
+    
+    /// 設定對話頁面
+    /// - Parameters:
+    ///   - segue: UIStoryboardSegue
+    ///   - sender: Any?
+    func chattingSetting(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let viewController = segue.destination as? ChatViewController else { return }
+        viewController.sentenceViewDelegate = self
     }
     
     /// 取得精選例句總數量

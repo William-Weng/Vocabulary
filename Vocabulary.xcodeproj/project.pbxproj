@@ -19,6 +19,8 @@
 		642858A6297BC40E00DD7D88 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642858A5297BC40E00DD7D88 /* Constant.swift */; };
 		642858AB297BC51E00DD7D88 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642858AA297BC51E00DD7D88 /* Model.swift */; };
 		642C5E722A18487800AC290B /* @Image in Resources */ = {isa = PBXBuildFile; fileRef = 642C5E712A18487800AC290B /* @Image */; };
+		64445E8E2B8A119E00B37744 /* WWKeyboardShadowView in Frameworks */ = {isa = PBXBuildFile; productRef = 64445E8D2B8A119E00B37744 /* WWKeyboardShadowView */; };
+		64445E912B8A126B00B37744 /* WWKeyboardShadowView in Frameworks */ = {isa = PBXBuildFile; productRef = 64445E902B8A126B00B37744 /* WWKeyboardShadowView */; };
 		644FF14B2B7C604C00D3B814 /* WWTypewriterLabel in Frameworks */ = {isa = PBXBuildFile; productRef = 644FF14A2B7C604C00D3B814 /* WWTypewriterLabel */; };
 		646E44A42980A726002BCBC8 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646E44A32980A726002BCBC8 /* ReviewViewController.swift */; };
 		64768B0D2AA3EB080005EF3A /* WWToast in Frameworks */ = {isa = PBXBuildFile; productRef = 64768B0C2AA3EB080005EF3A /* WWToast */; };
@@ -46,7 +48,6 @@
 		812C5444299F73DC003F942A /* TalkingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812C5443299F73DC003F942A /* TalkingViewController.swift */; };
 		815BC4E82B874A9D0099593F /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815BC4E72B874A9D0099593F /* ChatViewController.swift */; };
 		815BC4EB2B874AFA0099593F /* ChatViewControllerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815BC4EA2B874AFA0099593F /* ChatViewControllerCell.swift */; };
-		815BC4EE2B874B340099593F /* WWKeyboardShadowView in Frameworks */ = {isa = PBXBuildFile; productRef = 815BC4ED2B874B340099593F /* WWKeyboardShadowView */; };
 		815BC4F12B874B410099593F /* WWSimpleChatGPT in Frameworks */ = {isa = PBXBuildFile; productRef = 815BC4F02B874B410099593F /* WWSimpleChatGPT */; };
 		815E14782990F47700EC571D /* SentenceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815E14772990F47700EC571D /* SentenceTableViewCell.swift */; };
 		81708BC62B21AD4C00397B27 /* dictionary_7439537.png in Resources */ = {isa = PBXBuildFile; fileRef = 81708BC22B21AD4C00397B27 /* dictionary_7439537.png */; };
@@ -153,10 +154,11 @@
 				64ACFDED2B7EBDA700863407 /* WWOnBoardingViewController in Frameworks */,
 				81E4078E2A7239A200230C3A /* WWFloatingViewController in Frameworks */,
 				819A68C42AAEA2DD00ACE3FF /* WWJavaScriptContext in Frameworks */,
+				64445E912B8A126B00B37744 /* WWKeyboardShadowView in Frameworks */,
 				81E1F8FF2A1F2D9B00EB0139 /* WWNetworking in Frameworks */,
+				64445E8E2B8A119E00B37744 /* WWKeyboardShadowView in Frameworks */,
 				81EB0ED92A1F2E1300EE2A83 /* WWNetworking-UIImage in Frameworks */,
 				644FF14B2B7C604C00D3B814 /* WWTypewriterLabel in Frameworks */,
-				815BC4EE2B874B340099593F /* WWKeyboardShadowView in Frameworks */,
 				81E1F8F62A1F2CCA00EB0139 /* WWSlider in Frameworks */,
 				6418FC1A2A6DCDED00493B8D /* WWAppInstallSource in Frameworks */,
 				81E1F8F32A1F2C9A00EB0139 /* WWSQLite3Manager in Frameworks */,
@@ -479,8 +481,9 @@
 				819A68C32AAEA2DD00ACE3FF /* WWJavaScriptContext */,
 				644FF14A2B7C604C00D3B814 /* WWTypewriterLabel */,
 				64ACFDEC2B7EBDA700863407 /* WWOnBoardingViewController */,
-				815BC4ED2B874B340099593F /* WWKeyboardShadowView */,
 				815BC4F02B874B410099593F /* WWSimpleChatGPT */,
+				64445E8D2B8A119E00B37744 /* WWKeyboardShadowView */,
+				64445E902B8A126B00B37744 /* WWKeyboardShadowView */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -523,8 +526,8 @@
 				819A68C22AAEA2DD00ACE3FF /* XCRemoteSwiftPackageReference "WWJavaScriptContext" */,
 				644FF1492B7C604C00D3B814 /* XCRemoteSwiftPackageReference "WWTypewriterLabel" */,
 				813892762B7E060E00D67D98 /* XCRemoteSwiftPackageReference "WWOnBoardingViewController" */,
-				815BC4EC2B874B340099593F /* XCRemoteSwiftPackageReference "WWKeyboardShadowView" */,
 				815BC4EF2B874B410099593F /* XCRemoteSwiftPackageReference "WWSimpleChatGPT" */,
+				64445E8F2B8A126B00B37744 /* XCRemoteSwiftPackageReference "WWKeyboardShadowView" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -753,7 +756,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20240222;
+				CURRENT_PROJECT_VERSION = 20240225;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -772,7 +775,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.9;
+				MARKETING_VERSION = 2.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -792,7 +795,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20240222;
+				CURRENT_PROJECT_VERSION = 20240225;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -811,7 +814,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3.9;
+				MARKETING_VERSION = 2.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -856,6 +859,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		64445E8F2B8A126B00B37744 /* XCRemoteSwiftPackageReference "WWKeyboardShadowView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWKeyboardShadowView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.1;
+			};
+		};
 		644FF1492B7C604C00D3B814 /* XCRemoteSwiftPackageReference "WWTypewriterLabel" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWTypewriterLabel.git";
@@ -878,14 +889,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.3.0;
-			};
-		};
-		815BC4EC2B874B340099593F /* XCRemoteSwiftPackageReference "WWKeyboardShadowView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/William-Weng/WWKeyboardShadowView";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
 			};
 		};
 		815BC4EF2B874B410099593F /* XCRemoteSwiftPackageReference "WWSimpleChatGPT" */ = {
@@ -968,6 +971,15 @@
 			package = 6418FC182A6DCDED00493B8D /* XCRemoteSwiftPackageReference "WWAppInstallSource" */;
 			productName = WWAppInstallSource;
 		};
+		64445E8D2B8A119E00B37744 /* WWKeyboardShadowView */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WWKeyboardShadowView;
+		};
+		64445E902B8A126B00B37744 /* WWKeyboardShadowView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 64445E8F2B8A126B00B37744 /* XCRemoteSwiftPackageReference "WWKeyboardShadowView" */;
+			productName = WWKeyboardShadowView;
+		};
 		644FF14A2B7C604C00D3B814 /* WWTypewriterLabel */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 644FF1492B7C604C00D3B814 /* XCRemoteSwiftPackageReference "WWTypewriterLabel" */;
@@ -982,11 +994,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 813892762B7E060E00D67D98 /* XCRemoteSwiftPackageReference "WWOnBoardingViewController" */;
 			productName = WWOnBoardingViewController;
-		};
-		815BC4ED2B874B340099593F /* WWKeyboardShadowView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 815BC4EC2B874B340099593F /* XCRemoteSwiftPackageReference "WWKeyboardShadowView" */;
-			productName = WWKeyboardShadowView;
 		};
 		815BC4F02B874B410099593F /* WWSimpleChatGPT */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -319,6 +319,17 @@ extension Utility {
     func font(name: String, size: CGFloat = 36.0) -> UIFont? {
         return UIFont(name: name, size: size)
     }
+    
+    /// [設定TabBar顯示與否功能](https://www.jianshu.com/p/4c94fc74f1e6)
+    /// - Parameters:
+    ///   - isHidden: Bool
+    func tabBarHidden(with tabBarController: UITabBarController?, isHidden: Bool) {
+        
+        guard let tabBarController = tabBarController else { return }
+        
+        tabBarController._tabBarHidden(isHidden, duration: Constant.duration)
+        NotificationCenter.default._post(name: .viewDidTransition, object: isHidden)
+    }
 }
 
 // MARK: - 音樂相關 (function)

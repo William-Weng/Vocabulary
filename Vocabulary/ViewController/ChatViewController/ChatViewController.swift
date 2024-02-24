@@ -8,6 +8,7 @@
 import UIKit
 import WWPrint
 import WWHUD
+import WWUserDefaults
 import WWSimpleChatGPT
 import WWKeyboardShadowView
 
@@ -22,18 +23,25 @@ final class ChatViewController: UIViewController {
     
     static var chatMessageList: [Constant.ChatMessage] = []
     
-    private var bearerToken = "<BearerToken>"
+    @WWUserDefaults("ChatGPTBearerToken") var bearerToken: String?
+    
+    weak var sentenceViewDelegate: SentenceViewDelegate?
         
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
     }
-            
+    
     @IBAction func sendMessage(_ sender: UIButton) { sendMessage(with: myTextField.text) }
+    @IBAction func tokenSetting(_ sender: UIBarButtonItem) { bearerTokenTextHint(title: "請輸入Token") }
     
     @objc func dimissKeyboard() { view.endEditing(true) }
     
-    deinit { wwPrint("deinit => \(Self.self)") }
+    deinit {
+        keyboardShadowView.unregister()
+        sentenceViewDelegate?.tabBarHidden(false)
+        wwPrint("deinit => \(Self.self)")
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -87,13 +95,14 @@ private extension ChatViewController {
         myTextField.delegate = self
         myTableView.addGestureRecognizer(tapGesture)
                 
-        keyboardConstraintHeight.constant = 128
+        keyboardConstraintHeight.constant = 0
         keyboardShadowView.configure(target: self, keyboardConstraintHeight: keyboardConstraintHeight)
         keyboardShadowView.register()
         
-        WWSimpleChatGPT.configure(bearerToken: bearerToken)
+        sentenceViewDelegate?.tabBarHidden(true)
+        chatSetting(bearerToken: bearerToken)
     }
-        
+    
     /// 選擇Cell (自己 / ChatGPT)
     /// - Parameters:
     ///   - tableView: UITableView
@@ -143,7 +152,7 @@ private extension ChatViewController {
         guard let message = message,
               !message.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         else {
-            Utility.shared.diplayHUD(with: .fail); return
+            Utility.shared.flashHUD(with: .fail); return
         }
         
         sendMessage(message)
@@ -156,30 +165,85 @@ private extension ChatViewController {
     /// 傳送文字訊息
     /// - Parameter message: String?
     func sendMessage(_ message: String) {
-                
-        let chatMessage = Constant.ChatMessage(message, true)
-        let content = phaseMessage(chatMessage)
         
-        if let content = content {
+        guard let chatMessage = Optional.some(Constant.ChatMessage(message, true)),
+              let content = phaseMessage(chatMessage)
+        else {
+            Utility.shared.flashHUD(with: .fail); return
+        }
+        
+        Utility.shared.diplayHUD(with: .loading)
+        
+        Task {
             
-            Utility.shared.diplayHUD(with: .nice)
+            let result = await WWSimpleChatGPT.shared.chat(model: .v3_5, temperature: 0.7, content: content)
             
-            Task {
+            switch result {
+            case .failure(let error): wwPrint(error); Utility.shared.flashHUD(with: .fail)
+            case .success(let message):
                 
-                let result = await WWSimpleChatGPT.shared.chat(model: .v3_5, temperature: 0.7, content: content)
+                Utility.shared.dismissHUD()
                 
-                switch result {
-                case .failure(let error): wwPrint(error); Utility.shared.diplayHUD(with: .fail)
-                case .success(let message):
-                    
-                    Utility.shared.dismissHUD()
-                    
-                    if let message = message {
-                        let gptMessage = Constant.ChatMessage(message, false)
-                        _ = phaseMessage(gptMessage)
-                    }
+                if let message = message {
+                    let gptMessage = Constant.ChatMessage(message, false)
+                    _ = phaseMessage(gptMessage)
                 }
             }
         }
+    }
+    
+    /// 設定ChatGPT的Token對話框
+    /// - Parameters:
+    ///   - title: String
+    ///   - message: String?
+    ///   - defaultText: String?
+    func bearerTokenTextHint(title: String, message: String? = nil, defaultText: String? = nil) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let placeholder = title
+        
+        alertController.addTextField {
+            $0.text = defaultText
+            $0.placeholder = placeholder
+        }
+        
+        let actionOK = inputTokenAction(textFields: alertController.textFields)
+        let actionCancel = UIAlertAction(title: "取消", style: .cancel) {  _ in }
+        
+        alertController.addAction(actionOK)
+        alertController.addAction(actionCancel)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    /// 設定ChatGPT的Token功能
+    /// - Parameter textFields: [UITextField]?
+    /// - Returns: UIAlertAction
+    func inputTokenAction(textFields: [UITextField]?) -> UIAlertAction {
+        
+        let actionOK = UIAlertAction(title: "確認", style: .default) { [weak self] _ in
+            
+            guard let this = self,
+                  let bearerToken = textFields?.first?.text?._removeWhiteSpacesAndNewlines(),
+                  !bearerToken.isEmpty
+            else {
+                return
+            }
+            
+            this.chatSetting(bearerToken: bearerToken)
+        }
+        
+        return actionOK
+    }
+    
+    /// 設定ChatGPT的Token
+    /// - Parameter bearerToken: String?
+    func chatSetting(bearerToken: String?) {
+        
+        guard let bearerToken = bearerToken else { bearerTokenTextHint(title: "請輸入Token"); return }
+        
+        WWSimpleChatGPT.configure(bearerToken: bearerToken)
+        connentView.backgroundColor = .systemBlue
+        self.bearerToken = bearerToken
     }
 }

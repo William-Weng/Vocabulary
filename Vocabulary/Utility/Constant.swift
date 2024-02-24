@@ -230,6 +230,8 @@ extension Constant {
         case sentence
         case others
         case talking
+        case loading
+        case chatting
 
         /// 檔案路徑
         /// - Returns: URL?

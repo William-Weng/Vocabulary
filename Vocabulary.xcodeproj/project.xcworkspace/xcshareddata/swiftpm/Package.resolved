@@ -39,10 +39,10 @@
     {
       "identity" : "wwkeyboardshadowview",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/William-Weng/WWKeyboardShadowView",
+      "location" : "https://github.com/William-Weng/WWKeyboardShadowView.git",
       "state" : {
-        "revision" : "8a0642628aa0fd9cfdbd955585e8097fb7ec2efd",
-        "version" : "1.0.0"
+        "revision" : "b2cbaaaca7d59768412bc511dfe8d5b3020cd40b",
+        "version" : "1.0.1"
       }
     },
     {

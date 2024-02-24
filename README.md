@@ -87,6 +87,7 @@
 |[SunTreeBorder](https://zh.lovepik.com/image-401216042/sun-tree-border.html)|單字卡背景|
 |[Vertical](https://www.flaticon.com/free-icon/smartphones_604609)|畫面旋轉功能|
 |[Talking](https://www.flaticon.com/free-icon/talking_3002662)|對談|
+|[Token](https://www.flaticon.com/free-icon/key_3039392)|ChatGPT的Token|
 
 ## [背景音樂 - .mp3 / .m4a (請在iTunes上自行加入)](http://amachamusic.chagasi.com/)
 

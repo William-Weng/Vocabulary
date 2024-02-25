@@ -86,21 +86,6 @@ private extension OthersTableViewCell {
         initFavoriteImageViewTapGestureRecognizer()
     }
     
-    /// 讀取存在手機的圖示檔
-    /// - Parameter filename: String?
-    /// - Returns: UIImage?
-    func iconImage(with filename: String?) -> UIImage? {
-        
-        guard let imageFolderUrl = Constant.FileFolder.image.url(),
-              let filename = filename
-        else {
-            return nil
-        }
-        
-        let url = imageFolderUrl.appendingPathComponent(filename, isDirectory: false)
-        return UIImage(contentsOfFile: url.path)
-    }
-    
     /// 圖示檔的名稱 (SHA1)
     /// - Returns: String?
     func iconFilename() -> String? {

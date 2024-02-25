@@ -12,21 +12,25 @@ import WWUserDefaults
 import WWSimpleChatGPT
 import WWKeyboardShadowView
 
+extension Utility {
+    
+
+}
+
 // MARK: - 對話功能頁
 final class ChatViewController: UIViewController {
     
     @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var myTextField: UITextField!
     @IBOutlet weak var connentView: UIView!
+    @IBOutlet weak var chatImageView: UIImageView!
     @IBOutlet weak var keyboardShadowView: WWKeyboardShadowView!
     @IBOutlet weak var keyboardConstraintHeight: NSLayoutConstraint!
     
     static var chatMessageList: [Constant.ChatMessage] = []
-    
-    @WWUserDefaults("ChatGPTBearerToken") var bearerToken: String?
-    
-    weak var sentenceViewDelegate: SentenceViewDelegate?
         
+    weak var sentenceViewDelegate: SentenceViewDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
@@ -94,13 +98,15 @@ private extension ChatViewController {
         
         myTextField.delegate = self
         myTableView.addGestureRecognizer(tapGesture)
-                
+        
+        chatImageView.image = Utility.shared.folderImage(name: "Chatting.jpg")
+        
         keyboardConstraintHeight.constant = 0
         keyboardShadowView.configure(target: self, keyboardConstraintHeight: keyboardConstraintHeight)
         keyboardShadowView.register()
         
         sentenceViewDelegate?.tabBarHidden(true)
-        chatSetting(bearerToken: bearerToken)
+        chatSetting(bearerToken: Constant.bearerToken)
     }
     
     /// 選擇Cell (自己 / ChatGPT)
@@ -244,6 +250,6 @@ private extension ChatViewController {
         
         WWSimpleChatGPT.configure(bearerToken: bearerToken)
         connentView.backgroundColor = .systemBlue
-        self.bearerToken = bearerToken
+        Constant.bearerToken = bearerToken
     }
 }

@@ -330,6 +330,20 @@ extension Utility {
         tabBarController._tabBarHidden(isHidden, duration: Constant.duration)
         NotificationCenter.default._post(name: .viewDidTransition, object: isHidden)
     }
+    
+    /// 取得外部資料夾圖片 (/Image/<image>)
+    /// - Parameter name: String
+    /// - Returns: UIImage?
+    func folderImage(name: String) -> UIImage? {
+        
+        guard let imageUrl = Constant.FileFolder.images.url()?._appendPath(name),
+              let image = UIImage(contentsOfFile: imageUrl.path)
+        else {
+            return nil
+        }
+        
+        return image
+    }
 }
 
 // MARK: - 音樂相關 (function)

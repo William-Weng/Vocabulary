@@ -24,6 +24,7 @@ final class Constant: NSObject {
     }
     
     @WWUserDefaults("CurrentTableName") static var tableName: String?
+    @WWUserDefaults("ChatGPTBearerToken") static var bearerToken: String?
     
     static let webImageExpiredDays = 90
     static let duration: TimeInterval = 0.15
@@ -351,7 +352,7 @@ extension Constant {
     /// 外部的資料夾路徑 => ./Documents/Music
     enum FileFolder: String {
         
-        case image = "Image"
+        case images = "Images"
         case music = "Music"
         case animation = "Animation"
         

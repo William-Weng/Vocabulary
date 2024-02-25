@@ -13,15 +13,15 @@
       "idiom" : "universal",
       "resizing" : {
         "cap-insets" : {
-          "bottom" : 443,
-          "left" : 338,
+          "bottom" : 440,
+          "left" : 336,
           "right" : 649,
-          "top" : 443
+          "top" : 445
         },
         "center" : {
-          "height" : 1,
+          "height" : 2,
           "mode" : "tile",
-          "width" : 1
+          "width" : 3
         },
         "mode" : "9-part"
       },

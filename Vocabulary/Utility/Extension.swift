@@ -1231,7 +1231,20 @@ extension UIButton {
     }
 }
 
-// MARK: - UIView (function)
+// MARK: - UIImage (function)
+extension UIImage {
+    
+    /// [iOS點九圖NinePatch解析 - 9.png](https://mp.weixin.qq.com/s/angyJag7AZntt2FLNCOuXw)
+    /// - Parameters:
+    ///   - image: [原始圖片](https://blog.csdn.net/kmyhy/article/details/79087418)
+    ///   - capInsets: [裁切的位置](https://awesome-tips.gitbook.io/ios/xcode/content-4)
+    ///   - resizingMode: [填充的方式](https://developer.apple.com/documentation/swift/slice)
+    func _ninePatch(capInsets: UIEdgeInsets, resizingMode: UIImage.ResizingMode = .stretch) -> UIImage {
+        return self.resizableImage(withCapInsets: capInsets, resizingMode: resizingMode)
+    }
+}
+
+// MARK: - UIImageView (function)
 extension UIImageView {
     
     /// [播放GIF圖片 - 本地圖片](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/利用-cganimateimageaturlwithblock-播放-gif-4780071b835e)

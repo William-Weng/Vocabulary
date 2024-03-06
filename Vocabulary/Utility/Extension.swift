@@ -506,6 +506,28 @@ extension Date {
     }
 }
 
+// MARK: - UIDeviceOrientation
+extension UIDeviceOrientation {
+    
+    /// UIDeviceOrientation => UIInterfaceOrientation
+    /// - Returns: UIInterfaceOrientation
+    func _interfaceOrientation() -> UIInterfaceOrientation {
+        
+        var interfaceOrientation: UIInterfaceOrientation = .unknown
+        
+        switch self {
+        case .portrait: interfaceOrientation = .portrait
+        case .portraitUpsideDown: interfaceOrientation = .portraitUpsideDown
+        case .landscapeLeft: interfaceOrientation = .landscapeRight
+        case .landscapeRight: interfaceOrientation = .landscapeLeft
+        case .unknown, .faceUp, .faceDown: interfaceOrientation = .unknown
+        @unknown default: break
+        }
+        
+        return interfaceOrientation
+    }
+}
+
 // MARK: - AppDelegate
 extension AppDelegate {
     

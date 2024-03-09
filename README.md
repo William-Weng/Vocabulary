@@ -37,8 +37,8 @@
 |[WWJavaScriptContext](https://github.com/William-Weng/WWJavaScriptContext)|JavaScriptCore小工具|
 |[WWOnBoardingViewController](https://github.com/William-Weng/WWOnBoardingViewController)|製作單字卡分頁的小工具|
 |[WWTypewriterLabel](https://github.com/William-Weng/WWTypewriterLabel)|打字機效果|
-|[WWSimpleChatGPT](https://github.com/William-Weng/WWTypewriterLabel)|使用ChatGPT功能|
-|[WWKeyboardShadowView](https://github.com/William-Weng/WWTypewriterLabel)|處理鍵盤高度問題|
+|[WWSimpleChatGPT](https://github.com/William-Weng/WWSimpleChatGPT)|使用ChatGPT功能|
+|[WWKeyboardShadowView](https://github.com/William-Weng/WWKeyboardShadowView)|處理鍵盤高度問題|
 
 ## [相關圖示](https://www.flaticon.com)
 

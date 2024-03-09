@@ -133,10 +133,10 @@ private extension WordCardViewController {
         case .left: currentIndexOffset -= 1
         case .none: break
         }
-                
+        
         fixIndexOffset(currentIndexOffset)
         pageViewControllerSetting(with: nextIndex, offset: currentIndexOffset)
-                
+        
         self.currentIndex = currentIndex
     }
     
@@ -186,7 +186,7 @@ private extension WordCardViewController {
     func fixIndexOffset(_ offset: Int) {
         
         infinityLoopInfo = (true, true)
-                
+        
         if (offset <= 0) {
             infinityLoopInfo.hasPrevious = false
             currentIndexOffset = 0; return
@@ -275,26 +275,5 @@ private extension WordCardViewController {
     /// - Parameter name: String
     func orientationbButtonItemImage(name: String) {
         orientationbButtonItem.image = UIImage(named: name)
-    }
-}
-
-extension UIDeviceOrientation {
-    
-    /// UIDeviceOrientation => UIInterfaceOrientation
-    /// - Returns: UIInterfaceOrientation
-    func _interfaceOrientation() -> UIInterfaceOrientation {
-        
-        var interfaceOrientation: UIInterfaceOrientation = .unknown
-        
-        switch self {
-        case .portrait: interfaceOrientation = .portrait
-        case .portraitUpsideDown: interfaceOrientation = .portraitUpsideDown
-        case .landscapeLeft: interfaceOrientation = .landscapeRight
-        case .landscapeRight: interfaceOrientation = .landscapeLeft
-        case .unknown, .faceUp, .faceDown: interfaceOrientation = .unknown
-        @unknown default: break
-        }
-        
-        return interfaceOrientation
     }
 }

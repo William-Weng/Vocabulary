@@ -253,13 +253,13 @@ private extension AppDelegate {
     /// - Returns: 資料夾的URL
     func animationFolderUrlMaker() -> URL? {
         
-        guard let musicFolderUrl = Constant.FileFolder.animation.url() else { return nil }
+        guard let animationFolderUrl = Constant.FileFolder.animation.url() else { return nil }
         
-        let result = FileManager.default._createDirectory(with: musicFolderUrl, path: "")
+        let result = FileManager.default._createDirectory(with: animationFolderUrl, path: "")
         
         switch result {
         case .failure(let error): myPrint(error); return nil
-        case .success(let isSuccess): return (!isSuccess) ? nil : musicFolderUrl
+        case .success(let isSuccess): return (!isSuccess) ? nil : animationFolderUrl
         }
     }
     

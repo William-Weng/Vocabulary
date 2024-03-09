@@ -39,7 +39,7 @@
     {
       "identity" : "wwkeyboardshadowview",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/William-Weng/WWKeyboardShadowView.git",
+      "location" : "https://github.com/William-Weng/WWKeyboardShadowView",
       "state" : {
         "revision" : "67655aad7879e8ce5ffd99c391488c5bdcd73b89",
         "version" : "1.0.2"
@@ -50,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWNetworking",
       "state" : {
-        "revision" : "03ebe85587b0d647065cfb5eeae944204eeedc75",
-        "version" : "1.5.0"
+        "revision" : "d47d710216c892d13684de471158d35f67d27399",
+        "version" : "1.5.1"
       }
     },
     {
@@ -86,8 +86,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWSimpleChatGPT",
       "state" : {
-        "revision" : "0cdbe9ff9fcca47289b04dacc02a590de075a642",
-        "version" : "0.5.1"
+        "revision" : "685ffea85fff6fe4ba0589410930bb80422a85b1",
+        "version" : "0.5.3"
       }
     },
     {
@@ -131,8 +131,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWUserDefaults.git",
       "state" : {
-        "revision" : "03c70e58d4121ab5f6f3ef395b04c0a564e84019",
-        "version" : "1.0.0"
+        "revision" : "46e4475a6d808bf34f49203bfe7c0e9d8b8fe6e9",
+        "version" : "1.0.3"
       }
     }
   ],

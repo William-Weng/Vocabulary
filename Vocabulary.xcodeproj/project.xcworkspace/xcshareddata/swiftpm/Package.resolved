@@ -1,0 +1,140 @@
+{
+  "pins" : [
+    {
+      "identity" : "wwappinstallsource",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWAppInstallSource.git",
+      "state" : {
+        "revision" : "2491ca2eba21a4e8c7122f293224692d018e857d",
+        "version" : "1.0.4"
+      }
+    },
+    {
+      "identity" : "wwfloatingview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWFloatingView.git",
+      "state" : {
+        "revision" : "5ac7bcdd90156786429a3e031c25208378e86932",
+        "version" : "1.2.2"
+      }
+    },
+    {
+      "identity" : "wwhud",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWHUD",
+      "state" : {
+        "revision" : "924276ae44e9b875d0f780627c07f7d5c1295542",
+        "version" : "1.2.1"
+      }
+    },
+    {
+      "identity" : "wwjavascriptcontext",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWJavaScriptContext",
+      "state" : {
+        "revision" : "1959bc6f5a18f12a60c294142aafca05b02fb087",
+        "version" : "1.0.3"
+      }
+    },
+    {
+      "identity" : "wwkeyboardshadowview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWKeyboardShadowView",
+      "state" : {
+        "revision" : "968e05130d72e87a3594a355ce23bdd959343479",
+        "version" : "1.0.3"
+      }
+    },
+    {
+      "identity" : "wwnetworking",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWNetworking",
+      "state" : {
+        "revision" : "d0d3ec519baa25204e2813459d5e274e2bc8abf3",
+        "version" : "1.5.2"
+      }
+    },
+    {
+      "identity" : "wwnetworking-uiimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWNetworking-UIImage",
+      "state" : {
+        "revision" : "ec7640907c8fc349c78e804952a0bd1f89f9934a",
+        "version" : "1.2.7"
+      }
+    },
+    {
+      "identity" : "wwonboardingviewcontroller",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWOnBoardingViewController",
+      "state" : {
+        "revision" : "a3766c884048bc822794b904d8951a9efb70fd80",
+        "version" : "1.3.2"
+      }
+    },
+    {
+      "identity" : "wwprint",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWPrint.git",
+      "state" : {
+        "revision" : "0acf1057863faea81c3ded2057c21b09c3435435",
+        "version" : "1.3.0"
+      }
+    },
+    {
+      "identity" : "wwsimplechatgpt",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWSimpleChatGPT",
+      "state" : {
+        "revision" : "e89836ced5d7c32e0f0b88dad84e34a8ae8542d8",
+        "version" : "0.5.4"
+      }
+    },
+    {
+      "identity" : "wwslider",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWSlider",
+      "state" : {
+        "revision" : "86d91d4235b6fdd03d93a14dbedf959cdc247662",
+        "version" : "1.2.3"
+      }
+    },
+    {
+      "identity" : "wwsqlite3manager",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWSQLite3Manager",
+      "state" : {
+        "revision" : "2a84d9ce8e7ac8294177a1a439064b091237c469",
+        "version" : "1.4.10"
+      }
+    },
+    {
+      "identity" : "wwtoast",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWToast",
+      "state" : {
+        "revision" : "51ae1f39020cd0fad3243d858d73521a949fac20",
+        "version" : "1.2.1"
+      }
+    },
+    {
+      "identity" : "wwtypewriterlabel",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWTypewriterLabel.git",
+      "state" : {
+        "revision" : "40d1201621bc78f177612c91e62bb387bd4646d9",
+        "version" : "1.0.3"
+      }
+    },
+    {
+      "identity" : "wwuserdefaults",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWUserDefaults.git",
+      "state" : {
+        "revision" : "46e4475a6d808bf34f49203bfe7c0e9d8b8fe6e9",
+        "version" : "1.0.3"
+      }
+    }
+  ],
+  "version" : 2
+}

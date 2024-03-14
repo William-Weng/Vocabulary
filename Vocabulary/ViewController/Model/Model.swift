@@ -161,7 +161,7 @@ final class BookmarkSite: Codable {
 // MARK: - 背景音樂
 struct Music {
     
-    let filename: String
+    let filename: String    // 檔案名稱
     
     /// 音樂檔案路徑
     /// - Returns: URL?

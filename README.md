@@ -39,6 +39,7 @@
 |[WWTypewriterLabel](https://github.com/William-Weng/WWTypewriterLabel)|打字機效果|
 |[WWSimpleChatGPT](https://github.com/William-Weng/WWSimpleChatGPT)|使用ChatGPT功能|
 |[WWKeyboardShadowView](https://github.com/William-Weng/WWKeyboardShadowView)|處理鍵盤高度問題|
+|[WWHash](https://github.com/William-Weng/WWHash)|取得SHA1值|
 
 ## [相關圖示](https://www.flaticon.com)
 

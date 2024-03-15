@@ -22,7 +22,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable
     private let audioPlayerQueue = DispatchQueue(label: "github.com/William-Weng/Vocabulary")
     
     private var audioPlayer: AVAudioPlayer?
-    private var recordlayer: AVAudioPlayer?
+    private var recordPlayer: AVAudioPlayer?
     private var audioRecorder: AVAudioRecorder?
     private var musicLoopType: Constant.MusicLoopType = .infinity
     
@@ -63,7 +63,7 @@ extension AppDelegate: AVAudioRecorderDelegate {
         
         guard let recordlayer = AVAudioPlayer._build(audioURL: recorder.url, fileTypeHint: .wav, delegate: nil) else { return }
         
-        self.recordlayer = recordlayer
+        self.recordPlayer = recordlayer
         recordlayer.play()
     }
     

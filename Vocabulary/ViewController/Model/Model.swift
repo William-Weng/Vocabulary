@@ -8,6 +8,7 @@
 import UIKit
 import AVFoundation
 import WWSQLite3Manager
+import WWHash
 
 // MARK: - Settings.json設定檔Model
 final class Settings {
@@ -153,7 +154,7 @@ final class BookmarkSite: Codable {
     
     /// 圖示檔的名稱 (SHA1)
     /// - Returns: String
-    func iconName() -> String { return url._sha1() }
+    func iconName() -> String { return WWHash.sha1.encode(string: url) }
     
     deinit { myPrint("\(Self.self) deinit") }
 }

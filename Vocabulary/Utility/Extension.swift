@@ -367,10 +367,6 @@ extension String {
     /// - Returns: String?
     func _encodingURL(characterSet: CharacterSet = .urlQueryAllowed) -> Self? { return addingPercentEncoding(withAllowedCharacters: characterSet) }
     
-    /// [文字 => SHA1](https://stackoverflow.com/questions/25761344/how-to-hash-nsstring-with-sha1-in-swift)
-    /// - Returns: [String](https://emn178.github.io/online-tools/sha1.html)
-    func _sha1() -> Self { return self._secureHashAlgorithm(digestLength: CC_SHA1_DIGEST_LENGTH, encode: CC_SHA1) }
-    
     /// [修正Sqlite單引號問題 / ' => ''](https://dotblogs.com.tw/shanna/2019/09/08/205706)
     /// - Returns: [String](https://benjr.tw/102928)
     func fixSqliteSingleQuote() -> Self { return self.replacingOccurrences(of: "'", with: "''") }
@@ -416,26 +412,6 @@ extension String {
         }
         
         return jsonObject
-    }
-}
-
-// MARK: - String (private function)
-private extension String {
-    
-    /// [計算SHA家族的雜湊值](https://zh.wikipedia.org/zh-tw/SHA家族)
-    /// - Parameters:
-    ///   - digestLength: [雜湊值長度](https://ithelp.ithome.com.tw/articles/10241695)
-    ///   - encode: [雜湊函式](https://ithelp.ithome.com.tw/articles/10208884)
-    /// - Returns: [String](https://emn178.github.io/online-tools/)
-    func _secureHashAlgorithm(digestLength: Int32, encode: (_ data: UnsafeRawPointer?, _ len: CC_LONG, _ md: UnsafeMutablePointer<UInt8>?) -> UnsafeMutablePointer<UInt8>?) -> String {
-        
-        let data = Data(self.utf8)
-        var hash = [UInt8](repeating: 0, count: Int(digestLength))
-        
-        data.withUnsafeBytes { _ = encode($0.baseAddress, CC_LONG(data.count), &hash) }
-        
-        let hexBytes = hash.map { String(format: "%02hhx", $0) }
-        return hexBytes.joined()
     }
 }
 

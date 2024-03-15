@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "wwhash",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWHash",
+      "state" : {
+        "revision" : "2182c6dfc63141728dcdb5066220b8032f552521",
+        "version" : "1.0.1"
+      }
+    },
+    {
       "identity" : "wwhud",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWHUD",
@@ -131,8 +140,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWUserDefaults.git",
       "state" : {
-        "revision" : "46e4475a6d808bf34f49203bfe7c0e9d8b8fe6e9",
-        "version" : "1.0.3"
+        "revision" : "44675a469955dbaeb5b70a6277dbb2be543f6cb0",
+        "version" : "1.0.4"
       }
     }
   ],

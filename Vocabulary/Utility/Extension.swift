@@ -345,7 +345,7 @@ extension String {
         for scalar in unicodeScalars {
             
             guard let asciiA = characterA.ascii.unicodeScalars.first,
-                  let unicodeWord = UnicodeScalar(characterA.unicode + scalar.value - asciiA.value)
+                  let unicodeWord = Unicode.Scalar(characterA.unicode + scalar.value - asciiA.value)
             else {
                 unicodeString += characterA.error.description; continue
             }

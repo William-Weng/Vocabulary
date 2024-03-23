@@ -1,4 +1,5 @@
 {
+  "originHash" : "fc300bc1d1879fd5d0a6f0d24418767a04af781055fce0737a09031aa6abf86e",
   "pins" : [
     {
       "identity" : "wwappinstallsource",
@@ -59,8 +60,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWNetworking",
       "state" : {
-        "revision" : "d0d3ec519baa25204e2813459d5e274e2bc8abf3",
-        "version" : "1.5.2"
+        "revision" : "0e0684b80861f16441b92baeeafd27bbdb2234c2",
+        "version" : "1.5.4"
       }
     },
     {
@@ -145,5 +146,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

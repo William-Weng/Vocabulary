@@ -587,7 +587,7 @@ private extension MainViewController {
         }
     }
     
-    /// 背景音樂的資料夾的檔案列表
+    /// 背景音樂的資料夾的檔案列表 (單一層 / 不含資料夾 / 不含.DS_Store)
     /// - Returns: [String]?
     func musicFileList() -> [String]? {
         
@@ -597,7 +597,23 @@ private extension MainViewController {
         
         switch result {
         case .failure(let error): myPrint(error); return nil
-        case .success(let list): return list
+        case .success(let list): 
+            
+            guard let list = list else { return nil }
+            
+            let fileList = list.compactMap({ filename -> String? in
+                
+                let fileUrl = musicFolder.appendingPathComponent(filename)
+                let info = FileManager.default._fileExists(with: fileUrl)
+                
+                if (info.isDirectory) { return nil }
+                if (!info.isExist) { return nil }
+                if (filename == ".DS_Store") { return nil }
+                
+                return filename
+            })
+            
+            return fileList
         }
     }
     

@@ -9,8 +9,8 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="jf-openhuninn-1.1.ttf">
-            <string>jf-openhuninn-1.1</string>
+        <array key="jf-openhuninn-2.0.ttf">
+            <string>jf-openhuninn-2.0</string>
         </array>
     </customFonts>
     <scenes>
@@ -87,7 +87,7 @@
                                                                 <constraint firstAttribute="height" constant="36" id="Iz3-oh-Dhb"/>
                                                                 <constraint firstAttribute="width" constant="100" id="eGd-gY-pzu"/>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="24"/>
+                                                            <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="24"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -202,7 +202,7 @@
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="單字細節" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4px-GE-OUc">
                                                 <rect key="frame" x="171" y="4" width="72" height="42"/>
-                                                <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="18"/>
+                                                <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="18"/>
                                                 <color key="textColor" systemColor="systemGray6Color"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -237,7 +237,7 @@
                                                                 </view>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filename.gif" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MIs-lU-uNP">
                                                                     <rect key="frame" x="129" y="4" width="269" height="109"/>
-                                                                    <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="20"/>
+                                                                    <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="20"/>
                                                                     <color key="textColor" systemColor="systemGray6Color"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
@@ -350,7 +350,7 @@
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CNN - 有線電視新聞網 " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mWn-0d-Vp2">
                                                             <rect key="frame" x="107" y="0.0" width="268.5" height="61"/>
-                                                            <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="17"/>
+                                                            <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -574,7 +574,7 @@
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="48" id="SwB-X3-VMx"/>
                                                                             </constraints>
-                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="16"/>
+                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="16"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                             <state key="normal" title="困難"/>
                                                                             <userDefinedRuntimeAttributes>
@@ -589,7 +589,7 @@
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="40" id="sOr-sB-Kp6"/>
                                                                             </constraints>
-                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="16"/>
+                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="16"/>
                                                                             <color key="textColor" systemColor="tertiarySystemBackgroundColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                             <userDefinedRuntimeAttributes>
@@ -614,7 +614,7 @@
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="64" id="JHX-RJ-2mF"/>
                                                                     </constraints>
-                                                                    <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="30"/>
+                                                                    <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="30"/>
                                                                     <color key="textColor" systemColor="systemBlueColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
@@ -626,7 +626,7 @@
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="30" id="kIQ-Gv-Vvc"/>
                                                                             </constraints>
-                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="24"/>
+                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="24"/>
                                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
@@ -833,7 +833,7 @@
                                                                         </view>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="あい십일早安" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmN-Oi-da1">
                                                                             <rect key="frame" x="36" y="0.0" width="295.5" height="38"/>
-                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="30"/>
+                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="30"/>
                                                                             <color key="textColor" systemColor="systemBlueColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
@@ -847,7 +847,7 @@
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="24" id="QZX-CY-syN"/>
                                                                     </constraints>
-                                                                    <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="20"/>
+                                                                    <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="20"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
@@ -980,7 +980,7 @@
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="64" id="t6F-TT-GXV"/>
                                                                             </constraints>
-                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="16"/>
+                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="16"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                             <state key="normal" title="動詞"/>
                                                                             <userDefinedRuntimeAttributes>
@@ -998,7 +998,7 @@
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="解譯 解譯 解譯 解譯 解譯 解譯 解譯 解譯 解譯 解譯 解譯 解譯 " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="NW3-6f-rr3">
                                                                             <rect key="frame" x="116" y="0.0" width="238" height="36"/>
-                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="24"/>
+                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="24"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
@@ -1026,7 +1026,7 @@
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="Mlh-Cw-8md"/>
                                                                             </constraints>
-                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="20"/>
+                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="20"/>
                                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
@@ -1192,8 +1192,8 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="382" height="266"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Interpret Interpret Interpret Interpret Interpret Interpret Interpret Interpret Interpret Interpret" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAU-DG-JYv">
-                                                        <rect key="frame" x="8" y="85" width="366" height="96"/>
-                                                        <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="24"/>
+                                                        <rect key="frame" x="8" y="86" width="366" height="94"/>
+                                                        <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="24"/>
                                                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -1397,7 +1397,7 @@
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="64" id="eHz-gR-YG0"/>
                                                                             </constraints>
-                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="30"/>
+                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="30"/>
                                                                             <color key="textColor" systemColor="systemBlueColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
@@ -1409,7 +1409,7 @@
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="30" id="9ax-FK-QeC"/>
                                                                     </constraints>
-                                                                    <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="24"/>
+                                                                    <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="24"/>
                                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
@@ -1566,7 +1566,7 @@
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Me" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N7K-ta-H02">
                                                                             <rect key="frame" x="0.0" y="0.0" width="370" height="32"/>
                                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="24"/>
+                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="24"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
@@ -1657,7 +1657,7 @@
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ChatGPT" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7QZ-tt-ypz">
                                                                             <rect key="frame" x="36" y="0.0" width="370" height="32"/>
                                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="24"/>
+                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="24"/>
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
@@ -1812,40 +1812,40 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ReviewResultTableViewCell" id="yGr-4Q-LtM" customClass="ReviewResultTableViewCell" customModule="Vocabulary" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="289"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="290.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yGr-4Q-LtM" id="U1x-cj-AQT">
-                                            <rect key="frame" x="0.0" y="0.0" width="383.5" height="289"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="383.5" height="290.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kjK-Dn-L7J">
-                                                    <rect key="frame" x="8" y="8" width="375.5" height="273"/>
+                                                    <rect key="frame" x="8" y="8" width="375.5" height="274.5"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Kg6-f9-8PE">
-                                                            <rect key="frame" x="0.0" y="0.0" width="311.5" height="273"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="311.5" height="274.5"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="g4v-aD-V74">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="311.5" height="229"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="311.5" height="230.5"/>
                                                                     <subviews>
                                                                         <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Notice_Off" translatesAutoresizingMaskIntoConstraints="NO" id="kJO-yl-p5f">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="30" height="229"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="30" height="230.5"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="30" id="FGN-9a-bNN"/>
                                                                             </constraints>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="あい십일早安" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ma-bR-hOX">
-                                                                            <rect key="frame" x="34" y="0.0" width="277.5" height="229"/>
+                                                                            <rect key="frame" x="34" y="0.0" width="277.5" height="230.5"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="36" id="Rht-wN-TuZ"/>
                                                                             </constraints>
-                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="30"/>
+                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="30"/>
                                                                             <color key="textColor" systemColor="systemBlueColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                     </subviews>
                                                                 </stackView>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qbz-Le-eLh">
-                                                                    <rect key="frame" x="0.0" y="237" width="311.5" height="36"/>
+                                                                    <rect key="frame" x="0.0" y="238.5" width="311.5" height="36"/>
                                                                     <subviews>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jwd-Eq-5hs">
                                                                             <rect key="frame" x="0.0" y="0.0" width="152" height="36"/>
@@ -1857,8 +1857,8 @@
                                                                                     </constraints>
                                                                                 </imageView>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9999" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xdJ-Wl-9GQ">
-                                                                                    <rect key="frame" x="53" y="5" width="64" height="26"/>
-                                                                                    <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="26"/>
+                                                                                    <rect key="frame" x="53" y="5.5" width="64" height="25.5"/>
+                                                                                    <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="26"/>
                                                                                     <nil key="textColor"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
@@ -1882,8 +1882,8 @@
                                                                                     </constraints>
                                                                                 </imageView>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9999" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F73-4n-KmR">
-                                                                                    <rect key="frame" x="53" y="5" width="64" height="26"/>
-                                                                                    <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="26"/>
+                                                                                    <rect key="frame" x="53" y="5.5" width="64" height="25.5"/>
+                                                                                    <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="26"/>
                                                                                     <nil key="textColor"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
@@ -1905,10 +1905,10 @@
                                                             </subviews>
                                                         </stackView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oNj-i5-n1a">
-                                                            <rect key="frame" x="311.5" y="0.0" width="64" height="273"/>
+                                                            <rect key="frame" x="311.5" y="0.0" width="64" height="274.5"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zCQ-ru-4NQ">
-                                                                    <rect key="frame" x="11" y="115.5" width="42.5" height="42.5"/>
+                                                                    <rect key="frame" x="11" y="116" width="42.5" height="42.5"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                     <state key="normal" image="Sound"/>
                                                                     <connections>
@@ -2105,17 +2105,17 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SentenceTableViewCell" id="7kq-cM-I72" customClass="SentenceTableViewCell" customModule="Vocabulary" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="419"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="420.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7kq-cM-I72" id="OoA-Pn-cp2">
-                                            <rect key="frame" x="0.0" y="0.0" width="383.5" height="419"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="383.5" height="420.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tAd-5F-WZQ">
-                                                    <rect key="frame" x="8" y="8" width="375.5" height="403"/>
+                                                    <rect key="frame" x="8" y="8" width="375.5" height="404.5"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Tus-cj-5mI">
-                                                            <rect key="frame" x="0.0" y="0.0" width="311.5" height="403"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="311.5" height="404.5"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="6rr-hR-SCM">
                                                                     <rect key="frame" x="0.0" y="0.0" width="311.5" height="30"/>
@@ -2132,7 +2132,7 @@
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="64" id="jGf-Pc-n99"/>
                                                                             </constraints>
-                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="16"/>
+                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="16"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                             <state key="normal" title="慣用語"/>
                                                                             <userDefinedRuntimeAttributes>
@@ -2151,16 +2151,16 @@
                                                                     </constraints>
                                                                 </stackView>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="sBY-F3-0V4">
-                                                                    <rect key="frame" x="0.0" y="34" width="311.5" height="369"/>
+                                                                    <rect key="frame" x="0.0" y="34" width="311.5" height="370.5"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Example Example Example Example Example Example Example Example" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H6l-1O-BW6">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="311.5" height="337"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="311.5" height="338.5"/>
                                                                             <fontDescription key="fontDescription" name="BradleyHandITCTT-Bold" family="Bradley Hand" pointSize="24"/>
                                                                             <color key="textColor" systemColor="systemBlueColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Translate" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="VAz-ar-QAy">
-                                                                            <rect key="frame" x="0.0" y="337" width="311.5" height="32"/>
+                                                                            <rect key="frame" x="0.0" y="338.5" width="311.5" height="32"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="32" id="LPr-Ko-1fw"/>
                                                                             </constraints>
@@ -2173,10 +2173,10 @@
                                                             </subviews>
                                                         </stackView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aOk-iN-3sV">
-                                                            <rect key="frame" x="311.5" y="0.0" width="64" height="403"/>
+                                                            <rect key="frame" x="311.5" y="0.0" width="64" height="404.5"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRE-Mv-jkZ">
-                                                                    <rect key="frame" x="14" y="183.5" width="36" height="36"/>
+                                                                    <rect key="frame" x="14" y="184.5" width="36" height="36"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" secondItem="TRE-Mv-jkZ" secondAttribute="height" multiplier="1:1" id="KSn-do-Psy"/>
                                                                         <constraint firstAttribute="height" constant="36" id="ddL-2p-rnS"/>
@@ -2409,17 +2409,17 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SearchVocabularyTableViewCell" id="T8s-fz-6Yt" customClass="SearchVocabularyTableViewCell" customModule="Vocabulary" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="50" width="414" height="251"/>
+                                                <rect key="frame" x="0.0" y="50" width="414" height="253"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="T8s-fz-6Yt" id="yWC-Yr-t9H">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="251"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="253"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SEs-UA-rXt">
-                                                            <rect key="frame" x="8" y="8" width="390" height="235"/>
+                                                            <rect key="frame" x="8" y="8" width="390" height="237"/>
                                                             <subviews>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="lz5-sf-xaV">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="354" height="235"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="354" height="237"/>
                                                                     <subviews>
                                                                         <stackView contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="732-H4-XAb">
                                                                             <rect key="frame" x="0.0" y="0.0" width="354" height="45"/>
@@ -2444,7 +2444,7 @@
                                                                                 </view>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="あい십일早安" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EUk-WC-cXz">
                                                                                     <rect key="frame" x="36" y="0.0" width="318" height="45"/>
-                                                                                    <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="30"/>
+                                                                                    <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="30"/>
                                                                                     <color key="textColor" systemColor="systemOrangeColor"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
@@ -2458,7 +2458,7 @@
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="24" id="4h4-bL-xCu"/>
                                                                             </constraints>
-                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="20"/>
+                                                                            <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="20"/>
                                                                             <color key="textColor" systemColor="secondarySystemBackgroundColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
@@ -2470,15 +2470,15 @@
                                                                             </constraints>
                                                                         </view>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="mZH-qM-Wal">
-                                                                            <rect key="frame" x="0.0" y="97" width="354" height="138"/>
+                                                                            <rect key="frame" x="0.0" y="97" width="354" height="140"/>
                                                                         </stackView>
                                                                     </subviews>
                                                                 </stackView>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NSw-KH-oAk">
-                                                                    <rect key="frame" x="354" y="0.0" width="36" height="235"/>
+                                                                    <rect key="frame" x="354" y="0.0" width="36" height="237"/>
                                                                     <subviews>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B77-IF-eLx">
-                                                                            <rect key="frame" x="-3" y="96.5" width="42.5" height="42.5"/>
+                                                                            <rect key="frame" x="-3" y="97.5" width="42.5" height="42.5"/>
                                                                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                             <state key="normal" image="Sound"/>
                                                                             <connections>
@@ -2612,7 +2612,7 @@
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="64" id="76X-9i-JR5"/>
                                                                 </constraints>
-                                                                <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="16"/>
+                                                                <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="16"/>
                                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                                 <userDefinedRuntimeAttributes>
@@ -2626,7 +2626,7 @@
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="懸掛懸掛懸掛懸掛懸掛懸掛懸掛懸掛" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="AWA-Oo-sxc">
                                                                         <rect key="frame" x="0.0" y="0.0" width="230" height="30"/>
-                                                                        <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="18"/>
+                                                                        <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="18"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
@@ -2655,7 +2655,7 @@
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="sH3-co-vVH"/>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="20"/>
+                                                        <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="20"/>
                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -2701,7 +2701,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="48" id="gLJ-er-Iez"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="16"/>
+                                        <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="16"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="困難"/>
                                         <userDefinedRuntimeAttributes>
@@ -2716,7 +2716,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="48" id="yJe-0b-iSr"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="jf-openhuninn-1.1" family="jf-openhuninn-1.1" pointSize="16"/>
+                                        <fontDescription key="fontDescription" name="jf-openhuninn-2.0" family="jf-openhuninn-2.0" pointSize="16"/>
                                         <color key="textColor" systemColor="tertiarySystemBackgroundColor"/>
                                         <nil key="highlightedColor"/>
                                         <userDefinedRuntimeAttributes>
@@ -2787,8 +2787,8 @@
     </designables>
     <inferredMetricsTieBreakers>
         <segue reference="aTr-M4-697"/>
-        <segue reference="0U2-Kk-LoG"/>
-        <segue reference="ryU-FM-Qlk"/>
+        <segue reference="3lo-lz-iJI"/>
+        <segue reference="Ypq-4K-ZAg"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="AI" width="341.33334350585938" height="341.33334350585938"/>

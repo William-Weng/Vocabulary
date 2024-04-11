@@ -24,6 +24,7 @@ final class MyTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        initSetting()
         registerCanvasViewAction()
     }
     
@@ -58,6 +59,11 @@ extension MyTabBarController: PKCanvasViewDelegate {
 
 // MARK: - 小工具
 private extension MyTabBarController {
+    
+    /// 初始化設定
+    func initSetting() {
+        view.tintColor = .systemBlue
+    }
     
     /// 畫面旋轉後，要修正的事情 => 隱藏
     /// - Parameters:

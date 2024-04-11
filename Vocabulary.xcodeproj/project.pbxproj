@@ -26,7 +26,6 @@
 		6476D7D22B7A22A800E0DFC5 /* WordCardPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6476D7D12B7A22A800E0DFC5 /* WordCardPageViewController.swift */; };
 		6492ADD52986B8E900E1B59B /* KleeOne-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADD42986B8E900E1B59B /* KleeOne-SemiBold.ttf */; };
 		6492ADD72986BBFA00E1B59B /* GamjaFlower-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADD62986BBFA00E1B59B /* GamjaFlower-Regular.ttf */; };
-		6492ADDD2986BF6E00E1B59B /* jf-openhuninn-1.1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADDC2986BF6D00E1B59B /* jf-openhuninn-1.1.ttf */; };
 		64A11DF829B2315D00688C90 /* MyTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A11DF729B2315D00688C90 /* MyTabBar.swift */; };
 		64AB741B2B78508100882826 /* WordCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AB741A2B78508100882826 /* WordCardViewController.swift */; };
 		64ACFDED2B7EBDA700863407 /* WWOnBoardingViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 64ACFDEC2B7EBDA700863407 /* WWOnBoardingViewController */; };
@@ -71,6 +70,7 @@
 		81BA794029876DA800C0FD6C /* SearchWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA793F29876DA800C0FD6C /* SearchWordViewController.swift */; };
 		81BA794429877ACC00C0FD6C /* SearchWordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA794329877ACC00C0FD6C /* SearchWordTableViewCell.swift */; };
 		81C4A9DE2B21760400D28042 /* SimulaterPushNotification.apns in Resources */ = {isa = PBXBuildFile; fileRef = 81C4A9DD2B21760400D28042 /* SimulaterPushNotification.apns */; };
+		81C803FA2BC77A2600A8F724 /* jf-openhuninn-2.0.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 81C803F92BC77A2600A8F724 /* jf-openhuninn-2.0.ttf */; };
 		81CD85CC2990F03A009C39FF /* SentenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CD85CB2990F03A009C39FF /* SentenceViewController.swift */; };
 		81E1F8F02A1F2C8100EB0139 /* WWHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 81E1F8EF2A1F2C8100EB0139 /* WWHUD */; };
 		81E1F8F32A1F2C9A00EB0139 /* WWSQLite3Manager in Frameworks */ = {isa = PBXBuildFile; productRef = 81E1F8F22A1F2C9A00EB0139 /* WWSQLite3Manager */; };
@@ -102,7 +102,6 @@
 		6476D7D12B7A22A800E0DFC5 /* WordCardPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCardPageViewController.swift; sourceTree = "<group>"; };
 		6492ADD42986B8E900E1B59B /* KleeOne-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "KleeOne-SemiBold.ttf"; sourceTree = "<group>"; };
 		6492ADD62986BBFA00E1B59B /* GamjaFlower-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GamjaFlower-Regular.ttf"; sourceTree = "<group>"; };
-		6492ADDC2986BF6D00E1B59B /* jf-openhuninn-1.1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "jf-openhuninn-1.1.ttf"; sourceTree = "<group>"; };
 		64A11DF729B2315D00688C90 /* MyTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabBar.swift; sourceTree = "<group>"; };
 		64AB741A2B78508100882826 /* WordCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCardViewController.swift; sourceTree = "<group>"; };
 		64B94D792AB5DDE8006B317D /* README.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = README.html; sourceTree = SOURCE_ROOT; };
@@ -141,6 +140,7 @@
 		81BA793F29876DA800C0FD6C /* SearchWordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWordViewController.swift; sourceTree = "<group>"; };
 		81BA794329877ACC00C0FD6C /* SearchWordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWordTableViewCell.swift; sourceTree = "<group>"; };
 		81C4A9DD2B21760400D28042 /* SimulaterPushNotification.apns */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SimulaterPushNotification.apns; sourceTree = "<group>"; };
+		81C803F92BC77A2600A8F724 /* jf-openhuninn-2.0.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "jf-openhuninn-2.0.ttf"; sourceTree = "<group>"; };
 		81CD85CB2990F03A009C39FF /* SentenceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceViewController.swift; sourceTree = "<group>"; };
 		81E4078F2A723C4E00230C3A /* SearchVocabularyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVocabularyViewController.swift; sourceTree = "<group>"; };
 		81E56B6A2A725DA6004400D6 /* SearchVocabularyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVocabularyTableViewCell.swift; sourceTree = "<group>"; };
@@ -184,7 +184,7 @@
 		642448672986B57F0038449E /* Font */ = {
 			isa = PBXGroup;
 			children = (
-				6492ADDC2986BF6D00E1B59B /* jf-openhuninn-1.1.ttf */,
+				81C803F92BC77A2600A8F724 /* jf-openhuninn-2.0.ttf */,
 				6492ADD62986BBFA00E1B59B /* GamjaFlower-Regular.ttf */,
 				6492ADD42986B8E900E1B59B /* KleeOne-SemiBold.ttf */,
 			);
@@ -558,6 +558,7 @@
 				64285894297BBF8700DD7D88 /* Assets.xcassets in Resources */,
 				64B94D7A2AB5DDE8006B317D /* README.html in Resources */,
 				6417E8512AAD285D00512881 /* PaletteHeader.xib in Resources */,
+				81C803FA2BC77A2600A8F724 /* jf-openhuninn-2.0.ttf in Resources */,
 				81708BC82B21AD4C00397B27 /* communication_9893252.png in Resources */,
 				81BA793E29876CE000C0FD6C /* README.md in Resources */,
 				6492ADD72986BBFA00E1B59B /* GamjaFlower-Regular.ttf in Resources */,
@@ -567,7 +568,6 @@
 				81201C4D298B58C200291485 /* InterpretView.xib in Resources */,
 				64285892297BBF8600DD7D88 /* Main.storyboard in Resources */,
 				81708BC62B21AD4C00397B27 /* dictionary_7439537.png in Resources */,
-				6492ADDD2986BF6E00E1B59B /* jf-openhuninn-1.1.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -764,7 +764,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20240323;
+				CURRENT_PROJECT_VERSION = 20240411;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -783,7 +783,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4.4;
+				MARKETING_VERSION = 2.4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -803,7 +803,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20240323;
+				CURRENT_PROJECT_VERSION = 20240411;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -822,7 +822,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4.4;
+				MARKETING_VERSION = 2.4.5;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

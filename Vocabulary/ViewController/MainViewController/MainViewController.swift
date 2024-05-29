@@ -962,7 +962,7 @@ private extension MainViewController {
         animationBlock = { url in
             
             _ = gifImageView._GIF(url: url) { [weak self] result in
-                                
+                
                 guard let this = self else { return }
                 
                 switch result {

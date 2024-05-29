@@ -1,5 +1,4 @@
 {
-  "originHash" : "fc300bc1d1879fd5d0a6f0d24418767a04af781055fce0737a09031aa6abf86e",
   "pins" : [
     {
       "identity" : "wwappinstallsource",
@@ -49,7 +48,7 @@
     {
       "identity" : "wwkeyboardshadowview",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/William-Weng/WWKeyboardShadowView",
+      "location" : "https://github.com/William-Weng/WWKeyboardShadowView.git",
       "state" : {
         "revision" : "968e05130d72e87a3594a355ce23bdd959343479",
         "version" : "1.0.3"
@@ -60,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWNetworking",
       "state" : {
-        "revision" : "0e0684b80861f16441b92baeeafd27bbdb2234c2",
-        "version" : "1.5.4"
+        "revision" : "f1793491cbcc4913f0393b9a30397caf21c8c5f0",
+        "version" : "1.5.5"
       }
     },
     {
@@ -69,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWNetworking-UIImage",
       "state" : {
-        "revision" : "a67a8a2641c81dca202dff52260a8ae40827f500",
-        "version" : "1.2.8"
+        "revision" : "c57a2b8d896cdab60737db8dd2d1b369b58463c2",
+        "version" : "1.4.0"
       }
     },
     {

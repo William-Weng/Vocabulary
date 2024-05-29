@@ -27,6 +27,7 @@ final class Constant: NSObject {
     @WWUserDefaults("ChatGPTBearerToken") static var bearerToken: String?
     
     static let webImageExpiredDays = 90
+    static let webImageCacheDelayTime = 600.0
     static let duration: TimeInterval = 0.15
     static let delay: TimeInterval = 0.25
     static let autoBackupDays = 7

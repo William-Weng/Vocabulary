@@ -503,7 +503,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					64285886297BBF8600DD7D88 = {
 						CreatedOnToolsVersion = 14.2;
@@ -679,6 +679,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -739,6 +740,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -764,7 +766,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20240411;
+				CURRENT_PROJECT_VERSION = 20240529;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -783,7 +785,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4.5;
+				MARKETING_VERSION = 2.4.6;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -803,7 +805,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20240411;
+				CURRENT_PROJECT_VERSION = 20240529;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -822,7 +824,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4.5;
+				MARKETING_VERSION = 2.4.6;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

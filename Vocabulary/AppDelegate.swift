@@ -85,7 +85,7 @@ extension AppDelegate {
             Constant.database = database
             Constant.SettingsJSON.generalInformations.forEach { info in _ = createDatabase(database, info: info) }
             
-            myPrint(database.fileURL)
+            myPrint(database.fileURL.path)
         }
     }
     
@@ -226,9 +226,9 @@ private extension AppDelegate {
         backgroundBarColor(.black.withAlphaComponent(0.1))
         
         _ = animationFolderUrlMaker()
-        _ = WWWebImage.initDatabase(for: .caches, expiredDays: Constant.webImageExpiredDays)
+        _ = WWWebImage.shared.initDatabase(for: .caches, expiredDays: Constant.webImageExpiredDays, cacheDelayTime: Constant.webImageCacheDelayTime, defaultImage: OthersTableViewCell.defaultImage)
     }
-        
+    
     /// 建立該語言的資料庫群
     /// - Parameters:
     ///   - database: SQLite3Database

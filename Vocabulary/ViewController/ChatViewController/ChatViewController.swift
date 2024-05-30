@@ -12,11 +12,6 @@ import WWUserDefaults
 import WWSimpleChatGPT
 import WWKeyboardShadowView
 
-extension Utility {
-    
-
-}
-
 // MARK: - 對話功能頁
 final class ChatViewController: UIViewController {
     

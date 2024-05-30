@@ -43,6 +43,9 @@
 		811DFC432AAAFE1200BF480C /* PaletteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811DFC422AAAFE1200BF480C /* PaletteTableViewCell.swift */; };
 		81201C4C298B58C200291485 /* InterpretView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81201C4A298B58C200291485 /* InterpretView.swift */; };
 		81201C4D298B58C200291485 /* InterpretView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81201C4B298B58C200291485 /* InterpretView.xib */; };
+		812A01C22C0824A80086E128 /* WWNetworking-UIImage in Frameworks */ = {isa = PBXBuildFile; productRef = 812A01C12C0824A80086E128 /* WWNetworking-UIImage */; };
+		812A01C52C0824C90086E128 /* WWNetworking-UIImage in Frameworks */ = {isa = PBXBuildFile; productRef = 812A01C42C0824C90086E128 /* WWNetworking-UIImage */; };
+		812A01C82C0827CC0086E128 /* WWNetworking-UIImage in Frameworks */ = {isa = PBXBuildFile; productRef = 812A01C72C0827CC0086E128 /* WWNetworking-UIImage */; };
 		812C5444299F73DC003F942A /* TalkingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812C5443299F73DC003F942A /* TalkingViewController.swift */; };
 		813B25E32BA44DF2006B9755 /* WWHash in Frameworks */ = {isa = PBXBuildFile; productRef = 813B25E22BA44DF2006B9755 /* WWHash */; };
 		8141EEFC2B8C748D0091127F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8141EEFB2B8C748D0091127F /* PrivacyInfo.xcprivacy */; };
@@ -79,7 +82,6 @@
 		81E4078E2A7239A200230C3A /* WWFloatingViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 81E4078D2A7239A200230C3A /* WWFloatingViewController */; };
 		81E407902A723C4E00230C3A /* SearchVocabularyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E4078F2A723C4E00230C3A /* SearchVocabularyViewController.swift */; };
 		81E56B6B2A725DA6004400D6 /* SearchVocabularyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E56B6A2A725DA6004400D6 /* SearchVocabularyTableViewCell.swift */; };
-		81EB0ED92A1F2E1300EE2A83 /* WWNetworking-UIImage in Frameworks */ = {isa = PBXBuildFile; productRef = 81EB0ED82A1F2E1300EE2A83 /* WWNetworking-UIImage */; };
 		81F52F34299DE87A005F9DF2 /* MyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F52F33299DE87A005F9DF2 /* MyTabBarController.swift */; };
 /* End PBXBuildFile section */
 
@@ -152,6 +154,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				812A01C52C0824C90086E128 /* WWNetworking-UIImage in Frameworks */,
 				64768B0D2AA3EB080005EF3A /* WWToast in Frameworks */,
 				64ACFDED2B7EBDA700863407 /* WWOnBoardingViewController in Frameworks */,
 				81E4078E2A7239A200230C3A /* WWFloatingViewController in Frameworks */,
@@ -159,8 +162,9 @@
 				8146014C2B8C72CB00503D07 /* WWKeyboardShadowView in Frameworks */,
 				81E1F8FF2A1F2D9B00EB0139 /* WWNetworking in Frameworks */,
 				64445E8E2B8A119E00B37744 /* WWKeyboardShadowView in Frameworks */,
-				81EB0ED92A1F2E1300EE2A83 /* WWNetworking-UIImage in Frameworks */,
+				812A01C82C0827CC0086E128 /* WWNetworking-UIImage in Frameworks */,
 				813B25E32BA44DF2006B9755 /* WWHash in Frameworks */,
+				812A01C22C0824A80086E128 /* WWNetworking-UIImage in Frameworks */,
 				644FF14B2B7C604C00D3B814 /* WWTypewriterLabel in Frameworks */,
 				81E1F8F62A1F2CCA00EB0139 /* WWSlider in Frameworks */,
 				8141EEFF2B8C7FA60091127F /* WWUserDefaults in Frameworks */,
@@ -478,7 +482,6 @@
 				81E1F8F22A1F2C9A00EB0139 /* WWSQLite3Manager */,
 				81E1F8F52A1F2CCA00EB0139 /* WWSlider */,
 				81E1F8FE2A1F2D9B00EB0139 /* WWNetworking */,
-				81EB0ED82A1F2E1300EE2A83 /* WWNetworking-UIImage */,
 				6418FC192A6DCDED00493B8D /* WWAppInstallSource */,
 				81E4078D2A7239A200230C3A /* WWFloatingViewController */,
 				64768B0C2AA3EB080005EF3A /* WWToast */,
@@ -490,6 +493,9 @@
 				8146014B2B8C72CB00503D07 /* WWKeyboardShadowView */,
 				8141EEFE2B8C7FA60091127F /* WWUserDefaults */,
 				813B25E22BA44DF2006B9755 /* WWHash */,
+				812A01C12C0824A80086E128 /* WWNetworking-UIImage */,
+				812A01C42C0824C90086E128 /* WWNetworking-UIImage */,
+				812A01C72C0827CC0086E128 /* WWNetworking-UIImage */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -524,7 +530,6 @@
 				81E1F8F12A1F2C9A00EB0139 /* XCRemoteSwiftPackageReference "WWSQLite3Manager" */,
 				81E1F8F42A1F2CCA00EB0139 /* XCRemoteSwiftPackageReference "WWSlider" */,
 				81E1F8FD2A1F2D9B00EB0139 /* XCRemoteSwiftPackageReference "WWNetworking" */,
-				81EB0ED72A1F2E1300EE2A83 /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */,
 				6418FC182A6DCDED00493B8D /* XCRemoteSwiftPackageReference "WWAppInstallSource" */,
 				81E4078C2A7239A200230C3A /* XCRemoteSwiftPackageReference "WWFloatingView" */,
 				64768B0B2AA3EB080005EF3A /* XCRemoteSwiftPackageReference "WWToast" */,
@@ -535,6 +540,7 @@
 				8146014A2B8C72CB00503D07 /* XCRemoteSwiftPackageReference "WWKeyboardShadowView" */,
 				8141EEFD2B8C7FA60091127F /* XCRemoteSwiftPackageReference "WWUserDefaults" */,
 				813B25E12BA44DF2006B9755 /* XCRemoteSwiftPackageReference "WWHash" */,
+				812A01C62C0827CC0086E128 /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -766,7 +772,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20240529;
+				CURRENT_PROJECT_VERSION = 20240530;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -785,7 +791,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4.6;
+				MARKETING_VERSION = 2.4.7;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -805,7 +811,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20240529;
+				CURRENT_PROJECT_VERSION = 20240530;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
@@ -824,7 +830,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4.6;
+				MARKETING_VERSION = 2.4.7;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -883,6 +889,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.2.1;
+			};
+		};
+		812A01C62C0827CC0086E128 /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWNetworking-UIImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.1;
 			};
 		};
 		813892762B7E060E00D67D98 /* XCRemoteSwiftPackageReference "WWOnBoardingViewController" */ = {
@@ -973,14 +987,6 @@
 				minimumVersion = 1.2.2;
 			};
 		};
-		81EB0ED72A1F2E1300EE2A83 /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/William-Weng/WWNetworking-UIImage";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.7;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1007,6 +1013,19 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 813892762B7E060E00D67D98 /* XCRemoteSwiftPackageReference "WWOnBoardingViewController" */;
 			productName = WWOnBoardingViewController;
+		};
+		812A01C12C0824A80086E128 /* WWNetworking-UIImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "WWNetworking-UIImage";
+		};
+		812A01C42C0824C90086E128 /* WWNetworking-UIImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "WWNetworking-UIImage";
+		};
+		812A01C72C0827CC0086E128 /* WWNetworking-UIImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 812A01C62C0827CC0086E128 /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */;
+			productName = "WWNetworking-UIImage";
 		};
 		813B25E22BA44DF2006B9755 /* WWHash */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1057,11 +1076,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 81E4078C2A7239A200230C3A /* XCRemoteSwiftPackageReference "WWFloatingView" */;
 			productName = WWFloatingViewController;
-		};
-		81EB0ED82A1F2E1300EE2A83 /* WWNetworking-UIImage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 81EB0ED72A1F2E1300EE2A83 /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */;
-			productName = "WWNetworking-UIImage";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

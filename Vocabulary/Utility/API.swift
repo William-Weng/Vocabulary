@@ -33,16 +33,16 @@ extension API {
         let type: Constant.DataTableType = .list(info.key)
         let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
         var condition: SQLite3Condition.Where?
-        var orderBy: SQLite3Condition.OrderBy? = SQLite3Condition.OrderBy().item(key: "createTime", type: .descending)
+        var orderBy: SQLite3Condition.OrderBy? = SQLite3Condition.OrderBy().item(type: .descending(key: "createTime"))
         
         if let words = words, !words.isEmpty {
             condition = SQLite3Condition.Where().in(key: "word", values: words)
-            orderBy = SQLite3Condition.OrderBy().item(key: "word", type: .ascending)
+            orderBy = SQLite3Condition.OrderBy().item(type: .ascending(key: "word"))
         }
         
         if (isFavorite) {
-            condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: isFavorite._int())
-            orderBy = SQLite3Condition.OrderBy().item(key: "updateTime", type: .descending)
+            condition = SQLite3Condition.Where().isCompare(type: .equal(key: "favorite", value: isFavorite._int()))
+            orderBy = SQLite3Condition.OrderBy().item(type: .descending(key: "updateTime"))
         }
         
         let result = database.select(tableName: type.name(), type: VocabularyList.self, where: condition, orderBy: orderBy, limit: limit)
@@ -60,7 +60,7 @@ extension API {
         guard let database = Constant.database else { return [] }
         
         let type: Constant.DataTableType = .list(info.key)
-        let condition: SQLite3Condition.Where? = (isFavorite) ? SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: isFavorite._int()) : nil
+        let condition: SQLite3Condition.Where? = (isFavorite) ? SQLite3Condition.Where().isCompare(type: .equal(key: "favorite", value: isFavorite._int())) : nil
         let result = database.select(tableName: type.name(), functions: [.count(key, .INTEGER())], where: condition)
         
         return result.array
@@ -77,7 +77,7 @@ extension API {
         guard let database = Constant.database else { return [] }
         
         let type: Constant.DataTableType = .default(info.key)
-        let condition = SQLite3Condition.Where().isCompare(key: "word", type: .equal, value: word)
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "word", value: word))
         let result = database.select(tableName: type.name(), functions: [.count(key, .INTEGER())], where: condition)
         
         return result.array
@@ -96,7 +96,7 @@ extension API {
         let type: Constant.DataTableType = .bookmarkSite(info.key)
         var condition: SQLite3Condition.Where?
 
-        if (isFavorite) { condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: isFavorite._int()) }
+        if (isFavorite) { condition = SQLite3Condition.Where().isCompare(type: .equal(key: "favorite", value: isFavorite._int())) }
         let result = database.select(tableName: type.name(), functions: [.count(key, .INTEGER())], where: condition)
         
         return result.array
@@ -117,14 +117,14 @@ extension API {
         var condition: SQLite3Condition.Where?
 
         if let speechInfo = speechInfo {
-            var _condition = SQLite3Condition.Where().isCompare(key: "speech", type: .equal, value: speechInfo.value)
-            if isFavorite { _condition = _condition.andCompare(key: "favorite", type: .equal, value: isFavorite._int()) }
+            var _condition = SQLite3Condition.Where().isCompare(type: .equal(key: "speech", value: speechInfo.value))
+            if isFavorite { _condition = _condition.andCompare(type: .equal(key: "favorite", value: isFavorite._int())) }
             condition = _condition
         }
         
         if isFavorite {
-            var _condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: isFavorite._int())
-            if let speechInfo = speechInfo { _condition = _condition.andCompare(key: "speech", type: .equal, value: speechInfo.value) }
+            var _condition = SQLite3Condition.Where().isCompare(type: .equal(key: "favorite", value: isFavorite._int()))
+            if let speechInfo = speechInfo { _condition = _condition.andCompare(type: .equal(key: "speech", value: speechInfo.value)) }
             condition = _condition
         }
         
@@ -175,8 +175,8 @@ extension API {
         
         guard let database = Constant.database else { return [] }
         
-        let condition = SQLite3Condition.Where().isCompare(key: "word", type: .equal, value: word)
-        let orderBy = SQLite3Condition.OrderBy().item(key: "hardwork", type: .descending).addItem(key: "createTime", type: .ascending)
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "word", value: word))
+        let orderBy = SQLite3Condition.OrderBy().item(type: .descending(key: "hardwork")).addItem(type: .ascending(key: "createTime"))
         let result = database.select(tableName: type.name(), type: Vocabulary.self, where: condition, orderBy: orderBy, limit: nil)
         
         return result.array
@@ -196,7 +196,7 @@ extension API {
         guard let database = Constant.database else { return [] }
         
         let condition: SQLite3Condition.Where
-        let orderBy = SQLite3Condition.OrderBy().item(key: "word", type: .ascending)
+        let orderBy = SQLite3Condition.OrderBy().item(type: .ascending(key: "word"))
         let result: SQLite3Database.SelectResult
 
         var limit: SQLite3Condition.Limit?
@@ -258,7 +258,7 @@ extension API {
         
         let type: Constant.DataTableType = .list(info.key)
         let condition = SQLite3Condition.Where().in(key: "word", values: words)
-        let orderBy = SQLite3Condition.OrderBy().item(key: "word", type: .ascending)
+        let orderBy = SQLite3Condition.OrderBy().item(type: .ascending(key: "word"))
         let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
         let result = database.select(tableName: type.name(), type: VocabularyList.self, where: condition, orderBy: orderBy, limit: limit)
         
@@ -281,9 +281,9 @@ extension API {
         }
         
         let type: Constant.DataTableType = .list(generalInfo.key)
-        let condition = SQLite3Condition.Where().isCompare(key: "level", type: .equal, value: levelInfo.value).andCompare(key: "createTime", type: .lessThan, value: time)
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "level", value: levelInfo.value)).andCompare(type: .lessThan(key: "createTime", value: time))
         let limit = SQLite3Condition.Limit().build(count: levelInfo.guessCount, offset: 0)
-        let orderBy = SQLite3Condition.OrderBy().item(key: "level", type: .ascending).addItem(key: "review", type: .ascending).addItem(key: "createTime", type: .descending)
+        let orderBy = SQLite3Condition.OrderBy().item(type: .ascending(key: "level")).addItem(type: .ascending(key: "review")).addItem(type: .descending(key: "createTime"))
         let result = database.select(tableName: type.name(), type: VocabularyList.self, where: condition, orderBy: orderBy, limit: limit)
         
         return result.array
@@ -299,8 +299,8 @@ extension API {
         guard let database = Constant.database else { return [] }
         
         let type: Constant.DataTableType = .review(info.key)
-        let condition = SQLite3Condition.Where().isCompare(key: "word", type: .equal, value: word)
-        let orderBy = SQLite3Condition.OrderBy().item(key: "createTime", type: .ascending)
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "word", value: word))
+        let orderBy = SQLite3Condition.OrderBy().item(type: .ascending(key: "createTime"))
         let result = database.select(tableName: type.name(), type: VocabularyReviewList.self, where: condition, orderBy: orderBy, limit: nil)
         
         return result.array
@@ -321,19 +321,19 @@ extension API {
         let type: Constant.DataTableType = .sentence(generalInfo.key)
         let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
         
-        var orderBy = SQLite3Condition.OrderBy().item(key: "createTime", type: .descending)
+        var orderBy = SQLite3Condition.OrderBy().item(type: .descending(key: "createTime"))
         var condition: SQLite3Condition.Where?
 
         if let speechInfo = speechInfo {
-            var _condition = SQLite3Condition.Where().isCompare(key: "speech", type: .equal, value: speechInfo.value)
-            if isFavorite { _condition = _condition.andCompare(key: "favorite", type: .equal, value: isFavorite._int()) }
+            var _condition = SQLite3Condition.Where().isCompare(type: .equal(key: "speech", value: speechInfo.value))
+            if isFavorite { _condition = _condition.andCompare(type: .equal(key: "favorite", value: isFavorite._int())) }
             condition = _condition
         }
         
         if isFavorite {
-            var _condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: isFavorite._int())
-            if let speechInfo = speechInfo { _condition = _condition.andCompare(key: "speech", type: .equal, value: speechInfo.value) }
-            orderBy = SQLite3Condition.OrderBy().item(key: "updateTime", type: .descending)
+            var _condition = SQLite3Condition.Where().isCompare(type: .equal(key: "favorite", value: isFavorite._int()))
+            if let speechInfo = speechInfo { _condition = _condition.andCompare(type: .equal(key: "speech", value: speechInfo.value)) }
+            orderBy = SQLite3Condition.OrderBy().item(type: .descending(key: "updateTime"))
             condition = _condition
         }
         
@@ -404,15 +404,15 @@ extension API {
         
         guard let database = Constant.database else { return [] }
         
-        var orderBy = SQLite3Condition.OrderBy().item(key: "createTime", type: .descending)
+        var orderBy = SQLite3Condition.OrderBy().item(type: .descending(key: "createTime"))
         var condition: SQLite3Condition.Where?
         var limit: SQLite3Condition.Limit?
         
         if let count = count { limit = SQLite3Condition.Limit().build(count: count, offset: offset) }
         
         if (isFavorite) {
-            condition = SQLite3Condition.Where().isCompare(key: "favorite", type: .equal, value: isFavorite._int())
-            orderBy = SQLite3Condition.OrderBy().item(key: "updateTime", type: .descending)
+            condition = SQLite3Condition.Where().isCompare(type: .equal(key: "favorite", value: isFavorite._int()))
+            orderBy = SQLite3Condition.OrderBy().item(type: .descending(key: "updateTime"))
         }
         
         let type: Constant.DataTableType = .bookmarkSite(info.key)
@@ -576,7 +576,7 @@ extension API {
         
         if (hasUpdateTime) { items.append(SQLite3Database.InsertItem((key: "updateTime", value: Date()._localTime()))) }
         
-        let condition = SQLite3Condition.Where().isCompare(key: "word", type: .equal, value: word)
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "word", value: word))
         let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
@@ -598,7 +598,7 @@ extension API {
             (key: "alphabet", value: alphabet.fixSqliteSingleQuote()),
         ]
         
-        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "id", value: id))
         let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
@@ -621,7 +621,7 @@ extension API {
         ]
         
         let type: Constant.DataTableType = .default(generalInfo.key)
-        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: exampleInfo.id)
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "id", value: exampleInfo.id))
         let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
@@ -642,7 +642,7 @@ extension API {
         ]
         
         let type: Constant.DataTableType = .default(generalInfo.key)
-        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "id", value: id))
         let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
@@ -664,7 +664,7 @@ extension API {
             (key: "level", value: levelInfo.value),
         ]
         
-        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "id", value: id))
         let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
@@ -687,7 +687,7 @@ extension API {
         ]
         
         let type: Constant.DataTableType = .default(info.key)
-        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "id", value: id))
         let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
@@ -710,7 +710,7 @@ extension API {
             (key: "updateTime", value: Date()._localTime()),
         ]
         
-        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "id", value: id))
         let result = database.update(tableName: tableName, items: items, where: condition)
         
         return result.isSussess
@@ -765,7 +765,7 @@ extension API {
         ]
         
         let type: Constant.DataTableType = .list(info.key)
-        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "id", value: id))
         let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
@@ -792,7 +792,7 @@ extension API {
         }
         
         let type: Constant.DataTableType = .review(info.key)
-        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: list.id)
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "id", value: list.id))
         let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
@@ -814,7 +814,7 @@ extension API {
         ]
         
         let type: Constant.DataTableType = .sentence(generalInfo.key)
-        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "id", value: id))
         let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
@@ -838,7 +838,7 @@ extension API {
         ]
         
         let type: Constant.DataTableType = .sentence(info.key)
-        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "id", value: id))
         let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
@@ -862,7 +862,7 @@ extension API {
         ]
         
         let type: Constant.DataTableType = .bookmarkSite(info.key)
-        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "id", value: id))
         let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
@@ -884,7 +884,7 @@ extension API {
         ]
         
         let type: Constant.DataTableType = .bookmarkSite(info.key)
-        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "id", value: id))
         let result = database.update(tableName: type.name(), items: items, where: condition)
         
         return result.isSussess
@@ -904,7 +904,7 @@ extension API {
         guard let database = Constant.database else { return false }
         
         let type: Constant.DataTableType = .default(info.key)
-        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "id", value: id))
         let result = database.delete(tableName: type.name(), where: condition)
         
         return result.isSussess
@@ -920,7 +920,7 @@ extension API {
         guard let database = Constant.database else { return false }
         
         let type: Constant.DataTableType = .list(info.key)
-        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "id", value: id))
         let result = database.delete(tableName: type.name(), where: condition)
         
         return result.isSussess
@@ -936,7 +936,7 @@ extension API {
         guard let database = Constant.database else { return false }
         
         let type: Constant.DataTableType = .sentence(info.key)
-        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "id", value: id))
         let result = database.delete(tableName: type.name(), where: condition)
         
         return result.isSussess
@@ -952,7 +952,7 @@ extension API {
         guard let database = Constant.database else { return false }
         
         let type: Constant.DataTableType = .bookmarkSite(info.key)
-        let condition = SQLite3Condition.Where().isCompare(key: "id", type: .equal, value: id)
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "id", value: id))
         let result = database.delete(tableName: type.name(), where: condition)
         
         return result.isSussess

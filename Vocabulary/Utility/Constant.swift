@@ -27,14 +27,17 @@ final class Constant: NSObject {
     @WWUserDefaults("ChatGPTBearerToken") static var bearerToken: String?
     
     static let webImageExpiredDays = 90
+    static let autoBackupDays = 7
+    static let searchCount = 10
+    static let searchGuessWordDays = 3
     static let webImageCacheDelayTime = 600.0
+    
     static let maxnumDownloadCount: UInt = 10
     static let duration: TimeInterval = 0.15
     static let delay: TimeInterval = 0.25
-    static let autoBackupDays = 7
-    static let searchCount = 10
     static let autoBackupDelaySecond: TimeInterval = 2
     static let searchDelayTime: TimeInterval = 0.3
+    
     static let urlScheme = "word"
     static let reload = "重新讀取"
     static let noDataUpdate = "無更新資料"
@@ -42,10 +45,9 @@ final class Constant: NSObject {
     static let databaseFileExtension = "db"
     static let recordFilename = "record.wav"
     static let settingsJSON = "Settings.json"
-    static let fontname = "jf-openhuninn-1.1"
-    static let searchGuessWordDays = 3
+    static let fontname = "jf-openhuninn-2.0"
     
-    static var tableNameIndex: Int = 0
+    static var tableNameIndex = 0
     static var volume: Float = 0.1
     static var speakingSpeed: Float = 0.4
     static var updateScrolledHeight: CGFloat = 128.0

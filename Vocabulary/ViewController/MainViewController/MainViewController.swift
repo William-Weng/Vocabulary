@@ -858,8 +858,8 @@ private extension MainViewController {
         initMusicItemMenu()
     }
     
-    /// 初始化音樂選單 (UIMenu)
-    /// - Parameter sender: UIBarButtonItem
+    /// [初始化音樂選單 (UIMenu)](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/ios-的選單-menu-按鈕-pull-down-button-pop-up-button-2ddab2181ee5)
+    /// - Parameter sender: [UIBarButtonItem](https://medium.com/@le821227/uicontextmenu-uimenu-uiaction-de88aeb2bc1e)
     func initMusicItemMenu() {
         
         guard let musicList = musicFileList()?.sorted() else { Constant.musicFileList = nil; return }
@@ -872,7 +872,7 @@ private extension MainViewController {
         
         Constant.musicFileList = musicList
         
-        let menu = UIMenu(title: "請選擇背景音樂 (.mp3 / .m4a)", children: actions)
+        let menu = UIMenu(title: "請選擇背景音樂 (.mp3 / .m4a)", options: .singleSelection, children: actions)
         musicButtonItem.menu = menu
     }
     

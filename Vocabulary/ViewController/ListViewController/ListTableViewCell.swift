@@ -79,7 +79,7 @@ private extension ListTableViewCell {
         
         speechButtonSetting(speechButton, with: info)
         speechButton.showsMenuAsPrimaryAction = true
-        speechButton.menu = UIMenu(title: "請選擇詞性", children: speechMenuActionMaker())
+        speechButton.menu = UIMenu(title: "請選擇詞性", options: .singleSelection, children: speechMenuActionMaker())
         
         hardWorkImageView.image = Utility.shared.hardWorkIcon(isHardWork)
         initHardWorkImageViewTapGestureRecognizer()

@@ -502,7 +502,7 @@ extension ReviewViewController {
     func initQuestionLevelItem() {
         
         let actions = Constant.QuestionLevel.allCases.map { questionLevelActionMaker($0) }
-        let menu = UIMenu(title: "請選擇問題等級", children: actions)
+        let menu = UIMenu(title: "請選擇問題等級", options: .singleSelection, children: actions)
         
         questionLevelButtonItem.menu = menu
     }

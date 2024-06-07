@@ -73,7 +73,7 @@ private extension SentenceTableViewCell {
         
         speechButtonSetting(speechButton, with: info)
         speechButton.showsMenuAsPrimaryAction = true
-        speechButton.menu = UIMenu(title: "請選擇分類", children: speechMenuActionMaker())
+        speechButton.menu = UIMenu(title: "請選擇分類", options: .singleSelection, children: speechMenuActionMaker())
         
         favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)
         initFavoriteImageViewTapGestureRecognizer()

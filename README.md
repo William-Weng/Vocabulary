@@ -126,4 +126,4 @@
 |-|-|-|
 |[KleeOne-SemiBold.ttf](https://fonts.google.com/specimen/Klee+One)|[Google-Font](https://fonts.google.com)|日文字型|
 |[GamjaFlower-Regular.ttf](https://fonts.google.com/specimen/Gamja+Flower?query=Gamja+Flower)|[Google-Font](https://fonts.google.com)|韓文字型|
-|[jf-openhuninn-1.1.ttf](https://justfont.com/huninn/)|[open 粉圓 - justfont](https://justfont.com/)|中文字型|
+|[jf-openhuninn-2.0.ttf](https://justfont.com/huninn/)|[open 粉圓 - justfont](https://justfont.com/)|中文字型|

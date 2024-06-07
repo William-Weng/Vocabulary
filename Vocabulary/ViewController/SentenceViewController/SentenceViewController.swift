@@ -688,7 +688,7 @@ private extension SentenceViewController {
         
         actions.insert(action, at: 0)
         
-        let menu = UIMenu(title: "請選擇例句屬性", children: actions)
+        let menu = UIMenu(title: "請選擇例句屬性", options: .singleSelection, children: actions)
         speechButtonItem.menu = menu
     }
     

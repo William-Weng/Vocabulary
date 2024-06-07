@@ -181,7 +181,7 @@ private extension WordCardPageViewController {
         let info = Constant.SettingsJSON.vocabularyLevelInformations[safe: vocabularyList.level]
 
         levelButton.showsMenuAsPrimaryAction = true
-        levelButton.menu = UIMenu(title: "請選擇等級", children: levelMenuActionMaker())
+        levelButton.menu = UIMenu(title: "請選擇等級", options: .singleSelection , children: levelMenuActionMaker())
         
         Utility.shared.levelButtonSetting(levelButton, with: info)
     }

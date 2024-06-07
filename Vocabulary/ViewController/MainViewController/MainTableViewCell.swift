@@ -77,18 +77,18 @@ private extension MainTableViewCell {
         initFavoriteImageViewTapGestureRecognizer()
     }
     
-    /// 初始化等級設定
+    /// [初始化等級設定](https://juejin.cn/post/6982050059500126221)
     /// - Parameter vocabularyList: VocabularyList
     func initLevelButtonSetting(vocabularyList: VocabularyList) {
         
         let info = Constant.SettingsJSON.vocabularyLevelInformations[safe: vocabularyList.level]
 
         levelButton.showsMenuAsPrimaryAction = true
-        levelButton.menu = UIMenu(title: "請選擇等級", children: levelMenuActionMaker())
+        levelButton.menu = UIMenu(title: "請選擇等級", options: .singleSelection, children: levelMenuActionMaker())
         
         Utility.shared.levelButtonSetting(levelButton, with: info)
     }
-        
+    
     /// FavoriteImageView點擊功能
     func initFavoriteImageViewTapGestureRecognizer() {
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(Self.updateFavorite(_:)))

@@ -310,7 +310,7 @@ private extension ReviewResultViewController {
     func initSearchItemMenu() {
         
         let actions = Constant.ReviewResultType.allCases.map({ searchItemMenuActionMaker(type: $0) })
-        let menu = UIMenu(title: "請選擇排列方法", children: actions)
+        let menu = UIMenu(title: "請選擇排列方法", options: .singleSelection, children: actions)
         
         searchBarButtonItem.menu = menu
     }

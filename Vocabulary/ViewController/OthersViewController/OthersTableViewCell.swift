@@ -80,7 +80,7 @@ private extension OthersTableViewCell {
         titleLabel.text = bookmarkSite.title
         
         iconImageView.addGestureRecognizer(tapRecognizer)
-        iconImageView.WW.downloadImage(with: bookmarkSite.icon)
+        iconImageView.WW.downloadImage(with: bookmarkSite.icon, pixelSize: Constant.pixelSize)
         
         favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)
         initFavoriteImageViewTapGestureRecognizer()

@@ -83,6 +83,7 @@ private extension GalleryTableViewCell {
 extension GalleryTableViewCell {
     
     /// 執行GIF動畫
+    /// - Parameter indexPath: IndexPath
     func executeAnimation(with indexPath: IndexPath) {
         
         if let url = Self.animationUrl(with: indexPath) {

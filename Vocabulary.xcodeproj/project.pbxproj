@@ -37,6 +37,7 @@
 		64C18502297E861800D1D1B2 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C18501297E861800D1D1B2 /* Utility.swift */; };
 		64C18504297EB8E700D1D1B2 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C18503297EB8E700D1D1B2 /* ListViewController.swift */; };
 		64C18507297EC01700D1D1B2 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C18506297EC01700D1D1B2 /* ListTableViewCell.swift */; };
+		64C33C632C1BEF7C006FC466 /* WWKeyboardShadowView in Frameworks */ = {isa = PBXBuildFile; productRef = 64C33C622C1BEF7C006FC466 /* WWKeyboardShadowView */; };
 		64D3E61B2AAC5CB700140716 /* PaletteHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D3E6192AAC5CB700140716 /* PaletteHeader.swift */; };
 		64ED74D82998C5EF00948C77 /* LicenseWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64ED74D72998C5EF00948C77 /* LicenseWebViewController.swift */; };
 		811DFC402AAAEFE600BF480C /* PaletteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 811DFC3F2AAAEFE600BF480C /* PaletteViewController.swift */; };
@@ -50,7 +51,6 @@
 		813B25E32BA44DF2006B9755 /* WWHash in Frameworks */ = {isa = PBXBuildFile; productRef = 813B25E22BA44DF2006B9755 /* WWHash */; };
 		8141EEFC2B8C748D0091127F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8141EEFB2B8C748D0091127F /* PrivacyInfo.xcprivacy */; };
 		8141EEFF2B8C7FA60091127F /* WWUserDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = 8141EEFE2B8C7FA60091127F /* WWUserDefaults */; };
-		8146014C2B8C72CB00503D07 /* WWKeyboardShadowView in Frameworks */ = {isa = PBXBuildFile; productRef = 8146014B2B8C72CB00503D07 /* WWKeyboardShadowView */; };
 		815BC4E82B874A9D0099593F /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815BC4E72B874A9D0099593F /* ChatViewController.swift */; };
 		815BC4EB2B874AFA0099593F /* ChatViewControllerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815BC4EA2B874AFA0099593F /* ChatViewControllerCell.swift */; };
 		815BC4F12B874B410099593F /* WWSimpleChatGPT in Frameworks */ = {isa = PBXBuildFile; productRef = 815BC4F02B874B410099593F /* WWSimpleChatGPT */; };
@@ -156,10 +156,10 @@
 			files = (
 				812A01C52C0824C90086E128 /* WWNetworking-UIImage in Frameworks */,
 				64768B0D2AA3EB080005EF3A /* WWToast in Frameworks */,
+				64C33C632C1BEF7C006FC466 /* WWKeyboardShadowView in Frameworks */,
 				64ACFDED2B7EBDA700863407 /* WWOnBoardingViewController in Frameworks */,
 				81E4078E2A7239A200230C3A /* WWFloatingViewController in Frameworks */,
 				819A68C42AAEA2DD00ACE3FF /* WWJavaScriptContext in Frameworks */,
-				8146014C2B8C72CB00503D07 /* WWKeyboardShadowView in Frameworks */,
 				81E1F8FF2A1F2D9B00EB0139 /* WWNetworking in Frameworks */,
 				64445E8E2B8A119E00B37744 /* WWKeyboardShadowView in Frameworks */,
 				812A01C82C0827CC0086E128 /* WWNetworking-UIImage in Frameworks */,
@@ -490,12 +490,12 @@
 				64ACFDEC2B7EBDA700863407 /* WWOnBoardingViewController */,
 				815BC4F02B874B410099593F /* WWSimpleChatGPT */,
 				64445E8D2B8A119E00B37744 /* WWKeyboardShadowView */,
-				8146014B2B8C72CB00503D07 /* WWKeyboardShadowView */,
 				8141EEFE2B8C7FA60091127F /* WWUserDefaults */,
 				813B25E22BA44DF2006B9755 /* WWHash */,
 				812A01C12C0824A80086E128 /* WWNetworking-UIImage */,
 				812A01C42C0824C90086E128 /* WWNetworking-UIImage */,
 				812A01C72C0827CC0086E128 /* WWNetworking-UIImage */,
+				64C33C622C1BEF7C006FC466 /* WWKeyboardShadowView */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -537,10 +537,10 @@
 				644FF1492B7C604C00D3B814 /* XCRemoteSwiftPackageReference "WWTypewriterLabel" */,
 				813892762B7E060E00D67D98 /* XCRemoteSwiftPackageReference "WWOnBoardingViewController" */,
 				815BC4EF2B874B410099593F /* XCRemoteSwiftPackageReference "WWSimpleChatGPT" */,
-				8146014A2B8C72CB00503D07 /* XCRemoteSwiftPackageReference "WWKeyboardShadowView" */,
 				8141EEFD2B8C7FA60091127F /* XCRemoteSwiftPackageReference "WWUserDefaults" */,
 				813B25E12BA44DF2006B9755 /* XCRemoteSwiftPackageReference "WWHash" */,
 				812A01C62C0827CC0086E128 /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */,
+				64C33C612C1BEF7C006FC466 /* XCRemoteSwiftPackageReference "WWKeyboardShadowView" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -891,6 +891,14 @@
 				minimumVersion = 1.2.1;
 			};
 		};
+		64C33C612C1BEF7C006FC466 /* XCRemoteSwiftPackageReference "WWKeyboardShadowView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWKeyboardShadowView.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.0.3;
+			};
+		};
 		812A01C62C0827CC0086E128 /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWNetworking-UIImage";
@@ -921,14 +929,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.4;
-			};
-		};
-		8146014A2B8C72CB00503D07 /* XCRemoteSwiftPackageReference "WWKeyboardShadowView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/William-Weng/WWKeyboardShadowView.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.0.3;
 			};
 		};
 		815BC4EF2B874B410099593F /* XCRemoteSwiftPackageReference "WWSimpleChatGPT" */ = {
@@ -1014,6 +1014,11 @@
 			package = 813892762B7E060E00D67D98 /* XCRemoteSwiftPackageReference "WWOnBoardingViewController" */;
 			productName = WWOnBoardingViewController;
 		};
+		64C33C622C1BEF7C006FC466 /* WWKeyboardShadowView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 64C33C612C1BEF7C006FC466 /* XCRemoteSwiftPackageReference "WWKeyboardShadowView" */;
+			productName = WWKeyboardShadowView;
+		};
 		812A01C12C0824A80086E128 /* WWNetworking-UIImage */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "WWNetworking-UIImage";
@@ -1036,11 +1041,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8141EEFD2B8C7FA60091127F /* XCRemoteSwiftPackageReference "WWUserDefaults" */;
 			productName = WWUserDefaults;
-		};
-		8146014B2B8C72CB00503D07 /* WWKeyboardShadowView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8146014A2B8C72CB00503D07 /* XCRemoteSwiftPackageReference "WWKeyboardShadowView" */;
-			productName = WWKeyboardShadowView;
 		};
 		815BC4F02B874B410099593F /* WWSimpleChatGPT */ = {
 			isa = XCSwiftPackageProductDependency;

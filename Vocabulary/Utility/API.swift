@@ -33,7 +33,7 @@ extension API {
         let type: Constant.DataTableType = .list(info.key)
         let limit = SQLite3Condition.Limit().build(count: count, offset: offset)
         var condition: SQLite3Condition.Where?
-        var orderBy: SQLite3Condition.OrderBy? = SQLite3Condition.OrderBy().item(type: .descending(key: "createTime"))
+        var orderBy: SQLite3Condition.OrderBy? = SQLite3Condition.OrderBy().item(type: .descending(key: "updateTime"))
         
         if let words = words, !words.isEmpty {
             condition = SQLite3Condition.Where().in(key: "word", values: words)

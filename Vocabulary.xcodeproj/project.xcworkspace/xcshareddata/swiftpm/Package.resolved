@@ -1,4 +1,5 @@
 {
+  "originHash" : "454ea42184787b74c581589a615d88a1d3383cefdfa0bbd3fb4245edab9343b4",
   "pins" : [
     {
       "identity" : "wwappinstallsource",
@@ -41,14 +42,14 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWJavaScriptContext",
       "state" : {
-        "revision" : "1959bc6f5a18f12a60c294142aafca05b02fb087",
-        "version" : "1.0.3"
+        "revision" : "605cb0a6f03fd007661ecd2586328a23c6665ab1",
+        "version" : "1.0.4"
       }
     },
     {
       "identity" : "wwkeyboardshadowview",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/William-Weng/WWKeyboardShadowView.git",
+      "location" : "https://github.com/William-Weng/WWKeyboardShadowView",
       "state" : {
         "revision" : "968e05130d72e87a3594a355ce23bdd959343479",
         "version" : "1.0.3"
@@ -145,5 +146,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

@@ -1,7 +1,7 @@
 # [Vocabulary - 我愛背單字](https://github.com/William-Weng/Vocabulary)
 針對身為外語苦手的我，量身訂製的APP，有輕快的背景音樂，也有發音，加上可愛的動畫，還可以直接使用[Deep Link功能](word://append/vocabulary)…
 
-[![Swift-5.7](https://img.shields.io/badge/Swift-5.7-orange.svg?style=flat)](https://developer.apple.com/swift/) [![iOS 14.0](https://img.shields.io/badge/iOS-14.0-pink.svg?style=flat)](https://developer.apple.com/swift/) ![](https://img.shields.io/github/v/tag/William-Weng/Vocabulary) [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=flat)](https://developer.apple.com/swift/)
+[![Swift-5.7](https://img.shields.io/badge/Swift-5.7-orange.svg?style=flat)](https://developer.apple.com/swift/) [![iOS 15.6](https://img.shields.io/badge/iOS-15.6-pink.svg?style=flat)](https://developer.apple.com/swift/) ![](https://img.shields.io/github/v/tag/William-Weng/Vocabulary) [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=flat)](https://developer.apple.com/swift/)
 
 ## Deep Link功能
 |連結|功能|
@@ -37,7 +37,7 @@
 |[WWJavaScriptContext](https://github.com/William-Weng/WWJavaScriptContext)|JavaScriptCore小工具|
 |[WWOnBoardingViewController](https://github.com/William-Weng/WWOnBoardingViewController)|製作單字卡分頁的小工具|
 |[WWTypewriterLabel](https://github.com/William-Weng/WWTypewriterLabel)|打字機效果|
-|[WWSimpleChatGPT](https://github.com/William-Weng/WWSimpleChatGPT)|使用ChatGPT功能|
+|[WWSimpleAI_ChatGPT](https://github.com/William-Weng/WWSimpleAI_ChatGPT)|使用ChatGPT功能|
 |[WWKeyboardShadowView](https://github.com/William-Weng/WWKeyboardShadowView)|處理鍵盤高度問題|
 |[WWHash](https://github.com/William-Weng/WWHash)|取得SHA1值|
 

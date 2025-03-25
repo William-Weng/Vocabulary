@@ -1,5 +1,5 @@
 {
-  "originHash" : "454ea42184787b74c581589a615d88a1d3383cefdfa0bbd3fb4245edab9343b4",
+  "originHash" : "932191cd251763426b21b0689404aa8f46ec0ba42457122497bc29ed716b1acf",
   "pins" : [
     {
       "identity" : "wwappinstallsource",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "2491ca2eba21a4e8c7122f293224692d018e857d",
         "version" : "1.0.4"
+      }
+    },
+    {
+      "identity" : "wwcachemanager",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWCacheManager.git",
+      "state" : {
+        "revision" : "34d65216cf3b036a820b91f1070134227edb19a2",
+        "version" : "1.0.1"
       }
     },
     {
@@ -60,8 +69,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWNetworking",
       "state" : {
-        "revision" : "f1793491cbcc4913f0393b9a30397caf21c8c5f0",
-        "version" : "1.5.5"
+        "revision" : "9e41bb9f5ed6b19030389b77c0a73520844a20f5",
+        "version" : "1.7.5"
       }
     },
     {
@@ -69,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWNetworking-UIImage",
       "state" : {
-        "revision" : "5ab8c35a789f4867c9b192ce06e3988f1b8f081d",
-        "version" : "1.6.1"
+        "revision" : "91b461dffcfe633b5d9a67ec281ef04c2f4b1538",
+        "version" : "1.7.5"
       }
     },
     {
@@ -92,12 +101,21 @@
       }
     },
     {
-      "identity" : "wwsimplechatgpt",
+      "identity" : "wwsimpleai_chatgpt",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/William-Weng/WWSimpleChatGPT",
+      "location" : "https://github.com/William-Weng/WWSimpleAI_ChatGPT",
       "state" : {
-        "revision" : "e89836ced5d7c32e0f0b88dad84e34a8ae8542d8",
-        "version" : "0.5.4"
+        "revision" : "5a73380f869eacc19e832771dd7bc157c92d374c",
+        "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "wwsimpleai_ollama",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWSimpleAI_Ollama",
+      "state" : {
+        "revision" : "49c291a59dec10653f1cb8617bb1b567a04f70d4",
+        "version" : "1.1.3"
       }
     },
     {

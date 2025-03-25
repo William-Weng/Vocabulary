@@ -224,9 +224,9 @@ private extension AppDelegate {
         backgroundPlayAudio()
         appShortcutItem(with: application)
         backgroundBarColor(.black.withAlphaComponent(0.1))
-        
+                
         _ = animationFolderUrlMaker()
-        _ = WWWebImage.shared.initDatabase(for: .caches, expiredDays: Constant.webImageExpiredDays, cacheDelayTime: Constant.webImageCacheDelayTime, maxnumDownloadCount: Constant.maxnumDownloadCount, defaultImage: OthersTableViewCell.defaultImage)
+        _ = WWWebImage.shared.cacheTypeSetting(.cache(), defaultImage: OthersTableViewCell.defaultImage)
     }
     
     /// 建立該語言的資料庫群

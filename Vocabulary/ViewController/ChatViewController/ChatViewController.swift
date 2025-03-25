@@ -9,7 +9,8 @@ import UIKit
 import WWPrint
 import WWHUD
 import WWUserDefaults
-import WWSimpleChatGPT
+import WWSimpleAI_Ollama
+import WWSimpleAI_ChatGPT
 import WWKeyboardShadowView
 
 // MARK: - 對話功能頁
@@ -177,7 +178,7 @@ private extension ChatViewController {
         
         Task {
             
-            let result = await WWSimpleChatGPT.shared.chat(model: .v3_5, temperature: 0.7, content: content)
+            let result = await WWSimpleAI.ChatGPT.shared.chat(model: .v3_5, temperature: 0.7, content: content)
             
             switch result {
             case .failure(let error): wwPrint(error); Utility.shared.flashHUD(with: .fail)
@@ -243,7 +244,7 @@ private extension ChatViewController {
         
         guard let bearerToken = bearerToken else { bearerTokenTextHint(title: "請輸入Token"); return }
         
-        WWSimpleChatGPT.configure(bearerToken: bearerToken)
+        WWSimpleAI.ChatGPT.configure(apiKey: bearerToken)
         connentView.backgroundColor = .systemBlue
         Constant.bearerToken = bearerToken
     }

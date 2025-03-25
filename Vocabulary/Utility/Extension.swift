@@ -295,6 +295,14 @@ extension Array {
         return self._jsonData(options: options)?._string(using: encoding)
     }
     
+    /// Array => JSON Data => [T]
+    /// - Parameter type: 要轉換成的Array類型
+    /// - Returns: [T]?
+    func _jsonClass<T: Decodable>(for type: [T].Type) -> [T]? {
+        let array = self._jsonData()?._class(type: type.self)
+        return array
+    }
+    
     /// [隨機排序](https://blog.csdn.net/weixin_41735943/article/details/85229696)
     /// - Returns: [[Self.Element]?](https://leetcode.com/problems/shuffle-an-array/solutions/127672/shuffle-an-array/)
     func _randomSort() -> [Self.Element]? {
@@ -333,7 +341,7 @@ extension Dictionary {
 
 // MARK: - String (function)
 extension String {
-
+    
     /// [國家地區代碼](https://zh.wikipedia.org/wiki/國家地區代碼)
     /// - [顏文字：AA => 🇦🇦 / TW => 🇹🇼](https://lets-emoji.com/)
     /// - Returns: String
@@ -1464,6 +1472,22 @@ extension UITextField {
     /// [退鍵盤](https://medium.com/彼得潘的-swift-ios-app-開發教室/uitextfield如何讓鍵盤消失-)
     /// - Parameter textField: UITextField
     func _dismissKeyboard() { self.resignFirstResponder() }
+    
+    /// 取得完整的輸入文字 => textField(_:shouldChangeCharactersIn:replacementString:)
+    /// - Parameters:
+    ///   - range: NSRange
+    ///   - string: String
+    /// - Returns: String?
+    func _keyInText(shouldChangeCharactersIn range: NSRange, replacementString string: String) -> String? {
+        
+        guard let currentText = text,
+              let stringRange = Range(range, in: currentText)
+        else {
+            return nil
+        }
+        
+        return currentText.replacingCharacters(in: stringRange, with: string)
+    }
 }
 
 // MARK: - UITabBar (static function)

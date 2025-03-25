@@ -81,6 +81,7 @@
 		81E4078E2A7239A200230C3A /* WWFloatingViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 81E4078D2A7239A200230C3A /* WWFloatingViewController */; };
 		81E407902A723C4E00230C3A /* SearchVocabularyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E4078F2A723C4E00230C3A /* SearchVocabularyViewController.swift */; };
 		81E516562D928B8E0020BD90 /* WWNetworking-UIImage in Frameworks */ = {isa = PBXBuildFile; productRef = 81E516552D928B8E0020BD90 /* WWNetworking-UIImage */; };
+		81E516592D9290AF0020BD90 /* WWTipView in Frameworks */ = {isa = PBXBuildFile; productRef = 81E516582D9290AF0020BD90 /* WWTipView */; };
 		81E56B6B2A725DA6004400D6 /* SearchVocabularyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E56B6A2A725DA6004400D6 /* SearchVocabularyTableViewCell.swift */; };
 		81F52F34299DE87A005F9DF2 /* MyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F52F33299DE87A005F9DF2 /* MyTabBarController.swift */; };
 /* End PBXBuildFile section */
@@ -156,6 +157,7 @@
 			files = (
 				812A01C52C0824C90086E128 /* WWNetworking-UIImage in Frameworks */,
 				64768B0D2AA3EB080005EF3A /* WWToast in Frameworks */,
+				81E516592D9290AF0020BD90 /* WWTipView in Frameworks */,
 				81B041F22D92874200B698CA /* WWSimpleAI_ChatGPT in Frameworks */,
 				64C33C632C1BEF7C006FC466 /* WWKeyboardShadowView in Frameworks */,
 				64ACFDED2B7EBDA700863407 /* WWOnBoardingViewController in Frameworks */,
@@ -496,6 +498,7 @@
 				64C33C622C1BEF7C006FC466 /* WWKeyboardShadowView */,
 				81B041F12D92874200B698CA /* WWSimpleAI_ChatGPT */,
 				81E516552D928B8E0020BD90 /* WWNetworking-UIImage */,
+				81E516582D9290AF0020BD90 /* WWTipView */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -509,7 +512,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					64285886297BBF8600DD7D88 = {
 						CreatedOnToolsVersion = 14.2;
@@ -541,6 +544,7 @@
 				64C33C612C1BEF7C006FC466 /* XCRemoteSwiftPackageReference "WWKeyboardShadowView" */,
 				81B041F02D92874200B698CA /* XCRemoteSwiftPackageReference "WWSimpleAI_ChatGPT" */,
 				81E516542D928B8E0020BD90 /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */,
+				81E516572D9290AF0020BD90 /* XCRemoteSwiftPackageReference "WWTipView" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -653,6 +657,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -714,6 +719,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -791,7 +797,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4.12;
+				MARKETING_VERSION = 2.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -830,7 +836,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4.12;
+				MARKETING_VERSION = 2.5.0;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -987,6 +993,14 @@
 				minimumVersion = 1.7.5;
 			};
 		};
+		81E516572D9290AF0020BD90 /* XCRemoteSwiftPackageReference "WWTipView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWTipView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1076,6 +1090,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 81E516542D928B8E0020BD90 /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */;
 			productName = "WWNetworking-UIImage";
+		};
+		81E516582D9290AF0020BD90 /* WWTipView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 81E516572D9290AF0020BD90 /* XCRemoteSwiftPackageReference "WWTipView" */;
+			productName = WWTipView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

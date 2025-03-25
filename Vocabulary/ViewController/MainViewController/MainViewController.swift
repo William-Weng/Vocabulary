@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import WWPrint
 import WWSQLite3Manager
 import WWToast
+import WWTipView
 
 // MARK: - MainViewDelegate
 protocol MainViewDelegate: NSObject {
@@ -46,15 +48,20 @@ final class MainViewController: UIViewController {
     private var isNeededUpdate = true
     
     private var currentScrollDirection: Constant.ScrollDirection = .down
+    
     private var disappearImage: UIImage?
     private var refreshControl: UIRefreshControl!
     private var gifImageView: UIImageView?
-    private var animationBlock: ((URL) -> Void)?
+    private var inputTextField: UITextField?
+    private var inputTipView: WWTipView?
     
+    private var animationBlock: ((URL) -> Void)?
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
         initMenu()
+        initTipViewSetting()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -104,6 +111,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - UIPopoverPresentationControllerDelegate
 extension MainViewController: UIPopoverPresentationControllerDelegate {}
 
+// MARK: - UITextFieldDelegate
+extension MainViewController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return autoTipWordsAction(with: textField, shouldChangeCharactersIn: range, replacementString: string)
+    }
+}
+
 // MARK: - MainViewDelegate
 extension MainViewController: MainViewDelegate {
     
@@ -117,6 +132,17 @@ extension MainViewController: MainViewDelegate {
 extension MainViewController: MyNavigationControllerDelegate {
     
     func refreshRootViewController() { reloadVocabulary(isFavorite: isFavorite) }
+}
+
+// MARK: - WWTipView.Delegate
+extension MainViewController: WWTipView.Delegate {
+    
+    func tipView(_ tipView: WWTipView, didTouchedIndex index: Int) {
+        inputTextField?.text = tipView.texts[safe: index]
+        tipView.dismiss()
+    }
+    
+    func tipView(_ tipView: WWTipView, status: WWTipView.AnimationStatusType) {}
 }
 
 // MARK: - for DeepLink
@@ -178,6 +204,19 @@ private extension MainViewController {
         reloadVocabulary(isFavorite: isFavorite)
         viewDidTransitionAction()
         backupDatabaseAction(delay: Constant.autoBackupDelaySecond)
+    }
+    
+    /// 初始化輸入提示框設定
+    func initTipViewSetting() {
+        
+        let inputTipView = WWTipView(frame: .zero, contentType: .option(3), underLineColor: .lightGray)
+        
+        inputTipView.edgeInsets = .init(top: 12, left: 32, bottom: 12, right: 32)
+        inputTipView.texts = []
+        inputTipView.tintColor = .lightText
+        inputTipView.textColor = .darkGray
+        
+        self.inputTipView = inputTipView
     }
     
     /// 產生MainTableViewCell
@@ -367,7 +406,7 @@ private extension MainViewController {
         appendWord()
     }
     
-    /// 新增文字的提示框
+    /// 新增文字的提示框 (輸入單字會有單字提示框)
     /// - Parameters:
     ///   - indexPath: 要更新音標時，才會有IndexPath
     ///   - title: 標題
@@ -377,21 +416,36 @@ private extension MainViewController {
     func appendTextHint(with indexPath: IndexPath? = nil, title: String, message: String? = nil, defaultText: String? = nil, action: @escaping (String) -> Bool) {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-
+                
         alertController.addTextField {
+            self.inputTextField = $0
             $0.text = defaultText
             $0.placeholder = title
         }
         
         let actionOK = appendTextAlertAction(with: indexPath, textFields: alertController.textFields, action: action)
-        let actionCancel = UIAlertAction(title: "取消", style: .cancel) {  _ in }
+        let actionCancel = UIAlertAction(title: "取消", style: .cancel) {  _ in self.clearInputTipViewSetting() }
         
         alertController.addAction(actionOK)
         alertController.addAction(actionCancel)
         
-        present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true) {
+            
+            guard indexPath == nil,
+                  let superview = alertController.view.superview,
+                  let inputTextField = self.inputTextField,
+                  let inputTipView = self.inputTipView
+            else {
+                return
+            }
+            
+            inputTipView.isHidden = true
+            inputTextField.delegate = self
+            inputTipView.delegate = self
+            inputTipView.display(targetView: superview, at: inputTextField, position: .left(8))
+        }
     }
-    
+        
     /// 新增文字的提示框動作
     /// - Parameters:
     ///   - indexPath: IndexPath?
@@ -403,10 +457,13 @@ private extension MainViewController {
         let actionOK = UIAlertAction(title: "確認", style: .default) { [weak self] _ in
             
             guard let this = self,
-                  let inputWord = textFields?.first?.text?._removeWhiteSpacesAndNewlines()
+                  let textField = textFields?.first,
+                  let inputWord = textField.text?._removeWhiteSpacesAndNewlines()
             else {
                 return
             }
+            
+            this.clearInputTipViewSetting()
             
             if (!action(inputWord)) { Utility.shared.flashHUD(with: .fail); return }
             if let indexPath = indexPath { this.myTableView.reloadRows(at: [indexPath], with: .automatic); return }
@@ -1015,5 +1072,37 @@ private extension MainViewController {
         activityViewIndicator.alpha = percent
         indicatorLabel.alpha = percent
         indicatorLabel.text = Utility.shared.updateActivityViewIndicatorTitle(with: percent, isNeededUpdate: isNeededUpdate)
+    }
+}
+
+// MARK: - 選字提示框設定
+private extension MainViewController {
+    
+    /// 清除輸入提示框的相關設定
+    func clearInputTipViewSetting() {
+        inputTextField = nil
+        inputTipView?.texts = []
+    }
+    
+    /// 自動完成已輸入過的單字
+    /// - Parameters:
+    ///   - textField: UITextField
+    ///   - range: NSRange
+    ///   - string: String
+    /// - Returns: Bool
+    func autoTipWordsAction(with textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex),
+              let word = textField._keyInText(shouldChangeCharactersIn: range, replacementString: string)?._removeWhiteSpacesAndNewlines(),
+              let vocabularyListArray = Optional.some(Utility.shared.vocabularyListArrayMaker(like: word, searchType: .word, info: info, offset: 0)),
+              let vocabularyList = vocabularyListArray._jsonClass(for: [VocabularyList].self)
+        else {
+            return true
+        }
+        
+        inputTipView?.isHidden = (word.count < 1) || (vocabularyList.isEmpty)
+        inputTipView?.texts = vocabularyList.map { $0.word }
+        
+        return true
     }
 }

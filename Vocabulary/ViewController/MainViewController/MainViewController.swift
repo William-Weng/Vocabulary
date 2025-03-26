@@ -139,7 +139,8 @@ extension MainViewController: WWTipView.Delegate {
     
     func tipView(_ tipView: WWTipView, didTouchedIndex index: Int) {
         inputTextField?.text = tipView.texts[safe: index]
-        tipView.dismiss()
+        tipView.isHidden = true
+        tipView.texts = []
     }
     
     func tipView(_ tipView: WWTipView, status: WWTipView.AnimationStatusType) {}
@@ -209,12 +210,10 @@ private extension MainViewController {
     /// 初始化輸入提示框設定
     func initTipViewSetting() {
         
-        let inputTipView = WWTipView(frame: .zero, contentType: .option(3), underLineColor: .lightGray)
+        let inputTipView = WWTipView()
         
         inputTipView.edgeInsets = .init(top: 12, left: 32, bottom: 12, right: 32)
         inputTipView.texts = []
-        inputTipView.tintColor = .lightText
-        inputTipView.textColor = .darkGray
         
         self.inputTipView = inputTipView
     }
@@ -442,7 +441,7 @@ private extension MainViewController {
             inputTipView.isHidden = true
             inputTextField.delegate = self
             inputTipView.delegate = self
-            inputTipView.display(targetView: superview, at: inputTextField, position: .left(8))
+            inputTipView.display(targetView: superview, at: inputTextField, position: .left(8), textSetting: (textColor: .black, underLineColor: .lightGray, tintColor: .lightText, font: .systemFont(ofSize: 14.0), lines: 1))
         }
     }
         

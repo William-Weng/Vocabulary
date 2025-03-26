@@ -1,5 +1,5 @@
 {
-  "originHash" : "56f82e4909c3b1555db67ffc6977308f97da4f21b2a01f8d683d72783a7d53ee",
+  "originHash" : "eff4954c8b29b2bcb114e121fc9d9ccaea71f086f3b5fe8d3cb4d9575c709809",
   "pins" : [
     {
       "identity" : "wwappinstallsource",
@@ -141,8 +141,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWTipView",
       "state" : {
-        "revision" : "e843c594c53ff650b0e21327c33ebc20d45582af",
-        "version" : "1.2.1"
+        "revision" : "a381770375f10a953b913cc98d33b374999c3f5c",
+        "version" : "1.2.2"
       }
     },
     {

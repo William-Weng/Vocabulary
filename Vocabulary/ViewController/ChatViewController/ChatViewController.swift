@@ -75,10 +75,15 @@ extension ChatViewController: UITextFieldDelegate {
 }
 
 // MARK: - UITextFieldDelegate
-extension ChatViewController: WWKeyboardShadowViewDelegate {
+extension ChatViewController: WWKeyboardShadowView.Delegate {
     
-    func keyboardWillChange(view: WWKeyboardShadowView, information: WWKeyboardShadowView.KeyboardInfomation) -> Bool { return true }
-    func keyboardDidChange(view: WWKeyboardShadowView) {}
+    func keyboardViewChange(_ view: WWKeyboardShadowView, status: WWKeyboardShadowView.DisplayStatus, information: WWKeyboardShadowView.KeyboardInformation, height: CGFloat) -> Bool {
+        return true
+    }
+    
+    func keyboardView(_ view: WWKeyboardShadowView, error: WWKeyboardShadowView.CustomError) {
+        wwPrint(error)
+    }
 }
 
 // MARK: - 小工具

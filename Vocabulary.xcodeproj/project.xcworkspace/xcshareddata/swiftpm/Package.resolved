@@ -60,8 +60,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWKeyboardShadowView",
       "state" : {
-        "revision" : "968e05130d72e87a3594a355ce23bdd959343479",
-        "version" : "1.0.3"
+        "revision" : "3ca6e8206dc9cc470a8147f4114b0789c08b4d6b",
+        "version" : "1.1.0"
       }
     },
     {
@@ -141,8 +141,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWTipView",
       "state" : {
-        "revision" : "a381770375f10a953b913cc98d33b374999c3f5c",
-        "version" : "1.2.2"
+        "revision" : "f35c40fe53f1dbfc44f07ded41fb2a24bb1bd96e",
+        "version" : "1.2.3"
       }
     },
     {

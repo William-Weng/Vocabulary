@@ -415,7 +415,7 @@ private extension MainViewController {
     func appendTextHint(with indexPath: IndexPath? = nil, title: String, message: String? = nil, defaultText: String? = nil, action: @escaping (String) -> Bool) {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                
+        
         alertController.addTextField {
             self.inputTextField = $0
             $0.text = defaultText
@@ -427,7 +427,7 @@ private extension MainViewController {
         
         alertController.addAction(actionOK)
         alertController.addAction(actionCancel)
-        
+                
         present(alertController, animated: true) {
             
             guard indexPath == nil,

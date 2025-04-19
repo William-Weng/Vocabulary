@@ -33,6 +33,16 @@ extension Int {
     }
 }
 
+// MARK: - Array (function)
+extension Array {
+    
+    /// 彈出開頭第一個
+    /// - Returns: Element?
+    mutating func _popFirst() -> Element? {
+        return isEmpty ? nil : removeFirst()
+    }
+}
+
 // MARK: - UIColr (init function)
 extension UIColor {
     
@@ -1710,6 +1720,40 @@ extension UIContextualAction {
         contextualAction.image = image
         
         return contextualAction
+    }
+}
+
+// MARK: - UICollectionView (function)
+extension UICollectionView {
+    
+    /// 初始化Protocal
+    /// - Parameter this: UICollectionViewDelegate & UICollectionViewDataSource
+    func _delegateAndDataSource(with this: UICollectionViewDelegate & UICollectionViewDataSource) {
+        self.delegate = this
+        self.dataSource = this
+    }
+    
+    /// 取得UICollectionViewCell
+    /// - let cell = collectionView._reusableCell(at: indexPath) as MyCollectionViewCell
+    /// - Parameter indexPath: IndexPath
+    /// - Returns: 符合CellReusable的Cell
+    func _reusableCell<T: CellReusable>(at indexPath: IndexPath) -> T where T: UICollectionViewCell {
+        guard let cell = dequeueReusableCell(withReuseIdentifier: T.identifier, for: indexPath) as? T else { fatalError("UICollectionViewCell Error") }
+        return cell
+    }
+    
+    /// [資料新增或刪除時的動作設定 - performBatchUpdates() => beginUpdates() + endUpdates()](https://ithelp.ithome.com.tw/articles/10225747)
+    /// - Parameters:
+    ///   - updates: [((UICollectionView) -> Void)?](https://medium.com/@howardsun/uicollectionview-performbatchupdates-最大的秘密-7fb214c81d17)
+    ///   - completion: [((UICollectionView) -> Void)?](https://developer.apple.com/documentation/uikit/uicollectionview/1618045-performbatchupdates)
+    func _performBatchUpdates(_ updates: ((UICollectionView) -> Void)?, completion: ((UICollectionView) -> Void)? = nil) {
+        
+        self.performBatchUpdates {
+            updates?(self)
+        } completion: { isCompleted in
+            if (!isCompleted) { return }
+            completion?(self)
+        }
     }
 }
 

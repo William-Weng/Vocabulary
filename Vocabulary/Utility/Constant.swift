@@ -29,7 +29,7 @@ final class Constant: NSObject {
     static let webImageExpiredDays = 90
     static let autoBackupDays = 7
     static let searchCount = 10
-    static let searchGuessWordDays = 3
+    static let searchGuessWordDays = 14
     static let pixelSize = 192
     static let webImageCacheDelayTime = 600.0
     

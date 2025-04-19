@@ -17,9 +17,10 @@ final class WordCardViewController: UIViewController {
     
     var currentOrientation: UIDeviceOrientation = .unknown
     weak var mainViewDelegate: MainViewDelegate?
-
+    
     private var currentLockOrientation: UIInterfaceOrientationMask = .all
     private var infinityLoopInfo: WWOnBoardingViewController.InfinityLoopInformation = (hasPrevious: false, hasNext: true)
+    private var reviewWordCardList: [[String : Any]] = []
     
     private lazy var pageViewControllerArray: [UIViewController] = {
         return [
@@ -62,6 +63,11 @@ final class WordCardViewController: UIViewController {
     @IBAction func searchVocabulary(_ sender: UIBarButtonItem) {
         searchVocabularyViewController = UIStoryboard._instantiateViewController() as SearchVocabularyViewController
         Utility.shared.presentSearchVocabularyViewController(target: self, currentView: searchVocabularyViewController?.view)
+    }
+    
+    deinit {
+        mainViewDelegate = nil
+        myPrint("\(Self.self) deinit")
     }
 }
 

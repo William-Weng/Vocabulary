@@ -59,9 +59,9 @@ private extension MainTableViewCell {
     /// 畫面設定
     /// - Parameter indexPath: IndexPath
     func configure(for indexPath: IndexPath) {
-                
+        
         guard let vocabularyList = Self.vocabularyList(with: indexPath) else { return }
-                
+        
         self.indexPath = indexPath
         self.vocabularyList = vocabularyList
         self.isFavorite = ((vocabularyList.favorite ?? 0) != 0)
@@ -71,7 +71,7 @@ private extension MainTableViewCell {
         
         wordLabel.font = Utility.shared.dictionaryFont(with: Constant.tableNameIndex, size: 36.0)
         wordLabel.text = vocabularyList.word
-                
+        
         favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)
         initLevelButtonSetting(vocabularyList: vocabularyList)
         initFavoriteImageViewTapGestureRecognizer()

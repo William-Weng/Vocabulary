@@ -94,6 +94,8 @@ final class WordCardPageViewController: UIViewController {
         wordLabel.start(fps: 5, stringType: .general(vocabularyList?.word))
         exampleLabel.start(fps: 10, stringType: .general(vocabulary?.example))
     }
+    
+    deinit { myPrint("\(Self.self) deinit") }
 }
 
 // MARK: - 小工具

@@ -49,6 +49,23 @@ extension API {
         return result.array
     }
     
+    /// 隨機單字搜尋
+    /// - Parameters:
+    ///   - info: Settings.GeneralInformation
+    ///   - count: 數量
+    /// - Returns: [[String : Any]]
+    func searchWordRandomListDetail(info: Settings.GeneralInformation, count: Int = Constant.searchCount) -> [[String : Any]] {
+        
+        guard let database = Constant.database else { return [] }
+        
+        let type: Constant.DataTableType = .list(info.key)
+        let limit = SQLite3Condition.Limit().build(count: count, offset: 0)
+        let orderBy: SQLite3Condition.OrderBy? = SQLite3Condition.OrderBy().item(type: .random)
+        let result = database.select(tableName: type.name(), type: VocabularyList.self, where: nil, orderBy: orderBy, limit: limit)
+        
+        return result.array
+    }
+    
     /// 搜尋單字列表總數量
     /// - Parameters:
     ///   - info: Settings.GeneralInformation
@@ -282,7 +299,7 @@ extension API {
         
         let type: Constant.DataTableType = .list(generalInfo.key)
         let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "level", value: levelInfo.value)).andCompare(type: .lessThan(key: "createTime", value: time))
-        let limit = SQLite3Condition.Limit().build(count: levelInfo.guessCount, offset: 0)
+        let limit = SQLite3Condition.Limit().build(count: levelInfo.guessCount, offset: offset)
         let orderBy = SQLite3Condition.OrderBy().item(type: .ascending(key: "level")).addItem(type: .ascending(key: "review")).addItem(type: .descending(key: "createTime"))
         let result = database.select(tableName: type.name(), type: VocabularyList.self, where: condition, orderBy: orderBy, limit: limit)
         

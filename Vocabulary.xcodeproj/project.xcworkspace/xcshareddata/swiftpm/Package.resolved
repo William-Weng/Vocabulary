@@ -1,5 +1,5 @@
 {
-  "originHash" : "eff4954c8b29b2bcb114e121fc9d9ccaea71f086f3b5fe8d3cb4d9575c709809",
+  "originHash" : "1b4dbbb9ee7c1c5b1b61a3a7f6000de41b95d5e8ae08afcb74133cba2cd686c9",
   "pins" : [
     {
       "identity" : "wwappinstallsource",
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "34d65216cf3b036a820b91f1070134227edb19a2",
         "version" : "1.0.1"
+      }
+    },
+    {
+      "identity" : "wwcollectionviewlayout",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWCollectionViewLayout",
+      "state" : {
+        "revision" : "c112eeb26415400d5f59d5a0f7dbd26a9e0f6376",
+        "version" : "1.0.0"
       }
     },
     {
@@ -132,8 +141,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWSQLite3Manager",
       "state" : {
-        "revision" : "11f1d8a800d5e0516d53bbf9af18466e50821b44",
-        "version" : "1.5.0"
+        "revision" : "b4f6aed6a3bc98903638537945b7eecd034a5d9b",
+        "version" : "1.5.1"
       }
     },
     {

@@ -860,7 +860,7 @@ private extension MainViewController {
         let actionOK = UIAlertAction(title: "確認", style: .cancel) { _ in }
         let actionSelectDatabase = UIAlertAction(title: "選擇字典", style: .default) { [unowned self] _ in dictionaryAlertAction(target: self, sourceView: sourceView) }
         let actionWordCard = UIAlertAction(title: "單字卡模式", style: .default) { [unowned self] _ in performSegue(for: .wordCardView, sender: nil) }
-        let actionWordMemory = UIAlertAction(title: "單字記憶模式", style: .default) { [unowned self] _ in performSegue(for: .wordMemoryView, sender: nil) }
+        let actionWordMemory = UIAlertAction(title: "記憶模式", style: .default) { [unowned self] _ in performSegue(for: .wordMemoryView, sender: nil) }
         
         alertController.addAction(actionWordCard)
         alertController.addAction(actionWordMemory)

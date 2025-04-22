@@ -728,9 +728,29 @@ extension CALayer {
     ///   - radius: 圓的半徑
     ///   - corners: 圓角要哪幾個邊
     func _maskedCorners(radius: CGFloat, corners: CACornerMask = [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner]) {
-        self.masksToBounds = true
-        self.maskedCorners = corners
-        self.cornerRadius = radius
+        masksToBounds = true
+        maskedCorners = corners
+        cornerRadius = radius
+    }
+    
+    /// [設置陰影 (不切邊)](https://www.jianshu.com/p/2c90d6a637f7)
+    /// - Parameters:
+    ///   - color: [陰影顏色](https://medium.com/彼得潘的-swift-ios-app-開發教室/swift-collectionview-csutomercollectioncell-decoder-api-collectioncell陰影-collectioncell-e025d399022a)
+    ///   - backgroundColor: 陰影背景色
+    ///   - offset: 陰影位移
+    ///   - opacity: 陰影不透明度
+    ///   - radius: 陰影半徑
+    ///   - cornerRadius: 圓角半徑
+    func _shadow(color: UIColor, backgroundColor: UIColor, offset: CGSize, opacity: Float, radius: CGFloat, cornerRadius: CGFloat) {
+        
+        masksToBounds = false
+        
+        shadowColor = color.cgColor
+        shadowOffset = offset
+        shadowOpacity = opacity
+        shadowRadius = radius
+        self.cornerRadius = cornerRadius
+        self.backgroundColor = backgroundColor.cgColor
     }
 }
 
@@ -1210,6 +1230,27 @@ extension UIStoryboard {
         
         let viewController = Self(name: name, bundle: storyboardBundleOrNil).instantiateViewController(identifier: identifier) as T
         return viewController
+    }
+}
+
+// MARK: - UIView (static function)
+extension UIView {
+    
+    /// UIView動畫關閉 / 啟動
+    /// - Parameters:
+    ///   - isEnabled: Bool
+    ///   - action: () -> Void
+    static func _animations(isEnabled: Bool, action: () -> Void) {
+        
+        CATransaction.begin()
+        UIView.setAnimationsEnabled(isEnabled)
+        CATransaction.setDisableActions(!isEnabled)
+        
+        action()
+        
+        CATransaction.commit()
+        UIView.setAnimationsEnabled(true)
+        CATransaction.setDisableActions(false)
     }
 }
 
@@ -1729,8 +1770,18 @@ extension UICollectionView {
     /// 初始化Protocal
     /// - Parameter this: UICollectionViewDelegate & UICollectionViewDataSource
     func _delegateAndDataSource(with this: UICollectionViewDelegate & UICollectionViewDataSource) {
-        self.delegate = this
-        self.dataSource = this
+        delegate = this
+        dataSource = this
+    }
+    
+    /// [初始化拖放操作Protocal](https://juejin.cn/post/6872696500284686350)
+    /// - Parameters:
+    ///   - this: [UICollectionViewDragDelegate & UICollectionViewDropDelegate](https://blog.csdn.net/u014029960/article/details/118371984)
+    ///   - isDragInteraction: [Bool](https://github.com/pro648/tips/blob/master/sources/UICollectionView及其新功能drag and drop.md)
+    func _dragAndDropdelegate(with this: UICollectionViewDragDelegate & UICollectionViewDropDelegate, isDragInteraction: Bool = true) {
+        dragDelegate = this
+        dropDelegate = this
+        dragInteractionEnabled = isDragInteraction
     }
     
     /// 取得UICollectionViewCell

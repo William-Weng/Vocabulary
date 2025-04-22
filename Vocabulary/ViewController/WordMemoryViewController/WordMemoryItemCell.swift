@@ -14,7 +14,6 @@ final class WordMemoryItemCell: UICollectionViewCell, CellReusable {
     @IBOutlet weak var alphabetLabel: UILabel!
     @IBOutlet weak var favoriteImageView: UIImageView!
     @IBOutlet weak var vocabularyDetailButton: UIButton!
-    @IBOutlet weak var removeItemButton: UIButton!
     
     static weak var wordMemoryDelegate: WordMemoryDelegate?
     static var vocabularyListArray: [[String : Any]] = []
@@ -34,10 +33,6 @@ final class WordMemoryItemCell: UICollectionViewCell, CellReusable {
     @objc func updateFavorite(_ recognizer: UITapGestureRecognizer) {
         isFavorite.toggle()
         updateFavorite(isFavorite, with: indexPath)
-    }
-    
-    @IBAction func removeItem(_ sender: UIButton) {
-        Self.wordMemoryDelegate?.deleteItem()
     }
     
     @IBAction func gotoVocabularyDetailPage(_ sender: UIButton) {
@@ -70,21 +65,8 @@ extension WordMemoryItemCell {
         
         guard let vocabularyList = Self.vocabularyList(with: indexPath) else { return }
         
-        let condition = (Self.vocabularyListArray.count % 2 == 0) ? (indexPath.row % 2 == 0) : (indexPath.row % 2 != 0)
-
-        wordLabel.text = vocabularyList.word
-        wordLabel.font = Utility.shared.dictionaryFont(with: Constant.tableNameIndex, size: 36.0)
-        
-        alphabetLabel.text = vocabularyList.alphabet
-        
-        self.backgroundColor = condition ? UIColor(rgb: "#FFFFAA") : UIColor(rgb: "#DFFFDF")
-        self.isFavorite = ((vocabularyList.favorite ?? 0) != 0)
-        self.vocabularyList = vocabularyList
-        
-        favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)
-        initFavoriteImageViewTapGestureRecognizer()
-        
-        buttonsHiddenSetting(with: indexPath)
+        configureView(for: indexPath, vocabularyList: vocabularyList)
+        configureLayer()
     }
     
     /// 讀出單字
@@ -98,17 +80,6 @@ extension WordMemoryItemCell {
         }
         
         Utility.shared.speak(string: vocabularyList.word, code: settings.voice)
-    }
-    
-    /// 設定按鍵要不要顯示 => 只有最上面的一個要顯示
-    /// - Parameter indexPath: IndexPath
-    func buttonsHiddenSetting(with indexPath: IndexPath) {
-        
-        let isHidden = (indexPath.row != 0)
-        
-        favoriteImageView.isHidden = isHidden
-        vocabularyDetailButton.isHidden = isHidden
-        removeItemButton.isHidden = isHidden
     }
     
     /// 更新Favorite狀態
@@ -129,10 +100,59 @@ extension WordMemoryItemCell {
         favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)
         Utility.shared.updateFavoriteDictionary(isFavorite, with: indexPath)
     }
+}
+
+// MARK: - 小工具 (function)
+private extension WordMemoryItemCell {
+    
+    /// 有關ImageView的設定
+    /// - Parameter isFavorite: Bool
+    func configureImageView(isFavorite: Bool) {
+        initFavoriteImageViewTapGestureRecognizer()
+        favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)
+    }
+    
+    /// 有關基本View的設定
+    /// - Parameters:
+    ///   - indexPath: IndexPath
+    ///   - vocabularyList: VocabularyList
+    func configureView(for indexPath: IndexPath, vocabularyList: VocabularyList) {
+        
+        self.vocabularyList = vocabularyList
+        
+        wordLabel.text = vocabularyList.word
+        wordLabel.font = Utility.shared.dictionaryFont(with: Constant.tableNameIndex, size: 36.0)
+        
+        alphabetLabel.text = vocabularyList.alphabet
+        
+        isFavorite = ((vocabularyList.favorite ?? 0) != 0)
+        
+        buttonsHiddenSetting(with: indexPath)
+        configureImageView(isFavorite: isFavorite)
+    }
+    
+    /// 有關Layer陰影的設定
+    func configureLayer() {
+        
+        let condition = (Self.vocabularyListArray.count % 2 == 0) ? (indexPath.row % 2 == 0) : (indexPath.row % 2 != 0)
+        let backgroundColor = condition ? UIColor(rgb: "#FFFFAA") : UIColor(rgb: "#DFFFDF")
+        
+        layer._shadow(color: .gray, backgroundColor: backgroundColor, offset: .zero, opacity: 0.5, radius: 3.0, cornerRadius: 8.0)
+    }
     
     /// FavoriteImageView點擊功能
     func initFavoriteImageViewTapGestureRecognizer() {
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(Self.updateFavorite(_:)))
         favoriteImageView.addGestureRecognizer(recognizer)
+    }
+    
+    /// 設定按鍵要不要顯示 => 只有最上面的一個要顯示
+    /// - Parameter indexPath: IndexPath
+    func buttonsHiddenSetting(with indexPath: IndexPath) {
+        
+        let isHidden = (indexPath.row != 0)
+        
+        favoriteImageView.isHidden = isHidden
+        vocabularyDetailButton.isHidden = isHidden
     }
 }

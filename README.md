@@ -10,14 +10,12 @@
 |[word://search/<單字>](word://search/<新單字>)|搜尋該單字|
 |[word://icon/<圖示編號>](word://icon/<圖示編號>)|更新APP圖示|
 
-## 擷圖
+## 動態圖
 
-![](./@Image/001.png) ![](./@Image/002.png) ![](./@Image/003.png)
-![](./@Image/004.png) ![](./@Image/005.png) ![](./@Image/006.png)
-![](./@Image/007.png) ![](./@Image/008.png) ![](./@Image/009.png)
-![](./@Image/010.png) ![](./@Image/011.png) ![](./@Image/012.png)
-![](./@Image/000.png)
-![](./@Image/Storyboard.png)
+![](./@Image/demo_1.webp)
+![](./@Image/demo_2.webp)
+![](./@Image/demo_3.webp)
+![](./@Image/demo_4.webp)
 
 # 附錄：資源下載說明 (所有資源都是從網路下載，僅作程式分享教學之用，並無侵權之意，資源版權皆屬於原作者所有…)
 ## [引用套件](https://github.com/William-Weng/SwiftPackageManager)

@@ -11,10 +11,7 @@ import WWCollectionViewLayout
 // MARK: - WordMemoryDelegate
 protocol WordMemoryDelegate: NSObject {
     
-    /// 刪除單字
-    func deleteItem()
-    
-    /// 到單字列表
+    /// 轉到單字列表
     /// - Parameter indexPath: IndexPath
     func itemDetail(with indexPath: IndexPath)
 }
@@ -27,6 +24,8 @@ final class WordMemoryViewController: UIViewController {
     weak var mainViewDelegate: MainViewDelegate?
     
     private let segueIdentifier = "MemoryListViewSegue"
+    
+    private var canDelete = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,21 +81,48 @@ extension WordMemoryViewController: UICollectionViewDelegate, UICollectionViewDa
 
 // MARK: - WordMemoryDelegate
 extension WordMemoryViewController: WordMemoryDelegate {
-    
-    func deleteItem() {
         
-        let indexPath = IndexPath(row: 0, section: 0)
-        _ = WordMemoryItemCell.vocabularyListArray._popFirst()
-        
-        myCollectionView._performBatchUpdates({ collectionView in
-            collectionView.deleteItems(at: [indexPath])
-        }, completion: { collectionView in
-            collectionView.reloadData()
-        })
-    }
-    
     func itemDetail(with indexPath: IndexPath) {
         performSegue(withIdentifier: segueIdentifier, sender: indexPath)
+    }
+}
+
+// MARK: - UICollectionViewDragDelegate
+extension WordMemoryViewController: UICollectionViewDragDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: any UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return beginningItems(at: indexPath)
+    }
+}
+
+// MARK: - UICollectionViewDropDelegate
+extension WordMemoryViewController: UICollectionViewDropDelegate {
+        
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {}
+    
+    func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
+        return canHandleRule(session: session)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+        return UICollectionViewDropProposal(operation: .cancel)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidEnter session: any UIDropSession) {
+        let backgroundColor: UIColor = .black.withAlphaComponent(0.2)
+        collectionView.layer.backgroundColor = backgroundColor.cgColor
+        canDelete = false
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidExit session: any UIDropSession) {
+        let backgroundColor: UIColor = .clear
+        collectionView.layer.backgroundColor = backgroundColor.cgColor
+        canDelete = true
+    }
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidEnd session: any UIDropSession) {
+        let backgroundColor: UIColor = .clear
+        collectionView.layer.backgroundColor = backgroundColor.cgColor
+        deleteItem()
     }
 }
 
@@ -105,7 +131,7 @@ private extension WordMemoryViewController {
     
     /// 初始化設定
     func initSetting() {
-                
+        
         let layout = WWCollectionViewLayout.Stack.layout()
         let width = suitableWidth(with: myCollectionView.bounds.size)
         
@@ -116,7 +142,9 @@ private extension WordMemoryViewController {
         refreshVocabularyList()
         
         updateLayout(layout)
+        
         myCollectionView._delegateAndDataSource(with: self)
+        myCollectionView._dragAndDropdelegate(with: self)
     }
     
     /// 重新產生單字集
@@ -156,7 +184,7 @@ private extension WordMemoryViewController {
     ///   - size: 尺寸
     ///   - precent: 比例
     /// - Returns: CGFloat
-    func suitableWidth(with size: CGSize, precent: CGFloat = 0.65) -> CGFloat {
+    func suitableWidth(with size: CGSize, precent: CGFloat = 0.7) -> CGFloat {
         
         let width = (size.height > size.width) ? size.width : size.height
         return width * precent
@@ -179,5 +207,45 @@ private extension WordMemoryViewController {
         viewController.vocabularyList = vocabularyList
         viewController.vocabularyListIndexPath = indexPath
         viewController.mainViewDelegate = mainViewDelegate
+    }
+}
+
+// MARK: - 拖放功能
+private extension WordMemoryViewController {
+    
+    /// [按住鎖定將要開始拖放的Items](https://juejin.cn/post/6872696500284686350)
+    /// - Parameter indexPath: IndexPath
+    /// - Returns: [UIDragItem]
+    func beginningItems(at indexPath: IndexPath) -> [UIDragItem] {
+        
+        let itemProvider = NSItemProvider(object: "\(indexPath)" as NSString)
+        let dragItem = UIDragItem(itemProvider: itemProvider)
+        
+        dragItem.localObject = WordMemoryItemCell.vocabularyListArray[indexPath.row]
+        
+        return [dragItem]
+    }
+    
+    /// [可以有動作反應的規則](https://blog.csdn.net/u014029960/article/details/118371984)
+    /// - Parameter session: UIDropSession
+    /// - Returns: Bool
+    func canHandleRule(session: UIDropSession) -> Bool {
+        return session.canLoadObjects(ofClass: NSString.self)
+    }
+    
+    /// 刪除該項目
+    func deleteItem() {
+        
+        if !canDelete { return }
+        canDelete = false
+        
+        let indexPath = IndexPath(row: 0, section: 0)
+        _ = WordMemoryItemCell.vocabularyListArray._popFirst()
+                
+        myCollectionView._performBatchUpdates({ collectionView in
+            collectionView.deleteItems(at: [indexPath])
+        }, completion: { collectionView in
+            collectionView.reloadItems(at: [indexPath])
+        })
     }
 }

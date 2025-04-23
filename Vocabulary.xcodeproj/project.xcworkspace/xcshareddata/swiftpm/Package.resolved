@@ -1,5 +1,5 @@
 {
-  "originHash" : "1b4dbbb9ee7c1c5b1b61a3a7f6000de41b95d5e8ae08afcb74133cba2cd686c9",
+  "originHash" : "7e4554b27847440544ecc6922f7fa171a1d186ea4c1b706dca29a327d98b635f",
   "pins" : [
     {
       "identity" : "wwappinstallsource",
@@ -26,6 +26,15 @@
       "state" : {
         "revision" : "c112eeb26415400d5f59d5a0f7dbd26a9e0f6376",
         "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "wwexpandabletextview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWExpandableTextView",
+      "state" : {
+        "revision" : "e68e3f92bee7f0b8176b98ed85bb0454c9d82092",
+        "version" : "1.0.1"
       }
     },
     {
@@ -60,8 +69,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWJavaScriptContext",
       "state" : {
-        "revision" : "605cb0a6f03fd007661ecd2586328a23c6665ab1",
-        "version" : "1.0.4"
+        "revision" : "6e575659f75d2c50be7ad25ebdae6c9d8f1b164a",
+        "version" : "1.1.0"
       }
     },
     {

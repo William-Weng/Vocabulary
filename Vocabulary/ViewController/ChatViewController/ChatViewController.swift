@@ -12,32 +12,34 @@ import WWUserDefaults
 import WWSimpleAI_Ollama
 import WWSimpleAI_ChatGPT
 import WWKeyboardShadowView
+import WWExpandableTextView
 
 // MARK: - 對話功能頁
 final class ChatViewController: UIViewController {
     
     @IBOutlet weak var myTableView: UITableView!
-    @IBOutlet weak var myTextField: UITextField!
     @IBOutlet weak var connentView: UIView!
     @IBOutlet weak var chatImageView: UIImageView!
-    @IBOutlet weak var keyboardShadowView: WWKeyboardShadowView!
     @IBOutlet weak var keyboardConstraintHeight: NSLayoutConstraint!
+    @IBOutlet weak var keyboardShadowView: WWKeyboardShadowView!
+    @IBOutlet weak var expandableTextView: WWExpandableTextView!
     
     static var chatMessageList: [Constant.ChatMessage] = []
-        
+    
     weak var sentenceViewDelegate: SentenceViewDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
     }
-    
-    @IBAction func sendMessage(_ sender: UIButton) { sendMessage(with: myTextField.text) }
+        
+    @IBAction func sendMessage(_ sender: UIButton) { sendMessage(with: expandableTextView.text) }
     @IBAction func tokenSetting(_ sender: UIBarButtonItem) { bearerTokenTextHint(title: "請輸入Token") }
     
     @objc func dimissKeyboard() { view.endEditing(true) }
     
     deinit {
+        sentenceViewDelegate = nil
         keyboardShadowView.unregister()
         sentenceViewDelegate?.tabBarHidden(false)
         wwPrint("deinit => \(Self.self)")
@@ -96,8 +98,6 @@ private extension ChatViewController {
         
         myTableView.delegate = self
         myTableView.dataSource = self
-        
-        myTextField.delegate = self
         myTableView.addGestureRecognizer(tapGesture)
         
         chatImageView.image = Utility.shared.folderImage(name: "Chatting.jpg")
@@ -108,6 +108,14 @@ private extension ChatViewController {
         
         sentenceViewDelegate?.tabBarHidden(true)
         chatSetting(bearerToken: Constant.bearerToken)
+        
+        initExpandableTextViewSetting()
+    }
+    
+    /// 初始化設定可變高度的TextView (最高3行)
+    func initExpandableTextViewSetting() {
+        expandableTextView.configure(lines: 3, gap: 21)
+        expandableTextView.setting(font: .systemFont(ofSize: 20), backgroundColor: .white, borderWidth: 1, borderColor: .gray)
     }
     
     /// 選擇Cell (自己 / ChatGPT)
@@ -154,7 +162,11 @@ private extension ChatViewController {
     /// - Parameter message: String?
     func sendMessage(with message: String?) {
         
-        defer { dimissKeyboard(); myTextField.text = "" }
+        defer {
+            dimissKeyboard()
+            expandableTextView.text = ""
+            expandableTextView.updateHeight()
+        }
         
         guard let message = message,
               !message.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -250,7 +262,7 @@ private extension ChatViewController {
         guard let bearerToken = bearerToken else { bearerTokenTextHint(title: "請輸入Token"); return }
         
         WWSimpleAI.ChatGPT.configure(apiKey: bearerToken)
-        connentView.backgroundColor = .systemBlue
+        connentView.backgroundColor = .lightGray.withAlphaComponent(0.3)
         Constant.bearerToken = bearerToken
     }
 }

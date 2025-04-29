@@ -244,6 +244,7 @@ extension Constant {
         case talking
         case loading
         case chatting
+        case forgot
 
         /// 檔案路徑
         /// - Returns: URL?

@@ -44,7 +44,8 @@
         "nice": { "name": "答題正確", "value": 2, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Nice.gif" },
         "shudder": { "name": "問題閱讀", "value": 3, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Shudder.gif" },
         "speak": { "name": "單字發聲", "value": 4, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Speak.gif" },
-        "loading": { "name": "資料讀取", "value": 5, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Loading.gif" }
+        "loading": { "name": "資料讀取", "value": 5, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Loading.gif" },
+        "forgot": { "name": "消除記憶", "value": 6, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Forgot.gif" }
       },
       "background" : {
         "studing": { "name": "單字記憶", "value": 0, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Studing.gif" },
@@ -103,7 +104,8 @@
         "nice": { "name": "答題正確", "value": 2, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Nice.gif" },
         "shudder": { "name": "答題錯誤", "value": 3, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Shudder.gif" },
         "speak": { "name": "問題閱讀", "value": 4, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Speak.gif" },
-        "loading": { "name": "資料讀取", "value": 5, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Loading.gif" }
+        "loading": { "name": "資料讀取", "value": 5, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Loading.gif" },
+        "forgot": { "name": "消除記憶", "value": 6, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Forgot.gif" }
       },
       "background" : {
         "studing": { "name": "單字記憶", "value": 0, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Studing.gif" },
@@ -157,7 +159,8 @@
         "nice": { "name": "答題正確", "value": 2, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Nice.gif" },
         "shudder": { "name": "答題錯誤", "value": 3, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Shudder.gif" },
         "speak": { "name": "問題閱讀", "value": 4, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Speak.gif" },
-        "loading": { "name": "資料讀取", "value": 5, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Loading.gif" }
+        "loading": { "name": "資料讀取", "value": 5, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Loading.gif" },
+        "forgot": { "name": "消除記憶", "value": 6, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Forgot.gif" }
       },
       "background" : {
         "studing": { "name": "單字記憶", "value": 0, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Studing.gif" },

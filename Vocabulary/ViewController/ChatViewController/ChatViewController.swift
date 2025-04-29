@@ -35,6 +35,7 @@ final class ChatViewController: UIViewController {
     
     weak var sentenceViewDelegate: SentenceViewDelegate?
     
+    private var isConfigure = false
     private var botTimestamp: Int?
     private var responseString: String = ""
     
@@ -45,7 +46,21 @@ final class ChatViewController: UIViewController {
     
     override func viewIsAppearing(_ animated: Bool) {
         super.viewIsAppearing(animated)
+        
+        if (isConfigure) { return }
+        
+        isConfigure = true
         configure(ip: ip, port: port, model: chatModel)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        sentenceViewDelegate?.tabBarHidden(true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        sentenceViewDelegate?.tabBarHidden(false)
     }
     
     @IBAction func generateLiveDemo(_ sender: UIButton) {
@@ -63,7 +78,6 @@ final class ChatViewController: UIViewController {
     deinit {
         WWEventSource.shared.disconnect()
         keyboardShadowView.unregister()
-        sentenceViewDelegate?.tabBarHidden(false)
         sentenceViewDelegate = nil
         myPrint("deinit => \(Self.self)")
     }
@@ -343,10 +357,7 @@ private extension ChatViewController {
     
     /// [把Bot的記憶清除](https://tenor.com/view/downcast-face-phew-asking-embarrassed-where-gif-6508259955425936045)
     func forgetMemoryAction() {
-        
-        guard let gifUrl = Bundle.main.url(forResource: "Forgot", withExtension: ".gif") else { return }
-        
-        WWHUD.shared.flash(effect: .gif(url: gifUrl, options: nil), height: 312.0, backgroundColor: .black.withAlphaComponent(0.3), animation: 1.0)
+        Utility.shared.flashHUD(with: .forgot)
         lastContext = nil
     }
     

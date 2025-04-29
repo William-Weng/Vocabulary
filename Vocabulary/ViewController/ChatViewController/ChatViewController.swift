@@ -1,82 +1,95 @@
 //
-//  ViewController.swift
-//  ChatGPTAPI
+//  ChatViewController.swift
+//  Vocabulary
 //
-//  Created by William.Weng on 2022/12/15.
+//  Created by William.Weng on 2025/4/25.
 //
 
 import UIKit
-import WWPrint
+import JavaScriptCore
+import WebKit
 import WWHUD
-import WWUserDefaults
+import WWPrint
+import WWToast
+import WWNetworking
+import WWEventSource
 import WWSimpleAI_Ollama
-import WWSimpleAI_ChatGPT
 import WWKeyboardShadowView
 import WWExpandableTextView
+import WWUserDefaults
 
-// MARK: - 對話功能頁
+// MARK: - ChatViewController
 final class ChatViewController: UIViewController {
     
-    @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var connentView: UIView!
-    @IBOutlet weak var chatImageView: UIImageView!
+    @IBOutlet weak var generateLiveButton: UIButton!
+    @IBOutlet weak var myWebView: WKWebView!
     @IBOutlet weak var keyboardConstraintHeight: NSLayoutConstraint!
     @IBOutlet weak var keyboardShadowView: WWKeyboardShadowView!
     @IBOutlet weak var expandableTextView: WWExpandableTextView!
     
-    static var chatMessageList: [Constant.ChatMessage] = []
+    @WWUserDefaults("IP") private var ip: String?
+    @WWUserDefaults("Port") private var port: String?
+    @WWUserDefaults("ChatModel") private var chatModel: String?
+    @WWUserDefaults("LastContext") private var lastContext: String?
     
     weak var sentenceViewDelegate: SentenceViewDelegate?
+    
+    private var botTimestamp: Int?
+    private var responseString: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
     }
-        
-    @IBAction func sendMessage(_ sender: UIButton) { sendMessage(with: expandableTextView.text) }
-    @IBAction func tokenSetting(_ sender: UIBarButtonItem) { bearerTokenTextHint(title: "請輸入Token") }
     
-    @objc func dimissKeyboard() { view.endEditing(true) }
+    override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
+        configure(ip: ip, port: port, model: chatModel)
+    }
+    
+    @IBAction func generateLiveDemo(_ sender: UIButton) {
+        generateLiveAction()
+    }
+    
+    @IBAction func configureAction(_ sender: UIBarButtonItem) {
+        presentOllamaConfigureAlert()
+    }
+    
+    @IBAction func forgetMemory(_ sender: UIBarButtonItem) {
+        forgetMemoryAction()
+    }
     
     deinit {
-        sentenceViewDelegate = nil
+        WWEventSource.shared.disconnect()
         keyboardShadowView.unregister()
         sentenceViewDelegate?.tabBarHidden(false)
-        wwPrint("deinit => \(Self.self)")
+        sentenceViewDelegate = nil
+        myPrint("deinit => \(Self.self)")
     }
 }
 
-// MARK: - UITableViewDelegate, UITableViewDataSource
-extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
+// MARK: - WWEventSource.Delegate
+extension ChatViewController: WWEventSource.Delegate {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Self.chatMessageList.count
+    func serverSentEventsConnectionStatus(_ eventSource: WWEventSource, result: Result<WWEventSource.ConnectionStatus, any Error>) {
+        sseStatusAction(eventSource: eventSource, result: result)
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = chatCellMaker(tableView, cellForRowAt: indexPath) else { fatalError() }
-        return cell
+    func serverSentEventsRawData(_ eventSource: WWEventSource, result: Result<WWEventSource.RawInformation, any Error>) {
+        
+        switch result {
+        case .failure(let error): wwPrint(error)
+        case .success(let rawInformation): sseRawString(eventSource: eventSource, rawInformation: rawInformation)
+        }
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        dimissKeyboard()
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-}
-
-// MARK: - UITextFieldDelegate
-extension ChatViewController: UITextFieldDelegate {
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
+    func serverSentEvents(_ eventSource: WWEventSource, eventValue: WWEventSource.EventValue) {
+        wwPrint(eventValue)
     }
 }
 
-// MARK: - UITextFieldDelegate
+// MARK: - WWKeyboardShadowView.Delegate
 extension ChatViewController: WWKeyboardShadowView.Delegate {
     
     func keyboardViewChange(_ view: WWKeyboardShadowView, status: WWKeyboardShadowView.DisplayStatus, information: WWKeyboardShadowView.KeyboardInformation, height: CGFloat) -> Bool {
@@ -93,176 +106,326 @@ private extension ChatViewController {
     
     /// 初始化設定
     func initSetting() {
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(Self.dimissKeyboard))
-        
-        myTableView.delegate = self
-        myTableView.dataSource = self
-        myTableView.addGestureRecognizer(tapGesture)
-        
-        chatImageView.image = Utility.shared.folderImage(name: "Chatting.jpg")
-        
+        initKeyboardShadowViewSetting()
+        initExpandableTextViewSetting()
+        initWebView(filename: "index.html")
+        sentenceViewDelegate?.tabBarHidden(true)
+    }
+    
+    /// 初始化鍵盤高度設定
+    func initKeyboardShadowViewSetting() {
         keyboardConstraintHeight.constant = 0
         keyboardShadowView.configure(target: self, keyboardConstraintHeight: keyboardConstraintHeight)
         keyboardShadowView.register()
-        
-        sentenceViewDelegate?.tabBarHidden(true)
-        chatSetting(bearerToken: Constant.bearerToken)
-        
-        initExpandableTextViewSetting()
     }
     
     /// 初始化設定可變高度的TextView (最高3行)
     func initExpandableTextViewSetting() {
+        generateLiveButton(isEnabled: false)
         expandableTextView.configure(lines: 3, gap: 21)
-        expandableTextView.setting(font: .systemFont(ofSize: 20), backgroundColor: .white, borderWidth: 1, borderColor: .gray)
+        expandableTextView.setting(font: .systemFont(ofSize: 20), textColor: .white, backgroundColor: .white.withAlphaComponent(0.2), borderWidth: 1, borderColor: .white)
     }
     
-    /// 選擇Cell (自己 / ChatGPT)
+    /// 初始化WebView
+    /// - Parameter filename: HTML檔案名稱
+    func initWebView(filename: String) {
+        
+        _ = myWebView._loadFile(filename: filename)
+        
+        myWebView.backgroundColor = .clear
+        myWebView.scrollView.backgroundColor = .clear
+        myWebView.isOpaque = false
+    }
+}
+
+// MARK: - 小工具
+private extension ChatViewController {
+    
+    /// 參數設定
     /// - Parameters:
-    ///   - tableView: UITableView
-    ///   - indexPath: IndexPath
-    /// - Returns: UITableViewCell?
-    func chatCellMaker(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell? {
+    ///   - ip: String?
+    ///   - port: String?
+    ///   - model: String?
+    func configure(ip: String?, port: String?, model: String?) {
         
-        let message = ChatViewController.chatMessageList[indexPath.row]
+        guard let ip, let port, let model else { return }
         
-        if (!message.isMe) {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "SlaveTableViewCell") as? SlaveTableViewCell
-            cell?.config(with: indexPath)
-            return cell
-        }
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MasterTableViewCell") as? MasterTableViewCell
-        cell?.config(with: indexPath)
-        return cell
+        WWSimpleAI.Ollama.configure(baseURL: "http://\(ip):\(port)", model: model)
+        checkConfigure()
     }
     
-    /// 解析訊息
-    /// - Parameter chatMessage: Constant.ChatMessage?
-    /// - Returns: String?
-    func phaseMessage(_ chatMessage: Constant.ChatMessage?) -> String? {
+    /// 及時回應 (SSE)
+    /// - Parameters:
+    ///   - prompt: 提問文字
+    func liveGenerate(prompt: String) {
         
-        guard let chatMessage = chatMessage else { return nil }
+        guard let chatModel else { return }
         
-        Self.chatMessageList.append(chatMessage)
-        let indexPath = IndexPath(row: Self.chatMessageList.count - 1, section: 0)
+        let urlString = WWSimpleAI.Ollama.API.generate.url()
+        let context = lastContext?._base64JSONObjectDecode() as [Int]?
         
-        myTableView.insertRows(at: [indexPath], with: .none)
-        myTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+        let json = """
+        {
+          "model": "\(chatModel)",
+          "prompt": "\(prompt)",
+          "context": \(context ?? []),
+          "stream": true
+        }
+        """
         
-        return chatMessage.text
+        wwPrint(json)
+        
+        _ = WWEventSource.shared.connect(httpMethod: .POST, delegate: self, urlString: urlString, httpBodyType: .string(json))
+    }
+    
+    /// 問問題 (執行SSE串流)
+    func generateLiveAction() {
+        
+        let text = expandableTextView.text._removeWhitespacesAndNewlines()
+        if (text.isEmpty) { return }
+        
+        generateLiveAction(webView: myWebView, text: text)
     }
 }
 
-// MARK: - CharGPT
-private extension ChatViewController {
-        
-    /// 傳送文字訊息
-    /// - Parameter message: String?
-    func sendMessage(with message: String?) {
-        
-        defer {
-            dimissKeyboard()
-            expandableTextView.text = ""
-            expandableTextView.updateHeight()
-        }
-        
-        guard let message = message,
-              !message.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-        else {
-            Utility.shared.flashHUD(with: .fail); return
-        }
-        
-        sendMessage(message)
-    }
-}
-
-// MARK: - CharGPT
+// MARK: - SSE (Server Sent Events - 單方向串流)
 private extension ChatViewController {
     
-    /// 傳送文字訊息
-    /// - Parameter message: String?
-    func sendMessage(_ message: String) {
+    /// SSE狀態處理
+    /// - Parameters:
+    ///   - eventSource: WWEventSource
+    ///   - result: Result<WWEventSource.Constant.ConnectionStatus, any Error>
+    func sseStatusAction(eventSource: WWEventSource, result: Result<WWEventSource.ConnectionStatus, any Error>) {
         
-        guard let chatMessage = Optional.some(Constant.ChatMessage(message, true)),
-              let content = phaseMessage(chatMessage)
-        else {
-            Utility.shared.flashHUD(with: .fail); return
-        }
-        
-        Utility.shared.diplayHUD(with: .loading)
-        
-        Task {
-            
-            let result = await WWSimpleAI.ChatGPT.shared.chat(model: .v3_5, temperature: 0.7, content: content)
+        DispatchQueue.main.async {
             
             switch result {
-            case .failure(let error): wwPrint(error); Utility.shared.flashHUD(with: .fail)
-            case .success(let message):
+            case .failure(let error):
+                self.responseString = ""
+                self.generateLiveButton(isEnabled: true)
+                WWToast.shared.makeText("\(error.localizedDescription)")
                 
-                Utility.shared.dismissHUD()
-                
-                if let message = message {
-                    let gptMessage = Constant.ChatMessage(message, false)
-                    _ = phaseMessage(gptMessage)
+            case .success(let status):
+                switch status {
+                case .connecting:
+                    self.expandableTextView.text = ""
+                    self.expandableTextView.updateHeight()
+                    self.generateLiveButton(isEnabled: false)
+                case .open: break
+                case .closed:
+                    self.responseString = ""
+                    self.generateLiveButton(isEnabled: true)
                 }
             }
         }
     }
     
-    /// 設定ChatGPT的Token對話框
+    /// SSE資訊處理
+    /// - Parameters:
+    ///   - eventSource: WWEventSource
+    ///   - rawInformation: WWEventSource.RawInformation
+    func sseRawString(eventSource: WWEventSource, rawInformation: WWEventSource.RawInformation) {
+        
+        defer {
+            DispatchQueue.main.async { [unowned self] in refreashWebSlaveCell(with: myWebView, botTimestamp: botTimestamp, responseString: responseString) }
+        }
+        
+        if rawInformation.response.statusCode != 200 {
+            responseString = rawInformation.data._string() ?? "\(rawInformation.response.statusCode)"; return
+        }
+        
+        guard let jsonObject = rawInformation.data._jsonObject() as? [String: Any],
+              let response = jsonObject["response"] as? String,
+              let isDone = jsonObject["done"] as? Bool
+        else {
+            return
+        }
+        
+        responseString += response
+        
+        if isDone {
+            let context = jsonObject["context"] as? [Int]
+            lastContext = context?._base64JSONDataString()
+        }
+    }
+}
+
+// MARK: - SSE for WKWebView (Server Sent Events - 單方向串流)
+private extension ChatViewController {
+    
+    /// 顯示Markdown文字
+    /// - Parameters:
+    ///   - webView: WKWebView
+    ///   - botTimestamp: TimeInterval?
+    ///   - responseString: String
+    func refreashWebSlaveCell(with webView: WKWebView, botTimestamp: Int?, responseString: String) {
+        
+        guard let base64Encoded = responseString._base64Encoded(),
+              let botTimestamp = botTimestamp
+        else {
+            return
+        }
+        
+        let jsCode = """
+            window.displayMarkdown("\(base64Encoded)", \(botTimestamp))
+        """
+        
+        webView._evaluateJavaScript(script: jsCode) { result in
+            
+            switch result {
+            case .failure(let error): wwPrint(error)
+            case .success(let value): wwPrint(value ?? "")
+            }
+        }
+    }
+    
+    /// 使用WKWebView去執行SSE問問題
+    /// - Parameters:
+    ///   - webView: WKWebView
+    ///   - text: String
+    func generateLiveAction(webView: WKWebView, text: String) {
+        
+        appendRole(with: webView, role: "user", message: text) { _ in
+            
+            self.appendRole(with: webView, role: "bot", message: "") { dict in
+                
+                guard let botTimestamp = dict["timestamp"] else { return }
+                
+                self.botTimestamp = botTimestamp
+                self.liveGenerate(prompt: text)
+            }
+        }
+    }
+    
+    /// 加上角色Cell
+    /// - Parameters:
+    ///   - webView: WKWebView
+    ///   - role: String
+    ///   - message: String
+    ///   - result: ([String: Int]) -> Void
+    func appendRole(with webView: WKWebView, role: String, message: String = "",  result: @escaping (([String: Int]) -> Void)) {
+                
+        let jsCode = """
+            window.appendRole("\(role)", "\(message)")
+        """
+        
+        webView._evaluateJavaScript(script: jsCode) { _result_ in
+            
+            switch _result_ {
+            case .failure(let error): print(error)
+            case .success(let dict):
+                guard let dict = dict as? [String: Int] else { return }
+                return result(dict)
+            }
+        }
+    }
+    
+    /// 移除最後一個Bot對話
+    /// - Parameters:
+    ///   - webView: WKWebView
+    ///   - responseString: String
+    func removeLastBot(with webView: WKWebView) {
+        
+        let jsCode = """
+            window.removeLastBot()
+        """
+        
+        webView._evaluateJavaScript(script: jsCode) { result in
+            
+            switch result {
+            case .failure(let error): wwPrint(error)
+            case .success(let value): wwPrint(value ?? "")
+            }
+            
+            self.generateLiveButton(isEnabled: true)
+        }
+    }
+    
+    /// [把Bot的記憶清除](https://tenor.com/view/downcast-face-phew-asking-embarrassed-where-gif-6508259955425936045)
+    func forgetMemoryAction() {
+        
+        guard let gifUrl = Bundle.main.url(forResource: "Forgot", withExtension: ".gif") else { return }
+        
+        WWHUD.shared.flash(effect: .gif(url: gifUrl, options: nil), height: 312.0, backgroundColor: .black.withAlphaComponent(0.3), animation: 1.0)
+        lastContext = nil
+    }
+    
+    /// 顯示Ollama參數設定的UIAlertController
     /// - Parameters:
     ///   - title: String
     ///   - message: String?
-    ///   - defaultText: String?
-    func bearerTokenTextHint(title: String, message: String? = nil, defaultText: String? = nil) {
+    func presentOllamaConfigureAlert(title: String = "本機Ollama參數設定", message: String? = nil) {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let placeholder = title
         
-        alertController.addTextField {
-            $0.text = defaultText
-            $0.placeholder = placeholder
+        alertController.addTextField { (textField) in textField.text = self.ip; textField.placeholder = "127.0.0.1" }
+        alertController.addTextField { (textField) in textField.text = self.port; textField.placeholder = "11434" }
+        alertController.addTextField { (textField) in textField.text = self.chatModel; textField.placeholder = "llama3.2" }
+        
+        let sureAction = UIAlertAction(title: "確定", style: .destructive) { aciton in
+            guard let textFields = alertController.textFields else { return }
+            self.ollamaConfigure(textFields: textFields)
         }
         
-        let actionOK = inputTokenAction(textFields: alertController.textFields)
-        let actionCancel = UIAlertAction(title: "取消", style: .cancel) {  _ in }
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel) { _ in }
         
-        alertController.addAction(actionOK)
-        alertController.addAction(actionCancel)
-        
-        present(alertController, animated: true, completion: nil)
+        alertController.addAction(sureAction)
+        alertController.addAction(cancelAction)
+
+        present(alertController, animated: true)
     }
     
-    /// 設定ChatGPT的Token功能
-    /// - Parameter textFields: [UITextField]?
-    /// - Returns: UIAlertAction
-    func inputTokenAction(textFields: [UITextField]?) -> UIAlertAction {
-        
-        let actionOK = UIAlertAction(title: "確認", style: .default) { [weak self] _ in
+    /// Ollama參數設定
+    /// - Parameter textFields: [UITextField]
+    func ollamaConfigure(textFields: [UITextField]) {
+                
+        for (index, textField) in textFields.enumerated() {
             
-            guard let this = self,
-                  let bearerToken = textFields?.first?.text?._removeWhiteSpacesAndNewlines(),
-                  !bearerToken.isEmpty
+            guard let type = Constant.TextFieldType(rawValue: index),
+                  let value = textField.text
             else {
                 return
             }
             
-            this.chatSetting(bearerToken: bearerToken)
+            switch type {
+            case .ip: self.ip = value
+            case .port: self.port = value
+            case .chatModel: self.chatModel = value
+            }
         }
         
-        return actionOK
+        self.configure(ip: self.ip, port: self.port, model: self.chatModel)
     }
     
-    /// 設定ChatGPT的Token
-    /// - Parameter bearerToken: String?
-    func chatSetting(bearerToken: String?) {
+    /// 檢測參數設定是否正確
+    func checkConfigure() {
         
-        guard let bearerToken = bearerToken else { bearerTokenTextHint(title: "請輸入Token"); return }
-        
-        WWSimpleAI.ChatGPT.configure(apiKey: bearerToken)
-        connentView.backgroundColor = .lightGray.withAlphaComponent(0.3)
-        Constant.bearerToken = bearerToken
+        _ = WWNetworking.shared.request(urlString: WWSimpleAI.Ollama.API.version.url(), timeout: 5) { result in
+            
+            DispatchQueue.main.async {
+                
+                switch result {
+                case .failure(let error): self.presentOllamaConfigureAlert(message: error.localizedDescription)
+                case .success(let info):
+                    
+                    guard let data = info.data,
+                          let jsonObject = data._jsonObject() as? [String: Any],
+                          let version = jsonObject["version"]
+                    else {
+                        self.generateLiveButton(isEnabled: false); return
+                    }
+                    
+                    let text = "您使用的Ollama版本為：\(version)，模型為：\(WWSimpleAI.Ollama.model)"
+                    self.generateLiveButton(isEnabled: true)
+                    WWToast.shared.makeText(text)
+                }
+            }
+        }
+    }
+    
+    /// 設定generateLiveButton是否可以使用
+    /// - Parameter isEnabled: Bool
+    func generateLiveButton(isEnabled: Bool) {
+        generateLiveButton.isEnabled = isEnabled
     }
 }

@@ -24,7 +24,6 @@ final class Constant: NSObject {
     }
     
     @WWUserDefaults("CurrentTableName") static var tableName: String?
-    @WWUserDefaults("ChatGPTBearerToken") static var bearerToken: String?
     
     static let webImageExpiredDays = 90
     static let autoBackupDays = 7
@@ -84,6 +83,13 @@ extension Constant {
 
 // MARK: - Enumeration
 extension Constant {
+    
+    /// Bot文字框的順序
+    enum TextFieldType: Int {
+        case ip = 0
+        case port
+        case chatModel
+    }
     
     /// ScrollView滾動的方向
     enum ScrollDirection {

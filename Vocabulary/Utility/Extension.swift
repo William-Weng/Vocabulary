@@ -277,6 +277,19 @@ extension Encodable {
     }
 }
 
+// MARK: - Sequence (function)
+extension Sequence {
+    
+    /// Array => JSON Data => Base64String
+    /// - Parameters:
+    ///   - writingOptions: JSONSerialization.WritingOptions
+    ///   - base64EncodingOptions: Data.Base64EncodingOptions
+    /// - Returns: String?
+    func _base64JSONDataString(writingOptions: JSONSerialization.WritingOptions = JSONSerialization.WritingOptions(), base64EncodingOptions: Data.Base64EncodingOptions = []) -> String? {
+        return _jsonData(options: writingOptions)?._base64String(options: base64EncodingOptions)
+    }
+}
+
 // MARK: - Array (function)
 extension Array {
     
@@ -352,6 +365,10 @@ extension Dictionary {
 // MARK: - String (function)
 extension String {
     
+    /// 去除空白及換行字元
+    /// - Returns: Self
+    func _removeWhitespacesAndNewlines() -> Self { return trimmingCharacters(in: .whitespacesAndNewlines) }
+        
     /// [國家地區代碼](https://zh.wikipedia.org/wiki/國家地區代碼)
     /// - [顏文字：AA => 🇦🇦 / TW => 🇹🇼](https://lets-emoji.com/)
     /// - Returns: String
@@ -416,6 +433,14 @@ extension String {
         return data
     }
     
+    /// 文字 => Base64文字
+    /// => Hello World -> SGVsbG8gV29ybGQ=
+    /// - Parameter options: Data.Base64EncodingOptions
+    /// - Returns: String?
+    func _base64Encoded(using encoding: String.Encoding = .utf8, isLossyConversion: Bool = false, options: Data.Base64EncodingOptions = []) -> String? {
+        return _data(using: encoding, isLossyConversion: isLossyConversion)?._base64String(options: options)
+    }
+    
     /// JSON String => JSON Object
     /// - Parameters:
     ///   - encoding: 字元編碼
@@ -430,6 +455,23 @@ extension String {
         }
         
         return jsonObject
+    }
+    
+    /// 將轉成Base64的JSONObject轉回來 - "WzEsMiwzXQ==" => [1, 2, 3]
+    /// - Parameters:
+    ///   - encoding: String.Encoding
+    ///   - isLossyConversion: Bool
+    ///   - options: JSONSerialization.ReadingOptions
+    /// - Returns: T?
+    func _base64JSONObjectDecode<T>(using encoding: String.Encoding = .utf8, isLossyConversion: Bool = false, options: JSONSerialization.ReadingOptions = .allowFragments) -> T? {
+        
+        guard let data = _data(using: encoding, isLossyConversion: isLossyConversion),
+              let jsonObject = Data(base64Encoded: data)?._jsonObject(options: options)
+        else {
+            return nil
+        }
+        
+        return jsonObject as? T
     }
 }
 
@@ -467,6 +509,13 @@ extension Data {
     /// - Returns: String?
     func _string(using encoding: String.Encoding = .utf8) -> String? {
         return String(bytes: self, encoding: encoding)
+    }
+    
+    /// [Data => Base64文字](https://zh.wikipedia.org/zh-tw/Base64)
+    /// - Parameter options: Base64EncodingOptions
+    /// - Returns: Base64EncodingOptions
+    func _base64String(options: Base64EncodingOptions = []) -> String {
+        return self.base64EncodedString(options: options)
     }
 }
 
@@ -1892,6 +1941,22 @@ extension WKWebView {
         }
         
         return self.load(urlRequest)
+    }
+    
+    /// 載入本機HTML檔案
+    /// - Parameters:
+    ///   - filename: HTML檔案名稱
+    ///   - bundle: Bundle位置
+    ///   - directory: 資料夾位置
+    ///   - readAccessURL: 允許讀取的資料夾位置
+    /// - Returns: Result<WKNavigation?, Error>
+    func _loadFile(filename: String, bundle: Bundle? = nil, inSubDirectory directory: String? = nil, allowingReadAccessTo readAccessURL: URL? = nil) -> WKNavigation? {
+        
+        guard let url = (bundle ?? .main).url(forResource: filename, withExtension: nil, subdirectory: directory) else { return nil }
+        
+        let readAccessURL: URL = readAccessURL ?? url.deletingLastPathComponent()
+        
+        return loadFileURL(url, allowingReadAccessTo: readAccessURL)
     }
     
     /// 執行JavaScript

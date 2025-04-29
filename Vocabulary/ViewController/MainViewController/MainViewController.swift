@@ -506,7 +506,8 @@ private extension MainViewController {
                 UIPasteboard._paste(string: vocabularyList.word)
             } mainAction: {
                 let setting = Utility.shared.toastSetting(for: this)
-                WWToast.shared.makeText(target: this, text: vocabularyList.word, backgroundColor: setting.backgroundColor, height: setting.height)
+                WWToast.shared.setting(backgroundViewColor: setting.backgroundColor, bottomHeight: setting.height)
+                WWToast.shared.makeText(target: this, text: vocabularyList.word)
             }
         }
         
@@ -710,7 +711,8 @@ private extension MainViewController {
                 }
                 
                 let setting = Utility.shared.toastSetting(for: this)
-                WWToast.shared.makeText(target: this, text: message, backgroundColor: setting.backgroundColor, height: setting.height)
+                WWToast.shared.setting(backgroundViewColor: setting.backgroundColor, bottomHeight: setting.height)
+                WWToast.shared.makeText(target: this, text: message)
             }
         }
     }

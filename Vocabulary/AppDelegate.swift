@@ -300,8 +300,11 @@ private extension AppDelegate {
             return
         }
         
+        let text = "[\(duration)] \(filename)"
         let backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        WWToast.shared.makeText(targetFrame: window.frame, text: "[\(duration)] \(filename)", backgroundColor: backgroundColor)
+        
+        WWToast.shared.setting(backgroundViewColor: backgroundColor)
+        WWToast.shared.makeText(text, targetFrame: window.frame)
     }
     
     /// 開始錄音 (.wav)

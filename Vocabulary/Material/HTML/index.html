@@ -139,6 +139,7 @@
             const timestamp = Date.now()
             const localTimeString = new Date(timestamp).toLocaleString()
             const buttonId = `read-button-${timestamp}`
+            const messageId = `message-${timestamp}`
 
             let innerMessage = `
             <span class="dots">
@@ -169,7 +170,7 @@
                     <img src="${role}.png" alt="${role}">
                 </div>
                 <div class="message-bubble">
-                    <div id="message-${timestamp}" class="message-content markdown-body">${innerMessage}</div>
+                    <div id="${messageId}" class="message-content markdown-body">${innerMessage}</div>
                     <div class="message-note">${messageRoleReadContent}</div>
                 </div>
             </div>
@@ -182,7 +183,7 @@
                 behavior: 'smooth'
             })
             
-            window.readTextContentEventListener(timestamp)
+            window.readEventListener(timestamp)
 
             return { "timestamp": timestamp }
         }
@@ -194,10 +195,10 @@
          */
         window.displayMarkdown = (base64Encoded, timestamp) => {
             
-            const id = `message-${timestamp}`
+            const messageId = `message-${timestamp}`
             const decodedText = decodeURIComponent(escape(atob(base64Encoded)))
             const html = marked.parse(decodedText)
-            const div = document.getElementById(id)
+            const div = document.getElementById(messageId)
 
             div.innerHTML = html
             window.scrollToBottom()
@@ -236,15 +237,17 @@
         
         /**
          * 註冊點擊文字閱讀功能 - SpeechSynthesisUtterance
+         * @param {string} id - 按鍵的Id
          * @param {number} timestamp - 時間戳記 (ms)
          */
-        window.readTextContentEventListener = (timestamp) => {
+        window.readEventListener = (timestamp) => {
             
             const buttonId = `read-button-${timestamp}`
-
+            const messageId = `message-${timestamp}`
+            
             document.getElementById(buttonId).addEventListener("click", () => {
                 
-                const textToRead = document.getElementById(timestamp).textContent
+                const textToRead = document.getElementById(messageId).textContent
                 const utterance = new SpeechSynthesisUtterance(textToRead)
                 
                 utterance.rate = 0.8

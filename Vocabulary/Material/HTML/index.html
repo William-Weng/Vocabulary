@@ -182,7 +182,7 @@
                 behavior: 'smooth'
             })
             
-            window.readEventListener(buttonId, timestamp)
+            window.readTextContentEventListener(timestamp)
 
             return { "timestamp": timestamp }
         }
@@ -236,12 +236,13 @@
         
         /**
          * 註冊點擊文字閱讀功能 - SpeechSynthesisUtterance
-         * @param {string} id - 按鍵的Id
          * @param {number} timestamp - 時間戳記 (ms)
          */
-        window.readEventListener = (id, timestamp) => {
+        window.readTextContentEventListener = (timestamp) => {
             
-            document.getElementById(id).addEventListener("click", () => {
+            const buttonId = `read-button-${timestamp}`
+
+            document.getElementById(buttonId).addEventListener("click", () => {
                 
                 const textToRead = document.getElementById(timestamp).textContent
                 const utterance = new SpeechSynthesisUtterance(textToRead)

@@ -134,8 +134,11 @@ private extension ChatViewController {
     
     /// 初始化鍵盤高度設定
     func initKeyboardShadowViewSetting() {
-        keyboardConstraintHeight.constant = 0
-        keyboardShadowView.configure(target: self, keyboardConstraintHeight: keyboardConstraintHeight)
+        
+        let bottom = tabBarController?.view.safeAreaInsets.bottom ?? 0.0
+        
+        keyboardConstraintHeight.constant = bottom
+        keyboardShadowView.configure(target: self, keyboardConstraintHeight: keyboardConstraintHeight, bottomType: .custom(bottom))
         keyboardShadowView.register()
     }
     

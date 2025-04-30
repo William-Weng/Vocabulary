@@ -87,8 +87,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWKeyboardShadowView",
       "state" : {
-        "revision" : "3ca6e8206dc9cc470a8147f4114b0789c08b4d6b",
-        "version" : "1.1.0"
+        "revision" : "3fee0dfdaae1be49d694c8390598be49a588b27c",
+        "version" : "1.1.3"
       }
     },
     {

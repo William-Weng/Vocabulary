@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css/github-markdown.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         .message {
@@ -58,20 +59,26 @@
             word-wrap: break-word;
         }
 
+        .message-note {
+            margin-top: 8px;
+        }
+        
+        .message-read {
+            margin: 8px;
+        }
+        
         .bot .message-time {
             font-size: 0.7em;
             color: #999;
-            margin-top: 5px;
             align-self: flex-start;
         }
 
         .user .message-time {
             font-size: 0.7em;
             color: #999;
-            margin-top: 5px;
             align-self: flex-end;
         }
-
+        
         .fade-out {
             opacity: 0;
             transition: opacity 0.5s;
@@ -131,6 +138,7 @@
             const container = document.getElementById('container')
             const timestamp = Date.now()
             const localTimeString = new Date(timestamp).toLocaleString()
+            const buttonId = `read-button-${timestamp}`
 
             let innerMessage = `
             <span class="dots">
@@ -143,24 +151,38 @@
 
             if (message.length != 0) { innerMessage = message }
 
+            let messageRoleReadContent = `
+            <span class="message-time">${localTimeString}</span>
+            <span class="message-read"><button id="${buttonId}" class="fas fa-volume-up"></button></span>
+            `
+            
+            if (role == 'user') {
+                messageRoleReadContent = `
+                <span class="message-read"><button id="${buttonId}" class="fas fa-volume-up"></button></span>
+                <span class="message-time">${localTimeString}</span>
+                `
+            }
+            
             const divHtml = `
             <div class="message ${role}">
                 <div class="avatar">
                     <img src="${role}.png" alt="${role}">
                 </div>
                 <div class="message-bubble">
-                    <div id="${timestamp}" class="message-content markdown-body">${innerMessage}</div>
-                    <div class="message-time">${localTimeString}</div>
+                    <div id="message-${timestamp}" class="message-content markdown-body">${innerMessage}</div>
+                    <div class="message-note">${messageRoleReadContent}</div>
                 </div>
             </div>
             `
-
+            
             container.insertAdjacentHTML('beforeend', divHtml)
 
             window.scrollTo({
                 top: document.body.scrollHeight,
                 behavior: 'smooth'
             })
+            
+            window.readEventListener(buttonId, timestamp)
 
             return { "timestamp": timestamp }
         }
@@ -171,10 +193,11 @@
          * @param {number} timestamp - 時間戳記 (ms)
          */
         window.displayMarkdown = (base64Encoded, timestamp) => {
-
+            
+            const id = `message-${timestamp}`
             const decodedText = decodeURIComponent(escape(atob(base64Encoded)))
             const html = marked.parse(decodedText)
-            const div = document.getElementById(timestamp)
+            const div = document.getElementById(id)
 
             div.innerHTML = html
             window.scrollToBottom()
@@ -211,6 +234,24 @@
             })
         }
         
+        /**
+         * 註冊點擊文字閱讀功能 - SpeechSynthesisUtterance
+         * @param {string} id - 按鍵的Id
+         * @param {number} timestamp - 時間戳記 (ms)
+         */
+        window.readEventListener = (id, timestamp) => {
+            
+            document.getElementById(id).addEventListener("click", () => {
+                
+                const textToRead = document.getElementById(timestamp).textContent
+                const utterance = new SpeechSynthesisUtterance(textToRead)
+                
+                utterance.rate = 0.8
+                utterance.lang = 'zh-TW'
+                
+                speechSynthesis.speak(utterance)
+            });
+        }
     </script>
 
     <title>BOT聊天室</title>

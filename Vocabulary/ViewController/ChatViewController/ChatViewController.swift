@@ -9,7 +9,6 @@ import UIKit
 import JavaScriptCore
 import WebKit
 import WWHUD
-import WWPrint
 import WWToast
 import WWNetworking
 import WWEventSource
@@ -93,13 +92,13 @@ extension ChatViewController: WWEventSource.Delegate {
     func serverSentEventsRawData(_ eventSource: WWEventSource, result: Result<WWEventSource.RawInformation, any Error>) {
         
         switch result {
-        case .failure(let error): wwPrint(error)
+        case .failure(let error): myPrint(error)
         case .success(let rawInformation): sseRawString(eventSource: eventSource, rawInformation: rawInformation)
         }
     }
     
     func serverSentEvents(_ eventSource: WWEventSource, eventValue: WWEventSource.EventValue) {
-        wwPrint(eventValue)
+        myPrint(eventValue)
     }
 }
 
@@ -117,7 +116,7 @@ extension ChatViewController: WWKeyboardShadowView.Delegate {
     }
     
     func keyboardView(_ view: WWKeyboardShadowView, error: WWKeyboardShadowView.CustomError) {
-        wwPrint(error)
+        myPrint(error)
     }
 }
 
@@ -196,7 +195,7 @@ private extension ChatViewController {
         }
         """
         
-        wwPrint(json)
+        myPrint(json)
         
         _ = WWEventSource.shared.connect(httpMethod: .POST, delegate: self, urlString: urlString, httpBodyType: .string(json))
     }
@@ -296,8 +295,8 @@ private extension ChatViewController {
         webView._evaluateJavaScript(script: jsCode) { result in
             
             switch result {
-            case .failure(let error): wwPrint(error)
-            case .success(let value): wwPrint(value ?? "")
+            case .failure(let error): myPrint(error)
+            case .success(let value): myPrint(value ?? "")
             }
         }
     }
@@ -343,27 +342,6 @@ private extension ChatViewController {
         }
     }
     
-    /// 移除最後一個Bot對話
-    /// - Parameters:
-    ///   - webView: WKWebView
-    ///   - responseString: String
-    func removeLastBot(with webView: WKWebView) {
-        
-        let jsCode = """
-            window.removeLastBot()
-        """
-        
-        webView._evaluateJavaScript(script: jsCode) { result in
-            
-            switch result {
-            case .failure(let error): wwPrint(error)
-            case .success(let value): wwPrint(value ?? "")
-            }
-            
-            self.generateLiveButton(isEnabled: true)
-        }
-    }
-    
     /// 將網頁拉到最底部
     /// - Parameter webView: WKWebView
     func scrollToBottom(with webView: WKWebView) {
@@ -375,8 +353,8 @@ private extension ChatViewController {
         webView._evaluateJavaScript(script: jsCode) { result in
             
             switch result {
-            case .failure(let error): wwPrint(error)
-            case .success(let value): wwPrint(value ?? "")
+            case .failure(let error): myPrint(error)
+            case .success(let value): myPrint(value ?? "")
             }
         }
     }

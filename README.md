@@ -18,7 +18,7 @@
 ![](./@Image/demo_4.webp)
 
 # 附錄：資源下載說明 (所有資源都是從網路下載，僅作程式分享教學之用，並無侵權之意，資源版權皆屬於原作者所有…)
-## [引用套件](https://github.com/William-Weng/SwiftPackageManager)
+## [引用套件 - WW系列](https://swiftpackageindex.com/William-Weng)
 ## [背景音樂 - .mp3 / .m4a (請在iTunes上自行加入)](http://amachamusic.chagasi.com/)
 ## [語言字型](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/為-ios-app-加入客製字型-custom-font-d2b28b0269e0)
 

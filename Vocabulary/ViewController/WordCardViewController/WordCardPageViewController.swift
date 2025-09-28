@@ -135,6 +135,8 @@ private extension WordCardPageViewController {
         favoriteButton.setBackgroundImage(Utility.shared.favoriteIcon(isFavorite), for: .normal)
         
         countLabel.text = "\(vocabularyList.count)"
+        countLabel.clipsToBounds = true
+        
         wordLabel.text = vocabularyList.word
         alphabetLabel.text = vocabularyList.alphabet
         
@@ -171,6 +173,7 @@ private extension WordCardPageViewController {
     ///   - info: Settings.WordSpeechInformation?
     func speechLabelSetting(_ label: UILabel, with info: Settings.WordSpeechInformation) {
         
+        label.clipsToBounds = true
         label.text = info.name
         label.textColor = UIColor(rgb: info.color)
         label.backgroundColor = UIColor(rgb: info.backgroundColor)

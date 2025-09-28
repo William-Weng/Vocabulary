@@ -67,6 +67,8 @@ private extension MainTableViewCell {
         self.isFavorite = ((vocabularyList.favorite ?? 0) != 0)
         
         countLabel.text = "\(vocabularyList.count)"
+        countLabel.clipsToBounds = true
+        
         alphabetLabel.text = vocabularyList.alphabet
         
         wordLabel.font = Utility.shared.dictionaryFont(with: Constant.tableNameIndex, size: 36.0)

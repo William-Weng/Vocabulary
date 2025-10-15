@@ -416,7 +416,7 @@ private extension MainViewController {
     ///   - action: (String) -> Bool
     func appendTextHint(with indexPath: IndexPath? = nil, title: String, message: String? = nil, defaultText: String? = nil, action: @escaping (String) -> Bool) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertController = UIAlertController._build(title: title, message: message)
         
         alertController.addTextField {
             self.inputTextField = $0
@@ -858,7 +858,7 @@ private extension MainViewController {
     ///   - sourceView: UIView?
     func informationHint(with title: String?, message: String?, sourceView: UIView? = nil) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertController = UIAlertController._build(title: title, message: message)
         let actionOK = UIAlertAction(title: "確認", style: .cancel) { _ in }
         let actionSelectDatabase = UIAlertAction(title: "選擇字典", style: .default) { [unowned self] _ in dictionaryAlertAction(target: self, sourceView: sourceView) }
         let actionWordCard = UIAlertAction(title: "單字卡模式", style: .default) { [unowned self] _ in performSegue(for: .wordCardView, sender: nil) }
@@ -878,7 +878,7 @@ private extension MainViewController {
     ///   - sourceView: UIView?
     func dictionaryAlertAction(target: UIViewController, sourceView: UIView? = nil) {
         
-        let alertController = UIAlertController(title: "請選擇字典", message: nil, preferredStyle: .actionSheet)
+        let alertController = UIAlertController._build(title: "請選擇字典", message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
         
         Constant.SettingsJSON.generalInformations.forEach { info in

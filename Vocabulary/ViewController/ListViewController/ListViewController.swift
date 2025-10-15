@@ -241,7 +241,7 @@ private extension ListViewController {
         
         guard let vocabulary = ListTableViewCell.vocabulary(with: indexPath) else { return }
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertController = UIAlertController._build(title: title, message: message)
         
         alertController.addTextField { $0.text = vocabulary.interpret; $0.placeholder = "請輸入單字翻譯" }
         alertController.addTextField { $0.text = vocabulary.example; $0.placeholder = "請輸入相關例句" }

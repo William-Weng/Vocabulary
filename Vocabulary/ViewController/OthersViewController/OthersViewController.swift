@@ -335,7 +335,7 @@ private extension OthersViewController {
     ///   - action: (String, String) -> Bool
     func appendBookmarkHint(with indexPath: IndexPath? = nil, title: String, message: String? = nil, titleText: String? = nil, webUrlText: String? = nil, action: @escaping (String, String) -> Bool) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertController = UIAlertController._build(title: title, message: message)
 
         alertController.addTextField {
             $0.text = titleText
@@ -489,8 +489,8 @@ private extension OthersViewController {
     ///   - action: (String) -> Void
     func appendIconUrlHint(with indexPath: IndexPath, title: String, message: String? = nil, iconUrl: String? = nil, action: @escaping (String) -> Void) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
+        let alertController = UIAlertController._build(title: title, message: message)
+
         alertController.addTextField {
             $0.text = iconUrl
             $0.placeholder = "請輸入圖示網址…"
@@ -648,7 +648,7 @@ private extension OthersViewController {
     ///   - action: (() -> Void)?
     func downloadDocumentHint(target: UIViewController, title: String?, message: String?, barButtonItem: UIBarButtonItem? = nil, action: (() -> Void)? = nil) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertController = UIAlertController._build(title: title, message: message)
         let action = UIAlertAction(title: "確認", style: .cancel) {  _ in action?() }
         
         alertController.addAction(action)
@@ -706,7 +706,7 @@ private extension OthersViewController {
     /// 顯示版本 / 常用書籤數量訊息
     func informationHint(with title: String?, message: String?) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertController = UIAlertController._build(title: title, message: message)
         let actionOK = UIAlertAction(title: "確認", style: .default) { _ in }
         let actionLicense = UIAlertAction(title: "說明", style: .default) { [unowned self] _ in performSegue(withIdentifier: ViewSegueType.license.rawValue, sender: nil) }
         

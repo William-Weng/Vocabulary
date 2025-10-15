@@ -1884,6 +1884,23 @@ extension UIViewController {
     }
 }
 
+// MARK: - UIAlertController (static function)
+extension UIAlertController {
+    
+    /// 建立UIAlertController
+    /// - Parameters:
+    ///   - title: String?
+    ///   - message: String?
+    ///   - tintColor: UIColor
+    ///   - preferredStyle: UIAlertController.Style
+    /// - Returns: Self
+    static func _build(title: String?, message: String?, tintColor: UIColor = .systemBlue, preferredStyle: UIAlertController.Style = .alert) -> Self {
+        let alertController = Self(title: title, message: message, preferredStyle: .alert)
+        alertController.view.tintColor = tintColor
+        return alertController
+    }
+}
+
 // MARK: - UIDocumentPickerViewController (static function)
 extension UIDocumentPickerViewController {
     

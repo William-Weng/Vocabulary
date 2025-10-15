@@ -371,8 +371,8 @@ private extension ChatViewController {
     ///   - message: String?
     func presentOllamaConfigureAlert(title: String = "本機Ollama參數設定", message: String? = nil) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
+        let alertController = UIAlertController._build(title: title, message: message)
+
         alertController.addTextField { (textField) in textField.text = self.ip; textField.placeholder = "127.0.0.1" }
         alertController.addTextField { (textField) in textField.text = self.port; textField.placeholder = "11434" }
         alertController.addTextField { (textField) in textField.text = self.chatModel; textField.placeholder = "llama3.2" }

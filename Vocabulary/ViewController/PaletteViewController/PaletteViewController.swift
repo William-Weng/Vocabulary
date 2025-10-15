@@ -385,8 +385,8 @@ private extension PaletteViewController {
     ///   - message: String?
     func paletteSettingHint(target: UIViewController, title: String? = nil, message: String? = nil, barButtonItem: UIBarButtonItem? = nil) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
-        
+        let alertController = UIAlertController._build(title: title, message: message)
+
         let actionSetting = UIAlertAction(title: "設定", style: .default) { [weak self] _ in
             
             guard let this = self else { return }
@@ -421,7 +421,7 @@ private extension PaletteViewController {
     ///   - message: String?
     func previousPageHint(with title: String?, message: String?) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertController = UIAlertController._build(title: title, message: message)
         let actionCancel = UIAlertAction(title: "取消", style: .cancel) { _ in }
         let actionSelectDatabase = UIAlertAction(title: "確認", style: .default) { [weak self] _ in
             guard let this = self else { return }

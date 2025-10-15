@@ -310,8 +310,8 @@ private extension ReviewViewController {
     ///   - action: (String) -> Void
     func answerAlert(_ title: String, message: String? = nil, placeholder: String?, action: @escaping (String) -> Void) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
+        let alertController = UIAlertController._build(title: title, message: message)
+
         alertController.addTextField {
             $0.text = ""
             $0.placeholder = placeholder
@@ -478,7 +478,7 @@ extension ReviewViewController {
             return
         }
         
-        let alertController = UIAlertController(title: "請選擇等級", message: nil, preferredStyle: .actionSheet)
+        let alertController = UIAlertController._build(title: "請選擇等級", message: nil, preferredStyle: .actionSheet)
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
         
         Constant.SettingsJSON.vocabularyLevelInformations.forEach { levelInfo in
@@ -542,7 +542,7 @@ extension ReviewViewController {
     ///   - message: String?
     func informationHint(with title: String?, message: String?) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertController = UIAlertController._build(title: title, message: message)
         let actionOK = UIAlertAction(title: "確認", style: .default) { _ in }
         
         alertController.addAction(actionOK)

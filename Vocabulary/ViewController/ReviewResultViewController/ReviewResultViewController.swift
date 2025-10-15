@@ -277,7 +277,7 @@ private extension ReviewResultViewController {
     /// 顯示版本 / 複習總覽數量訊息
     func informationHint(with title: String?, message: String?) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertController = UIAlertController._build(title: title, message: message)
         let actionOK = UIAlertAction(title: "確認", style: .default) { _ in }
         
         alertController.addAction(actionOK)

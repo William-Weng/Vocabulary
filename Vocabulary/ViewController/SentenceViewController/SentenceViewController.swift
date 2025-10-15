@@ -381,7 +381,7 @@ private extension SentenceViewController {
     ///   - action: (String) -> Bool
     func appendSentenceHint(with indexPath: IndexPath? = nil, title: String, message: String? = nil, exampleText: String? = nil, translateText: String? = nil, action: @escaping (String, String) -> Bool) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertController = UIAlertController._build(title: title, message: message)
 
         alertController.addTextField {
             $0.text = exampleText
@@ -609,7 +609,7 @@ private extension SentenceViewController {
     /// 顯示版本 / 精選例句數量訊息
     func informationHint(with title: String?, message: String?) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let alertController = UIAlertController._build(title: title, message: message)
         let actionOK = UIAlertAction(title: "確認", style: .default) { _ in }
         
         alertController.addAction(actionOK)

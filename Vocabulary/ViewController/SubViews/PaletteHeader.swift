@@ -25,6 +25,7 @@ final class PaletteHeader: UIView {
     
     func configure(with section: Int) {
         myLabel.text = Self.groupColorKey(with: section)?.name()
+        myLabel.clipsToBounds = true
     }
     
     deinit { myPrint("\(Self.self) deinit") }

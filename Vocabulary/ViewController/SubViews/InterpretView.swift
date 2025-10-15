@@ -66,5 +66,6 @@ private extension InterpretView {
         label.text = info.name
         label.textColor = UIColor(rgb: info.color)
         label.backgroundColor = UIColor(rgb: info.backgroundColor)
+        label.clipsToBounds = true
     }
 }

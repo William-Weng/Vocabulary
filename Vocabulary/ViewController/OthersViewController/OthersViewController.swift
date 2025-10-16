@@ -276,7 +276,7 @@ private extension OthersViewController {
     ///   - isHidden: Bool
     func navigationBarHiddenAction(_ isHidden: Bool) {
         guard let navigationController = navigationController else { return }
-        navigationController.setNavigationBarHidden(isHidden, animated: true)
+        navigationController._barHidden(isHidden)
     }
     
     /// 修正TableView不使用SafeArea的位置問題

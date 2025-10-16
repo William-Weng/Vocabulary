@@ -1476,6 +1476,14 @@ extension UINavigationBarAppearance {
 // MARK: - UINavigationController (function)
 extension UINavigationController {
     
+    /// 設定NavigationBarHidden
+    /// - Parameters:
+    ///   - isHidden: Bool
+    ///   - flag: Bool
+    func _barHidden(_ isHidden: Bool, animated flag: Bool = true) {
+        setNavigationBarHidden(isHidden, animated: flag)
+    }
+    
     /// 取得第一頁的ViewController
     /// - Returns: UIViewController?
     func _rootViewController() -> UIViewController? { return viewControllers.first }
@@ -1520,6 +1528,7 @@ extension UIStatusBarManager {
         return keyWindow?.windowScene?.statusBarManager
     }
 }
+
 // MARK: - UITabBarController
 extension UITabBarController {
     

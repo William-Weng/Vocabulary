@@ -10,12 +10,25 @@
 |[word://search/<單字>](word://search/<新單字>)|搜尋該單字|
 |[word://icon/<圖示編號>](word://icon/<圖示編號>)|更新APP圖示|
 
-## 動態圖
+## 影片介紹
 
-![](./@Image/demo_1.webp)
-![](./@Image/demo_2.webp)
-![](./@Image/demo_3.webp)
-![](./@Image/demo_4.webp)
+https://github.com/user-attachments/assets/2501550c-9c37-47e9-8782-06d35df80a64
+
+
+https://github.com/user-attachments/assets/be213fd8-f9d5-47c5-a041-53c3f42d9262
+
+
+https://github.com/user-attachments/assets/e9abef13-09a7-44a4-b7df-f56ec562de34
+
+
+https://github.com/user-attachments/assets/cde17903-cd0b-45a5-8ce1-97e266d3e316
+
+
+https://github.com/user-attachments/assets/5e93609d-cd35-44d9-b06a-0badb47fe0d3
+
+
+https://github.com/user-attachments/assets/3fdc2b02-42e5-4586-a1a2-d4ee0b994180
+
 
 # 附錄：資源下載說明 (所有資源都是從網路下載，僅作程式分享教學之用，並無侵權之意，資源版權皆屬於原作者所有…)
 ## [引用套件 - WW系列](https://swiftpackageindex.com/William-Weng)

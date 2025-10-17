@@ -15,22 +15,25 @@ import WWToast
 import WWSQLite3Manager
 import WWNetworking_UIImage
 import WWAppInstallSource
+import WWAssistiveTouch
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable {
     
     var window: UIWindow?
     var orientationLock: UIInterfaceOrientationMask?
+    var assistiveTouch: WWAssistiveTouch!
 
     private let audioPlayerQueue = DispatchQueue(label: "github.com/William-Weng/Vocabulary")
-    
+
     private var audioPlayer: AVAudioPlayer?
     private var recordPlayer: AVAudioPlayer?
     private var audioRecorder: AVAudioRecorder?
     private var musicLoopType: Constant.MusicLoopType = .infinity
-    
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         initSetting(application, didFinishLaunchingWithOptions: launchOptions)
+        assistiveTouch = WWAssistiveTouch(touchViewController: UIViewController(), icon: UIImage(named: "Pencil"), delegate: self)
         return true
     }
     
@@ -71,6 +74,17 @@ extension AppDelegate: AVAudioRecorderDelegate {
     }
     
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) { myPrint(error) }
+}
+
+// MARK: - WWAssistiveTouch.Delegate
+extension AppDelegate: WWAssistiveTouch.Delegate {
+    
+    func assistiveTouch(_ assistiveTouch: WWAssistiveTouch, isTouched: Bool) {
+        assistiveTouch.isHidden = isTouched
+        if (isTouched) { NotificationCenter.default._post(name: .displayCanvasView, object: nil) }
+    }
+    
+    func assistiveTouch(_ assistiveTouch: WWAssistiveTouch, status: WWAssistiveTouch.Status) {}
 }
 
 // MARK: - 小工具 (公開)

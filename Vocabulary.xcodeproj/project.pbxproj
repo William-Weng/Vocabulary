@@ -30,7 +30,6 @@
 		6476D7D22B7A22A800E0DFC5 /* WordCardPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6476D7D12B7A22A800E0DFC5 /* WordCardPageViewController.swift */; };
 		6492ADD52986B8E900E1B59B /* KleeOne-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADD42986B8E900E1B59B /* KleeOne-SemiBold.ttf */; };
 		6492ADD72986BBFA00E1B59B /* GamjaFlower-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6492ADD62986BBFA00E1B59B /* GamjaFlower-Regular.ttf */; };
-		64A11DF829B2315D00688C90 /* MyTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A11DF729B2315D00688C90 /* MyTabBar.swift */; };
 		64AB741B2B78508100882826 /* WordCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AB741A2B78508100882826 /* WordCardViewController.swift */; };
 		64ACFDED2B7EBDA700863407 /* WWOnBoardingViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 64ACFDEC2B7EBDA700863407 /* WWOnBoardingViewController */; };
 		64B94D7A2AB5DDE8006B317D /* README.html in Resources */ = {isa = PBXBuildFile; fileRef = 64B94D792AB5DDE8006B317D /* README.html */; };
@@ -55,6 +54,7 @@
 		813B25E32BA44DF2006B9755 /* WWHash in Frameworks */ = {isa = PBXBuildFile; productRef = 813B25E22BA44DF2006B9755 /* WWHash */; };
 		8141EEFC2B8C748D0091127F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8141EEFB2B8C748D0091127F /* PrivacyInfo.xcprivacy */; };
 		8141EEFF2B8C7FA60091127F /* WWUserDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = 8141EEFE2B8C7FA60091127F /* WWUserDefaults */; };
+		8142F45C2EA2151C00F644FC /* WWAssistiveTouch in Frameworks */ = {isa = PBXBuildFile; productRef = 8142F45B2EA2151C00F644FC /* WWAssistiveTouch */; };
 		815E14782990F47700EC571D /* SentenceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815E14772990F47700EC571D /* SentenceTableViewCell.swift */; };
 		81708BC62B21AD4C00397B27 /* dictionary_7439537.png in Resources */ = {isa = PBXBuildFile; fileRef = 81708BC22B21AD4C00397B27 /* dictionary_7439537.png */; };
 		81708BC72B21AD4C00397B27 /* translate_5146533.png in Resources */ = {isa = PBXBuildFile; fileRef = 81708BC32B21AD4C00397B27 /* translate_5146533.png */; };
@@ -115,7 +115,6 @@
 		6476D7D12B7A22A800E0DFC5 /* WordCardPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCardPageViewController.swift; sourceTree = "<group>"; };
 		6492ADD42986B8E900E1B59B /* KleeOne-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "KleeOne-SemiBold.ttf"; sourceTree = "<group>"; };
 		6492ADD62986BBFA00E1B59B /* GamjaFlower-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GamjaFlower-Regular.ttf"; sourceTree = "<group>"; };
-		64A11DF729B2315D00688C90 /* MyTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTabBar.swift; sourceTree = "<group>"; };
 		64AB741A2B78508100882826 /* WordCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordCardViewController.swift; sourceTree = "<group>"; };
 		64B94D792AB5DDE8006B317D /* README.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = README.html; sourceTree = SOURCE_ROOT; };
 		64BA9EA1299764E600226DC8 /* OthersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OthersTableViewCell.swift; sourceTree = "<group>"; };
@@ -181,6 +180,7 @@
 				81E1F8FF2A1F2D9B00EB0139 /* WWNetworking in Frameworks */,
 				81E516562D928B8E0020BD90 /* WWNetworking-UIImage in Frameworks */,
 				64445E8E2B8A119E00B37744 /* WWKeyboardShadowView in Frameworks */,
+				8142F45C2EA2151C00F644FC /* WWAssistiveTouch in Frameworks */,
 				813B25E32BA44DF2006B9755 /* WWHash in Frameworks */,
 				812A01C22C0824A80086E128 /* WWNetworking-UIImage in Frameworks */,
 				81CB93AE2DB879C3006CAAE1 /* WWJavaScriptContext in Frameworks */,
@@ -356,7 +356,6 @@
 		64C18505297EB8F400D1D1B2 /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
-				64A11DF729B2315D00688C90 /* MyTabBar.swift */,
 				81201C4A298B58C200291485 /* InterpretView.swift */,
 				81201C4B298B58C200291485 /* InterpretView.xib */,
 				64D3E6192AAC5CB700140716 /* PaletteHeader.swift */,
@@ -539,6 +538,7 @@
 				81CB93AD2DB879C3006CAAE1 /* WWJavaScriptContext */,
 				81CB93B02DB87AB7006CAAE1 /* WWExpandableTextView */,
 				8139CE1C2DC07C7D00805A2F /* WWEventSource */,
+				8142F45B2EA2151C00F644FC /* WWAssistiveTouch */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -588,6 +588,7 @@
 				81CB93AC2DB87995006CAAE1 /* XCRemoteSwiftPackageReference "WWJavaScriptContext" */,
 				81CB93AF2DB87AB6006CAAE1 /* XCRemoteSwiftPackageReference "WWExpandableTextView" */,
 				8139CE1B2DC07C7D00805A2F /* XCRemoteSwiftPackageReference "WWEventSource" */,
+				8142F4402EA1F2D000F644FC /* XCRemoteSwiftPackageReference "WWAssistiveTouch" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -636,7 +637,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				64C18502297E861800D1D1B2 /* Utility.swift in Sources */,
-				64A11DF829B2315D00688C90 /* MyTabBar.swift in Sources */,
 				642858AB297BC51E00DD7D88 /* Model.swift in Sources */,
 				81F52F34299DE87A005F9DF2 /* MyTabBarController.swift in Sources */,
 				811DFC402AAAEFE600BF480C /* PaletteViewController.swift in Sources */,
@@ -828,7 +828,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20251015;
+				CURRENT_PROJECT_VERSION = 20251017;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "我愛背單字";
@@ -846,7 +846,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.6.5;
+				MARKETING_VERSION = 2.6.6;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -866,7 +866,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20251015;
+				CURRENT_PROJECT_VERSION = 20251017;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Vocabulary/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "我愛背單字";
@@ -884,7 +884,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.6.5;
+				MARKETING_VERSION = 2.6.6;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -991,6 +991,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.4;
+			};
+		};
+		8142F4402EA1F2D000F644FC /* XCRemoteSwiftPackageReference "WWAssistiveTouch" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWAssistiveTouch";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.4;
 			};
 		};
 		81B041F02D92874200B698CA /* XCRemoteSwiftPackageReference "WWSimpleAI_ChatGPT" */ = {
@@ -1132,6 +1140,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8141EEFD2B8C7FA60091127F /* XCRemoteSwiftPackageReference "WWUserDefaults" */;
 			productName = WWUserDefaults;
+		};
+		8142F45B2EA2151C00F644FC /* WWAssistiveTouch */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8142F4402EA1F2D000F644FC /* XCRemoteSwiftPackageReference "WWAssistiveTouch" */;
+			productName = WWAssistiveTouch;
 		};
 		81B041F12D92874200B698CA /* WWSimpleAI_ChatGPT */ = {
 			isa = XCSwiftPackageProductDependency;

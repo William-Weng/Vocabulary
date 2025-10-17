@@ -1540,6 +1540,8 @@ extension UITabBarController {
     ///   - curve: 動畫類型
     func _tabBarHidden(_ isHidden: Bool, animated: Bool = true, duration: TimeInterval = 0.1, curve: UIView.AnimationCurve = .linear) {
         
+        if #available(iOS 18.0, *) { isTabBarHidden = isHidden; return }
+        
         let viewHeight = self.view.frame.size.height
         var tabBarFrame = self.tabBar.frame
         

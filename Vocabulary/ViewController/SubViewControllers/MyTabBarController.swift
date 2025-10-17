@@ -170,6 +170,8 @@ private extension MyTabBarController {
     
     /// 移除畫布
     func removeCanvasView() {
+            
+        assistiveTouchHidden(false)
         
         canvasView?.removeFromSuperview()
         
@@ -177,6 +179,13 @@ private extension MyTabBarController {
         toolPicker = nil
         dismissButton = nil
         cleanDrawingButton = nil
+    }
+    
+    /// AssistiveTouch是否顯示
+    /// - Parameter isHidden: Bool
+    func assistiveTouchHidden(_ isHidden: Bool) {
+        guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        delegate.assistiveTouch.isHidden = isHidden
     }
     
     /// 清空畫布

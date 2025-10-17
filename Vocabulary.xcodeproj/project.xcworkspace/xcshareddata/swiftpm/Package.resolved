@@ -1,5 +1,5 @@
 {
-  "originHash" : "bb3d6d722e190fa7b8c265baaf0339c70c3b40270a322a8598484ac8112c4390",
+  "originHash" : "571af09b4c2298221fc8aa47c77019b1bc726c572bb1e9b928569aefaee6461b",
   "pins" : [
     {
       "identity" : "wwappinstallsource",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "2491ca2eba21a4e8c7122f293224692d018e857d",
         "version" : "1.0.4"
+      }
+    },
+    {
+      "identity" : "wwassistivetouch",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWAssistiveTouch",
+      "state" : {
+        "revision" : "403fc53f60d72a49ab6cf6e86a148a47c95e0a63",
+        "version" : "1.1.4"
       }
     },
     {

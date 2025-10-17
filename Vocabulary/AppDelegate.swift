@@ -33,7 +33,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         initSetting(application, didFinishLaunchingWithOptions: launchOptions)
-        assistiveTouch = WWAssistiveTouch(touchViewController: UIViewController(), icon: UIImage(named: "Pencil"), delegate: self)
+        assistiveTouch = WWAssistiveTouch(touchViewController: UIViewController(), icon: .pencil, delegate: self)
         return true
     }
     

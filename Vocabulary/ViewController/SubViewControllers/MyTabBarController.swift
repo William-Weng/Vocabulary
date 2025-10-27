@@ -14,13 +14,13 @@ final class MyTabBarController: UITabBarController {
     static var isHidden = true
     
     private let safeAreaGap = 24.0
+    private let diameter = 36.0
+    private let buttonPoint = CGPoint(x: 32.0, y: 44.0)
     
     private var canvasView: PKCanvasView?
     private var toolPicker: PKToolPicker?
     private var dismissButton: UIButton?
     private var cleanDrawingButton: UIButton?
-    private var diameter = 36.0
-    private var gap = 32.0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,8 +35,8 @@ final class MyTabBarController: UITabBarController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        dismissButton?.center = dismissButtonCenter(gap: gap)
-        cleanDrawingButton?.center = cleanDrawingButtonCenter(gap: gap)
+        dismissButton?.center = dismissButtonCenter(origin: buttonPoint)
+        cleanDrawingButton?.center = cleanDrawingButtonCenter(origin: buttonPoint)
         tabBarStatus(isHidden: Self.isHidden, animated: false)
     }
 
@@ -98,7 +98,8 @@ private extension MyTabBarController {
     func canvasViewSetting() {
         
         canvasView = PKCanvasView._build(onView: view, delegate: self)
-        
+        assistiveTouchHidden(true)
+                
         if let canvasView = canvasView {
             toolPicker = PKToolPicker._build(with: canvasView)
             canvasView.becomeFirstResponder()
@@ -113,8 +114,8 @@ private extension MyTabBarController {
         dismissButton?.removeFromSuperview()
         cleanDrawingButton?.removeFromSuperview()
         
-        dismissButton = actionButtonMaker(diameter, gap: gap, imageName: "Close")
-        cleanDrawingButton = actionButtonMaker(diameter, gap: gap, imageName: "Clean")
+        dismissButton = actionButtonMaker(diameter, imageName: "Close")
+        cleanDrawingButton = actionButtonMaker(diameter, imageName: "Clean")
         
         guard let dismissButton = dismissButton,
               let cleanDrawingButton = cleanDrawingButton
@@ -132,10 +133,9 @@ private extension MyTabBarController {
     /// 產生關閉畫布按鈕
     /// - Parameters:
     ///   - diameter: 直徑
-    ///   - gap: 與右上角的間隔
     ///   - imageName: 圖片名稱
     /// - Returns: UIButton
-    func actionButtonMaker(_ diameter: CGFloat, gap: CGFloat, imageName: String) -> UIButton {
+    func actionButtonMaker(_ diameter: CGFloat, imageName: String) -> UIButton {
         
         let button = UIButton()
         
@@ -147,32 +147,31 @@ private extension MyTabBarController {
     }
     
     /// 設定dismissButton的位置
-    /// - Parameter gap: CGFloat
+    /// - Parameter origin: CGPoint
     /// - Returns: CGPoint
-    func dismissButtonCenter(gap: CGFloat) -> CGPoint {
+    func dismissButtonCenter(origin: CGPoint) -> CGPoint {
         
-        var center = CGPoint(x: view.frame.width - gap, y: gap)
-        if let window = view.window, window._hasSafeArea() { center = CGPoint(x: view.frame.width - gap, y: gap + safeAreaGap) }
+        var center = CGPoint(x: view.frame.width - origin.x, y: origin.y)
+        if let window = view.window, window._hasSafeArea() { center = CGPoint(x: view.frame.width - origin.x, y: origin.y + safeAreaGap) }
         
         return center
     }
     
     /// 設定cleanDrawingButton的位置
-    /// - Parameter gap: CGFloat
+    /// - Parameter origin: CGPoint
     /// - Returns: CGPoint
-    func cleanDrawingButtonCenter(gap: CGFloat) -> CGPoint {
+    func cleanDrawingButtonCenter(origin: CGPoint) -> CGPoint {
         
-        var center = CGPoint(x: gap, y: gap)
-        if let window = view.window, window._hasSafeArea() { center = CGPoint(x: gap, y: gap + safeAreaGap) }
+        var center = origin
+        if let window = view.window, window._hasSafeArea() { center = CGPoint(x: origin.x, y: origin.y + safeAreaGap) }
         
         return center
     }
     
     /// 移除畫布
     func removeCanvasView() {
-            
-        assistiveTouchHidden(false)
         
+        assistiveTouchHidden(false)
         canvasView?.removeFromSuperview()
         
         canvasView = nil
@@ -184,8 +183,22 @@ private extension MyTabBarController {
     /// AssistiveTouch是否顯示
     /// - Parameter isHidden: Bool
     func assistiveTouchHidden(_ isHidden: Bool) {
+        
         guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        delegate.assistiveTouch.isHidden = isHidden
+        
+        delegate.assistiveTouch.alpha = isHidden ? 1.0 : 0.0
+
+        let animator = UIViewPropertyAnimator(duration: Constant.replay, curve: .easeInOut) {
+            delegate.assistiveTouch.alpha = !isHidden ? 1.0 : 0.0
+        }
+        
+        if !isHidden {
+            delegate.assistiveTouch.isHidden = false
+        } else {
+            animator.addCompletion { _ in delegate.assistiveTouch.isHidden = true }
+        }
+        
+        animator.startAnimation()
     }
     
     /// 清空畫布

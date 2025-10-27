@@ -68,7 +68,7 @@ private extension LicenseWebViewController {
     /// WebView初始化設定
     func initSetting() {
         
-        let webView = WKWebView._build(delegate: self, frame: view.bounds, contentInsetAdjustmentBehavior: .never)
+        let webView = WKWebView._build(delegate: self, frame: view.bounds, contentInsetAdjustmentBehavior: .automatic)
         let url = Bundle.main.url(forResource: "README.html", withExtension: nil)
 
         self.view = webView        

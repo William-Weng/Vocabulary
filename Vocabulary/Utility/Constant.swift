@@ -35,6 +35,7 @@ final class Constant: NSObject {
     static let maxnumDownloadCount: UInt = 10
     static let duration: TimeInterval = 0.15
     static let delay: TimeInterval = 0.25
+    static let replay: TimeInterval = 0.5
     static let autoBackupDelaySecond: TimeInterval = 2
     static let searchDelayTime: TimeInterval = 0.3
     

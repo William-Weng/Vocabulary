@@ -33,10 +33,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         initSetting(application, didFinishLaunchingWithOptions: launchOptions)
-        assistiveTouch = WWAssistiveTouch(touchViewController: UIViewController(), icon: .pencil, delegate: self)
+        initAssistiveTouch(window: window)
         return true
     }
-    
+        
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         deepLinkURL(app, open: url, options: options)
         return true
@@ -80,7 +80,6 @@ extension AppDelegate: AVAudioRecorderDelegate {
 extension AppDelegate: WWAssistiveTouch.Delegate {
     
     func assistiveTouch(_ assistiveTouch: WWAssistiveTouch, isTouched: Bool) {
-        assistiveTouch.isHidden = isTouched
         if (isTouched) { NotificationCenter.default._post(name: .displayCanvasView, object: nil) }
     }
     
@@ -115,7 +114,7 @@ extension AppDelegate {
         else {
             return
         }
-                        
+        
         Constant.SettingsJSON.generalInformations = generalInformations(with: parseSettingsDictionary)
         Constant.SettingsJSON.vocabularyLevelInformations = vocabularyLevelInformations(with: settings)
         Constant.SettingsJSON.sentenceSpeechInformations = sentenceSpeechInformations(with: settings)
@@ -158,7 +157,7 @@ extension AppDelegate {
     /// - Parameter notificaiton: Notification
     func replayMusic(with player: AVAudioPlayer) {
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + Constant.replay) { [weak self] in
             guard let this = self else { return }
             player._play(queue: this.audioPlayerQueue)
         }
@@ -417,6 +416,22 @@ private extension AppDelegate {
         let shortcutItem = UIApplicationShortcutItem._build(localizedTitle: title, localizedSubtitle: subtitle, icon: icon)
         
         return shortcutItem
+    }
+}
+
+// MARK: - Pencil Kit
+private extension AppDelegate {
+    
+    /// 初始化浮動按鈕
+    /// - Parameter window: UIWindow?
+    func initAssistiveTouch(window: UIWindow?) {
+        
+        guard let window else { return }
+                
+        let size = CGSize(width: 56, height: 56)
+        let origin = CGPoint(x: window.bounds.width, y: window.bounds.height - 216)
+        
+        assistiveTouch = WWAssistiveTouch(touchViewController: UIViewController(), frame: .init(origin: origin, size: size), icon: .pencil, delegate: self)
     }
 }
 

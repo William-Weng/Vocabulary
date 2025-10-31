@@ -27,6 +27,8 @@ https://github.com/user-attachments/assets/5e93609d-cd35-44d9-b06a-0badb47fe0d3
 https://github.com/user-attachments/assets/3fdc2b02-42e5-4586-a1a2-d4ee0b994180
 
 
+https://github.com/user-attachments/assets/acc0725b-12a5-4ae9-8f70-2c68870191f2
+
 # 附錄：資源下載說明 (所有資源都是從網路下載，僅作程式分享教學之用，並無侵權之意，資源版權皆屬於原作者所有…)
 ## [引用套件 - WW系列](https://swiftpackageindex.com/William-Weng)
 ## [背景音樂 - .mp3 / .m4a (請在iTunes上自行加入)](http://amachamusic.chagasi.com/)

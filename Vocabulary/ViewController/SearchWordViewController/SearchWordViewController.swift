@@ -33,6 +33,7 @@ final class SearchWordViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
         vocabularyListPageSetting(for: segue, sender: sender)
     }
     
@@ -185,7 +186,7 @@ private extension SearchWordViewController {
         _ = myImageView._GIF(url: gifUrl) { [weak self] result in
             
             guard let this = self else { return }
-                        
+            
             switch result {
             case .failure(let error): myPrint(error)
             case .success(let info):

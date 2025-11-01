@@ -57,7 +57,9 @@
         "talking": { "name": "錄音功能", "value": 6, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Talking.gif" },
         "solution": { "name": "單字解答", "value": 7, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Solution.gif" },
         "review": { "name": "複習總覽", "value": 8, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Review.gif" },
-        "palette": { "name": "相關設定", "value": 9, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Palette.gif" }
+        "palette": { "name": "相關設定", "value": 9, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Palette.gif" },
+        "chatting": { "name": "聊天對話", "value": 10, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Chatting.gif" },
+        "ollama": { "name": "網內對話", "value": 11, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Ollama.gif" }
       }
     }
   },
@@ -117,7 +119,9 @@
         "talking": { "name": "錄音功能", "value": 6, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Talking.gif" },
         "solution": { "name": "單字解答", "value": 7, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Solution.gif" },
         "review": { "name": "複習總覽", "value": 8, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Review.gif" },
-        "palette": { "name": "相關設定", "value": 9, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Palette.gif" }
+        "palette": { "name": "相關設定", "value": 9, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Palette.gif" },
+        "chatting": { "name": "聊天對話", "value": 10, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Chatting.gif" },
+        "ollama": { "name": "網內對話", "value": 11, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Ollama.gif" }
       }
     }
   },
@@ -172,7 +176,9 @@
         "talking": { "name": "錄音功能", "value": 6, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Talking.gif" },
         "solution": { "name": "單字解答", "value": 7, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Solution.gif" },
         "review": { "name": "複習總覽", "value": 8, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Review.gif" },
-        "palette": { "name": "相關設定", "value": 9, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Palette.gif" }
+        "palette": { "name": "相關設定", "value": 9, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Palette.gif" },
+        "chatting": { "name": "聊天對話", "value": 10, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Chatting.gif" },
+        "ollama": { "name": "網內對話", "value": 11, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Ollama.gif" }
       }
     }
   }

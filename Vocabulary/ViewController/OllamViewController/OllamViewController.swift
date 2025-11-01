@@ -1,5 +1,5 @@
 //
-//  ChatViewController.swift
+//  OllamViewController.swift
 //  Vocabulary
 //
 //  Created by William.Weng on 2025/4/25.
@@ -17,10 +17,11 @@ import WWKeyboardShadowView
 import WWExpandableTextView
 import WWUserDefaults
 
-// MARK: - ChatViewController
-final class ChatViewController: UIViewController {
+// MARK: - OllamViewController
+final class OllamViewController: UIViewController {
     
     @IBOutlet weak var connentView: UIView!
+    @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var generateLiveButton: UIButton!
     @IBOutlet weak var myWebView: WKWebView!
     @IBOutlet weak var keyboardConstraintHeight: NSLayoutConstraint!
@@ -31,12 +32,14 @@ final class ChatViewController: UIViewController {
     @WWUserDefaults("Port") private var port: String?
     @WWUserDefaults("ChatModel") private var chatModel: String?
     @WWUserDefaults("LastContext") private var lastContext: String?
-    
-    weak var sentenceViewDelegate: SentenceViewDelegate?
-    
+        
     private var isConfigure = false
     private var botTimestamp: Int?
     private var responseString: String = ""
+    
+    private var isAnimationStop = false
+    private var disappearImage: UIImage?
+    private var gifImageView: UIImageView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,12 +57,14 @@ final class ChatViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        sentenceViewDelegate?.tabBarHidden(true)
+        tabBarController?._tabBarHidden(true, animated: true)
+        animatedBackground(with: .ollama)
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        sentenceViewDelegate?.tabBarHidden(false)
+        tabBarController?._tabBarHidden(false, animated: true)
+        pauseBackgroundAnimation()
     }
     
     @IBAction func generateLiveDemo(_ sender: UIButton) {
@@ -77,13 +82,13 @@ final class ChatViewController: UIViewController {
     deinit {
         WWEventSource.shared.disconnect()
         keyboardShadowView.unregister()
-        sentenceViewDelegate = nil
+        removeGifBlock()
         myPrint("deinit => \(Self.self)")
     }
 }
 
 // MARK: - WWEventSource.Delegate
-extension ChatViewController: WWEventSource.Delegate {
+extension OllamViewController: WWEventSource.Delegate {
     
     func serverSentEventsConnectionStatus(_ eventSource: WWEventSource, result: Result<WWEventSource.ConnectionStatus, any Error>) {
         sseStatusAction(eventSource: eventSource, result: result)
@@ -103,7 +108,7 @@ extension ChatViewController: WWEventSource.Delegate {
 }
 
 // MARK: - WWKeyboardShadowView.Delegate
-extension ChatViewController: WWKeyboardShadowView.Delegate {
+extension OllamViewController: WWKeyboardShadowView.Delegate {
     
     func keyboardViewChange(_ view: WWKeyboardShadowView, status: WWKeyboardShadowView.DisplayStatus, information: WWKeyboardShadowView.KeyboardInformation, height: CGFloat) -> Bool {
         
@@ -121,14 +126,13 @@ extension ChatViewController: WWKeyboardShadowView.Delegate {
 }
 
 // MARK: - 小工具
-private extension ChatViewController {
+private extension OllamViewController {
     
     /// 初始化設定
     func initSetting() {
         initKeyboardShadowViewSetting()
         initExpandableTextViewSetting()
         initWebView(filename: "index.html")
-        sentenceViewDelegate?.tabBarHidden(true)
     }
     
     /// 初始化鍵盤高度設定
@@ -158,10 +162,49 @@ private extension ChatViewController {
         myWebView.scrollView.backgroundColor = .clear
         myWebView.isOpaque = false
     }
+    
+    /// 暫停背景動畫
+    func pauseBackgroundAnimation() {
+        disappearImage = myImageView.image
+        isAnimationStop = true
+    }
+    
+    /// 移除GIF動畫Block
+    func removeGifBlock() {
+        
+        isAnimationStop = true
+        gifImageView?.removeFromSuperview()
+        gifImageView = nil
+    }
+}
+
+// MARK: - gif工具
+private extension OllamViewController {
+    
+    /// 動畫背景設定
+    /// - Parameter type: Constant.AnimationGifType
+    func animatedBackground(with type: Constant.AnimationGifType) {
+        
+        guard let gifUrl = type.fileURL(with: .background) else { return }
+        
+        isAnimationStop = false
+        
+        _ = myImageView._GIF(url: gifUrl) { [weak self] result in
+            
+            guard let this = self else { return }
+            
+            switch result {
+            case .failure(let error): myPrint(error)
+            case .success(let info):
+                info.pointer.pointee = this.isAnimationStop
+                if (this.isAnimationStop) { this.myImageView.image = this.disappearImage }
+            }
+        }
+    }
 }
 
 // MARK: - 小工具
-private extension ChatViewController {
+private extension OllamViewController {
     
     /// 參數設定
     /// - Parameters:
@@ -211,7 +254,7 @@ private extension ChatViewController {
 }
 
 // MARK: - SSE (Server Sent Events - 單方向串流)
-private extension ChatViewController {
+private extension OllamViewController {
     
     /// SSE狀態處理
     /// - Parameters:
@@ -273,7 +316,7 @@ private extension ChatViewController {
 }
 
 // MARK: - SSE for WKWebView (Server Sent Events - 單方向串流)
-private extension ChatViewController {
+private extension OllamViewController {
     
     /// 顯示Markdown文字
     /// - Parameters:

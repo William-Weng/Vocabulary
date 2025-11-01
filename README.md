@@ -10,7 +10,7 @@
 |[word://search/<單字>](word://search/<新單字>)|搜尋該單字|
 |[word://icon/<圖示編號>](word://icon/<圖示編號>)|更新APP圖示|
 
-## 影片介紹
+## [影片介紹](https://www.sohu.com/a/62659825_323847)
 
 https://github.com/user-attachments/assets/2501550c-9c37-47e9-8782-06d35df80a64
 

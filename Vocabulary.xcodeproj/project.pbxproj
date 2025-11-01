@@ -12,6 +12,7 @@
 		3D652CD22DB39BAB0047DB39 /* WWCollectionViewLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 3D652CD12DB39BAB0047DB39 /* WWCollectionViewLayout */; };
 		3D652CD42DB3AD2B0047DB39 /* WordMemoryItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D652CD32DB3AD2B0047DB39 /* WordMemoryItemCell.swift */; };
 		3DC6E3872EB5898D00F883E6 /* TouchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC6E3862EB5898D00F883E6 /* TouchViewController.swift */; };
+		3DC6E38A2EB5A27700F883E6 /* TalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC6E3892EB5A27700F883E6 /* TalkViewController.swift */; };
 		6417E8512AAD285D00512881 /* PaletteHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6417E8502AAD285D00512881 /* PaletteHeader.xib */; };
 		6418FC1A2A6DCDED00493B8D /* WWAppInstallSource in Frameworks */ = {isa = PBXBuildFile; productRef = 6418FC192A6DCDED00493B8D /* WWAppInstallSource */; };
 		641B5CA72984BEB500AB1C56 /* VolumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641B5CA62984BEB500AB1C56 /* VolumeViewController.swift */; };
@@ -49,7 +50,7 @@
 		812A01C22C0824A80086E128 /* WWNetworking-UIImage in Frameworks */ = {isa = PBXBuildFile; productRef = 812A01C12C0824A80086E128 /* WWNetworking-UIImage */; };
 		812A01C52C0824C90086E128 /* WWNetworking-UIImage in Frameworks */ = {isa = PBXBuildFile; productRef = 812A01C42C0824C90086E128 /* WWNetworking-UIImage */; };
 		812C5444299F73DC003F942A /* TalkingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812C5443299F73DC003F942A /* TalkingViewController.swift */; };
-		8139CE1A2DC07C5D00805A2F /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8139CE192DC07C5D00805A2F /* ChatViewController.swift */; };
+		8139CE1A2DC07C5D00805A2F /* OllamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8139CE192DC07C5D00805A2F /* OllamViewController.swift */; };
 		8139CE1D2DC07C7D00805A2F /* WWEventSource in Frameworks */ = {isa = PBXBuildFile; productRef = 8139CE1C2DC07C7D00805A2F /* WWEventSource */; };
 		813B25E32BA44DF2006B9755 /* WWHash in Frameworks */ = {isa = PBXBuildFile; productRef = 813B25E22BA44DF2006B9755 /* WWHash */; };
 		8141EEFC2B8C748D0091127F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8141EEFB2B8C748D0091127F /* PrivacyInfo.xcprivacy */; };
@@ -66,7 +67,6 @@
 		8196323329933CEF00B96960 /* MyNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8196323229933CEF00B96960 /* MyNavigationController.swift */; };
 		819D69D0298E311D001AF48E /* SolutionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819D69CF298E311D001AF48E /* SolutionViewController.swift */; };
 		819D69D2298E31E1001AF48E /* SolutionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819D69D1298E31E1001AF48E /* SolutionTableViewCell.swift */; };
-		819DFAB52DC084380052CF22 /* Forgot.gif in Resources */ = {isa = PBXBuildFile; fileRef = 819DFAB42DC084380052CF22 /* Forgot.gif */; };
 		819DFABA2DC087BC0052CF22 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 819DFAB82DC087BC0052CF22 /* index.html */; };
 		819DFABB2DC087BC0052CF22 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = 819DFAB92DC087BC0052CF22 /* user.png */; };
 		819DFABC2DC087BC0052CF22 /* bot.png in Resources */ = {isa = PBXBuildFile; fileRef = 819DFAB72DC087BC0052CF22 /* bot.png */; };
@@ -98,6 +98,7 @@
 		3D652CC92DB38FD60047DB39 /* WordMemoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordMemoryViewController.swift; sourceTree = "<group>"; };
 		3D652CD32DB3AD2B0047DB39 /* WordMemoryItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordMemoryItemCell.swift; sourceTree = "<group>"; };
 		3DC6E3862EB5898D00F883E6 /* TouchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchViewController.swift; sourceTree = "<group>"; };
+		3DC6E3892EB5A27700F883E6 /* TalkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkViewController.swift; sourceTree = "<group>"; };
 		6417E8502AAD285D00512881 /* PaletteHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaletteHeader.xib; sourceTree = "<group>"; };
 		641B5CA62984BEB500AB1C56 /* VolumeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeViewController.swift; sourceTree = "<group>"; };
 		64285887297BBF8600DD7D88 /* Vocabulary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vocabulary.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,7 +132,7 @@
 		81201C4A298B58C200291485 /* InterpretView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterpretView.swift; sourceTree = "<group>"; };
 		81201C4B298B58C200291485 /* InterpretView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InterpretView.xib; sourceTree = "<group>"; };
 		812C5443299F73DC003F942A /* TalkingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkingViewController.swift; sourceTree = "<group>"; };
-		8139CE192DC07C5D00805A2F /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		8139CE192DC07C5D00805A2F /* OllamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OllamViewController.swift; sourceTree = "<group>"; };
 		8141EEFB2B8C748D0091127F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		815E14772990F47700EC571D /* SentenceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceTableViewCell.swift; sourceTree = "<group>"; };
 		81708BC22B21AD4C00397B27 /* dictionary_7439537.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dictionary_7439537.png; sourceTree = "<group>"; };
@@ -144,7 +145,6 @@
 		8196323229933CEF00B96960 /* MyNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNavigationController.swift; sourceTree = "<group>"; };
 		819D69CF298E311D001AF48E /* SolutionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolutionViewController.swift; sourceTree = "<group>"; };
 		819D69D1298E31E1001AF48E /* SolutionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolutionTableViewCell.swift; sourceTree = "<group>"; };
-		819DFAB42DC084380052CF22 /* Forgot.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Forgot.gif; sourceTree = "<group>"; };
 		819DFAB72DC087BC0052CF22 /* bot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bot.png; sourceTree = "<group>"; };
 		819DFAB82DC087BC0052CF22 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		819DFAB92DC087BC0052CF22 /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user.png; sourceTree = "<group>"; };
@@ -203,6 +203,14 @@
 				3D652CD32DB3AD2B0047DB39 /* WordMemoryItemCell.swift */,
 			);
 			path = WordMemoryViewController;
+			sourceTree = "<group>";
+		};
+		3DC6E3882EB5A24500F883E6 /* TalkViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3DC6E3892EB5A27700F883E6 /* TalkViewController.swift */,
+			);
+			path = TalkViewController;
 			sourceTree = "<group>";
 		};
 		6420F6A32980BEBB005EAA5A /* Frameworks */ = {
@@ -266,7 +274,8 @@
 				818E2616299231D400385705 /* ReviewResultViewController */,
 				819D69CE298E30F1001AF48E /* SolutionViewController */,
 				81D8E09D298A1146001D2581 /* SearchWordViewController */,
-				815BC4E92B874AA40099593F /* ChatViewController */,
+				3DC6E3882EB5A24500F883E6 /* TalkViewController */,
+				815BC4E92B874AA40099593F /* OllamViewController */,
 				81E56B6C2A725DD6004400D6 /* SearchVocabularyViewController */,
 				81CD85CD2990F040009C39FF /* SentenceViewController */,
 				81AB5EF72996437B0035216F /* OthersViewController */,
@@ -295,7 +304,6 @@
 				64285893297BBF8700DD7D88 /* Assets.xcassets */,
 				64B94D792AB5DDE8006B317D /* README.html */,
 				81BA793D29876CE000C0FD6C /* README.md */,
-				819DFAB42DC084380052CF22 /* Forgot.gif */,
 			);
 			path = Material;
 			sourceTree = "<group>";
@@ -381,12 +389,12 @@
 			path = PaletteViewController;
 			sourceTree = "<group>";
 		};
-		815BC4E92B874AA40099593F /* ChatViewController */ = {
+		815BC4E92B874AA40099593F /* OllamViewController */ = {
 			isa = PBXGroup;
 			children = (
-				8139CE192DC07C5D00805A2F /* ChatViewController.swift */,
+				8139CE192DC07C5D00805A2F /* OllamViewController.swift */,
 			);
-			path = ChatViewController;
+			path = OllamViewController;
 			sourceTree = "<group>";
 		};
 		818E2616299231D400385705 /* ReviewResultViewController */ = {
@@ -615,7 +623,6 @@
 				64285894297BBF8700DD7D88 /* Assets.xcassets in Resources */,
 				64B94D7A2AB5DDE8006B317D /* README.html in Resources */,
 				6417E8512AAD285D00512881 /* PaletteHeader.xib in Resources */,
-				819DFAB52DC084380052CF22 /* Forgot.gif in Resources */,
 				81C803FA2BC77A2600A8F724 /* jf-openhuninn-2.0.ttf in Resources */,
 				81708BC82B21AD4C00397B27 /* communication_9893252.png in Resources */,
 				81BA793E29876CE000C0FD6C /* README.md in Resources */,
@@ -645,6 +652,7 @@
 				64C184F7297E5D4C00D1D1B2 /* MainTableViewCell.swift in Sources */,
 				81E56B6B2A725DA6004400D6 /* SearchVocabularyTableViewCell.swift in Sources */,
 				3D652CCA2DB38FD60047DB39 /* WordMemoryViewController.swift in Sources */,
+				3DC6E38A2EB5A27700F883E6 /* TalkViewController.swift in Sources */,
 				3DC6E3872EB5898D00F883E6 /* TouchViewController.swift in Sources */,
 				6476D7D22B7A22A800E0DFC5 /* WordCardPageViewController.swift in Sources */,
 				64D3E61B2AAC5CB700140716 /* PaletteHeader.swift in Sources */,
@@ -670,7 +678,7 @@
 				81AB5EF9299643960035216F /* OthersViewController.swift in Sources */,
 				81201C4C298B58C200291485 /* InterpretView.swift in Sources */,
 				8196323329933CEF00B96960 /* MyNavigationController.swift in Sources */,
-				8139CE1A2DC07C5D00805A2F /* ChatViewController.swift in Sources */,
+				8139CE1A2DC07C5D00805A2F /* OllamViewController.swift in Sources */,
 				642858A6297BC40E00DD7D88 /* Constant.swift in Sources */,
 				818E261329922FFE00385705 /* ReviewResultViewController.swift in Sources */,
 				64ED74D82998C5EF00948C77 /* LicenseWebViewController.swift in Sources */,

@@ -16,11 +16,6 @@ protocol SentenceViewDelegate: NSObject {
 
 // MARK: - 精選例句
 final class SentenceViewController: UIViewController {
-
-    enum ViewSegueType: String {
-        case recording = "RecordingSegue"
-        case chatting = "ChattingSegue"
-    }
     
     @IBOutlet weak var myImageView: UIImageView!
     @IBOutlet weak var myTableView: UITableView!
@@ -66,24 +61,9 @@ final class SentenceViewController: UIViewController {
         pauseBackgroundAnimation()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        guard let identifier = segue.identifier,
-              let viewSegueType = ViewSegueType(rawValue: identifier)
-        else {
-            return
-        }
-        
-        switch viewSegueType {
-        case .chatting: chattingSetting(for: segue, sender: sender)
-        case .recording: break
-        }
-    }
-    
     @objc func refreshSentenceList(_ sender: UIRefreshControl) { translateDisplayArray = []; reloadSentenceList(with: currentSpeechInformation, isFavorite: isFavorite) }
     @objc func sentenceCount(_ sender: UITapGestureRecognizer) { sentenceCountAction(with: currentSpeechInformation, isFavorite: isFavorite) }
     
-    @IBAction func chattingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.chatting.rawValue, sender: nil) }
     @IBAction func filterFavorite(_ sender: UIBarButtonItem) { translateDisplayArray = []; filterFavoriteAction(sender) }
     @IBAction func appendSentenceAction(_ sender: UIButton) {
         
@@ -534,16 +514,6 @@ private extension SentenceViewController {
     func googleSearchUrlString(with example: String) -> String {
         let googleSearchUrl = "https://www.google.com/search?q=\(example)"
         return googleSearchUrl
-    }
-    
-    /// 設定對話頁面
-    /// - Parameters:
-    ///   - segue: UIStoryboardSegue
-    ///   - sender: Any?
-    func chattingSetting(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        guard let viewController = segue.destination as? ChatViewController else { return }
-        viewController.sentenceViewDelegate = self
     }
     
     /// 取得精選例句總數量

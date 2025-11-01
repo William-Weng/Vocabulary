@@ -55,8 +55,6 @@ final class MainViewController: UIViewController {
     private var gifImageView: UIImageView?
     private var inputTextField: UITextField?
     private var inputTipView: WWTipView?
-    
-    private var animationBlock: ((URL) -> Void)?
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,6 +77,11 @@ final class MainViewController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        pauseBackgroundAnimation()
+    }
+    
     /// [View Controller 生命週期更新 - iOS 17](https://xiaozhuanlan.com/topic/0651384792)
     // override func viewIsAppearing(_ animated: Bool) { super.viewIsAppearing(animated) }
     
@@ -95,6 +98,7 @@ final class MainViewController: UIViewController {
     deinit {
         MainTableViewCell.vocabularyListArray = []
         NotificationCenter.default._remove(observer: self, name: .viewDidTransition)
+        removeGifBlock()
         myPrint("\(Self.self) deinit")
     }
 }
@@ -543,7 +547,6 @@ private extension MainViewController {
         
         viewController._transparent(.black.withAlphaComponent(0.3))
         viewController.soundType = .volume
-        viewController.mainViewDelegate = self
         
         tabBarHidden(true)
     }
@@ -1006,15 +1009,24 @@ private extension MainViewController {
 private extension MainViewController {
     
     /// 動畫背景設定
-    /// - Parameter type: Utility.AnimationGifType
+    /// - Parameter type: Constant.AnimationGifType
     func animatedBackground(with type: Constant.AnimationGifType) {
         
         guard let gifUrl = type.fileURL(with: .background) else { return }
         
-        removeGifBlock()
-        initGifBlockSetting()
         isAnimationStop = false
-        animationBlock?(gifUrl)
+        
+        _ = myImageView._GIF(url: gifUrl) { [weak self] result in
+            
+            guard let this = self else { return }
+            
+            switch result {
+            case .failure(let error): myPrint(error)
+            case .success(let info):
+                info.pointer.pointee = this.isAnimationStop
+                if (this.isAnimationStop) { this.myImageView.image = this.disappearImage }
+            }
+        }
     }
     
     /// 暫停背景動畫
@@ -1023,36 +1035,10 @@ private extension MainViewController {
         isAnimationStop = true
     }
     
-    /// 初始化GIF動畫Block
-    func initGifBlockSetting() {
-        
-        let gifImageView = UIImageView()
-        
-        gifImageView.contentMode = .scaleAspectFill
-        gifImageView._autolayout(on: myImageView)
-        self.gifImageView = gifImageView
-        
-        animationBlock = { url in
-            
-            _ = gifImageView._GIF(url: url) { [weak self] result in
-                
-                guard let this = self else { return }
-                
-                switch result {
-                case .failure(let error): myPrint(error)
-                case .success(let info):
-                    info.pointer.pointee = this.isAnimationStop
-                    if (this.isAnimationStop) { this.gifImageView?.image = this.disappearImage }
-                }
-            }
-        }
-    }
-    
     /// 移除GIF動畫Block
     func removeGifBlock() {
         
         isAnimationStop = true
-        animationBlock = nil
         gifImageView?.removeFromSuperview()
         gifImageView = nil
     }

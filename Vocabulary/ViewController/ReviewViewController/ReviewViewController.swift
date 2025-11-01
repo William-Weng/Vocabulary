@@ -51,13 +51,11 @@ final class ReviewViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        MyTabBarController.isHidden = false
         animatedBackground(with: .working)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        MyTabBarController.isHidden = true
         pauseBackgroundAnimation()
     }
     

@@ -464,11 +464,11 @@ private extension AppDelegate {
     func initAssistiveTouch(window: UIWindow?, touchViewController: UIViewController?) {
         
         guard let window, let touchViewController else { return }
-                
+        
         let size = CGSize(width: 56, height: 56)
         let origin = CGPoint(x: window.bounds.width, y: window.bounds.height - 216)
         
-        assistiveTouch = WWAssistiveTouch(touchViewController: touchViewController, frame: .init(origin: origin, size: size), icon: .touchMain, delegate: self)
+        assistiveTouch = WWAssistiveTouch(touchViewController: touchViewController, frame: .init(origin: origin, size: size), icon: .touchMain, isAutoAdjust: true, delegate: self)
     }
 }
 

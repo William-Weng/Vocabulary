@@ -25,7 +25,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable
     var assistiveTouch: WWAssistiveTouch!
 
     private let audioPlayerQueue = DispatchQueue(label: "github.com/William-Weng/Vocabulary")
-
+    private lazy var touchViewController = { UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TouchViewController") }()
+    
     private var audioPlayer: AVAudioPlayer?
     private var recordPlayer: AVAudioPlayer?
     private var audioRecorder: AVAudioRecorder?
@@ -33,10 +34,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         initSetting(application, didFinishLaunchingWithOptions: launchOptions)
-        initAssistiveTouch(window: window)
+        initAssistiveTouch(window: window, touchViewController: touchViewController)
         return true
     }
-        
+    
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         deepLinkURL(app, open: url, options: options)
         return true
@@ -80,7 +81,7 @@ extension AppDelegate: AVAudioRecorderDelegate {
 extension AppDelegate: WWAssistiveTouch.Delegate {
     
     func assistiveTouch(_ assistiveTouch: WWAssistiveTouch, isTouched: Bool) {
-        if (isTouched) { NotificationCenter.default._post(name: .displayCanvasView, object: nil) }
+        if (isTouched) { assistiveTouch.display() }
     }
     
     func assistiveTouch(_ assistiveTouch: WWAssistiveTouch, status: WWAssistiveTouch.Status) {}
@@ -223,6 +224,40 @@ extension AppDelegate {
     /// 停止錄製聲音
     /// - Returns: Bool
     func stopRecordingWave() -> Bool { stopRecorder() }
+}
+
+// MARK: - TouchView
+extension AppDelegate {
+    
+    /// AssistiveTouch是否顯示
+    /// - Parameter isHidden: Bool
+    func assistiveTouchHidden(_ isHidden: Bool) {
+        
+        let this = self
+        assistiveTouch.alpha = isHidden ? 1.0 : 0.0
+
+        let animator = UIViewPropertyAnimator(duration: Constant.replay, curve: .easeInOut) {
+            this.assistiveTouch.alpha = !isHidden ? 1.0 : 0.0
+        }
+        
+        if !isHidden {
+            assistiveTouch.isHidden = false
+        } else {
+            animator.addCompletion { _ in this.assistiveTouch.isHidden = true }
+        }
+        
+        animator.startAnimation()
+    }
+    
+    /// 彈出畫筆工作列
+    func pencelToolPicker() {
+        NotificationCenter.default._post(name: .displayCanvasView, object: nil)
+    }
+    
+    /// 彈出錄音界面
+    func recording() {
+        _ = Utility.shared.presentViewController(target: window?.rootViewController, identifier: "TalkingViewController")
+    }
 }
 
 // MARK: - 小工具
@@ -419,19 +454,21 @@ private extension AppDelegate {
     }
 }
 
-// MARK: - Pencil Kit
+// MARK: - PencilKit
 private extension AppDelegate {
     
     /// 初始化浮動按鈕
-    /// - Parameter window: UIWindow?
-    func initAssistiveTouch(window: UIWindow?) {
+    /// - Parameters:
+    ///   - window: UIWindow?
+    ///   - viewController: UIViewController?
+    func initAssistiveTouch(window: UIWindow?, touchViewController: UIViewController?) {
         
-        guard let window else { return }
+        guard let window, let touchViewController else { return }
                 
         let size = CGSize(width: 56, height: 56)
         let origin = CGPoint(x: window.bounds.width, y: window.bounds.height - 216)
         
-        assistiveTouch = WWAssistiveTouch(touchViewController: UIViewController(), frame: .init(origin: origin, size: size), icon: .pencil, delegate: self)
+        assistiveTouch = WWAssistiveTouch(touchViewController: touchViewController, frame: .init(origin: origin, size: size), icon: .touchMain, delegate: self)
     }
 }
 

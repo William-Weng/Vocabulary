@@ -166,6 +166,25 @@ extension Utility {
     func isWebUrlString(_ urlString: String) -> Bool {
         return urlString.hasPrefix("http://") || urlString.hasPrefix("https://")
     }
+    
+    /// 彈出全畫面透明ViewController
+    /// - Parameters:
+    ///   - target: UIViewController?
+    ///   - identifier: String
+    /// - Returns: Bool
+    func presentViewController(target: UIViewController?, identifier: String) -> Bool {
+        
+        guard let target = target,
+              let viewController = target.storyboard?.instantiateViewController(identifier: identifier)
+        else {
+            return false
+        }
+        
+        viewController._transparent(.black.withAlphaComponent(0.3))
+        target.present(viewController, animated: false)
+        
+        return true
+    }
 }
 
 // MARK: - UI相關 (function)

@@ -75,8 +75,8 @@ final class SentenceViewController: UIViewController {
         }
         
         switch viewSegueType {
-        case .recording: talkingViewSetting(for: segue, sender: sender)
         case .chatting: chattingSetting(for: segue, sender: sender)
+        case .recording: break
         }
     }
     
@@ -84,7 +84,6 @@ final class SentenceViewController: UIViewController {
     @objc func sentenceCount(_ sender: UITapGestureRecognizer) { sentenceCountAction(with: currentSpeechInformation, isFavorite: isFavorite) }
     
     @IBAction func chattingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.chatting.rawValue, sender: nil) }
-    @IBAction func recordingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.recording.rawValue, sender: nil) }
     @IBAction func filterFavorite(_ sender: UIBarButtonItem) { translateDisplayArray = []; filterFavoriteAction(sender) }
     @IBAction func appendSentenceAction(_ sender: UIButton) {
         
@@ -535,18 +534,6 @@ private extension SentenceViewController {
     func googleSearchUrlString(with example: String) -> String {
         let googleSearchUrl = "https://www.google.com/search?q=\(example)"
         return googleSearchUrl
-    }
-    
-    /// 設定錄音頁面
-    /// - Parameters:
-    ///   - segue: UIStoryboardSegue
-    ///   - sender: Any?
-    func talkingViewSetting(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        guard let viewController = segue.destination as? TalkingViewController else { return }
-        
-        viewController._transparent(.black.withAlphaComponent(0.3))
-        tabBarHiddenAction(true)
     }
     
     /// 設定對話頁面

@@ -55,7 +55,6 @@ final class ListViewController: UIViewController {
     @objc func refreshVocabularyList(_ sender: UIRefreshControl) { reloadExampleList() }
 
     @IBAction func dictionaryNet(_ sender: UIBarButtonItem) { netDictionary(with: vocabularyList.word) }
-    @IBAction func recordingAction(_ sender: UIBarButtonItem) { performSegue(withIdentifier: recordingWaveSegue, sender: nil) }
     
     @IBAction func searchVocabulary(_ sender: UIButton) {
         searchVocabularyViewController = UIStoryboard._instantiateViewController() as SearchVocabularyViewController

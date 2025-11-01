@@ -24,8 +24,8 @@ final class MyTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        initSetting()
-        registerCanvasViewAction()
+         initSetting()
+         registerCanvasViewAction()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -99,7 +99,7 @@ private extension MyTabBarController {
         
         canvasView = PKCanvasView._build(onView: view, delegate: self)
         assistiveTouchHidden(true)
-                
+        
         if let canvasView = canvasView {
             toolPicker = PKToolPicker._build(with: canvasView)
             canvasView.becomeFirstResponder()
@@ -183,22 +183,8 @@ private extension MyTabBarController {
     /// AssistiveTouch是否顯示
     /// - Parameter isHidden: Bool
     func assistiveTouchHidden(_ isHidden: Bool) {
-        
         guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        delegate.assistiveTouch.alpha = isHidden ? 1.0 : 0.0
-
-        let animator = UIViewPropertyAnimator(duration: Constant.replay, curve: .easeInOut) {
-            delegate.assistiveTouch.alpha = !isHidden ? 1.0 : 0.0
-        }
-        
-        if !isHidden {
-            delegate.assistiveTouch.isHidden = false
-        } else {
-            animator.addCompletion { _ in delegate.assistiveTouch.isHidden = true }
-        }
-        
-        animator.startAnimation()
+        delegate.assistiveTouchHidden(isHidden)
     }
     
     /// 清空畫布

@@ -66,13 +66,16 @@ private extension TalkingViewController {
     
     /// 開始錄音
     func recordWave() {
-        guard let appDelegate = appDelegate else { return }
-        _ = appDelegate.recordWave()
+        
+        guard let delegate = appDelegate else { return }
+        _ = delegate.recordWave()
+        delegate.assistiveTouchHidden(true)
     }
     
     /// 停止錄音
     func stopRecording() {
-        guard let appDelegate = appDelegate else { return }
-        _ = appDelegate.stopRecordingWave()
+        guard let delegate = appDelegate else { return }
+        _ = delegate.stopRecordingWave()
+        delegate.assistiveTouchHidden(false)
     }
 }

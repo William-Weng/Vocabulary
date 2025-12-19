@@ -93,8 +93,8 @@ extension AppDelegate {
     /// [初始化資料表 / 資料庫](https://apppeterpan.medium.com/還模擬器一個乾乾淨淨的-xcode-console-a630992448d5)
     func initDatabase() {
         
-        let result = WWSQLite3Manager.shared.connent(for: .documents, filename: Constant.databaseName)
-        
+        let result = WWSQLite3Manager.shared.connect(for: .documents, filename: Constant.databaseName)
+
         switch result {
         case .failure(_): Utility.shared.flashHUD(with: .fail)
         case .success(let database):

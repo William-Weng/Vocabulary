@@ -427,7 +427,7 @@ private extension MainViewController {
             $0.text = defaultText
             $0.placeholder = title
         }
-                
+        
         let actionOK = appendTextAlertAction(with: indexPath, textFields: alertController.textFields, action: action)
         let actionCancel = UIAlertAction(title: "取消", style: .cancel) {  _ in self.clearInputTipViewSetting() }
         

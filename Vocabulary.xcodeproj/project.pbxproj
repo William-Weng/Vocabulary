@@ -62,6 +62,7 @@
 		81708BC82B21AD4C00397B27 /* communication_9893252.png in Resources */ = {isa = PBXBuildFile; fileRef = 81708BC42B21AD4C00397B27 /* communication_9893252.png */; };
 		81708BC92B21AD4C00397B27 /* language-learning_10037728.png in Resources */ = {isa = PBXBuildFile; fileRef = 81708BC52B21AD4C00397B27 /* language-learning_10037728.png */; };
 		817F88382B32BCA900053C3E /* Settings.json in Resources */ = {isa = PBXBuildFile; fileRef = 817F88372B32BCA900053C3E /* Settings.json */; };
+		8188EEC02EF53F46007C12F3 /* WWSimpleAI_Ollama in Frameworks */ = {isa = PBXBuildFile; productRef = 8188EEBF2EF53F46007C12F3 /* WWSimpleAI_Ollama */; };
 		818E261329922FFE00385705 /* ReviewResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818E261229922FFE00385705 /* ReviewResultViewController.swift */; };
 		818E2615299230B300385705 /* ReviewResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818E2614299230B300385705 /* ReviewResultTableViewCell.swift */; };
 		8196323329933CEF00B96960 /* MyNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8196323229933CEF00B96960 /* MyNavigationController.swift */; };
@@ -71,7 +72,6 @@
 		819DFABB2DC087BC0052CF22 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = 819DFAB92DC087BC0052CF22 /* user.png */; };
 		819DFABC2DC087BC0052CF22 /* bot.png in Resources */ = {isa = PBXBuildFile; fileRef = 819DFAB72DC087BC0052CF22 /* bot.png */; };
 		81AB5EF9299643960035216F /* OthersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AB5EF8299643960035216F /* OthersViewController.swift */; };
-		81B041F22D92874200B698CA /* WWSimpleAI_ChatGPT in Frameworks */ = {isa = PBXBuildFile; productRef = 81B041F12D92874200B698CA /* WWSimpleAI_ChatGPT */; };
 		81B1AF7F2AB423DD0074103B /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B1AF7E2AB423DD0074103B /* GalleryViewController.swift */; };
 		81B1AF822AB42B0E0074103B /* GalleryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B1AF812AB42B0E0074103B /* GalleryTableViewCell.swift */; };
 		81BA793E29876CE000C0FD6C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 81BA793D29876CE000C0FD6C /* README.md */; };
@@ -171,7 +171,6 @@
 				81CB93B12DB87AB7006CAAE1 /* WWExpandableTextView in Frameworks */,
 				64768B0D2AA3EB080005EF3A /* WWToast in Frameworks */,
 				81E516592D9290AF0020BD90 /* WWTipView in Frameworks */,
-				81B041F22D92874200B698CA /* WWSimpleAI_ChatGPT in Frameworks */,
 				3D652CD02DB39AFB0047DB39 /* WWKeyboardShadowView in Frameworks */,
 				3D652CD22DB39BAB0047DB39 /* WWCollectionViewLayout in Frameworks */,
 				64ACFDED2B7EBDA700863407 /* WWOnBoardingViewController in Frameworks */,
@@ -189,6 +188,7 @@
 				8141EEFF2B8C7FA60091127F /* WWUserDefaults in Frameworks */,
 				6418FC1A2A6DCDED00493B8D /* WWAppInstallSource in Frameworks */,
 				81E1F8F32A1F2C9A00EB0139 /* WWSQLite3Manager in Frameworks */,
+				8188EEC02EF53F46007C12F3 /* WWSimpleAI_Ollama in Frameworks */,
 				81E1F8F02A1F2C8100EB0139 /* WWHUD in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -538,7 +538,6 @@
 				813B25E22BA44DF2006B9755 /* WWHash */,
 				812A01C12C0824A80086E128 /* WWNetworking-UIImage */,
 				812A01C42C0824C90086E128 /* WWNetworking-UIImage */,
-				81B041F12D92874200B698CA /* WWSimpleAI_ChatGPT */,
 				81E516552D928B8E0020BD90 /* WWNetworking-UIImage */,
 				81E516582D9290AF0020BD90 /* WWTipView */,
 				3D652CCF2DB39AFB0047DB39 /* WWKeyboardShadowView */,
@@ -547,6 +546,7 @@
 				81CB93B02DB87AB7006CAAE1 /* WWExpandableTextView */,
 				8139CE1C2DC07C7D00805A2F /* WWEventSource */,
 				8142F45B2EA2151C00F644FC /* WWAssistiveTouch */,
+				8188EEBF2EF53F46007C12F3 /* WWSimpleAI_Ollama */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -588,7 +588,6 @@
 				813892762B7E060E00D67D98 /* XCRemoteSwiftPackageReference "WWOnBoardingViewController" */,
 				8141EEFD2B8C7FA60091127F /* XCRemoteSwiftPackageReference "WWUserDefaults" */,
 				813B25E12BA44DF2006B9755 /* XCRemoteSwiftPackageReference "WWHash" */,
-				81B041F02D92874200B698CA /* XCRemoteSwiftPackageReference "WWSimpleAI_ChatGPT" */,
 				81E516542D928B8E0020BD90 /* XCRemoteSwiftPackageReference "WWNetworking-UIImage" */,
 				81E516572D9290AF0020BD90 /* XCRemoteSwiftPackageReference "WWTipView" */,
 				3D652CCD2DB39AA50047DB39 /* XCRemoteSwiftPackageReference "WWCollectionViewLayout" */,
@@ -597,6 +596,7 @@
 				81CB93AF2DB87AB6006CAAE1 /* XCRemoteSwiftPackageReference "WWExpandableTextView" */,
 				8139CE1B2DC07C7D00805A2F /* XCRemoteSwiftPackageReference "WWEventSource" */,
 				8142F4402EA1F2D000F644FC /* XCRemoteSwiftPackageReference "WWAssistiveTouch" */,
+				8188EEBE2EF53F46007C12F3 /* XCRemoteSwiftPackageReference "WWSimpleAI_Ollama" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -838,7 +838,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20251101;
+				CURRENT_PROJECT_VERSION = 20251219;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = YES;
@@ -854,12 +854,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.7.1;
+				MARKETING_VERSION = 2.7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -879,7 +879,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20251101;
+				CURRENT_PROJECT_VERSION = 20251219;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_RESOURCE_ACCESS_AUDIO_INPUT = YES;
@@ -895,12 +895,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.7.1;
+				MARKETING_VERSION = 2.7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1017,12 +1017,12 @@
 				minimumVersion = 1.2.1;
 			};
 		};
-		81B041F02D92874200B698CA /* XCRemoteSwiftPackageReference "WWSimpleAI_ChatGPT" */ = {
+		8188EEBE2EF53F46007C12F3 /* XCRemoteSwiftPackageReference "WWSimpleAI_Ollama" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/William-Weng/WWSimpleAI_ChatGPT";
+			repositoryURL = "https://github.com/William-Weng/WWSimpleAI_Ollama";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				minimumVersion = 1.2.0;
 			};
 		};
 		81CB93AC2DB87995006CAAE1 /* XCRemoteSwiftPackageReference "WWJavaScriptContext" */ = {
@@ -1162,10 +1162,10 @@
 			package = 8142F4402EA1F2D000F644FC /* XCRemoteSwiftPackageReference "WWAssistiveTouch" */;
 			productName = WWAssistiveTouch;
 		};
-		81B041F12D92874200B698CA /* WWSimpleAI_ChatGPT */ = {
+		8188EEBF2EF53F46007C12F3 /* WWSimpleAI_Ollama */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 81B041F02D92874200B698CA /* XCRemoteSwiftPackageReference "WWSimpleAI_ChatGPT" */;
-			productName = WWSimpleAI_ChatGPT;
+			package = 8188EEBE2EF53F46007C12F3 /* XCRemoteSwiftPackageReference "WWSimpleAI_Ollama" */;
+			productName = WWSimpleAI_Ollama;
 		};
 		81CB93AD2DB879C3006CAAE1 /* WWJavaScriptContext */ = {
 			isa = XCSwiftPackageProductDependency;

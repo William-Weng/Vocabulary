@@ -1,5 +1,5 @@
 {
-  "originHash" : "571af09b4c2298221fc8aa47c77019b1bc726c572bb1e9b928569aefaee6461b",
+  "originHash" : "484c6e07bcd864f2b5f88c902d464190b3bca03e38fb0f8b61a2ac7691e22a28",
   "pins" : [
     {
       "identity" : "wwappinstallsource",
@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWEventSource",
       "state" : {
-        "revision" : "5bddc7c58032951b5e2f6e8913e654465294d0e6",
-        "version" : "1.4.0"
+        "revision" : "6ea3d939a84cea2391098d9519e4fca0efd7bb13",
+        "version" : "1.4.1"
       }
     },
     {
@@ -78,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWHUD",
       "state" : {
-        "revision" : "b8db2cdf70698c073842df293cfe0946ca0690d5",
-        "version" : "1.3.3"
+        "revision" : "bbdff687c88964328b17002bdf347451117355f5",
+        "version" : "1.5.1"
       }
     },
     {
@@ -105,8 +105,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWNetworking",
       "state" : {
-        "revision" : "77b572ec57cddb9c24dfb42c4bfa56fda98269ac",
-        "version" : "1.7.6"
+        "revision" : "188f716e63171e4f391423d79cb20ed3304abe1e",
+        "version" : "1.8.13"
       }
     },
     {
@@ -114,8 +114,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWNetworking-UIImage",
       "state" : {
-        "revision" : "91b461dffcfe633b5d9a67ec281ef04c2f4b1538",
-        "version" : "1.7.5"
+        "revision" : "f77e6d4c8f64807ca3c2c97a96de7613207d9df6",
+        "version" : "1.8.2"
       }
     },
     {
@@ -125,6 +125,15 @@
       "state" : {
         "revision" : "a3766c884048bc822794b904d8951a9efb70fd80",
         "version" : "1.3.2"
+      }
+    },
+    {
+      "identity" : "wworderedset",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWOrderedSet.git",
+      "state" : {
+        "revision" : "f55e78e72725103eeb09ca27b70442e2098b6241",
+        "version" : "1.0.2"
       }
     },
     {
@@ -146,21 +155,12 @@
       }
     },
     {
-      "identity" : "wwsimpleai_chatgpt",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/William-Weng/WWSimpleAI_ChatGPT",
-      "state" : {
-        "revision" : "5a73380f869eacc19e832771dd7bc157c92d374c",
-        "version" : "1.0.0"
-      }
-    },
-    {
       "identity" : "wwsimpleai_ollama",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWSimpleAI_Ollama",
       "state" : {
-        "revision" : "c411cdd0e305c286f6a35e1029c9aa31e5a25d55",
-        "version" : "1.1.7"
+        "revision" : "0e0c0e2ecfc9b6cb9db151d1d4dfa5b7a190fa87",
+        "version" : "1.2.0"
       }
     },
     {
@@ -177,8 +177,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWSQLite3Manager",
       "state" : {
-        "revision" : "b4f6aed6a3bc98903638537945b7eecd034a5d9b",
-        "version" : "1.5.1"
+        "revision" : "374deec459e7f60584944775aa3b20f7f6f6f07c",
+        "version" : "1.5.2"
       }
     },
     {

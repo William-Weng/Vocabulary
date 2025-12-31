@@ -1,5 +1,5 @@
 {
-  "originHash" : "484c6e07bcd864f2b5f88c902d464190b3bca03e38fb0f8b61a2ac7691e22a28",
+  "originHash" : "44de6f98fa7bbcf9615082e16bda8e495b83a89c7e0fb3112df30d3ae112f374",
   "pins" : [
     {
       "identity" : "wwappinstallsource",
@@ -105,8 +105,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWNetworking",
       "state" : {
-        "revision" : "188f716e63171e4f391423d79cb20ed3304abe1e",
-        "version" : "1.8.13"
+        "revision" : "2c7ce462a79c7c894dbb20dfa766b3eada9d2644",
+        "version" : "1.9.0"
       }
     },
     {
@@ -114,8 +114,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWNetworking-UIImage",
       "state" : {
-        "revision" : "f77e6d4c8f64807ca3c2c97a96de7613207d9df6",
-        "version" : "1.8.2"
+        "revision" : "edac20a64617cb769ba85395bac9bdcb090c4c11",
+        "version" : "1.8.3"
       }
     },
     {

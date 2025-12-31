@@ -14,6 +14,13 @@ final class TouchViewController: UIViewController {
         case recorder = 102
     }
     
+    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        appDelegate?.assistiveTouch.dismiss()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -30,16 +37,14 @@ final class TouchViewController: UIViewController {
     }
     
     @IBAction func touchAction(_ sender: UIButton) {
-        
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        defer { appDelegate.assistiveTouch.dismiss() }
+                
+        defer { appDelegate?.assistiveTouch.dismiss() }
         
         guard let touchType = TouchTagType(rawValue: sender.tag) else { return }
         
         switch touchType {
-        case .pencel: appDelegate.pencelToolPicker()
-        case .recorder: appDelegate.recording()
+        case .pencel: appDelegate?.pencelToolPicker()
+        case .recorder: appDelegate?.recording()
         }
     }
 }

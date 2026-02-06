@@ -70,11 +70,7 @@ final class MainViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        if (!isFixed) {
-            isFixed = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [unowned self] in fixTableViewInsetForSafeArea(for: IndexPath(row: 0, section: 0)) }
-        }
+        if (!isFixed) { fixTableViewInsetForSafeArea(for: IndexPath(row: 0, section: 0)); isFixed = true }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -605,8 +601,8 @@ private extension MainViewController {
         case .left , .right ,.none: break
         }
         
-        tabBarHidden(isHidden)
         navigationBarHidden(isHidden)
+        tabBarHiddenAction(isHidden)
         currentScrollDirection = direction
     }
     

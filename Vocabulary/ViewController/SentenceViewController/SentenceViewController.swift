@@ -285,8 +285,8 @@ private extension SentenceViewController {
         case .left , .right ,.none: break
         }
         
-        tabBarHiddenAction(isHidden)
         navigationBarHiddenAction(isHidden)
+        tabBarHiddenAction(isHidden)
         currentScrollDirection = direction
     }
     
@@ -676,6 +676,7 @@ private extension SentenceViewController {
     /// - Parameters:
     ///   - scrollView: UIScrollView
     ///   - criticalValue: 要更新的臨界值 => 120%才更新
+    ///   - isNeededUpdate: Bool
     func updateHeightPercentAction(with scrollView: UIScrollView, criticalValue: CGFloat = 1.2, isNeededUpdate: Bool) {
         
         var percent = Utility.shared.updateHeightPercent(with: scrollView, navigationController: navigationController)

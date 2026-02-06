@@ -259,8 +259,8 @@ private extension OthersViewController {
         case .left , .right ,.none: break
         }
         
-        tabBarHiddenAction(isHidden)
         navigationBarHiddenAction(isHidden)
+        tabBarHiddenAction(isHidden)
         currentScrollDirection = direction
     }
     

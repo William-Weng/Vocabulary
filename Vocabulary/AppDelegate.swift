@@ -662,7 +662,7 @@ private extension AppDelegate {
     }
     
     /// [使用UniversalLink功能的相關設定](https://medium.com/zrealm-ios-dev/ios-deferred-deep-link-延遲深度連結實作-swift-b08ef940c196)
-    /// => [在info.plist設定](https://medium.com/zrealm-ios-dev/universal-links-新鮮事-12c5026da33d )
+    /// => [在info.plist設定](https://medium.com/zrealm-ios-dev/universal-links-新鮮事-12c5026da33d)
     /// - Parameters:
     ///   - app: UIApplication
     ///   - userActivity: NSUserActivity

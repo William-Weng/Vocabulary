@@ -839,7 +839,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20251231;
+				CURRENT_PROJECT_VERSION = 20260206;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -861,7 +861,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.7.3;
+				MARKETING_VERSION = 2.7.4;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -883,7 +883,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20251231;
+				CURRENT_PROJECT_VERSION = 20260206;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -905,7 +905,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.7.3;
+				MARKETING_VERSION = 2.7.4;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

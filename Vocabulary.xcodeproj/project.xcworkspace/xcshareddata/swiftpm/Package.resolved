@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWAssistiveTouch",
       "state" : {
-        "revision" : "5c720220c7905065e09d92b4e5a1395ab0184c39",
-        "version" : "1.2.1"
+        "revision" : "39a80925e2b90082eb144e785500e6bd6d4fc3ee",
+        "version" : "1.2.3"
       }
     },
     {
@@ -78,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWHUD",
       "state" : {
-        "revision" : "bbdff687c88964328b17002bdf347451117355f5",
-        "version" : "1.5.1"
+        "revision" : "8ffa449fd2192fdfd06622b77659edd65b4edd18",
+        "version" : "1.6.0"
       }
     },
     {
@@ -179,6 +179,15 @@
       "state" : {
         "revision" : "374deec459e7f60584944775aa3b20f7f6f6f07c",
         "version" : "1.5.2"
+      }
+    },
+    {
+      "identity" : "wwsvgimageview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWSVGImageView",
+      "state" : {
+        "revision" : "c3118da8460fb998d7436f9912e70cda9a796327",
+        "version" : "1.0.2"
       }
     },
     {

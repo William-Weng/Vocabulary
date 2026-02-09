@@ -43,7 +43,6 @@ final class MainViewController: UIViewController {
     private let appendTextHintTitle = "請輸入單字"
     
     private var titleString: String { Utility.shared.mainViewContrillerTitle(with: Constant.tableNameIndex, default: "字典") }
-    private var isFixed = false
     private var isAnimationStop = false
     private var isFavorite = false
     private var isNeededUpdate = true
@@ -66,11 +65,6 @@ final class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         animatedBackground(with: .studing)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if (!isFixed) { fixTableViewInsetForSafeArea(for: IndexPath(row: 0, section: 0)); isFixed = true }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -202,7 +196,6 @@ private extension MainViewController {
         
         myTableView._delegateAndDataSource(with: self)
         myTableView.addSubview(refreshControl)
-        
         reloadVocabulary(isFavorite: isFavorite)
         viewDidTransitionAction()
         backupDatabaseAction(delay: Constant.autoBackupDelaySecond)
@@ -333,16 +326,6 @@ private extension MainViewController {
     func navigationBarHiddenAction(_ isHidden: Bool) {
         guard let navigationController = navigationController else { return }
         navigationController._barHidden(isHidden)
-    }
-    
-    /// 修正TableView不使用SafeArea的位置問題
-    /// - Parameter indexPath: IndexPath?
-    func fixTableViewInsetForSafeArea(for indexPath: IndexPath? = nil) {
-        
-        let navigationBarHeight = navigationController?._navigationBarHeight(for: UIWindow._keyWindow(hasScene: false)) ?? .zero
-        
-        if (MainTableViewCell.vocabularyListArray.count != 0) { myTableView._fixContentInsetForSafeArea(height: navigationBarHeight, scrollTo: indexPath); return }
-        myTableView._fixContentInsetForSafeArea(height: navigationBarHeight, scrollTo: nil)
     }
     
     /// [新增單字列表](https://medium.com/@daoseng33/我說那個-uitableview-insertrows-uicollectionview-insertitems-呀-56b8758b2efb)
@@ -619,7 +602,6 @@ private extension MainViewController {
             
             this.currentScrollDirection = .none
             this.appendButtonPositionConstraint(isHidden, duration: Constant.duration)
-            this.fixTableViewInsetForSafeArea()
             Utility.shared.updateScrolledHeightSetting()
         }
     }

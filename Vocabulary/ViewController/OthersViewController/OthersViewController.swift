@@ -48,17 +48,12 @@ final class OthersViewController: UIViewController {
         initSetting()
         viewDidTransitionAction()
     }
-    
+        
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         animatedBackground(with: .others)
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        if (!isFixed) { fixTableViewInsetForSafeArea(for: IndexPath(row: 0, section: 0)); isFixed = true }
-    }
-    
+        
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         pauseBackgroundAnimation()
@@ -107,13 +102,14 @@ extension OthersViewController: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - SFSafariViewControllerDelegate
 extension OthersViewController: SFSafariViewControllerDelegate {
-    
+        
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         
         let isHidden = false
         
         tabBarHiddenAction(isHidden)
         navigationBarHiddenAction(isHidden)
+        assistiveTouchHidden(isHidden)
     }
 }
 
@@ -279,15 +275,6 @@ private extension OthersViewController {
         navigationController._barHidden(isHidden)
     }
     
-    /// 修正TableView不使用SafeArea的位置問題
-    func fixTableViewInsetForSafeArea(for indexPath: IndexPath? = nil) {
-        
-        let navigationBarHeight = navigationController?._navigationBarHeight(for: UIWindow._keyWindow(hasScene: false)) ?? .zero
-        
-        if (OthersTableViewCell.bookmarksArray.count != 0) { myTableView._fixContentInsetForSafeArea(height: navigationBarHeight, scrollTo: indexPath); return }
-        myTableView._fixContentInsetForSafeArea(height: navigationBarHeight, scrollTo: nil)
-    }
-    
     /// 畫面旋轉的動作 (更新appendButton的位置 / TableView的Inset位置)
     func viewDidTransitionAction() {
         
@@ -301,7 +288,6 @@ private extension OthersViewController {
             
             this.currentScrollDirection = .none
             this.appendButtonPositionConstraint(isHidden, duration: Constant.duration)
-            this.fixTableViewInsetForSafeArea()
             Utility.shared.updateScrolledHeightSetting()
         }
     }
@@ -545,6 +531,14 @@ private extension OthersViewController {
         
         let safariController = url._openUrlWithInside(delegate: self)
         safariController.delegate = self
+        assistiveTouchHidden(true)
+    }
+    
+    /// 隱藏輔助觸控按鈕 (小白點)
+    /// - Parameter isHidden: Bool
+    func assistiveTouchHidden(_ isHidden: Bool) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        appDelegate.assistiveTouch.isHidden = isHidden
     }
     
     /// 載入Cell的圖示 (變更 / 下載 / 儲存)

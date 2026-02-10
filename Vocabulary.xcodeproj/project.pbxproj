@@ -53,6 +53,8 @@
 		8139CE1A2DC07C5D00805A2F /* OllamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8139CE192DC07C5D00805A2F /* OllamViewController.swift */; };
 		8139CE1D2DC07C7D00805A2F /* WWEventSource in Frameworks */ = {isa = PBXBuildFile; productRef = 8139CE1C2DC07C7D00805A2F /* WWEventSource */; };
 		813B25E32BA44DF2006B9755 /* WWHash in Frameworks */ = {isa = PBXBuildFile; productRef = 813B25E22BA44DF2006B9755 /* WWHash */; };
+		81407EF02F3B32D7007385CF /* WWNormalizeAudioPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 81407EEF2F3B32D7007385CF /* WWNormalizeAudioPlayer */; };
+		81407F0C2F3B3921007385CF /* WWNormalizeAudioPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 81407F0B2F3B3921007385CF /* WWNormalizeAudioPlayer */; };
 		8141EEFC2B8C748D0091127F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8141EEFB2B8C748D0091127F /* PrivacyInfo.xcprivacy */; };
 		8141EEFF2B8C7FA60091127F /* WWUserDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = 8141EEFE2B8C7FA60091127F /* WWUserDefaults */; };
 		8142F45C2EA2151C00F644FC /* WWAssistiveTouch in Frameworks */ = {isa = PBXBuildFile; productRef = 8142F45B2EA2151C00F644FC /* WWAssistiveTouch */; };
@@ -187,9 +189,11 @@
 				81E1F8F62A1F2CCA00EB0139 /* WWSlider in Frameworks */,
 				8141EEFF2B8C7FA60091127F /* WWUserDefaults in Frameworks */,
 				6418FC1A2A6DCDED00493B8D /* WWAppInstallSource in Frameworks */,
+				81407EF02F3B32D7007385CF /* WWNormalizeAudioPlayer in Frameworks */,
 				81E1F8F32A1F2C9A00EB0139 /* WWSQLite3Manager in Frameworks */,
 				8188EEC02EF53F46007C12F3 /* WWSimpleAI_Ollama in Frameworks */,
 				81E1F8F02A1F2C8100EB0139 /* WWHUD in Frameworks */,
+				81407F0C2F3B3921007385CF /* WWNormalizeAudioPlayer in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -547,6 +551,8 @@
 				8139CE1C2DC07C7D00805A2F /* WWEventSource */,
 				8142F45B2EA2151C00F644FC /* WWAssistiveTouch */,
 				8188EEBF2EF53F46007C12F3 /* WWSimpleAI_Ollama */,
+				81407EEF2F3B32D7007385CF /* WWNormalizeAudioPlayer */,
+				81407F0B2F3B3921007385CF /* WWNormalizeAudioPlayer */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -597,6 +603,7 @@
 				8139CE1B2DC07C7D00805A2F /* XCRemoteSwiftPackageReference "WWEventSource" */,
 				8142F4402EA1F2D000F644FC /* XCRemoteSwiftPackageReference "WWAssistiveTouch" */,
 				8188EEBE2EF53F46007C12F3 /* XCRemoteSwiftPackageReference "WWSimpleAI_Ollama" */,
+				81407F0A2F3B3921007385CF /* XCRemoteSwiftPackageReference "WWNormalizeAudioPlayer" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -839,7 +846,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20260209;
+				CURRENT_PROJECT_VERSION = 20260210;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -856,12 +863,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.7.5;
+				MARKETING_VERSION = 2.8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -883,7 +890,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20260209;
+				CURRENT_PROJECT_VERSION = 20260210;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -900,12 +907,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.7.5;
+				MARKETING_VERSION = 2.8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1005,6 +1012,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.1;
+			};
+		};
+		81407F0A2F3B3921007385CF /* XCRemoteSwiftPackageReference "WWNormalizeAudioPlayer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWNormalizeAudioPlayer";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.5;
 			};
 		};
 		8141EEFD2B8C7FA60091127F /* XCRemoteSwiftPackageReference "WWUserDefaults" */ = {
@@ -1157,6 +1172,15 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 813B25E12BA44DF2006B9755 /* XCRemoteSwiftPackageReference "WWHash" */;
 			productName = WWHash;
+		};
+		81407EEF2F3B32D7007385CF /* WWNormalizeAudioPlayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WWNormalizeAudioPlayer;
+		};
+		81407F0B2F3B3921007385CF /* WWNormalizeAudioPlayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 81407F0A2F3B3921007385CF /* XCRemoteSwiftPackageReference "WWNormalizeAudioPlayer" */;
+			productName = WWNormalizeAudioPlayer;
 		};
 		8141EEFE2B8C7FA60091127F /* WWUserDefaults */ = {
 			isa = XCSwiftPackageProductDependency;

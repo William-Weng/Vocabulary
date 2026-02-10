@@ -874,16 +874,6 @@ extension AVAudioPlayer {
     }
 }
 
-// MARK: - AVAudioPlayer (function)
-extension AVAudioPlayer {
-    
-    /// 播放音樂 (背景)
-    /// - Parameter queue: DispatchQueue
-    func _play(queue: DispatchQueue = .global()) {
-        queue.async { self.play() }
-    }
-}
-
 // MARK: - AVAudioRecorder (static function)
 extension AVAudioRecorder {
     

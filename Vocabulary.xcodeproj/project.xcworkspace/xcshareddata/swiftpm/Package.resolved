@@ -1,5 +1,5 @@
 {
-  "originHash" : "44de6f98fa7bbcf9615082e16bda8e495b83a89c7e0fb3112df30d3ae112f374",
+  "originHash" : "a5d485f6c0a75bdb2b62282e2aa183d5dad3943cbaaee55e2363e4634163378b",
   "pins" : [
     {
       "identity" : "wwappinstallsource",
@@ -116,6 +116,15 @@
       "state" : {
         "revision" : "edac20a64617cb769ba85395bac9bdcb090c4c11",
         "version" : "1.8.3"
+      }
+    },
+    {
+      "identity" : "wwnormalizeaudioplayer",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWNormalizeAudioPlayer",
+      "state" : {
+        "revision" : "e5ac390c9a48ee3d1bf87777991dfc18a855b701",
+        "version" : "1.1.5"
       }
     },
     {

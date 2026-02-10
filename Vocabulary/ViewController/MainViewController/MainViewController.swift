@@ -960,15 +960,15 @@ private extension MainViewController {
             
             switch musicLoopType {
             case .infinity:
-                isSuccess = appDelegate.playBackgroundMusic(with: music, volume: Constant.volume, musicLoopType: musicLoopType)
+                isSuccess = appDelegate.playMusic(with: music, volume: Constant.volume, musicLoopType: musicLoopType)
                 this.musicButtonItem.image = #imageLiteral(resourceName: "Music")
             case .loop:
                 Constant.playingMusicList = Utility.shared.loopMusics()
-                isSuccess = appDelegate.playBackgroundMusic(with: Constant.playingMusicList._popFirst(), volume: Constant.volume, musicLoopType: musicLoopType)
+                isSuccess = appDelegate.playMusic(with: Constant.playingMusicList._popFirst(), volume: Constant.volume, musicLoopType: musicLoopType)
                 this.musicButtonItem.image = #imageLiteral(resourceName: "Loop")
             case .shuffle:
                 Constant.playingMusicList = Utility.shared.shuffleMusics()
-                isSuccess = appDelegate.playBackgroundMusic(with: Constant.playingMusicList.popLast(), volume: Constant.volume, musicLoopType: musicLoopType)
+                isSuccess = appDelegate.playMusic(with: Constant.playingMusicList.popLast(), volume: Constant.volume, musicLoopType: musicLoopType)
                 this.musicButtonItem.image = #imageLiteral(resourceName: "Shuffle")
             case .mute:
                 isSuccess = !appDelegate.stopMusic()

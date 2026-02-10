@@ -16,6 +16,7 @@ import WWSQLite3Manager
 import WWNetworking_UIImage
 import WWAppInstallSource
 import WWAssistiveTouch
+import WWNormalizeAudioPlayer
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable {
@@ -24,10 +25,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable
     var orientationLock: UIInterfaceOrientationMask?
     var assistiveTouch: WWAssistiveTouch!
 
-    private let audioPlayerQueue = DispatchQueue(label: "github.com/William-Weng/Vocabulary")
-    private lazy var touchViewController = { UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TouchViewController") }()
+    private let audioPlayer: WWNormalizeAudioPlayer = .init()
     
-    private var audioPlayer: AVAudioPlayer?
+    private lazy var touchViewController = { UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TouchViewController") }()
+        
     private var recordPlayer: AVAudioPlayer?
     private var audioRecorder: AVAudioRecorder?
     private var musicLoopType: Constant.MusicLoopType = .infinity
@@ -42,7 +43,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable
         deepLinkURL(app, open: url, options: options)
         return true
     }
-     
+    
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         universalLink(application, continue: userActivity)
         return true
@@ -55,21 +56,13 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable
     deinit { myPrint("\(Self.self) deinit") }
 }
 
-// MARK: - AVAudioPlayerDelegate
-extension AppDelegate: AVAudioPlayerDelegate {
-    
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) { audioPlayerDidFinishPlayingAction(player, successfully: flag) }
-    func audioPlayerBeginInterruption(_ player: AVAudioPlayer) { replayMusic(with: player) }
-    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) { if let error = error { myPrint(error) }}
-}
-
 // MARK: - AVAudioRecorderDelegate
 extension AppDelegate: AVAudioRecorderDelegate {
     
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         
         guard let recordlayer = AVAudioPlayer._build(audioURL: recorder.url, fileTypeHint: .wav, delegate: nil) else { return }
-        
+                
         self.recordPlayer = recordlayer
         recordlayer.play()
     }
@@ -87,14 +80,26 @@ extension AppDelegate: WWAssistiveTouch.Delegate {
     func assistiveTouch(_ assistiveTouch: WWAssistiveTouch, status: WWAssistiveTouch.Status) {}
 }
 
+// MARK: - WWNormalizeAudioPlayer.Delegate
+extension AppDelegate: WWNormalizeAudioPlayer.Deleagte {
+    
+    func audioPlayer(_ player: WWNormalizeAudioPlayer, callbackType: AVAudioPlayerNodeCompletionCallbackType, didFinishPlaying audioFile: AVAudioFile) {
+        audioPlayerDidFinishPlayingAction(player)
+    }
+    
+    func audioPlayer(_ player: WWNormalizeAudioPlayer, audioFile: AVAudioFile, totalTime: TimeInterval, currentTime: TimeInterval) {}
+    
+    func audioPlayer(_ player: WWNormalizeAudioPlayer, error: any Error) {}
+}
+
 // MARK: - 小工具 (公開)
 extension AppDelegate {
-        
+    
     /// [初始化資料表 / 資料庫](https://apppeterpan.medium.com/還模擬器一個乾乾淨淨的-xcode-console-a630992448d5)
     func initDatabase() {
         
         let result = WWSQLite3Manager.shared.connect(for: .documents, filename: Constant.databaseName)
-
+        
         switch result {
         case .failure(_): Utility.shared.flashHUD(with: .fail)
         case .success(let database):
@@ -126,6 +131,13 @@ extension AppDelegate {
         Constant.tableNameIndex = Utility.shared.tableNameIndex(Constant.tableName)
     }
     
+    /// 初始化播放器設定
+    func initAudioPlaySetting() {
+        audioPlayer.delegate = self
+        audioPlayer.isHiddenProgress = true
+        audioPlayer.volume = 0.1
+    }
+    
     /// 解析預設的SettingsJSON的設定檔
     /// - Parameter filename: String
     /// - Returns: String?
@@ -153,65 +165,46 @@ extension AppDelegate {
         
         return jsonString
     }
+}
+
+// MARK: - 小工具 (公開)
+extension AppDelegate {
     
-    /// [重新播放音樂](https://juejin.cn/post/7163440404480655367)
-    /// - Parameter notificaiton: Notification
-    func replayMusic(with player: AVAudioPlayer) {
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + Constant.replay) { [weak self] in
-            guard let this = self else { return }
-            player._play(queue: this.audioPlayerQueue)
-        }
-    }
-    
-    /// 播放背景音樂
+    /// 播放音樂
     /// - Parameters:
     ///   - music: 音樂檔案
     ///   - volume: 音量大小
     ///   - loopType: MusicLoopType
     /// - Returns: Bool
-    func playBackgroundMusic(with music: Music?, volume: Float, musicLoopType: Constant.MusicLoopType) -> Bool {
-                
-        _ = stopMusic()
-        self.musicLoopType = musicLoopType
-                
+    func playMusic(with music: Music?, volume: Float, musicLoopType: Constant.MusicLoopType) -> Bool {
+        
         guard let music = music,
-              let audioPlayer = musicPlayerMaker(with: music)
+              let audioUrl = music.fileURL()
         else {
             return false
         }
         
-        self.audioPlayer = audioPlayer
-        
-        audioPlayer.volume = volume
-        audioPlayer.numberOfLoops = musicLoopType.number()
-        audioPlayer.delegate = self
-        audioPlayer.prepareToPlay()
-        audioPlayer._play(queue: audioPlayerQueue)
-        
+        audioPlayer.play(with: audioUrl)
         return true
     }
     
     /// 停止播放音樂
     func stopMusic() -> Bool {
-        
-        audioPlayer?.stop()
-        audioPlayer = nil
-        
+        audioPlayer.stop()
         return true
     }
     
     /// 取得背景音樂音量大小
     /// - Returns: Float
-    func musicVolume() -> Float? { return audioPlayer?.volume }
+    func musicVolume() -> Float { return audioPlayer.volume }
     
     /// 設定背景音樂聲音大小
     /// - Parameter volume: Float
     /// - Returns: Float
-    func musicVolumeSetting(_ volume: Float) -> Float? {
+    func musicVolumeSetting(_ volume: Float) -> Float {
         Constant.volume = volume
-        audioPlayer?.volume = Constant.volume
-        return musicVolume()
+        audioPlayer.volume = Constant.volume
+        return audioPlayer.volume
     }
     
     /// 錄製聲音
@@ -268,18 +261,18 @@ private extension AppDelegate {
     ///   - application: UIApplication
     ///   - launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     func initSetting(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
-                
+        
         initSettings()
         initDatabase()
+        initAudioPlaySetting()
         
-        backgroundPlayAudio()
         appShortcutItem(with: application)
         backgroundBarColor(.black.withAlphaComponent(0.1))
-                
+        
         _ = animationFolderUrlMaker()
         _ = WWWebImage.shared.cacheTypeSetting(.cache(), defaultImage: OthersTableViewCell.defaultImage)
     }
-    
+        
     /// 建立該語言的資料庫群
     /// - Parameters:
     ///   - database: SQLite3Database
@@ -320,26 +313,7 @@ private extension AppDelegate {
         UINavigationBar.appearance()._backgroundColor(color)
         UITabBar.appearance()._backgroundColor(color)
     }
-    
-    /// 音樂播放器
-    /// - Parameter music: Music
-    /// - Returns: AVAudioPlayer?
-    func musicPlayerMaker(with music: Music) -> AVAudioPlayer? {
         
-        audioPlayer?.stop()
-        audioPlayer = nil
-        
-        guard let audioURL = music.fileURL(),
-              let audioPlayer = AVAudioPlayer._build(audioURL: audioURL, fileTypeHint: music.fileType(), delegate: nil)
-        else {
-            return nil
-        }
-                
-        musicPlayerHint(audioPlayer)
-        
-        return audioPlayer
-    }
-    
     /// [音樂檔名提示](http://furnacedigital.blogspot.com/2010/12/avfoundation.html)
     /// - Parameter player: AVAudioPlayer
     func musicPlayerHint(_ player: AVAudioPlayer) {
@@ -389,17 +363,12 @@ private extension AppDelegate {
         case .success(let isSuccess): return isSuccess
         }
     }
-    
-    /// [背景播放音樂 => Background Modes](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/設定-background-mode-在背景播放音樂-9bab5db75cc9)
-    func backgroundPlayAudio() { try? AVAudioSession.sharedInstance().setCategory(.playback) }
-    
+        
     /// 音樂播完後的動作 => 全曲隨機 / 全曲循環
     /// - Parameters:
     ///   - player: AVAudioPlayer
     ///   - flag: Bool
-    func audioPlayerDidFinishPlayingAction(_ player: AVAudioPlayer, successfully flag: Bool) {
-        
-        guard (player == audioPlayer) else { return }
+    func audioPlayerDidFinishPlayingAction(_ player: WWNormalizeAudioPlayer) {
         
         let currentMusic: Music?
         
@@ -411,7 +380,7 @@ private extension AppDelegate {
         }
         
         if (Constant.playingMusicList.isEmpty) { Constant.playingMusicList = Utility.shared.musicList(for: musicLoopType) }
-        _ = playBackgroundMusic(with: currentMusic, volume: Constant.volume, musicLoopType: musicLoopType)
+        _ = playMusic(with: currentMusic, volume: Constant.volume, musicLoopType: musicLoopType)
     }
     
     /// [設定ShortcutItem](https://www.jianshu.com/p/e49b8bfea475)

@@ -125,14 +125,8 @@ extension VolumeViewController {
                 
         switch soundType {
         case .volume:
-            
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-                  let musicVolume = appDelegate.musicVolume()
-            else {
-                return nil
-            }
-            
-            return musicVolume
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
+            return appDelegate.musicVolume()
             
         case .rate: return Constant.speakingSpeed
         }

@@ -971,7 +971,7 @@ private extension MainViewController {
                 isSuccess = appDelegate.playMusic(with: Constant.playingMusicList.popLast(), volume: Constant.volume, musicLoopType: musicLoopType)
                 this.musicButtonItem.image = #imageLiteral(resourceName: "Shuffle")
             case .mute:
-                isSuccess = !appDelegate.stopMusic()
+                isSuccess = appDelegate.stopMusic()
                 this.musicButtonItem.image = #imageLiteral(resourceName: "Music")
             }
             

@@ -28,11 +28,12 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable
     private let audioPlayer: WWNormalizeAudioPlayer = .init()
     
     private lazy var touchViewController = { UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TouchViewController") }()
-        
+    
     private var recordPlayer: AVAudioPlayer?
     private var audioRecorder: AVAudioRecorder?
     private var musicLoopType: Constant.MusicLoopType = .infinity
-
+    private var currentMusic: Music?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         initSetting(application, didFinishLaunchingWithOptions: launchOptions)
         initAssistiveTouch(window: window, touchViewController: touchViewController)
@@ -84,6 +85,7 @@ extension AppDelegate: WWAssistiveTouch.Delegate {
 extension AppDelegate: WWNormalizeAudioPlayer.Deleagte {
     
     func audioPlayer(_ player: WWNormalizeAudioPlayer, callbackType: AVAudioPlayerNodeCompletionCallbackType, didFinishPlaying audioFile: AVAudioFile) {
+        print("== \(musicLoopType) ==")
         audioPlayerDidFinishPlayingAction(player)
     }
     
@@ -184,12 +186,20 @@ extension AppDelegate {
             return false
         }
         
+        self.currentMusic = music
+        self.musicLoopType = musicLoopType
+        
+        print("<< \(audioUrl.lastPathComponent) >>")
+        
         audioPlayer.play(with: audioUrl)
+        musicPlayerHint(audioPlayer)
+        
         return true
     }
     
     /// 停止播放音樂
     func stopMusic() -> Bool {
+        musicLoopType = .mute
         audioPlayer.stop()
         return true
     }
@@ -268,6 +278,7 @@ private extension AppDelegate {
         
         appShortcutItem(with: application)
         backgroundBarColor(.black.withAlphaComponent(0.1))
+        if #available(iOS 26.0, *) { backgroundBarColor(.clear) }
         
         _ = animationFolderUrlMaker()
         _ = WWWebImage.shared.cacheTypeSetting(.cache(), defaultImage: OthersTableViewCell.defaultImage)
@@ -313,19 +324,18 @@ private extension AppDelegate {
         UINavigationBar.appearance()._backgroundColor(color)
         UITabBar.appearance()._backgroundColor(color)
     }
-        
+    
     /// [音樂檔名提示](http://furnacedigital.blogspot.com/2010/12/avfoundation.html)
-    /// - Parameter player: AVAudioPlayer
-    func musicPlayerHint(_ player: AVAudioPlayer) {
+    /// - Parameter player: WWNormalizeAudioPlayer
+    func musicPlayerHint(_ player: WWNormalizeAudioPlayer) {
         
         guard let window = self.window,
-              let filename = player.url?.lastPathComponent,
-              let duration = player.duration._time(unitsStyle: .positional)
+              let time = player.totalTime()._time(unitsStyle: .positional, allowedUnits: [.minute, .second], behavior: .pad)
         else {
             return
         }
         
-        let text = "[\(duration)] \(filename)"
+        let text = "[\(time)] \(player.audioFile.url.lastPathComponent)"
         let backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         
         WWToast.shared.setting(backgroundViewColor: backgroundColor)
@@ -363,18 +373,16 @@ private extension AppDelegate {
         case .success(let isSuccess): return isSuccess
         }
     }
-        
+    
     /// 音樂播完後的動作 => 全曲隨機 / 全曲循環
     /// - Parameters:
     ///   - player: AVAudioPlayer
     ///   - flag: Bool
     func audioPlayerDidFinishPlayingAction(_ player: WWNormalizeAudioPlayer) {
         
-        let currentMusic: Music?
-        
         switch musicLoopType {
+        case .infinity: break
         case .mute: currentMusic = nil
-        case .infinity: currentMusic = nil
         case .loop: currentMusic = Constant.playingMusicList._popFirst()
         case .shuffle: currentMusic = Constant.playingMusicList.popLast()
         }

@@ -268,7 +268,7 @@ private extension WordCardViewController {
     func unlockScreenOrientation() {
         currentLockOrientation = .all
         _ = Utility.shared.screenOrientation(lock: currentLockOrientation, rotate: currentOrientation._interfaceOrientation())
-        UIViewController.attemptRotationToDeviceOrientation()
+        setNeedsUpdateOfSupportedInterfaceOrientations()
     }
     
     /// 設定畫面旋轉方向的圖示

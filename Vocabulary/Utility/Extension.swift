@@ -161,9 +161,10 @@ extension TimeInterval {
     /// [秒 => 時間 (210.2799sec => 3 minutes, 30 seconds)](https://stackoverflow.com/questions/26794703/swift-integer-conversion-to-hours-minutes-seconds)
     /// - Parameter unitsStyle: 輸出的方式 => .full
     /// - Parameter allowedUnits: 想要看的單位 => [.hour, .minute, .second]
+    /// - Parameter behavior: 處理0的顯示問題
     /// - Parameter localeIdentifier: 語言代號 => en-US
     /// - Returns: String?
-    func _time(unitsStyle: DateComponentsFormatter.UnitsStyle = .full, allowedUnits: NSCalendar.Unit = [.hour, .minute, .second], localeIdentifier: String = "en-US") -> String? {
+    func _time(unitsStyle: DateComponentsFormatter.UnitsStyle = .full, allowedUnits: NSCalendar.Unit = [.hour, .minute, .second], behavior: DateComponentsFormatter.ZeroFormattingBehavior = .default, localeIdentifier: String = "en-US") -> String? {
         
         let calendar = Calendar._build(localeIdentifier: localeIdentifier)
         let formatter = DateComponentsFormatter()
@@ -171,6 +172,7 @@ extension TimeInterval {
         formatter.calendar = calendar
         formatter.allowedUnits = allowedUnits
         formatter.unitsStyle = unitsStyle
+        formatter.zeroFormattingBehavior = behavior
         
         return formatter.string(from: self)
     }

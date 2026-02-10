@@ -277,8 +277,12 @@ private extension AppDelegate {
         initAudioPlaySetting()
         
         appShortcutItem(with: application)
-        backgroundBarColor(.black.withAlphaComponent(0.1))
-        if #available(iOS 26.0, *) { backgroundBarColor(.clear) }
+        
+        if #available(iOS 26.0, *) {
+            backgroundBarColor()
+        } else {
+            backgroundBarColor(.black.withAlphaComponent(0.1))
+        }
         
         _ = animationFolderUrlMaker()
         _ = WWWebImage.shared.cacheTypeSetting(.cache(), defaultImage: OthersTableViewCell.defaultImage)
@@ -321,8 +325,15 @@ private extension AppDelegate {
     /// 設定Bar的背景色
     /// - Parameter color: UIColor
     func backgroundBarColor(_ color: UIColor) {
+        
         UINavigationBar.appearance()._backgroundColor(color)
         UITabBar.appearance()._backgroundColor(color)
+        
+        let itemAppearance = UIBarButtonItemAppearance()
+        itemAppearance.normal.backgroundImage = nil
+    }
+    
+    func backgroundBarColor() {
     }
     
     /// [音樂檔名提示](http://furnacedigital.blogspot.com/2010/12/avfoundation.html)

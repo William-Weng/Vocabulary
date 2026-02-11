@@ -32,7 +32,7 @@ final class OllamViewController: UIViewController {
     @WWUserDefaults("Port") private var port: String?
     @WWUserDefaults("ChatModel") private var chatModel: String?
     @WWUserDefaults("LastContext") private var lastContext: String?
-        
+    
     private var isConfigure = false
     private var botTimestamp: Int?
     private var responseString: String = ""
@@ -41,16 +41,12 @@ final class OllamViewController: UIViewController {
     private var disappearImage: UIImage?
     private var gifImageView: UIImageView?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        initSetting()
-    }
-    
     override func viewIsAppearing(_ animated: Bool) {
         super.viewIsAppearing(animated)
         
         if (isConfigure) { return }
         
+        initSetting()
         isConfigure = true
         configure(ip: ip, port: port, model: chatModel)
     }
@@ -69,6 +65,10 @@ final class OllamViewController: UIViewController {
     
     @IBAction func generateLiveDemo(_ sender: UIButton) {
         generateLiveAction()
+    }
+    
+    @IBAction func dissmissAction(_ sender: UIBarButtonItem) {
+        dismiss(animated: true)
     }
     
     @IBAction func configureAction(_ sender: UIBarButtonItem) {
@@ -137,11 +137,11 @@ private extension OllamViewController {
     
     /// 初始化鍵盤高度設定
     func initKeyboardShadowViewSetting() {
-        
-        let bottom = tabBarController?.view.safeAreaInsets.bottom ?? 0.0
+
+        let bottom = view.window?.safeAreaInsets.bottom ?? 0
         
         keyboardConstraintHeight.constant = bottom
-        keyboardShadowView.configure(target: self, keyboardConstraintHeight: keyboardConstraintHeight, bottomType: .custom(bottom))
+        keyboardShadowView.configure(target: self, keyboardConstraintHeight: keyboardConstraintHeight, bottomType: .custom(44))
         keyboardShadowView.register()
     }
     
@@ -249,6 +249,7 @@ private extension OllamViewController {
         let text = expandableTextView.text._removeWhitespacesAndNewlines()
         if (text.isEmpty) { return }
         
+        view.endEditing(true)
         generateLiveAction(webView: myWebView, text: text)
     }
 }

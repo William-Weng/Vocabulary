@@ -14,6 +14,7 @@ final class TouchViewController: UIViewController {
         case recorder = 102
         case share = 103
         case download = 104
+        case chat = 105
     }
     
     private let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -51,6 +52,7 @@ final class TouchViewController: UIViewController {
         case .recorder: appDelegate.recording()
         case .share: appDelegate.shareDatabase()
         case .download: appDelegate.downloadDatabase()
+        case .chat: appDelegate.chat()
         }
     }
 }

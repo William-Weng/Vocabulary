@@ -296,6 +296,18 @@ extension AppDelegate {
         let documentPickerViewController = UIDocumentPickerViewController._build(delegate: self, allowedUTIs: [.item])
         target.present(documentPickerViewController, animated: true)
     }
+    
+    /// 跟AI對話
+    func chat() {
+        
+        guard let target = window?.rootViewController,
+              let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TalkNavigationController") as? UINavigationController
+        else {
+            return
+        }
+        
+        target.present(viewController, animated: true)
+    }
 }
 
 // MARK: - 小工具

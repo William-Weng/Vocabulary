@@ -1635,7 +1635,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R7h-e1-euy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3038" y="-762"/>
+            <point key="canvasLocation" x="3947.826086956522" y="-762.05357142857144"/>
         </scene>
         <!--複習總覽-->
         <scene sceneID="Eoh-lH-Bl6">
@@ -1877,7 +1877,6 @@
                         <segue destination="dRt-J7-ggg" kind="relationship" relationship="viewControllers" id="rgM-sp-gd8"/>
                         <segue destination="kd7-xT-3sI" kind="relationship" relationship="viewControllers" id="j6u-ig-YSi"/>
                         <segue destination="mec-ZW-fNy" kind="relationship" relationship="viewControllers" id="fgh-Ym-JXW"/>
-                        <segue destination="UKZ-qH-rEg" kind="relationship" relationship="viewControllers" id="N1x-M4-3EY"/>
                         <segue destination="gO8-d9-BBM" kind="relationship" relationship="viewControllers" id="zUr-ZX-YWP"/>
                     </connections>
                 </tabBarController>
@@ -2125,81 +2124,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Pf-5h-Uqv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-302" y="822"/>
-        </scene>
-        <!--聊天對話-->
-        <scene sceneID="Fja-P9-uNj">
-            <objects>
-                <viewController id="W8D-NG-eDd" customClass="TalkViewController" customModule="Vocabulary" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="WVz-X5-XlO">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iWW-HH-5XJ">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                            </imageView>
-                            <stackView opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="boe-eN-P8C">
-                                <rect key="frame" x="143" y="224" width="128" height="448"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z9D-L8-Iau">
-                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="Z9D-L8-Iau" secondAttribute="height" id="9uo-Km-lcq"/>
-                                        </constraints>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" backgroundImage="Ollama"/>
-                                        <connections>
-                                            <action selector="aiTalking:" destination="W8D-NG-eDd" eventType="touchUpInside" id="8Xp-B5-1dK"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bRX-XK-Aup">
-                                        <rect key="frame" x="0.0" y="160" width="128" height="128"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="bRX-XK-Aup" secondAttribute="height" id="CZ7-OH-0Ya"/>
-                                            <constraint firstAttribute="width" secondItem="bRX-XK-Aup" secondAttribute="height" id="cbB-UC-NLL"/>
-                                        </constraints>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" backgroundImage="Robot"/>
-                                        <connections>
-                                            <action selector="aiTalking:" destination="W8D-NG-eDd" eventType="touchUpInside" id="qXq-ZO-wME"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PNl-Ot-nlc">
-                                        <rect key="frame" x="0.0" y="320" width="128" height="128"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="PNl-Ot-nlc" secondAttribute="height" id="BPI-QU-6FJ"/>
-                                            <constraint firstAttribute="width" secondItem="PNl-Ot-nlc" secondAttribute="height" id="Tnx-UH-7d4"/>
-                                        </constraints>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" backgroundImage="Team"/>
-                                        <connections>
-                                            <action selector="aiTalking:" destination="W8D-NG-eDd" eventType="touchUpInside" id="cf9-vF-QpI"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <variation key="heightClass=compact" axis="horizontal"/>
-                            </stackView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="0DO-Qb-M7w"/>
-                        <color key="backgroundColor" red="0.58431372549019611" green="0.81960784313725488" blue="0.76470588235294112" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="boe-eN-P8C" firstAttribute="height" secondItem="WVz-X5-XlO" secondAttribute="height" multiplier="0.5" id="1Nv-sD-6aI"/>
-                            <constraint firstItem="iWW-HH-5XJ" firstAttribute="trailing" secondItem="0DO-Qb-M7w" secondAttribute="trailing" id="5oW-gW-yCS"/>
-                            <constraint firstItem="boe-eN-P8C" firstAttribute="centerX" secondItem="WVz-X5-XlO" secondAttribute="centerX" id="RFr-n9-ojq"/>
-                            <constraint firstItem="iWW-HH-5XJ" firstAttribute="leading" secondItem="0DO-Qb-M7w" secondAttribute="leading" id="S0r-2V-eEM"/>
-                            <constraint firstItem="boe-eN-P8C" firstAttribute="centerY" secondItem="WVz-X5-XlO" secondAttribute="centerY" id="em8-bw-as7"/>
-                            <constraint firstItem="iWW-HH-5XJ" firstAttribute="top" secondItem="WVz-X5-XlO" secondAttribute="top" id="lUW-A8-34Q"/>
-                            <constraint firstAttribute="bottom" secondItem="iWW-HH-5XJ" secondAttribute="bottom" id="wy3-z9-crL"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="聊天對話" id="w1d-gt-Gau"/>
-                    <connections>
-                        <outlet property="myImageView" destination="iWW-HH-5XJ" id="ew2-kA-AOy"/>
-                        <segue destination="dUN-Lu-1xT" kind="show" identifier="AITalkingSegue" id="HkE-Kx-QEw"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uvQ-l4-QSm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1955" y="1626"/>
         </scene>
         <!--精選例句-->
         <scene sceneID="ucT-2W-PsQ">
@@ -2669,12 +2593,12 @@
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TvM-5s-TW1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4114" y="-763"/>
+            <point key="canvasLocation" x="5023.188405797102" y="-763.39285714285711"/>
         </scene>
         <!--DeepSeek-->
         <scene sceneID="zlA-fq-wbA">
             <objects>
-                <viewController title="DeepSeek" modalTransitionStyle="flipHorizontal" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dUN-Lu-1xT" customClass="OllamViewController" customModule="Vocabulary" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OllamViewController" title="DeepSeek" modalPresentationStyle="overFullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dUN-Lu-1xT" customClass="OllamViewController" customModule="Vocabulary" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="G6P-Jd-9AM">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2771,18 +2695,23 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Ollama" id="ZKi-E5-zj1">
-                        <rightBarButtonItems>
-                            <barButtonItem image="Forget" id="QTv-aF-kRu">
-                                <connections>
-                                    <action selector="forgetMemory:" destination="dUN-Lu-1xT" id="kji-ql-BAN"/>
-                                </connections>
-                            </barButtonItem>
+                        <leftBarButtonItems>
                             <barButtonItem image="Settings" style="plain" id="fpC-30-ylb">
                                 <connections>
                                     <action selector="configureAction:" destination="dUN-Lu-1xT" id="Ih3-f7-RPD"/>
                                 </connections>
                             </barButtonItem>
-                        </rightBarButtonItems>
+                            <barButtonItem image="Forget" id="QTv-aF-kRu">
+                                <connections>
+                                    <action selector="forgetMemory:" destination="dUN-Lu-1xT" id="kji-ql-BAN"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" image="Dismiss" id="Q9m-go-5gc">
+                            <connections>
+                                <action selector="dissmissAction:" destination="dUN-Lu-1xT" id="sHu-b2-dsd"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="connentView" destination="lFb-2K-8EI" id="Hu6-vP-VhQ"/>
@@ -2796,7 +2725,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iaj-2J-gDX" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1954" y="2427"/>
+            <point key="canvasLocation" x="1954" y="-764"/>
         </scene>
         <!--Touch View Controller-->
         <scene sceneID="AbY-fr-RId">
@@ -2853,10 +2782,10 @@
                                                 <rect key="frame" x="102" y="0.0" width="86" height="86"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YQI-1b-ORf">
+                                            <button opaque="NO" tag="105" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YQI-1b-ORf">
                                                 <rect key="frame" x="204" y="0.0" width="86" height="86"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" image="Touch_Sub"/>
+                                                <state key="normal" image="Chat"/>
                                                 <connections>
                                                     <action selector="touchAction:" destination="0fB-fG-UaN" eventType="touchUpInside" id="pmS-QM-ul4"/>
                                                 </connections>
@@ -2929,24 +2858,23 @@
             </objects>
             <point key="canvasLocation" x="-306" y="-762"/>
         </scene>
-        <!--聊天對話-->
-        <scene sceneID="F50-rC-pNV">
+        <!--Navigation Controller-->
+        <scene sceneID="vwg-fo-vLK">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UKZ-qH-rEg" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="聊天對話" image="Talking" id="qyC-qH-zk5"/>
+                <navigationController storyboardIdentifier="TalkNavigationController" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="overFullScreen" id="VnG-Ua-FWZ" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7wW-8n-Lzi">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="oA3-8f-3sU">
                         <rect key="frame" x="0.0" y="96" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="W8D-NG-eDd" kind="relationship" relationship="rootViewController" id="fPv-ip-6Gq"/>
+                        <segue destination="dUN-Lu-1xT" kind="relationship" relationship="rootViewController" id="oL4-Qh-bsI"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cNE-9D-9GJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vb7-w6-G5P" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="809" y="822"/>
+            <point key="canvasLocation" x="807" y="-762"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
@@ -2961,6 +2889,7 @@
         <image name="Chat" width="85.333335876464844" height="85.333335876464844"/>
         <image name="Cry" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Dictionary" width="21.333333969116211" height="21.333333969116211"/>
+        <image name="Dismiss" width="32" height="32"/>
         <image name="Download" width="85.333335876464844" height="85.333335876464844"/>
         <image name="Filter" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Forget" width="26.666666030883789" height="26.666666030883789"/>
@@ -2974,7 +2903,6 @@
         <image name="Music" width="21.333333969116211" height="21.333333969116211"/>
         <image name="NoVolume" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Notice_Off" width="21.333333969116211" height="21.333333969116211"/>
-        <image name="Ollama" width="170.66667175292969" height="170.66667175292969"/>
         <image name="Others" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Palette" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Pencil" width="170.66667175292969" height="170.66667175292969"/>
@@ -2984,7 +2912,6 @@
         <image name="Read" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Recorder" width="170.66667175292969" height="170.66667175292969"/>
         <image name="Refresh" width="21.333333969116211" height="21.333333969116211"/>
-        <image name="Robot" width="341.33334350585938" height="341.33334350585938"/>
         <image name="Search" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Settings" width="26.666666030883789" height="26.666666030883789"/>
         <image name="Share" width="85.333335876464844" height="85.333335876464844"/>
@@ -2993,8 +2920,6 @@
         <image name="SpeedoMeter" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Star" width="21.333333969116211" height="21.333333969116211"/>
         <image name="SunTreeBorder" width="329.33334350585938" height="295.66665649414062"/>
-        <image name="Talking" width="21.333333969116211" height="21.333333969116211"/>
-        <image name="Team" width="170.66667175292969" height="170.66667175292969"/>
         <image name="Test" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Touch_Sub" width="85.333335876464844" height="85.333335876464844"/>
         <image name="Vertical" width="32" height="32"/>

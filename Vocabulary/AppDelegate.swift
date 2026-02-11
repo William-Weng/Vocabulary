@@ -77,6 +77,10 @@ extension AppDelegate: UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         downloadDocumentAction(controller, didPickDocumentsAt: urls)
     }
+    
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        assistiveTouchHidden(false)
+    }
 }
 
 // MARK: - WWAssistiveTouch.Delegate
@@ -295,6 +299,8 @@ extension AppDelegate {
         guard let target = window?.rootViewController else { return }
         
         let documentPickerViewController = UIDocumentPickerViewController._build(delegate: self, allowedUTIs: [.item])
+        
+        assistiveTouchHidden(true)
         target.present(documentPickerViewController, animated: true)
     }
     
@@ -311,9 +317,13 @@ extension AppDelegate {
         target.present(viewController, animated: true)
     }
     
-    func speedRate() {
+    /// 顯示調整聲音畫面 (音量  / 語速)
+    func adjustmentSoundType(_ soundType: VolumeViewController.AdjustmentSoundType) {
+        
         guard let target = window?.rootViewController else { return }
-        Utility.shared.presentVolumeViewController(target: target, soundType: .rate)
+        
+        assistiveTouchHidden(true)
+        Utility.shared.presentVolumeViewController(target: target, soundType: soundType)
     }
 }
 

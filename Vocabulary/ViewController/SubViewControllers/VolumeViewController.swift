@@ -21,6 +21,7 @@ final class VolumeViewController: UIViewController {
     
     var soundType: AdjustmentSoundType = .volume
     
+    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     private var isInitSetting = false
     
     override func viewDidLoad() {
@@ -147,7 +148,6 @@ extension VolumeViewController {
         let percent = sliderVolume() ?? 0
         let constant = currentValueMaker(with: percent)
         
-        tabBarHidden(true)
         updateWidth(isLandscape: isLandscape(with: view.frame.size))
         volumeProgressSlider.currentValue = constant
         _ = volumeProgressSlider.valueSetting(constant: constant, info: (text: "\(Int(percent * 100)) %", icon: nil))
@@ -178,32 +178,7 @@ extension VolumeViewController {
     
     /// 回到上一頁
     func dismissAction() {
-        
-        self.dismiss(animated: true) { [weak self] in
-            guard let this = self else { return }
-            this.tabBarHidden(false)
-        }
-    }
-    
-    /// 顯示 / 隱藏 => TabBar
-    /// - Parameters:
-    ///   - isHidden: Bool
-    func tabBarHidden(_ isHidden: Bool) {
-        guard let tabBarController = rootTabBarController() else { return }
-        tabBarController._tabBarHidden(isHidden)
-    }
-    
-    /// 取得首頁的UITabBarController
-    /// - Returns: UITabBarController?
-    func rootTabBarController() -> UITabBarController? {
-        
-        guard let keyWindow = UIWindow._keyWindow(),
-              let rootViewController = keyWindow.rootViewController,
-              let tabBarController = rootViewController as? UITabBarController
-        else {
-            return nil
-        }
-
-        return tabBarController
+        appDelegate?.assistiveTouchHidden(false)
+        dismiss(animated: true)
     }
 }

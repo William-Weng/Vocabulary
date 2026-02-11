@@ -54,7 +54,7 @@ final class TouchViewController: UIViewController {
         case .share: appDelegate.shareDatabase()
         case .download: appDelegate.downloadDatabase()
         case .chat: appDelegate.chat()
-        case .speedRate: appDelegate.speedRate()
+        case .speedRate: appDelegate.adjustmentSoundType(.rate)
         }
     }
 }

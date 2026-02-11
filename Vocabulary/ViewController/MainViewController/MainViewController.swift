@@ -40,6 +40,7 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var indicatorLabel: UILabel!
     
     private let appendTextHintTitle = "請輸入單字"
+    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     
     private var titleString: String { Utility.shared.mainViewContrillerTitle(with: Constant.tableNameIndex, default: "字典") }
     private var isAnimationStop = false
@@ -81,7 +82,7 @@ final class MainViewController: UIViewController {
     
     @IBAction func appendWordAction(_ sender: UIButton) { appendTextHintAction(sender) }
     @IBAction func filterFavorite(_ sender: UIBarButtonItem) { filterFavoriteAction(with: sender) }
-    @IBAction func selectVolume(_ sender: UIBarButtonItem) { Utility.shared.presentVolumeViewController(target: self, soundType: .volume) }
+    @IBAction func selectVolume(_ sender: UIBarButtonItem) { appDelegate?.adjustmentSoundType(.volume) }
     
     @IBAction func searchWordAction(_ sender: UIBarButtonItem) { performSegue(for: .searchView, sender: nil) }
     
@@ -935,7 +936,7 @@ private extension MainViewController {
         let action = UIAction(title: title) { [weak self] _ in
             
             guard let this = self,
-                  let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                  let appDelegate = self?.appDelegate
             else {
                 return
             }

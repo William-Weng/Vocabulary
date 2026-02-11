@@ -76,7 +76,6 @@ final class OthersViewController: UIViewController {
     @objc func refreshBookmarks(_ sender: UIRefreshControl) { reloadBookmarks(isFavorite: isFavorite) }
     @objc func bookmarkCount(_ sender: UITapGestureRecognizer) { bookmarkCountAction(isFavorite: isFavorite) }
     
-    @IBAction func shareDatabase(_ sender: UIBarButtonItem) { shareDatabaseAction(sender) }
     @IBAction func downloadDatabase(_ sender: UIBarButtonItem) { downloadDatabaseAction(sender) }
     @IBAction func filterFavorite(_ sender: UIBarButtonItem) { filterFavoriteAction(with: sender) }
     @IBAction func appendBookmarkAction(_ sender: UIButton) { appendBookmarkActionSetting(with: sender) }
@@ -567,16 +566,6 @@ private extension OthersViewController {
         
         let documentPickerViewController = UIDocumentPickerViewController._build(delegate: self, allowedUTIs: [.item])
         present(documentPickerViewController, animated: true)
-    }
-    
-    /// 分享(備份)Database
-    /// - Parameter sender: UIBarButtonItem
-    func shareDatabaseAction(_ sender: UIBarButtonItem) {
-        
-        guard let fileURL = Constant.database?.fileURL else { return }
-        
-        let activityViewController = UIActivityViewController._build(activityItems: [fileURL], barButtonItem: sender)
-        present(activityViewController, animated: true)
     }
     
     /// 新增書籤功能設定

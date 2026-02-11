@@ -1044,7 +1044,7 @@
 			repositoryURL = "https://github.com/William-Weng/WWAssistiveTouch";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.1;
+				minimumVersion = 1.2.5;
 			};
 		};
 		8188EEBE2EF53F46007C12F3 /* XCRemoteSwiftPackageReference "WWSimpleAI_Ollama" */ = {

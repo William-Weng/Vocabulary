@@ -12,6 +12,7 @@ final class TouchViewController: UIViewController {
     private enum TouchTagType: Int {
         case pencel = 101
         case recorder = 102
+        case share = 103
     }
     
     private let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -37,14 +38,17 @@ final class TouchViewController: UIViewController {
     }
     
     @IBAction func touchAction(_ sender: UIButton) {
-                
-        defer { appDelegate?.assistiveTouch.dismiss() }
+        
+        guard let appDelegate = appDelegate else { return }
+        
+        defer { appDelegate.assistiveTouch.dismiss() }
         
         guard let touchType = TouchTagType(rawValue: sender.tag) else { return }
         
         switch touchType {
-        case .pencel: appDelegate?.pencelToolPicker()
-        case .recorder: appDelegate?.recording()
+        case .pencel: appDelegate.pencelToolPicker()
+        case .recorder: appDelegate.recording()
+        case .share: appDelegate.shareDatabase()
         }
     }
 }

@@ -227,7 +227,7 @@ extension AppDelegate {
     func stopRecordingWave() -> Bool { stopRecorder() }
 }
 
-// MARK: - TouchView
+// MARK: - WWAssistiveTouch
 extension AppDelegate {
     
     /// AssistiveTouch是否顯示
@@ -258,6 +258,20 @@ extension AppDelegate {
     /// 彈出錄音界面
     func recording() {
         _ = Utility.shared.presentViewController(target: window?.rootViewController, identifier: "TalkingViewController")
+    }
+    
+    /// 分享(備份)Database
+    /// - Parameter sender: UIBarButtonItem
+    func shareDatabase() {
+        
+        guard let viewController = window?.rootViewController,
+              let fileURL = Constant.database?.fileURL
+        else {
+            return
+        }
+        
+        let activityViewController = UIActivityViewController._build(activityItems: [fileURL], view: viewController.view)
+        viewController.present(activityViewController, animated: true)
     }
 }
 

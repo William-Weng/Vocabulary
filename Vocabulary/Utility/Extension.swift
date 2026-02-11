@@ -1545,14 +1545,14 @@ extension UIActivityViewController {
     ///   - activityItems: [Any]
     ///   - applicationActivities: [UIActivity]?
     ///   - tintColor: tintColor
-    ///   - barButtonItem: 要貼在哪個Item上 (for iPad)
+    ///   - view: 要貼在哪個View上
     /// - Returns: UIActivityViewController
-    static func _build(activityItems: [Any], applicationActivities: [UIActivity]? = nil, tintColor: UIColor = .white, barButtonItem: UIBarButtonItem? = nil) -> UIActivityViewController {
+    static func _build(activityItems: [Any], applicationActivities: [UIActivity]? = nil, tintColor: UIColor = .white, view: UIView? = nil) -> UIActivityViewController {
         
         let activityViewController = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
         
         activityViewController.view.tintColor = tintColor
-        activityViewController.popoverPresentationController?.barButtonItem = barButtonItem
+        activityViewController.popoverPresentationController?.sourceView = view
         
         return activityViewController
     }

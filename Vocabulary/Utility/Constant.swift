@@ -426,29 +426,17 @@ extension Constant {
     /// 音樂播放類型
     enum MusicLoopType {
         
-        case mute
+        case stop
         case infinity
         case loop
         case shuffle
-
-        /// 播放次數
-        /// - Returns: Int
-        func number() -> Int {
-            
-            switch self {
-            case .mute: return 0
-            case .infinity: return -1
-            case .loop: return 0
-            case .shuffle: return 0
-            }
-        }
         
         /// 說明文字
         /// - Returns: String
         func toString() -> String {
             
             switch self {
-            case .mute: return "靜音"
+            case .stop: return "停止播放"
             case .infinity: return "單曲循環"
             case .loop: return "全曲循環"
             case .shuffle: return "全曲隨機"

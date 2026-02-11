@@ -185,6 +185,23 @@ extension Utility {
         
         return true
     }
+    
+    /// 顯示調節音量畫面
+    /// - Parameters:
+    ///   - target: UIViewController?
+    ///   - soundType: VolumeViewController.AdjustmentSoundType
+    func presentVolumeViewController(target: UIViewController?, soundType: VolumeViewController.AdjustmentSoundType) {
+        
+        guard let target = target,
+              let viewController = UIStoryboard(name: "Sub", bundle: nil).instantiateViewController(withIdentifier: "VolumeViewController") as? VolumeViewController
+        else {
+            return
+        }
+        
+        viewController.soundType = soundType
+        viewController._transparent(.black.withAlphaComponent(0.3))
+        target.present(viewController, animated: true)
+    }
 }
 
 // MARK: - UI相關 (function)
@@ -375,7 +392,7 @@ extension Utility {
     func musicList(for type: Constant.MusicLoopType) -> [Music] {
         
         switch type {
-        case .mute: return []
+        case .stop: return []
         case .infinity: return []
         case .loop: return loopMusics()
         case .shuffle: return shuffleMusics()

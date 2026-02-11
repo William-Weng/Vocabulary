@@ -25,7 +25,6 @@ final class MainViewController: UIViewController {
     
     enum ViewSegueType: String {
         case listTableView = "ListTableViewSegue"
-        case volumeView = "VolumeViewSegue"
         case searchView = "SearchViewSegue"
         case wordCardView = "WordCardViewSegue"
         case wordMemoryView = "WordMemoryViewSegue"
@@ -82,7 +81,8 @@ final class MainViewController: UIViewController {
     
     @IBAction func appendWordAction(_ sender: UIButton) { appendTextHintAction(sender) }
     @IBAction func filterFavorite(_ sender: UIBarButtonItem) { filterFavoriteAction(with: sender) }
-    @IBAction func selectVolume(_ sender: UIBarButtonItem) { performSegue(for: .volumeView, sender: nil) }
+    @IBAction func selectVolume(_ sender: UIBarButtonItem) { Utility.shared.presentVolumeViewController(target: self, soundType: .volume) }
+    
     @IBAction func searchWordAction(_ sender: UIBarButtonItem) { performSegue(for: .searchView, sender: nil) }
     
     deinit {
@@ -250,7 +250,6 @@ private extension MainViewController {
         
         switch segueType {
         case .listTableView: vocabularyListPageSetting(for: segue, sender: sender)
-        case .volumeView: volumePageSetting(for: segue, sender: sender)
         case .searchView: searchWordViewControllerSetting(for: segue, sender: sender)
         case .wordCardView: wordCardControllerSetting(for: segue, sender: sender)
         case .wordMemoryView: wordMemoryViewControllerSetting(for: segue, sender: sender)
@@ -514,20 +513,6 @@ private extension MainViewController {
         viewController.vocabularyList = vocabularyList
         viewController.vocabularyListIndexPath = indexPath
         viewController.mainViewDelegate = self
-    }
-    
-    /// 設定音量頁的相關數值
-    /// - Parameters:
-    ///   - segue: UIStoryboardSegue
-    ///   - sender: Any?
-    func volumePageSetting(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        guard let viewController = segue.destination as? VolumeViewController else { return }
-        
-        viewController._transparent(.black.withAlphaComponent(0.3))
-        viewController.soundType = .volume
-        
-        tabBarHidden(true)
     }
     
     /// 單字搜尋頁的相關數值
@@ -922,7 +907,7 @@ private extension MainViewController {
         
         actions.append(musicItemMenuActionMaker(filename: Constant.MusicLoopType.loop.toString(), musicLoopType: .loop))
         actions.append(musicItemMenuActionMaker(filename: Constant.MusicLoopType.shuffle.toString(), musicLoopType: .shuffle))
-        actions.append(musicItemMenuActionMaker(filename: Constant.MusicLoopType.mute.toString(), musicLoopType: .mute))
+        actions.append(musicItemMenuActionMaker(filename: Constant.MusicLoopType.stop.toString(), musicLoopType: .stop))
         
         Constant.musicFileList = musicList
         
@@ -941,10 +926,10 @@ private extension MainViewController {
         let title: String
         
         switch musicLoopType {
-        case .infinity: title = "🔊 - \(music.filename)"
-        case .loop: title = "💿 - \(musicLoopType.toString())"
-        case .shuffle: title = "🎧 - \(musicLoopType.toString())"
-        case .mute: title = "🚫 - \(musicLoopType.toString())"
+        case .infinity: title = "🎶 - \(music.filename)"
+        case .loop: title = "🎼 - \(musicLoopType.toString())"
+        case .shuffle: title = "🎵 - \(musicLoopType.toString())"
+        case .stop: title = "🚫 - \(musicLoopType.toString())"
         }
         
         let action = UIAction(title: title) { [weak self] _ in
@@ -988,8 +973,8 @@ private extension MainViewController {
             Constant.playingMusicList = Utility.shared.shuffleMusics()
             isSuccess = appDelegate.playMusic(with: Constant.playingMusicList.popLast(), volume: Constant.volume, musicLoopType: musicLoopType)
             musicButtonItem.image = .shuffle
-        case .mute:
-            isSuccess = appDelegate.stopMusic()
+        case .stop:
+            isSuccess = false
             musicButtonItem.image = .music
         }
         

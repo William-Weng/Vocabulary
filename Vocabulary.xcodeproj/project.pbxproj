@@ -16,6 +16,7 @@
 		3D659A822F3B858400F6CF17 /* WWNormalizeAudioPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 3D659A812F3B858400F6CF17 /* WWNormalizeAudioPlayer */; };
 		3DC6E3872EB5898D00F883E6 /* TouchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC6E3862EB5898D00F883E6 /* TouchViewController.swift */; };
 		3DCDCE192F3B5AF600EBEF79 /* WWNormalizeAudioPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 3DCDCE182F3B5AF600EBEF79 /* WWNormalizeAudioPlayer */; };
+		3DEB334F2F3CBBF800D14B5D /* Sub.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DEB334E2F3CBBF700D14B5D /* Sub.storyboard */; };
 		6417E8512AAD285D00512881 /* PaletteHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6417E8502AAD285D00512881 /* PaletteHeader.xib */; };
 		6418FC1A2A6DCDED00493B8D /* WWAppInstallSource in Frameworks */ = {isa = PBXBuildFile; productRef = 6418FC192A6DCDED00493B8D /* WWAppInstallSource */; };
 		641B5CA72984BEB500AB1C56 /* VolumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641B5CA62984BEB500AB1C56 /* VolumeViewController.swift */; };
@@ -102,6 +103,7 @@
 		3D652CC92DB38FD60047DB39 /* WordMemoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordMemoryViewController.swift; sourceTree = "<group>"; };
 		3D652CD32DB3AD2B0047DB39 /* WordMemoryItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordMemoryItemCell.swift; sourceTree = "<group>"; };
 		3DC6E3862EB5898D00F883E6 /* TouchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchViewController.swift; sourceTree = "<group>"; };
+		3DEB334E2F3CBBF700D14B5D /* Sub.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Sub.storyboard; sourceTree = "<group>"; };
 		6417E8502AAD285D00512881 /* PaletteHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaletteHeader.xib; sourceTree = "<group>"; };
 		641B5CA62984BEB500AB1C56 /* VolumeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeViewController.swift; sourceTree = "<group>"; };
 		64285887297BBF8600DD7D88 /* Vocabulary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vocabulary.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -289,6 +291,7 @@
 			isa = PBXGroup;
 			children = (
 				64285890297BBF8600DD7D88 /* Main.storyboard */,
+				3DEB334E2F3CBBF700D14B5D /* Sub.storyboard */,
 				64285895297BBF8700DD7D88 /* LaunchScreen.storyboard */,
 			);
 			path = Storyboard;
@@ -636,6 +639,7 @@
 				8141EEFC2B8C748D0091127F /* PrivacyInfo.xcprivacy in Resources */,
 				81201C4D298B58C200291485 /* InterpretView.xib in Resources */,
 				64285892297BBF8600DD7D88 /* Main.storyboard in Resources */,
+				3DEB334F2F3CBBF800D14B5D /* Sub.storyboard in Resources */,
 				81708BC62B21AD4C00397B27 /* dictionary_7439537.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

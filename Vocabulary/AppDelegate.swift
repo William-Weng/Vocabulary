@@ -27,7 +27,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable
 
     private let audioPlayer: WWNormalizeAudioPlayer = .init()
     
-    private lazy var touchViewController = { UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TouchViewController") }()
+    private lazy var touchViewController = { UIStoryboard(name: "Sub", bundle: nil).instantiateViewController(withIdentifier: "TouchViewController") }()
     
     private var recordPlayer: AVAudioPlayer?
     private var audioRecorder: AVAudioRecorder?
@@ -205,7 +205,7 @@ extension AppDelegate {
     
     /// 停止播放音樂
     func stopMusic() -> Bool {
-        musicLoopType = .mute
+        musicLoopType = .stop
         audioPlayer.stop()
         return true
     }
@@ -302,7 +302,7 @@ extension AppDelegate {
     func chat() {
         
         guard let target = window?.rootViewController,
-              let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TalkNavigationController") as? UINavigationController
+              let viewController = UIStoryboard(name: "Sub", bundle: nil).instantiateViewController(withIdentifier: "TalkNavigationController") as? UINavigationController
         else {
             return
         }
@@ -500,7 +500,7 @@ private extension AppDelegate {
         
         switch musicLoopType {
         case .infinity: break
-        case .mute: currentMusic = nil
+        case .stop: currentMusic = nil
         case .loop: currentMusic = Constant.playingMusicList._popFirst()
         case .shuffle: currentMusic = Constant.playingMusicList.popLast()
         }

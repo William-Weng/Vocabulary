@@ -149,6 +149,7 @@ private extension SearchWordViewController {
         titleSearchBar.searchTextField.text = text
         titleSearchBar.searchTextField.delegate = self
         titleSearchBar.searchTextField.leftView = leftButton
+        titleSearchBar.searchTextField.backgroundColor = .lightText.withAlphaComponent(0.3)
         
         if let text = text { searchBar(titleSearchBar, textDidChange: text) }
         

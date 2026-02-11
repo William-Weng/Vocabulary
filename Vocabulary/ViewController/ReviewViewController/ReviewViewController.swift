@@ -13,7 +13,6 @@ final class ReviewViewController: UIViewController {
     
     enum ViewSegueType: String {
         case solutionView = "SolutionViewSegue"
-        case speakingRateView = "SpeakingRateViewSegue"
     }
     
     @IBOutlet weak var myImageView: UIImageView!
@@ -74,7 +73,6 @@ final class ReviewViewController: UIViewController {
         
         switch viewSegue {
         case .solutionView: solutionPageSetting(for: segue, sender: sender)
-        case .speakingRateView: speakingRatePageSetting(for: segue, sender: sender)
         }
     }
     
@@ -83,7 +81,7 @@ final class ReviewViewController: UIViewController {
     
     @IBAction func guessAnswear(_ sender: UIButton) { answearAction(sender) }
     @IBAction func reviewSolution(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.solutionView.rawValue, sender: vocabularyArray) }
-    @IBAction func speedRate(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.speakingRateView.rawValue, sender: nil) }
+    @IBAction func speedRate(_ sender: UIBarButtonItem) { Utility.shared.presentVolumeViewController(target: self, soundType: .rate) }
     @IBAction func refreshQuestion(_ sender: UIBarButtonItem) { initReviewWordList(); Utility.shared.flashHUD(with: .nice) }
     
     deinit { myPrint("\(Self.self) deinit") }
@@ -443,20 +441,6 @@ private extension ReviewViewController {
         }
         
         viewController.words = words
-    }
-    
-    /// 設定語速的相關數值
-    /// - Parameters:
-    ///   - segue: UIStoryboardSegue
-    ///   - sender: Any?
-    func speakingRatePageSetting(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        guard let viewController = segue.destination as? VolumeViewController else { return }
-        
-        viewController._transparent(.black.withAlphaComponent(0.3))
-        viewController.soundType = .rate
-        
-        tabBarController?._tabBarHidden(true)
     }
 }
 

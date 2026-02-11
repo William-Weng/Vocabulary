@@ -1527,24 +1527,13 @@ extension UITabBarController {
     /// [設定TabBar是否顯示](https://stackoverflow.com/questions/41169966/swift-uitabbarcontroller-hide-with-animation)
     /// - Parameters:
     ///   - hidden: [Bool](https://www.appcoda.com.tw/interactive-animation-uiviewpropertyanimator/)
-    ///   - animated: 使用動畫
-    ///   - duration: 動畫時間
-    ///   - curve: 動畫類型
-    func _tabBarHidden(_ isHidden: Bool, animated: Bool = true, duration: TimeInterval = 0.1, curve: UIView.AnimationCurve = .linear) {
-        
-        // if #available(iOS 18.0, *) { isTabBarHidden = isHidden; return }
-        
-        let viewHeight = self.view.frame.size.height
-        var tabBarFrame = self.tabBar.frame
+    func _tabBarHidden(_ isHidden: Bool) {
+                
+        let viewHeight = view.frame.size.height
+        var tabBarFrame = tabBar.frame
         
         tabBarFrame.origin.y = !isHidden ? viewHeight - tabBarFrame.size.height : viewHeight
-        
-        if (!animated) { self.tabBar.frame = tabBarFrame; return }
-        
-        UIViewPropertyAnimator(duration: duration, curve: curve) { [weak self] in
-            guard let this = self else { return }
-            this.tabBar.frame = tabBarFrame
-        }.startAnimation()
+        tabBar.frame = tabBarFrame
     }
 }
 

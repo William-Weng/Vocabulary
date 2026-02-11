@@ -275,12 +275,7 @@ private extension AppDelegate {
         initAudioPlaySetting()
         
         appShortcutItem(with: application)
-        
-        if #available(iOS 26.0, *) {
-            backgroundBarColor()
-        } else {
-            backgroundBarColor(.black.withAlphaComponent(0.1))
-        }
+        backgroundBarColor(.black.withAlphaComponent(0.1))
         
         _ = animationFolderUrlMaker()
         _ = WWWebImage.shared.cacheTypeSetting(.cache(), defaultImage: OthersTableViewCell.defaultImage)

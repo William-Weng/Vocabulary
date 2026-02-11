@@ -46,7 +46,7 @@ final class ReviewResultViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tabBarController?._tabBarHidden(true, animated: true)
+        tabBarController?._tabBarHidden(true)
         animatedBackground(with: .review)
     }
     

@@ -81,7 +81,7 @@ private extension MyTabBarController {
     ///   - isHidden: Bool
     ///   - animated: Bool
     func tabBarStatus(isHidden: Bool, animated: Bool = true) {
-        self._tabBarHidden(isHidden, animated: animated)
+        self._tabBarHidden(isHidden)
         NotificationCenter.default._post(name: .viewDidTransition, object: isHidden)
     }
     

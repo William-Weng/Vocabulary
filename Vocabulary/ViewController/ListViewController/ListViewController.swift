@@ -215,7 +215,7 @@ private extension ListViewController {
         mainViewDelegate?.navigationBarHidden(false)
         mainViewDelegate?.tabBarHidden(true)
 
-        if (!canDelete) { tabBarController?._tabBarHidden(true, animated: true) }
+        if (!canDelete) { tabBarController?._tabBarHidden(true) }
     }
     
     /// View將要消失時的動作
@@ -395,7 +395,7 @@ private extension ListViewController {
         guard let viewController = segue.destination as? TalkingViewController else { return }
         
         viewController._transparent(.black.withAlphaComponent(0.3))
-        tabBarController?._tabBarHidden(true, animated: true)
+        tabBarController?._tabBarHidden(true)
     }
     
     /// 翻譯顯示與否

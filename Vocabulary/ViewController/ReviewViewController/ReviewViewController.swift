@@ -456,7 +456,7 @@ private extension ReviewViewController {
         viewController._transparent(.black.withAlphaComponent(0.3))
         viewController.soundType = .rate
         
-        tabBarController?._tabBarHidden(true, animated: true)
+        tabBarController?._tabBarHidden(true)
     }
 }
 

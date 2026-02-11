@@ -39,14 +39,14 @@ final class SearchWordViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tabBarController?._tabBarHidden(true, animated: true)
+        tabBarController?._tabBarHidden(true)
         animatedBackground(with: .search)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
-        tabBarController?._tabBarHidden(false, animated: true)
+        tabBarController?._tabBarHidden(false)
         pauseBackgroundAnimation()
     }
     

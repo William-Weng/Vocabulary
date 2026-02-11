@@ -188,12 +188,9 @@ extension VolumeViewController {
     /// 顯示 / 隱藏 => TabBar
     /// - Parameters:
     ///   - isHidden: Bool
-    ///   - animated: Bool
-    ///   - duration: TimeInterval
-    ///   - curve: UIView.AnimationCurve
-    func tabBarHidden(_ isHidden: Bool, animated: Bool = true, duration: TimeInterval = 0.1, curve: UIView.AnimationCurve = .linear) {
+    func tabBarHidden(_ isHidden: Bool) {
         guard let tabBarController = rootTabBarController() else { return }
-        tabBarController._tabBarHidden(isHidden, animated: animated, duration: duration, curve: curve)
+        tabBarController._tabBarHidden(isHidden)
     }
     
     /// 取得首頁的UITabBarController

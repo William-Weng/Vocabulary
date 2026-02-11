@@ -347,7 +347,7 @@ extension Utility {
         guard let tabBarController = tabBarController else { return }
         
         MyTabBarController.isHidden = isHidden
-        tabBarController._tabBarHidden(isHidden, duration: Constant.duration)
+        tabBarController._tabBarHidden(isHidden)
         NotificationCenter.default._post(name: .viewDidTransition, object: isHidden)
     }
     

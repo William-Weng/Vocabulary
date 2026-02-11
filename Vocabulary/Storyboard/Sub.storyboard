@@ -80,7 +80,7 @@
                                             <button opaque="NO" tag="106" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zco-JX-sY7">
                                                 <rect key="frame" x="0.0" y="0.0" width="81" height="81"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" image="Volume_Control.png"/>
+                                                <state key="normal" image="SpeedoMeter"/>
                                                 <connections>
                                                     <action selector="touchAction:" destination="bDF-AU-MZt" eventType="touchUpInside" id="5PY-4K-Nnr"/>
                                                 </connections>
@@ -354,8 +354,8 @@
         <image name="Recorder" width="170.66667175292969" height="170.66667175292969"/>
         <image name="Settings" width="26.666666030883789" height="26.666666030883789"/>
         <image name="Share" width="85.333335876464844" height="85.333335876464844"/>
+        <image name="SpeedoMeter" width="170.66667175292969" height="170.66667175292969"/>
         <image name="Touch_Sub" width="85.333335876464844" height="85.333335876464844"/>
-        <image name="Volume_Control.png" width="170.66667175292969" height="170.66667175292969"/>
         <image name="dismiss" width="26.666666030883789" height="26.666666030883789"/>
         <systemColor name="systemPinkColor">
             <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

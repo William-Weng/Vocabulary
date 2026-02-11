@@ -15,6 +15,7 @@ final class TouchViewController: UIViewController {
         case share = 103
         case download = 104
         case chat = 105
+        case speedRate = 106
     }
     
     private let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -53,6 +54,7 @@ final class TouchViewController: UIViewController {
         case .share: appDelegate.shareDatabase()
         case .download: appDelegate.downloadDatabase()
         case .chat: appDelegate.chat()
+        case .speedRate: appDelegate.speedRate()
         }
     }
 }

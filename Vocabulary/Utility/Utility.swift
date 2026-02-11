@@ -144,7 +144,7 @@ extension Utility {
     ///   - pitchMultiplier: 音調 (50% ~ 200%)
     ///   - volume: 音量 (0% ~ 100%)
     ///   - boundary: 停止發聲 (單字 / 立刻停止)
-    func speak(string: String, code: String, rate: Float = 0.4, pitchMultiplier: Float = 1.0, volume: Float = 1.0) {
+    func speak(string: String, code: String, rate: Float, pitchMultiplier: Float = 1.0, volume: Float = 1.0) {
         pauseSpeaking(at: .immediate)
         synthesizer._speak(string: string, code: code, rate: rate, pitchMultiplier: pitchMultiplier, volume: volume)
     }

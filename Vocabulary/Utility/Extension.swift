@@ -829,7 +829,7 @@ extension AVSpeechSynthesizer {
     ///   - rate: 語速 (0% ~ 100%)
     ///   - pitchMultiplier: 音調 (50% ~ 200%)
     ///   - volume: 音量 (0% ~ 100%)
-    func _speak(string: String, code: String, rate: Float = 0.5, pitchMultiplier: Float = 1.0, volume: Float = 1.0) {
+    func _speak(string: String, code: String, rate: Float, pitchMultiplier: Float, volume: Float) {
         
         let utterance = AVSpeechUtterance._build(string: string, code: code)
         

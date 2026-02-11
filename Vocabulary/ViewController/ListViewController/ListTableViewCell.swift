@@ -95,7 +95,7 @@ private extension ListTableViewCell {
             return
         }
         
-        Utility.shared.speak(string: example, code: settings.voice)
+        Utility.shared.speak(string: example, code: settings.voice, rate: Constant.speakingSpeed)
     }
     
     /// 產生SpeechButton選到時的動作

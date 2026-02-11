@@ -36,9 +36,7 @@ final class ReviewViewController: UIViewController {
     
     private var vocabularyList: VocabularyList?
     private var disappearImage: UIImage?
-    
-    private lazy var speechSynthesizer = AVSpeechSynthesizer._build(delegate: self)
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -81,7 +79,6 @@ final class ReviewViewController: UIViewController {
     
     @IBAction func guessAnswear(_ sender: UIButton) { answearAction(sender) }
     @IBAction func reviewSolution(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.solutionView.rawValue, sender: vocabularyArray) }
-    @IBAction func speedRate(_ sender: UIBarButtonItem) { Utility.shared.presentVolumeViewController(target: self, soundType: .rate) }
     @IBAction func refreshQuestion(_ sender: UIBarButtonItem) { initReviewWordList(); Utility.shared.flashHUD(with: .nice) }
     
     deinit { myPrint("\(Self.self) deinit") }
@@ -223,7 +220,7 @@ private extension ReviewViewController {
             string = "\(answerText). \(interpretText)"
         }
         
-        speechSynthesizer._speak(string: string, code: settings.voice, rate: Constant.speakingSpeed)
+        Utility.shared.speak(string: string, code: settings.voice, rate: Constant.speakingSpeed)
     }
     
     /// 動畫背景設定

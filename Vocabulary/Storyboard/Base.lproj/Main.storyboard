@@ -1230,14 +1230,7 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="單字複習" id="Wsv-fB-i1t">
-                        <leftBarButtonItems>
-                            <barButtonItem image="SpeedoMeter" id="QAP-Mq-sNq">
-                                <connections>
-                                    <action selector="speedRate:" destination="ciD-yo-hhF" id="Lia-jS-Mwf"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem image="Level" id="2TQ-ik-uCx"/>
-                        </leftBarButtonItems>
+                        <barButtonItem key="leftBarButtonItem" image="Level" id="2TQ-ik-uCx"/>
                         <rightBarButtonItems>
                             <barButtonItem image="Read" id="ruL-5i-jGd">
                                 <connections>
@@ -2570,7 +2563,6 @@
         <image name="Search" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Sound" width="42.666667938232422" height="42.666667938232422"/>
         <image name="SoundWaves" width="170.66667175292969" height="170.66667175292969"/>
-        <image name="SpeedoMeter" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Star" width="21.333333969116211" height="21.333333969116211"/>
         <image name="SunTreeBorder" width="329.33334350585938" height="295.66665649414062"/>
         <image name="Test" width="21.333333969116211" height="21.333333969116211"/>

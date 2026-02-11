@@ -310,6 +310,11 @@ extension AppDelegate {
         assistiveTouchHidden(true)
         target.present(viewController, animated: true)
     }
+    
+    func speedRate() {
+        guard let target = window?.rootViewController else { return }
+        Utility.shared.presentVolumeViewController(target: target, soundType: .rate)
+    }
 }
 
 // MARK: - 小工具

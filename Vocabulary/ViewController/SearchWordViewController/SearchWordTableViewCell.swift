@@ -162,7 +162,7 @@ private extension SearchWordTableViewCell {
             return
         }
         
-        Utility.shared.speak(string: vocabularyList.word, code: settings.voice)
+        Utility.shared.speak(string: vocabularyList.word, code: settings.voice, rate: Constant.speakingSpeed)
     }
     
     /// FavoriteImageView點擊功能

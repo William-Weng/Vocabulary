@@ -71,6 +71,14 @@ extension AppDelegate: AVAudioRecorderDelegate {
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) { myPrint(error) }
 }
 
+// MARK: - UIDocumentPickerDelegate
+extension AppDelegate: UIDocumentPickerDelegate {
+    
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        downloadDocumentAction(controller, didPickDocumentsAt: urls)
+    }
+}
+
 // MARK: - WWAssistiveTouch.Delegate
 extension AppDelegate: WWAssistiveTouch.Delegate {
     
@@ -264,14 +272,92 @@ extension AppDelegate {
     /// - Parameter sender: UIBarButtonItem
     func shareDatabase() {
         
-        guard let viewController = window?.rootViewController,
+        guard let target = window?.rootViewController,
               let fileURL = Constant.database?.fileURL
         else {
             return
         }
         
-        let activityViewController = UIActivityViewController._build(activityItems: [fileURL], view: viewController.view)
-        viewController.present(activityViewController, animated: true)
+        let activityViewController = UIActivityViewController._build(activityItems: [fileURL], sourceView: target.view)
+        
+        assistiveTouchHidden(true)
+        target.present(activityViewController, animated: true)
+        
+        activityViewController.completionWithItemsHandler = { [unowned self] activityType, completed, returnedItems, error in
+            assistiveTouchHidden(false)
+        }
+    }
+    
+    /// 下載備份的Database
+    func downloadDatabase() {
+        
+        guard let target = window?.rootViewController else { return }
+        
+        let documentPickerViewController = UIDocumentPickerViewController._build(delegate: self, allowedUTIs: [.item])
+        target.present(documentPickerViewController, animated: true)
+    }
+}
+
+// MARK: - 小工具
+private extension AppDelegate {
+    
+    /// 下載資料庫的相關處理
+    /// - Parameters:
+    ///   - controller: UIDocumentPickerViewController
+    ///   - urls: [URL]
+    func downloadDocumentAction(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        
+        guard let target = window?.rootViewController else { return }
+        
+        guard let databaseUrl = Constant.database?.fileURL,
+              let fileUrl = urls.first,
+              let backupUrl = Utility.shared.databaseBackupUrl()
+        else {
+            downloadDocumentHint(target: target, title: "備份路徑錯誤", message: nil); return
+        }
+        
+        var result = FileManager.default._moveFile(at: databaseUrl, to: backupUrl)
+        
+        switch result {
+        case .failure(let error): downloadDocumentHint(target: target, title: "錯誤", message: "\(error)")
+        case .success(let isSuccess):
+            
+            if (!isSuccess) { downloadDocumentHint(target: target, title: "備份失敗", message: nil); return }
+            
+            result = FileManager.default._moveFile(at: fileUrl, to: databaseUrl)
+            
+            switch result {
+            case .failure(let error): downloadDocumentHint(target: target, title: "錯誤", message: "\(error)")
+            case .success(let isSuccess):
+                
+                if (!isSuccess) { downloadDocumentHint(target: target, title: nil, message: "更新失敗"); return }
+                
+                downloadDocumentHint(target: target, title: "備份 / 更新成功", message: "\(backupUrl.lastPathComponent)") {
+                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                    appDelegate?.initDatabase()
+                    NotificationCenter.default._post(name: .refreshViewController)
+                }
+            }
+        }
+    }
+    
+    /// 下載資料庫檔案提示框
+    /// - Parameters:
+    ///   - target: UIViewController
+    ///   - title: String?
+    ///   - message: String?
+    ///   - barButtonItem: UIBarButtonItem?
+    ///   - action: (() -> Void)?
+    func downloadDocumentHint(target: UIViewController, title: String?, message: String?, barButtonItem: UIBarButtonItem? = nil, action: (() -> Void)? = nil) {
+        
+        let alertController = UIAlertController._build(title: title, message: message)
+        let action = UIAlertAction(title: "確認", style: .cancel) {  _ in action?() }
+        
+        alertController.addAction(action)
+        alertController.modalPresentationStyle = .popover
+        alertController.popoverPresentationController?.barButtonItem = barButtonItem
+        
+        target.present(alertController, animated: true)
     }
 }
 

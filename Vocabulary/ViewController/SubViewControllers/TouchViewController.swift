@@ -13,6 +13,7 @@ final class TouchViewController: UIViewController {
         case pencel = 101
         case recorder = 102
         case share = 103
+        case download = 104
     }
     
     private let appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -49,6 +50,7 @@ final class TouchViewController: UIViewController {
         case .pencel: appDelegate.pencelToolPicker()
         case .recorder: appDelegate.recording()
         case .share: appDelegate.shareDatabase()
+        case .download: appDelegate.downloadDatabase()
         }
     }
 }

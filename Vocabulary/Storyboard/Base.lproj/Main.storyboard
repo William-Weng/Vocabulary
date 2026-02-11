@@ -429,11 +429,6 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="其它設定" id="Emu-bQ-cBa">
-                        <barButtonItem key="leftBarButtonItem" image="Download" id="h2P-Su-eeZ">
-                            <connections>
-                                <action selector="downloadDatabase:" destination="taZ-Mq-Sfm" id="JsU-xZ-iG0"/>
-                            </connections>
-                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem image="Palette" id="coj-Tb-X0w">
                                 <connections>
@@ -2846,10 +2841,10 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="fPn-1x-UQj">
                                         <rect key="frame" x="0.0" y="102" width="290" height="86"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WJw-tt-lAc">
+                                            <button opaque="NO" tag="104" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WJw-tt-lAc">
                                                 <rect key="frame" x="0.0" y="0.0" width="86" height="86"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" image="Touch_Sub"/>
+                                                <state key="normal" image="Download"/>
                                                 <connections>
                                                     <action selector="touchAction:" destination="0fB-fG-UaN" eventType="touchUpInside" id="4k9-cZ-X9G"/>
                                                 </connections>
@@ -2966,7 +2961,7 @@
         <image name="Chat" width="85.333335876464844" height="85.333335876464844"/>
         <image name="Cry" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Dictionary" width="21.333333969116211" height="21.333333969116211"/>
-        <image name="Download" width="21.333333969116211" height="21.333333969116211"/>
+        <image name="Download" width="85.333335876464844" height="85.333335876464844"/>
         <image name="Filter" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Forget" width="26.666666030883789" height="26.666666030883789"/>
         <image name="FountainPen" width="21.333333969116211" height="21.333333969116211"/>

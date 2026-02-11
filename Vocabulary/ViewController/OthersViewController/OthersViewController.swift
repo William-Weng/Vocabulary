@@ -76,7 +76,6 @@ final class OthersViewController: UIViewController {
     @objc func refreshBookmarks(_ sender: UIRefreshControl) { reloadBookmarks(isFavorite: isFavorite) }
     @objc func bookmarkCount(_ sender: UITapGestureRecognizer) { bookmarkCountAction(isFavorite: isFavorite) }
     
-    @IBAction func downloadDatabase(_ sender: UIBarButtonItem) { downloadDatabaseAction(sender) }
     @IBAction func filterFavorite(_ sender: UIBarButtonItem) { filterFavoriteAction(with: sender) }
     @IBAction func appendBookmarkAction(_ sender: UIButton) { appendBookmarkActionSetting(with: sender) }
     @IBAction func paletteSettings(_ sender: UIBarButtonItem) { performSegue(withIdentifier: ViewSegueType.paletteSettings.rawValue, sender: nil) }
@@ -109,14 +108,6 @@ extension OthersViewController: SFSafariViewControllerDelegate {
         tabBarHiddenAction(isHidden)
         navigationBarHiddenAction(isHidden)
         assistiveTouchHidden(isHidden)
-    }
-}
-
-// MARK: - UIDocumentPickerDelegate
-extension OthersViewController: UIDocumentPickerDelegate {
-    
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        downloadDocumentAction(controller, didPickDocumentsAt: urls)
     }
 }
 
@@ -559,15 +550,7 @@ private extension OthersViewController {
             this.myTableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }
-    
-    /// 下載備份的Database
-    /// - Parameter sender: UIBarButtonItem
-    func downloadDatabaseAction(_ sender: UIBarButtonItem) {
         
-        let documentPickerViewController = UIDocumentPickerViewController._build(delegate: self, allowedUTIs: [.item])
-        present(documentPickerViewController, animated: true)
-    }
-    
     /// 新增書籤功能設定
     /// - Parameter sender: UIButton
     func appendBookmarkActionSetting(with sender: UIButton) {
@@ -582,63 +565,6 @@ private extension OthersViewController {
             
             return this.appendBookmark(title, webUrl: webUrl, info: info)
         }
-    }
-    
-    /// 下載資料庫的相關處理
-    /// - Parameters:
-    ///   - controller: UIDocumentPickerViewController
-    ///   - urls: [URL]
-    func downloadDocumentAction(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        
-        guard let databaseUrl = Constant.database?.fileURL,
-              let fileUrl = urls.first,
-              let backupUrl = Utility.shared.databaseBackupUrl()
-        else {
-            downloadDocumentHint(target: self, title: "備份路徑錯誤", message: nil); return
-        }
-        
-        var result = FileManager.default._moveFile(at: databaseUrl, to: backupUrl)
-        
-        switch result {
-        case .failure(let error): downloadDocumentHint(target: self, title: "錯誤", message: "\(error)")
-        case .success(let isSuccess):
-            
-            if (!isSuccess) { downloadDocumentHint(target: self, title: "備份失敗", message: nil); return }
-            
-            result = FileManager.default._moveFile(at: fileUrl, to: databaseUrl)
-            
-            switch result {
-            case .failure(let error): downloadDocumentHint(target: self, title: "錯誤", message: "\(error)")
-            case .success(let isSuccess):
-                
-                if (!isSuccess) { downloadDocumentHint(target: self, title: nil, message: "更新失敗"); return }
-                
-                downloadDocumentHint(target: self, title: "備份 / 更新成功", message: "\(backupUrl.lastPathComponent)") {
-                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                    appDelegate?.initDatabase()
-                    NotificationCenter.default._post(name: .refreshViewController)
-                }
-            }
-        }
-    }
-    
-    /// 下載資料庫檔案提示框
-    /// - Parameters:
-    ///   - target: UIViewController
-    ///   - title: String?
-    ///   - message: String?
-    ///   - barButtonItem: UIBarButtonItem?
-    ///   - action: (() -> Void)?
-    func downloadDocumentHint(target: UIViewController, title: String?, message: String?, barButtonItem: UIBarButtonItem? = nil, action: (() -> Void)? = nil) {
-        
-        let alertController = UIAlertController._build(title: title, message: message)
-        let action = UIAlertAction(title: "確認", style: .cancel) {  _ in action?() }
-        
-        alertController.addAction(action)
-        alertController.modalPresentationStyle = .popover
-        alertController.popoverPresentationController?.barButtonItem = barButtonItem
-        
-        target.present(alertController, animated: true)
     }
     
     /// 取得書籤總數量

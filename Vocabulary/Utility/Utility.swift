@@ -278,17 +278,17 @@ extension Utility {
     /// 我的最愛ICON
     /// - Parameter isFavorite: Bool
     /// - Returns: UIImage
-    func favoriteIcon(_ isFavorite: Bool) -> UIImage { return (!isFavorite) ? #imageLiteral(resourceName: "Notice_Off") : #imageLiteral(resourceName: "Notice_On") }
+    func favoriteIcon(_ isFavorite: Bool) -> UIImage { return (!isFavorite) ? .noticeOff : .noticeOn }
     
     /// 音量ICON
     /// - Parameter isFavorite: Bool
     /// - Returns: UIImage
-    func volumeIcon(_ isSuccess: Bool) -> UIImage { return (!isSuccess) ? #imageLiteral(resourceName: "NoVolume") : #imageLiteral(resourceName: "Volume") }
+    func volumeIcon(_ isSuccess: Bool) -> UIImage { return (!isSuccess) ? .noVolume : .volume }
     
     /// 單字翻譯難度ICON
     /// - Parameter isHardWork: Bool
     /// - Returns: UIImage
-    func hardWorkIcon(_ isHardWork: Bool) -> UIImage { return (!isHardWork) ? #imageLiteral(resourceName: "HardWork_Off") : #imageLiteral(resourceName: "HardWork_On") }
+    func hardWorkIcon(_ isHardWork: Bool) -> UIImage { return (!isHardWork) ? .hardWorkOff : .hardWorkOn }
     
     /// 產生NavigationItem標題的LabelView
     /// - Parameters:

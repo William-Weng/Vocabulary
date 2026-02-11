@@ -85,7 +85,6 @@ extension AppDelegate: WWAssistiveTouch.Delegate {
 extension AppDelegate: WWNormalizeAudioPlayer.Deleagte {
     
     func audioPlayer(_ player: WWNormalizeAudioPlayer, callbackType: AVAudioPlayerNodeCompletionCallbackType, didFinishPlaying audioFile: AVAudioFile) {
-        print("== \(musicLoopType) ==")
         audioPlayerDidFinishPlayingAction(player)
     }
     
@@ -135,6 +134,7 @@ extension AppDelegate {
     
     /// 初始化播放器設定
     func initAudioPlaySetting() {
+        _ = audioPlayer.setSession(category: .playback)
         audioPlayer.delegate = self
         audioPlayer.isHiddenProgress = true
         audioPlayer.volume = 0.1
@@ -188,8 +188,6 @@ extension AppDelegate {
         
         self.currentMusic = music
         self.musicLoopType = musicLoopType
-        
-        print("<< \(audioUrl.lastPathComponent) >>")
         
         audioPlayer.play(with: audioUrl)
         musicPlayerHint(audioPlayer)

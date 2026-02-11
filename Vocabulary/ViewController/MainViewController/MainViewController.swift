@@ -955,31 +955,46 @@ private extension MainViewController {
                 return
             }
             
-            let isSuccess: Bool
             Constant.playingMusicList = []
+            _ = appDelegate.stopMusic()
             
-            switch musicLoopType {
-            case .infinity:
-                isSuccess = appDelegate.playMusic(with: music, volume: Constant.volume, musicLoopType: musicLoopType)
-                this.musicButtonItem.image = #imageLiteral(resourceName: "Music")
-            case .loop:
-                Constant.playingMusicList = Utility.shared.loopMusics()
-                isSuccess = appDelegate.playMusic(with: Constant.playingMusicList._popFirst(), volume: Constant.volume, musicLoopType: musicLoopType)
-                this.musicButtonItem.image = #imageLiteral(resourceName: "Loop")
-            case .shuffle:
-                Constant.playingMusicList = Utility.shared.shuffleMusics()
-                isSuccess = appDelegate.playMusic(with: Constant.playingMusicList.popLast(), volume: Constant.volume, musicLoopType: musicLoopType)
-                this.musicButtonItem.image = #imageLiteral(resourceName: "Shuffle")
-            case .mute:
-                isSuccess = appDelegate.stopMusic()
-                this.musicButtonItem.image = #imageLiteral(resourceName: "Music")
+            Task {
+                try await Task.sleep(for: .milliseconds(250))
+                this.musicItemMenuAction(appDelegate: appDelegate, music: music, musicLoopType: musicLoopType)
             }
-            
-            this.volumeButtonItem.image = Utility.shared.volumeIcon(isSuccess)
-            this.volumeButtonItem.isEnabled = isSuccess
         }
         
         return action
+    }
+    
+    /// 各音樂播放選項的功能
+    /// - Parameters:
+    ///   - appDelegate: AppDelegate
+    ///   - music: Music
+    ///   - musicLoopType: Constant.MusicLoopType
+    func musicItemMenuAction(appDelegate: AppDelegate, music: Music, musicLoopType: Constant.MusicLoopType) {
+        
+        let isSuccess: Bool
+        
+        switch musicLoopType {
+        case .infinity:
+            isSuccess = appDelegate.playMusic(with: music, volume: Constant.volume, musicLoopType: musicLoopType)
+            musicButtonItem.image = .music
+        case .loop:
+            Constant.playingMusicList = Utility.shared.loopMusics()
+            isSuccess = appDelegate.playMusic(with: Constant.playingMusicList._popFirst(), volume: Constant.volume, musicLoopType: musicLoopType)
+            musicButtonItem.image = .loop
+        case .shuffle:
+            Constant.playingMusicList = Utility.shared.shuffleMusics()
+            isSuccess = appDelegate.playMusic(with: Constant.playingMusicList.popLast(), volume: Constant.volume, musicLoopType: musicLoopType)
+            musicButtonItem.image = .shuffle
+        case .mute:
+            isSuccess = appDelegate.stopMusic()
+            musicButtonItem.image = .music
+        }
+        
+        volumeButtonItem.image = Utility.shared.volumeIcon(isSuccess)
+        volumeButtonItem.isEnabled = isSuccess
     }
 }
 
@@ -1015,7 +1030,6 @@ private extension MainViewController {
     
     /// 移除GIF動畫Block
     func removeGifBlock() {
-        
         isAnimationStop = true
         gifImageView?.removeFromSuperview()
         gifImageView = nil

@@ -209,7 +209,7 @@ private extension SearchVocabularyTableViewCell {
     /// - Parameter isFavorite: Bool
     func favoriteImageViewSetting(isFavorite: Bool) {
         
-        favoriteImageView.image = UIImage(named: "Notice_On")?.withRenderingMode(.alwaysTemplate)
+        favoriteImageView.image = .noticeOn.withRenderingMode(.alwaysTemplate)
         favoriteImageView.tintColor = !isFavorite ? .lightGray : .systemRed
     }
 }

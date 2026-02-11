@@ -265,7 +265,8 @@ extension AppDelegate {
     
     /// 彈出錄音界面
     func recording() {
-        _ = Utility.shared.presentViewController(target: window?.rootViewController, identifier: "TalkingViewController")
+        guard let target = window?.rootViewController else { return }
+        _ = Utility.shared.presentViewController(target: target, identifier: "TalkingViewController")
     }
     
     /// 分享(備份)Database
@@ -306,6 +307,7 @@ extension AppDelegate {
             return
         }
         
+        assistiveTouchHidden(true)
         target.present(viewController, animated: true)
     }
 }

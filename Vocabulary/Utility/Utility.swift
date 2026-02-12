@@ -22,9 +22,226 @@ final class Utility: NSObject {
     static let shared = Utility()
     
     private let feedback = UIImpactFeedbackGenerator._build(style: .medium)
+    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
+
     private var synthesizer = AVSpeechSynthesizer._build()
 
     private override init() {}
+}
+
+// MARK: - AppDelegate (function)
+extension Utility {
+        
+    /// 回復字典檔設定
+    func initDictionarySettings() {
+        
+        guard let appDelegate = appDelegate else { return }
+        
+        appDelegate.initSettings()
+        NotificationCenter.default._post(name: .refreshViewController)
+    }
+    
+    /// 開始錄音
+    func recordWave() {
+        
+        guard let appDelegate = appDelegate else { return }
+        
+        _ = appDelegate.recordWave()
+        assistiveTouchHidden(true)
+    }
+    
+    /// 停止錄音
+    func stopRecording() {
+        
+        guard let appDelegate = appDelegate else { return }
+        
+        _ = appDelegate.stopRecordingWave()
+        assistiveTouchHidden(false)
+    }
+    
+    /// [強制改變裝置的方向](https://johnchihhonglin.medium.com/限制某個頁面的螢幕旋轉方向-8c7235d5a774)
+    /// - Parameters:
+    ///   - orientation: UIInterfaceOrientationMask
+    ///   - rotateOrientation: UIInterfaceOrientation
+    /// - Returns: Bool
+    func screenOrientation(lock orientation: UIInterfaceOrientationMask, rotate rotateOrientation: UIInterfaceOrientation) -> Bool {
+        
+        guard let appDelegate = appDelegate else { return false }
+
+        let isSuccess = appDelegate._orientation(lock: orientation, rotate: rotateOrientation)
+        return isSuccess
+    }
+}
+
+// MARK: - AppDelegate (function)
+extension Utility {
+    
+    /// 取得背景音樂音量大小
+    /// - Returns: Float
+    func musicVolume() -> Float {
+        guard let audioPlayer = appDelegate?.audioPlayer else { return 0 }
+        return audioPlayer.volume
+    }
+    
+    /// 設定背景音樂聲音大小
+    /// - Parameter volume: Float
+    /// - Returns: Float
+    func musicVolumeSetting(_ volume: Float) -> Float {
+
+        guard let audioPlayer = appDelegate?.audioPlayer else { return 0 }
+
+        Constant.volume = volume
+        audioPlayer.volume = Constant.volume
+        return audioPlayer.volume
+    }
+    
+    /// 停止播放音樂
+    func stopMusic() -> Bool {
+        
+        guard let appDelegate = appDelegate else { return false }
+        
+        appDelegate.musicLoopType = .stop
+        appDelegate.audioPlayer.stop()
+        return true
+    }
+    
+    /// 各音樂播放選項的功能
+    /// - Parameters:
+    ///   - appDelegate: AppDelegate
+    ///   - music: Music
+    ///   - musicLoopType: Constant.MusicLoopType
+    /// - Returns: (isSuccess: Bool, icon: UIImage)
+    func musicItemMenuAction(music: Music, musicLoopType: Constant.MusicLoopType) -> (isSuccess: Bool, icon: UIImage?) {
+        
+        guard let appDelegate else { return (false, nil) }
+        
+        let isSuccess: Bool
+        let musicButtonIcon: UIImage
+        
+        switch musicLoopType {
+        case .infinity:
+            isSuccess = appDelegate.playMusic(with: music, volume: Constant.volume, musicLoopType: musicLoopType)
+            musicButtonIcon = .music
+        case .loop:
+            Constant.playingMusicList = Utility.shared.loopMusics()
+            isSuccess = appDelegate.playMusic(with: Constant.playingMusicList._popFirst(), volume: Constant.volume, musicLoopType: musicLoopType)
+            musicButtonIcon = .loop
+        case .shuffle:
+            Constant.playingMusicList = Utility.shared.shuffleMusics()
+            isSuccess = appDelegate.playMusic(with: Constant.playingMusicList.popLast(), volume: Constant.volume, musicLoopType: musicLoopType)
+            musicButtonIcon = .shuffle
+        case .stop:
+            isSuccess = false
+            musicButtonIcon = .music
+        }
+        
+        return (isSuccess, musicButtonIcon)
+    }
+}
+
+// MARK: - AssistiveTouch
+extension Utility {
+    
+    /// AssistiveTouch是否顯示
+    /// - Parameter isHidden: Bool
+    func assistiveTouchHidden(_ isHidden: Bool) {
+        
+        guard let appDelegate = appDelegate else { return }
+        appDelegate.assistiveTouchHidden(isHidden)
+    }
+    
+    /// 顯示調整聲音畫面 (音量  / 語速)
+    func adjustmentSoundType(_ soundType: VolumeViewController.AdjustmentSoundType) {
+        
+        guard let appDelegate = appDelegate,
+              let target = appDelegate.window?.rootViewController
+        else {
+            return
+        }
+        
+        assistiveTouchHidden(true)
+        presentVolumeViewController(target: target, soundType: soundType)
+    }
+    
+    /// 彈出畫筆工作列
+    func pencelToolPicker() {
+        NotificationCenter.default._post(name: .displayCanvasView, object: nil)
+    }
+    
+    /// 彈出錄音界面
+    func recording() {
+        
+        guard let appDelegate = appDelegate,
+              let target = appDelegate.window?.rootViewController
+        else {
+            return
+        }
+        
+        _ = presentViewController(target: target, identifier: "TalkingViewController")
+    }
+    
+    /// 分享(備份)Database
+    /// - Parameter sender: UIBarButtonItem
+    func shareDatabase() {
+        
+        guard let appDelegate = appDelegate,
+              let target = appDelegate.window?.rootViewController,
+              let fileURL = Constant.database?.fileURL
+        else {
+            return
+        }
+        
+        let activityViewController = UIActivityViewController._build(activityItems: [fileURL], sourceView: target.view)
+        
+        assistiveTouchHidden(true)
+        target.present(activityViewController, animated: true)
+        
+        activityViewController.completionWithItemsHandler = { [unowned self] activityType, completed, returnedItems, error in
+            assistiveTouchHidden(false)
+        }
+    }
+}
+
+// MARK: - SettingsJSON設定檔相關
+extension Utility {
+    
+    /// 解析完整的SettingsJSON的設定檔
+    /// - Returns: [String: Any]?
+    func parseSettingsDictionary(with filename: String) -> [String: Any]? {
+        
+        guard var jsonString = parseDefaultSettingsJSON(with: filename) else { return nil }
+        if let _jsonString = parseUserSettingsJSON(with: filename) { jsonString = _jsonString }
+        
+        return jsonString._jsonObject() as? [String: Any]
+    }
+    
+    /// 解析預設的SettingsJSON的設定檔
+    /// - Parameter filename: String
+    /// - Returns: String?
+    func parseDefaultSettingsJSON(with filename: String) -> String? {
+        
+        guard let fileURL = Optional.some(Bundle.main.bundleURL.appendingPathComponent(filename)),
+              let jsonString = FileManager.default._readText(from: fileURL)
+        else {
+            return nil
+        }
+        
+        return jsonString
+    }
+    
+    /// 解析使用者自訂的SettingsJSON的設定檔
+    /// - Parameter filename: String
+    /// - Returns: String?
+    func parseUserSettingsJSON(with filename: String) -> String? {
+        
+        guard let url = FileManager.default._documentDirectory()?.appendingPathComponent(Constant.settingsJSON),
+              let jsonString = FileManager.default._readText(from: url)
+        else {
+            return nil
+        }
+        
+        return jsonString
+    }
 }
 
 // MARK: - 資料庫相關 (function)
@@ -38,15 +255,6 @@ extension Utility {
         Constant.tableNameIndex = tableNameIndex(info.key)
         
         initDictionarySettings()
-    }
-    
-    /// 回復字典檔設定
-    func initDictionarySettings() {
-        
-        guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        delegate.initSettings()
-        NotificationCenter.default._post(name: .refreshViewController)
     }
     
     /// 搜尋字典檔的index
@@ -206,19 +414,6 @@ extension Utility {
 
 // MARK: - UI相關 (function)
 extension Utility {
-    
-    /// [強制改變裝置的方向](https://johnchihhonglin.medium.com/限制某個頁面的螢幕旋轉方向-8c7235d5a774)
-    /// - Parameters:
-    ///   - orientation: UIInterfaceOrientationMask
-    ///   - rotateOrientation: UIInterfaceOrientation
-    /// - Returns: Bool
-    func screenOrientation(lock orientation: UIInterfaceOrientationMask, rotate rotateOrientation: UIInterfaceOrientation) -> Bool {
-        
-        guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return false }
-
-        let isSuccess = delegate._orientation(lock: orientation, rotate: rotateOrientation)
-        return isSuccess
-    }
     
     /// 計算下滑到底更新的距離百分比 (UIRefreshControl的另一邊)
     /// - Parameters:

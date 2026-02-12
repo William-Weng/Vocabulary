@@ -20,18 +20,18 @@ import WWNormalizeAudioPlayer
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable {
+
+    let audioPlayer: WWNormalizeAudioPlayer = .init()
     
     var window: UIWindow?
     var orientationLock: UIInterfaceOrientationMask?
     var assistiveTouch: WWAssistiveTouch!
-
-    private let audioPlayer: WWNormalizeAudioPlayer = .init()
+    var musicLoopType: Constant.MusicLoopType = .infinity
     
     private lazy var touchViewController = { UIStoryboard(name: "Sub", bundle: nil).instantiateViewController(withIdentifier: "TouchViewController") }()
     
     private var recordPlayer: AVAudioPlayer?
     private var audioRecorder: AVAudioRecorder?
-    private var musicLoopType: Constant.MusicLoopType = .infinity
     private var currentMusic: Music?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -127,7 +127,7 @@ extension AppDelegate {
     /// 初始化設定值 => Settings.json
     func initSettings() {
         
-        guard let parseSettingsDictionary = parseSettingsDictionary(with: Constant.settingsJSON),
+        guard let parseSettingsDictionary = Utility.shared.parseSettingsDictionary(with: Constant.settingsJSON),
               let dictionary = settingsDictionary(with: Constant.tableName, dictionary: parseSettingsDictionary),
               let settings = dictionary["settings"] as? [String: Any]
         else {
@@ -150,34 +150,6 @@ extension AppDelegate {
         audioPlayer.delegate = self
         audioPlayer.isHiddenProgress = true
         audioPlayer.volume = 0.1
-    }
-    
-    /// 解析預設的SettingsJSON的設定檔
-    /// - Parameter filename: String
-    /// - Returns: String?
-    func parseDefaultSettingsJSON(with filename: String) -> String? {
-        
-        guard let fileURL = Optional.some(Bundle.main.bundleURL.appendingPathComponent(filename)),
-              let jsonString = FileManager.default._readText(from: fileURL)
-        else {
-            return nil
-        }
-        
-        return jsonString
-    }
-    
-    /// 解析使用者自訂的SettingsJSON的設定檔
-    /// - Parameter filename: String
-    /// - Returns: String?
-    func parseUserSettingsJSON(with filename: String) -> String? {
-        
-        guard let url = FileManager.default._documentDirectory()?.appendingPathComponent(Constant.settingsJSON),
-              let jsonString = FileManager.default._readText(from: url)
-        else {
-            return nil
-        }
-        
-        return jsonString
     }
 }
 
@@ -212,19 +184,6 @@ extension AppDelegate {
         musicLoopType = .stop
         audioPlayer.stop()
         return true
-    }
-    
-    /// 取得背景音樂音量大小
-    /// - Returns: Float
-    func musicVolume() -> Float { return audioPlayer.volume }
-    
-    /// 設定背景音樂聲音大小
-    /// - Parameter volume: Float
-    /// - Returns: Float
-    func musicVolumeSetting(_ volume: Float) -> Float {
-        Constant.volume = volume
-        audioPlayer.volume = Constant.volume
-        return audioPlayer.volume
     }
     
     /// 錄製聲音
@@ -262,37 +221,6 @@ extension AppDelegate {
         animator.startAnimation()
     }
     
-    /// 彈出畫筆工作列
-    func pencelToolPicker() {
-        NotificationCenter.default._post(name: .displayCanvasView, object: nil)
-    }
-    
-    /// 彈出錄音界面
-    func recording() {
-        guard let target = window?.rootViewController else { return }
-        _ = Utility.shared.presentViewController(target: target, identifier: "TalkingViewController")
-    }
-    
-    /// 分享(備份)Database
-    /// - Parameter sender: UIBarButtonItem
-    func shareDatabase() {
-        
-        guard let target = window?.rootViewController,
-              let fileURL = Constant.database?.fileURL
-        else {
-            return
-        }
-        
-        let activityViewController = UIActivityViewController._build(activityItems: [fileURL], sourceView: target.view)
-        
-        assistiveTouchHidden(true)
-        target.present(activityViewController, animated: true)
-        
-        activityViewController.completionWithItemsHandler = { [unowned self] activityType, completed, returnedItems, error in
-            assistiveTouchHidden(false)
-        }
-    }
-    
     /// 下載備份的Database
     func downloadDatabase() {
         
@@ -315,15 +243,6 @@ extension AppDelegate {
         
         assistiveTouchHidden(true)
         target.present(viewController, animated: true)
-    }
-    
-    /// 顯示調整聲音畫面 (音量  / 語速)
-    func adjustmentSoundType(_ soundType: VolumeViewController.AdjustmentSoundType) {
-        
-        guard let target = window?.rootViewController else { return }
-        
-        assistiveTouchHidden(true)
-        Utility.shared.presentVolumeViewController(target: target, soundType: soundType)
     }
 }
 
@@ -361,9 +280,8 @@ private extension AppDelegate {
                 
                 if (!isSuccess) { downloadDocumentHint(target: target, title: nil, message: "更新失敗"); return }
                 
-                downloadDocumentHint(target: target, title: "備份 / 更新成功", message: "\(backupUrl.lastPathComponent)") {
-                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                    appDelegate?.initDatabase()
+                downloadDocumentHint(target: target, title: "備份 / 更新成功", message: "\(backupUrl.lastPathComponent)") { [unowned self] in
+                    initDatabase()
                     NotificationCenter.default._post(name: .refreshViewController)
                 }
             }
@@ -573,10 +491,16 @@ private extension AppDelegate {
     ///   - viewController: UIViewController?
     func initAssistiveTouch(window: UIWindow?, touchViewController: UIViewController?) {
         
-        guard let window, let touchViewController else { return }
+        guard let window,
+              let touchViewController = touchViewController as? TouchViewController
+        else {
+            return
+        }
         
         let size = CGSize(width: 56, height: 56)
         let origin = CGPoint(x: window.bounds.width, y: window.bounds.height - 216)
+        
+        touchViewController.appDelegate = self
         
         assistiveTouch = WWAssistiveTouch(touchViewController: touchViewController, frame: .init(origin: origin, size: size), icon: .touchMain, isAutoAdjust: true, delegate: self)
     }
@@ -614,17 +538,7 @@ private extension AppDelegate {
         guard let settings = dictionary[currentTableName] as? [String: Any] else { return nil }
         return settings
     }
-    
-    /// 解析完整的SettingsJSON的設定檔
-    /// - Returns: [String: Any]?
-    func parseSettingsDictionary(with filename: String) -> [String: Any]? {
         
-        guard var jsonString = parseDefaultSettingsJSON(with: filename) else { return nil }
-        if let _jsonString = parseUserSettingsJSON(with: filename) { jsonString = _jsonString }
-        
-        return jsonString._jsonObject() as? [String: Any]
-    }
-    
     /// 解析單字等級的設定值 (排序由小到大)
     /// - Parameter settings: [String: Any]
     /// - Returns: [Settings.VocabularyLevelInformation]

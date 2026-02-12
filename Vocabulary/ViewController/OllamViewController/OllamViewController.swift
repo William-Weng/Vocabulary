@@ -32,9 +32,7 @@ final class OllamViewController: UIViewController {
     @WWUserDefaults("Port") private var port: String?
     @WWUserDefaults("ChatModel") private var chatModel: String?
     @WWUserDefaults("LastContext") private var lastContext: String?
-    
-    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
-    
+        
     private var isConfigure = false
     private var botTimestamp: Int?
     private var responseString: String = ""
@@ -70,7 +68,7 @@ final class OllamViewController: UIViewController {
     }
     
     @IBAction func dissmissAction(_ sender: UIBarButtonItem) {
-        appDelegate?.assistiveTouchHidden(false)
+        Utility.shared.assistiveTouchHidden(false)
         dismiss(animated: true)
     }
     

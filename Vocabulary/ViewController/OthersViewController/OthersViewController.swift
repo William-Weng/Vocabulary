@@ -107,7 +107,7 @@ extension OthersViewController: SFSafariViewControllerDelegate {
         
         tabBarHiddenAction(isHidden)
         navigationBarHiddenAction(isHidden)
-        assistiveTouchHidden(isHidden)
+        Utility.shared.assistiveTouchHidden(isHidden)
     }
 }
 
@@ -521,14 +521,7 @@ private extension OthersViewController {
         
         let safariController = url._openUrlWithInside(delegate: self)
         safariController.delegate = self
-        assistiveTouchHidden(true)
-    }
-    
-    /// 隱藏輔助觸控按鈕 (小白點)
-    /// - Parameter isHidden: Bool
-    func assistiveTouchHidden(_ isHidden: Bool) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        appDelegate.assistiveTouch.isHidden = isHidden
+        Utility.shared.assistiveTouchHidden(true)
     }
     
     /// 載入Cell的圖示 (變更 / 下載 / 儲存)

@@ -441,13 +441,9 @@ private extension PaletteViewController {
     /// 使用JavaScriptContext處理Settings.json
     func initScriptContext() {
         
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-              var jsonString = appDelegate.parseDefaultSettingsJSON(with: Constant.settingsJSON)
-        else {
-            return
-        }
+        guard var jsonString = Utility.shared.parseDefaultSettingsJSON(with: Constant.settingsJSON) else { return }
         
-        if let _jsonString = appDelegate.parseUserSettingsJSON(with: Constant.settingsJSON) { jsonString = _jsonString }
+        if let _jsonString = Utility.shared.parseUserSettingsJSON(with: Constant.settingsJSON) { jsonString = _jsonString }
         let script = "var \(scriptKey) = \(jsonString)"
         
         scriptContext = WWJavaScriptContext.build(script: script)

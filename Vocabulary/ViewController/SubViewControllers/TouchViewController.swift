@@ -7,8 +7,10 @@
 
 import UIKit
 
+// MARK: - WWAssistiveTouch的內容項目頁
 final class TouchViewController: UIViewController {
     
+    /// TouchView的Tag編號
     private enum TouchTagType: Int {
         case pencel = 101
         case recorder = 102
@@ -18,10 +20,13 @@ final class TouchViewController: UIViewController {
         case speedRate = 106
     }
     
-    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    weak var appDelegate: AppDelegate?
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
+        
+        Utility.shared.assistiveTouchHidden(true)
+        
         appDelegate?.assistiveTouch.dismiss()
     }
     
@@ -49,12 +54,16 @@ final class TouchViewController: UIViewController {
         guard let touchType = TouchTagType(rawValue: sender.tag) else { return }
         
         switch touchType {
-        case .pencel: appDelegate.pencelToolPicker()
-        case .recorder: appDelegate.recording()
-        case .share: appDelegate.shareDatabase()
+        case .pencel: Utility.shared.pencelToolPicker()
+        case .recorder: Utility.shared.recording()
+        case .share: Utility.shared.shareDatabase()
         case .download: appDelegate.downloadDatabase()
         case .chat: appDelegate.chat()
-        case .speedRate: appDelegate.adjustmentSoundType(.rate)
+        case .speedRate: Utility.shared.adjustmentSoundType(.rate)
         }
+    }
+    
+    deinit {
+        appDelegate = nil
     }
 }

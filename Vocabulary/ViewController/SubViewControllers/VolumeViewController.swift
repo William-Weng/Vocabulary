@@ -21,7 +21,6 @@ final class VolumeViewController: UIViewController {
     
     var soundType: AdjustmentSoundType = .volume
     
-    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     private var isInitSetting = false
     
     override func viewDidLoad() {
@@ -110,11 +109,8 @@ extension VolumeViewController {
         let percent = Float(currentValue / maximumValue)
         
         switch soundType {
-        case .volume:
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
-            _ = appDelegate.musicVolumeSetting(percent)
-        case .rate:
-            Constant.speakingSpeed = percent
+        case .volume: _ = Utility.shared.musicVolumeSetting(percent)
+        case .rate: Constant.speakingSpeed = percent
         }
         
         return Int(percent * 100)
@@ -125,10 +121,7 @@ extension VolumeViewController {
     func sliderVolume() -> Float? {
                 
         switch soundType {
-        case .volume:
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
-            return appDelegate.musicVolume()
-            
+        case .volume: return Utility.shared.musicVolume()
         case .rate: return Constant.speakingSpeed
         }
     }
@@ -178,7 +171,7 @@ extension VolumeViewController {
     
     /// 回到上一頁
     func dismissAction() {
-        appDelegate?.assistiveTouchHidden(false)
+        Utility.shared.assistiveTouchHidden(false)
         dismiss(animated: true)
     }
 }

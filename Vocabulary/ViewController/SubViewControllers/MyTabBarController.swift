@@ -98,7 +98,7 @@ private extension MyTabBarController {
     func canvasViewSetting() {
         
         canvasView = PKCanvasView._build(onView: view, delegate: self)
-        assistiveTouchHidden(true)
+        Utility.shared.assistiveTouchHidden(true)
         
         if let canvasView = canvasView {
             toolPicker = PKToolPicker._build(with: canvasView)
@@ -114,8 +114,8 @@ private extension MyTabBarController {
         dismissButton?.removeFromSuperview()
         cleanDrawingButton?.removeFromSuperview()
         
-        dismissButton = actionButtonMaker(diameter, imageName: "Close")
-        cleanDrawingButton = actionButtonMaker(diameter, imageName: "Clean")
+        dismissButton = actionButtonMaker(diameter, image: .close)
+        cleanDrawingButton = actionButtonMaker(diameter, image: .clean)
         
         guard let dismissButton = dismissButton,
               let cleanDrawingButton = cleanDrawingButton
@@ -133,14 +133,14 @@ private extension MyTabBarController {
     /// 產生關閉畫布按鈕
     /// - Parameters:
     ///   - diameter: 直徑
-    ///   - imageName: 圖片名稱
+    ///   - image: 圖片
     /// - Returns: UIButton
-    func actionButtonMaker(_ diameter: CGFloat, imageName: String) -> UIButton {
+    func actionButtonMaker(_ diameter: CGFloat, image: UIImage) -> UIButton {
         
         let button = UIButton()
         
         button.frame.size = CGSize(width: diameter, height: diameter)
-        button.setBackgroundImage(UIImage(named: imageName), for: .normal)
+        button.setBackgroundImage(image, for: .normal)
         button.backgroundColor = .clear
 
         return button
@@ -171,20 +171,13 @@ private extension MyTabBarController {
     /// 移除畫布
     func removeCanvasView() {
         
-        assistiveTouchHidden(false)
+        Utility.shared.assistiveTouchHidden(false)
         canvasView?.removeFromSuperview()
         
         canvasView = nil
         toolPicker = nil
         dismissButton = nil
         cleanDrawingButton = nil
-    }
-    
-    /// AssistiveTouch是否顯示
-    /// - Parameter isHidden: Bool
-    func assistiveTouchHidden(_ isHidden: Bool) {
-        guard let delegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        delegate.assistiveTouchHidden(isHidden)
     }
     
     /// 清空畫布

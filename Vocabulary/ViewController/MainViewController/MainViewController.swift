@@ -40,7 +40,6 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var indicatorLabel: UILabel!
     
     private let appendTextHintTitle = "請輸入單字"
-    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
     
     private var titleString: String { Utility.shared.mainViewContrillerTitle(with: Constant.tableNameIndex, default: "字典") }
     private var isAnimationStop = false
@@ -82,7 +81,7 @@ final class MainViewController: UIViewController {
     
     @IBAction func appendWordAction(_ sender: UIButton) { appendTextHintAction(sender) }
     @IBAction func filterFavorite(_ sender: UIBarButtonItem) { filterFavoriteAction(with: sender) }
-    @IBAction func selectVolume(_ sender: UIBarButtonItem) { appDelegate?.adjustmentSoundType(.volume) }
+    @IBAction func selectVolume(_ sender: UIBarButtonItem) { Utility.shared.adjustmentSoundType(.volume) }
     
     @IBAction func searchWordAction(_ sender: UIBarButtonItem) { performSegue(for: .searchView, sender: nil) }
     
@@ -933,20 +932,14 @@ private extension MainViewController {
         case .stop: title = "🚫 - \(musicLoopType.toString())"
         }
         
-        let action = UIAction(title: title) { [weak self] _ in
-            
-            guard let this = self,
-                  let appDelegate = self?.appDelegate
-            else {
-                return
-            }
+        let action = UIAction(title: title) { _ in
             
             Constant.playingMusicList = []
-            _ = appDelegate.stopMusic()
+            _ = Utility.shared.stopMusic()
             
             Task {
                 try await Task.sleep(for: .milliseconds(250))
-                this.musicItemMenuAction(appDelegate: appDelegate, music: music, musicLoopType: musicLoopType)
+                _ = Utility.shared.musicItemMenuAction(music: music, musicLoopType: musicLoopType)
             }
         }
         
@@ -955,32 +948,15 @@ private extension MainViewController {
     
     /// 各音樂播放選項的功能
     /// - Parameters:
-    ///   - appDelegate: AppDelegate
     ///   - music: Music
     ///   - musicLoopType: Constant.MusicLoopType
-    func musicItemMenuAction(appDelegate: AppDelegate, music: Music, musicLoopType: Constant.MusicLoopType) {
+    func musicItemMenuAction(music: Music, musicLoopType: Constant.MusicLoopType) {
         
-        let isSuccess: Bool
+        let result = Utility.shared.musicItemMenuAction(music: music, musicLoopType: musicLoopType)
         
-        switch musicLoopType {
-        case .infinity:
-            isSuccess = appDelegate.playMusic(with: music, volume: Constant.volume, musicLoopType: musicLoopType)
-            musicButtonItem.image = .music
-        case .loop:
-            Constant.playingMusicList = Utility.shared.loopMusics()
-            isSuccess = appDelegate.playMusic(with: Constant.playingMusicList._popFirst(), volume: Constant.volume, musicLoopType: musicLoopType)
-            musicButtonItem.image = .loop
-        case .shuffle:
-            Constant.playingMusicList = Utility.shared.shuffleMusics()
-            isSuccess = appDelegate.playMusic(with: Constant.playingMusicList.popLast(), volume: Constant.volume, musicLoopType: musicLoopType)
-            musicButtonItem.image = .shuffle
-        case .stop:
-            isSuccess = false
-            musicButtonItem.image = .music
-        }
-        
-        volumeButtonItem.image = Utility.shared.volumeIcon(isSuccess)
-        volumeButtonItem.isEnabled = isSuccess
+        musicButtonItem.image = result.icon
+        volumeButtonItem.image = Utility.shared.volumeIcon(result.isSuccess)
+        volumeButtonItem.isEnabled = result.isSuccess
     }
 }
 

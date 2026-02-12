@@ -1902,7 +1902,7 @@ extension UIDocumentPickerViewController {
     ///   - allowedUTIs: [要讀取的檔案類型](https://developer.apple.com/documentation/uniformtypeidentifiers)
     ///   - presentationStyle: 彈出動畫的樣式
     /// - Returns: Self
-    static func _build(delegate: UIDocumentPickerDelegate, allowedUTIs: [UTType], asCopy: Bool = true) -> UIDocumentPickerViewController {
+    static func _build(delegate: (any UIDocumentPickerDelegate)?, allowedUTIs: [UTType], asCopy: Bool = true) -> UIDocumentPickerViewController {
         
         let controller = UIDocumentPickerViewController(forOpeningContentTypes: allowedUTIs, asCopy: asCopy)
         controller.delegate = delegate
@@ -1964,7 +1964,6 @@ extension WKWebView {
         guard let url = (bundle ?? .main).url(forResource: filename, withExtension: nil, subdirectory: directory) else { return nil }
         
         let readAccessURL: URL = readAccessURL ?? url.deletingLastPathComponent()
-        
         return loadFileURL(url, allowingReadAccessTo: readAccessURL)
     }
     

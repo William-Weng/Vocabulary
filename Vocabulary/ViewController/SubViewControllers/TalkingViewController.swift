@@ -14,7 +14,6 @@ final class TalkingViewController: UIViewController {
     
     private var isAnimationStop = false
     private var disappearImage: UIImage?
-    private var appDelegate: AppDelegate? { get { return UIApplication.shared.delegate as? AppDelegate } }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
@@ -25,7 +24,7 @@ final class TalkingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         animatedBackground(with: .talking)
-        recordWave()
+        Utility.shared.recordWave()
     }
     
     deinit {
@@ -56,26 +55,11 @@ private extension TalkingViewController {
                 info.pointer.pointee = this.isAnimationStop
                 
                 if (this.isAnimationStop) {
-                    this.stopRecording()
+                    Utility.shared.stopRecording()
                     this.myImageView.image = this.disappearImage
                     this.dismiss(animated: true)
                 }
             }
         }
-    }
-    
-    /// 開始錄音
-    func recordWave() {
-        
-        guard let delegate = appDelegate else { return }
-        _ = delegate.recordWave()
-        delegate.assistiveTouchHidden(true)
-    }
-    
-    /// 停止錄音
-    func stopRecording() {
-        guard let delegate = appDelegate else { return }
-        _ = delegate.stopRecordingWave()
-        delegate.assistiveTouchHidden(false)
     }
 }

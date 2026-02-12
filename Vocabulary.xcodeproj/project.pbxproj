@@ -99,6 +99,7 @@
 		81F52F34299DE87A005F9DF2 /* MyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F52F33299DE87A005F9DF2 /* MyTabBarController.swift */; };
 		81F7A4E72F3D732F008F33E3 /* AssistiveTouchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7A4E62F3D732F008F33E3 /* AssistiveTouchHelper.swift */; };
 		81F7A4E92F3D7F6F008F33E3 /* SettingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7A4E82F3D7F6F008F33E3 /* SettingHelper.swift */; };
+		81F7A4EB2F3D8320008F33E3 /* DeepLinkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7A4EA2F3D8320008F33E3 /* DeepLinkHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -169,6 +170,7 @@
 		81F52F33299DE87A005F9DF2 /* MyTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTabBarController.swift; sourceTree = "<group>"; };
 		81F7A4E62F3D732F008F33E3 /* AssistiveTouchHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssistiveTouchHelper.swift; sourceTree = "<group>"; };
 		81F7A4E82F3D7F6F008F33E3 /* SettingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHelper.swift; sourceTree = "<group>"; };
+		81F7A4EA2F3D8320008F33E3 /* DeepLinkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,6 +337,7 @@
 				64C184F4297E5CC600D1D1B2 /* Protocol.swift */,
 				64C18501297E861800D1D1B2 /* Utility.swift */,
 				81F7A4E82F3D7F6F008F33E3 /* SettingHelper.swift */,
+				81F7A4EA2F3D8320008F33E3 /* DeepLinkHelper.swift */,
 				81F7A4E62F3D732F008F33E3 /* AssistiveTouchHelper.swift */,
 			);
 			path = Utility;
@@ -692,6 +695,7 @@
 				812C5444299F73DC003F942A /* TalkingViewController.swift in Sources */,
 				81AB5EF9299643960035216F /* OthersViewController.swift in Sources */,
 				81201C4C298B58C200291485 /* InterpretView.swift in Sources */,
+				81F7A4EB2F3D8320008F33E3 /* DeepLinkHelper.swift in Sources */,
 				8196323329933CEF00B96960 /* MyNavigationController.swift in Sources */,
 				8139CE1A2DC07C5D00805A2F /* OllamViewController.swift in Sources */,
 				81F7A4E92F3D7F6F008F33E3 /* SettingHelper.swift in Sources */,

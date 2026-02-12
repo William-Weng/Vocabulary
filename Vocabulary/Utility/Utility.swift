@@ -10,6 +10,7 @@ import UIKit
 import WWPrint
 import WWHUD
 import WWFloatingViewController
+import WWAppInstallSource
 
 /// WWPrint再包一層 => 容易切換顯不顯示
 func myPrint<T>(_ message: T, file: String = #file, method: String = #function, line: Int = #line) {
@@ -21,9 +22,9 @@ final class Utility: NSObject {
     
     static let shared = Utility()
     
+    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    
     private let feedback = UIImpactFeedbackGenerator._build(style: .medium)
-    private let appDelegate = UIApplication.shared.delegate as? AppDelegate
-
     private var synthesizer = AVSpeechSynthesizer._build()
 
     private override init() {}
@@ -133,6 +134,39 @@ extension Utility {
         }
         
         return (isSuccess, musicButtonIcon)
+    }
+}
+
+// MARK: - ShortcutItem
+extension Utility {
+    
+    /// 產生版本號的ShortcutItem
+    /// - Parameter application: UIApplication
+    /// - Returns: UIApplicationShortcutItem
+    func appVersionShortcutItem(with application: UIApplication) -> UIApplicationShortcutItem {
+        
+        let version = Bundle.main._appVersion()
+        let installType = WWAppInstallSource.shared.detect() ?? .Simulator
+        let info = UIDevice._systemInformation()
+        let icon = UIApplicationShortcutIcon(type: .confirmation)
+        let title = "v\(version.app) (\(version.build))"
+        let subtitle = "\(info.name) \(info.version) by \(installType.rawValue)"
+        let shortcutItem = UIApplicationShortcutItem._build(localizedTitle: title, localizedSubtitle: subtitle, icon: icon)
+        
+        return shortcutItem
+    }
+    
+    /// 產生該上次使用時間的ShortcutItem
+    /// - Parameter application: UIApplication
+    /// - Returns: UIApplicationShortcutItem
+    func appLaunchTimeShortcutItem(with application: UIApplication) -> UIApplicationShortcutItem {
+        
+        let icon = UIApplicationShortcutIcon(type: .time)
+        let title = "上次使用時間"
+        let subtitle = "\(Date()._localTime(timeZone: .current))"
+        let shortcutItem = UIApplicationShortcutItem._build(localizedTitle: title, localizedSubtitle: subtitle, icon: icon)
+        
+        return shortcutItem
     }
 }
 

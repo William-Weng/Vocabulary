@@ -16,10 +16,9 @@ import WWNetworking_UIImage
 import WWNormalizeAudioPlayer
 
 @main
-final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable {
+final class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    var orientationLock: UIInterfaceOrientationMask?
     
     private lazy var touchViewController = { UIStoryboard(name: "Sub", bundle: nil).instantiateViewController(withIdentifier: "TouchViewController") }()
         
@@ -36,10 +35,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         DeepLinkHelper.shared.universalLink(application, continue: userActivity)
         return true
-    }
-    
-    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        return orientationLock ?? .all
     }
     
     deinit {

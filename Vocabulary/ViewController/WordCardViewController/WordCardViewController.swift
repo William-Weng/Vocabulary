@@ -14,11 +14,9 @@ import WWFloatingViewController
 final class WordCardViewController: UIViewController {
     
     @IBOutlet weak var orientationbButtonItem: UIBarButtonItem!
-    
-    var currentOrientation: UIDeviceOrientation = .unknown
+        
     weak var mainViewDelegate: MainViewDelegate?
     
-    private var currentLockOrientation: UIInterfaceOrientationMask = .all
     private var infinityLoopInfo: WWOnBoardingViewController.InfinityLoopInformation = (hasPrevious: false, hasNext: true)
     private var reviewWordCardList: [[String : Any]] = []
     
@@ -29,7 +27,7 @@ final class WordCardViewController: UIViewController {
             pageViewController(with: "WordCardPageViewController"),
         ]
     }()
-        
+    
     private var currentIndex = 0
     private var currentIndexOffset = 0
     private var onBoardingViewController: WWOnBoardingViewController?
@@ -48,7 +46,6 @@ final class WordCardViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         viewWillDisappearAction(animated)
-        unlockScreenOrientation()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -58,7 +55,7 @@ final class WordCardViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) { initSetting(for: segue, sender: sender) }
     
-    @IBAction func lockScreenOrientation(_ sender: UIBarButtonItem) { lockScreenOrientation() }
+    @IBAction func lockScreenOrientation(_ sender: UIBarButtonItem) {}
     
     @IBAction func searchVocabulary(_ sender: UIBarButtonItem) {
         searchVocabularyViewController = UIStoryboard._instantiateViewController() as SearchVocabularyViewController
@@ -232,54 +229,16 @@ private extension WordCardViewController {
 
 // MARK: - 小工具
 private extension WordCardViewController {
-    
-    /// 鎖定畫面方向
-    func lockScreenOrientation() {
-        if (currentLockOrientation == .landscape) { lockScreenOrientationToPortrait(); return }
-        lockScreenOrientationToLandscape()
-    }
-    
-    /// 鎖定畫面為橫向
-    func lockScreenOrientationToLandscape() {
-        
-        let interfaceOrientation: UIInterfaceOrientation
-        
-        switch currentOrientation {
-        case .portrait, .portraitUpsideDown, .unknown, .faceUp, .faceDown: interfaceOrientation = .landscapeRight
-        case .landscapeLeft: interfaceOrientation = .landscapeRight
-        case .landscapeRight: interfaceOrientation = .landscapeLeft
-        @unknown default: interfaceOrientation = .landscapeRight
-        }
-        
-        currentLockOrientation = .landscape
-        _ = Utility.shared.screenOrientation(lock: currentLockOrientation, rotate: interfaceOrientation)
-    }
-    
-    /// 鎖定畫面為直向
-    func lockScreenOrientationToPortrait() {
-        
-        let interfaceOrientation: UIInterfaceOrientation = .portrait
-        
-        currentLockOrientation = .portrait
-        _ = Utility.shared.screenOrientation(lock: currentLockOrientation, rotate: interfaceOrientation)
-    }
-    
-    /// 不鎖定畫面方向 (轉回原來的方向)
-    func unlockScreenOrientation() {
-        currentLockOrientation = .all
-        _ = Utility.shared.screenOrientation(lock: currentLockOrientation, rotate: currentOrientation._interfaceOrientation())
-        setNeedsUpdateOfSupportedInterfaceOrientations()
-    }
-    
+            
     /// 設定畫面旋轉方向的圖示
     func orientationbButtonItemSetting() {
-        let name = (UIDevice.current.orientation.isLandscape) ? "Horizontal" : "Vertical"
-        orientationbButtonItemImage(name: name)
+        let image: UIImage = (UIDevice.current.orientation.isLandscape) ? .horizontal : .vertical
+        orientationbButtonItemImage(image)
     }
     
     /// 設定圖示
-    /// - Parameter name: String
-    func orientationbButtonItemImage(name: String) {
-        orientationbButtonItem.image = UIImage(named: name)
+    /// - Parameter image: UIImage
+    func orientationbButtonItemImage(_ image: UIImage) {
+        orientationbButtonItem.image = image
     }
 }

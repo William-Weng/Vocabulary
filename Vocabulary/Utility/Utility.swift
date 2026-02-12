@@ -38,19 +38,6 @@ extension Utility {
         SettingHelper.shared.initSettings()
         NotificationCenter.default._post(name: .refreshViewController)
     }
-        
-    /// [強制改變裝置的方向](https://johnchihhonglin.medium.com/限制某個頁面的螢幕旋轉方向-8c7235d5a774)
-    /// - Parameters:
-    ///   - orientation: UIInterfaceOrientationMask
-    ///   - rotateOrientation: UIInterfaceOrientation
-    /// - Returns: Bool
-    func screenOrientation(lock orientation: UIInterfaceOrientationMask, rotate rotateOrientation: UIInterfaceOrientation) -> Bool {
-        
-        guard let appDelegate = appDelegate else { return false }
-
-        let isSuccess = appDelegate._orientation(lock: orientation, rotate: rotateOrientation)
-        return isSuccess
-    }
 }
 
 // MARK: - ShortcutItem
@@ -405,26 +392,23 @@ extension Utility {
         return urlString.hasPrefix("http://") || urlString.hasPrefix("https://")
     }
     
-    /// 彈出全畫面透明ViewController
+    /// 彈出全畫面透明ViewController (Sub.storyboard)
     /// - Parameters:
     ///   - target: UIViewController?
     ///   - identifier: String
     /// - Returns: Bool
     func presentViewController(target: UIViewController?, identifier: String) -> Bool {
         
-        guard let target = target,
-              let viewController = target.storyboard?.instantiateViewController(identifier: identifier)
-        else {
-            return false
-        }
+        guard let target = target else { return false }
         
+        let viewController = UIStoryboard(name: "Sub", bundle: nil).instantiateViewController(withIdentifier: identifier)
         viewController._transparent(.black.withAlphaComponent(0.3))
         target.present(viewController, animated: false)
         
         return true
     }
     
-    /// 顯示調節音量畫面
+    /// 顯示調節音量畫面 (Sub.storyboard)
     /// - Parameters:
     ///   - target: UIViewController?
     ///   - soundType: VolumeViewController.AdjustmentSoundType

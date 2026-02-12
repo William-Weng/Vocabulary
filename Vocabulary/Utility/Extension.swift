@@ -574,33 +574,33 @@ extension UIDeviceOrientation {
 }
 
 // MARK: - AppDelegate
-extension AppDelegate {
-    
-    /// [設置畫面能夠旋轉的方向](https://johnchihhonglin.medium.com/限制某個頁面的螢幕旋轉方向-8c7235d5a774)
-    /// - Parameter orientation: UIInterfaceOrientationMask
-    /// - Returns: Bool
-    func _lockOrientation(_ orientation: UIInterfaceOrientationMask) -> Bool {
-        
-        guard let delegate = UIApplication.shared.delegate as? OrientationLockable else { return false }
-        delegate.orientationLock = orientation
-        
-        return true
-    }
-    
-    /// [強制改變裝置的方向](https://juejin.cn/post/6855869344119783431)
-    /// - Parameters:
-    ///   - orientation: [UIInterfaceOrientationMask](https://www.jianshu.com/p/1a43d839a0e3)
-    ///   - rotateOrientation: UIInterfaceOrientation
-    func _orientation(lock orientation: UIInterfaceOrientationMask, rotate rotateOrientation: UIInterfaceOrientation) -> Bool {
-        
-        let isSuccess = self._lockOrientation(orientation)
-        
-        UIDevice.current.setValue(rotateOrientation.rawValue, forKey: "orientation")
-        UIViewController.attemptRotationToDeviceOrientation()
-
-        return isSuccess
-    }
-}
+//extension AppDelegate {
+//    
+//    /// [設置畫面能夠旋轉的方向](https://johnchihhonglin.medium.com/限制某個頁面的螢幕旋轉方向-8c7235d5a774)
+//    /// - Parameter orientation: UIInterfaceOrientationMask
+//    /// - Returns: Bool
+//    func _lockOrientation(_ orientation: UIInterfaceOrientationMask) -> Bool {
+//        
+//        guard let delegate = UIApplication.shared.delegate as? OrientationLockable else { return false }
+//        delegate.orientationLock = orientation
+//        
+//        return true
+//    }
+//    
+//    /// [強制改變裝置的方向](https://juejin.cn/post/6855869344119783431)
+//    /// - Parameters:
+//    ///   - orientation: [UIInterfaceOrientationMask](https://www.jianshu.com/p/1a43d839a0e3)
+//    ///   - rotateOrientation: UIInterfaceOrientation
+//    func _orientation(lock orientation: UIInterfaceOrientationMask, rotate rotateOrientation: UIInterfaceOrientation) -> Bool {
+//        
+//        let isSuccess = self._lockOrientation(orientation)
+//        
+//        UIDevice.current.setValue(rotateOrientation.rawValue, forKey: "orientation")
+//        UIViewController.attemptRotationToDeviceOrientation()
+//                
+//        return isSuccess
+//    }
+//}
 
 // MARK: - Bundle (function)
 extension Bundle {

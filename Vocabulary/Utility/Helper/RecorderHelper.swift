@@ -27,7 +27,7 @@ extension RecorderHelper: AVAudioRecorderDelegate {
         guard let recordlayer = AVAudioPlayer._build(audioURL: recorder.url, fileTypeHint: .wav, delegate: nil) else { return }
         
         self.recordPlayer = recordlayer
-        recordlayer.play()
+        Task { recordlayer.play() }
     }
     
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) { myPrint(error) }

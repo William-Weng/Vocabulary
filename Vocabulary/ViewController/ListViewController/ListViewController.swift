@@ -22,9 +22,7 @@ final class ListViewController: UIViewController {
     var vocabularyList: VocabularyList!
     
     weak var mainViewDelegate: MainViewDelegate?
-    
-    private let recordingWaveSegue = "RecordingWaveSegue"
-    
+        
     private var isAnimationStop = false
     private var isSafariViewControllerDismiss = true
     private var refreshControl: UIRefreshControl!

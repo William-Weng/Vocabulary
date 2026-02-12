@@ -537,9 +537,7 @@ private extension MainViewController {
     func wordCardControllerSetting(for segue: UIStoryboardSegue, sender: Any?) {
                 
         guard let viewController = segue.destination as? WordCardViewController else { return }
-        
         viewController.mainViewDelegate = self
-        viewController.currentOrientation = UIDevice.current.orientation
     }
     
     /// 單字記憶頁面相關設定
@@ -825,7 +823,7 @@ private extension MainViewController {
     func informationHint(with title: String?, message: String?, sourceView: UIView? = nil) {
         
         let alertController = UIAlertController._build(title: title, message: message)
-        let actionOK = UIAlertAction(title: "確認", style: .cancel) { _ in }
+        let actionOK = UIAlertAction(title: "確認", style: .destructive) { _ in }
         let actionSelectDatabase = UIAlertAction(title: "選擇字典", style: .default) { [unowned self] _ in dictionaryAlertAction(target: self, sourceView: sourceView) }
         let actionWordCard = UIAlertAction(title: "單字卡模式", style: .default) { [unowned self] _ in performSegue(for: .wordCardView, sender: nil) }
         let actionWordMemory = UIAlertAction(title: "記憶模式", style: .default) { [unowned self] _ in performSegue(for: .wordMemoryView, sender: nil) }

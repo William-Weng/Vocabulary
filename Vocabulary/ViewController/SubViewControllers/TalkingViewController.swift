@@ -17,15 +17,17 @@ final class TalkingViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
+        AssistiveTouchHelper.shared.hiddenAction(false)
         disappearImage = myImageView.image
         isAnimationStop = true
+        _ = RecorderHelper.shared.stop()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        AssistiveTouchHelper.shared.hiddenAction(true)
         animatedBackground(with: .talking)
         _ = RecorderHelper.shared.start()
-        AssistiveTouchHelper.shared.hiddenAction(true)
     }
     
     deinit {
@@ -56,8 +58,6 @@ private extension TalkingViewController {
                 info.pointer.pointee = this.isAnimationStop
                 
                 if (this.isAnimationStop) {
-                    AssistiveTouchHelper.shared.hiddenAction(false)
-                    _ = RecorderHelper.shared.stop()
                     this.myImageView.image = this.disappearImage
                     this.dismiss(animated: true)
                 }

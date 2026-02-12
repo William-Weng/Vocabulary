@@ -345,6 +345,34 @@
             </objects>
             <point key="canvasLocation" x="-2150" y="170"/>
         </scene>
+        <!--Talking View Controller-->
+        <scene sceneID="Jrb-EK-A7o">
+            <objects>
+                <viewController storyboardIdentifier="TalkingViewController" modalPresentationStyle="overFullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="NeG-pJ-yvX" customClass="TalkingViewController" customModule="Vocabulary" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vq0-5a-lyp">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Talking" translatesAutoresizingMaskIntoConstraints="NO" id="08c-HR-pbu">
+                                <rect key="frame" x="186" y="415.66666666666669" width="21" height="21"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="GZ7-6e-kjk"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="08c-HR-pbu" firstAttribute="centerX" secondItem="vq0-5a-lyp" secondAttribute="centerX" id="AmV-LH-oG0"/>
+                            <constraint firstItem="08c-HR-pbu" firstAttribute="centerY" secondItem="vq0-5a-lyp" secondAttribute="centerY" id="HSe-O6-TUz"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="bMH-l8-ywF"/>
+                    <connections>
+                        <outlet property="myImageView" destination="08c-HR-pbu" id="UYD-JM-f1G"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yfS-Gt-rGZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1008" y="170"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Chat" width="85.333335876464844" height="85.333335876464844"/>
@@ -356,6 +384,7 @@
         <image name="Settings" width="26.666666030883789" height="26.666666030883789"/>
         <image name="Share" width="85.333335876464844" height="85.333335876464844"/>
         <image name="SpeedoMeter" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="Talking" width="21.333333969116211" height="21.333333969116211"/>
         <image name="Touch_Sub" width="85.333335876464844" height="85.333335876464844"/>
         <systemColor name="systemPinkColor">
             <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

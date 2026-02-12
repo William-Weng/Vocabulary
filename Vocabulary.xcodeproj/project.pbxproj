@@ -100,6 +100,7 @@
 		81F7A4E72F3D732F008F33E3 /* AssistiveTouchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7A4E62F3D732F008F33E3 /* AssistiveTouchHelper.swift */; };
 		81F7A4E92F3D7F6F008F33E3 /* SettingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7A4E82F3D7F6F008F33E3 /* SettingHelper.swift */; };
 		81F7A4EB2F3D8320008F33E3 /* DeepLinkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7A4EA2F3D8320008F33E3 /* DeepLinkHelper.swift */; };
+		81F7A4ED2F3D861D008F33E3 /* MusicHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7A4EC2F3D861D008F33E3 /* MusicHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -171,6 +172,7 @@
 		81F7A4E62F3D732F008F33E3 /* AssistiveTouchHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssistiveTouchHelper.swift; sourceTree = "<group>"; };
 		81F7A4E82F3D7F6F008F33E3 /* SettingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHelper.swift; sourceTree = "<group>"; };
 		81F7A4EA2F3D8320008F33E3 /* DeepLinkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkHelper.swift; sourceTree = "<group>"; };
+		81F7A4EC2F3D861D008F33E3 /* MusicHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -337,6 +339,7 @@
 				64C184F4297E5CC600D1D1B2 /* Protocol.swift */,
 				64C18501297E861800D1D1B2 /* Utility.swift */,
 				81F7A4E82F3D7F6F008F33E3 /* SettingHelper.swift */,
+				81F7A4EC2F3D861D008F33E3 /* MusicHelper.swift */,
 				81F7A4EA2F3D8320008F33E3 /* DeepLinkHelper.swift */,
 				81F7A4E62F3D732F008F33E3 /* AssistiveTouchHelper.swift */,
 			);
@@ -690,6 +693,7 @@
 				64C184F5297E5CC600D1D1B2 /* Protocol.swift in Sources */,
 				81B1AF7F2AB423DD0074103B /* GalleryViewController.swift in Sources */,
 				6428588B297BBF8600DD7D88 /* AppDelegate.swift in Sources */,
+				81F7A4ED2F3D861D008F33E3 /* MusicHelper.swift in Sources */,
 				64C184F9297E5F7A00D1D1B2 /* API.swift in Sources */,
 				641B5CA72984BEB500AB1C56 /* VolumeViewController.swift in Sources */,
 				812C5444299F73DC003F942A /* TalkingViewController.swift in Sources */,
@@ -859,7 +863,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20260211;
+				CURRENT_PROJECT_VERSION = 20260212;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -881,7 +885,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.8.3;
+				MARKETING_VERSION = 2.8.4;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -903,7 +907,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20260211;
+				CURRENT_PROJECT_VERSION = 20260212;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -925,7 +929,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.8.3;
+				MARKETING_VERSION = 2.8.4;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

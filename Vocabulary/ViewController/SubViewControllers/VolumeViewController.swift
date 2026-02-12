@@ -109,7 +109,7 @@ extension VolumeViewController {
         let percent = Float(currentValue / maximumValue)
         
         switch soundType {
-        case .volume: _ = Utility.shared.musicVolumeSetting(percent)
+        case .volume: _ = MusicHelper.shared.musicVolumeSetting(percent)
         case .rate: Constant.speakingSpeed = percent
         }
         
@@ -121,7 +121,7 @@ extension VolumeViewController {
     func sliderVolume() -> Float? {
                 
         switch soundType {
-        case .volume: return Utility.shared.musicVolume()
+        case .volume: return MusicHelper.shared.musicVolume()
         case .rate: return Constant.speakingSpeed
         }
     }

@@ -12,26 +12,19 @@ import UIKit
 import AVFAudio
 import WWPrint
 import WWToast
-import WWSQLite3Manager
 import WWNetworking_UIImage
-import WWAppInstallSource
-import WWAssistiveTouch
 import WWNormalizeAudioPlayer
 
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable {
-
-    let audioPlayer: WWNormalizeAudioPlayer = .init()
     
     var window: UIWindow?
     var orientationLock: UIInterfaceOrientationMask?
-    var musicLoopType: Constant.MusicLoopType = .infinity
     
     private lazy var touchViewController = { UIStoryboard(name: "Sub", bundle: nil).instantiateViewController(withIdentifier: "TouchViewController") as? TouchViewController }()
     
     private var recordPlayer: AVAudioPlayer?
     private var audioRecorder: AVAudioRecorder?
-    private var currentMusic: Music?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         initSetting(application, didFinishLaunchingWithOptions: launchOptions)
@@ -52,7 +45,11 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable
         return orientationLock ?? .all
     }
 
-    deinit { myPrint("\(Self.self) deinit") }
+    deinit {
+        touchViewController?.removeFromParent()
+        touchViewController = nil
+        myPrint("\(Self.self) deinit")
+    }
 }
 
 // MARK: - AVAudioRecorderDelegate
@@ -81,62 +78,8 @@ extension AppDelegate: UIDocumentPickerDelegate {
     }
 }
 
-// MARK: - WWNormalizeAudioPlayer.Delegate
-extension AppDelegate: WWNormalizeAudioPlayer.Deleagte {
-    
-    func audioPlayer(_ player: WWNormalizeAudioPlayer, callbackType: AVAudioPlayerNodeCompletionCallbackType, didFinishPlaying audioFile: AVAudioFile) {
-        audioPlayerDidFinishPlayingAction(player)
-    }
-    
-    func audioPlayer(_ player: WWNormalizeAudioPlayer, audioFile: AVAudioFile, totalTime: TimeInterval, currentTime: TimeInterval) {}
-    
-    func audioPlayer(_ player: WWNormalizeAudioPlayer, error: any Error) {}
-}
-
 // MARK: - 小工具 (公開)
 extension AppDelegate {
-    
-    /// 初始化播放器設定
-    func initAudioPlaySetting() {
-        _ = audioPlayer.setSession(category: .playback)
-        audioPlayer.delegate = self
-        audioPlayer.isHiddenProgress = true
-        audioPlayer.volume = 0.1
-    }
-}
-
-// MARK: - 小工具 (公開)
-extension AppDelegate {
-    
-    /// 播放音樂
-    /// - Parameters:
-    ///   - music: 音樂檔案
-    ///   - volume: 音量大小
-    ///   - loopType: MusicLoopType
-    /// - Returns: Bool
-    func playMusic(with music: Music?, volume: Float, musicLoopType: Constant.MusicLoopType) -> Bool {
-        
-        guard let music = music,
-              let audioUrl = music.fileURL()
-        else {
-            return false
-        }
-        
-        self.currentMusic = music
-        self.musicLoopType = musicLoopType
-        
-        audioPlayer.play(with: audioUrl)
-        musicPlayerHint(audioPlayer)
-        
-        return true
-    }
-    
-    /// 停止播放音樂
-    func stopMusic() -> Bool {
-        musicLoopType = .stop
-        audioPlayer.stop()
-        return true
-    }
     
     /// 錄製聲音
     /// - Returns: Bool
@@ -161,11 +104,11 @@ private extension AppDelegate {
         
         SettingHelper.shared.initSettings()
         SettingHelper.shared.initDatabase()
+        MusicHelper.shared.initAudioPlaySetting()
         
         initAssistiveTouch(appDelegate: self, touchViewController: touchViewController)
         initAppShortcutItem(with: application)
 
-        initAudioPlaySetting()
         backgroundBarColor(.black.withAlphaComponent(0.1))
         
         _ = animationFolderUrlMaker()
@@ -189,27 +132,6 @@ private extension AppDelegate {
         let versionShortcutItem = Utility.shared.appVersionShortcutItem(with: application)
         
         application.shortcutItems = [launchTimeShortcutItem, versionShortcutItem]
-    }
-
-    
-    /// 建立該語言的資料庫群
-    /// - Parameters:
-    ///   - database: SQLite3Database
-    ///   - info: Settings.GeneralInformation
-    /// - Returns: [SQLite3Database.ExecuteResult]
-    func createDatabase(_ database: SQLite3Database, info: Settings.GeneralInformation) -> [SQLite3Database.ExecuteResult] {
-        
-        let language = info.key
-        
-        let result = [
-            database.create(tableName: Constant.DataTableType.default(language).name(), type: Vocabulary.self, isOverwrite: false),
-            database.create(tableName: Constant.DataTableType.list(language).name(), type: VocabularyList.self, isOverwrite: false),
-            database.create(tableName: Constant.DataTableType.review(language).name(), type: VocabularyReviewList.self, isOverwrite: false),
-            database.create(tableName: Constant.DataTableType.sentence(language).name(), type: VocabularySentenceList.self, isOverwrite: false),
-            database.create(tableName: Constant.DataTableType.bookmarkSite(language).name(), type: BookmarkSite.self, isOverwrite: false),
-        ]
-        
-        return result
     }
     
     /// 建立存放GIF動畫的資料夾
@@ -235,23 +157,6 @@ private extension AppDelegate {
         
         let itemAppearance = UIBarButtonItemAppearance()
         itemAppearance.normal.backgroundImage = nil
-    }
-    
-    /// [音樂檔名提示](http://furnacedigital.blogspot.com/2010/12/avfoundation.html)
-    /// - Parameter player: WWNormalizeAudioPlayer
-    func musicPlayerHint(_ player: WWNormalizeAudioPlayer) {
-        
-        guard let window = self.window,
-              let time = player.totalTime()._time(unitsStyle: .positional, allowedUnits: [.minute, .second], behavior: .pad)
-        else {
-            return
-        }
-        
-        let text = "[\(time)] \(player.audioFile.url.lastPathComponent)"
-        let backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        
-        WWToast.shared.setting(backgroundViewColor: backgroundColor)
-        WWToast.shared.makeText(text, targetFrame: window.frame)
     }
     
     /// 開始錄音 (.wav)
@@ -284,23 +189,6 @@ private extension AppDelegate {
         case .failure(let error): myPrint(error); return false
         case .success(let isSuccess): return isSuccess
         }
-    }
-    
-    /// 音樂播完後的動作 => 全曲隨機 / 全曲循環
-    /// - Parameters:
-    ///   - player: AVAudioPlayer
-    ///   - flag: Bool
-    func audioPlayerDidFinishPlayingAction(_ player: WWNormalizeAudioPlayer) {
-        
-        switch musicLoopType {
-        case .infinity: break
-        case .stop: currentMusic = nil
-        case .loop: currentMusic = Constant.playingMusicList._popFirst()
-        case .shuffle: currentMusic = Constant.playingMusicList.popLast()
-        }
-        
-        if (Constant.playingMusicList.isEmpty) { Constant.playingMusicList = Utility.shared.musicList(for: musicLoopType) }
-        _ = playMusic(with: currentMusic, volume: Constant.volume, musicLoopType: musicLoopType)
     }
 }
 

@@ -14,7 +14,7 @@ protocol MyNavigationControllerDelegate: NSObject {
 
 // MARK: - 自定義的UINavigationController
 final class MyNavigationController: UINavigationController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshViewControllerNotification()

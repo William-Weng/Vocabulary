@@ -18,8 +18,11 @@ final class TouchViewController: UIViewController {
         case download = 104
         case chat = 105
         case speedRate = 106
+        case lockScreen = 107
     }
-        
+    
+    @IBOutlet weak var orientationbButton: UIButton!
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         AssistiveTouchHelper.shared.assistiveTouch.dismiss()
@@ -28,6 +31,11 @@ final class TouchViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewWillAppearAction()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        orientationbButtonItemSetting()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -50,6 +58,7 @@ final class TouchViewController: UIViewController {
         case .download: Utility.shared.downloadDatabase(delegate: self)
         case .chat: Utility.shared.chat()
         case .speedRate: Utility.shared.adjustmentSoundType(.rate)
+        case .lockScreen: Utility.shared.screenOrientation(isAutorotate: false, lockMask: .landscape)
         }
     }
     
@@ -93,5 +102,17 @@ private extension TouchViewController {
         UIViewPropertyAnimator(duration: duration, curve: .linear) { [unowned self] in
             view.alpha = 0.0
         }.startAnimation()
+    }
+    
+    /// 設定畫面旋轉方向的圖示
+    func orientationbButtonItemSetting() {
+        let icon: UIImage = (UIDevice.current.orientation.isLandscape) ? .screenHorizontal : .screenVertical
+        orientationbButtonIcon(icon)
+    }
+    
+    /// 設定圖示
+    /// - Parameter image: UIImage
+    func orientationbButtonIcon(_ icon: UIImage) {
+        orientationbButton.setImage(icon, for: .normal)
     }
 }

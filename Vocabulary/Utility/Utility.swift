@@ -217,6 +217,21 @@ extension Utility {
         
         target.present(alertController, animated: true)
     }
+    
+    /// 手機畫面旋轉
+    /// - Parameters:
+    ///   - isAutorotate: 是否可以自貿旋轉
+    ///   - lockMask: 可以使用的方向
+    func screenOrientation(isAutorotate: Bool, lockMask: UIInterfaceOrientationMask) {
+        
+        guard let appDelegate = appDelegate,
+              let orientationLockable = appDelegate.window?.rootViewController as? OrientationLockable
+        else {
+            return
+        }
+        
+        orientationLockable.updateOrientations(isAutorotate: isAutorotate, lockOrientationMask: lockMask)
+    }
 }
 
 // MARK: - SettingsJSON設定檔相關
@@ -747,7 +762,6 @@ extension Utility {
     /// - Parameter index: Int
     /// - Returns: String?
     func mainViewContrillerTitle(with index: Int, `default`: String) -> String {
-        
         guard let settings = Utility.shared.generalSettings(index: index) else { return `default` }
         return settings.name
     }

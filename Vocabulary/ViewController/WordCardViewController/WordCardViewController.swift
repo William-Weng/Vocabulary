@@ -32,7 +32,7 @@ final class WordCardViewController: UIViewController {
     private var currentIndexOffset = 0
     private var onBoardingViewController: WWOnBoardingViewController?
     private var searchVocabularyViewController: SearchVocabularyViewController?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         orientationbButtonItemSetting()
@@ -54,9 +54,7 @@ final class WordCardViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) { initSetting(for: segue, sender: sender) }
-    
-    @IBAction func lockScreenOrientation(_ sender: UIBarButtonItem) {}
-    
+        
     @IBAction func searchVocabulary(_ sender: UIBarButtonItem) {
         searchVocabularyViewController = UIStoryboard._instantiateViewController() as SearchVocabularyViewController
         Utility.shared.presentSearchVocabularyViewController(target: self, currentView: searchVocabularyViewController?.view)

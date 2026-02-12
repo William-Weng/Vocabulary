@@ -85,10 +85,10 @@
                                                     <action selector="touchAction:" destination="bDF-AU-MZt" eventType="touchUpInside" id="5PY-4K-Nnr"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xry-Ac-Hxu">
+                                            <button opaque="NO" tag="107" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xry-Ac-Hxu">
                                                 <rect key="frame" x="97" y="0.0" width="81" height="81"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" image="Touch_Sub"/>
+                                                <state key="normal" image="ScreenVertical"/>
                                                 <connections>
                                                     <action selector="touchAction:" destination="bDF-AU-MZt" eventType="touchUpInside" id="0sp-TZ-5m9"/>
                                                 </connections>
@@ -135,6 +135,9 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="r39-qJ-imi"/>
+                    <connections>
+                        <outlet property="orientationbButton" destination="xry-Ac-Hxu" id="FOf-8p-9Uv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S3l-hi-tUU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -381,6 +384,7 @@
         <image name="Forget" width="26.666666030883789" height="26.666666030883789"/>
         <image name="Pencil" width="170.66667175292969" height="170.66667175292969"/>
         <image name="Recorder" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="ScreenVertical" width="85.333335876464844" height="85.333335876464844"/>
         <image name="Settings" width="26.666666030883789" height="26.666666030883789"/>
         <image name="Share" width="85.333335876464844" height="85.333335876464844"/>
         <image name="SpeedoMeter" width="170.66667175292969" height="170.66667175292969"/>

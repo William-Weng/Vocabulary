@@ -9,7 +9,7 @@ import UIKit
 import PencilKit
 
 // MARK: - 自定義的UITabBarController
-final class MyTabBarController: UITabBarController {
+final class MyTabBarController: UITabBarController, OrientationLockable {
     
     static var isHidden = true
     
@@ -22,10 +22,16 @@ final class MyTabBarController: UITabBarController {
     private var dismissButton: UIButton?
     private var cleanDrawingButton: UIButton?
 
+    var lockOrientationMask: UIInterfaceOrientationMask = .all
+    var isAutorotate = true
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask { return lockOrientationMask }
+    override var shouldAutorotate: Bool { return isAutorotate }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-         initSetting()
-         registerCanvasViewAction()
+        initSetting()
+        registerCanvasViewAction()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

@@ -8,8 +8,9 @@
 import UIKit
 
 // MARK: - [強制畫面旋轉](https://johnchihhonglin.medium.com/限制某個頁面的螢幕旋轉方向-8c7235d5a774)
-protocol OrientationLockable where Self: AppDelegate {
-    var orientationLock: UIInterfaceOrientationMask? { get set }
+protocol OrientationLockable where Self: UIViewController {
+    var lockOrientationMask: UIInterfaceOrientationMask { get set }
+    var isAutorotate: Bool { get set }
 }
 
 // MARK: - 顏色設定檔 (Settings.json)
@@ -36,6 +37,20 @@ protocol CellReusable: AnyObject {
     /// Cell的相關設定
     /// - Parameter indexPath: IndexPath
     func configure(with indexPath: IndexPath)
+}
+
+// MARK: - OrientationLockable
+extension OrientationLockable {
+    
+    /// 更新畫面方向
+    /// - Parameters:
+    ///   - isAutorotate: 是否自動旋轉
+    ///   - lockOrientationMask: 允許使用的畫面方向
+    func updateOrientations(isAutorotate: Bool, lockOrientationMask: UIInterfaceOrientationMask) {
+        self.isAutorotate = isAutorotate
+        self.lockOrientationMask = lockOrientationMask
+        self.setNeedsUpdateOfSupportedInterfaceOrientations()
+    }
 }
 
 // MARK: - 預設 identifier = class name (初值)

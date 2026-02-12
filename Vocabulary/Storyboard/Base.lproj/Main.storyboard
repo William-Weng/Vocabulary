@@ -1551,22 +1551,12 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="單字卡模式" id="ITF-5g-g65">
-                        <rightBarButtonItems>
-                            <barButtonItem image="Question" id="OHW-Ce-mgA">
-                                <connections>
-                                    <action selector="searchVocabulary:" destination="apD-De-WeM" id="Rqf-uC-UnB"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem image="Vertical" id="5zs-wP-32s">
-                                <connections>
-                                    <action selector="lockScreenOrientation:" destination="apD-De-WeM" id="UwS-ZH-tgZ"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <barButtonItem key="rightBarButtonItem" image="Question" id="OHW-Ce-mgA">
+                            <connections>
+                                <action selector="searchVocabulary:" destination="apD-De-WeM" id="Rqf-uC-UnB"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="orientationbButtonItem" destination="5zs-wP-32s" id="xFj-WM-lj4"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R7h-e1-euy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2534,7 +2524,6 @@
         <image name="Star" width="21.333333969116211" height="21.333333969116211"/>
         <image name="SunTreeBorder" width="329.33334350585938" height="295.66665649414062"/>
         <image name="Test" width="21.333333969116211" height="21.333333969116211"/>
-        <image name="Vertical" width="32" height="32"/>
         <systemColor name="secondarySystemBackgroundColor">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

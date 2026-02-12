@@ -97,6 +97,8 @@
 		81E516592D9290AF0020BD90 /* WWTipView in Frameworks */ = {isa = PBXBuildFile; productRef = 81E516582D9290AF0020BD90 /* WWTipView */; };
 		81E56B6B2A725DA6004400D6 /* SearchVocabularyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E56B6A2A725DA6004400D6 /* SearchVocabularyTableViewCell.swift */; };
 		81F52F34299DE87A005F9DF2 /* MyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F52F33299DE87A005F9DF2 /* MyTabBarController.swift */; };
+		81F7A4E72F3D732F008F33E3 /* AssistiveTouchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7A4E62F3D732F008F33E3 /* AssistiveTouchHelper.swift */; };
+		81F7A4E92F3D7F6F008F33E3 /* SettingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7A4E82F3D7F6F008F33E3 /* SettingHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -165,6 +167,8 @@
 		81E4078F2A723C4E00230C3A /* SearchVocabularyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVocabularyViewController.swift; sourceTree = "<group>"; };
 		81E56B6A2A725DA6004400D6 /* SearchVocabularyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVocabularyTableViewCell.swift; sourceTree = "<group>"; };
 		81F52F33299DE87A005F9DF2 /* MyTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTabBarController.swift; sourceTree = "<group>"; };
+		81F7A4E62F3D732F008F33E3 /* AssistiveTouchHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssistiveTouchHelper.swift; sourceTree = "<group>"; };
+		81F7A4E82F3D7F6F008F33E3 /* SettingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -330,6 +334,8 @@
 				642858A3297BC38200DD7D88 /* Extension.swift */,
 				64C184F4297E5CC600D1D1B2 /* Protocol.swift */,
 				64C18501297E861800D1D1B2 /* Utility.swift */,
+				81F7A4E82F3D7F6F008F33E3 /* SettingHelper.swift */,
+				81F7A4E62F3D732F008F33E3 /* AssistiveTouchHelper.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -659,6 +665,7 @@
 				811DFC432AAAFE1200BF480C /* PaletteTableViewCell.swift in Sources */,
 				642858A4297BC38200DD7D88 /* Extension.swift in Sources */,
 				64C184F7297E5D4C00D1D1B2 /* MainTableViewCell.swift in Sources */,
+				81F7A4E72F3D732F008F33E3 /* AssistiveTouchHelper.swift in Sources */,
 				81E56B6B2A725DA6004400D6 /* SearchVocabularyTableViewCell.swift in Sources */,
 				3D652CCA2DB38FD60047DB39 /* WordMemoryViewController.swift in Sources */,
 				3DC6E3872EB5898D00F883E6 /* TouchViewController.swift in Sources */,
@@ -687,6 +694,7 @@
 				81201C4C298B58C200291485 /* InterpretView.swift in Sources */,
 				8196323329933CEF00B96960 /* MyNavigationController.swift in Sources */,
 				8139CE1A2DC07C5D00805A2F /* OllamViewController.swift in Sources */,
+				81F7A4E92F3D7F6F008F33E3 /* SettingHelper.swift in Sources */,
 				642858A6297BC40E00DD7D88 /* Constant.swift in Sources */,
 				818E261329922FFE00385705 /* ReviewResultViewController.swift in Sources */,
 				64ED74D82998C5EF00948C77 /* LicenseWebViewController.swift in Sources */,

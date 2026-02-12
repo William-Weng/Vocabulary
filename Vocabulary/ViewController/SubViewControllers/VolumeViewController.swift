@@ -171,7 +171,7 @@ extension VolumeViewController {
     
     /// 回到上一頁
     func dismissAction() {
-        Utility.shared.assistiveTouchHidden(false)
+        AssistiveTouchHelper.shared.hiddenAction(false)
         dismiss(animated: true)
     }
 }

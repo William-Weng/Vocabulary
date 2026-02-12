@@ -31,13 +31,10 @@ final class Utility: NSObject {
 
 // MARK: - AppDelegate (function)
 extension Utility {
-        
+    
     /// 回復字典檔設定
     func initDictionarySettings() {
-        
-        guard let appDelegate = appDelegate else { return }
-        
-        appDelegate.initSettings()
+        SettingHelper.shared.initSettings()
         NotificationCenter.default._post(name: .refreshViewController)
     }
     
@@ -47,7 +44,7 @@ extension Utility {
         guard let appDelegate = appDelegate else { return }
         
         _ = appDelegate.recordWave()
-        assistiveTouchHidden(true)
+        AssistiveTouchHelper.shared.hiddenAction(true)
     }
     
     /// 停止錄音
@@ -56,7 +53,7 @@ extension Utility {
         guard let appDelegate = appDelegate else { return }
         
         _ = appDelegate.stopRecordingWave()
-        assistiveTouchHidden(false)
+        AssistiveTouchHelper.shared.hiddenAction(false)
     }
     
     /// [強制改變裝置的方向](https://johnchihhonglin.medium.com/限制某個頁面的螢幕旋轉方向-8c7235d5a774)
@@ -142,14 +139,6 @@ extension Utility {
 // MARK: - AssistiveTouch
 extension Utility {
     
-    /// AssistiveTouch是否顯示
-    /// - Parameter isHidden: Bool
-    func assistiveTouchHidden(_ isHidden: Bool) {
-        
-        guard let appDelegate = appDelegate else { return }
-        appDelegate.assistiveTouchHidden(isHidden)
-    }
-    
     /// 顯示調整聲音畫面 (音量  / 語速)
     func adjustmentSoundType(_ soundType: VolumeViewController.AdjustmentSoundType) {
         
@@ -159,7 +148,7 @@ extension Utility {
             return
         }
         
-        assistiveTouchHidden(true)
+        AssistiveTouchHelper.shared.hiddenAction(true)
         presentVolumeViewController(target: target, soundType: soundType)
     }
     
@@ -193,12 +182,103 @@ extension Utility {
         
         let activityViewController = UIActivityViewController._build(activityItems: [fileURL], sourceView: target.view)
         
-        assistiveTouchHidden(true)
+        AssistiveTouchHelper.shared.hiddenAction(true)
         target.present(activityViewController, animated: true)
         
-        activityViewController.completionWithItemsHandler = { [unowned self] activityType, completed, returnedItems, error in
-            assistiveTouchHidden(false)
+        activityViewController.completionWithItemsHandler = { _, _, _, _ in
+            AssistiveTouchHelper.shared.hiddenAction(false)
         }
+    }
+    
+    /// 跟AI對話
+    func chat() {
+        
+        guard let appDelegate = appDelegate,
+              let target = appDelegate.window?.rootViewController,
+              let viewController = UIStoryboard(name: "Sub", bundle: nil).instantiateViewController(withIdentifier: "TalkNavigationController") as? UINavigationController
+        else {
+            return
+        }
+        
+        AssistiveTouchHelper.shared.hiddenAction(true)
+        target.present(viewController, animated: true)
+    }
+    
+    /// 下載備份的Database
+    func downloadDatabase(delegate: (any UIDocumentPickerDelegate)?) {
+        
+        guard let appDelegate = appDelegate,
+              let target = appDelegate.window?.rootViewController
+        else {
+            return
+        }
+        
+        let documentPickerViewController = UIDocumentPickerViewController._build(delegate: delegate, allowedUTIs: [.item])
+        
+        AssistiveTouchHelper.shared.hiddenAction(true)
+        target.present(documentPickerViewController, animated: true)
+    }
+    
+    /// 下載資料庫的相關處理
+    /// - Parameters:
+    ///   - controller: UIDocumentPickerViewController
+    ///   - urls: [URL]
+    func downloadDocumentAction(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        
+        guard let appDelegate = appDelegate,
+              let target = appDelegate.window?.rootViewController
+        else {
+            return
+        }
+        
+        guard let databaseUrl = Constant.database?.fileURL,
+              let fileUrl = urls.first,
+              let backupUrl = Utility.shared.databaseBackupUrl()
+        else {
+            downloadDocumentHint(target: target, title: "備份路徑錯誤", message: nil); return
+        }
+        
+        var result = FileManager.default._moveFile(at: databaseUrl, to: backupUrl)
+        
+        switch result {
+        case .failure(let error): downloadDocumentHint(target: target, title: "錯誤", message: "\(error)")
+        case .success(let isSuccess):
+            
+            if (!isSuccess) { downloadDocumentHint(target: target, title: "備份失敗", message: nil); return }
+            
+            result = FileManager.default._moveFile(at: fileUrl, to: databaseUrl)
+            
+            switch result {
+            case .failure(let error): downloadDocumentHint(target: target, title: "錯誤", message: "\(error)")
+            case .success(let isSuccess):
+                
+                if (!isSuccess) { downloadDocumentHint(target: target, title: nil, message: "更新失敗"); return }
+                
+                downloadDocumentHint(target: target, title: "備份 / 更新成功", message: "\(backupUrl.lastPathComponent)") {
+                    SettingHelper.shared.initDatabase()
+                    NotificationCenter.default._post(name: .refreshViewController)
+                }
+            }
+        }
+    }
+    
+    /// 下載資料庫檔案提示框
+    /// - Parameters:
+    ///   - target: UIViewController
+    ///   - title: String?
+    ///   - message: String?
+    ///   - barButtonItem: UIBarButtonItem?
+    ///   - action: (() -> Void)?
+    func downloadDocumentHint(target: UIViewController, title: String?, message: String?, barButtonItem: UIBarButtonItem? = nil, action: (() -> Void)? = nil) {
+        
+        let alertController = UIAlertController._build(title: title, message: message)
+        let action = UIAlertAction(title: "確認", style: .cancel) {  _ in action?() }
+        
+        alertController.addAction(action)
+        alertController.modalPresentationStyle = .popover
+        alertController.popoverPresentationController?.barButtonItem = barButtonItem
+        
+        target.present(alertController, animated: true)
     }
 }
 

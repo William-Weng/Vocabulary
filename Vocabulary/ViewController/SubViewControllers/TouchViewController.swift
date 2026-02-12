@@ -24,32 +24,24 @@ final class TouchViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        
-        Utility.shared.assistiveTouchHidden(true)
-        
-        appDelegate?.assistiveTouch.dismiss()
+        AssistiveTouchHelper.shared.assistiveTouch.dismiss()
     }
-    
+        
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        view.alpha = 0.5
-        
-        UIViewPropertyAnimator(duration: 0.25, curve: .linear) { [unowned self] in
-            view.alpha = 1.0
-        }.startAnimation()
+        viewWillAppearAction()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        view.alpha = 0.0
+        viewWillDisappearAction()
     }
     
     @IBAction func touchAction(_ sender: UIButton) {
         
         guard let appDelegate = appDelegate else { return }
         
-        defer { appDelegate.assistiveTouch.dismiss() }
+        defer { AssistiveTouchHelper.shared.assistiveTouch.dismiss() }
         
         guard let touchType = TouchTagType(rawValue: sender.tag) else { return }
         
@@ -57,13 +49,40 @@ final class TouchViewController: UIViewController {
         case .pencel: Utility.shared.pencelToolPicker()
         case .recorder: Utility.shared.recording()
         case .share: Utility.shared.shareDatabase()
-        case .download: appDelegate.downloadDatabase()
-        case .chat: appDelegate.chat()
+        case .download: Utility.shared.downloadDatabase(delegate: appDelegate)
+        case .chat: Utility.shared.chat()
         case .speedRate: Utility.shared.adjustmentSoundType(.rate)
         }
     }
     
     deinit {
         appDelegate = nil
+        myPrint("\(Self.self) deinit")
+    }
+}
+
+// MARK: - 小工具
+private extension TouchViewController {
+    
+    /// 淡入動畫
+    /// - Parameter duration: TimeInterval
+    func viewWillAppearAction(duration: TimeInterval = 0.25) {
+        
+        view.alpha = 0.5
+        
+        UIViewPropertyAnimator(duration: duration, curve: .linear) { [unowned self] in
+            view.alpha = 1.0
+        }.startAnimation()
+    }
+    
+    /// 淡出動畫
+    /// - Parameter duration: TimeInterval
+    func viewWillDisappearAction(duration: TimeInterval = 0.25) {
+        
+        view.alpha = 1.0
+        
+        UIViewPropertyAnimator(duration: duration, curve: .linear) { [unowned self] in
+            view.alpha = 0.0
+        }.startAnimation()
     }
 }

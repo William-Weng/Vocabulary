@@ -25,10 +25,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable
     
     var window: UIWindow?
     var orientationLock: UIInterfaceOrientationMask?
-    var assistiveTouch: WWAssistiveTouch!
     var musicLoopType: Constant.MusicLoopType = .infinity
     
-    private lazy var touchViewController = { UIStoryboard(name: "Sub", bundle: nil).instantiateViewController(withIdentifier: "TouchViewController") }()
+    private lazy var touchViewController = { UIStoryboard(name: "Sub", bundle: nil).instantiateViewController(withIdentifier: "TouchViewController") as? TouchViewController }()
     
     private var recordPlayer: AVAudioPlayer?
     private var audioRecorder: AVAudioRecorder?
@@ -36,7 +35,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         initSetting(application, didFinishLaunchingWithOptions: launchOptions)
-        initAssistiveTouch(window: window, touchViewController: touchViewController)
+        initAssistiveTouch(appDelegate: self, touchViewController: touchViewController)
         return true
     }
     
@@ -75,22 +74,12 @@ extension AppDelegate: AVAudioRecorderDelegate {
 extension AppDelegate: UIDocumentPickerDelegate {
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        downloadDocumentAction(controller, didPickDocumentsAt: urls)
+        Utility.shared.downloadDocumentAction(controller, didPickDocumentsAt: urls)
     }
     
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-        assistiveTouchHidden(false)
+        AssistiveTouchHelper.shared.hiddenAction(false)
     }
-}
-
-// MARK: - WWAssistiveTouch.Delegate
-extension AppDelegate: WWAssistiveTouch.Delegate {
-    
-    func assistiveTouch(_ assistiveTouch: WWAssistiveTouch, isTouched: Bool) {
-        if (isTouched) { assistiveTouch.display() }
-    }
-    
-    func assistiveTouch(_ assistiveTouch: WWAssistiveTouch, status: WWAssistiveTouch.Status) {}
 }
 
 // MARK: - WWNormalizeAudioPlayer.Delegate
@@ -107,42 +96,6 @@ extension AppDelegate: WWNormalizeAudioPlayer.Deleagte {
 
 // MARK: - 小工具 (公開)
 extension AppDelegate {
-    
-    /// [初始化資料表 / 資料庫](https://apppeterpan.medium.com/還模擬器一個乾乾淨淨的-xcode-console-a630992448d5)
-    func initDatabase() {
-        
-        let result = WWSQLite3Manager.shared.connect(for: .documents, filename: Constant.databaseName)
-        
-        switch result {
-        case .failure(_): Utility.shared.flashHUD(with: .fail)
-        case .success(let database):
-            
-            Constant.database = database
-            Constant.SettingsJSON.generalInformations.forEach { info in _ = createDatabase(database, info: info) }
-            
-            myPrint(database.fileURL.path)
-        }
-    }
-    
-    /// 初始化設定值 => Settings.json
-    func initSettings() {
-        
-        guard let parseSettingsDictionary = Utility.shared.parseSettingsDictionary(with: Constant.settingsJSON),
-              let dictionary = settingsDictionary(with: Constant.tableName, dictionary: parseSettingsDictionary),
-              let settings = dictionary["settings"] as? [String: Any]
-        else {
-            return
-        }
-        
-        Constant.SettingsJSON.generalInformations = generalInformations(with: parseSettingsDictionary)
-        Constant.SettingsJSON.vocabularyLevelInformations = vocabularyLevelInformations(with: settings)
-        Constant.SettingsJSON.sentenceSpeechInformations = sentenceSpeechInformations(with: settings)
-        Constant.SettingsJSON.wordSpeechInformations = wordSpeechInformations(with: settings)
-        Constant.SettingsJSON.animationInformations = animationInformations(with: settings)
-        Constant.SettingsJSON.backgroundInformations = backgroundInformations(with: settings)
-        
-        Constant.tableNameIndex = Utility.shared.tableNameIndex(Constant.tableName)
-    }
     
     /// 初始化播放器設定
     func initAudioPlaySetting() {
@@ -198,116 +151,6 @@ extension AppDelegate {
     func stopRecordingWave() -> Bool { stopRecorder() }
 }
 
-// MARK: - WWAssistiveTouch
-extension AppDelegate {
-    
-    /// AssistiveTouch是否顯示
-    /// - Parameter isHidden: Bool
-    func assistiveTouchHidden(_ isHidden: Bool) {
-        
-        let this = self
-        assistiveTouch.alpha = isHidden ? 1.0 : 0.0
-
-        let animator = UIViewPropertyAnimator(duration: Constant.replay, curve: .easeInOut) {
-            this.assistiveTouch.alpha = !isHidden ? 1.0 : 0.0
-        }
-        
-        if !isHidden {
-            assistiveTouch.isHidden = false
-        } else {
-            animator.addCompletion { _ in this.assistiveTouch.isHidden = true }
-        }
-        
-        animator.startAnimation()
-    }
-    
-    /// 下載備份的Database
-    func downloadDatabase() {
-        
-        guard let target = window?.rootViewController else { return }
-        
-        let documentPickerViewController = UIDocumentPickerViewController._build(delegate: self, allowedUTIs: [.item])
-        
-        assistiveTouchHidden(true)
-        target.present(documentPickerViewController, animated: true)
-    }
-    
-    /// 跟AI對話
-    func chat() {
-        
-        guard let target = window?.rootViewController,
-              let viewController = UIStoryboard(name: "Sub", bundle: nil).instantiateViewController(withIdentifier: "TalkNavigationController") as? UINavigationController
-        else {
-            return
-        }
-        
-        assistiveTouchHidden(true)
-        target.present(viewController, animated: true)
-    }
-}
-
-// MARK: - 小工具
-private extension AppDelegate {
-    
-    /// 下載資料庫的相關處理
-    /// - Parameters:
-    ///   - controller: UIDocumentPickerViewController
-    ///   - urls: [URL]
-    func downloadDocumentAction(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        
-        guard let target = window?.rootViewController else { return }
-        
-        guard let databaseUrl = Constant.database?.fileURL,
-              let fileUrl = urls.first,
-              let backupUrl = Utility.shared.databaseBackupUrl()
-        else {
-            downloadDocumentHint(target: target, title: "備份路徑錯誤", message: nil); return
-        }
-        
-        var result = FileManager.default._moveFile(at: databaseUrl, to: backupUrl)
-        
-        switch result {
-        case .failure(let error): downloadDocumentHint(target: target, title: "錯誤", message: "\(error)")
-        case .success(let isSuccess):
-            
-            if (!isSuccess) { downloadDocumentHint(target: target, title: "備份失敗", message: nil); return }
-            
-            result = FileManager.default._moveFile(at: fileUrl, to: databaseUrl)
-            
-            switch result {
-            case .failure(let error): downloadDocumentHint(target: target, title: "錯誤", message: "\(error)")
-            case .success(let isSuccess):
-                
-                if (!isSuccess) { downloadDocumentHint(target: target, title: nil, message: "更新失敗"); return }
-                
-                downloadDocumentHint(target: target, title: "備份 / 更新成功", message: "\(backupUrl.lastPathComponent)") { [unowned self] in
-                    initDatabase()
-                    NotificationCenter.default._post(name: .refreshViewController)
-                }
-            }
-        }
-    }
-    
-    /// 下載資料庫檔案提示框
-    /// - Parameters:
-    ///   - target: UIViewController
-    ///   - title: String?
-    ///   - message: String?
-    ///   - barButtonItem: UIBarButtonItem?
-    ///   - action: (() -> Void)?
-    func downloadDocumentHint(target: UIViewController, title: String?, message: String?, barButtonItem: UIBarButtonItem? = nil, action: (() -> Void)? = nil) {
-        
-        let alertController = UIAlertController._build(title: title, message: message)
-        let action = UIAlertAction(title: "確認", style: .cancel) {  _ in action?() }
-        
-        alertController.addAction(action)
-        alertController.modalPresentationStyle = .popover
-        alertController.popoverPresentationController?.barButtonItem = barButtonItem
-        
-        target.present(alertController, animated: true)
-    }
-}
-
 // MARK: - 小工具
 private extension AppDelegate {
     
@@ -317,8 +160,8 @@ private extension AppDelegate {
     ///   - launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     func initSetting(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
         
-        initSettings()
-        initDatabase()
+        SettingHelper.shared.initSettings()
+        SettingHelper.shared.initDatabase()
         initAudioPlaySetting()
         
         appShortcutItem(with: application)
@@ -327,7 +170,16 @@ private extension AppDelegate {
         _ = animationFolderUrlMaker()
         _ = WWWebImage.shared.cacheTypeSetting(.cache(), defaultImage: OthersTableViewCell.defaultImage)
     }
-        
+    
+    /// 初始化浮動按鈕
+    /// - Parameters:
+    ///   - appDelegate: AppDelegate?
+    ///   - viewController: UIViewController?
+    func initAssistiveTouch(appDelegate: AppDelegate?, touchViewController: TouchViewController?) {
+        touchViewController?.appDelegate = self
+        AssistiveTouchHelper.shared.initSetting(appDelegate: appDelegate, touchViewController: touchViewController)
+    }
+    
     /// 建立該語言的資料庫群
     /// - Parameters:
     ///   - database: SQLite3Database
@@ -479,125 +331,6 @@ private extension AppDelegate {
         let shortcutItem = UIApplicationShortcutItem._build(localizedTitle: title, localizedSubtitle: subtitle, icon: icon)
         
         return shortcutItem
-    }
-}
-
-// MARK: - PencilKit
-private extension AppDelegate {
-    
-    /// 初始化浮動按鈕
-    /// - Parameters:
-    ///   - window: UIWindow?
-    ///   - viewController: UIViewController?
-    func initAssistiveTouch(window: UIWindow?, touchViewController: UIViewController?) {
-        
-        guard let window,
-              let touchViewController = touchViewController as? TouchViewController
-        else {
-            return
-        }
-        
-        let size = CGSize(width: 56, height: 56)
-        let origin = CGPoint(x: window.bounds.width, y: window.bounds.height - 216)
-        
-        touchViewController.appDelegate = self
-        
-        assistiveTouch = WWAssistiveTouch(touchViewController: touchViewController, frame: .init(origin: origin, size: size), icon: .touchMain, isAutoAdjust: true, delegate: self)
-    }
-}
-
-// MARK: - Settings.json
-private extension AppDelegate {
-        
-    /// 取得一般般的設定檔
-    /// - Parameter dictionary: [String: Any]
-    /// - Returns: [String: Settings.GeneralInformation]
-    func generalInformations(with dictionary: [String: Any]) -> [Settings.GeneralInformation] {
-        
-        let array = dictionary.keys.compactMap { key -> Settings.GeneralInformation? in
-            
-            guard var dictionary = dictionary[key] as? [String: Any] else { return nil }
-            dictionary["key"] = key
-            
-            return dictionary._jsonClass(for: Settings.GeneralInformation.self)
-        }
-        
-        return array.sorted { return $1.value > $0.value }
-    }
-    
-    /// 取得該語言的設定檔
-    /// - Parameters:
-    ///   - tableName: String?
-    ///   - filename: String
-    /// - Returns: [String: Any]?
-    func settingsDictionary(with tableName: String?, dictionary: [String: Any]) -> [String: Any]? {
-        
-        let currentTableName = tableName ?? "English"
-        Constant.tableName = currentTableName
-        
-        guard let settings = dictionary[currentTableName] as? [String: Any] else { return nil }
-        return settings
-    }
-        
-    /// 解析單字等級的設定值 (排序由小到大)
-    /// - Parameter settings: [String: Any]
-    /// - Returns: [Settings.VocabularyLevelInformation]
-    func vocabularyLevelInformations(with settings: [String: Any]) -> [Settings.VocabularyLevelInformation] {
-        let array = colorSettingsArray(with: settings, key: .vocabularyLevel, type: Settings.VocabularyLevelInformation.self)
-        return array.sorted { return $1.value > $0.value }
-    }
-    
-    /// 解析精選例句類型的設定值
-    /// - Parameter settings: [String: Any]
-    /// - Returns: [SentenceSpeechInformation]
-    func sentenceSpeechInformations(with settings: [String: Any]) -> [Settings.SentenceSpeechInformation] {
-        let array = colorSettingsArray(with: settings, key: .sentenceSpeech, type: Settings.SentenceSpeechInformation.self)
-        return array.sorted { return $1.value > $0.value }
-    }
-    
-    /// 解析單字型態的設定值
-    /// - Parameter settings: [String: Any]
-    /// - Returns: [Settings.SentenceSpeechInformation]
-    func wordSpeechInformations(with settings: [String: Any]) -> [Settings.WordSpeechInformation] {
-        let array = colorSettingsArray(with: settings, key: .wordSpeech, type: Settings.WordSpeechInformation.self)
-        return array.sorted { return $1.value > $0.value }
-    }
-    
-    /// 解析HUD動畫檔案的設定值
-    /// - Parameter settings: [String: Any]
-    /// - Returns: [Settings.SentenceSpeechInformation]
-    func animationInformations(with settings: [String: Any]) -> [Settings.AnimationInformation] {
-        let array = colorSettingsArray(with: settings, key: .animation, type: Settings.AnimationInformation.self)
-        return array.sorted { return $1.value > $0.value }
-    }
-    
-    /// 解析背景動畫檔案的設定值
-    /// - Parameter settings: [String: Any]
-    /// - Returns: [Settings.SentenceSpeechInformation]
-    func backgroundInformations(with settings: [String: Any]) -> [Settings.BackgroundInformation] {
-        let array = colorSettingsArray(with: settings, key: .background, type: Settings.BackgroundInformation.self)
-        return array.sorted { return $1.value > $0.value }
-    }
-    
-    /// 解析Settings有關顏色的設定檔值
-    /// - Parameters:
-    ///   - settings: [String: Any]
-    ///   - key: Constant.SettingsColorKey
-    ///   - type: T.Type
-    /// - Returns: [T]
-    func colorSettingsArray<T: Decodable>(with settings: [String: Any], key: Constant.SettingsColorKey, type: T.Type) -> [T] {
-        
-        guard let informations = settings[key.value()] as? [String: Any] else { return [] }
-        
-        let array = informations.keys.compactMap { key -> T? in
-            
-            guard var dictionary = informations[key] as? [String: Any] else { return nil }
-            dictionary["key"] = key
-            
-            return dictionary._jsonClass(for: T.self)
-        }
-        
-        return array
     }
 }
 

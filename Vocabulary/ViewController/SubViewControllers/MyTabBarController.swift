@@ -98,7 +98,7 @@ private extension MyTabBarController {
     func canvasViewSetting() {
         
         canvasView = PKCanvasView._build(onView: view, delegate: self)
-        Utility.shared.assistiveTouchHidden(true)
+        AssistiveTouchHelper.shared.hiddenAction(true)
         
         if let canvasView = canvasView {
             toolPicker = PKToolPicker._build(with: canvasView)
@@ -171,7 +171,7 @@ private extension MyTabBarController {
     /// 移除畫布
     func removeCanvasView() {
         
-        Utility.shared.assistiveTouchHidden(false)
+        AssistiveTouchHelper.shared.hiddenAction(false)
         canvasView?.removeFromSuperview()
         
         canvasView = nil

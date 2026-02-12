@@ -68,7 +68,7 @@ final class OllamViewController: UIViewController {
     }
     
     @IBAction func dissmissAction(_ sender: UIBarButtonItem) {
-        Utility.shared.assistiveTouchHidden(false)
+        AssistiveTouchHelper.shared.hiddenAction(false)
         dismiss(animated: true)
     }
     

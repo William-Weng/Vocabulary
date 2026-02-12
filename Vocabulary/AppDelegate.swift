@@ -4,9 +4,6 @@
 //
 //  Created by William.Weng on 2023/1/21.
 //
-// [defaults write com.apple.dt.Xcode DVTEnableCoreDevice enabled / defaults delete com.apple.dt.Xcode DVTEnableCoreDevice](https://github.com/filsv/iOSDeviceSupport)
-// override var supportedInterfaceOrientations: UIInterfaceOrientationMask { return .portrait }
-// override var shouldAutorotate: Bool { return false }
 
 import UIKit
 import WWPrint

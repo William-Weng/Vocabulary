@@ -27,7 +27,15 @@ final class TouchViewController: UIViewController {
         super.touchesBegan(touches, with: event)
         AssistiveTouchHelper.shared.assistiveTouch.dismiss()
     }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
         
+        coordinator.animate { [unowned self] _ in
+            orientationbButtonItemSetting()
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewWillAppearAction()

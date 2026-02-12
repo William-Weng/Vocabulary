@@ -77,7 +77,7 @@ private extension MyTabBarController {
     ///   - coordinator: UIViewControllerTransitionCoordinator
     func viewWillTransitionAction(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         
-        coordinator.animate { [unowned self] _ in
+        coordinator.animate { [unowned self]_ in
             tabBarStatus(isHidden: Self.isHidden)
         }
     }

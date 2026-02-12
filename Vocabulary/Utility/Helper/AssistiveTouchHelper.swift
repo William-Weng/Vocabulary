@@ -14,9 +14,7 @@ final class AssistiveTouchHelper: NSObject {
     static let shared = AssistiveTouchHelper()
     
     var assistiveTouch: WWAssistiveTouch!
-    
-    private var touchViewController: UIViewController?
-    
+        
     private override init() {}
 }
 
@@ -36,22 +34,20 @@ extension AssistiveTouchHelper {
     /// 初始化浮動按鈕
     /// - Parameters:
     ///   - appDelegate: AppDelegate?
-    ///   - touchViewController: UIViewController?
-    func initSetting(appDelegate: AppDelegate?, touchViewController: UIViewController?) {
+    ///   - viewController: UIViewController?
+    func initSetting(appDelegate: AppDelegate?, viewController: UIViewController?) {
         
         guard let appDelegate = appDelegate,
               let window = appDelegate.window,
-              let touchViewController = touchViewController
+              let viewController = viewController
         else {
             return
         }
         
         let size = CGSize(width: 56, height: 56)
         let origin = CGPoint(x: window.bounds.width, y: window.bounds.height - 216)
-        
-        self.touchViewController = touchViewController
-        
-        assistiveTouch = WWAssistiveTouch(touchViewController: touchViewController, frame: .init(origin: origin, size: size), icon: .touchMain, isAutoAdjust: true, delegate: self)
+                
+        assistiveTouch = WWAssistiveTouch(touchViewController: viewController, frame: .init(origin: origin, size: size), icon: .touchMain, isAutoAdjust: true, delegate: self)
     }
     
     /// AssistiveTouch是否顯示 (動畫)

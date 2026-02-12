@@ -21,11 +21,8 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable
     var window: UIWindow?
     var orientationLock: UIInterfaceOrientationMask?
     
-    private lazy var touchViewController = { UIStoryboard(name: "Sub", bundle: nil).instantiateViewController(withIdentifier: "TouchViewController") as? TouchViewController }()
-    
-    private var recordPlayer: AVAudioPlayer?
-    private var audioRecorder: AVAudioRecorder?
-    
+    private lazy var touchViewController = { UIStoryboard(name: "Sub", bundle: nil).instantiateViewController(withIdentifier: "TouchViewController") }()
+        
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         initSetting(application, didFinishLaunchingWithOptions: launchOptions)
         return true
@@ -44,53 +41,11 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, OrientationLockable
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         return orientationLock ?? .all
     }
-
+    
     deinit {
-        touchViewController?.removeFromParent()
-        touchViewController = nil
+        touchViewController.removeFromParent()
         myPrint("\(Self.self) deinit")
     }
-}
-
-// MARK: - AVAudioRecorderDelegate
-extension AppDelegate: AVAudioRecorderDelegate {
-    
-    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        
-        guard let recordlayer = AVAudioPlayer._build(audioURL: recorder.url, fileTypeHint: .wav, delegate: nil) else { return }
-                
-        self.recordPlayer = recordlayer
-        recordlayer.play()
-    }
-    
-    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) { myPrint(error) }
-}
-
-// MARK: - UIDocumentPickerDelegate
-extension AppDelegate: UIDocumentPickerDelegate {
-    
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        Utility.shared.downloadDocumentAction(controller, didPickDocumentsAt: urls)
-    }
-    
-    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-        AssistiveTouchHelper.shared.hiddenAction(false)
-    }
-}
-
-// MARK: - 小工具 (公開)
-extension AppDelegate {
-    
-    /// 錄製聲音
-    /// - Returns: Bool
-    func recordWave() -> Bool {
-        guard let recordURL = FileManager.default._temporaryDirectory()._appendPath(Constant.recordFilename) else { return false }
-        return recordSound(with: recordURL)
-    }
-    
-    /// 停止錄製聲音
-    /// - Returns: Bool
-    func stopRecordingWave() -> Bool { stopRecorder() }
 }
 
 // MARK: - 小工具
@@ -105,23 +60,14 @@ private extension AppDelegate {
         SettingHelper.shared.initSettings()
         SettingHelper.shared.initDatabase()
         MusicHelper.shared.initAudioPlaySetting()
+        AssistiveTouchHelper.shared.initSetting(appDelegate: self, viewController: touchViewController)
         
-        initAssistiveTouch(appDelegate: self, touchViewController: touchViewController)
         initAppShortcutItem(with: application)
 
         backgroundBarColor(.black.withAlphaComponent(0.1))
         
         _ = animationFolderUrlMaker()
         _ = WWWebImage.shared.cacheTypeSetting(.cache(), defaultImage: OthersTableViewCell.defaultImage)
-    }
-    
-    /// 初始化浮動按鈕
-    /// - Parameters:
-    ///   - appDelegate: AppDelegate?
-    ///   - viewController: UIViewController?
-    func initAssistiveTouch(appDelegate: AppDelegate?, touchViewController: TouchViewController?) {
-        touchViewController?.appDelegate = self
-        AssistiveTouchHelper.shared.initSetting(appDelegate: appDelegate, touchViewController: touchViewController)
     }
     
     /// [設定ShortcutItem](https://www.jianshu.com/p/e49b8bfea475)
@@ -157,38 +103,6 @@ private extension AppDelegate {
         
         let itemAppearance = UIBarButtonItemAppearance()
         itemAppearance.normal.backgroundImage = nil
-    }
-    
-    /// 開始錄音 (.wav)
-    /// - Parameter recordURL: URL
-    /// - Returns: Bool
-    func recordSound(with recordURL: URL) -> Bool {
-        
-        _ = audioRecorder?._stop()
-        
-        guard let audioRecorder = AVAudioRecorder._build(recordURL: recordURL) else { return false }
-
-        self.audioRecorder = audioRecorder
-        audioRecorder.delegate = self
-        
-        let result = audioRecorder._record()
-        
-        switch result {
-        case .failure(let error): myPrint(error); return false
-        case .success(let isSuccess): return isSuccess
-        }
-    }
-    
-    /// 停止錄音
-    /// - Returns: Bool
-    func stopRecorder() -> Bool {
-        
-        guard let result = audioRecorder?._stop() else { return false }
-        
-        switch result {
-        case .failure(let error): myPrint(error); return false
-        case .success(let isSuccess): return isSuccess
-        }
     }
 }
 

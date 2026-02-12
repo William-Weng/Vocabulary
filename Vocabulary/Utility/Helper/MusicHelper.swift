@@ -85,7 +85,7 @@ extension MusicHelper {
     }
     
     /// 停止播放音樂
-    func stopMusic() -> Bool {
+    func stop() -> Bool {
         musicLoopType = .stop
         audioPlayer.stop()
         return true
@@ -97,7 +97,7 @@ extension MusicHelper {
     ///   - music: Music
     ///   - musicLoopType: Constant.MusicLoopType
     /// - Returns: (isSuccess: Bool, icon: UIImage)
-    func musicItemMenuAction(music: Music, musicLoopType: Constant.MusicLoopType) -> (isSuccess: Bool, icon: UIImage) {
+    func itemMenuAction(music: Music, musicLoopType: Constant.MusicLoopType) -> (isSuccess: Bool, icon: UIImage) {
         
         let isSuccess: Bool
         let musicButtonIcon: UIImage

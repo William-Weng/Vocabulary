@@ -19,9 +19,7 @@ final class TouchViewController: UIViewController {
         case chat = 105
         case speedRate = 106
     }
-    
-    weak var appDelegate: AppDelegate?
-    
+        
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         AssistiveTouchHelper.shared.assistiveTouch.dismiss()
@@ -37,10 +35,10 @@ final class TouchViewController: UIViewController {
         viewWillDisappearAction()
     }
     
+    /// 點擊後的動作
+    /// - Parameter sender: UIButton
     @IBAction func touchAction(_ sender: UIButton) {
-        
-        guard let appDelegate = appDelegate else { return }
-        
+                
         defer { AssistiveTouchHelper.shared.assistiveTouch.dismiss() }
         
         guard let touchType = TouchTagType(rawValue: sender.tag) else { return }
@@ -49,15 +47,26 @@ final class TouchViewController: UIViewController {
         case .pencel: Utility.shared.pencelToolPicker()
         case .recorder: Utility.shared.recording()
         case .share: Utility.shared.shareDatabase()
-        case .download: Utility.shared.downloadDatabase(delegate: appDelegate)
+        case .download: Utility.shared.downloadDatabase(delegate: self)
         case .chat: Utility.shared.chat()
         case .speedRate: Utility.shared.adjustmentSoundType(.rate)
         }
     }
     
     deinit {
-        appDelegate = nil
         myPrint("\(Self.self) deinit")
+    }
+}
+
+// MARK: - UIDocumentPickerDelegate
+extension TouchViewController: UIDocumentPickerDelegate {
+
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        Utility.shared.downloadDocumentAction(controller, didPickDocumentsAt: urls)
+    }
+
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        AssistiveTouchHelper.shared.hiddenAction(false)
     }
 }
 

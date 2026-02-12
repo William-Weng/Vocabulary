@@ -38,25 +38,7 @@ extension Utility {
         SettingHelper.shared.initSettings()
         NotificationCenter.default._post(name: .refreshViewController)
     }
-    
-    /// 開始錄音
-    func recordWave() {
         
-        guard let appDelegate = appDelegate else { return }
-        
-        _ = appDelegate.recordWave()
-        AssistiveTouchHelper.shared.hiddenAction(true)
-    }
-    
-    /// 停止錄音
-    func stopRecording() {
-        
-        guard let appDelegate = appDelegate else { return }
-        
-        _ = appDelegate.stopRecordingWave()
-        AssistiveTouchHelper.shared.hiddenAction(false)
-    }
-    
     /// [強制改變裝置的方向](https://johnchihhonglin.medium.com/限制某個頁面的螢幕旋轉方向-8c7235d5a774)
     /// - Parameters:
     ///   - orientation: UIInterfaceOrientationMask

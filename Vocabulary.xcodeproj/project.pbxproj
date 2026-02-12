@@ -101,6 +101,7 @@
 		81F7A4E92F3D7F6F008F33E3 /* SettingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7A4E82F3D7F6F008F33E3 /* SettingHelper.swift */; };
 		81F7A4EB2F3D8320008F33E3 /* DeepLinkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7A4EA2F3D8320008F33E3 /* DeepLinkHelper.swift */; };
 		81F7A4ED2F3D861D008F33E3 /* MusicHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7A4EC2F3D861D008F33E3 /* MusicHelper.swift */; };
+		81F7A4F02F3DA128008F33E3 /* RecorderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7A4EF2F3DA128008F33E3 /* RecorderHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -173,6 +174,7 @@
 		81F7A4E82F3D7F6F008F33E3 /* SettingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHelper.swift; sourceTree = "<group>"; };
 		81F7A4EA2F3D8320008F33E3 /* DeepLinkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkHelper.swift; sourceTree = "<group>"; };
 		81F7A4EC2F3D861D008F33E3 /* MusicHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicHelper.swift; sourceTree = "<group>"; };
+		81F7A4EF2F3DA128008F33E3 /* RecorderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -333,15 +335,12 @@
 		642858A2297BC37700DD7D88 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				81F7A4EE2F3DA10C008F33E3 /* Helper */,
 				64C184F8297E5F7A00D1D1B2 /* API.swift */,
 				642858A5297BC40E00DD7D88 /* Constant.swift */,
 				642858A3297BC38200DD7D88 /* Extension.swift */,
 				64C184F4297E5CC600D1D1B2 /* Protocol.swift */,
 				64C18501297E861800D1D1B2 /* Utility.swift */,
-				81F7A4E82F3D7F6F008F33E3 /* SettingHelper.swift */,
-				81F7A4EC2F3D861D008F33E3 /* MusicHelper.swift */,
-				81F7A4EA2F3D8320008F33E3 /* DeepLinkHelper.swift */,
-				81F7A4E62F3D732F008F33E3 /* AssistiveTouchHelper.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -521,6 +520,18 @@
 			path = SearchVocabularyViewController;
 			sourceTree = "<group>";
 		};
+		81F7A4EE2F3DA10C008F33E3 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				81F7A4E82F3D7F6F008F33E3 /* SettingHelper.swift */,
+				81F7A4EC2F3D861D008F33E3 /* MusicHelper.swift */,
+				81F7A4EA2F3D8320008F33E3 /* DeepLinkHelper.swift */,
+				81F7A4E62F3D732F008F33E3 /* AssistiveTouchHelper.swift */,
+				81F7A4EF2F3DA128008F33E3 /* RecorderHelper.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -667,6 +678,7 @@
 				642858AB297BC51E00DD7D88 /* Model.swift in Sources */,
 				81F52F34299DE87A005F9DF2 /* MyTabBarController.swift in Sources */,
 				811DFC402AAAEFE600BF480C /* PaletteViewController.swift in Sources */,
+				81F7A4F02F3DA128008F33E3 /* RecorderHelper.swift in Sources */,
 				646E44A42980A726002BCBC8 /* ReviewViewController.swift in Sources */,
 				811DFC432AAAFE1200BF480C /* PaletteTableViewCell.swift in Sources */,
 				642858A4297BC38200DD7D88 /* Extension.swift in Sources */,

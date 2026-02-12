@@ -932,14 +932,14 @@ private extension MainViewController {
         case .stop: title = "🚫 - \(musicLoopType.toString())"
         }
         
-        let action = UIAction(title: title) { _ in
+        let action = UIAction(title: title) { [unowned self] _ in
             
             Constant.playingMusicList = []
-            _ = MusicHelper.shared.stopMusic()
+            _ = MusicHelper.shared.stop()
             
             Task {
                 try await Task.sleep(for: .milliseconds(250))
-                _ = MusicHelper.shared.musicItemMenuAction(music: music, musicLoopType: musicLoopType)
+                musicItemMenuAction(music: music, musicLoopType: musicLoopType)
             }
         }
         
@@ -952,7 +952,7 @@ private extension MainViewController {
     ///   - musicLoopType: Constant.MusicLoopType
     func musicItemMenuAction(music: Music, musicLoopType: Constant.MusicLoopType) {
         
-        let result = MusicHelper.shared.musicItemMenuAction(music: music, musicLoopType: musicLoopType)
+        let result = MusicHelper.shared.itemMenuAction(music: music, musicLoopType: musicLoopType)
         
         musicButtonItem.image = result.icon
         volumeButtonItem.image = Utility.shared.volumeIcon(result.isSuccess)

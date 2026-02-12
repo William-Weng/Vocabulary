@@ -58,7 +58,7 @@ final class TouchViewController: UIViewController {
         case .download: Utility.shared.downloadDatabase(delegate: self)
         case .chat: Utility.shared.chat()
         case .speedRate: Utility.shared.adjustmentSoundType(.rate)
-        case .lockScreen: Utility.shared.screenOrientation(isAutorotate: false, lockMask: .landscape)
+        case .lockScreen: Utility.shared.screenOrientation(isAutorotate: true, lockMask: .all)
         }
     }
     

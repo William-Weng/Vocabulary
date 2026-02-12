@@ -10,7 +10,7 @@ import UIKit
 // MARK: - 錄音功能
 final class TalkingViewController: UIViewController {
 
-    @IBOutlet weak var myImageView: UIImageView!
+    @IBOutlet weak var gifImageView: UIImageView!
     
     private var isAnimationStop = false
     private var disappearImage: UIImage?
@@ -18,7 +18,7 @@ final class TalkingViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         AssistiveTouchHelper.shared.hiddenAction(false)
-        disappearImage = myImageView.image
+        disappearImage = gifImageView.image
         isAnimationStop = true
         _ = RecorderHelper.shared.stop()
     }
@@ -31,7 +31,7 @@ final class TalkingViewController: UIViewController {
     }
     
     deinit {
-        isAnimationStop = true
+        removeGifBlock()
         myPrint("\(Self.self) deinit")
     }
 }
@@ -47,7 +47,7 @@ private extension TalkingViewController {
         
         isAnimationStop = false
         
-        _ = myImageView._GIF(url: gifUrl) { [weak self] result in
+        _ = gifImageView._GIF(url: gifUrl) { [weak self] result in
             
             guard let this = self else { return }
             
@@ -58,10 +58,18 @@ private extension TalkingViewController {
                 info.pointer.pointee = this.isAnimationStop
                 
                 if (this.isAnimationStop) {
-                    this.myImageView.image = this.disappearImage
+                    this.gifImageView.image = this.disappearImage
                     this.dismiss(animated: true)
                 }
             }
         }
+    }
+    
+    /// 移除GIF動畫Block
+    func removeGifBlock() {
+        
+        isAnimationStop = true
+        gifImageView?.removeFromSuperview()
+        gifImageView = nil
     }
 }

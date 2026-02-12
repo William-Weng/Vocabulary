@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -369,7 +368,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="bMH-l8-ywF"/>
                     <connections>
-                        <outlet property="myImageView" destination="08c-HR-pbu" id="UYD-JM-f1G"/>
+                        <outlet property="gifImageView" destination="08c-HR-pbu" id="UYD-JM-f1G"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yfS-Gt-rGZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

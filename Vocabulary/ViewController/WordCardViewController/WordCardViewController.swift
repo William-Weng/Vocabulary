@@ -32,12 +32,7 @@ final class WordCardViewController: UIViewController {
     private var currentIndexOffset = 0
     private var onBoardingViewController: WWOnBoardingViewController?
     private var searchVocabularyViewController: SearchVocabularyViewController?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        orientationbButtonItemSetting()
-    }
-    
+        
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewWillAppearAction(animated)
@@ -46,11 +41,6 @@ final class WordCardViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         viewWillDisappearAction(animated)
-    }
-    
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        orientationbButtonItemSetting()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) { initSetting(for: segue, sender: sender) }
@@ -222,21 +212,5 @@ private extension WordCardViewController {
     func viewWillDisappearAction(_ animated: Bool) {
         mainViewDelegate?.navigationBarHidden(false)
         mainViewDelegate?.tabBarHidden(false)
-    }
-}
-
-// MARK: - 小工具
-private extension WordCardViewController {
-            
-    /// 設定畫面旋轉方向的圖示
-    func orientationbButtonItemSetting() {
-        let image: UIImage = (UIDevice.current.orientation.isLandscape) ? .horizontal : .vertical
-        orientationbButtonItemImage(image)
-    }
-    
-    /// 設定圖示
-    /// - Parameter image: UIImage
-    func orientationbButtonItemImage(_ image: UIImage) {
-        orientationbButtonItem.image = image
     }
 }

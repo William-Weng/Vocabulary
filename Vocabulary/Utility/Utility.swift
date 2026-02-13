@@ -22,7 +22,7 @@ final class Utility: NSObject {
     
     static let shared = Utility()
     
-    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+    var appDelegate: SceneDelegate? { findSceneDelegate() }
     
     private let feedback = UIImpactFeedbackGenerator._build(style: .medium)
     private var synthesizer = AVSpeechSynthesizer._build()
@@ -783,5 +783,22 @@ extension Utility {
     /// - Returns: Settings.GeneralInformation?
     func generalSettings(index: Int) -> Settings.GeneralInformation? {
         return Constant.SettingsJSON.generalInformations[safe: index]
+    }
+}
+
+// MARK: - 小工具
+private extension Utility {
+    
+    /// 尋找SceneDelegate
+    /// - Returns: SceneDelegate?
+    func findSceneDelegate() -> SceneDelegate? {
+        
+        guard let windowScene = UIApplication.shared.connectedScenes.first,
+              let sceneDelegate = windowScene.delegate as? SceneDelegate
+        else {
+            return nil
+        }
+        
+        return sceneDelegate
     }
 }

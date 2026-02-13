@@ -61,6 +61,7 @@
 		8141EEFC2B8C748D0091127F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 8141EEFB2B8C748D0091127F /* PrivacyInfo.xcprivacy */; };
 		8141EEFF2B8C7FA60091127F /* WWUserDefaults in Frameworks */ = {isa = PBXBuildFile; productRef = 8141EEFE2B8C7FA60091127F /* WWUserDefaults */; };
 		8142F45C2EA2151C00F644FC /* WWAssistiveTouch in Frameworks */ = {isa = PBXBuildFile; productRef = 8142F45B2EA2151C00F644FC /* WWAssistiveTouch */; };
+		814DD42B2F3F022100291AEE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814DD42A2F3F022100291AEE /* SceneDelegate.swift */; };
 		815E14782990F47700EC571D /* SentenceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815E14772990F47700EC571D /* SentenceTableViewCell.swift */; };
 		81708BC62B21AD4C00397B27 /* dictionary_7439537.png in Resources */ = {isa = PBXBuildFile; fileRef = 81708BC22B21AD4C00397B27 /* dictionary_7439537.png */; };
 		81708BC72B21AD4C00397B27 /* translate_5146533.png in Resources */ = {isa = PBXBuildFile; fileRef = 81708BC32B21AD4C00397B27 /* translate_5146533.png */; };
@@ -144,6 +145,7 @@
 		812C5443299F73DC003F942A /* TalkingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkingViewController.swift; sourceTree = "<group>"; };
 		8139CE192DC07C5D00805A2F /* OllamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OllamViewController.swift; sourceTree = "<group>"; };
 		8141EEFB2B8C748D0091127F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		814DD42A2F3F022100291AEE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		815E14772990F47700EC571D /* SentenceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceTableViewCell.swift; sourceTree = "<group>"; };
 		81708BC22B21AD4C00397B27 /* dictionary_7439537.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dictionary_7439537.png; sourceTree = "<group>"; };
 		81708BC32B21AD4C00397B27 /* translate_5146533.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = translate_5146533.png; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				6428589F297BBFF400DD7D88 /* Storyboard */,
 				6428589E297BBFE300DD7D88 /* ViewController */,
 				6428588A297BBF8600DD7D88 /* AppDelegate.swift */,
+				814DD42A2F3F022100291AEE /* SceneDelegate.swift */,
 			);
 			path = Vocabulary;
 			sourceTree = "<group>";
@@ -713,6 +716,7 @@
 				81201C4C298B58C200291485 /* InterpretView.swift in Sources */,
 				81F7A4EB2F3D8320008F33E3 /* DeepLinkHelper.swift in Sources */,
 				8196323329933CEF00B96960 /* MyNavigationController.swift in Sources */,
+				814DD42B2F3F022100291AEE /* SceneDelegate.swift in Sources */,
 				8139CE1A2DC07C5D00805A2F /* OllamViewController.swift in Sources */,
 				81F7A4E92F3D7F6F008F33E3 /* SettingHelper.swift in Sources */,
 				642858A6297BC40E00DD7D88 /* Constant.swift in Sources */,
@@ -897,7 +901,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.9.0;
+				MARKETING_VERSION = 2.9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -941,7 +945,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.9.0;
+				MARKETING_VERSION = 2.9.1;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

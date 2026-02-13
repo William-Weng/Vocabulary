@@ -21,16 +21,6 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        DeepLinkHelper.shared.deepLinkURL(app, open: url, options: options)
-        return true
-    }
-    
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-        DeepLinkHelper.shared.universalLink(application, continue: userActivity)
-        return true
-    }
-    
     deinit {
         touchViewController.removeFromParent()
         myPrint("\(Self.self) deinit")
@@ -49,10 +39,9 @@ private extension AppDelegate {
         SettingHelper.shared.initSettings()
         SettingHelper.shared.initDatabase()
         MusicHelper.shared.initAudioPlaySetting()
-        AssistiveTouchHelper.shared.initSetting(appDelegate: self, viewController: touchViewController)
         
         initAppShortcutItem(with: application)
-
+        
         backgroundBarColor(.black.withAlphaComponent(0.1))
         
         _ = animationFolderUrlMaker()

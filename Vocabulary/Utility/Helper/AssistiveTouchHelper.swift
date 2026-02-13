@@ -33,9 +33,9 @@ extension AssistiveTouchHelper {
     
     /// 初始化浮動按鈕
     /// - Parameters:
-    ///   - appDelegate: AppDelegate?
+    ///   - appDelegate: SceneDelegate?
     ///   - viewController: UIViewController?
-    func initSetting(appDelegate: AppDelegate?, viewController: UIViewController?) {
+    func initSetting(appDelegate: SceneDelegate?, viewController: UIViewController?) {
         
         guard let appDelegate = appDelegate,
               let window = appDelegate.window,

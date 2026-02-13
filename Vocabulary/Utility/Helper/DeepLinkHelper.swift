@@ -21,10 +21,9 @@ extension DeepLinkHelper {
     /// [使用UrlScheme功能的相關設定](https://youtu.be/OyzFPrVIlQ8)
     /// => [在info.plist設定](https://cg2010studio.com/2014/11/13/ios-客製化-url-scheme-custom-url-scheme/)
     /// - Parameters:
-    ///   - app: UIApplication
+    ///   - sceneDelegate: SceneDelegate
     ///   - url: URL
-    ///   - options: [UIApplication.OpenURLOptionsKey : Any]
-    func deepLinkURL(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) {
+    func deepLinkURL(_ sceneDelegate: SceneDelegate, open url: URL) {
         
         guard let components = url._components(),
               Constant.urlScheme == components.scheme?.lowercased()
@@ -45,13 +44,18 @@ extension DeepLinkHelper {
         }
     }
     
-    
     /// [使用UniversalLink功能的相關設定](https://medium.com/zrealm-ios-dev/ios-deferred-deep-link-延遲深度連結實作-swift-b08ef940c196)
     /// => [在info.plist設定](https://medium.com/zrealm-ios-dev/universal-links-新鮮事-12c5026da33d)
     /// - Parameters:
-    ///   - app: UIApplication
-    ///   - userActivity: NSUserActivity
-    func universalLink(_ application: UIApplication, continue userActivity: NSUserActivity) {}
+    ///   - sceneDelegate: SceneDelegate
+    ///   - webpageURL: URL
+    func universalLink(_ sceneDelegate: SceneDelegate, webpageURL: URL) {}
+    
+    /// 處理推播送來的資訊
+    /// - Parameters:
+    ///   - sceneDelegate: SceneDelegate
+    ///   - userInfo: [AnyHashable : Any]
+    func pushNotification(_ sceneDelegate: SceneDelegate, userInfo: [AnyHashable : Any]) {}
 }
 
 // MARK: - 小工具

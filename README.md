@@ -1,7 +1,7 @@
 # [Vocabulary - 我愛背單字](https://github.com/William-Weng/Vocabulary)
 針對身為外語苦手的我，量身訂製的APP，有輕快的背景音樂，也有發音，加上可愛的動畫，還可以直接使用[Deep Link功能](word://append/vocabulary)…
 
-[![Swift-5.7](https://img.shields.io/badge/Swift-5.7-orange.svg?style=flat)](https://developer.apple.com/swift/) [![iOS 15.6](https://img.shields.io/badge/iOS-15.6-pink.svg?style=flat)](https://developer.apple.com/swift/) ![](https://img.shields.io/github/v/tag/William-Weng/Vocabulary) [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=flat)](https://developer.apple.com/swift/)
+[![Swift-5.7](https://img.shields.io/badge/Swift-5.7-orange.svg?style=flat)](https://developer.apple.com/swift/) [![iOS 16.0](https://img.shields.io/badge/iOS-16.0-pink.svg?style=flat)](https://developer.apple.com/swift/) ![](https://img.shields.io/github/v/tag/William-Weng/Vocabulary) [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=flat)](https://developer.apple.com/swift/)
 
 ## Deep Link功能
 |連結|功能|
@@ -12,7 +12,9 @@
 
 ## [影片介紹](https://www.sohu.com/a/62659825_323847)
 
-![Page-1](https://github.com/user-attachments/assets/7433831c-403f-4a45-b478-e1f3c532167c) ![Page-2](https://github.com/user-attachments/assets/0dad3aef-eddc-4b15-81f8-c3e4b3f7ba3c) ![Page-3](https://github.com/user-attachments/assets/605f569e-3d37-439f-b0bb-3195f2c28f72)
+![Page-1](https://github.com/user-attachments/assets/7433831c-403f-4a45-b478-e1f3c532167c)
+![Page-2](https://github.com/user-attachments/assets/0dad3aef-eddc-4b15-81f8-c3e4b3f7ba3c) 
+![Page-3](https://github.com/user-attachments/assets/605f569e-3d37-439f-b0bb-3195f2c28f72)
 ![Page-4](https://github.com/user-attachments/assets/dd790378-ead5-4c1c-864e-87df65427960)
 ![Page-5](https://github.com/user-attachments/assets/0d0936ca-1a92-4827-872d-f47feb919b6a)
 

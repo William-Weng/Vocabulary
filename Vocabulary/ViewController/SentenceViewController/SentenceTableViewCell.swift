@@ -95,7 +95,7 @@ private extension SentenceTableViewCell {
             return
         }
         
-        Utility.shared.speak(string: example, code: settings.voice, rate: Constant.speakingSpeed)
+        Utility.shared.speak(string: example, code: settings.voice, rate: Constant.speakingSpeed, volume: Constant.speakingVolume)
     }
     
     /// 最右側的箭頭View

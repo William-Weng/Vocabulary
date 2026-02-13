@@ -49,7 +49,8 @@ final class Constant: NSObject {
     static let fontname = "jf-openhuninn-2.0"
     
     static var tableNameIndex = 0
-    static var volume: Float = 0.1
+    static var musicVolume: Float = 0.1
+    static var speakingVolume: Float = 0.5
     static var speakingSpeed: Float = 0.2
     static var updateScrolledHeight: CGFloat = 128.0
     static var updateSearchScrolledHeight: CGFloat = 96.0

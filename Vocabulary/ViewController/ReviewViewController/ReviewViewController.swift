@@ -36,7 +36,8 @@ final class ReviewViewController: UIViewController {
     
     private var vocabularyList: VocabularyList?
     private var disappearImage: UIImage?
-        
+    private var synthesizer = AVSpeechSynthesizer._build()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -110,7 +111,7 @@ private extension ReviewViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(Self.guessVocabulary(_:)))
         speakImageView.addGestureRecognizer(tapGesture)
         speakImageView.image = nil
-        
+        synthesizer.delegate = self
         navigationItem.backBarButtonItem = UIBarButtonItem()
     }
     
@@ -220,7 +221,7 @@ private extension ReviewViewController {
             string = "\(answerText). \(interpretText)"
         }
         
-        Utility.shared.speak(string: string, code: settings.voice, rate: Constant.speakingSpeed)
+        synthesizer._speak(string: string, code: settings.voice, rate: Constant.speakingSpeed, pitchMultiplier: 1.0, volume: Constant.speakingVolume)
     }
     
     /// 動畫背景設定

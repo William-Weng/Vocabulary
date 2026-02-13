@@ -60,10 +60,14 @@
                                                     <action selector="touchAction:" destination="bDF-AU-MZt" eventType="touchUpInside" id="rne-OF-HWC"/>
                                                 </connections>
                                             </button>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qoY-qz-aLY">
+                                            <button opaque="NO" tag="200" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D28-2f-7hz">
                                                 <rect key="frame" x="97" y="0.0" width="81" height="81.333333333333329"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </view>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" image="ScreenVertical"/>
+                                                <connections>
+                                                    <action selector="touchAction:" destination="bDF-AU-MZt" eventType="touchUpInside" id="gZv-Ul-zmT"/>
+                                                </connections>
+                                            </button>
                                             <button opaque="NO" tag="105" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QS9-6S-HFN">
                                                 <rect key="frame" x="194" y="0.0" width="81" height="81.333333333333329"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -88,7 +92,7 @@
                                             <button opaque="NO" tag="107" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xry-Ac-Hxu">
                                                 <rect key="frame" x="97" y="0.0" width="81" height="81"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" image="ScreenVertical"/>
+                                                <state key="normal" image="VolumeSlider"/>
                                                 <connections>
                                                     <action selector="touchAction:" destination="bDF-AU-MZt" eventType="touchUpInside" id="0sp-TZ-5m9"/>
                                                 </connections>
@@ -136,7 +140,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="r39-qJ-imi"/>
                     <connections>
-                        <outlet property="orientationbButton" destination="xry-Ac-Hxu" id="FOf-8p-9Uv"/>
+                        <outlet property="orientationbButton" destination="D28-2f-7hz" id="ZT5-F0-jBn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S3l-hi-tUU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -244,7 +248,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Ollama" id="Am3-TT-C6x">
                         <leftBarButtonItems>
-                            <barButtonItem image="Settings" style="plain" id="1Pe-ER-t8s">
+                            <barButtonItem image="Settings" id="1Pe-ER-t8s">
                                 <connections>
                                     <action selector="configureAction:" destination="0H6-mu-JXO" id="Vft-kG-rY3"/>
                                 </connections>
@@ -390,8 +394,9 @@
         <image name="Share" width="85.333335876464844" height="85.333335876464844"/>
         <image name="SpeedoMeter" width="170.66667175292969" height="170.66667175292969"/>
         <image name="Talking" width="21.333333969116211" height="21.333333969116211"/>
+        <image name="VolumeSlider" width="85.333335876464844" height="85.333335876464844"/>
         <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

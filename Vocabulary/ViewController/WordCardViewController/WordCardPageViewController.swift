@@ -164,7 +164,7 @@ private extension WordCardPageViewController {
             return
         }
         
-        Utility.shared.speak(string: string, code: settings.voice, rate: Constant.speakingSpeed)
+        Utility.shared.speak(string: string, code: settings.voice, rate: Constant.speakingSpeed, volume: Constant.speakingVolume)
     }
     
     /// speechLabel文字顏色設定

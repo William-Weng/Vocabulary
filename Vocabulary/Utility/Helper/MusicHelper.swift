@@ -56,8 +56,8 @@ extension MusicHelper {
     /// - Parameter volume: Float
     /// - Returns: Float
     func musicVolumeSetting(_ volume: Float) -> Float {
-        Constant.volume = volume
-        audioPlayer.volume = Constant.volume
+        Constant.musicVolume = volume
+        audioPlayer.volume = volume
         return audioPlayer.volume
     }
     
@@ -104,15 +104,15 @@ extension MusicHelper {
         
         switch musicLoopType {
         case .infinity:
-            isSuccess = MusicHelper.shared.play(music: music, volume: Constant.volume, musicLoopType: musicLoopType)
+            isSuccess = MusicHelper.shared.play(music: music, volume: Constant.musicVolume, musicLoopType: musicLoopType)
             musicButtonIcon = .music
         case .loop:
             Constant.playingMusicList = Utility.shared.loopMusics()
-            isSuccess = MusicHelper.shared.play(music: Constant.playingMusicList._popFirst(), volume: Constant.volume, musicLoopType: musicLoopType)
+            isSuccess = MusicHelper.shared.play(music: Constant.playingMusicList._popFirst(), volume: Constant.musicVolume, musicLoopType: musicLoopType)
             musicButtonIcon = .loop
         case .shuffle:
             Constant.playingMusicList = Utility.shared.shuffleMusics()
-            isSuccess = MusicHelper.shared.play(music: Constant.playingMusicList.popLast(), volume: Constant.volume, musicLoopType: musicLoopType)
+            isSuccess = MusicHelper.shared.play(music: Constant.playingMusicList.popLast(), volume: Constant.musicVolume, musicLoopType: musicLoopType)
             musicButtonIcon = .shuffle
         case .stop:
             isSuccess = false
@@ -140,7 +140,7 @@ private extension MusicHelper {
         }
         
         if (Constant.playingMusicList.isEmpty) { Constant.playingMusicList = Utility.shared.musicList(for: musicLoopType) }
-        _ = play(music: currentMusic, volume: Constant.volume, musicLoopType: musicLoopType)
+        _ = play(music: currentMusic, volume: Constant.musicVolume, musicLoopType: musicLoopType)
     }
     
     /// [音樂檔名提示](http://furnacedigital.blogspot.com/2010/12/avfoundation.html)

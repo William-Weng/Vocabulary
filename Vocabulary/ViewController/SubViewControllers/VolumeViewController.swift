@@ -12,8 +12,9 @@ import WWSlider
 final class VolumeViewController: UIViewController {
     
     enum AdjustmentSoundType {
-        case volume     // 音量大小
+        case volume     // 音樂音量大小
         case rate       // 語速快慢
+        case spacking   // 閱讀音量大小
     }
     
     @IBOutlet weak var widthConstraint: NSLayoutConstraint!
@@ -111,6 +112,7 @@ extension VolumeViewController {
         switch soundType {
         case .volume: _ = MusicHelper.shared.musicVolumeSetting(percent)
         case .rate: Constant.speakingSpeed = percent
+        case .spacking: Constant.speakingVolume = percent
         }
         
         return Int(percent * 100)
@@ -123,6 +125,7 @@ extension VolumeViewController {
         switch soundType {
         case .volume: return MusicHelper.shared.musicVolume()
         case .rate: return Constant.speakingSpeed
+        case .spacking: return Constant.speakingVolume
         }
     }
     

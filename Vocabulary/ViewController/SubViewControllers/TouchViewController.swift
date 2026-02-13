@@ -19,10 +19,11 @@ final class TouchViewController: UIViewController {
         case download = 104
         case chat = 105
         case speedRate = 106
-        case lockScreen = 107
+        case spackingVolume = 107
         case question = 108
+        case lockScreen = 109
     }
-        
+    
     @IBOutlet weak var orientationbButton: UIButton!
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -68,8 +69,9 @@ final class TouchViewController: UIViewController {
         case .download: Utility.shared.downloadDatabase(delegate: self)
         case .chat: Utility.shared.chat()
         case .speedRate: Utility.shared.adjustmentSoundType(.rate)
-        case .lockScreen: Utility.shared.screenOrientation(isAutorotate: true, lockMask: .all)
+        case .spackingVolume: Utility.shared.adjustmentSoundType(.spacking)
         case .question: Utility.shared.displaySearchView()
+        case .lockScreen: Utility.shared.screenOrientation(isAutorotate: true, lockMask: .all)
         }
     }
         

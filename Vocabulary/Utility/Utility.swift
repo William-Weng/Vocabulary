@@ -237,7 +237,7 @@ extension Utility {
     func displaySearchView() {
         
         guard let appDelegate = appDelegate,
-              let tabBarController = Utility.shared.appDelegate?.window?.rootViewController as? MyTabBarController
+              let tabBarController = appDelegate.window?.rootViewController as? MyTabBarController
         else {
             return
         }
@@ -396,7 +396,7 @@ extension Utility {
     ///   - pitchMultiplier: 音調 (50% ~ 200%)
     ///   - volume: 音量 (0% ~ 100%)
     ///   - boundary: 停止發聲 (單字 / 立刻停止)
-    func speak(string: String, code: String, rate: Float, pitchMultiplier: Float = 1.0, volume: Float = 1.0) {
+    func speak(string: String, code: String, rate: Float, pitchMultiplier: Float = 1.0, volume: Float) {
         pauseSpeaking(at: .immediate)
         synthesizer._speak(string: string, code: code, rate: rate, pitchMultiplier: pitchMultiplier, volume: volume)
     }

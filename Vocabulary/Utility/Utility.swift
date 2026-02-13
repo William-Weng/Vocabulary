@@ -232,6 +232,18 @@ extension Utility {
         
         orientationLockable.updateOrientations(isAutorotate: isAutorotate, lockOrientationMask: lockMask)
     }
+    
+    /// 顯示單字浮動搜尋頁
+    func displaySearchView() {
+        
+        guard let appDelegate = appDelegate,
+              let tabBarController = Utility.shared.appDelegate?.window?.rootViewController as? MyTabBarController
+        else {
+            return
+        }
+        
+        tabBarController.displaySearchFloatingView()
+    }
 }
 
 // MARK: - SettingsJSON設定檔相關

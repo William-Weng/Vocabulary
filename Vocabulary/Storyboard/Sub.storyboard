@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -92,10 +93,10 @@
                                                     <action selector="touchAction:" destination="bDF-AU-MZt" eventType="touchUpInside" id="0sp-TZ-5m9"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B7h-Nn-2bm">
+                                            <button opaque="NO" tag="108" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B7h-Nn-2bm">
                                                 <rect key="frame" x="194" y="0.0" width="81" height="81"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" image="Touch_Sub"/>
+                                                <state key="normal" image="Question"/>
                                                 <connections>
                                                     <action selector="touchAction:" destination="bDF-AU-MZt" eventType="touchUpInside" id="Mqh-r1-bbK"/>
                                                 </connections>
@@ -382,15 +383,15 @@
         <image name="Download" width="85.333335876464844" height="85.333335876464844"/>
         <image name="Forget" width="26.666666030883789" height="26.666666030883789"/>
         <image name="Pencil" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="Question" width="85.333335876464844" height="85.333335876464844"/>
         <image name="Recorder" width="170.66667175292969" height="170.66667175292969"/>
         <image name="ScreenVertical" width="85.333335876464844" height="85.333335876464844"/>
         <image name="Settings" width="26.666666030883789" height="26.666666030883789"/>
         <image name="Share" width="85.333335876464844" height="85.333335876464844"/>
         <image name="SpeedoMeter" width="170.66667175292969" height="170.66667175292969"/>
         <image name="Talking" width="21.333333969116211" height="21.333333969116211"/>
-        <image name="Touch_Sub" width="85.333335876464844" height="85.333335876464844"/>
         <systemColor name="systemPinkColor">
-            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

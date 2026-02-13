@@ -96,10 +96,9 @@ extension SentenceViewController: UITableViewDelegate, UITableViewDataSource {
 extension SentenceViewController: SFSafariViewControllerDelegate {
     
     func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
-        
-        let isHidden = false
-        tabBarHiddenAction(isHidden)
-        navigationBarHiddenAction(isHidden)
+        tabBarHiddenAction(false)
+        navigationBarHiddenAction(false)
+        AssistiveTouchHelper.shared.hiddenAction(false)
     }
 }
 
@@ -475,6 +474,7 @@ private extension SentenceViewController {
             return
         }
         
+        AssistiveTouchHelper.shared.hiddenAction(true)
         netDictionary(with: sentenceList.example)
     }
     

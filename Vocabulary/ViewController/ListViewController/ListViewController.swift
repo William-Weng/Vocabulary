@@ -28,7 +28,6 @@ final class ListViewController: UIViewController {
     private var refreshControl: UIRefreshControl!
     private var disappearImage: UIImage?
     private var translateDisplayArray: Set<Int> = []
-    private var searchVocabularyViewController: SearchVocabularyViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,11 +53,6 @@ final class ListViewController: UIViewController {
 
     @IBAction func dictionaryNet(_ sender: UIBarButtonItem) { netDictionary(with: vocabularyList.word) }
     
-    @IBAction func searchVocabulary(_ sender: UIButton) {
-        searchVocabularyViewController = UIStoryboard._instantiateViewController() as SearchVocabularyViewController
-        Utility.shared.presentSearchVocabularyViewController(target: self, currentView: searchVocabularyViewController?.view)
-    }
-    
     deinit {
         ListTableViewCell.exmapleList = []
         myPrint("\(Self.self) deinit")
@@ -77,7 +71,10 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - SFSafariViewControllerDelegate
 extension ListViewController: SFSafariViewControllerDelegate {
     
-    func safariViewControllerDidFinish(_ controller: SFSafariViewController) { isSafariViewControllerDismiss = true }
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        isSafariViewControllerDismiss = true
+        AssistiveTouchHelper.shared.hiddenAction(false)
+    }
 }
 
 // MARK: - WWFloatingViewDelegate
@@ -176,6 +173,7 @@ private extension ListViewController {
             return
         }
         
+        AssistiveTouchHelper.shared.hiddenAction(true)
         openUrlWithInside(with: url)
     }
     
@@ -190,6 +188,7 @@ private extension ListViewController {
             return
         }
         
+        AssistiveTouchHelper.shared.hiddenAction(true)
         openUrlWithInside(with: url)
     }
     

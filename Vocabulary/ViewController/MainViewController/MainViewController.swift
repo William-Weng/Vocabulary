@@ -936,7 +936,7 @@ private extension MainViewController {
             _ = MusicHelper.shared.stop()
             
             Task {
-                try await Task.sleep(for: .milliseconds(250))
+                try await Task.sleep(for: .microseconds(250))
                 musicItemMenuAction(music: music, musicLoopType: musicLoopType)
             }
         }

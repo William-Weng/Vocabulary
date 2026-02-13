@@ -7,11 +7,15 @@
 
 import UIKit
 import PencilKit
+import WWFloatingViewController
 
 // MARK: - 自定義的UITabBarController
 final class MyTabBarController: UITabBarController, OrientationLockable {
     
     static var isHidden = true
+    
+    var lockOrientationMask: UIInterfaceOrientationMask = .all
+    var isAutorotate = true
     
     private let safeAreaGap = 24.0
     private let diameter = 36.0
@@ -21,9 +25,8 @@ final class MyTabBarController: UITabBarController, OrientationLockable {
     private var toolPicker: PKToolPicker?
     private var dismissButton: UIButton?
     private var cleanDrawingButton: UIButton?
-
-    var lockOrientationMask: UIInterfaceOrientationMask = .all
-    var isAutorotate = true
+    
+    private var searchVocabularyViewController: SearchVocabularyViewController?
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask { return lockOrientationMask }
     override var shouldAutorotate: Bool { return isAutorotate }
@@ -60,6 +63,26 @@ extension MyTabBarController: PKCanvasViewDelegate {
     
     func canvasViewDidFinishRendering(_ canvasView: PKCanvasView) {
         tabBarStatus(isHidden: Self.isHidden, animated: false)
+    }
+}
+
+// MARK: - WWFloatingViewDelegate
+extension MyTabBarController: WWFloatingViewDelegate {
+    
+    func willAppear(_ viewController: WWFloatingViewController, completePercent: CGFloat) { AssistiveTouchHelper.shared.hiddenAction(true) }
+    func appearing(_ viewController: WWFloatingViewController, fractionComplete: CGFloat) {}
+    func didAppear(_ viewController: WWFloatingViewController, animatingPosition: UIViewAnimatingPosition) {}
+    func willDisAppear(_ viewController: WWFloatingViewController) {}
+    func didDisAppear(_ viewController: WWFloatingViewController, animatingPosition: UIViewAnimatingPosition) { AssistiveTouchHelper.shared.hiddenAction(false) }
+}
+
+// MARK: - 公開函式
+extension MyTabBarController {
+    
+    /// 顯示單字浮動搜尋頁
+    func displaySearchFloatingView() {
+        searchVocabularyViewController = UIStoryboard._instantiateViewController() as SearchVocabularyViewController
+        Utility.shared.presentSearchVocabularyViewController(target: self, currentView: searchVocabularyViewController?.view)
     }
 }
 

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WWFloatingViewController
 
 // MARK: - WWAssistiveTouch的內容項目頁
 final class TouchViewController: UIViewController {
@@ -19,8 +20,9 @@ final class TouchViewController: UIViewController {
         case chat = 105
         case speedRate = 106
         case lockScreen = 107
+        case question = 108
     }
-    
+        
     @IBOutlet weak var orientationbButton: UIButton!
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -67,9 +69,10 @@ final class TouchViewController: UIViewController {
         case .chat: Utility.shared.chat()
         case .speedRate: Utility.shared.adjustmentSoundType(.rate)
         case .lockScreen: Utility.shared.screenOrientation(isAutorotate: true, lockMask: .all)
+        case .question: Utility.shared.displaySearchView()
         }
     }
-    
+        
     deinit {
         myPrint("\(Self.self) deinit")
     }

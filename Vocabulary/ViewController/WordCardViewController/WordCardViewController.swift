@@ -12,8 +12,6 @@ import WWFloatingViewController
 
 // MARK: - 單字卡
 final class WordCardViewController: UIViewController {
-    
-    @IBOutlet weak var orientationbButtonItem: UIBarButtonItem!
         
     weak var mainViewDelegate: MainViewDelegate?
     
@@ -44,11 +42,6 @@ final class WordCardViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) { initSetting(for: segue, sender: sender) }
-        
-    @IBAction func searchVocabulary(_ sender: UIBarButtonItem) {
-        searchVocabularyViewController = UIStoryboard._instantiateViewController() as SearchVocabularyViewController
-        Utility.shared.presentSearchVocabularyViewController(target: self, currentView: searchVocabularyViewController?.view)
-    }
     
     deinit {
         mainViewDelegate = nil
@@ -75,16 +68,6 @@ extension WordCardViewController: WWOnBoardingViewControllerDelegate {
     func didChangeViewController(_ onBoardingViewController: WWOnBoardingViewController, finishAnimating finished: Bool, transitionCompleted: Bool, currentIndex: Int, nextIndex: Int, pageRotateDirection: WWOnBoardingViewController.PageRotateDirection, error: WWOnBoardingViewController.OnBoardingError?) {
         didChangeViewControllerAction(onBoardingViewController: onBoardingViewController, finishAnimating: finished, transitionCompleted: transitionCompleted, currentIndex: currentIndex, nextIndex: nextIndex, pageRotateDirection: pageRotateDirection, error: error)
     }
-}
-
-// MARK: - WWFloatingViewDelegate
-extension WordCardViewController: WWFloatingViewDelegate {
-    
-    func willAppear(_ viewController: WWFloatingViewController, completePercent: CGFloat) {}
-    func appearing(_ viewController: WWFloatingViewController, fractionComplete: CGFloat) {}
-    func didAppear(_ viewController: WWFloatingViewController, animatingPosition: UIViewAnimatingPosition) {}
-    func willDisAppear(_ viewController: WWFloatingViewController) {}
-    func didDisAppear(_ viewController: WWFloatingViewController, animatingPosition: UIViewAnimatingPosition) {}
 }
 
 // MARK: - 小工具

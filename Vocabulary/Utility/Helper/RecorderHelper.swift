@@ -7,13 +7,15 @@
 
 import Foundation
 import AVFAudio
+import WWNormalizeAudioPlayer
 
 // MARK: - RecorderHelper (單例)
 final class RecorderHelper: NSObject {
     
     static let shared = RecorderHelper()
     
-    private var recordPlayer: AVAudioPlayer?
+    private let audioPlayer = WWNormalizeAudioPlayer()
+
     private var audioRecorder: AVAudioRecorder?
     
     private override init() {}
@@ -23,11 +25,8 @@ final class RecorderHelper: NSObject {
 extension RecorderHelper: AVAudioRecorderDelegate {
     
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        
-        guard let recordlayer = AVAudioPlayer._build(audioURL: recorder.url, fileTypeHint: .wav, delegate: nil) else { return }
-        
-        self.recordPlayer = recordlayer
-        Task { recordlayer.play() }
+        MusicHelper.shared.resume()
+        audioPlayer.play(with: recorder.url, targetDB: nil)
     }
     
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) { myPrint(error) }
@@ -40,6 +39,7 @@ extension RecorderHelper {
     /// - Returns: Bool
     func start() -> Bool {
         guard let recordURL = FileManager.default._temporaryDirectory()._appendPath(Constant.recordFilename) else { return false }
+        MusicHelper.shared.pause()
         return recordSound(with: recordURL)
     }
     
@@ -55,11 +55,11 @@ private extension RecorderHelper {
     /// - Parameter recordURL: URL
     /// - Returns: Bool
     func recordSound(with recordURL: URL) -> Bool {
-        
+
         _ = audioRecorder?._stop()
         
         guard let audioRecorder = AVAudioRecorder._build(recordURL: recordURL) else { return false }
-
+        
         self.audioRecorder = audioRecorder
         audioRecorder.delegate = self
         

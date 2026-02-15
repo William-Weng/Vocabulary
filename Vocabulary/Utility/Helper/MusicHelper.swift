@@ -40,7 +40,11 @@ extension MusicHelper {
     
     /// 初始化播放器設定
     func initAudioPlaySetting() {
-        _ = audioPlayer.setSession(category: .playback)
+        
+        let options: AVAudioSession.CategoryOptions = [.mixWithOthers, .defaultToSpeaker, .allowBluetoothHFP]
+        
+        _ = AVAudioSession.sharedInstance()._setCategory(.playAndRecord, mode: .default, policy: .default, options: options, isActive: true)
+        
         audioPlayer.delegate = self
         audioPlayer.isHiddenProgress = true
         audioPlayer.volume = 0.1
@@ -85,9 +89,24 @@ extension MusicHelper {
     }
     
     /// 停止播放音樂
+    @discardableResult
     func stop() -> Bool {
         musicLoopType = .stop
         audioPlayer.stop()
+        return true
+    }
+    
+    /// 回復播放音樂
+    @discardableResult
+    func resume() -> Bool {
+        audioPlayer.resume()
+        return true
+    }
+    
+    /// 暫停播放音樂
+    @discardableResult
+    func pause() -> Bool {
+        audioPlayer.pause()
         return true
     }
     

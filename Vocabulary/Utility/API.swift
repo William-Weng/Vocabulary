@@ -621,6 +621,28 @@ extension API {
         return result.isSussess
     }
     
+    /// 更新相似字
+    /// - Parameters:
+    ///   - id: Int
+    ///   - alphabet: 音標
+    ///   - info: Settings.GeneralInformation
+    /// - Returns: Bool
+    func updateSimilarWordToList(_ id: Int, similar: String, info: Settings.GeneralInformation) -> Bool {
+        
+        guard let database = Constant.database else { return false }
+        
+        let type: Constant.DataTableType = .list(info.key)
+        
+        let items: [SQLite3Database.InsertItem] = [
+            (key: "similar", value: similar.fixSqliteSingleQuote()),
+        ]
+        
+        let condition = SQLite3Condition.Where().isCompare(type: .equal(key: "id", value: id))
+        let result = database.update(tableName: type.name(), items: items, where: condition)
+        
+        return result.isSussess
+    }
+    
     /// 更新單字範例相關內容
     /// - Parameters:
     ///   - exampleInfo: Constant.ExampleInfomation

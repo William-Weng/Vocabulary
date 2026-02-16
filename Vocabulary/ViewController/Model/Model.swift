@@ -86,7 +86,6 @@ final class Vocabulary: Codable {
     let id: Int             // 編號
     let speech: Int         // 詞性
     let word: String        // 單字
-    let similar: String?    // 相似字 (JSON)
     let hardwork: Int?      // 翻譯難度 (有讀過了嗎？)
     let interpret: String?  // 單字翻譯
     let example: String?    // 例句範例
@@ -107,6 +106,7 @@ final class VocabularyList: Codable {
     let word: String        // 單字
     let alphabet: String?   // 音標字母
     let favorite: Int?      // 我的最愛
+    let similar: String?    // 相似字 (JSON)
     let createTime: Date    // 建立時間
     let updateTime: Date    // 更新時間
     
@@ -190,6 +190,12 @@ struct Music {
     }
 }
 
+// MARK: - 相似字
+struct SimilarWord {
+    let word: String    // 單字
+    let level: Int      // 等級
+}
+
 // MARK: - SQLite3SchemeDelegate
 extension Vocabulary: SQLite3SchemeDelegate {
     
@@ -202,7 +208,6 @@ extension Vocabulary: SQLite3SchemeDelegate {
             (key: "speech", type: .INTEGER()),
             (key: "word", type: .TEXT(attribute: (isNotNull: true, isNoCase: true, isUnique: false), defaultValue: nil)),
             (key: "hardwork", type: .INTEGER()),
-            (key: "similar", type: .TEXT(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),
             (key: "interpret", type: .TEXT(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),
             (key: "example", type: .TEXT(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),
             (key: "translate", type: .TEXT(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),
@@ -228,6 +233,7 @@ extension VocabularyList: SQLite3SchemeDelegate {
             (key: "review", type: .INTEGER()),
             (key: "word", type: .TEXT(attribute: (isNotNull: true, isNoCase: true, isUnique: true), defaultValue: nil)),
             (key: "alphabet", type: .TEXT(attribute: (isNotNull: false, isNoCase: true, isUnique: false), defaultValue: nil)),
+            (key: "similar", type: .TEXT(attribute: (isNotNull: false, isNoCase: false, isUnique: false), defaultValue: nil)),
             (key: "favorite", type: .INTEGER()),
             (key: "createTime", type: .TIMESTAMP()),
             (key: "updateTime", type: .TIMESTAMP()),

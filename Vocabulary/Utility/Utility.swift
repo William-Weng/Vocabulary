@@ -738,6 +738,18 @@ extension Utility {
         MainTableViewCell.vocabularyListArray[indexPath.row] = dictionary
     }
     
+    /// 更新相似字資訊
+    /// - Parameters:
+    ///   - info: Settings.VocabularyLevelInformation
+    ///   - indexPath: IndexPath
+    func updateSimilarWordDictionary(_ similarWord: String, with indexPath: IndexPath) {
+        
+        guard var dictionary = MainTableViewCell.vocabularyListArray[safe: indexPath.row] else { return }
+        
+        dictionary["similar"] = similarWord
+        MainTableViewCell.vocabularyListArray[indexPath.row] = dictionary
+    }
+    
     /// levelButton文字顏色設定
     /// - Parameters:
     ///   - button: UIButton

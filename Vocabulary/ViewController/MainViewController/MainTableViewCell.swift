@@ -12,6 +12,7 @@ import AVFAudio
 final class MainTableViewCell: UITableViewCell, CellReusable {
     
     @IBOutlet weak var levelButton: UIButton!
+    @IBOutlet weak var similarButton: UIButton!
     @IBOutlet weak var countLabel: UILabel!
     @IBOutlet weak var wordLabel: UILabel!
     @IBOutlet weak var alphabetLabel: UILabel!
@@ -51,6 +52,27 @@ extension MainTableViewCell {
         guard let vocabularyList = Self.vocabularyListArray[safe: indexPath.row]?._jsonClass(for: VocabularyList.self) else { return nil }
         return vocabularyList
     }
+    
+    /// 將相似字的記錄 => Array
+    /// - Parameter list: VocabularyList
+    /// - Returns: [SimilarWord]
+    static func similarWords(with indexPath: IndexPath) -> [SimilarWord] {
+        
+        guard let vocabularyList = MainTableViewCell.vocabularyList(with: indexPath),
+              let similar = vocabularyList.similar,
+              let dict = similar._jsonObject() as? [String: Int]
+        else {
+            return []
+        }
+        
+        let array = dict.map { word, value in
+            SimilarWord(word: word, level: value)
+        }.sorted(by: {
+            $0.level > $1.level
+        })
+        
+        return array
+    }
 }
 
 // MARK: - 小工具
@@ -76,6 +98,7 @@ private extension MainTableViewCell {
         
         favoriteImageView.image = Utility.shared.favoriteIcon(isFavorite)
         initLevelButtonSetting(vocabularyList: vocabularyList)
+        initSimilarButtonSetting(vocabularyList: vocabularyList)
         initFavoriteImageViewTapGestureRecognizer()
     }
     
@@ -84,11 +107,23 @@ private extension MainTableViewCell {
     func initLevelButtonSetting(vocabularyList: VocabularyList) {
         
         let info = Constant.SettingsJSON.vocabularyLevelInformations[safe: vocabularyList.level]
-
+        
         levelButton.showsMenuAsPrimaryAction = true
         levelButton.menu = UIMenu(title: "請選擇等級", options: .singleSelection, children: levelMenuActionMaker())
         
         Utility.shared.levelButtonSetting(levelButton, with: info)
+    }
+    
+    /// 相似字單字列表設定
+    /// - Parameter vocabularyList: VocabularyList
+    func initSimilarButtonSetting(vocabularyList: VocabularyList) {
+                
+        var actions = Self.similarWords(with: indexPath).map { UIAction(title: $0.word) { _ in }}
+        
+        if actions.isEmpty { actions.append(UIAction(title: "----") { _ in })}
+        
+        similarButton.showsMenuAsPrimaryAction = true
+        similarButton.menu = UIMenu(title: "相似字", options: .singleSelection, children: actions)
     }
     
     /// FavoriteImageView點擊功能
@@ -96,6 +131,10 @@ private extension MainTableViewCell {
         let recognizer = UITapGestureRecognizer(target: self, action: #selector(Self.updateFavorite(_:)))
         favoriteImageView.addGestureRecognizer(recognizer)
     }
+}
+
+// MARK: - 小工具
+private extension MainTableViewCell {
     
     /// 讀出單字
     func playWordSound() {

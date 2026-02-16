@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D5C907B2F41529E007BA966 /* SimilarWordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D5C907A2F41529E007BA966 /* SimilarWordViewController.swift */; };
 		3D652CCA2DB38FD60047DB39 /* WordMemoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D652CC92DB38FD60047DB39 /* WordMemoryViewController.swift */; };
 		3D652CD02DB39AFB0047DB39 /* WWKeyboardShadowView in Frameworks */ = {isa = PBXBuildFile; productRef = 3D652CCF2DB39AFB0047DB39 /* WWKeyboardShadowView */; };
 		3D652CD22DB39BAB0047DB39 /* WWCollectionViewLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 3D652CD12DB39BAB0047DB39 /* WWCollectionViewLayout */; };
@@ -16,6 +17,7 @@
 		3D659A822F3B858400F6CF17 /* WWNormalizeAudioPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 3D659A812F3B858400F6CF17 /* WWNormalizeAudioPlayer */; };
 		3DC6E3872EB5898D00F883E6 /* TouchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC6E3862EB5898D00F883E6 /* TouchViewController.swift */; };
 		3DCDCE192F3B5AF600EBEF79 /* WWNormalizeAudioPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 3DCDCE182F3B5AF600EBEF79 /* WWNormalizeAudioPlayer */; };
+		3DD27F252F41562A007D5299 /* SimilarWordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD27F242F41562A007D5299 /* SimilarWordCell.swift */; };
 		3DEB334F2F3CBBF800D14B5D /* Sub.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DEB334E2F3CBBF700D14B5D /* Sub.storyboard */; };
 		6417E8512AAD285D00512881 /* PaletteHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6417E8502AAD285D00512881 /* PaletteHeader.xib */; };
 		6418FC1A2A6DCDED00493B8D /* WWAppInstallSource in Frameworks */ = {isa = PBXBuildFile; productRef = 6418FC192A6DCDED00493B8D /* WWAppInstallSource */; };
@@ -106,9 +108,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D5C907A2F41529E007BA966 /* SimilarWordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarWordViewController.swift; sourceTree = "<group>"; };
 		3D652CC92DB38FD60047DB39 /* WordMemoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordMemoryViewController.swift; sourceTree = "<group>"; };
 		3D652CD32DB3AD2B0047DB39 /* WordMemoryItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordMemoryItemCell.swift; sourceTree = "<group>"; };
 		3DC6E3862EB5898D00F883E6 /* TouchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchViewController.swift; sourceTree = "<group>"; };
+		3DD27F242F41562A007D5299 /* SimilarWordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarWordCell.swift; sourceTree = "<group>"; };
 		3DEB334E2F3CBBF700D14B5D /* Sub.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Sub.storyboard; sourceTree = "<group>"; };
 		6417E8502AAD285D00512881 /* PaletteHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PaletteHeader.xib; sourceTree = "<group>"; };
 		641B5CA62984BEB500AB1C56 /* VolumeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeViewController.swift; sourceTree = "<group>"; };
@@ -218,6 +222,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D5C907C2F4152A7007BA966 /* SimilarWordViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3D5C907A2F41529E007BA966 /* SimilarWordViewController.swift */,
+				3DD27F242F41562A007D5299 /* SimilarWordCell.swift */,
+			);
+			path = SimilarWordViewController;
+			sourceTree = "<group>";
+		};
 		3D652CC82DB38FB80047DB39 /* WordMemoryViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -296,6 +309,7 @@
 				811DFC412AAAEFEB00BF480C /* PaletteViewController */,
 				81B1AF802AB423E20074103B /* GalleryViewController */,
 				64F6F42A29991B40001F4F66 /* LicenseWebViewController */,
+				3D5C907C2F4152A7007BA966 /* SimilarWordViewController */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -698,7 +712,9 @@
 				81BA794029876DA800C0FD6C /* SearchWordViewController.swift in Sources */,
 				818E2615299230B300385705 /* ReviewResultTableViewCell.swift in Sources */,
 				81E407902A723C4E00230C3A /* SearchVocabularyViewController.swift in Sources */,
+				3DD27F252F41562A007D5299 /* SimilarWordCell.swift in Sources */,
 				64C18507297EC01700D1D1B2 /* ListTableViewCell.swift in Sources */,
+				3D5C907B2F41529E007BA966 /* SimilarWordViewController.swift in Sources */,
 				64C18504297EB8E700D1D1B2 /* ListViewController.swift in Sources */,
 				64AB741B2B78508100882826 /* WordCardViewController.swift in Sources */,
 				64BA9EA2299764E600226DC8 /* OthersTableViewCell.swift in Sources */,
@@ -896,7 +912,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -940,7 +956,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

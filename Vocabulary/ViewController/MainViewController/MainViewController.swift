@@ -14,6 +14,7 @@ import WWTipView
 // MARK: - MainViewDelegate
 protocol MainViewDelegate: NSObject {
     
+    func reloadRow(with indexPath: IndexPath)
     func deleteRow(with indexPath: IndexPath)
     func updateCountLabel(with indexPath: IndexPath, count: Int)
     func tabBarHidden(_ isHidden: Bool)
@@ -28,6 +29,7 @@ final class MainViewController: UIViewController {
         case searchView = "SearchViewSegue"
         case wordCardView = "WordCardViewSegue"
         case wordMemoryView = "WordMemoryViewSegue"
+        case similarWordView = "SimilarWordSegue"
     }
     
     @IBOutlet weak var myImageView: UIImageView!
@@ -82,7 +84,6 @@ final class MainViewController: UIViewController {
     @IBAction func appendWordAction(_ sender: UIButton) { appendTextHintAction(sender) }
     @IBAction func filterFavorite(_ sender: UIBarButtonItem) { filterFavoriteAction(with: sender) }
     @IBAction func selectVolume(_ sender: UIBarButtonItem) { Utility.shared.adjustmentSoundType(.volume) }
-    
     @IBAction func searchWordAction(_ sender: UIBarButtonItem) { performSegue(for: .searchView, sender: nil) }
     
     deinit {
@@ -99,8 +100,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return MainTableViewCell.vocabularyListArray.count }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { return mainTableViewCell(tableView, cellForRowAt: indexPath) }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { performSegue(for: .listTableView, sender: indexPath) }
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? { return UISwipeActionsConfiguration(actions: trailingSwipeActionsMaker(with: indexPath)) }
     func scrollViewDidScroll(_ scrollView: UIScrollView) { tabrBarHidden(with: scrollView); updateHeightPercentAction(with: scrollView, isNeededUpdate: isNeededUpdate) }
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? { UISwipeActionsConfiguration(actions: leadingSwipeActionsMaker(with: indexPath)) }
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? { return UISwipeActionsConfiguration(actions: trailingSwipeActionsMaker(with: indexPath)) }
 }
 
 // MARK: - UIPopoverPresentationControllerDelegate
@@ -117,6 +119,7 @@ extension MainViewController: UITextFieldDelegate {
 // MARK: - MainViewDelegate
 extension MainViewController: MainViewDelegate {
     
+    func reloadRow(with indexPath: IndexPath) { myTableView.reloadRows(at: [indexPath], with: .automatic) }
     func deleteRow(with indexPath: IndexPath) { deleteRowAction(with: indexPath) }
     func updateCountLabel(with indexPath: IndexPath, count: Int) { updateCountLabelAction(with: indexPath, count: count) }
     func tabBarHidden(_ isHidden: Bool) { tabBarHiddenAction(isHidden) }
@@ -253,6 +256,7 @@ private extension MainViewController {
         case .searchView: searchWordViewControllerSetting(for: segue, sender: sender)
         case .wordCardView: wordCardControllerSetting(for: segue, sender: sender)
         case .wordMemoryView: wordMemoryViewControllerSetting(for: segue, sender: sender)
+        case .similarWordView: similarWordViewControllerSetting(for: segue, sender: sender)
         }
     }
     
@@ -457,6 +461,18 @@ private extension MainViewController {
         return actionOK
     }
     
+    /// 左側滑動按鈕 => 設定相似字
+    /// - Parameter indexPath: IndexPath
+    /// - Returns: [UIContextualAction]
+    func leadingSwipeActionsMaker(with indexPath: IndexPath) -> [UIContextualAction] {
+        
+        let simpleWordEditAction = UIContextualAction._build(with: "相似字", color: #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)) { [weak self] in
+            self?.performSegue(for: .similarWordView, sender: indexPath)
+        }
+        
+        return [simpleWordEditAction]
+    }
+    
     /// 右側滑動按鈕 => 設定音標 / 複製單字
     /// - Parameter indexPath: IndexPath
     /// - Returns: [UIContextualAction]
@@ -535,7 +551,6 @@ private extension MainViewController {
     ///   - segue: UIStoryboardSegue
     ///   - sender: Any?
     func wordCardControllerSetting(for segue: UIStoryboardSegue, sender: Any?) {
-                
         guard let viewController = segue.destination as? WordCardViewController else { return }
         viewController.mainViewDelegate = self
     }
@@ -545,9 +560,23 @@ private extension MainViewController {
     ///   - segue: UIStoryboardSegue
     ///   - sender: Any?
     func wordMemoryViewControllerSetting(for segue: UIStoryboardSegue, sender: Any?) {
-        
         guard let viewController = segue.destination as? WordMemoryViewController else { return }
+        viewController.mainViewDelegate = self
+    }
+    
+    /// 相似字頁面相關設定
+    /// - Parameters:
+    ///   - segue: UIStoryboardSegue
+    ///   - sender: Any?
+    func similarWordViewControllerSetting(for segue: UIStoryboardSegue, sender: Any?) {
         
+        guard let indexPath = sender as? IndexPath,
+              let viewController = segue.destination as? SimilarWordViewController
+        else {
+            return
+        }
+        
+        viewController.mainIndexPath = indexPath
         viewController.mainViewDelegate = self
     }
     

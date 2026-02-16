@@ -8,7 +8,6 @@
 import UIKit
 import JavaScriptCore
 import WebKit
-import WWHUD
 import WWToast
 import WWNetworking
 import WWEventSource

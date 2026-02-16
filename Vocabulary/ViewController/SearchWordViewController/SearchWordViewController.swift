@@ -112,6 +112,7 @@ extension SearchWordViewController: UITextFieldDelegate {
 // MARK: - MainViewDelegate
 extension SearchWordViewController: MainViewDelegate {
     
+    func reloadRow(with indexPath: IndexPath) {}
     func deleteRow(with indexPath: IndexPath) { deleteRowAction(with: indexPath) }
     func updateCountLabel(with indexPath: IndexPath, count: Int) {}
     func tabBarHidden(_ isHidden: Bool) {}

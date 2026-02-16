@@ -248,6 +248,7 @@ extension Constant {
         case chatting
         case forgot
         case ollama
+        case similar
 
         /// 檔案路徑
         /// - Returns: URL?

@@ -55,7 +55,7 @@ final class MainViewController: UIViewController {
     private var gifImageView: UIImageView?
     private var inputTextField: UITextField?
     private var inputTipView: WWTipView?
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
@@ -875,13 +875,11 @@ private extension MainViewController {
         let action = UIAlertAction(title: "取消", style: .cancel) {  _ in }
         
         Constant.SettingsJSON.generalInformations.forEach { info in
-            
             let action = dictionaryAlertActionMaker(with: info)
             alertController.addAction(action)
         }
         
         alertController.addAction(action)
-        
         alertController.modalPresentationStyle = .popover
         alertController.popoverPresentationController?.sourceView = sourceView
         

@@ -117,11 +117,11 @@ private extension MainTableViewCell {
     /// 相似字單字列表設定
     /// - Parameter vocabularyList: VocabularyList
     func initSimilarButtonSetting(vocabularyList: VocabularyList) {
-                
-        var actions = Self.similarWords(with: indexPath).map { UIAction(title: $0.word) { _ in }}
         
-        if actions.isEmpty { actions.append(UIAction(title: "----") { _ in })}
+        let actions = Self.similarWords(with: indexPath).map { UIAction(title: $0.word) { _ in }}
+        let image: UIImage = (!actions.isEmpty) ? .similar : .similarNo
         
+        similarButton.setImage(image, for: .normal)
         similarButton.showsMenuAsPrimaryAction = true
         similarButton.menu = UIMenu(title: "相似字", options: .singleSelection, children: actions)
     }

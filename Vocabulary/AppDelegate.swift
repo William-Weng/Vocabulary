@@ -9,6 +9,7 @@ import UIKit
 import WWPrint
 import WWNetworking_UIImage
 
+// MARK: - AppDelegate
 @main
 final class AppDelegate: UIResponder, UIApplicationDelegate {
     
@@ -42,7 +43,7 @@ private extension AppDelegate {
         
         initAppShortcutItem(with: application)
         
-        backgroundBarColor(.black.withAlphaComponent(0.1))
+        // backgroundBarColor(.black.withAlphaComponent(0.1))
         
         _ = animationFolderUrlMaker()
         _ = WWWebImage.shared.cacheTypeSetting(.cache(), defaultImage: OthersTableViewCell.defaultImage)

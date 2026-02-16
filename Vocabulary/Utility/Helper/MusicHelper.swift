@@ -30,9 +30,13 @@ extension MusicHelper: WWNormalizeAudioPlayer.Deleagte {
         audioPlayerDidFinishPlayingAction(player)
     }
     
-    func audioPlayer(_ player: WWNormalizeAudioPlayer, audioFile: AVAudioFile, totalTime: TimeInterval, currentTime: TimeInterval) {}
+    func audioPlayer(_ player: WWNormalizeAudioPlayer, audioFile: AVAudioFile, totalTime: TimeInterval, currentTime: TimeInterval) {
+        myPrint("\(currentTime) (\(totalTime))")
+    }
     
-    func audioPlayer(_ player: WWNormalizeAudioPlayer, error: any Error) {}
+    func audioPlayer(_ player: WWNormalizeAudioPlayer, error: any Error) {
+        myPrint(error)
+    }
 }
 
 // MARK: - 公開函式
@@ -46,7 +50,7 @@ extension MusicHelper {
         _ = AVAudioSession.sharedInstance()._setCategory(.playAndRecord, mode: .default, policy: .default, options: options, isActive: true)
         
         audioPlayer.delegate = self
-        audioPlayer.isHiddenProgress = true
+        audioPlayer.preferredFrameRateRange = nil
         audioPlayer.volume = 0.1
     }
     
@@ -167,15 +171,15 @@ private extension MusicHelper {
     func musicPlayerHint(_ player: WWNormalizeAudioPlayer) {
         
         guard let window = Utility.shared.appDelegate?.window,
-              let time = player.totalTime()._time(unitsStyle: .positional, allowedUnits: [.minute, .second], behavior: .pad)
+              let time = player.totalTime()._time(unitsStyle: .positional, allowedUnits: [.minute, .second], behavior: .pad),
+              let audioFile = player.audioFile
         else {
             return
         }
         
-        let text = "[\(time)] \(player.audioFile.url.lastPathComponent)"
+        let text = "[\(time)] \(audioFile.url.lastPathComponent)"
         
         WWToast.shared.setting(backgroundViewColor: .black)
         WWToast.shared.makeText(text, targetFrame: window.frame)
     }
-
 }

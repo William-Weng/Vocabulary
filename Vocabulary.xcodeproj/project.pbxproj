@@ -14,7 +14,8 @@
 		3D652CD42DB3AD2B0047DB39 /* WordMemoryItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D652CD32DB3AD2B0047DB39 /* WordMemoryItemCell.swift */; };
 		3D659A4D2F3B72BB00F6CF17 /* WWNormalizeAudioPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 3D659A4C2F3B72BB00F6CF17 /* WWNormalizeAudioPlayer */; };
 		3D659A7F2F3B829500F6CF17 /* WWNormalizeAudioPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 3D659A7E2F3B829500F6CF17 /* WWNormalizeAudioPlayer */; };
-		3D659A822F3B858400F6CF17 /* WWNormalizeAudioPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 3D659A812F3B858400F6CF17 /* WWNormalizeAudioPlayer */; };
+		3D8A19DE2F4370520026FDA2 /* WWNormalizeAudioPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 3D8A19DD2F4370520026FDA2 /* WWNormalizeAudioPlayer */; };
+		3D9EA9F22F435F5B000484AD /* WWNormalizeAudioPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 3D9EA9F12F435F5B000484AD /* WWNormalizeAudioPlayer */; };
 		3DC6E3872EB5898D00F883E6 /* TouchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DC6E3862EB5898D00F883E6 /* TouchViewController.swift */; };
 		3DCDCE192F3B5AF600EBEF79 /* WWNormalizeAudioPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 3DCDCE182F3B5AF600EBEF79 /* WWNormalizeAudioPlayer */; };
 		3DD27F252F41562A007D5299 /* SimilarWordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD27F242F41562A007D5299 /* SimilarWordCell.swift */; };
@@ -192,7 +193,7 @@
 				81CB93B12DB87AB7006CAAE1 /* WWExpandableTextView in Frameworks */,
 				64768B0D2AA3EB080005EF3A /* WWToast in Frameworks */,
 				81E516592D9290AF0020BD90 /* WWTipView in Frameworks */,
-				3D659A822F3B858400F6CF17 /* WWNormalizeAudioPlayer in Frameworks */,
+				3D9EA9F22F435F5B000484AD /* WWNormalizeAudioPlayer in Frameworks */,
 				3D652CD02DB39AFB0047DB39 /* WWKeyboardShadowView in Frameworks */,
 				3D652CD22DB39BAB0047DB39 /* WWCollectionViewLayout in Frameworks */,
 				64ACFDED2B7EBDA700863407 /* WWOnBoardingViewController in Frameworks */,
@@ -206,6 +207,7 @@
 				3D659A4D2F3B72BB00F6CF17 /* WWNormalizeAudioPlayer in Frameworks */,
 				812A01C22C0824A80086E128 /* WWNetworking-UIImage in Frameworks */,
 				81CB93AE2DB879C3006CAAE1 /* WWJavaScriptContext in Frameworks */,
+				3D8A19DE2F4370520026FDA2 /* WWNormalizeAudioPlayer in Frameworks */,
 				644FF14B2B7C604C00D3B814 /* WWTypewriterLabel in Frameworks */,
 				81E1F8F62A1F2CCA00EB0139 /* WWSlider in Frameworks */,
 				8141EEFF2B8C7FA60091127F /* WWUserDefaults in Frameworks */,
@@ -593,7 +595,8 @@
 				3DCDCE182F3B5AF600EBEF79 /* WWNormalizeAudioPlayer */,
 				3D659A4C2F3B72BB00F6CF17 /* WWNormalizeAudioPlayer */,
 				3D659A7E2F3B829500F6CF17 /* WWNormalizeAudioPlayer */,
-				3D659A812F3B858400F6CF17 /* WWNormalizeAudioPlayer */,
+				3D9EA9F12F435F5B000484AD /* WWNormalizeAudioPlayer */,
+				3D8A19DD2F4370520026FDA2 /* WWNormalizeAudioPlayer */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -644,7 +647,7 @@
 				8139CE1B2DC07C7D00805A2F /* XCRemoteSwiftPackageReference "WWEventSource" */,
 				8142F4402EA1F2D000F644FC /* XCRemoteSwiftPackageReference "WWAssistiveTouch" */,
 				8188EEBE2EF53F46007C12F3 /* XCRemoteSwiftPackageReference "WWSimpleAI_Ollama" */,
-				3D659A802F3B858400F6CF17 /* XCRemoteSwiftPackageReference "WWNormalizeAudioPlayer" */,
+				3D8A19DC2F4370520026FDA2 /* XCRemoteSwiftPackageReference "WWNormalizeAudioPlayer" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -1015,12 +1018,12 @@
 				minimumVersion = 1.1.3;
 			};
 		};
-		3D659A802F3B858400F6CF17 /* XCRemoteSwiftPackageReference "WWNormalizeAudioPlayer" */ = {
+		3D8A19DC2F4370520026FDA2 /* XCRemoteSwiftPackageReference "WWNormalizeAudioPlayer" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWNormalizeAudioPlayer";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.2;
+				minimumVersion = 1.3.0;
 			};
 		};
 		6418FC182A6DCDED00493B8D /* XCRemoteSwiftPackageReference "WWAppInstallSource" */ = {
@@ -1188,9 +1191,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = WWNormalizeAudioPlayer;
 		};
-		3D659A812F3B858400F6CF17 /* WWNormalizeAudioPlayer */ = {
+		3D8A19DD2F4370520026FDA2 /* WWNormalizeAudioPlayer */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3D659A802F3B858400F6CF17 /* XCRemoteSwiftPackageReference "WWNormalizeAudioPlayer" */;
+			package = 3D8A19DC2F4370520026FDA2 /* XCRemoteSwiftPackageReference "WWNormalizeAudioPlayer" */;
+			productName = WWNormalizeAudioPlayer;
+		};
+		3D9EA9F12F435F5B000484AD /* WWNormalizeAudioPlayer */ = {
+			isa = XCSwiftPackageProductDependency;
 			productName = WWNormalizeAudioPlayer;
 		};
 		3DCDCE182F3B5AF600EBEF79 /* WWNormalizeAudioPlayer */ = {

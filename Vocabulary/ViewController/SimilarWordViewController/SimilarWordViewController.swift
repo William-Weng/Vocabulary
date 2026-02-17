@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 
 // MARK: - 相似字處理
 final class SimilarWordViewController: UIViewController {
@@ -55,8 +56,16 @@ extension SimilarWordViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return SimilarWordCell.words.count }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { return similarWordCell(tableView, cellForRowAt: indexPath) }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { compareSimilarWord(with: indexPath) }
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? { return UISwipeActionsConfiguration(actions: trailingSwipeActionsMaker(with: indexPath)) }
+}
+
+// MARK: - SFSafariViewControllerDelegate
+extension SimilarWordViewController: SFSafariViewControllerDelegate {
+    
+    func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        AssistiveTouchHelper.shared.hiddenAction(false)
+    }
 }
 
 // MARK: - 小工具
@@ -192,6 +201,33 @@ private extension SimilarWordViewController {
         }
                 
         return false
+    }
+    
+    /// 相似字比較
+    /// - Parameter indexPath: IndexPath
+    func compareSimilarWord(with indexPath: IndexPath) {
+        
+        guard let vocabularyList = MainTableViewCell.vocabularyList(with: mainIndexPath),
+              let similarWord = SimilarWordCell.words[safe: indexPath.row],
+              let url = URL._standardization(string: netCompareWord(word: vocabularyList.word, similarWord: similarWord.word))
+        else {
+            return
+        }
+        
+        let safariController = url._openUrlWithInside(delegate: self)
+        safariController.delegate = self
+        AssistiveTouchHelper.shared.hiddenAction(true)
+    }
+    
+    /// 網路相似字比較 (google)
+    /// - Parameters:
+    ///   - word: 原字
+    ///   - similarWord: 相似字
+    /// - Returns: String
+    func netCompareWord(word: String, similarWord: String) -> String {
+        let question = "\(word) vs \(similarWord)"
+        let googleSearchUrl = "https://www.google.com/search?q=\(question)"
+        return googleSearchUrl
     }
 }
 

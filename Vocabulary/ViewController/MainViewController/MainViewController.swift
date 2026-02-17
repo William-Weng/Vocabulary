@@ -71,10 +71,7 @@ final class MainViewController: UIViewController {
         super.viewWillDisappear(animated)
         pauseBackgroundAnimation()
     }
-    
-    /// [View Controller 生命週期更新 - iOS 17](https://xiaozhuanlan.com/topic/0651384792)
-    // override func viewIsAppearing(_ animated: Bool) { super.viewIsAppearing(animated) }
-    
+        
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) { prepareAction(for: segue, sender: sender) }
     
     @objc func refreshVocabularyList(_ sender: UIRefreshControl) { reloadVocabulary(isFavorite: isFavorite) }

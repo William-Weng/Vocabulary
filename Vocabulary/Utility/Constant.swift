@@ -110,6 +110,12 @@ extension Constant {
         case icon       // 更換ICON
     }
     
+    /// AI代理人類型
+    enum AIAgentType {
+        case ollama
+        case perplexity
+    }
+    
     /// 能夠設定顏色的Settings設定檔
     enum SettingsColorKey: Int, CaseIterable {
         

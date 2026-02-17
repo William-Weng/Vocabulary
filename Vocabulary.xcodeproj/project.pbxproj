@@ -20,6 +20,7 @@
 		3DCDCE192F3B5AF600EBEF79 /* WWNormalizeAudioPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 3DCDCE182F3B5AF600EBEF79 /* WWNormalizeAudioPlayer */; };
 		3DD27F252F41562A007D5299 /* SimilarWordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD27F242F41562A007D5299 /* SimilarWordCell.swift */; };
 		3DEB334F2F3CBBF800D14B5D /* Sub.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3DEB334E2F3CBBF700D14B5D /* Sub.storyboard */; };
+		3DFECB4A2F446DF100C5A1D3 /* WWSimpleAI_Perplexity in Frameworks */ = {isa = PBXBuildFile; productRef = 3DFECB492F446DF100C5A1D3 /* WWSimpleAI_Perplexity */; };
 		6417E8512AAD285D00512881 /* PaletteHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6417E8502AAD285D00512881 /* PaletteHeader.xib */; };
 		6418FC1A2A6DCDED00493B8D /* WWAppInstallSource in Frameworks */ = {isa = PBXBuildFile; productRef = 6418FC192A6DCDED00493B8D /* WWAppInstallSource */; };
 		641B5CA72984BEB500AB1C56 /* VolumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641B5CA62984BEB500AB1C56 /* VolumeViewController.swift */; };
@@ -57,7 +58,7 @@
 		812A01C22C0824A80086E128 /* WWNetworking-UIImage in Frameworks */ = {isa = PBXBuildFile; productRef = 812A01C12C0824A80086E128 /* WWNetworking-UIImage */; };
 		812A01C52C0824C90086E128 /* WWNetworking-UIImage in Frameworks */ = {isa = PBXBuildFile; productRef = 812A01C42C0824C90086E128 /* WWNetworking-UIImage */; };
 		812C5444299F73DC003F942A /* TalkingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812C5443299F73DC003F942A /* TalkingViewController.swift */; };
-		8139CE1A2DC07C5D00805A2F /* OllamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8139CE192DC07C5D00805A2F /* OllamViewController.swift */; };
+		8139CE1A2DC07C5D00805A2F /* OllamaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8139CE192DC07C5D00805A2F /* OllamaViewController.swift */; };
 		8139CE1D2DC07C7D00805A2F /* WWEventSource in Frameworks */ = {isa = PBXBuildFile; productRef = 8139CE1C2DC07C7D00805A2F /* WWEventSource */; };
 		813B25E32BA44DF2006B9755 /* WWHash in Frameworks */ = {isa = PBXBuildFile; productRef = 813B25E22BA44DF2006B9755 /* WWHash */; };
 		81407EF02F3B32D7007385CF /* WWNormalizeAudioPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 81407EEF2F3B32D7007385CF /* WWNormalizeAudioPlayer */; };
@@ -71,13 +72,12 @@
 		81708BC82B21AD4C00397B27 /* communication_9893252.png in Resources */ = {isa = PBXBuildFile; fileRef = 81708BC42B21AD4C00397B27 /* communication_9893252.png */; };
 		81708BC92B21AD4C00397B27 /* language-learning_10037728.png in Resources */ = {isa = PBXBuildFile; fileRef = 81708BC52B21AD4C00397B27 /* language-learning_10037728.png */; };
 		817F88382B32BCA900053C3E /* Settings.json in Resources */ = {isa = PBXBuildFile; fileRef = 817F88372B32BCA900053C3E /* Settings.json */; };
-		8188EEC02EF53F46007C12F3 /* WWSimpleAI_Ollama in Frameworks */ = {isa = PBXBuildFile; productRef = 8188EEBF2EF53F46007C12F3 /* WWSimpleAI_Ollama */; };
 		818E261329922FFE00385705 /* ReviewResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818E261229922FFE00385705 /* ReviewResultViewController.swift */; };
 		818E2615299230B300385705 /* ReviewResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 818E2614299230B300385705 /* ReviewResultTableViewCell.swift */; };
 		8196323329933CEF00B96960 /* MyNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8196323229933CEF00B96960 /* MyNavigationController.swift */; };
 		819D69D0298E311D001AF48E /* SolutionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819D69CF298E311D001AF48E /* SolutionViewController.swift */; };
 		819D69D2298E31E1001AF48E /* SolutionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819D69D1298E31E1001AF48E /* SolutionTableViewCell.swift */; };
-		819DFABA2DC087BC0052CF22 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 819DFAB82DC087BC0052CF22 /* index.html */; };
+		819DFABA2DC087BC0052CF22 /* chat.html in Resources */ = {isa = PBXBuildFile; fileRef = 819DFAB82DC087BC0052CF22 /* chat.html */; };
 		819DFABB2DC087BC0052CF22 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = 819DFAB92DC087BC0052CF22 /* user.png */; };
 		819DFABC2DC087BC0052CF22 /* bot.png in Resources */ = {isa = PBXBuildFile; fileRef = 819DFAB72DC087BC0052CF22 /* bot.png */; };
 		81AB5EF9299643960035216F /* OthersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AB5EF8299643960035216F /* OthersViewController.swift */; };
@@ -148,7 +148,7 @@
 		81201C4A298B58C200291485 /* InterpretView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterpretView.swift; sourceTree = "<group>"; };
 		81201C4B298B58C200291485 /* InterpretView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InterpretView.xib; sourceTree = "<group>"; };
 		812C5443299F73DC003F942A /* TalkingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkingViewController.swift; sourceTree = "<group>"; };
-		8139CE192DC07C5D00805A2F /* OllamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OllamViewController.swift; sourceTree = "<group>"; };
+		8139CE192DC07C5D00805A2F /* OllamaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OllamaViewController.swift; sourceTree = "<group>"; };
 		8141EEFB2B8C748D0091127F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		814DD42A2F3F022100291AEE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		815E14772990F47700EC571D /* SentenceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceTableViewCell.swift; sourceTree = "<group>"; };
@@ -163,7 +163,7 @@
 		819D69CF298E311D001AF48E /* SolutionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolutionViewController.swift; sourceTree = "<group>"; };
 		819D69D1298E31E1001AF48E /* SolutionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolutionTableViewCell.swift; sourceTree = "<group>"; };
 		819DFAB72DC087BC0052CF22 /* bot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bot.png; sourceTree = "<group>"; };
-		819DFAB82DC087BC0052CF22 /* index.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		819DFAB82DC087BC0052CF22 /* chat.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = chat.html; sourceTree = "<group>"; };
 		819DFAB92DC087BC0052CF22 /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user.png; sourceTree = "<group>"; };
 		81AB5EF8299643960035216F /* OthersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OthersViewController.swift; sourceTree = "<group>"; };
 		81B1AF7E2AB423DD0074103B /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
@@ -215,9 +215,9 @@
 				81407EF02F3B32D7007385CF /* WWNormalizeAudioPlayer in Frameworks */,
 				81E1F8F32A1F2C9A00EB0139 /* WWSQLite3Manager in Frameworks */,
 				3D659A7F2F3B829500F6CF17 /* WWNormalizeAudioPlayer in Frameworks */,
-				8188EEC02EF53F46007C12F3 /* WWSimpleAI_Ollama in Frameworks */,
 				81E1F8F02A1F2C8100EB0139 /* WWHUD in Frameworks */,
 				3DCDCE192F3B5AF600EBEF79 /* WWNormalizeAudioPlayer in Frameworks */,
+				3DFECB4A2F446DF100C5A1D3 /* WWSimpleAI_Perplexity in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,7 +304,7 @@
 				818E2616299231D400385705 /* ReviewResultViewController */,
 				819D69CE298E30F1001AF48E /* SolutionViewController */,
 				81D8E09D298A1146001D2581 /* SearchWordViewController */,
-				815BC4E92B874AA40099593F /* OllamViewController */,
+				815BC4E92B874AA40099593F /* OllamaViewController */,
 				81E56B6C2A725DD6004400D6 /* SearchVocabularyViewController */,
 				81CD85CD2990F040009C39FF /* SentenceViewController */,
 				81AB5EF72996437B0035216F /* OthersViewController */,
@@ -421,12 +421,12 @@
 			path = PaletteViewController;
 			sourceTree = "<group>";
 		};
-		815BC4E92B874AA40099593F /* OllamViewController */ = {
+		815BC4E92B874AA40099593F /* OllamaViewController */ = {
 			isa = PBXGroup;
 			children = (
-				8139CE192DC07C5D00805A2F /* OllamViewController.swift */,
+				8139CE192DC07C5D00805A2F /* OllamaViewController.swift */,
 			);
-			path = OllamViewController;
+			path = OllamaViewController;
 			sourceTree = "<group>";
 		};
 		818E2616299231D400385705 /* ReviewResultViewController */ = {
@@ -451,7 +451,7 @@
 			isa = PBXGroup;
 			children = (
 				819DFAB72DC087BC0052CF22 /* bot.png */,
-				819DFAB82DC087BC0052CF22 /* index.html */,
+				819DFAB82DC087BC0052CF22 /* chat.html */,
 				819DFAB92DC087BC0052CF22 /* user.png */,
 			);
 			path = HTML;
@@ -590,13 +590,13 @@
 				81CB93B02DB87AB7006CAAE1 /* WWExpandableTextView */,
 				8139CE1C2DC07C7D00805A2F /* WWEventSource */,
 				8142F45B2EA2151C00F644FC /* WWAssistiveTouch */,
-				8188EEBF2EF53F46007C12F3 /* WWSimpleAI_Ollama */,
 				81407EEF2F3B32D7007385CF /* WWNormalizeAudioPlayer */,
 				3DCDCE182F3B5AF600EBEF79 /* WWNormalizeAudioPlayer */,
 				3D659A4C2F3B72BB00F6CF17 /* WWNormalizeAudioPlayer */,
 				3D659A7E2F3B829500F6CF17 /* WWNormalizeAudioPlayer */,
 				3D9EA9F12F435F5B000484AD /* WWNormalizeAudioPlayer */,
 				3D8A19DD2F4370520026FDA2 /* WWNormalizeAudioPlayer */,
+				3DFECB492F446DF100C5A1D3 /* WWSimpleAI_Perplexity */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -646,8 +646,8 @@
 				81CB93AF2DB87AB6006CAAE1 /* XCRemoteSwiftPackageReference "WWExpandableTextView" */,
 				8139CE1B2DC07C7D00805A2F /* XCRemoteSwiftPackageReference "WWEventSource" */,
 				8142F4402EA1F2D000F644FC /* XCRemoteSwiftPackageReference "WWAssistiveTouch" */,
-				8188EEBE2EF53F46007C12F3 /* XCRemoteSwiftPackageReference "WWSimpleAI_Ollama" */,
 				3D8A19DC2F4370520026FDA2 /* XCRemoteSwiftPackageReference "WWNormalizeAudioPlayer" */,
+				3DFECB482F446DF100C5A1D3 /* XCRemoteSwiftPackageReference "WWSimpleAI_Perplexity" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -665,7 +665,7 @@
 			files = (
 				6492ADD52986B8E900E1B59B /* KleeOne-SemiBold.ttf in Resources */,
 				81708BC72B21AD4C00397B27 /* translate_5146533.png in Resources */,
-				819DFABA2DC087BC0052CF22 /* index.html in Resources */,
+				819DFABA2DC087BC0052CF22 /* chat.html in Resources */,
 				819DFABB2DC087BC0052CF22 /* user.png in Resources */,
 				819DFABC2DC087BC0052CF22 /* bot.png in Resources */,
 				817F88382B32BCA900053C3E /* Settings.json in Resources */,
@@ -736,7 +736,7 @@
 				81F7A4EB2F3D8320008F33E3 /* DeepLinkHelper.swift in Sources */,
 				8196323329933CEF00B96960 /* MyNavigationController.swift in Sources */,
 				814DD42B2F3F022100291AEE /* SceneDelegate.swift in Sources */,
-				8139CE1A2DC07C5D00805A2F /* OllamViewController.swift in Sources */,
+				8139CE1A2DC07C5D00805A2F /* OllamaViewController.swift in Sources */,
 				81F7A4E92F3D7F6F008F33E3 /* SettingHelper.swift in Sources */,
 				642858A6297BC40E00DD7D88 /* Constant.swift in Sources */,
 				818E261329922FFE00385705 /* ReviewResultViewController.swift in Sources */,
@@ -920,7 +920,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.9.4;
+				MARKETING_VERSION = 2.9.5;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -964,7 +964,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.9.4;
+				MARKETING_VERSION = 2.9.5;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1024,6 +1024,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.3.0;
+			};
+		};
+		3DFECB482F446DF100C5A1D3 /* XCRemoteSwiftPackageReference "WWSimpleAI_Perplexity" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWSimpleAI_Perplexity";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.1;
 			};
 		};
 		6418FC182A6DCDED00493B8D /* XCRemoteSwiftPackageReference "WWAppInstallSource" */ = {
@@ -1088,14 +1096,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.2.5;
-			};
-		};
-		8188EEBE2EF53F46007C12F3 /* XCRemoteSwiftPackageReference "WWSimpleAI_Ollama" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/William-Weng/WWSimpleAI_Ollama";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.0;
 			};
 		};
 		81CB93AC2DB87995006CAAE1 /* XCRemoteSwiftPackageReference "WWJavaScriptContext" */ = {
@@ -1204,6 +1204,11 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = WWNormalizeAudioPlayer;
 		};
+		3DFECB492F446DF100C5A1D3 /* WWSimpleAI_Perplexity */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3DFECB482F446DF100C5A1D3 /* XCRemoteSwiftPackageReference "WWSimpleAI_Perplexity" */;
+			productName = WWSimpleAI_Perplexity;
+		};
 		6418FC192A6DCDED00493B8D /* WWAppInstallSource */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6418FC182A6DCDED00493B8D /* XCRemoteSwiftPackageReference "WWAppInstallSource" */;
@@ -1259,11 +1264,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8142F4402EA1F2D000F644FC /* XCRemoteSwiftPackageReference "WWAssistiveTouch" */;
 			productName = WWAssistiveTouch;
-		};
-		8188EEBF2EF53F46007C12F3 /* WWSimpleAI_Ollama */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8188EEBE2EF53F46007C12F3 /* XCRemoteSwiftPackageReference "WWSimpleAI_Ollama" */;
-			productName = WWSimpleAI_Ollama;
 		};
 		81CB93AD2DB879C3006CAAE1 /* WWJavaScriptContext */ = {
 			isa = XCSwiftPackageProductDependency;

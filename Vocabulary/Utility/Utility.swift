@@ -128,17 +128,19 @@ extension Utility {
     }
     
     /// 跟AI對話
-    func chat() {
+    func chat(agentType: Constant.AIAgentType) {
         
         guard let appDelegate = appDelegate,
               let target = appDelegate.window?.rootViewController,
-              let viewController = UIStoryboard(name: "Sub", bundle: nil).instantiateViewController(withIdentifier: "TalkNavigationController") as? UINavigationController
+              let navigationController = UIStoryboard(name: "Sub", bundle: nil).instantiateViewController(withIdentifier: "TalkNavigationController") as? UINavigationController,
+              let rootViewController = navigationController.topViewController as? OllamaViewController
         else {
             return
         }
         
         AssistiveTouchHelper.shared.hiddenAction(true)
-        target.present(viewController, animated: true)
+        rootViewController.agentType = agentType
+        target.present(navigationController, animated: true)
     }
     
     /// 下載備份的Database

@@ -60,12 +60,12 @@
                                                     <action selector="touchAction:" destination="bDF-AU-MZt" eventType="touchUpInside" id="rne-OF-HWC"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" tag="200" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D28-2f-7hz">
+                                            <button opaque="NO" tag="109" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D28-2f-7hz">
                                                 <rect key="frame" x="102" y="0.0" width="86" height="86"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" image="ScreenVertical"/>
+                                                <state key="normal" image="Perplexity"/>
                                                 <connections>
-                                                    <action selector="touchAction:" destination="bDF-AU-MZt" eventType="touchUpInside" id="gZv-Ul-zmT"/>
+                                                    <action selector="touchAction:" destination="bDF-AU-MZt" eventType="touchUpInside" id="Bv4-Dz-B3J"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" tag="105" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QS9-6S-HFN">
@@ -139,18 +139,15 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="r39-qJ-imi"/>
-                    <connections>
-                        <outlet property="orientationbButton" destination="D28-2f-7hz" id="ZT5-F0-jBn"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S3l-hi-tUU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2150" y="-651"/>
         </scene>
-        <!--DeepSeek-->
+        <!--Ollama View Controller-->
         <scene sceneID="m6q-sn-KFO">
             <objects>
-                <viewController storyboardIdentifier="OllamViewController" title="DeepSeek" modalPresentationStyle="overFullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0H6-mu-JXO" customClass="OllamViewController" customModule="Vocabulary" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OllamaViewController" title="DeepSeek" modalPresentationStyle="overFullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0H6-mu-JXO" userLabel="Ollama View Controller" customClass="OllamaViewController" customModule="Vocabulary" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AvH-Bi-rFd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -269,7 +266,7 @@
                         <outlet property="connentView" destination="dvp-w7-Chx" id="iak-2m-iR7"/>
                         <outlet property="expandableTextView" destination="Wb9-yj-JI9" id="WTR-Lu-lZA"/>
                         <outlet property="generateLiveButton" destination="0b2-eb-Skw" id="WjR-Xx-grO"/>
-                        <outlet property="keyboardConstraintHeight" destination="U1d-d1-hgN" id="138-ai-RQq"/>
+                        <outlet property="keyboardConstraintHeight" destination="a2w-zx-IGy" id="fUx-T9-pea"/>
                         <outlet property="keyboardShadowView" destination="78r-ht-gnQ" id="Jhx-vT-xAx"/>
                         <outlet property="myImageView" destination="vLy-jq-L7h" id="LPN-4e-cfr"/>
                         <outlet property="myWebView" destination="tcy-eS-3A0" id="Fna-2P-pwn"/>
@@ -387,9 +384,9 @@
         <image name="Download" width="85.333335876464844" height="85.333335876464844"/>
         <image name="Forget" width="26.666666030883789" height="26.666666030883789"/>
         <image name="Pencil" width="170.66667175292969" height="170.66667175292969"/>
+        <image name="Perplexity" width="85.333335876464844" height="85.333335876464844"/>
         <image name="Question" width="85.333335876464844" height="85.333335876464844"/>
         <image name="Recorder" width="170.66667175292969" height="170.66667175292969"/>
-        <image name="ScreenVertical" width="85.333335876464844" height="85.333335876464844"/>
         <image name="Settings" width="26.666666030883789" height="26.666666030883789"/>
         <image name="Share" width="85.333335876464844" height="85.333335876464844"/>
         <image name="SpeedoMeter" width="170.66667175292969" height="170.66667175292969"/>

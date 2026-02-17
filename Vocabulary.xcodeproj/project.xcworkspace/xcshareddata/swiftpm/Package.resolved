@@ -1,5 +1,5 @@
 {
-  "originHash" : "a5d485f6c0a75bdb2b62282e2aa183d5dad3943cbaaee55e2363e4634163378b",
+  "originHash" : "9732f77c5bb10cc9aedc846d5a4e6b0a2d715664267a8e94da6cca30ef66aaf1",
   "pins" : [
     {
       "identity" : "wwappinstallsource",
@@ -170,6 +170,15 @@
       "state" : {
         "revision" : "0e0c0e2ecfc9b6cb9db151d1d4dfa5b7a190fa87",
         "version" : "1.2.0"
+      }
+    },
+    {
+      "identity" : "wwsimpleai_perplexity",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWSimpleAI_Perplexity",
+      "state" : {
+        "revision" : "279b67c0772f6565175bf44fca3a9cafb72e7f35",
+        "version" : "0.5.1"
       }
     },
     {

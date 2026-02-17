@@ -12,12 +12,13 @@ import WWToast
 import WWNetworking
 import WWEventSource
 import WWSimpleAI_Ollama
+import WWSimpleAI_Perplexity
 import WWKeyboardShadowView
 import WWExpandableTextView
 import WWUserDefaults
 
-// MARK: - OllamViewController
-final class OllamViewController: UIViewController {
+// MARK: - OllamaViewController
+final class OllamaViewController: UIViewController {
     
     @IBOutlet weak var connentView: UIView!
     @IBOutlet weak var myImageView: UIImageView!
@@ -31,7 +32,10 @@ final class OllamViewController: UIViewController {
     @WWUserDefaults("Port") private var port: String?
     @WWUserDefaults("ChatModel") private var chatModel: String?
     @WWUserDefaults("LastContext") private var lastContext: String?
-        
+    @WWUserDefaults("ApiKey") private var apiKey: String?
+
+    var agentType: Constant.AIAgentType = .ollama
+    
     private var isConfigure = false
     private var botTimestamp: Int?
     private var responseString: String = ""
@@ -40,6 +44,7 @@ final class OllamViewController: UIViewController {
     private var disappearImage: UIImage?
     private var gifImageView: UIImageView?
     
+    /// [View Controller 生命週期更新 - iOS 17](https://xiaozhuanlan.com/topic/0651384792)
     override func viewIsAppearing(_ animated: Bool) {
         super.viewIsAppearing(animated)
         
@@ -47,7 +52,12 @@ final class OllamViewController: UIViewController {
         
         initSetting()
         isConfigure = true
-        configure(ip: ip, port: port, model: chatModel)
+        title = "\(agentType)".capitalized
+
+        switch agentType {
+        case .ollama: configure(ip: ip, port: port, model: chatModel)
+        case .perplexity: configure(apiKey: apiKey)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,7 +73,11 @@ final class OllamViewController: UIViewController {
     }
     
     @IBAction func generateLiveDemo(_ sender: UIButton) {
-        generateLiveAction()
+        
+        switch agentType {
+        case .ollama: ollamaLiveAction()
+        case .perplexity: perplexityAction()
+        }
     }
     
     @IBAction func dissmissAction(_ sender: UIBarButtonItem) {
@@ -72,7 +86,13 @@ final class OllamViewController: UIViewController {
     }
     
     @IBAction func configureAction(_ sender: UIBarButtonItem) {
-        presentOllamaConfigureAlert()
+        
+        let title = "\(agentType)".capitalized
+        
+        switch agentType {
+        case .ollama: presentOllamaConfigureAlert(title: "\(title)參數設定")
+        case .perplexity: presentPerplexityConfigureAlert(title: "\(title)參數設定")
+        }
     }
     
     @IBAction func forgetMemory(_ sender: UIBarButtonItem) {
@@ -88,7 +108,7 @@ final class OllamViewController: UIViewController {
 }
 
 // MARK: - WWEventSource.Delegate
-extension OllamViewController: WWEventSource.Delegate {
+extension OllamaViewController: WWEventSource.Delegate {
     
     func serverSentEventsConnectionStatus(_ eventSource: WWEventSource, result: Result<WWEventSource.ConnectionStatus, any Error>) {
         sseStatusAction(eventSource: eventSource, result: result)
@@ -108,7 +128,7 @@ extension OllamViewController: WWEventSource.Delegate {
 }
 
 // MARK: - WWKeyboardShadowView.Delegate
-extension OllamViewController: WWKeyboardShadowView.Delegate {
+extension OllamaViewController: WWKeyboardShadowView.Delegate {
     
     func keyboardViewChange(_ view: WWKeyboardShadowView, status: WWKeyboardShadowView.DisplayStatus, information: WWKeyboardShadowView.KeyboardInformation, height: CGFloat) -> Bool {
         
@@ -126,13 +146,13 @@ extension OllamViewController: WWKeyboardShadowView.Delegate {
 }
 
 // MARK: - 小工具
-private extension OllamViewController {
+private extension OllamaViewController {
     
     /// 初始化設定
     func initSetting() {
         initKeyboardShadowViewSetting()
         initExpandableTextViewSetting()
-        initWebView(filename: "index.html")
+        initWebView(filename: "chat.html")
     }
     
     /// 初始化鍵盤高度設定
@@ -179,7 +199,7 @@ private extension OllamViewController {
 }
 
 // MARK: - gif工具
-private extension OllamViewController {
+private extension OllamaViewController {
     
     /// 動畫背景設定
     /// - Parameter type: Constant.AnimationGifType
@@ -204,9 +224,9 @@ private extension OllamViewController {
 }
 
 // MARK: - 小工具
-private extension OllamViewController {
+private extension OllamaViewController {
     
-    /// 參數設定
+    /// 參數設定 (Ollama)
     /// - Parameters:
     ///   - ip: String?
     ///   - port: String?
@@ -217,6 +237,17 @@ private extension OllamViewController {
         
         WWSimpleAI.Ollama.configure(baseURL: "http://\(ip):\(port)", model: model)
         checkConfigure()
+    }
+    
+    /// 參數設定 (Perplexity)
+    /// - Parameters:
+    ///   - apiKey: String?
+    func configure(apiKey: String?) {
+        
+        guard let apiKey else { return }
+        
+        WWSimpleAI.Perplexity.shared.configure(apiKey: apiKey)
+        generateLiveButton(isEnabled: true)
     }
     
     /// 及時回應 (SSE)
@@ -244,18 +275,28 @@ private extension OllamViewController {
     }
     
     /// 問問題 (執行SSE串流)
-    func generateLiveAction() {
+    func ollamaLiveAction() {
         
-        let text = expandableTextView.text._removeWhitespacesAndNewlines()
-        if (text.isEmpty) { return }
+        let prompt = expandableTextView.text._removeWhitespacesAndNewlines()
+        if (prompt.isEmpty) { return }
         
         view.endEditing(true)
-        generateLiveAction(webView: myWebView, text: text)
+        generateLiveAction(webView: myWebView, text: prompt)
+    }
+    
+    /// 問問題 (直接回答)
+    func perplexityAction() {
+        
+        let prompt = expandableTextView.text._removeWhitespacesAndNewlines()
+        if (prompt.isEmpty) { return }
+        
+        view.endEditing(true)
+        generateAction(webView: myWebView, text: prompt)
     }
 }
 
 // MARK: - SSE (Server Sent Events - 單方向串流)
-private extension OllamViewController {
+private extension OllamaViewController {
     
     /// SSE狀態處理
     /// - Parameters:
@@ -317,7 +358,7 @@ private extension OllamViewController {
 }
 
 // MARK: - SSE for WKWebView (Server Sent Events - 單方向串流)
-private extension OllamViewController {
+private extension OllamaViewController {
     
     /// 顯示Markdown文字
     /// - Parameters:
@@ -363,6 +404,34 @@ private extension OllamViewController {
         }
     }
     
+    /// 使用WKWebView顯示回答
+    /// - Parameters:
+    ///   - webView: WKWebView
+    ///   - text: String
+    func generateAction(webView: WKWebView, text: String) {
+        
+        expandableTextView.text = ""
+        appendRole(with: webView, role: "user", message: text) { [unowned self] _ in
+            
+            appendRole(with: webView, role: "bot", message: "") { dict in
+                
+                guard let botTimestamp = dict["timestamp"] else { return }
+                
+                self.botTimestamp = botTimestamp
+                
+                Task {
+                    do {
+                        guard let responseString = try await WWSimpleAI.Perplexity.shared.chat(text: text).get() else { return }
+                        self.refreashWebSlaveCell(with: webView, botTimestamp: botTimestamp, responseString: responseString)
+                    } catch {
+                        myPrint(error)
+                        Utility.shared.flashHUD(with: .fail)
+                    }
+                }
+            }
+        }
+    }
+    
     /// 加上角色Cell
     /// - Parameters:
     ///   - webView: WKWebView
@@ -378,7 +447,7 @@ private extension OllamViewController {
         webView._evaluateJavaScript(script: jsCode) { _result_ in
             
             switch _result_ {
-            case .failure(let error): print(error)
+            case .failure(let error): myPrint(error)
             case .success(let dict):
                 guard let dict = dict as? [String: Int] else { return }
                 return result(dict)
@@ -413,7 +482,7 @@ private extension OllamViewController {
     /// - Parameters:
     ///   - title: String
     ///   - message: String?
-    func presentOllamaConfigureAlert(title: String = "本機Ollama參數設定", message: String? = nil) {
+    func presentOllamaConfigureAlert(title: String, message: String? = nil) {
         
         let alertController = UIAlertController._build(title: title, message: message)
 
@@ -424,6 +493,29 @@ private extension OllamViewController {
         let sureAction = UIAlertAction(title: "確定", style: .destructive) { aciton in
             guard let textFields = alertController.textFields else { return }
             self.ollamaConfigure(textFields: textFields)
+        }
+        
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel) { _ in }
+        
+        alertController.addAction(sureAction)
+        alertController.addAction(cancelAction)
+
+        present(alertController, animated: true)
+    }
+    
+    /// 顯示Perplexity參數設定的UIAlertController
+    /// - Parameters:
+    ///   - title: String
+    ///   - message: String?
+    func presentPerplexityConfigureAlert(title: String, message: String? = nil) {
+        
+        let alertController = UIAlertController._build(title: title, message: message)
+
+        alertController.addTextField { (textField) in textField.text = self.apiKey; textField.placeholder = "pplx-<Your-API-Key>" }
+        
+        let sureAction = UIAlertAction(title: "確定", style: .destructive) { aciton in
+            guard let textFields = alertController.textFields else { return }
+            self.perplexityConfigure(textFields: textFields)
         }
         
         let cancelAction = UIAlertAction(title: "取消", style: .cancel) { _ in }
@@ -447,24 +539,37 @@ private extension OllamViewController {
             }
             
             switch type {
-            case .ip: self.ip = value
-            case .port: self.port = value
-            case .chatModel: self.chatModel = value
+            case .ip: ip = value
+            case .port: port = value
+            case .chatModel: chatModel = value
             }
         }
         
-        self.configure(ip: self.ip, port: self.port, model: self.chatModel)
+        configure(ip: ip, port: port, model: chatModel)
+    }
+    
+    /// Perplexity參數設定
+    /// - Parameter textFields: [UITextField]
+    func perplexityConfigure(textFields: [UITextField]) {
+        
+        guard let apiKey = textFields.first?.text else { return }
+        
+        self.apiKey = apiKey
+        WWSimpleAI.Perplexity.shared.configure(apiKey: apiKey)
+        generateLiveButton(isEnabled: true)
     }
     
     /// 檢測參數設定是否正確
     func checkConfigure() {
+        
+        let title = "\(agentType)".capitalized
         
         _ = WWNetworking.shared.request(urlString: WWSimpleAI.Ollama.API.version.url(), timeout: 5) { result in
             
             DispatchQueue.main.async {
                 
                 switch result {
-                case .failure(let error): self.presentOllamaConfigureAlert(message: error.localizedDescription)
+                case .failure(let error): self.presentOllamaConfigureAlert(title: "\(title)參數設定", message: error.localizedDescription)
                 case .success(let info):
                     
                     guard let data = info.data,

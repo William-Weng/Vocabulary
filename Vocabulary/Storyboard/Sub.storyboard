@@ -266,7 +266,7 @@
                         <outlet property="connentView" destination="dvp-w7-Chx" id="iak-2m-iR7"/>
                         <outlet property="expandableTextView" destination="Wb9-yj-JI9" id="WTR-Lu-lZA"/>
                         <outlet property="generateLiveButton" destination="0b2-eb-Skw" id="WjR-Xx-grO"/>
-                        <outlet property="keyboardConstraintHeight" destination="a2w-zx-IGy" id="fUx-T9-pea"/>
+                        <outlet property="keyboardConstraintHeight" destination="U1d-d1-hgN" id="w8Y-Fk-EpF"/>
                         <outlet property="keyboardShadowView" destination="78r-ht-gnQ" id="Jhx-vT-xAx"/>
                         <outlet property="myImageView" destination="vLy-jq-L7h" id="LPN-4e-cfr"/>
                         <outlet property="myWebView" destination="tcy-eS-3A0" id="Fna-2P-pwn"/>
@@ -393,7 +393,7 @@
         <image name="Talking" width="21.333333969116211" height="21.333333969116211"/>
         <image name="VolumeSlider" width="85.333335876464844" height="85.333335876464844"/>
         <systemColor name="systemPinkColor">
-            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -8,7 +8,7 @@
 import UIKit
 import SafariServices
 
-// MARK: - 相似字處理
+// MARK: - 同義字處理
 final class SimilarWordViewController: UIViewController {
     
     @IBOutlet weak var myTableView: UITableView!
@@ -125,11 +125,11 @@ private extension SimilarWordViewController {
         
         if let indexPath = indexPath, let _similarWord = SimilarWordCell.words[safe: indexPath.row] { similarWord = _similarWord }
         
-        let alertController = UIAlertController._build(title: "請輸入相似字", message: nil)
+        let alertController = UIAlertController._build(title: "請輸入同義字", message: nil)
         
         alertController.addTextField {
             
-            $0.placeholder = "相似字"
+            $0.placeholder = "同義字"
             
             if let similarWord = similarWord {
                 $0.text = similarWord.word
@@ -203,7 +203,7 @@ private extension SimilarWordViewController {
         return false
     }
     
-    /// 相似字比較
+    /// 同義字比較
     /// - Parameter indexPath: IndexPath
     func compareSimilarWord(with indexPath: IndexPath) {
         
@@ -219,10 +219,10 @@ private extension SimilarWordViewController {
         AssistiveTouchHelper.shared.hiddenAction(true)
     }
     
-    /// 網路相似字比較 (google)
+    /// 網路同義字比較 (google)
     /// - Parameters:
     ///   - word: 原字
-    ///   - similarWord: 相似字
+    ///   - similarWord: 同義字
     /// - Returns: String
     func netCompareWord(word: String, similarWord: String) -> String {
         let question = "\(word) vs \(similarWord)"

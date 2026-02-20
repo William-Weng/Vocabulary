@@ -60,7 +60,7 @@
         "palette": { "name": "相關設定", "value": 9, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Palette.gif" },
         "chatting": { "name": "聊天對話", "value": 10, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Chatting.gif" },
         "ollama": { "name": "網內對話", "value": 11, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Ollama.gif" },
-        "similar": { "name": "相似文字", "value": 12, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Similar.gif" }
+        "similar": { "name": "同義文字", "value": 12, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Similar.gif" }
       }
     }
   },
@@ -123,7 +123,7 @@
         "palette": { "name": "相關設定", "value": 9, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Palette.gif" },
         "chatting": { "name": "聊天對話", "value": 10, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Chatting.gif" },
         "ollama": { "name": "網內對話", "value": 11, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Ollama.gif" },
-        "similar": { "name": "相似文字", "value": 12, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Similar.gif" }
+        "similar": { "name": "同義文字", "value": 12, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Similar.gif" }
       }
     }
   },
@@ -181,7 +181,7 @@
         "palette": { "name": "相關設定", "value": 9, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Palette.gif" },
         "chatting": { "name": "聊天對話", "value": 10, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Chatting.gif" },
         "ollama": { "name": "網內對話", "value": 11, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Ollama.gif" },
-        "similar": { "name": "相似文字", "value": 12, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Similar.gif" }
+        "similar": { "name": "同義文字", "value": 12, "color": "#1c1c1b", "backgroundColor": "#c9f361", "filename": "Similar.gif" }
       }
     }
   }

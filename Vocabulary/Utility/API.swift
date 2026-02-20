@@ -621,7 +621,7 @@ extension API {
         return result.isSussess
     }
     
-    /// 更新相似字
+    /// 更新同義字
     /// - Parameters:
     ///   - id: Int
     ///   - alphabet: 音標

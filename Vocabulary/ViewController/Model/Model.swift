@@ -106,7 +106,7 @@ final class VocabularyList: Codable {
     let word: String        // 單字
     let alphabet: String?   // 音標字母
     let favorite: Int?      // 我的最愛
-    let similar: String?    // 相似字 (JSON)
+    let similar: String?    // 同義字 (JSON)
     let createTime: Date    // 建立時間
     let updateTime: Date    // 更新時間
     
@@ -190,7 +190,7 @@ struct Music {
     }
 }
 
-// MARK: - 相似字
+// MARK: - 同義字
 struct SimilarWord {
     let word: String    // 單字
     let level: Int      // 等級

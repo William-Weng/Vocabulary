@@ -53,7 +53,7 @@ extension MainTableViewCell {
         return vocabularyList
     }
     
-    /// 將相似字的記錄 => Array
+    /// 將同義字的記錄 => Array
     /// - Parameter list: VocabularyList
     /// - Returns: [SimilarWord]
     static func similarWords(with indexPath: IndexPath) -> [SimilarWord] {
@@ -114,7 +114,7 @@ private extension MainTableViewCell {
         Utility.shared.levelButtonSetting(levelButton, with: info)
     }
     
-    /// 相似字單字列表設定
+    /// 同義字單字列表設定
     /// - Parameter vocabularyList: VocabularyList
     func initSimilarButtonSetting(vocabularyList: VocabularyList) {
         
@@ -123,7 +123,7 @@ private extension MainTableViewCell {
         
         similarButton.setImage(image, for: .normal)
         similarButton.showsMenuAsPrimaryAction = true
-        similarButton.menu = UIMenu(title: "相似字", options: .singleSelection, children: actions)
+        similarButton.menu = UIMenu(title: "同義字", options: .singleSelection, children: actions)
     }
     
     /// FavoriteImageView點擊功能

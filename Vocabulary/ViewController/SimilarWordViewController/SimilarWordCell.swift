@@ -7,7 +7,7 @@
 
 import UIKit
 
-// MARK: - 相似字Cell
+// MARK: - 同義字Cell
 final class SimilarWordCell: UITableViewCell, CellReusable {
     
     @IBOutlet weak var wordLabel: UILabel!

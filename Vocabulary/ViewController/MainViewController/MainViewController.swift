@@ -457,12 +457,12 @@ private extension MainViewController {
         return actionOK
     }
     
-    /// 左側滑動按鈕 => 設定相似字
+    /// 左側滑動按鈕 => 設定同義字
     /// - Parameter indexPath: IndexPath
     /// - Returns: [UIContextualAction]
     func leadingSwipeActionsMaker(with indexPath: IndexPath) -> [UIContextualAction] {
         
-        let simpleWordEditAction = UIContextualAction._build(with: "相似字", color: #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)) { [weak self] in
+        let simpleWordEditAction = UIContextualAction._build(with: "同義字", color: #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)) { [weak self] in
             self?.performSegue(for: .similarWordView, sender: indexPath)
         }
         
@@ -560,7 +560,7 @@ private extension MainViewController {
         viewController.mainViewDelegate = self
     }
     
-    /// 相似字頁面相關設定
+    /// 同義字頁面相關設定
     /// - Parameters:
     ///   - segue: UIStoryboardSegue
     ///   - sender: Any?

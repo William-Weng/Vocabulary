@@ -740,7 +740,7 @@ extension Utility {
         MainTableViewCell.vocabularyListArray[indexPath.row] = dictionary
     }
     
-    /// 更新相似字資訊
+    /// 更新同義字資訊
     /// - Parameters:
     ///   - info: Settings.VocabularyLevelInformation
     ///   - indexPath: IndexPath

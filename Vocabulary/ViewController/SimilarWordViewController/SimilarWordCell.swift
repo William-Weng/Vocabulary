@@ -34,7 +34,8 @@ private extension SimilarWordCell {
         guard let list = Self.words[safe: indexPath.row] else { return }
         
         wordLabel.text = list.word
-        
+        wordLabel.font = Utility.shared.dictionaryFont(with: Constant.tableNameIndex, size: 36.0)
+
         for index in 0..<levelImageViews.count {
             
             let levelImageView = levelImageViews[index]

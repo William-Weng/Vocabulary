@@ -110,11 +110,11 @@ private extension SearchVocabularyViewController {
         mySearchBar.placeholder = "請輸入需要搜尋的\(type)"
         mySearchBar.delegate = self
         mySearchBar._searchBarStyle(with: .minimal)
-                
+        
         mySearchBar.searchTextField.delegate = self
         mySearchBar.searchTextField.leftView = leftButton
         mySearchBar.searchTextField.backgroundColor = .black.withAlphaComponent(0.5)
-        mySearchBar.searchTextField.textColor = .secondarySystemBackground
+        mySearchBar.searchTextField.textColor = .lightText
     }
     
     /// 產生MainTableViewCell

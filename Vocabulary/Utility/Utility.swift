@@ -236,7 +236,8 @@ extension Utility {
     }
     
     /// 顯示單字浮動搜尋頁
-    func displaySearchView() {
+    /// - Parameter word: 搜尋單字
+    func displaySearchView(like word: String? = nil) {
         
         guard let appDelegate = appDelegate,
               let tabBarController = appDelegate.window?.rootViewController as? MyTabBarController
@@ -244,7 +245,7 @@ extension Utility {
             return
         }
         
-        tabBarController.displaySearchFloatingView()
+        tabBarController.displaySearchFloatingView(like: word)
     }
 }
 
@@ -377,13 +378,14 @@ extension Utility {
     /// - Parameters:
     ///   - target: UIViewController & WWFloatingViewDelegate
     ///   - currentView: UIView?
-    func presentSearchVocabularyViewController(target: UIViewController & WWFloatingViewDelegate, currentView: UIView?) {
+    ///   - completion: (ViewController) -> Void
+    func presentSearchVocabularyViewController(target: UIViewController & WWFloatingViewDelegate, currentView: UIView?, completion: (() -> Void)? = nil) {
         
         let floatingViewController = WWFloatingView.shared.maker()
         floatingViewController.configure(animationDuration: Constant.delay, backgroundColor: .black.withAlphaComponent(0.1), multiplier: 0.8, completePercent: 0.5, currentView: currentView)
         floatingViewController.myDelegate = target
         
-        target.present(floatingViewController, animated: false)
+        target.present(floatingViewController, animated: false) { completion?() }
     }
 }
 

@@ -80,9 +80,15 @@ extension MyTabBarController: WWFloatingViewDelegate {
 extension MyTabBarController {
     
     /// 顯示單字浮動搜尋頁
-    func displaySearchFloatingView() {
+    /// - Parameter word: 搜尋單字
+    func displaySearchFloatingView(like word: String?) {
+        
         searchVocabularyViewController = UIStoryboard._instantiateViewController() as SearchVocabularyViewController
-        Utility.shared.presentSearchVocabularyViewController(target: self, currentView: searchVocabularyViewController?.view)
+        
+        Utility.shared.presentSearchVocabularyViewController(target: self, currentView: searchVocabularyViewController?.view) { [unowned self] in
+            searchVocabularyViewController?.mySearchBar.text = word
+            searchVocabularyViewController?.searchWordList(like: word)
+        }
     }
 }
 

@@ -118,7 +118,10 @@ private extension MainTableViewCell {
     /// - Parameter vocabularyList: VocabularyList
     func initSimilarButtonSetting(vocabularyList: VocabularyList) {
         
-        let actions = Self.similarWords(with: indexPath).map { UIAction(title: $0.word) { _ in }}
+        let actions = Self.similarWords(with: indexPath).map { UIAction(title: $0.word) { action in
+            print(action.title)
+            Utility.shared.displaySearchView(like: action.title)
+        }}
         let image: UIImage = (!actions.isEmpty) ? .similar : .similarNo
         
         similarButton.setImage(image, for: .normal)

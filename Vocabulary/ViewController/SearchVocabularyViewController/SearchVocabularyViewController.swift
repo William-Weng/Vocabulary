@@ -83,6 +83,34 @@ extension SearchVocabularyViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: - 公開工具
+extension SearchVocabularyViewController {
+    
+    /// 搜尋相似的單字
+    /// - Parameter word: 以它為開頭的單字
+    func searchWordList(like word: String?) {
+        
+        defer {
+            
+            let listCount = SearchVocabularyTableViewCell.vocabularyListArray.count
+            isNeededUpdate = (listCount < Constant.searchCount) ? false : true
+            
+            refreshControl.endRefreshing()
+            myTableView.reloadData()
+        }
+        
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex),
+              let word = word?._removeWhiteSpacesAndNewlines(),
+              !word.isEmpty
+        else {
+            SearchVocabularyTableViewCell.vocabularyListArray = []; return
+        }
+        
+        SearchVocabularyTableViewCell.vocabularyListArray = []
+        SearchVocabularyTableViewCell.vocabularyListArray = Utility.shared.vocabularyListArrayMaker(like: word, searchType: currentSearchType, info: info, offset: 0)
+    }
+}
+
 // MARK: - 小工具
 private extension SearchVocabularyViewController {
     
@@ -128,30 +156,6 @@ private extension SearchVocabularyViewController {
         cell.configure(with: indexPath)
         
         return cell
-    }
-    
-    /// 搜尋相似的單字
-    /// - Parameter word: 以它為開頭的單字
-    func searchWordList(like word: String?) {
-        
-        defer {
-            
-            let listCount = SearchVocabularyTableViewCell.vocabularyListArray.count
-            isNeededUpdate = (listCount < Constant.searchCount) ? false : true
-            
-            refreshControl.endRefreshing()
-            myTableView.reloadData()
-        }
-        
-        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex),
-              let word = word?._removeWhiteSpacesAndNewlines(),
-              !word.isEmpty
-        else {
-            SearchVocabularyTableViewCell.vocabularyListArray = []; return
-        }
-        
-        SearchVocabularyTableViewCell.vocabularyListArray = []
-        SearchVocabularyTableViewCell.vocabularyListArray = Utility.shared.vocabularyListArrayMaker(like: word, searchType: currentSearchType, info: info, offset: 0)
     }
     
     /// 增加相似的單字

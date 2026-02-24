@@ -12,7 +12,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-    private lazy var touchViewController = { UIStoryboard(name: "Sub", bundle: nil).instantiateViewController(withIdentifier: "TouchViewController") }()
+    private lazy var touchViewController = { UIStoryboard._instantiateViewController(name: "Sub") as TouchViewController }()
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
@@ -78,12 +78,9 @@ private extension SceneDelegate {
             DeepLinkHelper.shared.deepLinkURL(self, open: urlContext.url); return
         }
         
-        if let userActivity = connectionOptions.userActivities.first, let url = userActivity.webpageURL {
-            DeepLinkHelper.shared.universalLink(self, webpageURL: url); return
-        }
-        
-        if let userActivity = connectionOptions.userActivities.first, let userInfo = userActivity.userInfo {
-            DeepLinkHelper.shared.pushNotification(self, userInfo: userInfo); return
+        if let userActivity = connectionOptions.userActivities.first {
+            if let url = userActivity.webpageURL { DeepLinkHelper.shared.universalLink(self, webpageURL: url); return }
+            if let userInfo = userActivity.userInfo { DeepLinkHelper.shared.pushNotification(self, userInfo: userInfo); return }
         }
     }
 }

@@ -86,8 +86,9 @@ extension MusicHelper {
         self.currentMusic = music
         self.musicLoopType = musicLoopType
         
-        audioPlayer.play(with: audioUrl)
-        musicPlayerHint(audioPlayer)
+        audioPlayer.play(with: audioUrl, targetDB: -5.0)
+        audioPlayer.volume = volume
+        musicPlayerHint()
         
         return true
     }
@@ -168,11 +169,11 @@ private extension MusicHelper {
     
     /// [音樂檔名提示](http://furnacedigital.blogspot.com/2010/12/avfoundation.html)
     /// - Parameter player: WWNormalizeAudioPlayer
-    func musicPlayerHint(_ player: WWNormalizeAudioPlayer) {
+    func musicPlayerHint() {
         
         guard let window = Utility.shared.appDelegate?.window,
-              let time = player.totalTime()._time(unitsStyle: .positional, allowedUnits: [.minute, .second], behavior: .pad),
-              let audioFile = player.audioFile
+              let time = audioPlayer.totalTime()._time(unitsStyle: .positional, allowedUnits: [.minute, .second], behavior: .pad),
+              let audioFile = audioPlayer.audioFile
         else {
             return
         }

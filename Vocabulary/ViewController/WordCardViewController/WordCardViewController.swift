@@ -49,8 +49,7 @@ final class WordCardViewController: UIViewController {
     @IBAction func resetRandomWordList(_ sender: UIBarButtonItem) {
         
         Task {
-            Utility.shared.flashHUD(with: .loading, animation: Constant.autoBackupDelaySecond)
-            try await Task.sleep(for: .seconds(Constant.autoBackupDelaySecond))
+            Utility.shared.flashHUD(with: .loading, animation: Constant.replay)
             initRandomWordListDetail()
             onBoardingViewController?.rootPage(completion: nil)
         }

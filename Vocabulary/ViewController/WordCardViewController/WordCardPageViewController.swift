@@ -50,7 +50,7 @@ final class WordCardPageViewController: UIViewController {
     /// - Parameter indexPath: IndexPath
     func configure(with indexPath: IndexPath) {
         
-        guard let vocabularyList = MainTableViewCell.vocabularyList(with: indexPath),
+        guard let vocabularyList = WordMemoryItemCell.vocabularyList(with: indexPath),
               let settings = Utility.shared.generalSettings(index: Constant.tableNameIndex)
         else {
             return
@@ -216,7 +216,7 @@ private extension WordCardPageViewController {
     ///   - indexPath: IndexPath
     func updateFavorite(_ isFavorite: Bool, with indexPath: IndexPath) {
                 
-        guard let vocabularyList = MainTableViewCell.vocabularyList(with: indexPath),
+        guard let vocabularyList = WordMemoryItemCell.vocabularyList(with: indexPath),
               let info = Utility.shared.generalSettings(index: Constant.tableNameIndex)
         else {
             return
@@ -235,7 +235,7 @@ private extension WordCardPageViewController {
     ///   - indexPath: IndexPath
     func updateLevel(_ levelInfo: Settings.VocabularyLevelInformation, with indexPath: IndexPath) {
         
-        guard let vocabularyList = MainTableViewCell.vocabularyList(with: indexPath),
+        guard let vocabularyList = WordMemoryItemCell.vocabularyList(with: indexPath),
               let generalInfo = Utility.shared.generalSettings(index: Constant.tableNameIndex)
         else {
             return

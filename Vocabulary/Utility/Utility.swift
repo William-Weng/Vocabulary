@@ -334,34 +334,16 @@ extension Utility {
     
     /// [顯示HUD](https://augmentedcode.io/2019/09/01/animating-gifs-and-apngs-with-cganimateimageaturlwithblock-in-swift/)
     /// - Parameter type: [Constant.AnimationGifType](https://www.swiftjectivec.com/animating-images-using-image-io/)
-    func flashHUD(with type: Constant.AnimationGifType) {
+    func flashHUD(with type: Constant.AnimationGifType, animation duration: TimeInterval = 0.75) {
         
         guard let gifUrl = type.fileURL(with: .animation),
               FileManager.default._fileExists(with: gifUrl).isExist
         else {
-            WWHUD.shared.flash(effect: .default, backgroundColor: .black.withAlphaComponent(0.3), animation: 0.75, completion: nil); return
+            WWHUD.shared.flash(effect: .default, backgroundColor: .black.withAlphaComponent(0.3), animation: duration, completion: nil); return
         }
         
         let options = [kCGImageAnimationStartIndex: 0] as? CFDictionary
         WWHUD.shared.flash(effect: .gif(url: gifUrl, options: options), height: 256.0, backgroundColor: .black.withAlphaComponent(0.3), animation: 0.75, completion: nil)
-    }
-    
-    /// 播放HUD
-    /// - Parameter type: Constant.AnimationGifType
-    func diplayHUD(with type: Constant.AnimationGifType) {
-        
-        guard let gifUrl = type.fileURL(with: .animation),
-              FileManager.default._fileExists(with: gifUrl).isExist
-        else {
-            WWHUD.shared.flash(effect: .default, backgroundColor: .black.withAlphaComponent(0.3), animation: 0.75, completion: nil); return
-        }
-        
-        WWHUD.shared.display(effect: .gif(url: gifUrl, options: nil), height: 256.0, backgroundColor: .black.withAlphaComponent(0.3))
-    }
-    
-    /// 停止HUD
-    func dismissHUD() {
-        WWHUD.shared.dismiss(completion: nil)
     }
     
     /// WWToast的顏色 / 高度設定

@@ -12,17 +12,16 @@ import WWFloatingViewController
 
 // MARK: - 單字卡
 final class WordCardViewController: UIViewController {
-        
+    
     weak var mainViewDelegate: MainViewDelegate?
     
     private var infinityLoopInfo: WWOnBoardingViewController.InfinityLoopInformation = (hasPrevious: false, hasNext: true)
-    private var reviewWordCardList: [[String : Any]] = []
     
-    private lazy var pageViewControllerArray: [UIViewController] = {
+    private lazy var pageViewControllerArray: [WordCardPageViewController] = {
         return [
-            pageViewController(with: "WordCardPageViewController"),
-            pageViewController(with: "WordCardPageViewController"),
-            pageViewController(with: "WordCardPageViewController"),
+            pageViewController(),
+            pageViewController(),
+            pageViewController(),
         ]
     }()
     
@@ -30,7 +29,7 @@ final class WordCardViewController: UIViewController {
     private var currentIndexOffset = 0
     private var onBoardingViewController: WWOnBoardingViewController?
     private var searchVocabularyViewController: SearchVocabularyViewController?
-        
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewWillAppearAction(animated)
@@ -41,7 +40,21 @@ final class WordCardViewController: UIViewController {
         viewWillDisappearAction(animated)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) { initSetting(for: segue, sender: sender) }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        initRandomWordListDetail()
+        initSetting(for: segue, sender: sender)
+    }
+    
+    @IBAction func resetRandomWordList(_ sender: UIBarButtonItem) {
+        
+        Task {
+            Utility.shared.flashHUD(with: .loading, animation: Constant.autoBackupDelaySecond)
+            try await Task.sleep(for: .seconds(Constant.autoBackupDelaySecond))
+            initRandomWordListDetail()
+            onBoardingViewController?.rootPage(completion: nil)
+        }
+    }
     
     deinit {
         mainViewDelegate = nil
@@ -53,7 +66,7 @@ final class WordCardViewController: UIViewController {
 extension WordCardViewController: WWOnBoardingViewControllerDelegate {
     
     func viewControllers(onBoardingViewController: WWOnBoardingViewController) -> [UIViewController] {
-        if (MainTableViewCell.vocabularyListArray.isEmpty) { pageViewControllerArray = [UIViewController()] }
+        if (WordMemoryItemCell.vocabularyListArray.isEmpty) { pageViewControllerArray = [] }
         return pageViewControllerArray
     }
     
@@ -84,11 +97,20 @@ private extension WordCardViewController {
         onBoardingViewController?.setting(onBoardingDelegate: self, currentIndex: currentIndex)
     }
     
-    /// 尋找Storyboard上的ViewController for StoryboardId
-    /// - Parameter indentifier: String
-    /// - Returns: UIViewController
-    func pageViewController(with indentifier: String) -> UIViewController {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: indentifier)
+    /// 初始化隨機單字
+    func initRandomWordListDetail() {
+        
+        guard let info = Utility.shared.generalSettings(index: Constant.tableNameIndex) else { return }
+        
+        currentIndex = 0
+        currentIndexOffset = 0
+        WordMemoryItemCell.vocabularyListArray = API.shared.searchWordRandomListDetail(info: info)
+    }
+    
+    /// 產生WordCardPageViewController
+    /// - Returns: WordCardPageViewController
+    func pageViewController() -> WordCardPageViewController {
+        return UIStoryboard._instantiateViewController() as WordCardPageViewController
     }
     
     /// 處理將要換頁的動作
@@ -135,9 +157,9 @@ private extension WordCardViewController {
     ///   - offset: Int
     func pageViewControllerSetting(with index: Int, offset: Int) {
         
-        guard let viewController = pageViewControllerArray[safe: index] as? WordCardPageViewController else { return }
+        guard let viewController = pageViewControllerArray[safe: index] else { return }
         
-        title = "單字卡 - \(currentIndexOffset + 1) / \(MainTableViewCell.vocabularyListArray.count)"
+        title = "單字卡 - \(currentIndexOffset + 1) / \(WordMemoryItemCell.vocabularyListArray.count)"
         
         viewController.loadViewIfNeeded()
         viewController.configure(with: IndexPath(row: currentIndexOffset, section: 0))
@@ -149,7 +171,7 @@ private extension WordCardViewController {
     ///   - isTypping: Bool
     func speakContent(with index: Int, isTypping: Bool = false) {
         
-        guard let viewController = pageViewControllerArray[safe: index] as? WordCardPageViewController else { return }
+        guard let viewController = pageViewControllerArray[safe: index] else { return }
         
         viewController.loadViewIfNeeded()
         isTypping ? viewController.typewriter() : viewController.speakContent()
@@ -166,9 +188,9 @@ private extension WordCardViewController {
             currentIndexOffset = 0; return
         }
         
-        if (offset >= MainTableViewCell.vocabularyListArray.count - 1) {
+        if (offset >= WordMemoryItemCell.vocabularyListArray.count - 1) {
             infinityLoopInfo.hasNext = false
-            currentIndexOffset = MainTableViewCell.vocabularyListArray.count - 1
+            currentIndexOffset = WordMemoryItemCell.vocabularyListArray.count - 1
         }
     }
     
@@ -178,7 +200,7 @@ private extension WordCardViewController {
         
         switch error {
         case .firstPage: currentIndexOffset = 0
-        case .lastPage: currentIndexOffset = MainTableViewCell.vocabularyListArray.count - 2
+        case .lastPage: currentIndexOffset = WordMemoryItemCell.vocabularyListArray.count - 2
         default: break
         }
     }

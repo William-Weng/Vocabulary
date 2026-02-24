@@ -22,9 +22,7 @@ final class WordMemoryViewController: UIViewController {
     @IBOutlet weak var myCollectionView: UICollectionView!
     
     weak var mainViewDelegate: MainViewDelegate?
-    
-    private let segueIdentifier = "MemoryListViewSegue"
-    
+        
     private var canDelete = false
     
     override func viewDidLoad() {
@@ -44,10 +42,6 @@ final class WordMemoryViewController: UIViewController {
     
     @IBAction func refreshVocabularyListAction(_ sender: UIBarButtonItem) {
         refreshVocabularyList()
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        vocabularyListPageSetting(for: segue, sender: sender)
     }
     
     deinit {
@@ -83,7 +77,8 @@ extension WordMemoryViewController: UICollectionViewDelegate, UICollectionViewDa
 extension WordMemoryViewController: WordMemoryDelegate {
         
     func itemDetail(with indexPath: IndexPath) {
-        performSegue(withIdentifier: segueIdentifier, sender: indexPath)
+        guard let vocabularyList = WordMemoryItemCell.vocabularyList(with: indexPath) else { return }
+        Utility.shared.displaySearchView(like: vocabularyList.word)
     }
 }
 
@@ -188,25 +183,6 @@ private extension WordMemoryViewController {
         
         let width = (size.height > size.width) ? size.width : size.height
         return width * precent
-    }
-    
-    /// 設定單字列表頁的相關數值
-    /// - Parameters:
-    ///   - segue: UIStoryboardSegue
-    ///   - sender: Any?
-    func vocabularyListPageSetting(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        guard let viewController = segue.destination as? ListViewController,
-              let indexPath = sender as? IndexPath,
-              let vocabularyList = WordMemoryItemCell.vocabularyList(with: indexPath)
-        else {
-            return
-        }
-        
-        viewController.canDelete = false
-        viewController.vocabularyList = vocabularyList
-        viewController.vocabularyListIndexPath = indexPath
-        viewController.mainViewDelegate = mainViewDelegate
     }
 }
 

@@ -190,8 +190,9 @@
          * @param {number} message - 初始對話框文字
          * @returns {number} 建立時的時間戳記 (ms)
          */
-        window.appendRole = (role, message) => {
+        window.appendRole = (role, base64Encoded) => {
 
+            const decodedText = decodedBase64Text(base64Encoded)
             const container = document.getElementById('container')
             const timestamp = Date.now()
             const localTimeString = new Date(timestamp).toLocaleString()
@@ -207,8 +208,8 @@
                 <span class="dot">.</span>
             </span>`
 
-            if (message.length != 0) { innerMessage = message }
-
+            if (decodedText.length != 0) { innerMessage = marked.parse(decodedText) }
+            
             let messageRoleReadContent = `
             <span class="message-time">${localTimeString}</span>
             <span class="message-read"><button id="${buttonId}" class="fas fa-volume-up"></button></span>
@@ -248,8 +249,8 @@
          */
         window.displayMarkdown = (base64Encoded, timestamp) => {
             
-            const messageId = messageIdMaker(timestamp)
             const decodedText = decodedBase64Text(base64Encoded)
+            const messageId = messageIdMaker(timestamp)
             const html = marked.parse(decodedText)
             const div = document.getElementById(messageId)
 

@@ -259,11 +259,12 @@ private extension OllamaViewController {
         
         let urlString = WWSimpleAI.Ollama.API.generate.url()
         let context = lastContext?._base64JSONObjectDecode() as [Int]?
+        let fixPrompt = prompt.replacingOccurrences(of: "\n", with: " ")
         
         let json = """
         {
           "model": "\(chatModel)",
-          "prompt": "\(prompt)",
+          "prompt": "\(fixPrompt)",
           "context": \(context ?? []),
           "stream": true
         }
@@ -441,7 +442,7 @@ private extension OllamaViewController {
     func appendRole(with webView: WKWebView, role: Constant.AgentRoleType, message: String = "",  result: @escaping (([String: Int]) -> Void)) {
                 
         let jsCode = """
-            window.appendRole("\(role)", "\(message)")
+            window.appendRole("\(role)", "\(message._base64Encoded() ?? "???")")
         """
         
         webView._evaluateJavaScript(script: jsCode) { _result_ in

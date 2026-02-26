@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
+        
+        :root {
+            --base-font-size: 1.2em;
+        }
+        
         .message {
             margin-bottom: 15px;
             display: flex;
@@ -38,11 +43,15 @@
         }
 
         .message-bubble {
-            max-width: 90%;
+            max-width: 100%;
             display: flex;
             flex-direction: column;
         }
 
+        .message-content {
+            font-size: var(--base-font-size);
+        }
+        
         .bot .message-content {
             background-color: #00000066;
             border-radius: 8px;
@@ -68,13 +77,13 @@
         }
         
         .bot .message-time {
-            font-size: 0.7em;
+            font-size: calc(var(--base-font-size) * 0.6);
             color: #999;
             align-self: flex-start;
         }
 
         .user .message-time {
-            font-size: 0.7em;
+            font-size: calc(var(--base-font-size) * 0.6);
             color: #999;
             align-self: flex-end;
         }

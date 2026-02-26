@@ -45,7 +45,7 @@ extension MusicHelper {
     /// 初始化播放器設定
     func initAudioPlaySetting() {
         
-        let options: AVAudioSession.CategoryOptions = [.mixWithOthers, .defaultToSpeaker, .allowBluetoothHFP]
+        let options: AVAudioSession.CategoryOptions = [.mixWithOthers, .defaultToSpeaker, .allowBluetooth]
         
         _ = AVAudioSession.sharedInstance()._setCategory(.playAndRecord, mode: .default, policy: .default, options: options, isActive: true)
         

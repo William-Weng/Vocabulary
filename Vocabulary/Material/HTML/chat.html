@@ -126,6 +126,63 @@
     </style>
 
     <script>
+        
+        /**
+        * Base64文字解碼
+        * @param {string} base64Encoded - Base64編碼文字
+        */
+        function decodedBase64Text(base64Encoded) {
+            const decodedText = decodeURIComponent(escape(atob(base64Encoded)))
+            return decodedText
+        }
+        
+        /**
+        * 產生當Key值用的MessageId
+        * @param {number} timestamp - 建立時的時間戳記 (ms)
+        */
+        function messageIdMaker(timestamp) {
+            const id = `message-${timestamp}`
+            return id
+        }
+        
+        /**
+        * 產生當Key值用的ReadButtonId
+        * @param {number} timestamp - 建立時的時間戳記 (ms)
+        */
+        function readButtonIdMaker(timestamp) {
+            const id = `read-button-${timestamp}`
+            return id
+        }
+        
+        /**
+        * [唸出文字內容](https://ithelp.ithome.com.tw/m/articles/10305630)
+        * @param {string} text - 要唸出的文字
+        * @param {string} lang - 語言代碼 (預設:'zh-TW')
+        * @param {number} rate - 語速 (0.1 到 10.0)
+        * @param {number} pitch - 音調 (0 到 2)
+        */
+        function speakText(text, lang = 'zh-TW', rate = 1.0, pitch = 1.0) {
+
+            if (!window.speechSynthesis || !text) { return }
+            if (typeof text !== 'string') { return }
+
+            const utterance = new SpeechSynthesisUtterance(text)
+            utterance.voice = speechSynthesis.getVoices().find(voice => voice.lang === lang) || speechSynthesis.getVoices()[0]
+
+            if (!utterance.voice) { return }
+
+            utterance.lang = lang
+            utterance.text = text
+            utterance.rate = rate
+            utterance.pitch = pitch
+
+            speechSynthesis.speak(utterance)
+        }
+    </script>
+    
+
+    
+    <script>
 
         /**
          * 加入角色 + 初始對話框文字 (時間戳記當Id用)
@@ -138,8 +195,8 @@
             const container = document.getElementById('container')
             const timestamp = Date.now()
             const localTimeString = new Date(timestamp).toLocaleString()
-            const buttonId = `read-button-${timestamp}`
-            const messageId = `message-${timestamp}`
+            const buttonId = readButtonIdMaker(timestamp)
+            const messageId = messageIdMaker(timestamp)
 
             let innerMessage = `
             <span class="dots">
@@ -178,11 +235,7 @@
             
             container.insertAdjacentHTML('beforeend', divHtml)
 
-            window.scrollTo({
-                top: document.body.scrollHeight,
-                behavior: 'smooth'
-            })
-            
+            window.scrollToBottom()
             window.readEventListener(timestamp)
 
             return { "timestamp": timestamp }
@@ -195,8 +248,8 @@
          */
         window.displayMarkdown = (base64Encoded, timestamp) => {
             
-            const messageId = `message-${timestamp}`
-            const decodedText = decodeURIComponent(escape(atob(base64Encoded)))
+            const messageId = messageIdMaker(timestamp)
+            const decodedText = decodedBase64Text(base64Encoded)
             const html = marked.parse(decodedText)
             const div = document.getElementById(messageId)
 
@@ -242,18 +295,12 @@
          */
         window.readEventListener = (timestamp) => {
             
-            const buttonId = `read-button-${timestamp}`
-            const messageId = `message-${timestamp}`
+            const buttonId = readButtonIdMaker(timestamp)
+            const messageId = messageIdMaker(timestamp)
             
             document.getElementById(buttonId).addEventListener("click", () => {
-                
-                const textToRead = document.getElementById(messageId).textContent
-                const utterance = new SpeechSynthesisUtterance(textToRead)
-                
-                utterance.rate = 0.8
-                utterance.lang = 'zh-TW'
-                
-                speechSynthesis.speak(utterance)
+                const text = document.getElementById(messageId).textContent
+                speakText(text)
             });
         }
     </script>

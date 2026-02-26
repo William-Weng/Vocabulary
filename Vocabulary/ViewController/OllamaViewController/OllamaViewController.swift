@@ -392,9 +392,9 @@ private extension OllamaViewController {
     ///   - text: String
     func generateLiveAction(webView: WKWebView, text: String) {
         
-        appendRole(with: webView, role: "user", message: text) { _ in
+        appendRole(with: webView, role: .user, message: text) { _ in
             
-            self.appendRole(with: webView, role: "bot", message: "") { dict in
+            self.appendRole(with: webView, role: .bot, message: "") { dict in
                 
                 guard let botTimestamp = dict["timestamp"] else { return }
                 
@@ -411,9 +411,9 @@ private extension OllamaViewController {
     func generateAction(webView: WKWebView, text: String) {
         
         expandableTextView.text = ""
-        appendRole(with: webView, role: "user", message: text) { [unowned self] _ in
+        appendRole(with: webView, role: .user, message: text) { [unowned self] _ in
             
-            appendRole(with: webView, role: "bot", message: "") { dict in
+            appendRole(with: webView, role: .bot, message: "") { dict in
                 
                 guard let botTimestamp = dict["timestamp"] else { return }
                 
@@ -435,10 +435,10 @@ private extension OllamaViewController {
     /// 加上角色Cell
     /// - Parameters:
     ///   - webView: WKWebView
-    ///   - role: String
+    ///   - role: Constant.AgentRoleType
     ///   - message: String
     ///   - result: ([String: Int]) -> Void
-    func appendRole(with webView: WKWebView, role: String, message: String = "",  result: @escaping (([String: Int]) -> Void)) {
+    func appendRole(with webView: WKWebView, role: Constant.AgentRoleType, message: String = "",  result: @escaping (([String: Int]) -> Void)) {
                 
         let jsCode = """
             window.appendRole("\(role)", "\(message)")

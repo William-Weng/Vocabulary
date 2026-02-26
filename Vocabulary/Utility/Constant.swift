@@ -116,6 +116,30 @@ extension Constant {
         case perplexity
     }
     
+    /// 代理人角色類型
+    enum AgentRoleType: String {
+        case user
+        case bot
+    }
+}
+
+// MARK: - Enumeration
+extension Constant {
+    
+    /// [info.plist上的Key值](https://ithelp.ithome.com.tw/articles/10206444)
+    enum InfoPlistKey: String {
+        case CFBundleShortVersionString = "CFBundleShortVersionString"      // Version版本號 => 1.0.0
+        case CFBundleVersion = "CFBundleVersion"                            // Build的代號 => 202001011
+    }
+    
+    /// 單字相關的動作功能 => CRUD
+    enum WordActionType {
+        case append     // 新增
+        case update     // 修改
+        case delete     // 刪除
+        case search     // 查詢
+    }
+    
     /// 能夠設定顏色的Settings設定檔
     enum SettingsColorKey: Int, CaseIterable {
         
@@ -281,13 +305,7 @@ extension Constant {
             }
         }
     }
-    
-    /// [info.plist上的Key值](https://ithelp.ithome.com.tw/articles/10206444)
-    enum InfoPlistKey: String {
-        case CFBundleShortVersionString = "CFBundleShortVersionString"      // Version版本號 => 1.0.0
-        case CFBundleVersion = "CFBundleVersion"                            // Build的代號 => 202001011
-    }
-    
+        
     /// 單字內容的資料庫名稱
     enum DataTableType {
         
@@ -421,14 +439,6 @@ extension Constant {
             case .alphabet: return .systemPink
             }
         }
-    }
-    
-    /// 單字相關的動作功能 => CRUD
-    enum WordActionType {
-        case append     // 新增
-        case update     // 修改
-        case delete     // 刪除
-        case search     // 查詢
     }
     
     /// 音樂播放類型

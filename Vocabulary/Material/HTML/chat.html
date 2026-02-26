@@ -189,8 +189,6 @@
         }
     </script>
     
-
-    
     <script>
 
         /**
@@ -312,6 +310,13 @@
                 const text = document.getElementById(messageId).textContent
                 speakText(text)
             });
+        }
+        
+        /**
+         * 停止文字閱讀 - SpeechSynthesisUtterance
+         */
+        window.stopSpeakText = () => {
+            window.speechSynthesis.cancel()
         }
     </script>
 

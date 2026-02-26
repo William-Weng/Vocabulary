@@ -22,6 +22,8 @@ final class OllamaViewController: UIViewController {
     
     @IBOutlet weak var connentView: UIView!
     @IBOutlet weak var myImageView: UIImageView!
+    @IBOutlet weak var forgetMemoryButtonItem: UIBarButtonItem!
+    @IBOutlet weak var ollamaModelOptionButtonItem: UIBarButtonItem!
     @IBOutlet weak var generateLiveButton: UIButton!
     @IBOutlet weak var myWebView: WKWebView!
     @IBOutlet weak var keyboardConstraintHeight: NSLayoutConstraint!
@@ -39,33 +41,42 @@ final class OllamaViewController: UIViewController {
     private var isConfigure = false
     private var botTimestamp: Int?
     private var responseString: String = ""
+    private var ollamaBaseURL: String?
     
     private var isAnimationStop = false
     private var disappearImage: UIImage?
     private var gifImageView: UIImageView?
-    
-    /// [View Controller 生命週期更新 - iOS 17](https://xiaozhuanlan.com/topic/0651384792)
-    override func viewIsAppearing(_ animated: Bool) {
-        super.viewIsAppearing(animated)
-        
-        if (isConfigure) { return }
-        
-        initSetting()
-        isConfigure = true
-        title = "\(agentType)".capitalized
-
-        switch agentType {
-        case .ollama: configure(ip: ip, port: port, model: chatModel)
-        case .perplexity: configure(apiKey: apiKey)
-        }
-    }
-    
+            
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?._tabBarHidden(true)
         animatedBackground(with: .ollama)
     }
 
+    /// [View Controller 生命週期更新 - iOS 17](https://xiaozhuanlan.com/topic/0651384792)
+    override func viewIsAppearing(_ animated: Bool) {
+        super.viewIsAppearing(animated)
+        
+        if (isConfigure) { return }
+        
+        let isPerplexity = (agentType == .perplexity)
+        
+        initSetting()
+        
+        isConfigure = true
+        
+        forgetMemoryButtonItem.isHidden = isPerplexity
+        ollamaModelOptionButtonItem.isHidden = isPerplexity
+        ollamaModelOptionButtonItem.isEnabled = false
+        
+        title = "\(agentType)".capitalized
+        
+        switch agentType {
+        case .ollama: configure(ip: ip, port: port, model: chatModel)
+        case .perplexity: configure(apiKey: apiKey)
+        }
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         tabBarController?._tabBarHidden(false)
@@ -101,6 +112,7 @@ final class OllamaViewController: UIViewController {
     
     deinit {
         WWEventSource.shared.disconnect()
+        stopSpeakText(with: myWebView)
         keyboardShadowView.unregister()
         removeGifBlock()
         myPrint("deinit => \(Self.self)")
@@ -233,10 +245,48 @@ private extension OllamaViewController {
     ///   - model: String?
     func configure(ip: String?, port: String?, model: String?) {
         
-        guard let ip, let port, let model else { return }
+        guard let ip, let port else { return }
         
-        WWSimpleAI.Ollama.configure(baseURL: "http://\(ip):\(port)", model: model)
-        checkConfigure()
+        let baseURL = "http://\(ip):\(port)"
+        ollamaBaseURL = baseURL
+        
+        WWSimpleAI.Ollama.shared.baseURL = baseURL
+        if let model { WWSimpleAI.Ollama.shared.model = model }
+
+        checkConfigure(isInitModel: true)
+    }
+    
+    /// 初始化可用AI模型名稱
+    func initModels() {
+        
+        Task {
+            do {
+                let _models = try await WWSimpleAI.Ollama.shared.models().get()
+                let models = _models.map { $0.name.replacingOccurrences(of: ":latest", with: "") }.sorted()
+                let actions = models.compactMap { self.modelActionsMaker($0) }
+                let menu = UIMenu(title: "請選擇模型", options: .singleSelection, children: actions)
+                
+                ollamaModelOptionButtonItem.isEnabled = !models.isEmpty
+                ollamaModelOptionButtonItem.menu = menu
+                
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
+    /// AI模型選單
+    /// - Parameter model: String
+    /// - Returns: UIAction
+    func modelActionsMaker(_ model: String) -> UIAction {
+        
+        let action = UIAction(title: model) { [unowned self] _ in
+            WWSimpleAI.Ollama.shared.model = model
+            chatModel = model
+            checkConfigure(isInitModel: false)
+        }
+        
+        return action
     }
     
     /// 參數設定 (Perplexity)
@@ -255,9 +305,9 @@ private extension OllamaViewController {
     ///   - prompt: 提問文字
     func liveGenerate(prompt: String) {
         
-        guard let chatModel else { return }
+        guard let chatModel, let ollamaBaseURL else { return }
         
-        let urlString = WWSimpleAI.Ollama.API.generate.url()
+        let urlString = WWSimpleAI.Ollama.API.generate.url(for: ollamaBaseURL)
         let context = lastContext?._base64JSONObjectDecode() as [Int]?
         let fixPrompt = prompt.replacingOccurrences(of: "\n", with: " ")
         
@@ -305,25 +355,22 @@ private extension OllamaViewController {
     ///   - result: Result<WWEventSource.Constant.ConnectionStatus, any Error>
     func sseStatusAction(eventSource: WWEventSource, result: Result<WWEventSource.ConnectionStatus, any Error>) {
         
-        DispatchQueue.main.async {
+        switch result {
+        case .failure(let error):
+            self.responseString = ""
+            self.generateLiveButton(isEnabled: true)
+            WWToast.shared.makeText("\(error.localizedDescription)")
             
-            switch result {
-            case .failure(let error):
+        case .success(let status):
+            switch status {
+            case .connecting:
+                self.expandableTextView.text = ""
+                self.expandableTextView.updateHeight()
+                self.generateLiveButton(isEnabled: false)
+            case .open: break
+            case .closed:
                 self.responseString = ""
                 self.generateLiveButton(isEnabled: true)
-                WWToast.shared.makeText("\(error.localizedDescription)")
-                
-            case .success(let status):
-                switch status {
-                case .connecting:
-                    self.expandableTextView.text = ""
-                    self.expandableTextView.updateHeight()
-                    self.generateLiveButton(isEnabled: false)
-                case .open: break
-                case .closed:
-                    self.responseString = ""
-                    self.generateLiveButton(isEnabled: true)
-                }
             }
         }
     }
@@ -334,9 +381,7 @@ private extension OllamaViewController {
     ///   - rawInformation: WWEventSource.RawInformation
     func sseRawString(eventSource: WWEventSource, rawInformation: WWEventSource.RawInformation) {
         
-        defer {
-            DispatchQueue.main.async { [unowned self] in refreashWebSlaveCell(with: myWebView, botTimestamp: botTimestamp, responseString: responseString) }
-        }
+        defer { refreashWebSlaveCell(with: myWebView, botTimestamp: botTimestamp, responseString: responseString) }
         
         if rawInformation.response.statusCode != 200 {
             responseString = rawInformation.data._string() ?? "\(rawInformation.response.statusCode)"; return
@@ -382,11 +427,11 @@ private extension OllamaViewController {
             
             switch result {
             case .failure(let error): myPrint(error)
-            case .success(let value): myPrint(value ?? "")
+            case .success(let value): if let value { myPrint(value) }
             }
         }
     }
-    
+        
     /// 使用WKWebView去執行SSE問問題
     /// - Parameters:
     ///   - webView: WKWebView
@@ -473,6 +518,23 @@ private extension OllamaViewController {
         }
     }
     
+    /// 停止文字閱讀
+    /// - Parameter webView: WKWebView
+    func stopSpeakText(with webView: WKWebView) {
+        
+        let jsCode = """
+            window.stopSpeakText()
+        """
+        
+        webView._evaluateJavaScript(script: jsCode) { result in
+            
+            switch result {
+            case .failure(let error): myPrint(error)
+            case .success(let value): if let value { myPrint(value) }
+            }
+        }
+    }
+    
     /// [把Bot的記憶清除](https://tenor.com/view/downcast-face-phew-asking-embarrassed-where-gif-6508259955425936045)
     func forgetMemoryAction() {
         Utility.shared.flashHUD(with: .forgot)
@@ -489,7 +551,6 @@ private extension OllamaViewController {
 
         alertController.addTextField { (textField) in textField.text = self.ip; textField.placeholder = "127.0.0.1" }
         alertController.addTextField { (textField) in textField.text = self.port; textField.placeholder = "11434" }
-        alertController.addTextField { (textField) in textField.text = self.chatModel; textField.placeholder = "llama3.2" }
         
         let sureAction = UIAlertAction(title: "確定", style: .destructive) { aciton in
             guard let textFields = alertController.textFields else { return }
@@ -561,29 +622,32 @@ private extension OllamaViewController {
     }
     
     /// 檢測參數設定是否正確
-    func checkConfigure() {
+    func checkConfigure(isInitModel: Bool) {
         
-        let title = "\(agentType)".capitalized
+        guard let ollamaBaseURL else { return }
         
-        _ = WWNetworking.shared.request(urlString: WWSimpleAI.Ollama.API.version.url(), timeout: 5) { result in
+        let alearTitle = "\(agentType)".capitalized
+        
+        _ = WWNetworking.shared.request(urlString: WWSimpleAI.Ollama.API.version.url(for: ollamaBaseURL), timeout: 5) { [unowned self] result in
             
-            DispatchQueue.main.async {
+            switch result {
+            case .failure(let error): self.presentOllamaConfigureAlert(title: "\(alearTitle)參數設定", message: error.localizedDescription)
+            case .success(let info):
                 
-                switch result {
-                case .failure(let error): self.presentOllamaConfigureAlert(title: "\(title)參數設定", message: error.localizedDescription)
-                case .success(let info):
-                    
-                    guard let data = info.data,
-                          let jsonObject = data._jsonObject() as? [String: Any],
-                          let version = jsonObject["version"]
-                    else {
-                        self.generateLiveButton(isEnabled: false); return
-                    }
-                    
-                    let text = "您使用的Ollama版本為：\(version)，模型為：\(WWSimpleAI.Ollama.model)"
-                    self.generateLiveButton(isEnabled: true)
-                    WWToast.shared.makeText(text)
+                guard let data = info.data,
+                      let jsonObject = data._jsonObject() as? [String: Any],
+                      let version = jsonObject["version"]
+                else {
+                    self.generateLiveButton(isEnabled: false); return
                 }
+                
+                let text = "您使用的Ollama版本為：\(version)，模型為：\(WWSimpleAI.Ollama.shared.model)"
+                
+                if (isInitModel) { initModels() }
+                
+                title = WWSimpleAI.Ollama.shared.model
+                generateLiveButton(isEnabled: true)
+                WWToast.shared.makeText(text)
             }
         }
     }

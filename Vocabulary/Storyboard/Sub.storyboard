@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Kab-2h-Na6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Kab-2h-Na6">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -256,20 +256,25 @@
                                 </connections>
                             </barButtonItem>
                         </leftBarButtonItems>
-                        <barButtonItem key="rightBarButtonItem" image="Dismiss" id="xYl-0p-yOu">
-                            <connections>
-                                <action selector="dissmissAction:" destination="0H6-mu-JXO" id="Fmp-0H-Wrt"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="Dismiss" id="xYl-0p-yOu">
+                                <connections>
+                                    <action selector="dissmissAction:" destination="0H6-mu-JXO" id="Fmp-0H-Wrt"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem enabled="NO" image="Agnet" id="kmu-bL-KB5"/>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="connentView" destination="dvp-w7-Chx" id="iak-2m-iR7"/>
                         <outlet property="expandableTextView" destination="Wb9-yj-JI9" id="WTR-Lu-lZA"/>
+                        <outlet property="forgetMemoryButtonItem" destination="U9W-As-hCG" id="LZT-G7-puX"/>
                         <outlet property="generateLiveButton" destination="0b2-eb-Skw" id="WjR-Xx-grO"/>
                         <outlet property="keyboardConstraintHeight" destination="U1d-d1-hgN" id="w8Y-Fk-EpF"/>
                         <outlet property="keyboardShadowView" destination="78r-ht-gnQ" id="Jhx-vT-xAx"/>
                         <outlet property="myImageView" destination="vLy-jq-L7h" id="LPN-4e-cfr"/>
                         <outlet property="myWebView" destination="tcy-eS-3A0" id="Fna-2P-pwn"/>
+                        <outlet property="ollamaModelOptionButtonItem" destination="kmu-bL-KB5" id="FA1-e3-0AF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kvD-2G-nJp" sceneMemberID="firstResponder"/>
@@ -282,7 +287,7 @@
                 <navigationController storyboardIdentifier="TalkNavigationController" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="overFullScreen" id="Kab-2h-Na6" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="qCt-cN-97f">
-                        <rect key="frame" x="0.0" y="96" width="414" height="54"/>
+                        <rect key="frame" x="0.0" y="96" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -379,6 +384,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Agnet" width="26.666666030883789" height="26.666666030883789"/>
         <image name="Chat" width="85.333335876464844" height="85.333335876464844"/>
         <image name="Dismiss" width="26.666666030883789" height="26.666666030883789"/>
         <image name="Download" width="85.333335876464844" height="85.333335876464844"/>
@@ -393,7 +399,7 @@
         <image name="Talking" width="21.333333969116211" height="21.333333969116211"/>
         <image name="VolumeSlider" width="85.333335876464844" height="85.333335876464844"/>
         <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

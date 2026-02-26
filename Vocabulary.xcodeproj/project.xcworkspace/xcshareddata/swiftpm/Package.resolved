@@ -1,5 +1,5 @@
 {
-  "originHash" : "9732f77c5bb10cc9aedc846d5a4e6b0a2d715664267a8e94da6cca30ef66aaf1",
+  "originHash" : "ed78bab5ffc51b2b6335da3c5b44b21dd6efe8f0848f24610403721f4be718db",
   "pins" : [
     {
       "identity" : "wwappinstallsource",
@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWEventSource",
       "state" : {
-        "revision" : "6ea3d939a84cea2391098d9519e4fca0efd7bb13",
-        "version" : "1.4.1"
+        "revision" : "029562b9a32cd5a6899c3d343dbf5a3825c77981",
+        "version" : "1.4.2"
       }
     },
     {
@@ -168,8 +168,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWSimpleAI_Ollama",
       "state" : {
-        "revision" : "0e0c0e2ecfc9b6cb9db151d1d4dfa5b7a190fa87",
-        "version" : "1.2.0"
+        "revision" : "518685c72e6fba7ae182466e3776ad564d24d068",
+        "version" : "1.2.1"
       }
     },
     {

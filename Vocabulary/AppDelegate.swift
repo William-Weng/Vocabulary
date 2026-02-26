@@ -41,7 +41,6 @@ private extension AppDelegate {
         MusicHelper.shared.initAudioPlaySetting()
         
         initAppShortcutItem(with: application)
-        
         // backgroundBarColor(.black.withAlphaComponent(0.1))
         
         _ = animationFolderUrlMaker()

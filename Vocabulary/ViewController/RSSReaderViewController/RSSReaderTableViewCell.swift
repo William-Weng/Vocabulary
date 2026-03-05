@@ -15,11 +15,11 @@ final class RSSReaderTableViewCell: UITableViewCell {
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var expandableView: WWExpandView!
     
-    static var items: [WWRssParser.RssItem] = []
     static var expandRowsList: [Int: Set<IndexPath>] = [:]
     static weak var rssTableView: UITableView?
     
     var indexPath: IndexPath = []
+    var item: WWRssParser.RssItem?
     
     private let isSingle = true
     
@@ -30,10 +30,7 @@ final class RSSReaderTableViewCell: UITableViewCell {
         RSSReaderTableViewCell.exchangeExpandState(rssTableView, indexPath: indexPath, isSingle: isSingle)
     }
     
-    deinit {
-        Self.rssTableView = nil
-        Self.items.removeAll()
-    }
+    deinit { myPrint("\(Self.self) init") }
 }
 
 // MARK: - WWCellExpandable
@@ -43,11 +40,11 @@ extension RSSReaderTableViewCell: WWCellExpandable {
     /// - Parameter indexPath: IndexPath
     func configure(with indexPath: IndexPath) {
         
-        guard let item = Self.items[safe: indexPath.row] else { return }
+        guard let item = item else { return }
         
         self.indexPath = indexPath
         
-        titleLabel.text =  "\(indexPath.row + 1) - \(item.title)"
+        titleLabel.text = "\(indexPath.row + 1) - \(item.title)"
         contentLabel.text = item.description
         expandableView.isHidden = !(Self.expandRowsList[indexPath.section]?.contains(indexPath) ?? false)
     }

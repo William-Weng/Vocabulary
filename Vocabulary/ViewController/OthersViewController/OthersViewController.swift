@@ -531,8 +531,7 @@ private extension OthersViewController {
                 
                 defer { Utility.shared.flashHUD(with: .loading, animation: 0.75) }
                 
-                if contentType.contains("text/xml") { performSegue(withIdentifier: ViewSegueType.rssReader.rawValue, sender: bookmarkSite); return }
-                if contentType.contains("text/atom+xml") { performSegue(withIdentifier: ViewSegueType.rssReader.rawValue, sender: bookmarkSite); return }
+                if contentType.contains("xml") { performSegue(withIdentifier: ViewSegueType.rssReader.rawValue, sender: bookmarkSite); return }
                 
                 let safariController = url._openUrlWithInside(delegate: self)
                 safariController.delegate = self

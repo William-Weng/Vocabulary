@@ -1,5 +1,5 @@
 {
-  "originHash" : "35958483b26f72fcd6d032bb8d55322b1a43a2bb67fc8c532b4deba64fef1269",
+  "originHash" : "22ce0f47552d4aa398c43816980fe9060da11ff0e043aad992abc48ac41d771a",
   "pins" : [
     {
       "identity" : "wwappinstallsource",
@@ -177,8 +177,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWRssParser",
       "state" : {
-        "revision" : "e1fef03c839e68991b4f422b800a9fef163a8880",
-        "version" : "1.1.1"
+        "revision" : "d812ed59f77e43a99a5e4d895f35756af0531dc0",
+        "version" : "1.2.0"
       }
     },
     {

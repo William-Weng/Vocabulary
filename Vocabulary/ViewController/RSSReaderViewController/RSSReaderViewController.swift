@@ -15,11 +15,12 @@ final class RSSReaderViewController: UIViewController {
     @IBOutlet weak var rssTableView: UITableView!
     
     var bookmarkSite: BookmarkSite?
-        
+    
     weak var othersViewDelegate: OthersViewDelegate?
     
     private lazy var dataSource = dataSourceMaker()
-        
+    private var currentItems: [WWRssParser.RssItem] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initSetting()
@@ -34,14 +35,15 @@ final class RSSReaderViewController: UIViewController {
         super.viewWillDisappear(animated)
         viewWillDisappearAction()
     }
-        
+    
     @IBAction func reloadDataAction(_ sender: UIBarButtonItem) {
         reloadData(with: bookmarkSite)
     }
     
     deinit {
+        RSSReaderTableViewCell.rssTableView = nil
         othersViewDelegate = nil
-        RSSReaderTableViewCell.items.removeAll()
+        myPrint("\(Self.self) deinit")
     }
 }
 
@@ -49,7 +51,7 @@ final class RSSReaderViewController: UIViewController {
 extension RSSReaderViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = RSSReaderTableViewCell.items[indexPath.row]
+        let item = currentItems[indexPath.row]
         title = item.title
     }
 }
@@ -61,11 +63,13 @@ private extension RSSReaderViewController {
     /// - Returns: UITableViewDiffableDataSource<Int, WWRssParser.RssItem>
     func dataSourceMaker() -> UITableViewDiffableDataSource<Int, WWRssParser.RssItem> {
         
-        let source = UITableViewDiffableDataSource<Int, WWRssParser.RssItem>(tableView: rssTableView) { tableView, indexPath, rss in
+        let source = UITableViewDiffableDataSource<Int, WWRssParser.RssItem>(tableView: rssTableView) { tableView, indexPath, item in
             
             let cell = tableView._reusableCell(at: indexPath) as RSSReaderTableViewCell
             
+            cell.item = item
             cell.configure(with: indexPath)
+            
             return cell
         }
         
@@ -73,14 +77,15 @@ private extension RSSReaderViewController {
     }
     
     /// 設定數值更新
-    /// - Parameter animatingDifferences: Bool
+    /// - Parameter animatingDifferences: 是否使用動畫
     func applySnapshot(animatingDifferences: Bool = true) {
         
         let section: Int = 0
         var snapshot = NSDiffableDataSourceSnapshot<Int, WWRssParser.RssItem>()
         
         snapshot.appendSections([section])
-        snapshot.appendItems(RSSReaderTableViewCell.items, toSection: section)
+        snapshot.appendItems(currentItems, toSection: section)
+        
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
 }
@@ -107,12 +112,10 @@ private extension RSSReaderViewController {
     /// 初始化設定
     func initSetting() {
         
+        RSSReaderTableViewCell.rssTableView = rssTableView
+        
         rssTableView.delegate = self
         reloadData(with: bookmarkSite)
-        
-        RSSReaderTableViewCell.expandRowsList = [:]
-        RSSReaderTableViewCell.rssTableView = rssTableView
-        RSSReaderTableViewCell.expandedCell(section: 0, row: 0)
     }
     
     /// 重新讀取資料
@@ -122,8 +125,10 @@ private extension RSSReaderViewController {
         guard let bookmarkSite = bookmarkSite else { return }
         
         title = bookmarkSite.title
+        
         RSSReaderTableViewCell.expandRowsList = [:]
         RSSReaderTableViewCell.expandedCell(section: 0, row: 0)
+        
         reloadData(urlString: bookmarkSite.url)
     }
     
@@ -132,17 +137,23 @@ private extension RSSReaderViewController {
     func reloadData(urlString: String) {
         
         Utility.shared.displayHUD(with: .loading)
+        currentItems.removeAll()
         
         Task {
             do {
                 let xmlItems = try await WWRssParser.shared.parse(url: urlString).get()
                 
-                switch xmlItems {
-                case .Atom(let items): RSSReaderTableViewCell.items = items
-                case .RSS(let items): RSSReaderTableViewCell.items = items
+                await MainActor.run { [weak self] in
+                    
+                    guard let this = self else { return }
+                    
+                    switch xmlItems {
+                    case .Atom(let items): this.currentItems = items
+                    case .RSS(let items): this.currentItems = items
+                    }
+                    
+                    this.applySnapshot()
                 }
-                                
-                await MainActor.run { self.applySnapshot() }
                 
                 Utility.shared.flashHUD(with: .loading)
                 

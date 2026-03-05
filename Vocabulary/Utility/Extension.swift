@@ -11,6 +11,7 @@ import SafariServices
 import CommonCrypto
 import PencilKit
 import WebKit
+import WWNetworking
 
 // MARK: - Bool (function)
 extension Bool {
@@ -1373,7 +1374,7 @@ extension UIApplication {
     ///   - result: Result<Bool, Error>
     func _openURL(_ url: URL, options: [UIApplication.OpenExternalURLOptionsKey: Any] = [:], result: @escaping (Result<Bool, Error>) -> Void) {
         
-        if !canOpenURL(url) { result(.failure(Constant.MyError.notOpenURL)); return }
+        if !canOpenURL(url) { result(.failure(Constant.CustomError.notOpenURL)); return }
         
         open(url, options: options) { (isSuccess) in
             result(.success(isSuccess))
@@ -1389,7 +1390,7 @@ extension UIApplication {
     ///   - result: (Result<String?, Error>) -> Void
     func _alternateIcons(for key: String?, result: @escaping ((Result<String?, Error>) -> Void)) {
         
-        guard UIApplication.shared.supportsAlternateIcons else { result(.failure(Constant.MyError.notSupports)); return }
+        guard UIApplication.shared.supportsAlternateIcons else { result(.failure(Constant.CustomError.notSupports)); return }
         
         UIApplication.shared.setAlternateIconName(key) { (error) in
             if let error = error { result(.failure(error)); return }
@@ -1654,6 +1655,15 @@ extension UITableView {
                 
         if (isFooterViewHidden) { self._tableFooterViewHidden() }
         if #available(iOS 15.0, *) { self._isPrefetchingEnabled(isPrefetchingEnabled) }
+    }
+    
+    /// 取得UITableViewCell
+    /// - let cell = tableview._reusableCell(at: indexPath) as MyTableViewCell
+    /// - Parameter indexPath: IndexPath
+    /// - Returns: 符合CellReusable的Cell
+    func _reusableCell<T>(at indexPath: IndexPath) -> T where T: UITableViewCell {
+        guard let cell = dequeueReusableCell(withIdentifier: "\(T.self)", for: indexPath) as? T else { fatalError("UITableViewCell Error") }
+        return cell
     }
     
     /// 取得UITableViewCell
@@ -1973,7 +1983,7 @@ extension WKWebView {
     ///   - result: Result<Any?, Error>
     func _evaluateJavaScript(script: String?, result: @escaping (Result<Any?, Error>) -> Void) {
         
-        guard let script = script else { result(.failure(Constant.MyError.isEmpty)); return }
+        guard let script = script else { result(.failure(Constant.CustomError.isEmpty)); return }
         
         self.evaluateJavaScript(script) { data, error in
             if let error = error { result(.failure(error)); return }
@@ -2056,6 +2066,24 @@ extension WKWebView {
         }
         
         return observation
+    }
+}
+
+// MARK: - HTTPURLResponse
+extension HTTPURLResponse {
+    
+    /// 取得其中一個Field
+    /// - Parameter key: AnyHashable
+    /// - Returns: Any?
+    func _headerField(for key: AnyHashable) -> Any? {
+        return self.allHeaderFields[key]
+    }
+    
+    /// 取得其中一個Field
+    /// - Parameter key: HTTPHeaderField
+    /// - Returns: Any?
+    func _headerField(with key: WWNetworking.HTTPHeaderField) -> Any? {
+        return self._headerField(for: key.rawValue)
     }
 }
 

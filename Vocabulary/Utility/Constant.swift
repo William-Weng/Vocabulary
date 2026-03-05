@@ -331,7 +331,7 @@ extension Constant {
     }
     
     /// 自定義錯誤
-    enum MyError: Error, LocalizedError {
+    enum CustomError: Error, LocalizedError {
         
         var errorDescription: String { errorMessage() }
         

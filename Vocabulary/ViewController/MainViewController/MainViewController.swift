@@ -713,7 +713,7 @@ private extension MainViewController {
         guard let databaseUrl = Constant.database?.fileURL,
               let backupUrl = Utility.shared.databaseBackupUrl()
         else {
-            return .failure(Constant.MyError.notOpenURL)
+            return .failure(Constant.CustomError.notOpenURL)
         }
         
         let result = FileManager.default._copyFile(at: databaseUrl, to: backupUrl)

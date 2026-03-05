@@ -1,5 +1,5 @@
 {
-  "originHash" : "ed78bab5ffc51b2b6335da3c5b44b21dd6efe8f0848f24610403721f4be718db",
+  "originHash" : "35958483b26f72fcd6d032bb8d55322b1a43a2bb67fc8c532b4deba64fef1269",
   "pins" : [
     {
       "identity" : "wwappinstallsource",
@@ -44,6 +44,15 @@
       "state" : {
         "revision" : "029562b9a32cd5a6899c3d343dbf5a3825c77981",
         "version" : "1.4.2"
+      }
+    },
+    {
+      "identity" : "wwexpandablecell",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWExpandableCell",
+      "state" : {
+        "revision" : "c075050cd33f5bde1937b1c3e11836e12561d41d",
+        "version" : "1.1.3"
       }
     },
     {
@@ -161,6 +170,15 @@
       "state" : {
         "revision" : "5bc5c03259ed28b4c5c6899458fde6ac4d665794",
         "version" : "1.0.1"
+      }
+    },
+    {
+      "identity" : "wwrssparser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWRssParser",
+      "state" : {
+        "revision" : "e1fef03c839e68991b4f422b800a9fef163a8880",
+        "version" : "1.1.1"
       }
     },
     {

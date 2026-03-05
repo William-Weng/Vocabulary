@@ -8,7 +8,6 @@
 import UIKit
 import SafariServices
 import WWNetworking
-import UniformTypeIdentifiers
 
 // MARK: - OthersViewDelegate
 protocol OthersViewDelegate: NSObject {
@@ -23,6 +22,7 @@ final class OthersViewController: UIViewController {
     enum ViewSegueType: String {
         case paletteSettings = "PaletteSettingsSegue"
         case license = "LicenseWebViewSegue"
+        case rssReader = "RSSReaderSegue"
     }
     
     @IBOutlet weak var myImageView: UIImageView!
@@ -70,9 +70,10 @@ final class OthersViewController: UIViewController {
         switch viewSegueType {
         case .paletteSettings: palettePageSetting(for: segue, sender: sender)
         case .license: licenseViewSetting(for: segue, sender: sender)
+        case .rssReader: rssReaderViewSetting(for: segue, sender: sender)
         }
     }
-        
+    
     @objc func refreshBookmarks(_ sender: UIRefreshControl) { reloadBookmarks(isFavorite: isFavorite) }
     @objc func bookmarkCount(_ sender: UITapGestureRecognizer) { bookmarkCountAction(isFavorite: isFavorite) }
     
@@ -510,18 +511,39 @@ private extension OthersViewController {
     /// - Parameter indexPath: IndexPath
     func openBookmark(with indexPath: IndexPath) {
         
-        guard let urlString = OthersTableViewCell.bookmarkSite(with: indexPath)?.url,
-              Utility.shared.isWebUrlString(urlString),
-              let url = URL._standardization(string: urlString)
+        guard let bookmarkSite = OthersTableViewCell.bookmarkSite(with: indexPath),
+              Utility.shared.isWebUrlString(bookmarkSite.url),
+              let url = URL._standardization(string: bookmarkSite.url)
         else {
             Utility.shared.flashHUD(with: .fail); return
         }
         
+        Utility.shared.displayHUD(with: .loading)
         currentScrollDirection = .up
         
-        let safariController = url._openUrlWithInside(delegate: self)
-        safariController.delegate = self
-        AssistiveTouchHelper.shared.hiddenAction(true)
+        Task {
+            do {
+                guard let response = try await WWNetworking.shared.request(httpMethod: .HEAD, urlString: bookmarkSite.url).get().response,
+                      let contentType = response._headerField(with: .contentType) as? String
+                else {
+                    throw Constant.CustomError.notOpenURL
+                }
+                
+                defer { Utility.shared.flashHUD(with: .loading, animation: 0.75) }
+                
+                if contentType.contains("text/xml") { performSegue(withIdentifier: ViewSegueType.rssReader.rawValue, sender: bookmarkSite); return }
+                if contentType.contains("text/atom+xml") { performSegue(withIdentifier: ViewSegueType.rssReader.rawValue, sender: bookmarkSite); return }
+                
+                let safariController = url._openUrlWithInside(delegate: self)
+                safariController.delegate = self
+                AssistiveTouchHelper.shared.hiddenAction(true)
+                
+                Utility.shared.flashHUD(with: .loading, animation: 0.25)
+                
+            } catch {
+                Utility.shared.flashHUD(with: .fail)
+            }
+        }
     }
     
     /// 載入Cell的圖示 (變更 / 下載 / 儲存)
@@ -679,5 +701,21 @@ private extension OthersViewController {
     func licenseViewSetting(for segue: UIStoryboardSegue, sender: Any?) {
         guard let webViewController = segue.destination as? LicenseWebViewController else { return }
         webViewController.othersViewDelegate = self
+    }
+    
+    /// 版權說明頁設定
+    /// - Parameters:
+    ///   - segue: UIStoryboardSegue
+    ///   - sender: Any?
+    func rssReaderViewSetting(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let rssReaderViewController = segue.destination as? RSSReaderViewController,
+              let bookmarkSite = sender as? BookmarkSite
+        else {
+            return
+        }
+        
+        rssReaderViewController.othersViewDelegate = self
+        rssReaderViewController.bookmarkSite = bookmarkSite
     }
 }

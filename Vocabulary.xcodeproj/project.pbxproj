@@ -67,6 +67,10 @@
 		8142F45C2EA2151C00F644FC /* WWAssistiveTouch in Frameworks */ = {isa = PBXBuildFile; productRef = 8142F45B2EA2151C00F644FC /* WWAssistiveTouch */; };
 		814DD42B2F3F022100291AEE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814DD42A2F3F022100291AEE /* SceneDelegate.swift */; };
 		815E14782990F47700EC571D /* SentenceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815E14772990F47700EC571D /* SentenceTableViewCell.swift */; };
+		8164A8942F5924FE0038B596 /* WWRssParser in Frameworks */ = {isa = PBXBuildFile; productRef = 8164A8932F5924FE0038B596 /* WWRssParser */; };
+		8164A8972F592E520038B596 /* RSSReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8164A8962F592E520038B596 /* RSSReaderViewController.swift */; };
+		8164A8AD2F5936670038B596 /* RSSReaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8164A8AC2F5936670038B596 /* RSSReaderTableViewCell.swift */; };
+		8164A8B02F5954900038B596 /* WWExpandableCell in Frameworks */ = {isa = PBXBuildFile; productRef = 8164A8AF2F5954900038B596 /* WWExpandableCell */; };
 		81708BC62B21AD4C00397B27 /* dictionary_7439537.png in Resources */ = {isa = PBXBuildFile; fileRef = 81708BC22B21AD4C00397B27 /* dictionary_7439537.png */; };
 		81708BC72B21AD4C00397B27 /* translate_5146533.png in Resources */ = {isa = PBXBuildFile; fileRef = 81708BC32B21AD4C00397B27 /* translate_5146533.png */; };
 		81708BC82B21AD4C00397B27 /* communication_9893252.png in Resources */ = {isa = PBXBuildFile; fileRef = 81708BC42B21AD4C00397B27 /* communication_9893252.png */; };
@@ -152,6 +156,8 @@
 		8141EEFB2B8C748D0091127F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		814DD42A2F3F022100291AEE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		815E14772990F47700EC571D /* SentenceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentenceTableViewCell.swift; sourceTree = "<group>"; };
+		8164A8962F592E520038B596 /* RSSReaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSReaderViewController.swift; sourceTree = "<group>"; };
+		8164A8AC2F5936670038B596 /* RSSReaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSReaderTableViewCell.swift; sourceTree = "<group>"; };
 		81708BC22B21AD4C00397B27 /* dictionary_7439537.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dictionary_7439537.png; sourceTree = "<group>"; };
 		81708BC32B21AD4C00397B27 /* translate_5146533.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = translate_5146533.png; sourceTree = "<group>"; };
 		81708BC42B21AD4C00397B27 /* communication_9893252.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = communication_9893252.png; sourceTree = "<group>"; };
@@ -191,6 +197,8 @@
 			files = (
 				812A01C52C0824C90086E128 /* WWNetworking-UIImage in Frameworks */,
 				81CB93B12DB87AB7006CAAE1 /* WWExpandableTextView in Frameworks */,
+				8164A8B02F5954900038B596 /* WWExpandableCell in Frameworks */,
+				8164A8942F5924FE0038B596 /* WWRssParser in Frameworks */,
 				64768B0D2AA3EB080005EF3A /* WWToast in Frameworks */,
 				81E516592D9290AF0020BD90 /* WWTipView in Frameworks */,
 				3D9EA9F22F435F5B000484AD /* WWNormalizeAudioPlayer in Frameworks */,
@@ -308,6 +316,7 @@
 				81E56B6C2A725DD6004400D6 /* SearchVocabularyViewController */,
 				81CD85CD2990F040009C39FF /* SentenceViewController */,
 				81AB5EF72996437B0035216F /* OthersViewController */,
+				8164A8952F592E200038B596 /* RSSReaderViewController */,
 				811DFC412AAAEFEB00BF480C /* PaletteViewController */,
 				81B1AF802AB423E20074103B /* GalleryViewController */,
 				64F6F42A29991B40001F4F66 /* LicenseWebViewController */,
@@ -427,6 +436,15 @@
 				8139CE192DC07C5D00805A2F /* OllamaViewController.swift */,
 			);
 			path = OllamaViewController;
+			sourceTree = "<group>";
+		};
+		8164A8952F592E200038B596 /* RSSReaderViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8164A8962F592E520038B596 /* RSSReaderViewController.swift */,
+				8164A8AC2F5936670038B596 /* RSSReaderTableViewCell.swift */,
+			);
+			path = RSSReaderViewController;
 			sourceTree = "<group>";
 		};
 		818E2616299231D400385705 /* ReviewResultViewController */ = {
@@ -597,6 +615,8 @@
 				3D9EA9F12F435F5B000484AD /* WWNormalizeAudioPlayer */,
 				3D8A19DD2F4370520026FDA2 /* WWNormalizeAudioPlayer */,
 				3DFECB492F446DF100C5A1D3 /* WWSimpleAI_Perplexity */,
+				8164A8932F5924FE0038B596 /* WWRssParser */,
+				8164A8AF2F5954900038B596 /* WWExpandableCell */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -648,6 +668,8 @@
 				8142F4402EA1F2D000F644FC /* XCRemoteSwiftPackageReference "WWAssistiveTouch" */,
 				3D8A19DC2F4370520026FDA2 /* XCRemoteSwiftPackageReference "WWNormalizeAudioPlayer" */,
 				3DFECB482F446DF100C5A1D3 /* XCRemoteSwiftPackageReference "WWSimpleAI_Perplexity" */,
+				8164A8922F5924FE0038B596 /* XCRemoteSwiftPackageReference "WWRssParser" */,
+				8164A8AE2F5954900038B596 /* XCRemoteSwiftPackageReference "WWExpandableCell" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -730,6 +752,7 @@
 				81F7A4ED2F3D861D008F33E3 /* MusicHelper.swift in Sources */,
 				64C184F9297E5F7A00D1D1B2 /* API.swift in Sources */,
 				641B5CA72984BEB500AB1C56 /* VolumeViewController.swift in Sources */,
+				8164A8972F592E520038B596 /* RSSReaderViewController.swift in Sources */,
 				812C5444299F73DC003F942A /* TalkingViewController.swift in Sources */,
 				81AB5EF9299643960035216F /* OthersViewController.swift in Sources */,
 				81201C4C298B58C200291485 /* InterpretView.swift in Sources */,
@@ -743,6 +766,7 @@
 				64ED74D82998C5EF00948C77 /* LicenseWebViewController.swift in Sources */,
 				819D69D2298E31E1001AF48E /* SolutionTableViewCell.swift in Sources */,
 				819D69D0298E311D001AF48E /* SolutionViewController.swift in Sources */,
+				8164A8AD2F5936670038B596 /* RSSReaderTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -898,7 +922,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20260226;
+				CURRENT_PROJECT_VERSION = 20260305;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -920,7 +944,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.9.13;
+				MARKETING_VERSION = 2.10.0;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -942,7 +966,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20260226;
+				CURRENT_PROJECT_VERSION = 20260305;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -964,7 +988,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.9.13;
+				MARKETING_VERSION = 2.10.0;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1096,6 +1120,22 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.2.5;
+			};
+		};
+		8164A8922F5924FE0038B596 /* XCRemoteSwiftPackageReference "WWRssParser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWRssParser";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.1.1;
+			};
+		};
+		8164A8AE2F5954900038B596 /* XCRemoteSwiftPackageReference "WWExpandableCell" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWExpandableCell";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.1.3;
 			};
 		};
 		81CB93AC2DB87995006CAAE1 /* XCRemoteSwiftPackageReference "WWJavaScriptContext" */ = {
@@ -1264,6 +1304,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 8142F4402EA1F2D000F644FC /* XCRemoteSwiftPackageReference "WWAssistiveTouch" */;
 			productName = WWAssistiveTouch;
+		};
+		8164A8932F5924FE0038B596 /* WWRssParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8164A8922F5924FE0038B596 /* XCRemoteSwiftPackageReference "WWRssParser" */;
+			productName = WWRssParser;
+		};
+		8164A8AF2F5954900038B596 /* WWExpandableCell */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8164A8AE2F5954900038B596 /* XCRemoteSwiftPackageReference "WWExpandableCell" */;
+			productName = WWExpandableCell;
 		};
 		81CB93AD2DB879C3006CAAE1 /* WWJavaScriptContext */ = {
 			isa = XCSwiftPackageProductDependency;

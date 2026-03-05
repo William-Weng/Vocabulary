@@ -332,6 +332,21 @@ extension Utility {
 // MARK: - 提示相關 (function)
 extension Utility {
     
+    /// [顯示HUD](https://github.com/William-Weng/WWHUD)
+    /// - Parameters:
+    ///   - type: Constant.AnimationGifType
+    func displayHUD(with type: Constant.AnimationGifType) {
+        
+        guard let gifUrl = type.fileURL(with: .animation),
+              FileManager.default._fileExists(with: gifUrl).isExist
+        else {
+            WWHUD.shared.flash(effect: .default, backgroundColor: .black.withAlphaComponent(0.3), animation: 0.75, completion: nil); return
+        }
+
+        let options = [kCGImageAnimationStartIndex: 0] as? CFDictionary
+        WWHUD.shared.display(effect: .gif(url: gifUrl, options: options), height: 256.0, backgroundColor: .black.withAlphaComponent(0.3))
+    }
+    
     /// [顯示HUD](https://augmentedcode.io/2019/09/01/animating-gifs-and-apngs-with-cganimateimageaturlwithblock-in-swift/)
     /// - Parameter type: [Constant.AnimationGifType](https://www.swiftjectivec.com/animating-images-using-image-io/)
     func flashHUD(with type: Constant.AnimationGifType, animation duration: TimeInterval = 0.75) {
@@ -350,8 +365,9 @@ extension Utility {
     /// - Parameter viewController: UIViewController?
     /// - Returns: (backgroundColor: UIColor, height: CGFloat)
     func toastSetting(for viewController: UIViewController?) -> (backgroundColor: UIColor, height: CGFloat) {
-                
-        let setting: (backgroundColor: UIColor, height: CGFloat) = (#colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1), viewController?.navigationController?._navigationBarHeight(for: UIWindow._keyWindow(hasScene: false)) ?? .zero)
+        
+        let height = viewController?.navigationController?._navigationBarHeight(for: UIWindow._keyWindow(hasScene: false)) ?? .zero
+        let setting: (backgroundColor: UIColor, height: CGFloat) = (#colorLiteral(red: 0, green: 0.5690457821, blue: 0.5746168494, alpha: 1), height)
         
         return setting
     }

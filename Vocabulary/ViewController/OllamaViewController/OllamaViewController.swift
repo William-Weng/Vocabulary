@@ -628,25 +628,27 @@ private extension OllamaViewController {
         
         let alearTitle = "\(agentType)".capitalized
         
-        _ = WWNetworking.shared.request(urlString: WWSimpleAI.Ollama.API.version.url(for: ollamaBaseURL), timeout: 5) { [unowned self] result in
+        _ = WWNetworking.shared.request(urlString: WWSimpleAI.Ollama.API.version.url(for: ollamaBaseURL), timeout: 5) { [weak self] result in
+            
+            guard let this = self else { return }
             
             switch result {
-            case .failure(let error): self.presentOllamaConfigureAlert(title: "\(alearTitle)參數設定", message: error.localizedDescription)
+            case .failure(let error): this.presentOllamaConfigureAlert(title: "\(alearTitle)參數設定", message: error.localizedDescription)
             case .success(let info):
                 
                 guard let data = info.data,
                       let jsonObject = data._jsonObject() as? [String: Any],
                       let version = jsonObject["version"]
                 else {
-                    self.generateLiveButton(isEnabled: false); return
+                    this.generateLiveButton(isEnabled: false); return
                 }
                 
                 let text = "您使用的Ollama版本為：\(version)，模型為：\(WWSimpleAI.Ollama.shared.model)"
                 
-                if (isInitModel) { initModels() }
+                if (isInitModel) { this.initModels() }
                 
-                title = WWSimpleAI.Ollama.shared.model
-                generateLiveButton(isEnabled: true)
+                this.title = WWSimpleAI.Ollama.shared.model
+                this.generateLiveButton(isEnabled: true)
                 WWToast.shared.makeText(text)
             }
         }

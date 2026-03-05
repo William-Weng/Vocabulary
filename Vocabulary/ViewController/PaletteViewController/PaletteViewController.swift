@@ -502,7 +502,7 @@ private extension PaletteViewController {
               let jsonString = dictionary._jsonData()?._string(),
               let url = FileManager.default._documentDirectory()?.appendingPathComponent(Constant.settingsJSON)
         else {
-            return .failure(Constant.MyError.isEmpty)
+            return .failure(Constant.CustomError.isEmpty)
         }
         
         return FileManager.default._writeText(to: url, text: jsonString)
@@ -512,7 +512,7 @@ private extension PaletteViewController {
     /// - Returns: Result<Bool, Error>
     func removeSettingsJSON() -> Result<Bool, Error> {
         
-        guard let url = FileManager.default._documentDirectory()?.appendingPathComponent(Constant.settingsJSON) else { return .failure(Constant.MyError.isEmpty) }
+        guard let url = FileManager.default._documentDirectory()?.appendingPathComponent(Constant.settingsJSON) else { return .failure(Constant.CustomError.isEmpty) }
         return FileManager.default._removeFile(at: url)
     }
 }

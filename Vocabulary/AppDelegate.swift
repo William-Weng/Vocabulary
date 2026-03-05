@@ -41,7 +41,7 @@ private extension AppDelegate {
         MusicHelper.shared.initAudioPlaySetting()
         
         initAppShortcutItem(with: application)
-        // backgroundBarColor(.black.withAlphaComponent(0.1))
+        backgroundBarColor(.black.withAlphaComponent(0.1))
         
         _ = animationFolderUrlMaker()
         _ = WWWebImage.shared.cacheTypeSetting(.cache(), defaultImage: OthersTableViewCell.defaultImage)

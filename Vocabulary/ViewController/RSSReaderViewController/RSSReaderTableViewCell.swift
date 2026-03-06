@@ -62,7 +62,7 @@ private extension RSSReaderTableViewCell {
         
         self.indexPath = indexPath
         titleLabel.text = "\(indexPath.row + 1) - \(item.title)"
-        contentLabel.attributedText = item.description._html(font: .systemFont(ofSize: 20), foregroundColor: .white)
+        contentLabel.attributedText = item.description._html(using: .unicode, font: .systemFont(ofSize: 20), foregroundColor: .white)
         titleView.layer.zPosition = 10
         
         titleViewExpandState(isExpanded: !isHidden)

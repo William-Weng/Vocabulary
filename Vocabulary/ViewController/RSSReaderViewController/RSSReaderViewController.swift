@@ -47,15 +47,6 @@ final class RSSReaderViewController: UIViewController {
     }
 }
 
-// MARK: - UITableViewDelegate
-extension RSSReaderViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = currentItems[indexPath.row]
-        title = item.title
-    }
-}
-
 // MARK: - UITableViewDiffableDataSource
 private extension RSSReaderViewController {
     
@@ -111,10 +102,7 @@ private extension RSSReaderViewController {
     
     /// 初始化設定
     func initSetting() {
-        
         RSSReaderTableViewCell.rssTableView = rssTableView
-        
-        rssTableView.delegate = self
         reloadData(with: bookmarkSite)
     }
     

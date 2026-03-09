@@ -11,6 +11,10 @@ import WWRssParser
 // MARK: - RSS / Atom讀取器
 final class RSSReaderViewController: UIViewController {
     
+    protocol Delegate: AnyObject {
+        func exchangeExpandCell(with indexPath: IndexPath, expandAction: @escaping (Bool) -> Void)
+    }
+    
     @IBOutlet weak var rssImageView: UIImageView!
     @IBOutlet weak var rssTableView: UITableView!
     
@@ -81,6 +85,24 @@ private extension RSSReaderViewController {
     }
 }
 
+// MARK: - RSSReaderViewController.Delegate
+extension RSSReaderViewController: RSSReaderViewController.Delegate {
+    
+    /// 折疊Cell的處理
+    /// - Parameters:
+    ///   - indexPath: IndexPath
+    ///   - expandAction: 折疊功能
+    func exchangeExpandCell(with indexPath: IndexPath, expandAction: @escaping (Bool) -> Void) {
+        
+        RSSReaderTableViewCell.exchangeExpandState(rssTableView, indexPath: indexPath, isSingle: true, batchUpdates: { isExpanded in
+            expandAction(isExpanded)
+        } , completion: { previous, _ in
+            guard let previousItem = self.previousItem(at: previous) else { return }
+            self.reloadItem(previousItem)
+        })
+    }
+}
+
 // MARK: - 小工具
 private extension RSSReaderViewController {
     
@@ -103,6 +125,7 @@ private extension RSSReaderViewController {
     /// 初始化設定
     func initSetting() {
         RSSReaderTableViewCell.rssTableView = rssTableView
+        RSSReaderTableViewCell.rssDelegate = self
         reloadData(with: bookmarkSite)
     }
     
@@ -149,6 +172,31 @@ private extension RSSReaderViewController {
                 Utility.shared.flashHUD(with: .fail)
             }
         }
+    }
+    
+    /// 取得上一個折疊Item
+    /// - Parameters:
+    ///   - list: [Int: Set<IndexPath>]
+    ///   - section: Int
+    /// - Returns: WWRssParser.RssItem?
+    func previousItem(at list: [Int: Set<IndexPath>], section: Int = 0) -> WWRssParser.RssItem? {
+        
+        guard let set = list[section],
+              let indexPath = Array(set).first,
+              let item = currentItems[safe: indexPath.row]
+        else {
+            return nil
+        }
+        
+        return item
+    }
+    
+    /// 就是reloadData()
+    /// - Parameter item: WWRssParser.RssItem
+    func reloadItem(_ item: WWRssParser.RssItem) {
+        var snapshot = dataSource.snapshot()
+        snapshot.reloadItems([item])
+        dataSource.apply(snapshot, animatingDifferences: false)
     }
 }
 

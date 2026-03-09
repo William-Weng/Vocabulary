@@ -17,8 +17,9 @@ final class RSSReaderTableViewCell: UITableViewCell {
     @IBOutlet weak var expandableView: WWExpandView!
     
     static var expandRowsList: [Int: Set<IndexPath>] = [:]
+    static var rssDelegate: RSSReaderViewController.Delegate?
     static weak var rssTableView: UITableView?
-        
+    
     var indexPath: IndexPath = []
     var item: WWRssParser.RssItem?
     
@@ -29,10 +30,10 @@ final class RSSReaderTableViewCell: UITableViewCell {
     /// 展開 / 折疊
     /// - Parameter sender: UIButton
     @IBAction func expandAction(_ sender: UIButton) {
+                
+        guard let rssDelegate = Self.rssDelegate else { return }
         
-        guard let rssTableView = Self.rssTableView else { return }
-        
-        RSSReaderTableViewCell.exchangeExpandState(rssTableView, indexPath: indexPath, isSingle: true) { [weak self] isExpanded in
+        rssDelegate.exchangeExpandCell(with: indexPath) { [weak self] isExpanded in
             guard let this = self else { return }
             this.titleViewExpandState(isExpanded: isExpanded)
         }
@@ -42,7 +43,7 @@ final class RSSReaderTableViewCell: UITableViewCell {
 }
 
 // MARK: - WWCellExpandable
-extension RSSReaderTableViewCell: WWCellExpandable {
+extension RSSReaderTableViewCell: WWCellExpandable {    
         
     func expandView() -> WWExpandView? {
         return expandableView

@@ -1,5 +1,5 @@
 {
-  "originHash" : "bb12777464e34167fd59e2e33650d3c86fd8e222b54891b9ef80fe2f01b2f8b9",
+  "originHash" : "35958483b26f72fcd6d032bb8d55322b1a43a2bb67fc8c532b4deba64fef1269",
   "pins" : [
     {
       "identity" : "wwappinstallsource",
@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWExpandableCell",
       "state" : {
-        "revision" : "00a6e126c0deb376ba238fb70571342ed52297b2",
-        "version" : "1.2.1"
+        "revision" : "ddb1a0d01df3d23ab8c727e5700442cccc69b868",
+        "version" : "1.2.2"
       }
     },
     {

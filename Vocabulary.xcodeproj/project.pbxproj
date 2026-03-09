@@ -71,7 +71,6 @@
 		815E14782990F47700EC571D /* SentenceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815E14772990F47700EC571D /* SentenceTableViewCell.swift */; };
 		8164A8972F592E520038B596 /* RSSReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8164A8962F592E520038B596 /* RSSReaderViewController.swift */; };
 		8164A8AD2F5936670038B596 /* RSSReaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8164A8AC2F5936670038B596 /* RSSReaderTableViewCell.swift */; };
-		8164A8B02F5954900038B596 /* WWExpandableCell in Frameworks */ = {isa = PBXBuildFile; productRef = 8164A8AF2F5954900038B596 /* WWExpandableCell */; };
 		8164A8B62F5970650038B596 /* WWRssParser in Frameworks */ = {isa = PBXBuildFile; productRef = 8164A8B52F5970650038B596 /* WWRssParser */; };
 		8164A8BC2F597CB70038B596 /* WWRssParser in Frameworks */ = {isa = PBXBuildFile; productRef = 8164A8BB2F597CB70038B596 /* WWRssParser */; };
 		81708BC62B21AD4C00397B27 /* dictionary_7439537.png in Resources */ = {isa = PBXBuildFile; fileRef = 81708BC22B21AD4C00397B27 /* dictionary_7439537.png */; };
@@ -107,6 +106,8 @@
 		81E516562D928B8E0020BD90 /* WWNetworking-UIImage in Frameworks */ = {isa = PBXBuildFile; productRef = 81E516552D928B8E0020BD90 /* WWNetworking-UIImage */; };
 		81E516592D9290AF0020BD90 /* WWTipView in Frameworks */ = {isa = PBXBuildFile; productRef = 81E516582D9290AF0020BD90 /* WWTipView */; };
 		81E56B6B2A725DA6004400D6 /* SearchVocabularyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E56B6A2A725DA6004400D6 /* SearchVocabularyTableViewCell.swift */; };
+		81E6D3BD2F5E626900D1BE26 /* WWExpandableCell in Frameworks */ = {isa = PBXBuildFile; productRef = 81E6D3BC2F5E626900D1BE26 /* WWExpandableCell */; };
+		81E6D3C62F5E755B00D1BE26 /* WWExpandableCell in Frameworks */ = {isa = PBXBuildFile; productRef = 81E6D3C52F5E755B00D1BE26 /* WWExpandableCell */; };
 		81F52F34299DE87A005F9DF2 /* MyTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F52F33299DE87A005F9DF2 /* MyTabBarController.swift */; };
 		81F7A4E72F3D732F008F33E3 /* AssistiveTouchHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7A4E62F3D732F008F33E3 /* AssistiveTouchHelper.swift */; };
 		81F7A4E92F3D7F6F008F33E3 /* SettingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7A4E82F3D7F6F008F33E3 /* SettingHelper.swift */; };
@@ -201,8 +202,8 @@
 				812A01C52C0824C90086E128 /* WWNetworking-UIImage in Frameworks */,
 				81CB93B12DB87AB7006CAAE1 /* WWExpandableTextView in Frameworks */,
 				81550B792F5A6EA8006D7EC1 /* WWRssParser in Frameworks */,
-				8164A8B02F5954900038B596 /* WWExpandableCell in Frameworks */,
 				64768B0D2AA3EB080005EF3A /* WWToast in Frameworks */,
+				81E6D3BD2F5E626900D1BE26 /* WWExpandableCell in Frameworks */,
 				81E516592D9290AF0020BD90 /* WWTipView in Frameworks */,
 				3D9EA9F22F435F5B000484AD /* WWNormalizeAudioPlayer in Frameworks */,
 				3D652CD02DB39AFB0047DB39 /* WWKeyboardShadowView in Frameworks */,
@@ -225,6 +226,7 @@
 				81E1F8F62A1F2CCA00EB0139 /* WWSlider in Frameworks */,
 				8141EEFF2B8C7FA60091127F /* WWUserDefaults in Frameworks */,
 				6418FC1A2A6DCDED00493B8D /* WWAppInstallSource in Frameworks */,
+				81E6D3C62F5E755B00D1BE26 /* WWExpandableCell in Frameworks */,
 				81407EF02F3B32D7007385CF /* WWNormalizeAudioPlayer in Frameworks */,
 				81E1F8F32A1F2C9A00EB0139 /* WWSQLite3Manager in Frameworks */,
 				3D659A7F2F3B829500F6CF17 /* WWNormalizeAudioPlayer in Frameworks */,
@@ -621,11 +623,12 @@
 				3D9EA9F12F435F5B000484AD /* WWNormalizeAudioPlayer */,
 				3D8A19DD2F4370520026FDA2 /* WWNormalizeAudioPlayer */,
 				3DFECB492F446DF100C5A1D3 /* WWSimpleAI_Perplexity */,
-				8164A8AF2F5954900038B596 /* WWExpandableCell */,
 				8164A8B52F5970650038B596 /* WWRssParser */,
 				8164A8BB2F597CB70038B596 /* WWRssParser */,
 				81550B782F5A6EA8006D7EC1 /* WWRssParser */,
 				81550B7B2F5A73BA006D7EC1 /* WWRssParser */,
+				81E6D3BC2F5E626900D1BE26 /* WWExpandableCell */,
+				81E6D3C52F5E755B00D1BE26 /* WWExpandableCell */,
 			);
 			productName = Vocabulary;
 			productReference = 64285887297BBF8600DD7D88 /* Vocabulary.app */;
@@ -677,8 +680,8 @@
 				8142F4402EA1F2D000F644FC /* XCRemoteSwiftPackageReference "WWAssistiveTouch" */,
 				3D8A19DC2F4370520026FDA2 /* XCRemoteSwiftPackageReference "WWNormalizeAudioPlayer" */,
 				3DFECB482F446DF100C5A1D3 /* XCRemoteSwiftPackageReference "WWSimpleAI_Perplexity" */,
-				8164A8AE2F5954900038B596 /* XCRemoteSwiftPackageReference "WWExpandableCell" */,
 				81550B7A2F5A73BA006D7EC1 /* XCRemoteSwiftPackageReference "WWRssParser" */,
+				81E6D3C42F5E755B00D1BE26 /* XCRemoteSwiftPackageReference "WWExpandableCell" */,
 			);
 			productRefGroup = 64285888297BBF8600DD7D88 /* Products */;
 			projectDirPath = "";
@@ -931,7 +934,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20260306;
+				CURRENT_PROJECT_VERSION = 20260308;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -953,7 +956,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.10.2;
+				MARKETING_VERSION = 2.10.3;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -975,7 +978,7 @@
 				CODE_SIGN_ENTITLEMENTS = Vocabulary/Vocabulary.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20260306;
+				CURRENT_PROJECT_VERSION = 20260308;
 				DEVELOPMENT_TEAM = 4Q5CYDAG3B;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -997,7 +1000,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.10.2;
+				MARKETING_VERSION = 2.10.3;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1139,14 +1142,6 @@
 				minimumVersion = 1.2.1;
 			};
 		};
-		8164A8AE2F5954900038B596 /* XCRemoteSwiftPackageReference "WWExpandableCell" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/William-Weng/WWExpandableCell";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.2.1;
-			};
-		};
 		81CB93AC2DB87995006CAAE1 /* XCRemoteSwiftPackageReference "WWJavaScriptContext" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/William-Weng/WWJavaScriptContext";
@@ -1217,6 +1212,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.2.3;
+			};
+		};
+		81E6D3C42F5E755B00D1BE26 /* XCRemoteSwiftPackageReference "WWExpandableCell" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWExpandableCell";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1323,11 +1326,6 @@
 			package = 81550B7A2F5A73BA006D7EC1 /* XCRemoteSwiftPackageReference "WWRssParser" */;
 			productName = WWRssParser;
 		};
-		8164A8AF2F5954900038B596 /* WWExpandableCell */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8164A8AE2F5954900038B596 /* XCRemoteSwiftPackageReference "WWExpandableCell" */;
-			productName = WWExpandableCell;
-		};
 		8164A8B52F5970650038B596 /* WWRssParser */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WWRssParser;
@@ -1380,6 +1378,15 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 81E516572D9290AF0020BD90 /* XCRemoteSwiftPackageReference "WWTipView" */;
 			productName = WWTipView;
+		};
+		81E6D3BC2F5E626900D1BE26 /* WWExpandableCell */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WWExpandableCell;
+		};
+		81E6D3C52F5E755B00D1BE26 /* WWExpandableCell */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 81E6D3C42F5E755B00D1BE26 /* XCRemoteSwiftPackageReference "WWExpandableCell" */;
+			productName = WWExpandableCell;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

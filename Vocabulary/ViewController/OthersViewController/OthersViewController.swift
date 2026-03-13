@@ -523,7 +523,7 @@ private extension OthersViewController {
         
         Task {
             do {
-                guard let response = try await WWNetworking.shared.request(httpMethod: .HEAD, urlString: bookmarkSite.url).get().response,
+                guard let response = try await WWNetworking.shared.request(httpMethod: .OPTIONS, urlString: bookmarkSite.url).get().response,
                       let contentType = response._headerField(with: .contentType) as? String
                 else {
                     throw Constant.CustomError.notOpenURL

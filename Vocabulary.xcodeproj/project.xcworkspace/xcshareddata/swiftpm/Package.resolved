@@ -1,5 +1,5 @@
 {
-  "originHash" : "35958483b26f72fcd6d032bb8d55322b1a43a2bb67fc8c532b4deba64fef1269",
+  "originHash" : "bb12777464e34167fd59e2e33650d3c86fd8e222b54891b9ef80fe2f01b2f8b9",
   "pins" : [
     {
       "identity" : "wwappinstallsource",
@@ -87,8 +87,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWHUD",
       "state" : {
-        "revision" : "8ffa449fd2192fdfd06622b77659edd65b4edd18",
-        "version" : "1.6.0"
+        "revision" : "924276ae44e9b875d0f780627c07f7d5c1295542",
+        "version" : "1.2.1"
       }
     },
     {
@@ -218,15 +218,6 @@
       }
     },
     {
-      "identity" : "wwsvgimageview",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/William-Weng/WWSVGImageView",
-      "state" : {
-        "revision" : "c3118da8460fb998d7436f9912e70cda9a796327",
-        "version" : "1.0.2"
-      }
-    },
-    {
       "identity" : "wwtipview",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWTipView",
@@ -258,8 +249,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWUserDefaults",
       "state" : {
-        "revision" : "44675a469955dbaeb5b70a6277dbb2be543f6cb0",
-        "version" : "1.0.4"
+        "revision" : "06668c74c56cc0dc430a39989c09a3b7f37e9b29",
+        "version" : "1.1.0"
       }
     }
   ],

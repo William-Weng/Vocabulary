@@ -521,26 +521,29 @@ private extension OthersViewController {
         Utility.shared.displayHUD(with: .loading)
         currentScrollDirection = .up
         
-        Task {
-            do {
-                guard let response = try await WWNetworking.shared.request(httpMethod: .OPTIONS, urlString: bookmarkSite.url).get().response,
+        _ = WWNetworking.shared.request(httpMethod: .OPTIONS, urlString: bookmarkSite.url) { [weak self] result in
+            
+            guard let this = self else { return }
+            
+            switch result {
+            case .failure(_): Utility.shared.flashHUD(with: .fail)
+            case .success(let info):
+                
+                guard let response = info.response,
                       let contentType = response._headerField(with: .contentType) as? String
                 else {
-                    throw Constant.CustomError.notOpenURL
+                    return Utility.shared.flashHUD(with: .fail)
                 }
                 
                 defer { Utility.shared.flashHUD(with: .loading, animation: 0.75) }
                 
-                if contentType.contains("xml") { performSegue(withIdentifier: ViewSegueType.rssReader.rawValue, sender: bookmarkSite); return }
+                if contentType.contains("xml") { this.performSegue(withIdentifier: ViewSegueType.rssReader.rawValue, sender: bookmarkSite); return }
                 
-                let safariController = url._openUrlWithInside(delegate: self)
-                safariController.delegate = self
+                let safariController = url._openUrlWithInside(delegate: this)
+                safariController.delegate = this
                 AssistiveTouchHelper.shared.hiddenAction(true)
                 
                 Utility.shared.flashHUD(with: .loading, animation: 0.25)
-                
-            } catch {
-                Utility.shared.flashHUD(with: .fail)
             }
         }
     }

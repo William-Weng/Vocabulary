@@ -567,7 +567,7 @@ private extension OthersViewController {
             this.myTableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }
-        
+    
     /// 新增書籤功能設定
     /// - Parameter sender: UIButton
     func appendBookmarkActionSetting(with sender: UIButton) {

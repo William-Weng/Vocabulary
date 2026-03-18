@@ -4,7 +4,7 @@
     "name": "英文字典",
     "code": "US",
     "voice": "en-US",
-    "dictionaryURL": "https://tw.dictionary.search.yahoo.com/search?p=<word>",
+    "dictionaryURL": "https://ezabc.com.tw/showword/?srch_target=<word>",
     "defineURL": "https://www.google.com/search?q=define+<word>",
     "font": "Bradley Hand",
     "settings": {

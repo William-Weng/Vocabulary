@@ -1,11 +1,15 @@
 # Vocabulary - 我愛背單字
 
-針對身為外語苦手的我，量身訂製的背單字 App。擁有輕快的背景音樂、正確的發音、可愛的動畫，並支援 Deep Link 功能，讓背單字變得輕鬆有趣！
-
 [![Swift-5.7](https://img.shields.io/badge/Swift-5.7-orange.svg?style=flat)](https://developer.apple.com/swift/) 
 [![iOS 16.0](https://img.shields.io/badge/iOS-16.0-pink.svg?style=flat)](https://developer.apple.com/swift/) 
 ![](https://img.shields.io/github/v/tag/William-Weng/Vocabulary) 
 [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=flat)](https://developer.apple.com/swift/)
+
+--
+
+針對身為外語苦手的我，量身訂製的背單字 App。擁有輕快的背景音樂、正確的發音、可愛的動畫，並支援 Deep Link 功能，讓背單字變得輕鬆有趣！
+
+--
 
 ## ✨ 特點
 

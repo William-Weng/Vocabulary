@@ -5,11 +5,11 @@
 ![](https://img.shields.io/github/v/tag/William-Weng/Vocabulary) 
 [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=flat)](https://developer.apple.com/swift/)
 
---
+---
 
 針對身為外語苦手的我，量身訂製的背單字 App。擁有輕快的背景音樂、正確的發音、可愛的動畫，並支援 Deep Link 功能，讓背單字變得輕鬆有趣！
 
---
+---
 
 ## ✨ 特點
 

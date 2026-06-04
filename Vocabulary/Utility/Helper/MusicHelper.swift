@@ -29,15 +29,12 @@ extension MusicHelper: WWNormalizeAudioPlayer.Delegate {
     
     func audioPlayer(_ player: WWNormalizeAudioPlayer, didStartTracks tracks: [URL], totalDuration: TimeInterval) {
         self.tracks = tracks
-        print(tracks)
     }
     
     func audioPlayer(_ player: WWNormalizeAudioPlayer, trackIndex: Int, currentTime: TimeInterval, trackTime: TimeInterval) {
-                
+        
         if (self.trackIndex == nil) {
-            
-            print(trackIndex)
-            
+                        
             let track = tracks[trackIndex]
             let time = trackTime._time(unitsStyle: .positional, allowedUnits: [.minute, .second], behavior: .pad) ?? "--:--"
             let hint: String = "\(trackIndex + 1). [\(time)] \(track.lastPathComponent)"
@@ -60,9 +57,9 @@ extension MusicHelper: WWNormalizeAudioPlayer.Delegate {
 extension MusicHelper {
     
     /// 初始化播放器設定
+    @MainActor
     func initAudioPlaySetting() {
-        
-        try? audioPlayer.configure(delegate: self)
+        audioPlayer.configure(delegate: self, options: [.mixWithOthers])
         audioPlayer.volume = 0.1
     }
     
@@ -110,6 +107,7 @@ extension MusicHelper {
     }
     
     /// 回復播放音樂
+    @MainActor
     func resume() {
         audioPlayer.resume()
     }
@@ -125,10 +123,11 @@ private extension MusicHelper {
     
     /// [音樂檔名提示](http://furnacedigital.blogspot.com/2010/12/avfoundation.html)
     /// - Parameter hint: 提示文字
+    @MainActor
     func musicPlayerHint(_ hint: String) {
         
         guard let window = Utility.shared.appDelegate?.window else { return }
-                
+        
         WWToast.shared.setting(backgroundViewColor: .black)
         WWToast.shared.makeText(hint, targetFrame: window.frame)
     }

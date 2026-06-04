@@ -956,7 +956,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.11;
+				MARKETING_VERSION = 2.11.1;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1000,7 +1000,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.11;
+				MARKETING_VERSION = 2.11.1;
 				PRODUCT_BUNDLE_IDENTIFIER = idv.william.example.vocabulary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1059,7 +1059,7 @@
 			repositoryURL = "https://github.com/William-Weng/WWNormalizeAudioPlayer";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.5.1;
+				minimumVersion = 1.5.3;
 			};
 		};
 		3DFECB482F446DF100C5A1D3 /* XCRemoteSwiftPackageReference "WWSimpleAI_Perplexity" */ = {

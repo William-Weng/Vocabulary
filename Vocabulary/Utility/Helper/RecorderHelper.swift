@@ -25,9 +25,11 @@ final class RecorderHelper: NSObject {
 extension RecorderHelper: AVAudioRecorderDelegate {
     
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        MusicHelper.shared.resume()
         
-        Task { await audioPlayer.play(with: [recorder.url], targetDB: nil) }
+        Task {
+            await MusicHelper.shared.resume()
+            await audioPlayer.play(with: [recorder.url], targetDB: nil)
+        }
     }
     
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) { myPrint(error) }

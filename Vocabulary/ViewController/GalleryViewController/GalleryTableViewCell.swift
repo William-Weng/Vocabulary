@@ -51,10 +51,9 @@ extension GalleryTableViewCell {
     /// - Parameter indexPath: IndexPath
     /// - Returns: URL?
     static func animationUrl(with indexPath: IndexPath) -> URL? {
-        
-        guard let animationFolderUrl = Constant.FileFolder.animation.url(),
-              let filename = Self.galleryImages[safe: indexPath.row],
-              let fileURL = animationFolderUrl._appendPath(filename)
+                
+        guard let filename = Self.galleryImages[safe: indexPath.row],
+              let fileURL = Constant.FileFolder.animation.url()._appendPath(filename)
         else {
             return nil
         }

@@ -267,13 +267,8 @@ extension Utility {
     /// - Returns: String?
     func parseDefaultSettingsJSON(with filename: String) -> String? {
         
-        guard let fileURL = Optional.some(Bundle.main.bundleURL.appendingPathComponent(filename)),
-              let jsonString = FileManager.default._readText(from: fileURL)
-        else {
-            return nil
-        }
-        
-        return jsonString
+        let fileURL = Optional.some(Bundle.main.bundleURL.appendingPathComponent(filename))
+        return FileManager.default._readText(from: fileURL)
     }
     
     /// 解析使用者自訂的SettingsJSON的設定檔
@@ -281,13 +276,8 @@ extension Utility {
     /// - Returns: String?
     func parseUserSettingsJSON(with filename: String) -> String? {
         
-        guard let url = FileManager.default._documentDirectory()?.appendingPathComponent(Constant.settingsJSON),
-              let jsonString = FileManager.default._readText(from: url)
-        else {
-            return nil
-        }
-        
-        return jsonString
+        let url = FileManager.default._documentDirectory().appendingPathComponent(Constant.settingsJSON)
+        return FileManager.default._readText(from: url)
     }
 }
 
@@ -324,7 +314,7 @@ extension Utility {
     /// - Parameter dateFormat: "yyyy-MM-dd HH:mm:ss ZZZ"
     /// - Returns: URL?
     func databaseBackupUrl(_ dateFormat: String = "yyyy-MM-dd HH:mm:ss ZZZ") -> URL? {
-        let url = Constant.backupDirectory?._appendPath("\(Date()._localTime(dateFormat: dateFormat, timeZone: .current)).\(Constant.databaseFileExtension)")
+        let url = Constant.backupDirectory._appendPath("\(Date()._localTime(dateFormat: dateFormat, timeZone: .current)).\(Constant.databaseFileExtension)")
         return url
     }
 }
@@ -611,7 +601,7 @@ extension Utility {
     /// - Returns: UIImage?
     func folderImage(name: String) -> UIImage? {
         
-        guard let imageUrl = Constant.FileFolder.images.url()?._appendPath(name),
+        guard let imageUrl = Constant.FileFolder.images.url()._appendPath(name),
               let image = UIImage(contentsOfFile: imageUrl.path)
         else {
             return nil

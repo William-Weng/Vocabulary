@@ -17,25 +17,42 @@ final class MusicHelper: NSObject {
     
     let audioPlayer: WWNormalizeAudioPlayer = .init()
     
+    var tracks: [URL] = []
     var musicLoopType: Constant.MusicLoopType = .infinity
-    var currentMusic: Music?
+    var trackIndex: Int?
     
     private override init() {}
 }
 
 // MARK: - WWNormalizeAudioPlayer.Delegate
-extension MusicHelper: WWNormalizeAudioPlayer.Deleagte {
+extension MusicHelper: WWNormalizeAudioPlayer.Delegate {
     
-    func audioPlayer(_ player: WWNormalizeAudioPlayer, callbackType: AVAudioPlayerNodeCompletionCallbackType, didFinishPlaying audioFile: AVAudioFile) {
-        audioPlayerDidFinishPlayingAction(player)
+    func audioPlayer(_ player: WWNormalizeAudioPlayer, didStartTracks tracks: [URL], totalDuration: TimeInterval) {
+        self.tracks = tracks
+        print(tracks)
     }
     
-    func audioPlayer(_ player: WWNormalizeAudioPlayer, audioFile: AVAudioFile, totalTime: TimeInterval, currentTime: TimeInterval) {
-        myPrint("\(currentTime) (\(totalTime))")
+    func audioPlayer(_ player: WWNormalizeAudioPlayer, trackIndex: Int, currentTime: TimeInterval, trackTime: TimeInterval) {
+                
+        if (self.trackIndex == nil) {
+            
+            print(trackIndex)
+            
+            let track = tracks[trackIndex]
+            let time = trackTime._time(unitsStyle: .positional, allowedUnits: [.minute, .second], behavior: .pad) ?? "--:--"
+            let hint: String = "\(trackIndex + 1). [\(time)] \(track.lastPathComponent)"
+            
+            self.trackIndex = trackIndex
+            musicPlayerHint(hint)
+        }
+    }
+    
+    func audioPlayer(_ player: WWNormalizeAudioPlayer, didFinishTrackIndex trackIndex: Int, callbackType: AVAudioPlayerNodeCompletionCallbackType) {
+        self.trackIndex = nil
     }
     
     func audioPlayer(_ player: WWNormalizeAudioPlayer, error: any Error) {
-        myPrint(error)
+        musicPlayerHint(error.localizedDescription)
     }
 }
 
@@ -45,12 +62,7 @@ extension MusicHelper {
     /// 初始化播放器設定
     func initAudioPlaySetting() {
         
-        let options: AVAudioSession.CategoryOptions = [.mixWithOthers, .defaultToSpeaker, .allowBluetooth]
-        
-        _ = AVAudioSession.sharedInstance()._setCategory(.playAndRecord, mode: .default, policy: .default, options: options, isActive: true)
-        
-        audioPlayer.delegate = self
-        audioPlayer.preferredFrameRateRange = nil
+        try? audioPlayer.configure(delegate: self)
         audioPlayer.volume = 0.1
     }
     
@@ -64,123 +76,60 @@ extension MusicHelper {
     /// - Parameter volume: Float
     /// - Returns: Float
     func musicVolumeSetting(_ volume: Float) -> Float {
+        
         Constant.musicVolume = volume
-        audioPlayer.volume = volume
+        audioPlayer.volume = Constant.musicVolume
+        
         return audioPlayer.volume
     }
     
-    /// 播放音樂
+    /// [播放音樂](http://furnacedigital.blogspot.com/2010/12/avfoundation.html)
     /// - Parameters:
-    ///   - music: 音樂檔案
+    ///   - list: 音樂檔案列表
     ///   - volume: 音量大小
     ///   - loopType: MusicLoopType
-    /// - Returns: Bool
-    func play(music: Music?, volume: Float, musicLoopType: Constant.MusicLoopType) -> Bool {
+    func playMusic(with list: [Music], volume: Float, musicLoopType: Constant.MusicLoopType) async {
         
-        guard let music = music,
-              let audioUrl = music.fileURL()
-        else {
-            return false
-        }
+        guard !list.isEmpty else { return }
         
-        self.currentMusic = music
-        self.musicLoopType = musicLoopType
+        let audioUrls = list.compactMap { $0.fileURL() }
+        let isShuffle = musicLoopType == .shuffle ? true : false
         
-        audioPlayer.play(with: audioUrl, targetDB: -5.0)
+        stop()
         audioPlayer.volume = volume
-        musicPlayerHint()
-        
-        return true
+        self.musicLoopType = musicLoopType
+
+        await audioPlayer.play(with: audioUrls, targetDB: -1.0, loop: true, shuffle: isShuffle)
     }
     
     /// 停止播放音樂
-    @discardableResult
-    func stop() -> Bool {
+    func stop() {
+        trackIndex = nil
         musicLoopType = .stop
         audioPlayer.stop()
-        return true
     }
     
     /// 回復播放音樂
-    @discardableResult
-    func resume() -> Bool {
+    func resume() {
         audioPlayer.resume()
-        return true
     }
     
     /// 暫停播放音樂
-    @discardableResult
-    func pause() -> Bool {
+    func pause() {
         audioPlayer.pause()
-        return true
-    }
-    
-    /// 各音樂播放選項的功能
-    /// - Parameters:
-    ///   - appDelegate: AppDelegate
-    ///   - music: Music
-    ///   - musicLoopType: Constant.MusicLoopType
-    /// - Returns: (isSuccess: Bool, icon: UIImage)
-    func itemMenuAction(music: Music, musicLoopType: Constant.MusicLoopType) -> (isSuccess: Bool, icon: UIImage) {
-        
-        let isSuccess: Bool
-        let musicButtonIcon: UIImage
-        
-        switch musicLoopType {
-        case .infinity:
-            isSuccess = MusicHelper.shared.play(music: music, volume: Constant.musicVolume, musicLoopType: musicLoopType)
-            musicButtonIcon = .music
-        case .loop:
-            Constant.playingMusicList = Utility.shared.loopMusics()
-            isSuccess = MusicHelper.shared.play(music: Constant.playingMusicList._popFirst(), volume: Constant.musicVolume, musicLoopType: musicLoopType)
-            musicButtonIcon = .loop
-        case .shuffle:
-            Constant.playingMusicList = Utility.shared.shuffleMusics()
-            isSuccess = MusicHelper.shared.play(music: Constant.playingMusicList.popLast(), volume: Constant.musicVolume, musicLoopType: musicLoopType)
-            musicButtonIcon = .shuffle
-        case .stop:
-            isSuccess = false
-            musicButtonIcon = .music
-        }
-        
-        return (isSuccess, musicButtonIcon)
     }
 }
 
 // MARK: - 小工具
 private extension MusicHelper {
-        
-    /// 音樂播完後的動作 => 全曲隨機 / 全曲循環
-    /// - Parameters:
-    ///   - player: AVAudioPlayer
-    ///   - flag: Bool
-    func audioPlayerDidFinishPlayingAction(_ player: WWNormalizeAudioPlayer) {
-        
-        switch musicLoopType {
-        case .infinity: break
-        case .stop: currentMusic = nil
-        case .loop: currentMusic = Constant.playingMusicList._popFirst()
-        case .shuffle: currentMusic = Constant.playingMusicList.popLast()
-        }
-        
-        if (Constant.playingMusicList.isEmpty) { Constant.playingMusicList = Utility.shared.musicList(for: musicLoopType) }
-        _ = play(music: currentMusic, volume: Constant.musicVolume, musicLoopType: musicLoopType)
-    }
     
     /// [音樂檔名提示](http://furnacedigital.blogspot.com/2010/12/avfoundation.html)
-    /// - Parameter player: WWNormalizeAudioPlayer
-    func musicPlayerHint() {
+    /// - Parameter hint: 提示文字
+    func musicPlayerHint(_ hint: String) {
         
-        guard let window = Utility.shared.appDelegate?.window,
-              let time = audioPlayer.totalTime()._time(unitsStyle: .positional, allowedUnits: [.minute, .second], behavior: .pad),
-              let audioFile = audioPlayer.audioFile
-        else {
-            return
-        }
-        
-        let text = "[\(time)] \(audioFile.url.lastPathComponent)"
-        
+        guard let window = Utility.shared.appDelegate?.window else { return }
+                
         WWToast.shared.setting(backgroundViewColor: .black)
-        WWToast.shared.makeText(text, targetFrame: window.frame)
+        WWToast.shared.makeText(hint, targetFrame: window.frame)
     }
 }

@@ -636,8 +636,7 @@ private extension MainViewController {
     /// - Returns: 資料夾的URL
     func musicFolderMaker() -> URL? {
         
-        guard let musicFolderUrl = Constant.FileFolder.music.url() else { return nil }
-        
+        let musicFolderUrl = Constant.FileFolder.music.url()
         let result = FileManager.default._createDirectory(with: musicFolderUrl, path: "")
         
         switch result {
@@ -745,8 +744,7 @@ private extension MainViewController {
     /// - Returns: Date?
     func lastBackupDatabaseDate() -> Date? {
         
-        guard let backupDirectory = Constant.backupDirectory else { return nil }
-        
+        let backupDirectory = Constant.backupDirectory
         let fileManager = FileManager.default
         let result = fileManager._fileList(with: backupDirectory)
         
@@ -924,11 +922,11 @@ private extension MainViewController {
         
         guard let musicList = musicFileList()?.sorted() else { Constant.musicFileList = nil; return }
         
-        var actions = musicList.map({ musicItemMenuActionMaker(filename: $0) })
+        var actions = musicList.map({ musicItemMenuActionMaker(musicList: [$0]) })
         
-        actions.append(musicItemMenuActionMaker(filename: Constant.MusicLoopType.loop.toString(), musicLoopType: .loop))
-        actions.append(musicItemMenuActionMaker(filename: Constant.MusicLoopType.shuffle.toString(), musicLoopType: .shuffle))
-        actions.append(musicItemMenuActionMaker(filename: Constant.MusicLoopType.stop.toString(), musicLoopType: .stop))
+        actions.append(musicItemMenuActionMaker(musicList: musicList, musicLoopType: .loop))
+        actions.append(musicItemMenuActionMaker(musicList: musicList, musicLoopType: .shuffle))
+        actions.append(musicItemMenuActionMaker(musicList: musicList, musicLoopType: .stop))
         
         Constant.musicFileList = musicList
         
@@ -941,13 +939,12 @@ private extension MainViewController {
     ///   - filename: String
     ///   - type: Constant.MusicLoopType
     /// - Returns: UIAction
-    func musicItemMenuActionMaker(filename: String, musicLoopType: Constant.MusicLoopType = .infinity) -> UIAction {
+    func musicItemMenuActionMaker(musicList: [String], musicLoopType: Constant.MusicLoopType = .infinity) -> UIAction {
         
-        let music = Music(filename: filename)
         let title: String
         
         switch musicLoopType {
-        case .infinity: title = "🎶 - \(music.filename)"
+        case .infinity: title = "🎶 - \(musicList.first ?? "<null>")"
         case .loop: title = "🎼 - \(musicLoopType.toString())"
         case .shuffle: title = "🎵 - \(musicLoopType.toString())"
         case .stop: title = "🚫 - \(musicLoopType.toString())"
@@ -956,11 +953,11 @@ private extension MainViewController {
         let action = UIAction(title: title) { [unowned self] _ in
             
             Constant.playingMusicList = []
-            _ = MusicHelper.shared.stop()
+            MusicHelper.shared.stop()
             
             Task {
                 try await Task.sleep(for: .microseconds(250))
-                musicItemMenuAction(music: music, musicLoopType: musicLoopType)
+                await musicItemMenuAction(list: musicList, type: musicLoopType)
             }
         }
         
@@ -969,15 +966,33 @@ private extension MainViewController {
     
     /// 各音樂播放選項的功能
     /// - Parameters:
-    ///   - music: Music
-    ///   - musicLoopType: Constant.MusicLoopType
-    func musicItemMenuAction(music: Music, musicLoopType: Constant.MusicLoopType) {
+    ///   - list: [String]
+    ///   - type: Constant.MusicLoopType
+    func musicItemMenuAction(list: [String], type: Constant.MusicLoopType) async {
         
-        let result = MusicHelper.shared.itemMenuAction(music: music, musicLoopType: musicLoopType)
+        let isSuccess = (type != .stop)
+                
+        musicButtonItem.image = parseMusicButtonIcon(with: type)
+        volumeButtonItem.image = Utility.shared.volumeIcon(isSuccess)
+        volumeButtonItem.isEnabled = isSuccess
         
-        musicButtonItem.image = result.icon
-        volumeButtonItem.image = Utility.shared.volumeIcon(result.isSuccess)
-        volumeButtonItem.isEnabled = result.isSuccess
+        if (type == .stop) { MusicHelper.shared.stop(); return }
+        
+        let musics = list.map { Music(filename: $0) }
+        await MusicHelper.shared.playMusic(with: musics, volume: Constant.musicVolume, musicLoopType: type)
+    }
+    
+    /// 根據各播放類型設定圖示
+    /// - Parameter type: MusicLoopType
+    /// - Returns: UIImage
+    func parseMusicButtonIcon(with type: Constant.MusicLoopType) -> UIImage {
+        
+        switch type {
+        case .infinity: return .music
+        case .loop: return .loop
+        case .shuffle: return .shuffle
+        case .stop: return .music
+        }
     }
 }
 

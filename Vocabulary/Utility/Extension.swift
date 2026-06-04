@@ -1036,13 +1036,13 @@ extension FileManager {
     
     /// User的「文件」資料夾URL
     /// - => ~/Documents (UIFileSharingEnabled)
-    /// - Returns: URL?
-    func _documentDirectory() -> URL? { return self._userDirectory(for: .documentDirectory).first }
+    /// - Returns: URL
+    func _documentDirectory() -> URL { return URL.documentsDirectory }
     
     /// User的「暫存」資料夾
     /// - => ~/tmp
     /// - Returns: URL
-    func _temporaryDirectory() -> URL { return self.temporaryDirectory }
+    func _temporaryDirectory() -> URL { return URL.temporaryDirectory }
     
     /// 新增資料夾
     /// - Parameters:

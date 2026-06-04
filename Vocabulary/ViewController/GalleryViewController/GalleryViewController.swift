@@ -103,7 +103,7 @@ private extension GalleryViewController {
     /// - Returns: [String]?
     func galleryImageList() -> [String]? {
         
-        guard let animationFolderUrl = Constant.FileFolder.animation.url() else { return nil }
+        let animationFolderUrl = Constant.FileFolder.animation.url()
 
         let result = FileManager.default._fileList(with: animationFolderUrl)
         

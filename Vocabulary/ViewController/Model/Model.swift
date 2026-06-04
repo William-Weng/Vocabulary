@@ -169,7 +169,7 @@ struct Music {
     /// - Returns: URL?
     func fileURL() -> URL? {
         let musicFolderUrl = Constant.FileFolder.music.url()
-        return musicFolderUrl?._appendPath(filename)
+        return musicFolderUrl._appendPath(filename)
     }
     
     /// 音樂檔案類型

@@ -397,8 +397,8 @@ extension Constant {
         case animation = "Animation"
         
         /// 產生URL
-        /// - Returns: URL?
-        func url() -> URL? { return FileManager.default._documentDirectory()?.appendingPathComponent(self.rawValue, isDirectory: false) }
+        /// - Returns: URL
+        func url() -> URL { return FileManager.default._documentDirectory().appendingPathComponent(self.rawValue, isDirectory: false) }
     }
     
     /// 要搜尋的類型分類

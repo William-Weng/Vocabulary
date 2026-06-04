@@ -61,7 +61,7 @@ private extension AppDelegate {
     /// - Returns: 資料夾的URL
     func animationFolderUrlMaker() -> URL? {
         
-        guard let animationFolderUrl = Constant.FileFolder.animation.url() else { return nil }
+        let animationFolderUrl = Constant.FileFolder.animation.url()
         
         let result = FileManager.default._createDirectory(with: animationFolderUrl, path: "")
         

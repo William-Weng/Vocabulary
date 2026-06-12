@@ -94,7 +94,7 @@ extension VolumeViewController {
         
         let maximumValue = volumeProgressSlider.frame.height
         let currentValue = CGFloat(percent) * maximumValue
-                
+        
         return currentValue
     }
     

@@ -521,7 +521,7 @@ private extension OthersViewController {
         Utility.shared.displayHUD(with: .loading)
         currentScrollDirection = .up
         
-        _ = WWNetworking.shared.request(httpMethod: .OPTIONS, urlString: bookmarkSite.url) { [weak self] result in
+        _ = WWNetworking.shared.request(httpMethod: .HEAD, urlString: bookmarkSite.url) { [weak self] result in
             
             guard let this = self else { return }
             
